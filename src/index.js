@@ -1,10 +1,5 @@
 import { app, BrowserWindow, dialog, Menu } from "electron";
-// import installExtension, {
-//   REACT_DEVELOPER_TOOLS
-// } from "electron-devtools-installer";
 import { enableLiveReload } from "electron-compile";
-
-// import fs from "fs";
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -21,9 +16,6 @@ if (isDevMode) {
 const createWindow = async () => {
   // Create the browser window.
   mainWindow = new BrowserWindow({
-    // webPreferences: {
-    //   nodeIntegration: false
-    // },
     width: 800,
     height: 600,
     titleBarStyle: "hidden"
@@ -31,20 +23,6 @@ const createWindow = async () => {
 
   // and load the index.html of the app.
   mainWindow.loadURL(`file://${__dirname}/index.html`);
-
-  // to open file
-  // function openFile() {
-  //   // to open dialog for file input
-  //   const files = dialog.showOpenDialog(mainWindow, {
-  //     properties: ["openFile"],
-  //     filters: [
-  //       {
-  //         name: "Markdown",
-  //         extensions: ["md", "markdown", "txt"]
-  //       }
-  //     ]
-  //   });
-  // }
 
   // to open directory
   function openDir() {

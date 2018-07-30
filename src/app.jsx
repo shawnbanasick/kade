@@ -1,7 +1,6 @@
 import React from "react";
 import Markdown from "markdown-to-jsx";
 import AceEditor from "react-ace";
-// import brace from "brace";
 import "brace/mode/markdown";
 import "brace/theme/dracula";
 import styled from "styled-components";
