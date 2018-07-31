@@ -2,51 +2,40 @@ import React from "react";
 import styled from "styled-components";
 // import settings from "electron-settings";
 
-
 class App extends React.Component {
-
-    render() {
-        // const {activeIndex} = this.state;
-        return (
-            <AppWrap>
-              <Header>KANDED</Header>
-              <Split>
-                <FilesWindow>
-                  <FileButton>
-                    <p className="title">
-                      Start
-                    </p>
-                  </FileButton>
-                  <FileButton>
-                    <p className="title">
-                      1. Input
-                    </p>
-                  </FileButton>
-                  <FileButton>
-                    <p className="title">
-                      2. Factors
-                    </p>
-                  </FileButton>
-                  <FileButton>
-                    <p className="title">
-                      3. Rotation
-                    </p>
-                  </FileButton>
-                  <FileButton>
-                    <p className="title">
-                      4. Loadings
-                    </p>
-                  </FileButton>
-                  <FileButton>
-                    <p className="title">
-                      5. Output
-                    </p>
-                  </FileButton>
-                </FilesWindow>
-              </Split>
-            </AppWrap>
-            );
-    }
+  render() {
+    // const {activeIndex} = this.state;
+    return (
+      <AppWrap>
+        <Header>KANDED</Header>
+        <Split>
+          <FilesWindow>
+            <FileButton>
+              <p className="title">Start</p>
+            </FileButton>
+            <FileButton>
+              <p className="title">1. Input</p>
+            </FileButton>
+            <FileButton>
+              <p className="title">2. Factors</p>
+            </FileButton>
+            <FileButton>
+              <p className="title">3. Rotation</p>
+            </FileButton>
+            <FileButton>
+              <p className="title">4. Loadings</p>
+            </FileButton>
+            <FileButton>
+              <p className="title">5. Output</p>
+            </FileButton>
+          </FilesWindow>
+          <ActionWindow>
+            <p>Action Window</p>
+          </ActionWindow>
+        </Split>
+      </AppWrap>
+    );
+  }
 }
 
 export default App;
@@ -56,9 +45,9 @@ const AppWrap = styled.div`
 `;
 
 const Header = styled.header`
-  display:grid;
+  display: grid;
   background-color: #d3d3d3;
-  font-family:  Helvetica;
+  font-family: Helvetica;
   color: black;
   font-size: 1rem;
   height: 23px;
@@ -74,7 +63,8 @@ const Header = styled.header`
 `;
 
 const Split = styled.div`
-  display: flex;
+  display: grid;
+  grid-template-columns: 200px 1fr;
   height: 100vh;
 `;
 
@@ -83,7 +73,7 @@ const FilesWindow = styled.div`
   background: #d3d3d3;
   border-right: solid 1px #302b3a;
   position: relative;
-  width: 20%;
+  width: 200px;
   &:after {
     content: "";
     position: absolute;
@@ -125,9 +115,16 @@ const FileButton = styled.button`
     font-wight: bold;
     font-size: 0.9rem;
     margin: 0 0 5px;
+    color: black;
   }
 
   .date {
     margin: 0;
   }
+`;
+
+const ActionWindow = styled.div`
+  background-color: white;
+  height: 100%;
+  width: 100%;
 `;
