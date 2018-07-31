@@ -16,8 +16,8 @@ if (isDevMode) {
 const createWindow = async () => {
   // Create the browser window.
   mainWindow = new BrowserWindow({
-    width: 800,
-    height: 600,
+    width: 960,
+    height: 750,
     titleBarStyle: "hidden"
   });
 
