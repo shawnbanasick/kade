@@ -25,19 +25,19 @@ const createWindow = async () => {
   mainWindow.loadURL(`file://${__dirname}/index.html`);
 
   // to open directory
-  function openDir() {
-    // to open dialog for file input
-    const directory = dialog.showOpenDialog(mainWindow, {
-      properties: ["openDirectory"]
-    });
+  // function openDir() {
+  //   // to open dialog for file input
+  //   const directory = dialog.showOpenDialog(mainWindow, {
+  //     properties: ["openDirectory"]
+  //   });
 
-    // to stop no file error, early return
-    if (!directory) return;
+  //   // to stop no file error, early return
+  //   if (!directory) return;
 
-    const dir = directory[0];
+  //   const dir = directory[0];
 
-    mainWindow.webContents.send("new-dir", dir);
-  }
+  //   mainWindow.webContents.send("new-dir", dir);
+  // }
 
   const template = [
     {
@@ -47,7 +47,7 @@ const createWindow = async () => {
           label: "Open Folder",
           accelerator: "CmdOrCtrl+O",
           click() {
-            openDir();
+            console.log("open");
           }
         },
         {
