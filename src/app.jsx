@@ -1,11 +1,16 @@
+import { view, store } from "react-easy-state";
 import React from "react";
 import styled from "styled-components";
-import Start from './Sections/Start/Start';
+import Start from "./Sections/Start/Start";
+import Input from "./Sections/Input/Input";
 // import settings from "electron-settings";
+
+const localState = store({ viewStart: true, viewInput: false });
 
 class App extends React.Component {
   render() {
-    // const {activeIndex} = this.state;
+    const { viewStart, viewInput } = localState;
+    console.log(viewStart);
     return (
       <AppWrap>
         <Header>KANDED</Header>
@@ -34,15 +39,16 @@ class App extends React.Component {
             </FileButton>
           </FilesWindow>
           <ActionWindow>
-            <Start />
+            {viewStart && <Start />}
+            {viewInput && <Input />}
           </ActionWindow>
         </Split>
       </AppWrap>
-      );
+    );
   }
 }
 
-export default App;
+export default view(App);
 
 const AppWrap = styled.div`
   margin-top: 23px;

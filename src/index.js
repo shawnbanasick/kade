@@ -1,4 +1,4 @@
-import { app, BrowserWindow, dialog, Menu } from "electron";
+import { app, BrowserWindow, Menu } from "electron";
 import { enableLiveReload } from "electron-compile";
 
 // Keep a global reference of the window object, if you don't, the window will
