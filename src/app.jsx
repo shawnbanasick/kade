@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import Start from './Sections/Start/Start';
 // import settings from "electron-settings";
 
 class App extends React.Component {
@@ -28,13 +29,16 @@ class App extends React.Component {
             <FileButton>
               <p className="title">5. Output</p>
             </FileButton>
+            <FileButton>
+              <p className="title">6. License</p>
+            </FileButton>
           </FilesWindow>
           <ActionWindow>
-            <p>Action Window</p>
+            <Start />
           </ActionWindow>
         </Split>
       </AppWrap>
-    );
+      );
   }
 }
 
