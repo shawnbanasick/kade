@@ -3,23 +3,45 @@ import React from "react";
 import styled from "styled-components";
 import Start from "./Sections/Start/Start";
 import Input from "./Sections/Input/Input";
-// import settings from "electron-settings";
 
-const localState = store({ viewStart: true, viewInput: false });
 
 class App extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.localState = store({
+      viewStart: true,
+      viewInput: false,
+      viewFactors: false,
+      viewRotation: false,
+      viewLoadings: false,
+      viewOutput: false,
+      viewLicense: false,
+      activeWindow: "viewStart"
+    });
+
+
+    this.handleClick = this.handleClick.bind(this);
+  }
+
+  handleClick(target) {
+    const activeWindow = this.localState.activeWindow;
+    this.localState[activeWindow] = false;
+    this.localState[target] = true;
+    this.localState.activeWindow = target;
+  };
+
   render() {
-    const { viewStart, viewInput } = localState;
-    console.log(viewStart);
+    const {viewStart, viewInput} = this.localState;
     return (
       <AppWrap>
         <Header>KANDED</Header>
         <Split>
           <FilesWindow>
-            <FileButton>
+            <FileButton onClick={ () => this.handleClick("viewStart") }>
               <p className="title">Start</p>
             </FileButton>
-            <FileButton>
+            <FileButton onClick={ () => this.handleClick("viewInput") }>
               <p className="title">1. Input</p>
             </FileButton>
             <FileButton>
@@ -39,12 +61,12 @@ class App extends React.Component {
             </FileButton>
           </FilesWindow>
           <ActionWindow>
-            {viewStart && <Start />}
-            {viewInput && <Input />}
+            { viewStart && <Start view={ viewStart } /> }
+            { viewInput && <Input view={ viewInput } /> }
           </ActionWindow>
         </Split>
       </AppWrap>
-    );
+      );
   }
 }
 
@@ -112,6 +134,7 @@ const FileButton = styled.button`
   &:hover {
     opacity: 1;
     border-left: solid 8px #82d8d8;
+    background-color: white;
   }
 
   ${({ active }) =>

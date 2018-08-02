@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { view } from "react-easy-state";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 
 class Start extends Component {
   render() {
@@ -17,11 +17,33 @@ class Start extends Component {
         <WebLinkDiv2>square div 3</WebLinkDiv2>
         <WebLinkDiv2>square div 4</WebLinkDiv2>
       </MainContent>
-    );
+      );
   }
 }
 
 export default view(Start);
+
+
+const fadeIn = keyframes`
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+`;
+
+const fadeOut = keyframes`
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+`;
+
 
 const MainContent = styled.div`
   display: grid;
@@ -38,6 +60,9 @@ const MainContent = styled.div`
   background-color: white;
   height: 100%;
   width: 100%;
+  visibility: ${props => props.view ? 'hidden' : 'visible'};
+  animation: ${props => props.view ? fadeOut : fadeIn} .5s linear;
+  transition: visibility .5s linear;
 `;
 
 const LanguageSelection = styled.div`
