@@ -47,7 +47,7 @@ const createWindow = async () => {
           label: "Open Folder",
           accelerator: "CmdOrCtrl+O",
           click() {
-            console.log("open");
+            // console.log("open");
           }
         },
         {

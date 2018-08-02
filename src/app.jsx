@@ -3,6 +3,11 @@ import React from "react";
 import styled from "styled-components";
 import Start from "./Sections/Start/Start";
 import Input from "./Sections/Input/Input";
+import Factors from './Sections/Factors/Factors';
+import Rotation from './Sections/Rotation/Rotation';
+import Loadings from './Sections/Loadings/Loadings';
+import Output from './Sections/Output/Output';
+import License from './Sections/License/License';
 
 
 class App extends React.Component {
@@ -32,37 +37,42 @@ class App extends React.Component {
   };
 
   render() {
-    const {viewStart, viewInput} = this.localState;
+    const {viewStart, viewInput, viewFactors, viewRotation, viewLoadings, viewOutput, viewLicense} = this.localState;
     return (
       <AppWrap>
         <Header>KANDED</Header>
         <Split>
           <FilesWindow>
-            <FileButton onClick={ () => this.handleClick("viewStart") }>
+            <StartButton active={ viewStart } onClick={ () => this.handleClick("viewStart") }>
               <p className="title">Start</p>
-            </FileButton>
-            <FileButton onClick={ () => this.handleClick("viewInput") }>
+            </StartButton>
+            <FileButton active={ viewInput } onClick={ () => this.handleClick("viewInput") }>
               <p className="title">1. Input</p>
             </FileButton>
-            <FileButton>
+            <FileButton active={ viewFactors } onClick={ () => this.handleClick("viewFactors") }>
               <p className="title">2. Factors</p>
             </FileButton>
-            <FileButton>
+            <FileButton active={ viewRotation } onClick={ () => this.handleClick("viewRotation") }>
               <p className="title">3. Rotation</p>
             </FileButton>
-            <FileButton>
+            <FileButton active={ viewLoadings } onClick={ () => this.handleClick("viewLoadings") }>
               <p className="title">4. Loadings</p>
             </FileButton>
-            <FileButton>
+            <FileButton active={ viewOutput } onClick={ () => this.handleClick("viewOutput") }>
               <p className="title">5. Output</p>
             </FileButton>
-            <FileButton>
+            <FileButton active={ viewLicense } onClick={ () => this.handleClick("viewLicense") }>
               <p className="title">6. License</p>
             </FileButton>
           </FilesWindow>
           <ActionWindow>
             { viewStart && <Start view={ viewStart } /> }
             { viewInput && <Input view={ viewInput } /> }
+            { viewFactors && <Factors view={ viewFactors } /> }
+            { viewRotation && <Rotation view={ viewRotation } /> }
+            { viewLoadings && <Loadings view={ viewLoadings } /> }
+            { viewOutput && <Output view={ viewOutput } /> }
+            { viewLicense && <License view={ viewLicense } /> }
           </ActionWindow>
         </Split>
       </AppWrap>
@@ -96,7 +106,7 @@ const Header = styled.header`
 
 const Split = styled.div`
   display: grid;
-  grid-template-columns: 200px 1fr;
+  grid-template-columns: 150px 1fr;
   height: 100vh;
 `;
 
@@ -105,7 +115,7 @@ const FilesWindow = styled.div`
   background: #d3d3d3;
   border-right: solid 1px #302b3a;
   position: relative;
-  width: 200px;
+  width: 150px;
   &:after {
     content: "";
     position: absolute;
@@ -124,7 +134,7 @@ const FileButton = styled.button`
   padding: 10px;
   width: 100%;
   background: #d3d3d3;
-  opacity: 0.4;
+  opacity: 0.6;
   color: black;
   border: none;
   text-align: left;
@@ -133,26 +143,23 @@ const FileButton = styled.button`
 
   &:hover {
     opacity: 1;
-    border-left: solid 8px #82d8d8;
+    border-left: solid 8px lightgreen;
     background-color: white;
   }
 
   ${({ active }) =>
     active &&
     `
+    background-color: white;
     opacity: 1;
-    border-left: solid 8px #83cafe;
+    border-left: solid 8px lightgreen;
     `};
 
   .title {
-    font-wight: bold;
+    font-weght: bold;
     font-size: 0.9rem;
     margin: 0 0 5px;
     color: black;
-  }
-
-  .date {
-    margin: 0;
   }
 `;
 
@@ -160,4 +167,38 @@ const ActionWindow = styled.div`
   background-color: white;
   height: 100%;
   width: 100%;
+`;
+
+
+const StartButton = styled.button`
+  padding: 10px;
+  width: 100%;
+  background: lightgreen;
+  opacity: 0.6;
+  color: black;
+  border: none;
+  text-align: center;
+  border-bottom: solid 1px #302b3a;
+  transition: 0.3s ease all;
+
+  &:hover {
+    opacity: 1;
+    border-left: solid 8px lightgreen;
+    background-color: white;
+  }
+
+  ${({ active }) =>
+    active &&
+    `
+    background-color: white;
+    opacity: 1;
+    border-left: solid 8px lightgreen;
+    `};
+
+  .title {
+    font-weight: bold;
+    font-size: 1.2rem;
+    margin: 5px 0 5px;
+    color: black;
+  }
 `;
