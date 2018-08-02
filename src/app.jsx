@@ -140,10 +140,11 @@ const FileButton = styled.button`
   text-align: left;
   border-bottom: solid 1px #302b3a;
   transition: 0.3s ease all;
+  outline: none !important;
 
   &:hover {
     opacity: 1;
-    border-left: solid 8px lightgreen;
+    border-left: solid 8px #d3d3d3;
     background-color: white;
   }
 
@@ -152,7 +153,7 @@ const FileButton = styled.button`
     `
     background-color: white;
     opacity: 1;
-    border-left: solid 8px lightgreen;
+    border-left: solid 8px #d3d3d3;
     `};
 
   .title {
@@ -180,10 +181,11 @@ const StartButton = styled.button`
   text-align: center;
   border-bottom: solid 1px #302b3a;
   transition: 0.3s ease all;
+  outline: none !important;
 
   &:hover {
     opacity: 1;
-    border-left: solid 8px lightgreen;
+    border-left: solid 8px #d3d3d3;
     background-color: white;
   }
 
@@ -192,7 +194,7 @@ const StartButton = styled.button`
     `
     background-color: white;
     opacity: 1;
-    border-left: solid 8px lightgreen;
+    border-left: solid 8px #d3d3d3;
     `};
 
   .title {
