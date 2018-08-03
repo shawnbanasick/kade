@@ -3,6 +3,7 @@ import { view } from "react-easy-state";
 import styled, { keyframes } from "styled-components";
 import Tabs from "react-simpletabs";
 import CsvStatementCard from "./CSV/CsvStatementCard";
+import CsvQsortsCard from "./CSV/CsvQsortsCard";
 
 class Input extends Component {
   render() {
@@ -14,7 +15,10 @@ class Input extends Component {
               <h2 style={{ fontFamily: "Helvetica" }}>
                 Upload both a statements text file and Q sorts csv file.
               </h2>
-              <CsvStatementCard />
+              <CardHolder>
+                <CsvStatementCard />
+                <CsvQsortsCard />
+              </CardHolder>
             </DataWindow>
           </Tabs.Panel>
           <Tabs.Panel title="Excel">
@@ -113,6 +117,7 @@ const MainContent = styled.div`
   .tab-panel {
     padding: 10px 50px;
     background-color: white;
+    padding-left: 10px !important;
   }
 `;
 
@@ -121,6 +126,11 @@ const DataWindow = styled.div`
   background-color: white;
 `;
 
+const CardHolder = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: space-evenly;
+`;
 // const TopSection = styled.div`
 //   background-color: #d3d3d3;
 // `;
