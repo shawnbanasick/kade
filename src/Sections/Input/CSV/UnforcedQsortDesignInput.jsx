@@ -1,33 +1,30 @@
-import { view } from "react-easy-state";
-import React from "react";
-import store from "../../../store";
+import { view, store } from "react-easy-state";
 import styled from "styled-components";
+import React from "react";
+import state from "../../../store";
+
+const localStore = store({ inputValue: "" });
+
+const handleChange = event => {
+  const array = event.target.value;
+  localStore.inputValue = array;
+  const qSortPatternArray2 = array.split(",");
+  const qSortPatternArray = [];
+  for (const num of qSortPatternArray2) {
+    const value = parseInt(num, 10);
+    if (!isNaN(value)) {
+      qSortPatternArray.push(value);
+    }
+  }
+  qSortPatternArray.sort((a, b) => a - b);
+  state.setState({
+    qSortPattern: qSortPatternArray
+  });
+};
 
 class ForcedInput extends React.Component {
-  constructor() {
-    super();
-
-    this.handleChange = this.handleChange.bind(this);
-  }
-
-  handleChange(event) {
-    const array = event.target.value;
-    const qSortPatternArray2 = array.split(",");
-    const qSortPatternArray = [];
-    for (const num of qSortPatternArray2) {
-      const value = parseInt(num, 10);
-      if (!isNaN(value)) {
-        qSortPatternArray.push(value);
-      }
-    }
-    qSortPatternArray.sort((a, b) => a - b);
-    store.setState({
-      qSortPattern: qSortPatternArray
-    });
-  }
-
   render() {
-    const showForcedInput = store.getState("showForcedInput");
+    const showForcedInput = state.getState("showForcedInput");
     if (showForcedInput) {
       return (
         <div>
@@ -36,8 +33,9 @@ class ForcedInput extends React.Component {
             <Input
               type="text"
               id="qSortDesignInput"
-              onChange={this.handleChange}
+              onChange={e => handleChange(e)}
               placeholder="sort values separated by commas"
+              value={localStore.inputValue}
             />
           </Label>
         </div>

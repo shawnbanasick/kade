@@ -1,6 +1,9 @@
 import React from "react";
 import styled from "styled-components";
-import store from "../../../store";
+import state from "../../../store";
+import { view, store } from "react-easy-state";
+
+const localStore = store({ projectName: "" });
 
 const handleChange = e => {
   const projectName = e.target.value;
@@ -8,7 +11,10 @@ const handleChange = e => {
   if (projectName.length > 0) {
     hasAddedProjectName = true;
   }
-  store.setState({
+
+  localStore.projectName = projectName;
+
+  state.setState({
     hasAddedProjectName,
     projectName: e.target.value,
     projectHistoryArray: [`${e.target.value} data loaded from CSV file`]
@@ -20,10 +26,11 @@ const ProjectNameInput = () => (
     onChange={e => handleChange(e)}
     label="Project Name:"
     placeholder="Input Project Name"
+    value={localStore.projectName}
   />
 );
 
-export default ProjectNameInput;
+export default view(ProjectNameInput);
 
 const Input = styled.input`
   font-size: 20px;

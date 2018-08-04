@@ -5,36 +5,36 @@ import state from "../../../store";
 const { dialog } = require("electron").remote;
 const fs = require("fs");
 
-class LoadTxtStatementFile extends Component {
-  handleClick() {
-    dialog.showOpenDialog(
-      {
-        properties: ["openFile"],
-        filters: [{ name: "CSV", extensions: ["csv", "CSV"] }]
-      },
-      files => {
-        if (files !== undefined) {
-          const fileName = files[0];
-          fs.readFile(fileName, "utf-8", (err, data) => {
-            // split into lines
-            const lines = data.split(/[\r\n]+/g);
-            // remove empty strings
-            const lines2 = lines.filter(e => e === 0 || e);
-            state.setState({
-              sorts: lines2,
-              sortsLoaded: true
-            });
-            const log = state.getState("sorts");
-            console.log(JSON.stringify(log));
+const handleClick = () => {
+  dialog.showOpenDialog(
+    {
+      properties: ["openFile"],
+      filters: [{ name: "CSV", extensions: ["csv", "CSV"] }]
+    },
+    files => {
+      if (files !== undefined) {
+        const fileName = files[0];
+        fs.readFile(fileName, "utf-8", (err, data) => {
+          // split into lines
+          const lines = data.split(/[\r\n]+/g);
+          // remove empty strings
+          const lines2 = lines.filter(e => e === 0 || e);
+          state.setState({
+            sorts: lines2,
+            sortsLoaded: true
           });
-        }
+          const log = state.getState("sorts");
+          console.log(JSON.stringify(log));
+        });
       }
-    );
-  }
+    }
+  );
+};
 
+class LoadTxtStatementFile extends Component {
   render() {
     return (
-      <LoadTxtButton onClick={this.handleClick}>
+      <LoadTxtButton onClick={() => handleClick()}>
         <p>Load CSV File</p>
       </LoadTxtButton>
     );

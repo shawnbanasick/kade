@@ -1,30 +1,21 @@
 import { view } from "react-easy-state";
-import React from "react";
-// import store from "../../../store";
 import styled from "styled-components";
+import React from "react";
+import state from "../../../store";
 
 class CsvSuccessfulLoadBar extends React.Component {
-  //   constructor() {
-  //     super();
-
-  //     // this.handleClick = this.handleClick.bind(this);
-  //   }
-
-  // handleClick(event) {}
-
   render() {
-    // const showForcedInput = store.getState("success");
-    // if (showForcedInput) {
-    return (
-      <SuccessBar>
-        <p>CSV Project Loaded:</p>
-        <Button>View Project Data</Button>
-        <Button>View Correlation Matrix</Button>
-      </SuccessBar>
-    );
-    //     }
-    //     return null;
-    //   }
+    const { hasAddedProjectName, sortsLoaded, statementsLoaded } = state;
+    if (hasAddedProjectName && sortsLoaded && statementsLoaded) {
+      return (
+        <SuccessBar>
+          <p>CSV Project Loaded:</p>
+          <Button>View Project Data</Button>
+          <Button>View Correlation Matrix</Button>
+        </SuccessBar>
+      );
+    }
+    return null;
   }
 }
 

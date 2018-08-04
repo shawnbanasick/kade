@@ -5,49 +5,43 @@ import state from "../../../store";
 
 const localStore = store({ value: "forced" });
 
-class RadioExampleRadioGroup extends Component {
-  constructor() {
-    super();
+const handleChange = e => {
+  const value = e.target.value;
 
-    this.handleChange = this.handleChange.bind(this);
-  }
+  localStore.value = value;
 
-  handleChange(e) {
-    const value = e.target.value;
-
-    localStore.value = value;
-
-    // if "UNFORCED" is selected
-    const hasQsortPattern = state.getState("qSortPattern");
-    const dataOrigin = state.getState("dataOrigin");
-    if (value === "unforced") {
+  // if "UNFORCED" is selected
+  const hasQsortPattern = state.getState("qSortPattern");
+  const dataOrigin = state.getState("dataOrigin");
+  if (value === "unforced") {
+    state.setState({
+      showForcedInput: true,
+      isForcedQsortPattern: false,
+      requireQsortPatternInput: true
+    });
+    if (dataOrigin === "csv" || dataOrigin === "json") {
       state.setState({
-        showForcedInput: true,
-        isForcedQsortPattern: false,
-        requireQsortPatternInput: true
+        oldQsortPattern: hasQsortPattern,
+        qSortPattern: []
       });
-      if (dataOrigin === "csv" || dataOrigin === "json") {
-        state.setState({
-          oldQsortPattern: hasQsortPattern,
-          qSortPattern: []
-        });
-      }
-    } else {
-      // if FORCED is selected
-      const oldQsortPattern = state.getState("oldQsortPattern");
+    }
+  } else {
+    // if FORCED is selected
+    const oldQsortPattern = state.getState("oldQsortPattern");
+    state.setState({
+      showForcedInput: false,
+      isForcedQsortPattern: true,
+      requireQsortPatternInput: false
+    });
+    if (dataOrigin === "csv" || dataOrigin === "json") {
       state.setState({
-        showForcedInput: false,
-        isForcedQsortPattern: true,
-        requireQsortPatternInput: false
+        qSortPattern: oldQsortPattern
       });
-      if (dataOrigin === "csv" || dataOrigin === "json") {
-        state.setState({
-          qSortPattern: oldQsortPattern
-        });
-      }
     }
   }
+};
 
+class RadioExampleRadioGroup extends Component {
   render() {
     return (
       <RadioDiv>
@@ -61,7 +55,7 @@ class RadioExampleRadioGroup extends Component {
             id="forcedButton"
             value="forced"
             checked={localStore.value === "forced"}
-            onChange={this.handleChange}
+            onChange={e => handleChange(e)}
           />
           Forced
         </Label>
@@ -72,7 +66,7 @@ class RadioExampleRadioGroup extends Component {
             name="radioGroup"
             value="unforced"
             checked={localStore.value === "unforced"}
-            onChange={this.handleChange}
+            onChange={e => handleChange(e)}
           />
           Unforced
         </Label>
