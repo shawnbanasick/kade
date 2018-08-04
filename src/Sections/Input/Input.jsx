@@ -4,6 +4,8 @@ import styled, { keyframes } from "styled-components";
 import Tabs from "react-simpletabs";
 import CsvStatementCard from "./CSV/CsvStatementCard";
 import CsvQsortsCard from "./CSV/CsvQsortsCard";
+import ProjectNameInput from "./CSV/ProjectNameInput";
+import ForcedUnforcedRadio from "./CSV/ForcedUnforcedRadio";
 
 class Input extends Component {
   render() {
@@ -13,11 +15,13 @@ class Input extends Component {
           <Tabs.Panel title="CSV">
             <DataWindow>
               <h2 style={{ fontFamily: "Helvetica" }}>
-                Upload both a statements text file and Q sorts csv file.
+                Load both a statements TXT file and Q sorts CSV file.
               </h2>
               <CardHolder>
                 <CsvStatementCard />
                 <CsvQsortsCard />
+                <ProjectNameInput />
+                <ForcedUnforcedRadio />
               </CardHolder>
             </DataWindow>
           </Tabs.Panel>
@@ -73,7 +77,7 @@ const MainContent = styled.div`
     "linkboxRow2 linkboxRow2 linkboxRow2 linkboxRow2";
   justify-items: center;
   align-items: center; */
-  background-color: #d3d3d3;
+  background-color: #d6dbe0;
   height: 100%;
   width: 100%;
   visibility: ${props => (props.view ? "hidden" : "visible")};
@@ -83,7 +87,7 @@ const MainContent = styled.div`
   .tabs-menu {
     display: grid;
     grid-template-columns: 120px 120px 150px 150px 180px 170px;
-    background-color: #d3d3d3;
+    background-color: #d6dbe0;
     padding-left: 20px !important;
     height: 45px;
     align-items: end;
@@ -99,7 +103,7 @@ const MainContent = styled.div`
     align-items: center;
     justify-items: center;
     margin-right: 20px;
-    background-color: #d3d3d3;
+    background-color: #d6dbe0;
     height: 80%;
   }
 
@@ -127,10 +131,10 @@ const DataWindow = styled.div`
 `;
 
 const CardHolder = styled.div`
-  width: 100%;
-  display: flex;
-  justify-content: space-evenly;
+  display: grid;
+  grid-template-columns: 300px 300px;
+  grid-template-rows: 380px 100px 100px 100px;
 `;
 // const TopSection = styled.div`
-//   background-color: #d3d3d3;
+//   background-color: #d6dbe0;
 // `;

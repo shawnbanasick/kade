@@ -83,7 +83,7 @@ const WebLinkDiv1 = styled.div`
   display: grid;
   align-items: center;
   justify-items: center;
-  background-color: #d3d3d3;
+  background-color: #d6dbe0;
   color: black;
   border-radius: 2px;
   font-size: 22px;
@@ -96,7 +96,7 @@ const WebLinkDiv2 = styled.div`
   justify-items: center;
   height: 180px;
   width: 180px;
-  background-color: #d3d3d3;
+  background-color: #d6dbe0;
   color: black;
   border-radius: 2px;
   font-size: 22px;

@@ -19,6 +19,7 @@ class FileUpload extends Component {
       const reader = new FileReader();
       reader.onload = () => {
         try {
+          console.log("trying");
           const fileAsBinaryString = reader.result;
           // parse blob by new line
           const lines = fileAsBinaryString.split(/[\r\n]+/g);
@@ -33,6 +34,7 @@ class FileUpload extends Component {
           store.setState({
             statements: lines2
           });
+          console.log(lines2);
         } catch (error) {
           // set error message
           store.setState({
