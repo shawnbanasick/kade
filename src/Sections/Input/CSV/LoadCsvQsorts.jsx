@@ -43,7 +43,7 @@ class LoadTxtStatementFile extends Component {
 
 export default LoadTxtStatementFile;
 
-const LoadTxtButton = styled.div`
+const LoadTxtButton = styled.button`
   display: grid;
   align-items: center;
   justify-items: center;
@@ -52,10 +52,21 @@ const LoadTxtButton = styled.div`
   width: 240px;
   border: 1px solid black;
   text-align: center;
+  font-size: 16px;
   font-family: Helvetica, sans-serif;
   font-weight: bold;
   border-radius: 4px;
+  margin-right: 3px;
+  margin-bottom: 3px;
+  box-shadow: 0 3px 3px 0 black;
+
   &:hover {
     background-color: white;
+  }
+
+  &:active {
+    box-shadow: 0 0 1px 0 black inset;
+    margin-left: 3px;
+    margin-top: 3px;
   }
 `;

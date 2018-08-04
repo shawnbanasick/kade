@@ -1,50 +1,47 @@
 import React, { Component } from "react";
-import { view } from "react-easy-state";
+import { view, store } from "react-easy-state";
 import styled from "styled-components";
-import store from "../../../store";
+import state from "../../../store";
+
+const localStore = store({ value: "forced" });
 
 class RadioExampleRadioGroup extends Component {
   constructor() {
     super();
 
-    this.state = {
-      value: "forced"
-    };
     this.handleChange = this.handleChange.bind(this);
   }
 
   handleChange(e) {
     const value = e.target.value;
 
-    this.setState({
-      value
-    });
+    localStore.value = value;
 
     // if "UNFORCED" is selected
-    const hasQsortPattern = store.getState("qSortPattern");
-    const dataOrigin = store.getState("dataOrigin");
+    const hasQsortPattern = state.getState("qSortPattern");
+    const dataOrigin = state.getState("dataOrigin");
     if (value === "unforced") {
-      store.setState({
+      state.setState({
         showForcedInput: true,
         isForcedQsortPattern: false,
         requireQsortPatternInput: true
       });
       if (dataOrigin === "csv" || dataOrigin === "json") {
-        store.setState({
+        state.setState({
           oldQsortPattern: hasQsortPattern,
           qSortPattern: []
         });
       }
     } else {
       // if FORCED is selected
-      const oldQsortPattern = store.getState("oldQsortPattern");
-      store.setState({
+      const oldQsortPattern = state.getState("oldQsortPattern");
+      state.setState({
         showForcedInput: false,
         isForcedQsortPattern: true,
         requireQsortPatternInput: false
       });
       if (dataOrigin === "csv" || dataOrigin === "json") {
-        store.setState({
+        state.setState({
           qSortPattern: oldQsortPattern
         });
       }
@@ -55,7 +52,7 @@ class RadioExampleRadioGroup extends Component {
     return (
       <RadioDiv>
         <div>
-          Q-Sorts are: <b>{this.state.value}</b>
+          Q-Sorts are: <b>{localStore.value}</b>
         </div>
         <Label htmlFor="forcedButton">
           <input
@@ -63,7 +60,7 @@ class RadioExampleRadioGroup extends Component {
             name="radioGroup"
             id="forcedButton"
             value="forced"
-            checked={this.state.value === "forced"}
+            checked={localStore.value === "forced"}
             onChange={this.handleChange}
           />
           Forced
@@ -74,7 +71,7 @@ class RadioExampleRadioGroup extends Component {
             id="unforcedButton"
             name="radioGroup"
             value="unforced"
-            checked={this.state.value === "unforced"}
+            checked={localStore.value === "unforced"}
             onChange={this.handleChange}
           />
           Unforced
@@ -91,7 +88,6 @@ const RadioDiv = styled.div`
   grid-template-columns: 300px;
   grid-template-rows: 30px 30px 30px;
   align-items: center;
-  justify-items: left;
   font-family: Helvetica, sans-serif;
   margin-top: 0px;
   margin-bottom: 15px;
@@ -103,8 +99,7 @@ const RadioDiv = styled.div`
 const Label = styled.label`
   display: grid;
   grid-template-columns: 25px 1fr;
-  margin-top: 3px;
-  margin-left: 5px;
+  margin-top: 0px;
+  margin-left: 10px;
   align-items: center;
-  justify-items: left;
 `;

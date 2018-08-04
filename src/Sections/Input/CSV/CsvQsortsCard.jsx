@@ -7,7 +7,7 @@ import LoadCsvQsorts from "./LoadCsvQsorts";
 const CsvQsortsCard = () => (
   <Card>
     <CardMeta>
-      <p>2. Load Q sorts as a CSV File</p>
+      <CardLabel>2. Load Q sorts as a CSV File</CardLabel>
     </CardMeta>
     <Image>
       <img
@@ -28,7 +28,7 @@ const Card = styled.div`
   align-items: center;
   background-color: white;
   border: 2px solid black;
-  height: 345px;
+  height: 300px;
   width: 280px;
   border: 2px solid darkgray;
   border-radius: 5px;
@@ -66,3 +66,9 @@ const CardMeta = styled.div`
 //   background-color: white;
 //   border: 2px solid black;
 // `;
+
+const CardLabel = styled.div`
+  font-family: Helvetica, sans-serif;
+  font-size: 18px;
+  font-weight: bold;
+`;

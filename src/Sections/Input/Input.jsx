@@ -6,6 +6,8 @@ import CsvStatementCard from "./CSV/CsvStatementCard";
 import CsvQsortsCard from "./CSV/CsvQsortsCard";
 import ProjectNameInput from "./CSV/ProjectNameInput";
 import ForcedUnforcedRadio from "./CSV/ForcedUnforcedRadio";
+import UnforcedQsortDesignInput from "./CSV/UnforcedQsortDesignInput";
+import CsvSuccessfulLoadBar from "./CSV/CsvSuccessfulLoadBar";
 
 class Input extends Component {
   render() {
@@ -14,14 +16,16 @@ class Input extends Component {
         <Tabs>
           <Tabs.Panel title="CSV">
             <DataWindow>
-              <h2 style={{ fontFamily: "Helvetica" }}>
+              <Header>
                 Load both a statements TXT file and Q sorts CSV file.
-              </h2>
+              </Header>
               <CardHolder>
                 <CsvStatementCard />
                 <CsvQsortsCard />
                 <ProjectNameInput />
                 <ForcedUnforcedRadio />
+                <UnforcedQsortDesignInput />
+                <CsvSuccessfulLoadBar />
               </CardHolder>
             </DataWindow>
           </Tabs.Panel>
@@ -121,7 +125,7 @@ const MainContent = styled.div`
   .tab-panel {
     padding: 10px 50px;
     background-color: white;
-    padding-left: 10px !important;
+    padding-left: 20px !important;
   }
 `;
 
@@ -132,9 +136,17 @@ const DataWindow = styled.div`
 
 const CardHolder = styled.div`
   display: grid;
-  grid-template-columns: 300px 300px;
-  grid-template-rows: 380px 100px 100px 100px;
+  grid-template-columns: 350px 350px;
+  grid-template-rows: 320px 115px 120px 130px;
 `;
 // const TopSection = styled.div`
 //   background-color: #d6dbe0;
 // `;
+
+const Header = styled.div`
+  font-family: Helvetica;
+  font-size: 22px;
+  font-weight: bold;
+  height: 30px;
+  margin-top: 10px;
+`;

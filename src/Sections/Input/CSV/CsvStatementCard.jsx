@@ -7,7 +7,7 @@ import LoadTxtStatementFile from "./LoadTxtStatementFile";
 const CsvStatementCard = () => (
   <Card>
     <CardMeta>
-      <p>1. Load Statements as TXT File</p>
+      <CardLabel>1. Load Statements as TXT File</CardLabel>
     </CardMeta>
     <Image>
       <img
@@ -29,7 +29,7 @@ const Card = styled.div`
   align-items: center;
   background-color: white;
   border: 2px solid black;
-  height: 345px;
+  height: 300px;
   width: 280px;
   border: 2px solid darkgray;
   border-radius: 5px;
@@ -50,8 +50,9 @@ const Card = styled.div`
 
 const Image = styled.div`
   background-color: white;
-  width: 275px;
-  height: 175px;
+  width: 260px;
+  height: 160px;
+  margin-bottom: 15px;
 `;
 
 const CardMeta = styled.div`
@@ -67,3 +68,9 @@ const CardMeta = styled.div`
 //   background-color: white;
 //   border: 2px solid black;
 // `;
+
+const CardLabel = styled.div`
+  font-family: Helvetica, sans-serif;
+  font-size: 18px;
+  font-weight: bold;
+`;
