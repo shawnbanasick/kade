@@ -97,6 +97,7 @@ class FileUpload extends Component {
             multiplierArray,
             dataOrigin: "csv"
           });
+          console.log(JSON.stringify(qSortPatternArray));
         } catch (error) {
           // set error message
           store.setState({

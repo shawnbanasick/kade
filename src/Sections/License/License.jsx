@@ -1,23 +1,23 @@
 import React, { Component } from "react";
 import { view } from "react-easy-state";
 import styled, { keyframes } from "styled-components";
-
+// import state from '../../store';
+import DisplayState from "./DisplayState";
 
 // import styled from "styled-components";
 
 class License extends Component {
-    render() {
-        return (
-            <MainContent>
-              <p>License Section</p>
-            </MainContent>
-            );
-    }
+  render() {
+    return (
+      <MainContent>
+        <p>License Section</p>
+        <DisplayState />
+      </MainContent>
+    );
+  }
 }
 
 export default view(License);
-
-
 
 const fadeIn = keyframes`
   from {
@@ -39,23 +39,11 @@ const fadeOut = keyframes`
   }
 `;
 
-
 const MainContent = styled.div`
   display: grid;
-  grid-template-columns: 190px 190px 190px 190px;
-  grid-template-rows: 50px 125px 125px 200px 200px 50px;
-  grid-template-areas:
-    "row1 row1 row1 row1"
-    "titleRow titleRow titleRow titleRow"
-    "weblinkRow weblinkRow weblinkRow weblinkRow"
-    "linkboxRow1 linkboxRow1 linkboxRow1 linkboxRow1"
-    "linkboxRow2 linkboxRow2 linkboxRow2 linkboxRow2";
+  grid-template-columns: 500px;
+  grid-template-rows: 50px 1fr;
   justify-items: center;
   align-items: center;
   background-color: white;
-  height: 100%;
-  width: 100%;
-  visibility: ${props => props.view ? 'hidden' : 'visible'};
-  animation: ${props => props.view ? fadeOut : fadeIn} .5s linear;
-  transition: visibility .5s linear;
 `;

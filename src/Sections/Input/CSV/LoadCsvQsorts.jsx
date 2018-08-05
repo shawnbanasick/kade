@@ -1,34 +1,135 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 import state from "../../../store";
+import { sortsDisplayText } from "../logic/sortsDisplayText";
+import shiftRawSortsPositive from "../logic/shiftRawSortsPositive";
+import calcMultiplierArrayT2 from "../logic/excelLogic/calcMultiplierArrayT2";
+import checkUniqueParticipantNames from "../logic/checkUniqueParticipantName";
+import Papa from "papaparse";
 
 const { dialog } = require("electron").remote;
 const fs = require("fs");
 
 const handleClick = () => {
-  dialog.showOpenDialog(
-    {
-      properties: ["openFile"],
-      filters: [{ name: "CSV", extensions: ["csv", "CSV"] }]
-    },
-    files => {
-      if (files !== undefined) {
-        const fileName = files[0];
-        fs.readFile(fileName, "utf-8", (err, data) => {
-          // split into lines
-          const lines = data.split(/[\r\n]+/g);
-          // remove empty strings
-          const lines2 = lines.filter(e => e === 0 || e);
-          state.setState({
-            sorts: lines2,
-            sortsLoaded: true
+  try {
+    dialog.showOpenDialog(
+      {
+        properties: ["openFile"],
+        filters: [{ name: "CSV", extensions: ["csv", "CSV"] }]
+      },
+      files => {
+        if (files !== undefined) {
+          const fileName = files[0];
+          fs.readFile(fileName, "utf-8", (err, data) => {
+            // parse file
+            const parsedFile = Papa.parse(data);
+
+            const lines2 = parsedFile.data;
+
+            // // split into lines
+            // const lines = data.split(/[\r\n]+/g);
+            // // remove empty strings
+            // const lines2 = lines.filter(e => e === 0 || e);
+
+            let qSortPatternArray;
+
+            // remove the first (header) line
+            lines2.shift();
+
+            // parsing first line of PQMethod file to set qav variables
+            const numberSorts = lines2.length;
+
+            if (lines2[0][1] === "") {
+              throw new Error("Can't find any Q-sorts in the file!");
+            }
+
+            // remove empty "" strings from array
+            let maxLength = lines2[0].length;
+            for (let i = 0; i < lines2[0].length - 1; i++) {
+              const value1 = lines2[0][i];
+              if (value1 === "") {
+                maxLength = i;
+                break;
+              }
+            }
+
+            // todo - check if other data import methods check to see if min value is above zero
+            // before doing positive shift for raw sorts
+            let minValue;
+            let arrayShiftedPositive;
+            const mainDataObject = [];
+            const respondentNames = [];
+            for (let j = 0; j < lines2.length; j++) {
+              // const activeLine = lines2[j].split(",");
+
+              lines2[j].length = maxLength;
+
+              const tempObj = {};
+              console.log(JSON.stringify(lines2[j]));
+
+              // get name
+              const name = lines2[j].shift();
+
+              // slice off name
+              lines2[j] = lines2[j].slice(1, -1);
+              tempObj.name = name;
+              respondentNames.push(name);
+              const asNumbers = lines2[j].map(Number);
+              if (j === 0) {
+                minValue = Math.min(...asNumbers);
+              }
+              // grab last for for qSortPattern
+              qSortPatternArray = asNumbers;
+
+              if (minValue < 1) {
+                arrayShiftedPositive = shiftRawSortsPositive(
+                  asNumbers,
+                  minValue
+                );
+              } else {
+                arrayShiftedPositive = [...asNumbers];
+              }
+              tempObj.posShiftSort = arrayShiftedPositive;
+              tempObj.rawSort = asNumbers;
+              tempObj.displaySort = lines2[j].toString();
+              mainDataObject.push(tempObj);
+            }
+
+            qSortPatternArray.sort((a, b) => a - b);
+
+            const multiplierArray = calcMultiplierArrayT2([
+              ...qSortPatternArray
+            ]);
+
+            const sortsDisplayTextArray = sortsDisplayText(mainDataObject);
+
+            const participantNames = checkUniqueParticipantNames(
+              respondentNames
+            );
+
+            state.setState({
+              numQsorts: numberSorts,
+              qSortPattern: qSortPatternArray,
+              numStatements: lines2[0].length,
+              respondentNames: participantNames,
+              mainDataObject,
+              sortsDisplayText: sortsDisplayTextArray,
+              multiplierArray,
+              dataOrigin: "csv",
+              sortsLoaded: true
+            });
+            const log = state.getState("sorts");
+            console.log(JSON.stringify(log));
           });
-          const log = state.getState("sorts");
-          console.log(JSON.stringify(log));
-        });
+        }
       }
-    }
-  );
+    );
+  } catch (error) {
+    state.setState({
+      csvErrorMessage1: error.message,
+      showCsvErrorModal: true
+    });
+  }
 };
 
 class LoadTxtStatementFile extends Component {

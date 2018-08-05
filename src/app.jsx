@@ -3,6 +3,8 @@ import React from "react";
 import styled from "styled-components";
 import Start from "./Sections/Start/Start";
 import Input from "./Sections/Input/Input";
+import Data from "./Sections/Data/Data";
+import Correlations from "./Sections/Correlations/Correlations";
 import Factors from "./Sections/Factors/Factors";
 import Rotation from "./Sections/Rotation/Rotation";
 import Loadings from "./Sections/Loadings/Loadings";
@@ -16,6 +18,8 @@ class App extends React.Component {
     this.localState = store({
       viewStart: true,
       viewInput: false,
+      viewData: false,
+      viewCorrelations: false,
       viewFactors: false,
       viewRotation: false,
       viewLoadings: false,
@@ -38,6 +42,8 @@ class App extends React.Component {
     const {
       viewStart,
       viewInput,
+      viewData,
+      viewCorrelations,
       viewFactors,
       viewRotation,
       viewLoadings,
@@ -62,39 +68,53 @@ class App extends React.Component {
               <p className="title">1. Input</p>
             </FileButton>
             <FileButton
+              active={viewData}
+              onClick={() => this.handleClick("viewData")}
+            >
+              <p className="title">2. Data</p>
+            </FileButton>
+            <FileButton
+              active={viewCorrelations}
+              onClick={() => this.handleClick("viewCorrelations")}
+            >
+              <p className="title">3. Correlations</p>
+            </FileButton>
+            <FileButton
               active={viewFactors}
               onClick={() => this.handleClick("viewFactors")}
             >
-              <p className="title">2. Factors</p>
+              <p className="title">4. Factors</p>
             </FileButton>
             <FileButton
               active={viewRotation}
               onClick={() => this.handleClick("viewRotation")}
             >
-              <p className="title">3. Rotation</p>
+              <p className="title">5. Rotation</p>
             </FileButton>
             <FileButton
               active={viewLoadings}
               onClick={() => this.handleClick("viewLoadings")}
             >
-              <p className="title">4. Loadings</p>
+              <p className="title">6. Loadings</p>
             </FileButton>
             <FileButton
               active={viewOutput}
               onClick={() => this.handleClick("viewOutput")}
             >
-              <p className="title">5. Output</p>
+              <p className="title">7. Output</p>
             </FileButton>
             <FileButton
               active={viewLicense}
               onClick={() => this.handleClick("viewLicense")}
             >
-              <p className="title">6. License</p>
+              <p className="title">8. License</p>
             </FileButton>
           </FilesWindow>
           <ActionWindow>
             {viewStart && <Start view={viewStart} />}
             {viewInput && <Input view={viewInput} />}
+            {viewData && <Data view={viewData} />}
+            {viewCorrelations && <Correlations view={viewCorrelations} />}
             {viewFactors && <Factors view={viewFactors} />}
             {viewRotation && <Rotation view={viewRotation} />}
             {viewLoadings && <Loadings view={viewLoadings} />}
