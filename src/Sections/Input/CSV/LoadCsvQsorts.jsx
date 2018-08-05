@@ -65,7 +65,6 @@ const handleClick = () => {
               lines2[j].length = maxLength;
 
               const tempObj = {};
-              console.log(JSON.stringify(lines2[j]));
 
               // get name
               const name = lines2[j].shift();
@@ -118,8 +117,6 @@ const handleClick = () => {
               dataOrigin: "csv",
               sortsLoaded: true
             });
-            const log = state.getState("sorts");
-            console.log(JSON.stringify(log));
           });
         }
       }

@@ -1,15 +1,24 @@
 import React, { Component } from "react";
 import { view, store } from "react-easy-state";
-import state from "../../store";
 import styled from "styled-components";
+import state from "../../store";
 
 const localStore = store({ state });
 
 class DisplayState extends Component {
   render() {
-    const result = Object.keys(state).map(key => [key, state[key]]);
+    const result = Object.keys(state).map(key => {
+      if (typeof state[key] === "function") {
+        return [key, "function"];
+      }
+      console.log(key);
+      if (typeof state[key] === "object") {
+        return [key, "array or object"];
+      }
+      return [key, state[key].toString()];
+    });
     localStore.state = result;
-    console.log(this.props);
+    // console.log(this.props);
     return (
       <OrderedList>
         {localStore.state.map((value, index) => (

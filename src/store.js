@@ -15,7 +15,8 @@ export default store({
     const newReturnValue = cloneDeep(returnValue);
     return newReturnValue;
   },
-
+  statements: [],
+  sortsDisplayText: [],
   isForcedQsortPattern: true,
   qSortPattern: [],
   dataOrigin: ""
