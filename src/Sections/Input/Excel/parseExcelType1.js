@@ -1,12 +1,15 @@
 import XLSX from "xlsx";
 import store from "../../../store";
-// import { formatExcelType1ForDisplay } from "./formatExcelType1ForDisplay";
+import formatExcelType1ForDisplay from "./excelLogic/formatExcelType1ForDisplay";
 
 function parseExcelType1(excelFile) {
   const workbook = XLSX.readFile(excelFile, { type: "binary" });
-  console.log(`workbook: ${JSON.stringify(workbook)}`);
+  // console.log(`workbook: ${JSON.stringify(workbook)}`);
 
-  let tester, tester2, tester3, tester4;
+  let tester;
+  let tester2;
+  let tester3;
+  let tester4;
   let tempArray = [];
   const allWorksheets = [];
   let worksheet;
@@ -19,17 +22,17 @@ function parseExcelType1(excelFile) {
 
   try {
     sheetNameList.forEach(y => {
-      y = y.toLowerCase();
+      const y2 = y.toLowerCase();
       /* iterate through sheets */
       worksheet = workbook.Sheets[y];
-      if (y === "sorts" || y === "qsorts" || y === "q-sorts") {
+      if (y2 === "sorts" || y2 === "qsorts" || y2 === "q-sorts") {
         hasSortsWorksheet = true;
         tester = XLSX.utils.sheet_to_csv(worksheet);
         tester2 = tester.split(/\n/);
 
         if (filetype === "user-input") {
           // max participants 200 artificial limit
-          for (let i = 1; i < 200; i++) {
+          for (let i = 1; i < 200; i += 1) {
             tester3 = tester2[i].split(",");
             tempArray.push(tester3);
           }
@@ -37,7 +40,7 @@ function parseExcelType1(excelFile) {
           tester3 = tester2.filter(Boolean);
           tempArray.push(tester3);
         }
-      } else if (y === "statements" || y === "statement") {
+      } else if (y2 === "statements" || y2 === "statement") {
         hasStatementsWorksheet = true;
         tempArray = [];
         tester4 = XLSX.utils.sheet_to_json(worksheet);
@@ -55,7 +58,7 @@ function parseExcelType1(excelFile) {
 
     console.log(`allWorksheets: ${JSON.stringify(allWorksheets)}`);
 
-    // formatExcelType1ForDisplay(allWorksheets);
+    formatExcelType1ForDisplay(allWorksheets);
     store.setState({ dataOrigin: "excel" });
 
     // manage error messages
