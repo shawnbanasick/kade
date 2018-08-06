@@ -1,10 +1,12 @@
 import { view, store } from "react-easy-state";
 import React, { Component } from "react";
+// import XLSX from "xlsx";
 import styled from "styled-components";
-import state from "../../../store";
+// import state from "../../../store";
+import parseExcelType1 from "./parseExcelType1";
 
 const { dialog } = require("electron").remote;
-const fs = require("fs");
+// const fs = require("fs");
 
 const localStore = store({ buttonColor: "#d6dbe0" });
 
@@ -12,22 +14,18 @@ const handleClick = () => {
   dialog.showOpenDialog(
     {
       properties: ["openFile"],
-      filters: [{ name: "Text", extensions: ["txt", "TXT"] }]
+      filters: [{ name: "Excel", extensions: ["xls", "XLS", "xlsx", "XLSX"] }]
     },
     files => {
       if (files !== undefined) {
-        const fileName = files[0];
-        fs.readFile(fileName, "utf-8", (err, data) => {
-          // split into lines
-          const lines = data.split(/[\r\n]+/g);
-          // remove empty strings
-          const lines2 = lines.filter(e => e === 0 || e);
-          state.setState({
-            statements: lines2,
-            statementsLoaded: true
-          });
-          localStore.buttonColor = "rgba(144,	238,	144, .6)";
-        });
+        const excelFile = files[0];
+        parseExcelType1(excelFile);
+
+        // state.setState({
+        //   // statements: lines2,
+        //   statementsLoaded: true
+        // });
+        localStore.buttonColor = "rgba(144,	238,	144, .6)";
       }
     }
   );
@@ -40,7 +38,7 @@ class LoadTxtStatementFile extends Component {
         buttonColor={localStore.buttonColor}
         onClick={() => handleClick()}
       >
-        <p>Load TXT File</p>
+        <p>Load Type 1 Excel File</p>
       </LoadTxtButton>
     );
   }

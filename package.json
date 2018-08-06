@@ -66,7 +66,8 @@
     "react-hot-loader": "^3.0.0-beta.6",
     "react-simpletabs": "^0.7.0",
     "react-transition-group": "^2.4.0",
-    "styled-components": "^3.3.3"
+    "styled-components": "^3.3.3",
+    "xlsx": "^0.13.3"
   },
   "devDependencies": {
     "babel-plugin-transform-async-to-generator": "^6.24.1",

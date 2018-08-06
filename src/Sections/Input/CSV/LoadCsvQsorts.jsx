@@ -1,14 +1,17 @@
+import { view, store } from "react-easy-state";
 import React, { Component } from "react";
 import styled from "styled-components";
+import Papa from "papaparse";
 import state from "../../../store";
 import { sortsDisplayText } from "../logic/sortsDisplayText";
 import shiftRawSortsPositive from "../logic/shiftRawSortsPositive";
 import calcMultiplierArrayT2 from "../logic/excelLogic/calcMultiplierArrayT2";
 import checkUniqueParticipantNames from "../logic/checkUniqueParticipantName";
-import Papa from "papaparse";
 
 const { dialog } = require("electron").remote;
 const fs = require("fs");
+
+const localStore = store({ buttonColor: "#d6dbe0" });
 
 const handleClick = () => {
   try {
@@ -117,6 +120,7 @@ const handleClick = () => {
               dataOrigin: "csv",
               sortsLoaded: true
             });
+            localStore.buttonColor = "rgba(144,	238,	144, .6)";
           });
         }
       }
@@ -132,20 +136,23 @@ const handleClick = () => {
 class LoadTxtStatementFile extends Component {
   render() {
     return (
-      <LoadTxtButton onClick={() => handleClick()}>
+      <LoadTxtButton
+        buttonColor={localStore.buttonColor}
+        onClick={() => handleClick()}
+      >
         <p>Load CSV File</p>
       </LoadTxtButton>
     );
   }
 }
 
-export default LoadTxtStatementFile;
+export default view(LoadTxtStatementFile);
 
 const LoadTxtButton = styled.button`
   display: grid;
   align-items: center;
   justify-items: center;
-  background-color: #d6dbe0;
+  background-color: ${props => props.buttonColor};
   height: 60px;
   width: 240px;
   border: 1px solid black;

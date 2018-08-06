@@ -27,8 +27,8 @@ class Data extends Component {
 export default view(Data);
 
 const MainContent = styled.div`
-  /*
   display: grid;
+  /*
    grid-template-columns: 190px 190px 190px 190px;
   grid-template-rows: 50px 125px 125px 200px 200px 50px;
   grid-template-areas:

@@ -19,26 +19,6 @@ class License extends Component {
 
 export default view(License);
 
-const fadeIn = keyframes`
-  from {
-    opacity: 0;
-  }
-
-  to {
-    opacity: 1;
-  }
-`;
-
-const fadeOut = keyframes`
-  from {
-    opacity: 1;
-  }
-
-  to {
-    opacity: 0;
-  }
-`;
-
 const MainContent = styled.div`
   display: grid;
   grid-template-columns: 500px;
@@ -46,4 +26,11 @@ const MainContent = styled.div`
   justify-items: center;
   align-items: center;
   background-color: white;
+
+  font-family: Helvetica, sans-serif;
+  font-size: 18px;
+  width: calc(100vw - 153px);
+  box-sizing: border-box;
+  height: calc(100vh - 22px);
+  overflow: auto;
 `;

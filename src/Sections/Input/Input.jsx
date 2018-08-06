@@ -2,12 +2,8 @@ import React, { Component } from "react";
 import { view } from "react-easy-state";
 import styled, { keyframes } from "styled-components";
 import Tabs from "react-simpletabs";
-import CsvStatementCard from "./CSV/CsvStatementCard";
-import CsvQsortsCard from "./CSV/CsvQsortsCard";
-import ProjectNameInput from "./CSV/ProjectNameInput";
-import ForcedUnforcedRadio from "./CSV/ForcedUnforcedRadio";
-import UnforcedQsortDesignInput from "./CSV/UnforcedQsortDesignInput";
-import CsvSuccessfulLoadBar from "./CSV/CsvSuccessfulLoadBar";
+import CsvPanel from "./CsvPanel";
+import ExcelPanel from "./ExcelPanel";
 
 class Input extends Component {
   render() {
@@ -15,22 +11,10 @@ class Input extends Component {
       <MainContent>
         <Tabs>
           <Tabs.Panel title="CSV">
-            <DataWindow>
-              <Header>
-                Load both a statements TXT file and Q sorts CSV file.
-              </Header>
-              <CardHolder>
-                <CsvStatementCard />
-                <CsvQsortsCard />
-                <ProjectNameInput />
-                <ForcedUnforcedRadio />
-                <UnforcedQsortDesignInput />
-                <CsvSuccessfulLoadBar />
-              </CardHolder>
-            </DataWindow>
+            <CsvPanel />
           </Tabs.Panel>
           <Tabs.Panel title="Excel">
-            <h2>Content #2 here</h2>
+            <ExcelPanel />
           </Tabs.Panel>
           <Tabs.Panel title="JSON">
             <h2>Content #3 here</h2>
@@ -82,11 +66,14 @@ const MainContent = styled.div`
   justify-items: center;
   align-items: center; */
   background-color: #d6dbe0;
-  height: 100%;
-  width: 100%;
   visibility: ${props => (props.view ? "hidden" : "visible")};
   animation: ${props => (props.view ? fadeOut : fadeIn)} 0.5s linear;
   transition: visibility 0.5s linear;
+
+  width: calc(100vw - 153px);
+  box-sizing: border-box;
+  max-height: calc(100vh - 22px);
+  overflow: auto;
 
   .tabs-menu {
     display: grid;
@@ -127,26 +114,4 @@ const MainContent = styled.div`
     background-color: white;
     padding-left: 20px !important;
   }
-`;
-
-const DataWindow = styled.div`
-  height: 100%;
-  background-color: white;
-`;
-
-const CardHolder = styled.div`
-  display: grid;
-  grid-template-columns: 350px 350px;
-  grid-template-rows: 320px 115px 120px 130px;
-`;
-// const TopSection = styled.div`
-//   background-color: #d6dbe0;
-// `;
-
-const Header = styled.div`
-  font-family: Helvetica;
-  font-size: 22px;
-  font-weight: bold;
-  height: 30px;
-  margin-top: 10px;
 `;

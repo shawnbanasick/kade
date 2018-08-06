@@ -17,12 +17,11 @@ class Start extends Component {
         <WebLinkDiv2>square div 3</WebLinkDiv2>
         <WebLinkDiv2>square div 4</WebLinkDiv2>
       </MainContent>
-      );
+    );
   }
 }
 
 export default view(Start);
-
 
 const fadeIn = keyframes`
   from {
@@ -44,7 +43,6 @@ const fadeOut = keyframes`
   }
 `;
 
-
 const MainContent = styled.div`
   display: grid;
   grid-template-columns: 190px 190px 190px 190px;
@@ -58,11 +56,17 @@ const MainContent = styled.div`
   justify-items: center;
   align-items: center;
   background-color: white;
-  height: 100%;
-  width: 100%;
-  visibility: ${props => props.view ? 'hidden' : 'visible'};
-  animation: ${props => props.view ? fadeOut : fadeIn} .5s linear;
-  transition: visibility .5s linear;
+  visibility: ${props => (props.view ? "hidden" : "visible")};
+  animation: ${props => (props.view ? fadeOut : fadeIn)} 0.5s linear;
+  transition: visibility 0.5s linear;
+
+  font-family: Helvetica, sans-serif;
+  font-size: 18px;
+
+  width: calc(100vw - 153px);
+  box-sizing: border-box;
+  max-height: calc(100vh - 22px);
+  overflow: auto;
 `;
 
 const LanguageSelection = styled.div`
