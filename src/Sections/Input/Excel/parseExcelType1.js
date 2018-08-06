@@ -56,7 +56,7 @@ function parseExcelType1(excelFile) {
       throw new Error("Can't find the 'statements' worksheet!");
     }
 
-    console.log(`allWorksheets: ${JSON.stringify(allWorksheets)}`);
+    // console.log(`allWorksheets: ${JSON.stringify(allWorksheets)}`);
 
     formatExcelType1ForDisplay(allWorksheets);
     store.setState({ dataOrigin: "excel" });

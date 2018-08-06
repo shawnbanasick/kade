@@ -1,15 +1,26 @@
 import React, { Component } from "react";
-import { view } from "react-easy-state";
+import { view, store } from "react-easy-state";
 import styled, { keyframes } from "styled-components";
 import Tabs from "react-simpletabs";
 import CsvPanel from "./CsvPanel";
 import ExcelPanel from "./ExcelPanel";
 
+const localStore = store({ tabActive: 1 });
+
+const handleAfter = selectedIndex => {
+  // console.log(`on mount, showing tab ${selectedIndex}`);
+
+  localStore.tabActive = selectedIndex;
+};
+
 class Input extends Component {
   render() {
     return (
       <MainContent>
-        <Tabs>
+        <Tabs
+          tabActive={localStore.tabActive}
+          onAfterChange={e => handleAfter(e)}
+        >
           <Tabs.Panel title="CSV">
             <CsvPanel />
           </Tabs.Panel>

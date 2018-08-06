@@ -4,11 +4,13 @@ import styled from "styled-components";
 import DisplayState from "./DisplayState";
 import StatementsInState from "./StatementsInState";
 import SortsInState from "./SortsInState";
+import state from "../../store";
 
 // import styled from "styled-components";
 
 class License extends Component {
   render() {
+    console.log(JSON.stringify(state));
     return (
       <MainContent>
         <p>License Section</p>

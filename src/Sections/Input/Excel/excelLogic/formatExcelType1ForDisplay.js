@@ -8,14 +8,14 @@ import checkUniqueParticipantNames from "../../logic/checkUniqueParticipantName"
 import { createMultiplierArrayAndTriangleShape } from "./createMultiplierArrayAndTriangleShape";
 
 export default function formatExcelType1ForDisplay(data) {
-  console.log(JSON.stringify("called"));
+  // console.log(JSON.stringify("called"));
   try {
-    console.log(`data: ${JSON.stringify(data)}`);
+    // console.log(`data: ${JSON.stringify(data)}`);
 
     // QAV #1  Project Name
     const projectName = data[0][0][1];
 
-    console.log(`pro name: ${JSON.stringify(projectName)}`);
+    // console.log(`pro name: ${JSON.stringify(projectName)}`);
 
     // // QAV #2  -  todo - fix loop function
     const inputData1 = data[0];
