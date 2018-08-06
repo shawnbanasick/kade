@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { view } from "react-easy-state";
 import styled from "styled-components";
 import ExcelT1Card from "./Excel/ExcelT1Card";
+import ExcelT2Card from "./Excel/ExcelT2Card";
 
 class ExcelPanel extends Component {
   render() {
@@ -12,6 +13,7 @@ class ExcelPanel extends Component {
         </Header>
         <CardHolder>
           <ExcelT1Card />
+          <ExcelT2Card />
         </CardHolder>
       </DataWindow>
     );
@@ -33,7 +35,7 @@ const CardHolder = styled.div`
 
 const Header = styled.div`
   font-family: Helvetica;
-  font-size: 21px;
+  font-size: 22px;
   font-weight: bold;
   height: 30px;
   margin-top: 10px;

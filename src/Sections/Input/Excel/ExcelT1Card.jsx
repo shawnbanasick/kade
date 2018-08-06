@@ -31,12 +31,10 @@ const Card = styled.div`
   align-items: center;
   background-color: white;
   border: 2px solid black;
-  height: 350px;
+  height: 300px;
   width: 280px;
   border: 2px solid darkgray;
   border-radius: 5px;
-  margin-left: 10px;
-  margin-top: 20px;
 `;
 
 // const CardContent = styled.div`

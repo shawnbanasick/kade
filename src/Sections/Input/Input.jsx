@@ -8,8 +8,6 @@ import ExcelPanel from "./ExcelPanel";
 const localStore = store({ tabActive: 1 });
 
 const handleAfter = selectedIndex => {
-  // console.log(`on mount, showing tab ${selectedIndex}`);
-
   localStore.tabActive = selectedIndex;
 };
 
@@ -107,6 +105,7 @@ const MainContent = styled.div`
     margin-right: 20px;
     background-color: #d6dbe0;
     height: 80%;
+    border-left: 5px solid #d6dbe0;
   }
 
   .tabs-menu-item a {
@@ -114,10 +113,16 @@ const MainContent = styled.div`
     color: black;
   }
 
-  .tabs-menu-item:not(.is-active):hover,
+  .tabs-menu-item:not(.is-active):hover {
+    color: #3498db;
+    background-color: white;
+  }
+
   .tabs-menu-item.is-active {
     color: #3498db;
     background-color: white;
+    border-left: 5px solid lightgreen;
+    transition: all 0.25s linear;
   }
 
   .tab-panel {
