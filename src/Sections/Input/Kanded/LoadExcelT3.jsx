@@ -1,12 +1,9 @@
 import { view, store } from "react-easy-state";
 import React, { Component } from "react";
-// import XLSX from "xlsx";
 import styled from "styled-components";
-// import state from "../../../store";
-import parseExcelType3 from "./KandedLogic/parseExcelType3";
+import parseExcelType3 from "./KandedLogic/parseExcelType3.js";
 
 const { dialog } = require("electron").remote;
-// const fs = require("fs");
 
 const localStore = store({ buttonColor: "#d6dbe0" });
 
@@ -20,11 +17,6 @@ const handleClick = () => {
       if (files !== undefined) {
         const excelFile = files[0];
         parseExcelType3(excelFile);
-
-        // state.setState({
-        //   // statements: lines2,
-        //   statementsLoaded: true
-        // });
         localStore.buttonColor = "rgba(144,	238,	144, .6)";
       }
     }

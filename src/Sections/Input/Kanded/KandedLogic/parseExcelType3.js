@@ -1,6 +1,6 @@
 import XLSX from "xlsx";
 import store from "../../../../store";
-import formatExcelType3ForDisplay from "./excelLogic/formatExcelType3ForDisplay";
+import formatExcelType3ForDisplay from "../KandedLogic/formatExcelType3ForDisplay";
 
 function parseExcelType3(excelFile) {
   const workbook = XLSX.readFile(excelFile, { type: "binary" });
