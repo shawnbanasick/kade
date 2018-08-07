@@ -8,6 +8,7 @@ import CsvStatementCard from "./CSV/CsvStatementCard";
 // import CsvSuccessfulLoadBar from "./CSV/CsvSuccessfulLoadBar";
 import JsonQsortsCard from "./JSON/JsonQsortsCard";
 // import IdDropdownSelect from "./JSON/IdDropdownSelect";
+import Dropdown from '../../Utils/Dropdown';
 
 class CsvPanel extends Component {
   render() {
@@ -22,6 +23,7 @@ class CsvPanel extends Component {
           <UnforcedQsortDesignInput />
           {/* <IdDropdownSelect /> */}
           {/* <CsvSuccessfulLoadBar /> */}
+          <Dropdown options={['Strawberry Cream', 'Chocolate Flakes', 'Marshmallow Sprinkles']} />
         </CardHolder>
       </DataWindow>
     );
