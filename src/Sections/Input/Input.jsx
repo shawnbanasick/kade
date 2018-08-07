@@ -5,6 +5,7 @@ import Tabs from "react-simpletabs";
 import CsvPanel from "./CsvPanel";
 import ExcelPanel from "./ExcelPanel";
 import KandedPanel from "./KandedPanel";
+import JsonPanel from "./JsonPanel";
 
 const localStore = store({ tabActive: 1 });
 
@@ -30,7 +31,7 @@ class Input extends Component {
             <KandedPanel />
           </Tabs.Panel>
           <Tabs.Panel title="JSON">
-            <h2>Content #3 here</h2>
+            <JsonPanel />
           </Tabs.Panel>
           <Tabs.Panel title="PQMethod">
             <h2>Content #4 here</h2>

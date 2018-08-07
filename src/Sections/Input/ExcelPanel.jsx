@@ -3,6 +3,7 @@ import { view } from "react-easy-state";
 import styled from "styled-components";
 import ExcelT1Card from "./Excel/ExcelT1Card";
 import ExcelT2Card from "./Excel/ExcelT2Card";
+import ForcedUnforcedRadio from "./CSV/ForcedUnforcedRadio";
 
 class ExcelPanel extends Component {
   render() {
@@ -12,6 +13,7 @@ class ExcelPanel extends Component {
         <CardHolder>
           <ExcelT1Card />
           <ExcelT2Card />
+          <ForcedUnforcedRadio />
         </CardHolder>
       </DataWindow>
     );

@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { view } from "react-easy-state";
 import styled from "styled-components";
 import KandedCard from "./Kanded/ExcelT3Card";
+import ForcedUnforcedRadio from "./CSV/ForcedUnforcedRadio";
 // import ExcelT1Card from "./Excel/ExcelT1Card";
 // import ExcelT2Card from "./Excel/ExcelT2Card";
 
@@ -14,6 +15,7 @@ class ExcelPanel extends Component {
         </Header>
         <CardHolder>
           <KandedCard />
+          <ForcedUnforcedRadio />
         </CardHolder>
       </DataWindow>
     );
@@ -31,6 +33,7 @@ const CardHolder = styled.div`
   display: grid;
   grid-template-columns: 350px 350px;
   grid-template-rows: 320px 115px 120px 130px;
+  align-items: center;
 `;
 
 const Header = styled.div`
