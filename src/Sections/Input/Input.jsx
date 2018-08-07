@@ -4,6 +4,7 @@ import styled, { keyframes } from "styled-components";
 import Tabs from "react-simpletabs";
 import CsvPanel from "./CsvPanel";
 import ExcelPanel from "./ExcelPanel";
+import KandedPanel from "./KandedPanel";
 
 const localStore = store({ tabActive: 1 });
 
@@ -24,6 +25,9 @@ class Input extends Component {
           </Tabs.Panel>
           <Tabs.Panel title="Excel">
             <ExcelPanel />
+          </Tabs.Panel>
+          <Tabs.Panel title="KANDED">
+            <KandedPanel />
           </Tabs.Panel>
           <Tabs.Panel title="JSON">
             <h2>Content #3 here</h2>
@@ -86,7 +90,7 @@ const MainContent = styled.div`
 
   .tabs-menu {
     display: grid;
-    grid-template-columns: 120px 120px 150px 150px 180px 170px;
+    grid-template-columns: 100px 100px 140px 110px 150px 170px;
     background-color: #d6dbe0;
     padding-left: 20px !important;
     height: 45px;
