@@ -8,13 +8,6 @@ const localStore = store({
 });
 
 class Dropdown extends React.Component {
-  // constructor(props) {
-  //   super(props);
-  //   this.state = {
-  //     expanded: false,
-  //     value: "Select Participant Id..."
-  //   };
-  // }
 
   expand() {
     localStore.expanded = true;
@@ -25,9 +18,10 @@ class Dropdown extends React.Component {
   }
 
   handleItemClick(e) {
+    const newSelection = e.target.innerText;
     localStore.expanded = false;
-    localStore.value = e.target.innerText;
-    console.log(e.target.innerText);
+    localStore.value = newSelection;
+    this.props.onChangeMessageUpTree(newSelection)
   }
 
   handleTriggerClick() {
@@ -39,10 +33,10 @@ class Dropdown extends React.Component {
     if (localStore.expanded) {
       dropdown = (
         <div className="content">
-          { this.props.options.map(item => (
-              <div role="listbox" key={ item.toString() } onClick={ e => {
-                                                                    this.handleItemClick(e);
-                                                                  } } className="item">
+          { this.props.options.map((item, index) => (
+              <div role="listbox" key={ item.toString() + index } onClick={ e => {
+                                                                            this.handleItemClick(e);
+                                                                          } } className="item">
                 { item }
               </div>
             )) }
@@ -78,6 +72,7 @@ const DropdownDiv = styled.div`
   transition: box-shadow 0.1s linear;
   width: 200px;
   font-family: Helvetica, sans-serif;
+  font-size: 18px;
 
   &.active {
     box-shadow: 0 10px 30px rgba(#7c4dff, 0.2);
@@ -97,14 +92,14 @@ const DropdownDiv = styled.div`
   }
 
   .trigger {
-    border: 2px solid #d6dbe0;
+    border: 1px solid black;
     border-radius: 5px;
     cursor: pointer;
     display: inline-block;
     padding: 10px;
     width: 100%;
-  background: #d6dbe0;
-
+    background: #d6dbe0;
+    height: 25px;
   }
 
   .content {
@@ -114,6 +109,9 @@ const DropdownDiv = styled.div`
     padding: 10px;
     position: absolute;
     width: 100%;
+    overflow: auto;
+    height: 200px;
+    background-color: white;
   }
 
   .item {

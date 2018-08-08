@@ -5,23 +5,32 @@ import ForcedUnforcedRadio from "./CSV/ForcedUnforcedRadio";
 import UnforcedQsortDesignInput from "./CSV/UnforcedQsortDesignInput";
 import ProjectNameInput from "./CSV/ProjectNameInput";
 import CsvStatementCard from "./CSV/CsvStatementCard";
-// import CsvSuccessfulLoadBar from "./CSV/CsvSuccessfulLoadBar";
 import JsonQsortsCard from "./JSON/JsonQsortsCard";
-// import IdDropdownSelect from "./JSON/IdDropdownSelect";
 import Dropdown from '../../Utils/Dropdown';
+import state from '../../store';
+import displayJsonData from './JSON/displayJsonData';
+import DownloadCsvModal from './JSON/DownloadCsvModal';
 
 class JsonPanel extends Component {
+
+  handleMessage(jsonIdSelection) {
+    displayJsonData(jsonIdSelection);
+  }
+
   render() {
+    const options = state.getState("jsonParticipantId") || [];
+
     return (
       <DataWindow>
         <Header>Load both a statements TXT file and Q sorts CSV file.</Header>
-        <CardHolder>
+        <CardHolder id="JsonCardHolder">
           <CsvStatementCard />
           <JsonQsortsCard />
           <ProjectNameInput />
-          <Dropdown options={ ['Strawberry Cream', 'Chocolate Flakes', 'Marshmallow Sprinkles'] } />
+          <Dropdown options={ options } onChangeMessageUpTree={ this.handleMessage } />
           <ForcedUnforcedRadio />
           <UnforcedQsortDesignInput />
+          <DownloadCsvModal />
           { /* <IdDropdownSelect /> */ }
           { /* <CsvSuccessfulLoadBar /> */ }
         </CardHolder>
