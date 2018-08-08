@@ -19,6 +19,7 @@ const createWindow = async () => {
     width: 960,
     height: 750,
     titleBarStyle: "hidden"
+    // icon: path.join(__dirname, "assets/icons/png/64x64.png")
   });
 
   // and load the index.html of the app.
@@ -136,9 +137,9 @@ const createWindow = async () => {
       submenu: [
         {
           label: "Learn More"
-        // click() {
-        //   require('electron').shell.openExternal('https://electronjs.org');
-        // },
+          // click() {
+          //   require('electron').shell.openExternal('https://electronjs.org');
+          // },
         }
       ]
     },
@@ -147,7 +148,8 @@ const createWindow = async () => {
       submenu: [
         {
           label: "Toggle Developer Tools",
-          accelerator: process.platform === "darwin" ? "Alt+Cmd+I" : "Ctrl+Shift+I",
+          accelerator:
+            process.platform === "darwin" ? "Alt+Cmd+I" : "Ctrl+Shift+I",
           click() {
             mainWindow.webContents.toggleDevTools();
           }

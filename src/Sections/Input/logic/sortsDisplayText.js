@@ -1,7 +1,7 @@
-export function sortsDisplayText(mainDataObject) {
-    let sortsDisplayText = mainDataObject.map(function(item) {
-        return item.name + ": " + item.displaySort;
-    });
+export default function sortsDisplayText(mainDataObject) {
+  const sortsDisplayText2 = mainDataObject.map(
+    item => `${item.name} : ${item.displaySort}`
+  );
 
-    return sortsDisplayText;
+  return sortsDisplayText2;
 }

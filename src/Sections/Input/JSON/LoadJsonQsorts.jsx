@@ -2,13 +2,13 @@ import { view, store } from "react-easy-state";
 import React, { Component } from "react";
 import styled from "styled-components";
 import state from "../../../store";
-import convertJSONToData from './convertJSONToData';
+import convertJSONToData from "./convertJSONToData";
 // import { sortsDisplayText } from "../logic/sortsDisplayText";
 // import shiftRawSortsPositive from "../logic/shiftRawSortsPositive";
 // import calcMultiplierArrayT2 from "../logic/excelLogic/calcMultiplierArrayT2";
 // import checkUniqueParticipantNames from "../logic/checkUniqueParticipantName";
 
-const {dialog} = require("electron").remote;
+const { dialog } = require("electron").remote;
 const fs = require("fs");
 
 const localStore = store({
@@ -20,16 +20,17 @@ const handleClick = () => {
     dialog.showOpenDialog(
       {
         properties: ["openFile"],
-        filters: [{
-          name: "JSON",
-          extensions: ["json", "JSON"]
-        }]
+        filters: [
+          {
+            name: "JSON",
+            extensions: ["json", "JSON"]
+          }
+        ]
       },
       files => {
         if (files !== undefined) {
           const fileName = files[0];
           fs.readFile(fileName, "utf8", (err, data) => {
-
             const results = JSON.parse(data);
 
             // console.log("results: " + (JSON.stringify(results)));
@@ -47,8 +48,6 @@ const handleClick = () => {
 
             // console.log(`csvData ${  JSON.stringify(csvData[0][0])}`);
 
-
-
             // get options for id selection dropdown
             // console.log(JSON.stringify(csvData[0][0]));
             // const jsonParticipantId = [];
@@ -64,16 +63,12 @@ const handleClick = () => {
             //  const jsonParticipantId = [];
             const columnHeaders = csvData[0][0];
 
-
-
-
             state.setState({
               jsonParticipantId: columnHeaders,
               showJsonParticipantIdDropdown: true,
               csvData,
               jsonObj: results,
-              dataOrigin: "json",
-              showJsonFileLoadedMessage: true
+              dataOrigin: "json"
             });
             localStore.buttonColor = "rgba(144,	238,	144, .6)";
           });
@@ -91,10 +86,13 @@ const handleClick = () => {
 class LoadTxtStatementFile extends Component {
   render() {
     return (
-      <LoadTxtButton buttonColor={ localStore.buttonColor } onClick={ () => handleClick() }>
+      <LoadTxtButton
+        buttonColor={localStore.buttonColor}
+        onClick={() => handleClick()}
+      >
         <p>Load JSON File</p>
       </LoadTxtButton>
-      );
+    );
   }
 }
 

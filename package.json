@@ -29,7 +29,8 @@
         ]
       },
       "electronPackagerConfig": {
-        "packageManager": "yarn"
+        "packageManager": "yarn",
+        "icon": "src/assets/icons/mac/KANDED.png.icns"
       },
       "electronWinstallerConfig": {
         "name": "desktop_analysis"
