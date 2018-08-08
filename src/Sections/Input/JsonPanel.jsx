@@ -10,7 +10,7 @@ import JsonQsortsCard from "./JSON/JsonQsortsCard";
 // import IdDropdownSelect from "./JSON/IdDropdownSelect";
 import Dropdown from '../../Utils/Dropdown';
 
-class CsvPanel extends Component {
+class JsonPanel extends Component {
   render() {
     return (
       <DataWindow>
@@ -19,18 +19,18 @@ class CsvPanel extends Component {
           <CsvStatementCard />
           <JsonQsortsCard />
           <ProjectNameInput />
+          <Dropdown options={ ['Strawberry Cream', 'Chocolate Flakes', 'Marshmallow Sprinkles'] } />
           <ForcedUnforcedRadio />
           <UnforcedQsortDesignInput />
-          {/* <IdDropdownSelect /> */}
-          {/* <CsvSuccessfulLoadBar /> */}
-          <Dropdown options={['Strawberry Cream', 'Chocolate Flakes', 'Marshmallow Sprinkles']} />
+          { /* <IdDropdownSelect /> */ }
+          { /* <CsvSuccessfulLoadBar /> */ }
         </CardHolder>
       </DataWindow>
-    );
+      );
   }
 }
 
-export default view(CsvPanel);
+export default view(JsonPanel);
 
 const DataWindow = styled.div`
   height: 100%;
