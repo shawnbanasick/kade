@@ -1,31 +1,48 @@
 import store from "../../../store";
-// import sanitizeUserInputText from "../../../Utils/sanitizeUserInputText";
+
 const fs = require('fs');
+const {dialog} = require("electron").remote;
 
-const downloadCSVdata = function() {
-  let csvBody2 = store.getState("csvData");
 
-  // todo - find out what is adding the extra set of brackets around the data
-  let csvBody = csvBody2[0];
-  // let shouldIncludeTimestamp = store.getState("shouldIncludeTimestamp");
-  let projectName = store.getState("projectName");
+function saveFile(fileName, csvFile) {
 
-  // export the file
-  exportToCsv(projectName + ".csv", csvBody);
-};
+  dialog.showSaveDialog({
+    filters: [
+      {
+        name: 'csv',
+        extensions: ['csv']
+      }
+    ]
+  }, (fileName) => {
 
-const exportToCsv = function(filename, rows) {
-  let processRow = function(row) {
+    if (fileName === undefined) return;
+
+    fs.writeFile(fileName, csvFile, (err) => {
+      if (err === undefined || err === null) {
+        dialog.showMessageBox({
+          message: "The file has been saved!",
+          buttons: ["OK"]
+        });
+
+      } else {
+        dialog.showErrorBox("File Save Error", err.message);
+      }
+    });
+  });
+}
+
+function exportToCsv(fileName, rows) {
+  const processRow = function(row) {
     let finalVal = "";
     for (let j = 0; j < row.length; j++) {
       let value = row[j];
       if (value === null || value === undefined) {
         value = "";
       }
-      let innerValue = value.toString();
+      const innerValue = value.toString();
       let result = innerValue.replace(/"/g, '""');
       if (result.search(/("|,|\n)/g) >= 0) {
-        result = '"' + result + '"';
+        result = `"${  result  }"`;
       }
       if (j > 0) {
         finalVal += ",";
@@ -34,7 +51,7 @@ const exportToCsv = function(filename, rows) {
     }
     console.log(finalVal);
 
-    return finalVal + "\n";
+    return `${finalVal  }\n`;
   };
 
   let csvFile = "";
@@ -42,38 +59,23 @@ const exportToCsv = function(filename, rows) {
     csvFile += processRow(rows[i]);
   }
 
-  console.log(JSON.stringify(csvFile));
+  saveFile(fileName, csvFile);
+}
+;
 
+function downloadCSVdata() {
+  const csvBody2 = store.getState("csvData");
 
-  fs.writeFile(__dirname + fileName, csvFile, 'utf8', function (err) {
-    if (err) {
-      console.log('Some error occured - file either not saved or corrupted file saved.');
-    } else{
-      console.log('Its saved!');
-    }
-  });
+  // todo - find out what is adding the extra set of brackets around the data
+  const csvBody = csvBody2[0];
+  // let shouldIncludeTimestamp = store.getState("shouldIncludeTimestamp");
+  const projectName = store.getState("projectName");
 
+  const nameWithExtension = `${projectName}.csv`;
 
-  // let blob = new Blob([csvFile], {
-  //   type: "text/CSV;charset=UTF-8;"
-  // });
-  // if (navigator.msSaveBlob) {
-  //   // IE 10+
-  //   navigator.msSaveBlob(blob, filename);
-  // } else {
-  //   let link = document.createElement("a");
-  //   if (link.download !== undefined) {
-  //     // feature detection
-  //     // Browsers that support HTML5 download attribute
-  //     let url = URL.createObjectURL(blob);
-  //     link.setAttribute("href", url);
-  //     link.setAttribute("download", filename);
-  //     link.style.visibility = "hidden";
-  //     document.body.appendChild(link);
-  //     link.click();
-  //     document.body.removeChild(link);
-  //   }
-  // }
-};
+  // export the file
+  exportToCsv(nameWithExtension, csvBody);
+}
+;
 
 export default downloadCSVdata;

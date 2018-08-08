@@ -12,7 +12,7 @@ import downloadCSVdata from './downloadCSVdata';
 
 const customStyles = {
     overlay: {
-       backgroundColor: "rgba(0, 0, 0, .6)" 
+        backgroundColor: "rgba(0, 0, 0, .6)"
     },
     content: {
         top: '50%',
@@ -45,13 +45,13 @@ class DownloadCsvModal extends Component {
 
     openModal() {
 
-        downloadCSVdata()  //  OR open modal
+        downloadCSVdata() //  OR open modal
 
         console.log("clicked")
 
-        // this.setState({
-        //     modalIsOpen: true
-        // });
+    // this.setState({
+    //     modalIsOpen: true
+    // });
     }
 
     afterOpenModal() {
@@ -93,4 +93,6 @@ const Button = styled.button`
     border-radius: 5px;
     font-size: 18px;
     font-family: Helvetica, sans-serif;
+    grid-column-start: 2;
+    grid-row-start: 4;
 `;

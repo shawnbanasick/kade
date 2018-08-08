@@ -31,8 +31,6 @@ class JsonPanel extends Component {
           <ForcedUnforcedRadio />
           <UnforcedQsortDesignInput />
           <DownloadCsvModal />
-          { /* <IdDropdownSelect /> */ }
-          { /* <CsvSuccessfulLoadBar /> */ }
         </CardHolder>
       </DataWindow>
       );
