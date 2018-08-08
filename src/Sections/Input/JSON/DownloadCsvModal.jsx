@@ -3,7 +3,7 @@ https://github.com/reactjs/react-modal
 copyright - 2017 Ryan Florence  (not MIT, copyright only listed in license)
 */
 
-// import store from "../../../store";
+import state from "../../../store";
 import React, { Component } from "react";
 // import downloadCSVdata from "./downloadCSVdata";
 import Modal from 'react-modal';
@@ -12,24 +12,27 @@ import downloadCSVdata from './downloadCSVdata';
 
 const customStyles = {
     overlay: {
-        backgroundColor: "rgba(0, 0, 0, .6)"
+        backgroundColor: "rgba(0, 0, 0, 0.0)"
     },
     content: {
-        top: '50%',
-        left: '50%',
+        top: '90%',
+        left: '0%',
         right: 'auto',
         bottom: 'auto',
-        marginRight: '-50%',
-        transform: 'translate(-50%, -50%)',
-        width: "400px"
+        width: "100%",
+        backgroundColor: "red",
+        height: "200px",
+    // marginRight: '-50%',
+    // transform: 'translate(-50%, -50%)',
+    // width: "400px",
     }
 };
+
 
 class DownloadCsvModal extends Component {
 
     // Make sure to bind modal to your appElement (http://reactcommunity.org/react-modal/accessibility/)
     // Modal.setAppElement('#JsonCardHolder');
-
 
     constructor() {
         super();
@@ -45,18 +48,22 @@ class DownloadCsvModal extends Component {
 
     openModal() {
 
-        downloadCSVdata() //  OR open modal
+        const isJsonLoaded = state.getState("showJsonFileLoadedMessage");
 
-        console.log("clicked")
+        if (isJsonLoaded) {
+            downloadCSVdata() //  OR open modal
+        } else {
+            console.log("error - no Json loaded");
 
-    // this.setState({
-    //     modalIsOpen: true
-    // });
+            this.setState({
+                modalIsOpen: true
+            });
+        }
     }
 
     afterOpenModal() {
         // references are now sync'd and can be accessed.
-        this.subtitle.style.color = '#83cafe';
+        this.subtitle.style.color = 'black';
     }
 
     closeModal() {
@@ -67,7 +74,7 @@ class DownloadCsvModal extends Component {
 
     render() {
         return (
-            <div>
+            <GridContainerDiv>
               <Button onClick={ this.openModal }>Download JSON data as CSV</Button>
               <Modal ariaHideApp={ false } isOpen={ this.state.modalIsOpen } onAfterOpen={ this.afterOpenModal } onRequestClose={ this.closeModal } style={ customStyles }
                 contentLabel="Example Modal">
@@ -78,7 +85,7 @@ class DownloadCsvModal extends Component {
                   <input />
                 </form>
               </Modal>
-            </div>
+            </GridContainerDiv>
             );
     }
 
@@ -93,6 +100,12 @@ const Button = styled.button`
     border-radius: 5px;
     font-size: 18px;
     font-family: Helvetica, sans-serif;
-    grid-column-start: 2;
-    grid-row-start: 4;
+`;
+
+const GridContainerDiv = styled.div`
+grid-column-start: 2;
+grid-row-start: 4;
+
+
+
 `;
