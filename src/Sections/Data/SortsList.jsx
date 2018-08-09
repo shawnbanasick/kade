@@ -3,7 +3,6 @@ import { view } from "react-easy-state";
 
 class SortsList extends Component {
   render() {
-    console.log(this.props);
     return (
       <ol>
         {this.props.displayText.map(listValue => (

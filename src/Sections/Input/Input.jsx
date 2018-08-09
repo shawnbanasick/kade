@@ -7,6 +7,7 @@ import ExcelPanel from "./ExcelPanel";
 import KandedPanel from "./KandedPanel";
 import JsonPanel from "./JsonPanel";
 import PQMethodPanel from "./PQMethodPanel";
+import DemoDataPanel from "./DemoDataPanel";
 
 const localStore = store({ tabActive: 1 });
 
@@ -38,7 +39,7 @@ class Input extends Component {
             <PQMethodPanel />
           </Tabs.Panel>
           <Tabs.Panel title="Demo Data">
-            <h2>Content #5 here</h2>
+            <DemoDataPanel />
           </Tabs.Panel>
         </Tabs>
       </MainContent>
