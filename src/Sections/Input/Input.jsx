@@ -8,6 +8,8 @@ import KandedPanel from "./KandedPanel";
 import JsonPanel from "./JsonPanel";
 import PQMethodPanel from "./PQMethodPanel";
 import DemoDataPanel from "./DemoDataPanel";
+import SuccessNotification from "./SuccessNotification";
+import ErrorNotification from "./ErrorNotification";
 
 const localStore = store({ tabActive: 1 });
 
@@ -42,6 +44,8 @@ class Input extends Component {
             <DemoDataPanel />
           </Tabs.Panel>
         </Tabs>
+        <ErrorNotification />
+        {/* <SuccessNotification /> */}
       </MainContent>
     );
   }

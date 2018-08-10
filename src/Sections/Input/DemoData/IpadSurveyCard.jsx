@@ -21,7 +21,7 @@ const Card = styled.div`
   align-items: center;
   background-color: white;
   border: 2px solid black;
-  height: 300px;
+  height: 250px;
   width: 280px;
   border: 2px solid darkgray;
   border-radius: 5px;

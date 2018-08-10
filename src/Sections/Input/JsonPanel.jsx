@@ -6,13 +6,12 @@ import UnforcedQsortDesignInput from "./CSV/UnforcedQsortDesignInput";
 import ProjectNameInput from "./CSV/ProjectNameInput";
 import CsvStatementCard from "./CSV/CsvStatementCard";
 import JsonQsortsCard from "./JSON/JsonQsortsCard";
-import Dropdown from '../../Utils/Dropdown';
-import state from '../../store';
-import displayJsonData from './JSON/displayJsonData';
-import DownloadCsvModal from './JSON/DownloadCsvModal';
+import Dropdown from "../../Utils/Dropdown";
+import state from "../../store";
+import displayJsonData from "./JSON/displayJsonData";
+import DownloadCsvModal from "./JSON/DownloadCsvModal";
 
 class JsonPanel extends Component {
-
   handleMessage(jsonIdSelection) {
     displayJsonData(jsonIdSelection);
   }
@@ -27,13 +26,16 @@ class JsonPanel extends Component {
           <CsvStatementCard />
           <JsonQsortsCard />
           <ProjectNameInput />
-          <Dropdown options={ options } onChangeMessageUpTree={ this.handleMessage } />
+          <Dropdown
+            options={options}
+            onChangeMessageUpTree={this.handleMessage}
+          />
           <ForcedUnforcedRadio />
           <UnforcedQsortDesignInput />
           <DownloadCsvModal />
         </CardHolder>
       </DataWindow>
-      );
+    );
   }
 }
 
@@ -47,7 +49,7 @@ const DataWindow = styled.div`
 const CardHolder = styled.div`
   display: grid;
   grid-template-columns: 350px 350px;
-  grid-template-rows: 320px 115px 120px 130px;
+  grid-template-rows: 320px 95px 80px 130px;
 `;
 
 const Header = styled.div`

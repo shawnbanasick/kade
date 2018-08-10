@@ -25,14 +25,14 @@ class CsvPanel extends Component {
 export default view(CsvPanel);
 
 const DataWindow = styled.div`
-  height: 100%;
+  height: calc(100vh-150px);
   background-color: white;
 `;
 
 const CardHolder = styled.div`
   display: grid;
   grid-template-columns: 350px 350px;
-  grid-template-rows: 320px 115px 120px 130px;
+  grid-template-rows: 270px 270px 10px;
 `;
 
 const Header = styled.div`
