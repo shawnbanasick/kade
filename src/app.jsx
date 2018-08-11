@@ -9,6 +9,7 @@ import Factors from "./Sections/Factors/Factors";
 import Rotation from "./Sections/Rotation/Rotation";
 import Loadings from "./Sections/Loadings/Loadings";
 import Output from "./Sections/Output/Output";
+import ProjectHistory from './Sections/ProjectHistory/ProjectHistory';
 import License from "./Sections/License/License";
 
 class App extends React.Component {
@@ -24,6 +25,7 @@ class App extends React.Component {
       viewRotation: false,
       viewLoadings: false,
       viewOutput: false,
+      viewProjectHistory: false,
       viewLicense: false,
       activeWindow: "viewStart"
     });
@@ -48,6 +50,7 @@ class App extends React.Component {
       viewRotation,
       viewLoadings,
       viewOutput,
+      viewProjectHistory,
       viewLicense
     } = this.localState;
     return (
@@ -104,10 +107,16 @@ class App extends React.Component {
               <p className="title">7. Output</p>
             </FileButton>
             <FileButton
+              active={viewProjectHistory}
+              onClick={() => this.handleClick("viewProjectHistory")}
+            >
+              <p className="title">Project History</p>
+            </FileButton>
+            <FileButton
               active={viewLicense}
               onClick={() => this.handleClick("viewLicense")}
             >
-              <p className="title">8. License</p>
+              <p className="title">License</p>
             </FileButton>
           </FilesWindow>
           <ActionWindow>
@@ -119,6 +128,7 @@ class App extends React.Component {
             {viewRotation && <Rotation view={viewRotation} />}
             {viewLoadings && <Loadings view={viewLoadings} />}
             {viewOutput && <Output view={viewOutput} />}
+            {viewProjectHistory && <ProjectHistory view={viewProjectHistory} />}
             {viewLicense && <License view={viewLicense} />}
           </ActionWindow>
         </Split>

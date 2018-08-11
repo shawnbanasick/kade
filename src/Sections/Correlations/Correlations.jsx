@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { view } from "react-easy-state";
 import styled, { keyframes } from "styled-components";
+import CalculateCorrelationsButton from "./CalculateCorrelationsButton";
 
 // import styled from "styled-components";
 
@@ -9,6 +10,7 @@ class Correlations extends Component {
     return (
       <MainContent>
         <p>Correlations Section</p>
+        <CalculateCorrelationsButton />
       </MainContent>
     );
   }
@@ -38,14 +40,14 @@ const fadeOut = keyframes`
 
 const MainContent = styled.div`
   display: grid;
-  grid-template-columns: 190px 190px 190px 190px;
-  grid-template-rows: 50px 125px 125px 200px 200px 50px;
-  grid-template-areas:
+  grid-template-columns: 250px 190px 190px 190px;
+  grid-template-rows: 120px 125px 125px 200px 200px 50px;
+  /* grid-template-areas:
     "row1 row1 row1 row1"
     "titleRow titleRow titleRow titleRow"
     "weblinkRow weblinkRow weblinkRow weblinkRow"
     "linkboxRow1 linkboxRow1 linkboxRow1 linkboxRow1"
-    "linkboxRow2 linkboxRow2 linkboxRow2 linkboxRow2";
+    "linkboxRow2 linkboxRow2 linkboxRow2 linkboxRow2"; */
   justify-items: center;
   align-items: center;
   background-color: white;

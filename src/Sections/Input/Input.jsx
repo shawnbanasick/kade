@@ -8,7 +8,7 @@ import KandedPanel from "./KandedPanel";
 import JsonPanel from "./JsonPanel";
 import PQMethodPanel from "./PQMethodPanel";
 import DemoDataPanel from "./DemoDataPanel";
-import SuccessNotification from "./SuccessNotification";
+// import SuccessNotification from "./SuccessNotification";
 import ErrorNotification from "./ErrorNotification";
 
 const localStore = store({ tabActive: 1 });
@@ -74,17 +74,6 @@ const fadeOut = keyframes`
 `;
 
 const MainContent = styled.div`
-  /* display: grid;
-  grid-template-columns: 190px 190px 190px 190px;
-  grid-template-rows: 50px 125px 125px 200px 200px 50px;
-  grid-template-areas:
-    "row1 row1 row1 row1"
-    "titleRow titleRow titleRow titleRow"
-    "weblinkRow weblinkRow weblinkRow weblinkRow"
-    "linkboxRow1 linkboxRow1 linkboxRow1 linkboxRow1"
-    "linkboxRow2 linkboxRow2 linkboxRow2 linkboxRow2";
-  justify-items: center;
-  align-items: center; */
   background-color: #d6dbe0;
   visibility: ${props => (props.view ? "hidden" : "visible")};
   animation: ${props => (props.view ? fadeOut : fadeIn)} 0.5s linear;
@@ -116,7 +105,9 @@ const MainContent = styled.div`
     margin-right: 20px;
     background-color: #d6dbe0;
     height: 80%;
-    border-left: 5px solid #d6dbe0;
+    border-top: 5px solid #d6dbe0;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
   }
 
   .tabs-menu-item a {
@@ -132,7 +123,7 @@ const MainContent = styled.div`
   .tabs-menu-item.is-active {
     color: #3498db;
     background-color: white;
-    border-left: 5px solid lightgreen;
+    border-top: 5px solid #0080ff;
     transition: all 0.25s linear;
   }
 
