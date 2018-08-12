@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { view } from "react-easy-state";
 import styled, { keyframes } from "styled-components";
 import CalculateCorrelationsButton from "./CalculateCorrelationsButton";
+import CorrelationTable from './CorrelationTable/CorrelationTable';
 
 // import styled from "styled-components";
 
@@ -11,8 +12,9 @@ class Correlations extends Component {
       <MainContent>
         <p>Correlations Section</p>
         <CalculateCorrelationsButton />
+        <CorrelationTable />
       </MainContent>
-    );
+      );
   }
 }
 
@@ -40,14 +42,12 @@ const fadeOut = keyframes`
 
 const MainContent = styled.div`
   display: grid;
-  grid-template-columns: 250px 190px 190px 190px;
-  grid-template-rows: 120px 125px 125px 200px 200px 50px;
-  /* grid-template-areas:
-    "row1 row1 row1 row1"
-    "titleRow titleRow titleRow titleRow"
-    "weblinkRow weblinkRow weblinkRow weblinkRow"
-    "linkboxRow1 linkboxRow1 linkboxRow1 linkboxRow1"
-    "linkboxRow2 linkboxRow2 linkboxRow2 linkboxRow2"; */
+  grid-template-columns: 150px 190px 1fr;
+  grid-template-rows: 120px 120px 1fr;
+  grid-template-areas:
+    "header header header"
+    "row2 row2 row2"
+    "main main main";
   justify-items: center;
   align-items: center;
   background-color: white;

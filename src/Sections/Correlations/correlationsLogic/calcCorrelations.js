@@ -1,29 +1,29 @@
-import store from "../../store";
 import cloneDeep from "lodash/cloneDeep";
-import { getPqmethodCorrelation } from "./getPqmethodCorrelation";
+import store from "../../../store";
+import getPqmethodCorrelation from "./getPqmethodCorrelation";
 
-export function calculateCorrelations(rawSorts, respondentNames) {
+export default function calculateCorrelations(rawSorts, respondentNames) {
     // controls matrix formation - corrs calculated in "getPqmethodCorrelations"
 
     //
     // todo - remove unnecessary correlationtablearray code - only using formatted array
-    var totalSorts = respondentNames.length;
-    var rawSortsCloned = cloneDeep(rawSorts);
-    var correlationTableArray = [];
-    var correlationTableArrayFormatted = [];
+    let totalSorts = respondentNames.length;
+    let rawSortsCloned = cloneDeep(rawSorts);
+    let correlationTableArray = [];
+    let correlationTableArrayFormatted = [];
 
-    for (var m = 0; m < totalSorts; m++) {
+    for (let m = 0; m < totalSorts; m++) {
         correlationTableArray[m] = [];
     }
 
-    for (var n = 0; n < totalSorts; n++) {
+    for (let n = 0; n < totalSorts; n++) {
         correlationTableArrayFormatted[n] = [];
     }
 
-    for (var i = 0; i < totalSorts; i++) {
-        var pullX = rawSortsCloned[i];
+    for (let i = 0; i < totalSorts; i++) {
+        let pullX = rawSortsCloned[i];
 
-        var correlationValue = getPqmethodCorrelation(
+        let correlationValue = getPqmethodCorrelation(
             rawSortsCloned[i],
             rawSortsCloned[i]
         );
@@ -31,8 +31,8 @@ export function calculateCorrelations(rawSorts, respondentNames) {
         correlationTableArray[0][0] = correlationValue[0];
         correlationTableArrayFormatted[0][0] = correlationValue[1];
 
-        for (var k = i; k < totalSorts; k++) {
-            var correlationValue2 = getPqmethodCorrelation(pullX, rawSortsCloned[k]);
+        for (let k = i; k < totalSorts; k++) {
+            let correlationValue2 = getPqmethodCorrelation(pullX, rawSortsCloned[k]);
 
             correlationTableArray[i][k] = correlationValue2[0];
             correlationTableArrayFormatted[i][k] = correlationValue2[1];
@@ -47,31 +47,31 @@ export function calculateCorrelations(rawSorts, respondentNames) {
     } //  end of i loop
 
     // generate row data for ag-grid corr table
-    let gridRowData = [];
-    correlationTableArrayFormatted.forEach(function(element, j) {
-        let tempObj = {};
+    const gridRowData = [];
+    correlationTableArrayFormatted.forEach((element, j) => {
+        const tempObj = {};
         tempObj.respondent = respondentNames[j];
-        element.forEach(function(data, k) {
-            let key = respondentNames[k];
+        element.forEach((data, k) => {
+            const key = respondentNames[k];
             tempObj[key] = data;
         });
         gridRowData.push(tempObj);
     });
 
     // generate column definitions
-    let gridColDefs = [];
+    const gridColDefs = [];
     let tempObj2 = {};
     tempObj2.headerName = "Respondent";
     tempObj2.field = "respondent";
     tempObj2.pinned = true;
     tempObj2.width = 150;
-    //tempObj2.sortable = true;
+    // tempObj2.sortable = true;
     tempObj2.cellStyle = {
         textAlign: "center"
     // backgroundColor: "#eee"
     };
     gridColDefs.push(tempObj2);
-    respondentNames.forEach(function(element, m) {
+    respondentNames.forEach((element, m) => {
         tempObj2 = {};
         tempObj2.headerName = element;
         tempObj2.field = element;
@@ -85,21 +85,20 @@ export function calculateCorrelations(rawSorts, respondentNames) {
                     textAlign: "right",
                     color: "red"
                 };
-            } else {
+            } 
                 return {
                     textAlign: "right"
                 };
-            }
+            
         };
         gridColDefs.push(tempObj2);
     });
 
     // push data objects to STATE
     store.setState({
-        gridColDefs: gridColDefs,
-        gridRowData: gridRowData,
+        gridColDefs,
+        gridRowData,
         correlationTableArray: correlationTableArrayFormatted,
         correlation5Calcs: correlationTableArray,
     });
-    return;
 }

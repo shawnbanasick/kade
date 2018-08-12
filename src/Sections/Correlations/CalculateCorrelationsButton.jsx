@@ -1,33 +1,39 @@
 import { view, store } from "react-easy-state";
 import React, { Component } from "react";
 import styled from "styled-components";
-// import state from "../../../store";
-// import mainCorrCalcs from "./correlationsLogic/mainCorrCalcs";
+import state from "../../store";
+import mainCorrCalcs from "./correlationsLogic/mainCorrCalcs";
 
-const localStore = store({ buttonColor: "#d6dbe0" });
+const localStore = store({
+  buttonColor: "#d6dbe0"
+});
 
 const handleClick = () => {
-  console.log("start calcs");
-  // mainCorrCalcs();
+  const respondentNames = state.getState("respondentNames");
+  console.log(`names ${  JSON.stringify(respondentNames)}`);
+
+  const mainDataObject = state.getState("mainDataObject");
+  const rawSortsArray = mainDataObject.map((item) => item.rawSort);
+
+  console.log(`raw ${  JSON.stringify(rawSortsArray)}`);
+  // console.log("start calcs");
+  mainCorrCalcs(respondentNames, rawSortsArray);
 };
 
 class CalculateCorrelationsButton extends Component {
   render() {
     return (
-      <BeginAnalysisButton
-        buttonColor={localStore.buttonColor}
-        onClick={() => handleClick()}
-      >
+      <BeginAnalysisButton buttonColor={ localStore.buttonColor } onClick={ () => handleClick() }>
         <p>Calculate Correlations</p>
-        {/* <Spinner className="item-loader-container">
-          <div className="la-ball-pulse la-2x">
-            <div />
-            <div />
-            <div />
-          </div>
-        </Spinner> */}
+        { /* <Spinner className="item-loader-container">
+                                                                                                          <div className="la-ball-pulse la-2x">
+                                                                                                            <div />
+                                                                                                            <div />
+                                                                                                            <div />
+                                                                                                          </div>
+                                                                                                        </Spinner> */ }
       </BeginAnalysisButton>
-    );
+      );
   }
 }
 
