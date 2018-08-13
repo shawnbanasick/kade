@@ -3,13 +3,15 @@ import { view } from "react-easy-state";
 import styled from "styled-components";
 import { AgGridReact } from "ag-grid-react";
 import store from "../../../store";
+// import calculateCorrelations from "../correlationsLogic/calcCorrelations";
 
 
 class CorrelationTable extends Component {
   onGridReady(params) {
     this.gridApi = params.api;
     this.columnApi = params.columnApi;
-  // this.gridApi.sizeColumnsToFit();
+    // this.gridApi.sizeColumnsToFit();
+  // params.api.sizeColumnsToFit();
   };
 
   render() {
@@ -31,10 +33,10 @@ class CorrelationTable extends Component {
           <p style={ { fontWeight: "normal", marginTop: 15, textAlign: "left" } }>
             Click the table headers to re-sort by column (low-to-high, high-to-low, original sort).
           </p>
-          <AgGridStyleWrapper style={ { height: '80vh', width: '80vw' } }>
+          <AgGridStyleWrapper style={ { height: '70vh', width: '80vw' } }>
             <div className="ag-theme-fresh">
               <AgGridWrapper>
-                <AgGridReact columnDefs={ gridColDefs } rowData={ gridRowData } onGridReady={ onGridReady } domLayout={ "autoHeight" } enableSorting />
+                <AgGridReact columnDefs={ gridColDefs } rowData={ gridRowData } onGridReady={ onGridReady } gridAutoHeight={ true } enableSorting />
               </AgGridWrapper>
             </div>
           </AgGridStyleWrapper>
@@ -47,6 +49,20 @@ class CorrelationTable extends Component {
 }
 
 export default view(CorrelationTable);
+
+/*
+const Shared = styled.div`
+  color: green;
+`
+
+// ... then later
+
+const ComponentOne = styled(Shared)`
+  /* some non-shared styles */
+// `
+// const ComponentTwo = styled(Shared)`
+/* some non-shared styles */
+
 
 // className="ag-fresh"
 

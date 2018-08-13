@@ -77,7 +77,7 @@ export default function calculateCorrelations(rawSorts, respondentNames) {
         tempObj2.field = element;
         tempObj2.pinned = false;
         tempObj2.editable = false;
-        tempObj2.width = 75;
+        tempObj2.width = 80;
         // tempObj2.sortable = true;
         tempObj2.cellStyle = function(params) {
             if (params.value < 0) {

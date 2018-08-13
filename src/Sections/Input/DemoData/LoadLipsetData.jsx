@@ -3,7 +3,9 @@ import { view, store } from "react-easy-state";
 import styled from "styled-components";
 import uploadLipsetData from "./uploadLipsetData";
 
-const localStore = store({ buttonColor: "#d6dbe0" });
+const localStore = store({
+  buttonColor: "#d6dbe0"
+});
 
 const handleClick = () => {
   uploadLipsetData();
@@ -12,12 +14,7 @@ const handleClick = () => {
 
 const LipsetButton1 = () => (
   <div>
-    <LoadTxtButton
-      id="lipsetButton"
-      floated="right"
-      onClick={() => handleClick()}
-      buttonColor={localStore.buttonColor}
-    >
+    <LoadTxtButton id="lipsetButton" floated="right" onClick={ () => handleClick() } buttonColor={ localStore.buttonColor }>
       Load Lipset
     </LoadTxtButton>
   </div>
@@ -43,12 +40,13 @@ const LoadTxtButton = styled.button`
   box-shadow: 0 3px 3px 0 black;
 
   &:hover {
-    background-color: white;
+    font-size: 22px;
   }
 
   &:active {
     box-shadow: 0 0 1px 0 black inset;
     margin-left: 3px;
     margin-top: 3px;
+    background-color: rgba(144,	238, 144, .6);
   }
 `;
