@@ -10,13 +10,10 @@ const localStore = store({
 
 const handleClick = () => {
   const respondentNames = state.getState("respondentNames");
-  console.log(`names ${  JSON.stringify(respondentNames)}`);
 
   const mainDataObject = state.getState("mainDataObject");
   const rawSortsArray = mainDataObject.map((item) => item.rawSort);
 
-  console.log(`raw ${  JSON.stringify(rawSortsArray)}`);
-  // console.log("start calcs");
   mainCorrCalcs(respondentNames, rawSortsArray);
 };
 
