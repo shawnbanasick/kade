@@ -27,8 +27,10 @@ class JsonPanel extends Component {
           <JsonQsortsCard />
           <ProjectNameInput />
           <Dropdown
+            textValue = {"Select Participant Id..."}
             options={options}
             onChangeMessageUpTree={this.handleMessage}
+            width='200px'
           />
           <ForcedUnforcedRadio />
           <UnforcedQsortDesignInput />

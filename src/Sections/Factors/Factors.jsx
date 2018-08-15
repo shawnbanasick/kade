@@ -1,23 +1,24 @@
 import React, { Component } from "react";
 import { view } from "react-easy-state";
 import styled, { keyframes } from "styled-components";
-
+import TypeOfAnalysisTransitionContainer from "./TypeOfAnalysisTransitionContainer";
+// import UnrotatedFactorsTransitionContainer from "./UnrotatedFactorsTransitionContainer";
 
 // import styled from "styled-components";
 
 class Factors extends Component {
-    render() {
-        return (
-            <MainContent>
-              <p>Factors Section</p>
-            </MainContent>
-            );
-    }
+  render() {
+    return (
+      <MainContent>
+        <p>Factors Section</p>
+        <TypeOfAnalysisTransitionContainer />
+        {/* <UnrotatedFactorsTransitionContainer /> */}
+      </MainContent>
+    );
+  }
 }
 
 export default view(Factors);
-
-
 
 const fadeIn = keyframes`
   from {
@@ -39,7 +40,6 @@ const fadeOut = keyframes`
   }
 `;
 
-
 const MainContent = styled.div`
   display: grid;
   grid-template-columns: 190px 190px 190px 190px;
@@ -55,7 +55,7 @@ const MainContent = styled.div`
   background-color: white;
   height: 100%;
   width: 100%;
-  visibility: ${props => props.view ? 'hidden' : 'visible'};
-  animation: ${props => props.view ? fadeOut : fadeIn} .5s linear;
-  transition: visibility .5s linear;
+  visibility: ${props => (props.view ? "hidden" : "visible")};
+  animation: ${props => (props.view ? fadeOut : fadeIn)} 0.5s linear;
+  transition: visibility 0.5s linear;
 `;

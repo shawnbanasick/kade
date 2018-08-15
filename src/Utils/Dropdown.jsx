@@ -2,12 +2,17 @@ import React from "react";
 import { view, store } from "react-easy-state";
 import styled from "styled-components";
 
+
 const localStore = store({
   expanded: false,
-  value: "Select Participant Id..."
+  value:  ""  // "Select Participant Id..."
 });
 
 class Dropdown extends React.Component {
+
+  componentDidMount() {
+    localStore.value = this.props.textValue;
+  }
 
   expand() {
     localStore.expanded = true;
@@ -45,12 +50,12 @@ class Dropdown extends React.Component {
     }
 
     return (
-      <DropdownDiv className={ ` ${localStore.expanded ? "active" : ""}` } tabIndex="0" onBlur={ () => {
-                                                                                             this.collapse();
-                                                                                           } }>
-        <div className="trigger" onClick={ () => {
-                                             this.handleTriggerClick();
-                                           } }>
+      <DropdownDiv className={ ` ${localStore.expanded ? "active" : ""}` } 
+                    tabIndex="0" 
+                    width={this.props.width} 
+                    onBlur={ () => {  this.collapse();  } }>
+        <div className="trigger" 
+              onClick={ () => {  this.handleTriggerClick(); } }>
           { localStore.value }
         </div>
         { dropdown }
@@ -65,12 +70,12 @@ export default view(Dropdown);
 // blue color => #d6dbe0
 
 const DropdownDiv = styled.div`
+  width: ${(props) => props.width};
   box-shadow: 0 4px 10px rgba(#7c4dff, 0.2);
   margin-top: 7px;
   outline: none;
   position: relative;
   transition: box-shadow 0.1s linear;
-  width: 200px;
   font-family: Helvetica, sans-serif;
   font-size: 18px;
 

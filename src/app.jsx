@@ -9,7 +9,7 @@ import Factors from "./Sections/Factors/Factors";
 import Rotation from "./Sections/Rotation/Rotation";
 import Loadings from "./Sections/Loadings/Loadings";
 import Output from "./Sections/Output/Output";
-import ProjectHistory from './Sections/ProjectHistory/ProjectHistory';
+import ProjectHistory from "./Sections/ProjectHistory/ProjectHistory";
 import License from "./Sections/License/License";
 
 class App extends React.Component {
@@ -230,8 +230,7 @@ const ActionWindow = styled.div`
 const StartButton = styled.button`
   padding: 10px;
   width: 100%;
-  background: lightgreen;
-  opacity: 0.6;
+  background-color: rgba(144, 238, 144, 0.6);
   color: black;
   border: none;
   text-align: center;
