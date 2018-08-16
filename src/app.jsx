@@ -1,5 +1,6 @@
 import { view, store } from "react-easy-state";
 import React from "react";
+import "semantic-ui-css/semantic.min.css";
 import styled from "styled-components";
 import Start from "./Sections/Start/Start";
 import Input from "./Sections/Input/Input";

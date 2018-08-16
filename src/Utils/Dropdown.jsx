@@ -94,6 +94,7 @@ const DropdownDiv = styled.div`
   font-family: Helvetica, sans-serif;
   font-size: 18px;
   z-index: 99;
+  overflow: visible;
 
   &.active {
     box-shadow: 0 10px 30px rgba(#7c4dff, 0.2);
@@ -110,6 +111,7 @@ const DropdownDiv = styled.div`
     border-bottom-right-radius: 0;
     border-bottom-left-radius: 0;
     color: black;
+    overflow: visible;
   }
 
   .trigger {
@@ -123,6 +125,7 @@ const DropdownDiv = styled.div`
     height: 25px;
     box-shadow: 0 2px 2px 0 black;
     z-index: 99;
+    overflow: visible;
   }
 
   .content {
@@ -136,12 +139,14 @@ const DropdownDiv = styled.div`
     height: 200px;
     background-color: white;
     z-index: 999;
+    overflow: visible;
   }
 
   .item {
     padding: 10px;
     transition: background 0.1s linear;
     font-family: Helvetica, sans-serif;
+    z-index: 999;
 
     &:hover {
       background: #d6dbe0;

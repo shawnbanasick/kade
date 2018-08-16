@@ -51,7 +51,7 @@ const BeginPCAButton = styled.button`
   justify-items: center;
   background-color: ${props => props.buttonColor};
   height: 48px;
-  width: 160px;
+  width: 200px;
   border: 1px solid black;
   text-align: center;
   font-size: 16px;
@@ -60,7 +60,7 @@ const BeginPCAButton = styled.button`
   border-radius: 4px;
   margin-right: 3px;
   outline: none;
-  margin-left: 30px;
+  margin-left: 230px;
   margin-top: 3px;
   box-shadow: 0 2px 2px 0 black;
 
