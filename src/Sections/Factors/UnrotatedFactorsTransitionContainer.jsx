@@ -7,11 +7,10 @@ import Chart from "./FactorScreePlot/Chart";
 import EigenTable from "./FactorTableEigen/EigenTable";
 import CentroidTable from "./FactorTable/CentroidTable";
 
-function resetSpinner() {
-  state.setState({ showCentroidSpinner: false });
-}
-
 class UnrotatedFactorsTransitionContainer extends React.Component {
+  componentDidUpdate() {
+    state.setState({ showCentroidSpinner: false });
+  }
   render() {
     const showUnrotatedFactorTable = state.getState("showUnrotatedFactorTable");
     // let showEigenvaluesTable = store.getState("showEigenvaluesTable");
@@ -22,7 +21,6 @@ class UnrotatedFactorsTransitionContainer extends React.Component {
     // {/*  </Transition> */}
 
     if (showUnrotatedFactorTable) {
-      resetSpinner();
       return (
         <Container>
           <CentroidTable />

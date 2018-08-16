@@ -19,5 +19,6 @@ export default store({
   sortsDisplayText: [],
   isForcedQsortPattern: true,
   qSortPattern: [],
-  dataOrigin: ""
+  dataOrigin: "",
+  pcaButtonText: "Principal Components"
 });

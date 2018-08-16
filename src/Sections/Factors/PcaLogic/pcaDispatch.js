@@ -1,39 +1,39 @@
-import store from "../../store";
 import cloneDeep from "lodash/cloneDeep";
 import * as numeric from "numeric-1.2.6.min";
+import store from "../../../store";
 import sortEigenValues from "./sortEigenValues";
 import calcEigenVectors from "./calcEigenVectors";
 import determineNumberPCs from "./determineNumberPCs";
-import transposeMatrix from "../../Utils/transposeMatrix";
+import transposeMatrix from "../../../Utils/transposeMatrix";
 import factorTableDataPrep from "../FactorTable/factorTableDataPrep";
 import calcEigenCumulPercentArray from "./calcEigenCumulPercentArray";
 import inflectPrincipalComponents from "./inflectPrincipalComponents";
 import factorTableEigenDataPrep from "../FactorTableEigen/FactorTableEigenDataPrep";
-import calculateCommunalities from "../../S4-rotation/varimaxLogic/2calculateCommunalities";
+import calculateCommunalities from "../../Rotation/varimaxLogic/2calculateCommunalities";
 
 const pcaDispatch = () => {
-  let projectHistoryArray = store.getState("projectHistoryArray");
+  const projectHistoryArray = store.getState("projectHistoryArray");
 
-  let X = store.getState("correlation5Calcs");
-  let m = X.length;
-  let numberOfSorts = m;
-  let numberofPrincipalComps = determineNumberPCs();
+  const X = store.getState("correlation5Calcs");
+  const m = X.length;
+  const numberOfSorts = m;
+  const numberofPrincipalComps = determineNumberPCs();
 
-  let eigens = numeric.eig(X);
+  const eigens = numeric.eig(X);
 
-  let sigma = numeric.div(numeric.dot(numeric.transpose(X), X), m);
-  let svd = numeric.svd(sigma).U;
+  const sigma = numeric.div(numeric.dot(numeric.transpose(X), X), m);
+  const svd = numeric.svd(sigma).U;
 
-  let eigenValuesSorted = sortEigenValues(eigens.lambda.x);
-  let getEigenCumulPercentArray = calcEigenCumulPercentArray(
+  const eigenValuesSorted = sortEigenValues(eigens.lambda.x);
+  const getEigenCumulPercentArray = calcEigenCumulPercentArray(
     eigenValuesSorted,
     m
   );
 
-  let eigenValuesAsPercents = getEigenCumulPercentArray[0];
-  let eigenValuesCumulPercentArray = getEigenCumulPercentArray[1];
+  const eigenValuesAsPercents = getEigenCumulPercentArray[0];
+  const eigenValuesCumulPercentArray = getEigenCumulPercentArray[1];
 
-  let doEigenVecsCalcs = calcEigenVectors(
+  const doEigenVecsCalcs = calcEigenVectors(
     numberOfSorts,
     numberofPrincipalComps,
     eigenValuesSorted,
@@ -41,13 +41,13 @@ const pcaDispatch = () => {
   );
 
   let eigenVecs = doEigenVecsCalcs[0];
-  let inflectionArray = doEigenVecsCalcs[1];
+  const inflectionArray = doEigenVecsCalcs[1];
   eigenVecs = inflectPrincipalComponents(eigenVecs, inflectionArray);
 
   calculateCommunalities([...eigenVecs]);
 
   // transpose
-  let eigenVecsTransposed = transposeMatrix(eigenVecs);
+  const eigenVecsTransposed = transposeMatrix(eigenVecs);
 
   // truncate arrays
   eigenValuesSorted.length = 8;
@@ -55,16 +55,16 @@ const pcaDispatch = () => {
   eigenValuesCumulPercentArray.length = 8;
 
   // formatted for output file
-  let formattedEigenCum = cloneDeep(eigenValuesCumulPercentArray);
+  const formattedEigenCum = cloneDeep(eigenValuesCumulPercentArray);
   formattedEigenCum.unshift("Cumulative % Expln Var");
-  let formattedEigenPer = cloneDeep(eigenValuesAsPercents);
+  const formattedEigenPer = cloneDeep(eigenValuesAsPercents);
   formattedEigenPer.unshift("% Explained Variance");
 
   // create data for scree plot
-  let eigenData = cloneDeep(eigenValuesSorted);
-  let screeData = [];
-  eigenData.forEach(function(element, index) {
-    let tempArray = [];
+  const eigenData = cloneDeep(eigenValuesSorted);
+  const screeData = [];
+  eigenData.forEach((element, index) => {
+    const tempArray = [];
     tempArray.push(index + 1, eigenData[index]);
     screeData.push(tempArray);
   }, this);
@@ -78,11 +78,11 @@ const pcaDispatch = () => {
     screePlotData: screeData,
     eigensPercentExpVar: formattedEigenPer,
     cumulEigenPerVar: formattedEigenCum,
-    projectHistoryArray: projectHistoryArray,
+    projectHistoryArray,
     numFacsForTableWidth: 8
   });
 
-  let eigenvaluesArray = [
+  const eigenvaluesArray = [
     eigenValuesSorted,
     eigenValuesAsPercents,
     eigenValuesCumulPercentArray

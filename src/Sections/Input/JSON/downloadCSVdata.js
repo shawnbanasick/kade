@@ -1,34 +1,33 @@
 import store from "../../../store";
 
-const fs = require('fs');
-const {dialog} = require("electron").remote;
-
+const fs = require("fs");
+const { dialog } = require("electron").remote;
 
 function saveFile(fileName, csvFile) {
+  dialog.showSaveDialog(
+    {
+      filters: [
+        {
+          name: "csv",
+          extensions: ["csv"]
+        }
+      ]
+    },
+    fileName => {
+      if (fileName === undefined) return;
 
-  dialog.showSaveDialog({
-    filters: [
-      {
-        name: 'csv',
-        extensions: ['csv']
-      }
-    ]
-  }, (fileName) => {
-
-    if (fileName === undefined) return;
-
-    fs.writeFile(fileName, csvFile, (err) => {
-      if (err === undefined || err === null) {
-        dialog.showMessageBox({
-          message: "The file has been saved!",
-          buttons: ["OK"]
-        });
-
-      } else {
-        dialog.showErrorBox("File Save Error", err.message);
-      }
-    });
-  });
+      fs.writeFile(fileName, csvFile, err => {
+        if (err === undefined || err === null) {
+          dialog.showMessageBox({
+            message: "The file has been saved!",
+            buttons: ["OK"]
+          });
+        } else {
+          dialog.showErrorBox("File Save Error", err.message);
+        }
+      });
+    }
+  );
 }
 
 function exportToCsv(fileName, rows) {
@@ -42,7 +41,7 @@ function exportToCsv(fileName, rows) {
       const innerValue = value.toString();
       let result = innerValue.replace(/"/g, '""');
       if (result.search(/("|,|\n)/g) >= 0) {
-        result = `"${  result  }"`;
+        result = `"${result}"`;
       }
       if (j > 0) {
         finalVal += ",";
@@ -51,7 +50,7 @@ function exportToCsv(fileName, rows) {
     }
     console.log(finalVal);
 
-    return `${finalVal  }\n`;
+    return `${finalVal}\n`;
   };
 
   let csvFile = "";
@@ -61,8 +60,6 @@ function exportToCsv(fileName, rows) {
 
   saveFile(fileName, csvFile);
 }
-;
-
 function downloadCSVdata() {
   const csvBody2 = store.getState("csvData");
 
@@ -76,6 +73,4 @@ function downloadCSVdata() {
   // export the file
   exportToCsv(nameWithExtension, csvBody);
 }
-;
-
 export default downloadCSVdata;
