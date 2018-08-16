@@ -1,15 +1,17 @@
-import store from '../../store';
-import evenRound from "../../Utils/evenRound";
+import store from "../../../store";
+import evenRound from "../../../Utils/evenRound";
 
 const calculateFactorLoadingSignificanceLevel = function(totalStatements) {
-    let userSelectedSigLevel = store.getState("userSelectedSigLevel");
-    // var totalStatements = QAV.getState("qavOriginalSortSize");
-    var significanceLevel = evenRound(userSelectedSigLevel * (1 / Math.sqrt(totalStatements)), 5);
-    return significanceLevel;
+  const userSelectedSigLevel = store.getState("userSelectedSigLevel");
+  // var totalStatements = QAV.getState("qavOriginalSortSize");
+  const significanceLevel = evenRound(
+    userSelectedSigLevel * (1 / Math.sqrt(totalStatements)),
+    5
+  );
+  return significanceLevel;
 };
 
 export default calculateFactorLoadingSignificanceLevel;
-
 
 /*
 

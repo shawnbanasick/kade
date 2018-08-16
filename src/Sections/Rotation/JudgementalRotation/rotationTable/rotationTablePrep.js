@@ -1,16 +1,16 @@
-import store from "../../../store";
-import evenRound from "../../../Utils/evenRound";
+import store from "../../../../store";
+import evenRound from "../../../../Utils/evenRound";
 
 const rotationTablePrep = function(d3RotChartData, baselineData) {
-  let abFactors = store.getState("abFactors");
-  let minFac = Math.min(...abFactors);
-  let maxFac = Math.max(...abFactors);
-  let factorA = "Fac. " + minFac;
-  let factorB = "Fac. " + maxFac;
-  let factorAchng = "Chg. " + minFac;
-  let factorBchng = "Chg. " + maxFac;
+  const abFactors = store.getState("abFactors");
+  const minFac = Math.min(...abFactors);
+  const maxFac = Math.max(...abFactors);
+  const factorA = `Fac. ${  minFac}`;
+  const factorB = `Fac. ${  maxFac}`;
+  const factorAchng = `Chg. ${  minFac}`;
+  const factorBchng = `Chg. ${  maxFac}`;
 
-  let rotColDefsFactorTable = [
+  const rotColDefsFactorTable = [
     {
       headerName: "Num.",
       field: "resNum",
@@ -40,18 +40,18 @@ const rotationTablePrep = function(d3RotChartData, baselineData) {
       editable: false,
       sortable: true,
       width: 80,
-      cellStyle: function(params) {
-        let sig = params.node.data.factor1Sig;
+      cellStyle(params) {
+        const sig = params.node.data.factor1Sig;
         if (sig) {
           return {
             textAlign: "center",
             background: "aquamarine"
           };
-        } else {
+        } 
           return {
             textAlign: "center"
           };
-        }
+        
       }
     },
     {
@@ -72,18 +72,18 @@ const rotationTablePrep = function(d3RotChartData, baselineData) {
       editable: false,
       sortable: true,
       width: 80,
-      cellStyle: function(params) {
-        let sig = params.node.data.factor2Sig;
+      cellStyle(params) {
+        const sig = params.node.data.factor2Sig;
         if (sig) {
           return {
             textAlign: "center",
             background: "#ffe4b2"
           };
-        } else {
+        } 
           return {
             textAlign: "center"
           };
-        }
+        
       }
     },
     {
@@ -117,18 +117,18 @@ const rotationTablePrep = function(d3RotChartData, baselineData) {
     }
   ];
 
-  let rotRowDataFactorTable = [];
+  const rotRowDataFactorTable = [];
 
   for (let j = 0; j < d3RotChartData.length; j++) {
-    let tempObj = {};
-    let baselineA = baselineData[j][minFac - 1];
-    let baselineB = baselineData[j][maxFac - 1];
-    let newValueA = d3RotChartData[j].factor1;
-    let newValueB = d3RotChartData[j].factor2;
-    let factor1Sig = d3RotChartData[j].factor1Sig;
-    let factor2Sig = d3RotChartData[j].factor2Sig;
-    let diffA = evenRound(newValueA - baselineA, 4);
-    let diffB = evenRound(newValueB - baselineB, 4);
+    const tempObj = {};
+    const baselineA = baselineData[j][minFac - 1];
+    const baselineB = baselineData[j][maxFac - 1];
+    const newValueA = d3RotChartData[j].factor1;
+    const newValueB = d3RotChartData[j].factor2;
+    const factor1Sig = d3RotChartData[j].factor1Sig;
+    const factor2Sig = d3RotChartData[j].factor2Sig;
+    const diffA = evenRound(newValueA - baselineA, 4);
+    const diffB = evenRound(newValueB - baselineB, 4);
     tempObj.resNum = d3RotChartData[j].num;
     tempObj.respondent = d3RotChartData[j].respondent;
     tempObj.factor1 = newValueA;
@@ -141,10 +141,9 @@ const rotationTablePrep = function(d3RotChartData, baselineData) {
   }
 
   store.setState({
-    rotColDefsFactorTable: rotColDefsFactorTable,
-    rotRowDataFactorTable: rotRowDataFactorTable
+    rotColDefsFactorTable,
+    rotRowDataFactorTable
   });
 };
 
 export default rotationTablePrep;
-

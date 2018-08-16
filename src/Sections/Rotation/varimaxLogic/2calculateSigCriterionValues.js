@@ -1,11 +1,11 @@
-import store from "../../store";
-import pullAt from 'lodash/pullAt';
+import pullAt from "lodash/pullAt";
 import cloneDeep from "lodash/cloneDeep";
-import evenRound from "../../Utils/evenRound";
+import store from "../../../store";
+import evenRound from "../../../Utils/evenRound";
 import calculateFactorLoadingSignificanceLevel from "./3_calculateFactorLoadingSignificanceLevel";
 
 const getAutoflagBoolean = (addFlag, sigLevel2, testValue, othersValue) => {
-  let requireMajorityCommonVariance = store.getState(
+  const requireMajorityCommonVariance = store.getState(
     "requireMajorityCommonVariance"
   );
 
@@ -20,7 +20,7 @@ const getAutoflagBoolean = (addFlag, sigLevel2, testValue, othersValue) => {
 
     // all other flag cases
 
-    let sigLevel = evenRound(sigLevel2 * sigLevel2, 5);
+    const sigLevel = evenRound(sigLevel2 * sigLevel2, 5);
 
     // requireMajorityCommonVariance = true
     if (requireMajorityCommonVariance) {
@@ -42,19 +42,14 @@ const getAutoflagBoolean = (addFlag, sigLevel2, testValue, othersValue) => {
 };
 
 const calculatefSigCriterionValues = function(addFlag) {
-  let fSigCriterionArray = store.getState("fSigCriterion");
-  let totalStatements = store.getState("numStatements");
-  let sigLevel2 = calculateFactorLoadingSignificanceLevel(totalStatements);
-  let arrayLength = fSigCriterionArray.length;
-  let arrayLength2 = fSigCriterionArray[0].length;
-  let temp1,
-    testValue,
-    others2,
-    array;
-  let i,
-    j,
-    tempArray;
-  let fSigCriterionResults = [];
+  const fSigCriterionArray = store.getState("fSigCriterion");
+  const totalStatements = store.getState("numStatements");
+  const sigLevel2 = calculateFactorLoadingSignificanceLevel(totalStatements);
+  const arrayLength = fSigCriterionArray.length;
+  const arrayLength2 = fSigCriterionArray[0].length;
+  let temp1, testValue, others2, array;
+  let i, j, tempArray;
+  const fSigCriterionResults = [];
 
   for (i = 0; i < arrayLength; i++) {
     temp1 = fSigCriterionArray[i];
@@ -62,12 +57,10 @@ const calculatefSigCriterionValues = function(addFlag) {
     for (j = 0; j < arrayLength2; j++) {
       array = cloneDeep(temp1);
       testValue = pullAt(array, j);
-      others2 = array.reduce(function(a, b) {
-        return a + b;
-      });
-      let othersValue = evenRound(others2, 5);
+      others2 = array.reduce((a, b) => a + b);
+      const othersValue = evenRound(others2, 5);
 
-      let significant = getAutoflagBoolean(
+      const significant = getAutoflagBoolean(
         addFlag,
         sigLevel2,
         testValue[0],
@@ -81,7 +74,7 @@ const calculatefSigCriterionValues = function(addFlag) {
 
   // should be display style -  for example - Lipset - 7 cols, 9 rows
   store.setState({
-    fSigCriterionResults: fSigCriterionResults
+    fSigCriterionResults
   });
 };
 
