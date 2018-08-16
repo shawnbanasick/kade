@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { AgGridReact } from "ag-grid-react";
 // import store from "../../../store";
-import { easyComp } from "react-easy-state";
+import { view } from "react-easy-state";
 
 class RotationTable extends Component {
   onGridReady = params => {
@@ -43,4 +43,4 @@ class RotationTable extends Component {
   }
 }
 
-export default easyComp(RotationTable);
+export default view(RotationTable);

@@ -1,6 +1,6 @@
 import store from "../../../store";
 import React from "react";
-import { easyComp } from "react-easy-state";
+import { view } from "react-easy-state";
 import ScatterPlot from "./ScatterPlot";
 import ParticipantPopUp from "./ParticipantPopUp";
 import ClockwiseButtons from "./ClockwiseButtons";
@@ -86,4 +86,4 @@ class ScatterPlotAndTableTransitionContainer extends React.Component {
     }
 }
 
-export default easyComp(ScatterPlotAndTableTransitionContainer);
+export default view(ScatterPlotAndTableTransitionContainer);

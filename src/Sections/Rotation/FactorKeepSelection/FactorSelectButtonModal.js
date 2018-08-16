@@ -1,6 +1,6 @@
 import store from "../../store";
 import React, { Component } from "react";
-import { easyComp } from "react-easy-state";
+import { view } from "react-easy-state";
 import { Button, Header, Icon, Modal } from "semantic-ui-react";
 import loadingsTableDataPrep from "../../S5-loadings/LoadingsTable/loadingsTableDataPrep";
 
@@ -72,4 +72,4 @@ class FactorSelectButtonModal extends Component {
     }
 }
 
-export default easyComp(FactorSelectButtonModal);
+export default view(FactorSelectButtonModal);

@@ -1,6 +1,6 @@
 import store from "../../store";
 import React, { Component } from "react";
-import { easyComp } from "react-easy-state";
+import { view } from "react-easy-state";
 import { Transition } from 'semantic-ui-react';
 import ScatterPlotDiv from "./plot/ScatterPlotDiv";
 
@@ -39,4 +39,4 @@ class judgementalRotationContainer extends Component {
     }
 }
 
-export default easyComp(judgementalRotationContainer);
+export default view(judgementalRotationContainer);

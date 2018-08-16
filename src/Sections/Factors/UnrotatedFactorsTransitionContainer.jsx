@@ -1,5 +1,5 @@
 import React from "react";
-import { easyComp } from "react-easy-state";
+import { view } from "react-easy-state";
 import store from "../../store";
 import Chart from "./FactorScreePlot/Chart";
 // import { Transition } from 'semantic-ui-react';
@@ -29,4 +29,4 @@ class UnrotatedFactorsTransitionContainer extends React.Component {
   }
 }
 
-export default easyComp(UnrotatedFactorsTransitionContainer);
+export default view(UnrotatedFactorsTransitionContainer);

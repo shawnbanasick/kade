@@ -1,7 +1,7 @@
 import * as d3 from "d3";
+import React from "react";
 import { default as Line } from "./DataLine";
 import { default as AxisTextLabels } from "./AxisTextLabels";
-import React from "react";
 import XYAxis from "./XyAxis";
 import DataCircles from "./DataCircles";
 
@@ -37,13 +37,15 @@ const yMax = data => {
 };
 
 // Returns a function that "scales" X coordinates from the data to fit the chart
-const xScale = props => d3
+const xScale = props =>
+  d3
     .scaleLinear()
     .domain([0, xMax])
     .range([props.padding, props.width - props.padding * 2]);
 
 // Returns a function that "scales" Y coordinates from the data to fit the chart
-const yScale = props => d3
+const yScale = props =>
+  d3
     .scaleLinear()
     .domain([0, yMax(props.data)])
     .range([props.height - props.padding, props.padding]);

@@ -3,7 +3,7 @@ import data from "../plot/data";
 import store from "../../../store";
 import includes from 'lodash/includes';
 import { Button } from "semantic-ui-react";
-import { easyComp } from "react-easy-state";
+import { view } from "react-easy-state";
 import doD3ChartDataPrep from "../rotationLogic/doD3ChartDataPrep";
 import rotationTablePrep from "../rotationTable/rotationTablePrep";
 import displaySelectedFactorsOnPlot from "./displaySelectedFactorsOnPlot";
@@ -252,4 +252,4 @@ class FactorSelectButtons extends React.Component {
   }
 }
 
-export default easyComp(FactorSelectButtons);
+export default view(FactorSelectButtons);

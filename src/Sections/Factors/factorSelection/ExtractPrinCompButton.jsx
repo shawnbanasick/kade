@@ -1,7 +1,7 @@
 import React from "react";
 import store from "../../store";
 import { Button } from "semantic-ui-react";
-import { easyComp } from "react-easy-state";
+import { view } from "react-easy-state";
 import { default as pcaDispatch } from "../PcaLogic/pcaDispatch";
 
 const style = {
@@ -25,10 +25,10 @@ class PCAButton extends React.Component {
   }
 
   render() {
-    let isActive = store.getState("activePcaButton");
-    let isDisabled = store.getState("disabledPcaButton");
-    let isCalculating = store.getState("calculatingPca");
-    let pcaButtonText = store.getState("pcaButtonText");
+    const isActive = store.getState("activePcaButton");
+    const isDisabled = store.getState("disabledPcaButton");
+    const isCalculating = store.getState("calculatingPca");
+    const pcaButtonText = store.getState("pcaButtonText");
     return (
       <div>
         <Button
@@ -48,4 +48,4 @@ class PCAButton extends React.Component {
     );
   }
 }
-export default easyComp(PCAButton);
+export default view(PCAButton);

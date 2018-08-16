@@ -1,7 +1,7 @@
 import React from "react";
 import "./ScatterPlotDiv.css";
 // import store from "../../../store";
-import { easyComp } from "react-easy-state";
+import { view } from "react-easy-state";
 import FactorSelectButtons from "../FactorSelect/FactorSelectButtons";
 import ScatterPlotAndTableTransitionContainer from "./ScatterPlotAndTableTransitionContainer";
 import transposeMatrix from "../../../Utils/transposeMatrix";
@@ -32,4 +32,4 @@ class ScatterPlotDiv extends React.Component {
     }
 }
 
-export default easyComp(ScatterPlotDiv);
+export default view(ScatterPlotDiv);

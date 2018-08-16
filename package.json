@@ -74,6 +74,7 @@
     "react-simpletabs": "^0.7.0",
     "react-styled-select": "^1.1.0",
     "react-transition-group": "^2.4.0",
+    "save-svg-as-png": "^1.4.6",
     "styled-components": "^3.3.3",
     "xlsx": "^0.13.3"
   },

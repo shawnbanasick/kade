@@ -1,6 +1,6 @@
 import React from "react";
 import store from "../../store";
-import { easyComp } from "react-easy-state";
+import { view } from "react-easy-state";
 import { Button, Dropdown, Transition } from "semantic-ui-react";
 import FactorSelectButtonModal from "./FactorSelectButtonModal";
 
@@ -131,4 +131,4 @@ class FactorSelectDropdown extends React.Component {
             );
     }
 }
-export default easyComp(FactorSelectDropdown);
+export default view(FactorSelectDropdown);

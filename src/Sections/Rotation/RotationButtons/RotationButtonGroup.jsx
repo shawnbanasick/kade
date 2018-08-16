@@ -1,7 +1,7 @@
 import store from "../../store";
 import React, { Component } from "react";
 import { Button, Transition } from "semantic-ui-react";
-import { easyComp } from "react-easy-state";
+import { view } from "react-easy-state";
 import { default as varimaxDispatch } from "../varimaxLogic/varimaxDispatch";
 
 class RotationButtonGroup extends Component {
@@ -80,4 +80,4 @@ class RotationButtonGroup extends Component {
     }
 }
 
-export default easyComp(RotationButtonGroup);
+export default view(RotationButtonGroup);

@@ -1,5 +1,5 @@
 import React from "react";
-import { easyComp } from "react-easy-state";
+import { view } from "react-easy-state";
 import store from "../../../store";
 
 const styles = {
@@ -33,4 +33,4 @@ class ParticipantPopUp extends React.Component {
     }
 }
 
-export default easyComp(ParticipantPopUp);
+export default view(ParticipantPopUp);

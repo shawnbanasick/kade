@@ -1,25 +1,25 @@
-import { default as currentDate } from "../../Utils/currentDate1";
-import { default as currentTime } from "../../Utils/currentTime1";
-import store from "../../store";
+import { default as currentDate } from "../../../Utils/currentDate1";
+import { default as currentTime } from "../../../Utils/currentTime1";
+import store from "../../../store";
 
 const downloadSvgImage = () => {
-  let projectName = store.getState("projectName");
-  let date = currentDate();
-  let time = currentTime();
-  let dateTime = date + " " + time;
-  let completeFileName = projectName + "-scree_plot_" + dateTime;
+  const projectName = store.getState("projectName");
+  const date = currentDate();
+  const time = currentTime();
+  const dateTime = `${date} ${time}`;
+  const completeFileName = `${projectName}-scree_plot_${dateTime}`;
 
-  var svg = document.querySelector('#screePlot');
+  const svg = document.querySelector("#screePlot");
 
   function saveSvg(svgEl, name) {
     svgEl.setAttribute("xmlns", "http://www.w3.org/2000/svg");
-    var svgData = svgEl.outerHTML;
-    var preface = '<?xml version="1.0" standalone="no"?>\r\n';
-    var svgBlob = new Blob([preface, svgData], {
+    const svgData = svgEl.outerHTML;
+    const preface = '<?xml version="1.0" standalone="no"?>\r\n';
+    const svgBlob = new Blob([preface, svgData], {
       type: "image/svg+xml;charset=utf-8"
     });
-    var svgUrl = URL.createObjectURL(svgBlob);
-    var downloadLink = document.createElement("a");
+    const svgUrl = URL.createObjectURL(svgBlob);
+    const downloadLink = document.createElement("a");
     downloadLink.href = svgUrl;
     downloadLink.download = name;
     document.body.appendChild(downloadLink);
@@ -27,7 +27,6 @@ const downloadSvgImage = () => {
     document.body.removeChild(downloadLink);
   }
   saveSvg(svg, completeFileName);
-  return;
 };
 
 export default downloadSvgImage;

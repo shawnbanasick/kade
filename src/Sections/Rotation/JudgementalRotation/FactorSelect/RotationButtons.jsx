@@ -1,5 +1,5 @@
 import React from "react";
-import { easyComp } from "react-easy-state";
+import { view } from "react-easy-state";
 import store from "../../../store";
 import { Button } from "semantic-ui-react";
 
@@ -71,4 +71,4 @@ class RotationButtons extends React.Component {
     }
 }
 
-export default easyComp(RotationButtons);
+export default view(RotationButtons);

@@ -1,7 +1,7 @@
 import React from "react";
 import store from "../../../store";
 import { Button } from "semantic-ui-react";
-import { easyComp } from "react-easy-state";
+import { view } from "react-easy-state";
 import transposeMatrix from "../../../Utils/transposeMatrix";
 import calcuateSigCriterionValues from "../../varimaxLogic/2calculateSigCriterionValues";
 import loadingsTableDataPrep from "../../../S5-loadings/LoadingsTable/loadingsTableDataPrep";
@@ -115,4 +115,4 @@ class SaveRotationButton extends React.Component {
   }
 }
 
-export default easyComp(SaveRotationButton);
+export default view(SaveRotationButton);
