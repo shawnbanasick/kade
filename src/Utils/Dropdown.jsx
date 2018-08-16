@@ -93,6 +93,7 @@ const DropdownDiv = styled.div`
   transition: box-shadow 0.1s linear;
   font-family: Helvetica, sans-serif;
   font-size: 18px;
+  z-index: 99;
 
   &.active {
     box-shadow: 0 10px 30px rgba(#7c4dff, 0.2);
@@ -121,6 +122,7 @@ const DropdownDiv = styled.div`
     background: #d6dbe0;
     height: 25px;
     box-shadow: 0 2px 2px 0 black;
+    z-index: 99;
   }
 
   .content {
@@ -133,6 +135,7 @@ const DropdownDiv = styled.div`
     overflow: auto;
     height: 200px;
     background-color: white;
+    z-index: 999;
   }
 
   .item {

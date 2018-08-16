@@ -4,7 +4,7 @@ import store from "../../../store";
 const styles = {
   stroke: "black",
   strokeWidth: 0.5,
-  zindex: 99,
+  // zindex: 99,
   fontSize: 8,
   cursor: "default"
 };
@@ -21,8 +21,7 @@ const closePopUp = function() {
   });
 };
 
-const renderCircleText = props => {
-  return (coords, index) => {
+const renderCircleText = props => (coords, index) => {
     const circleProps = {
       x: props.xScale(props.data[index].factor2),
       y: props.yScale(props.data[index].factor1 - 0.01),
@@ -42,8 +41,5 @@ const renderCircleText = props => {
       </text>
     );
   };
-};
 
-export default props => {
-  return <g>{props.data.map(renderCircleText(props))}</g>;
-};
+export default props => <g>{props.data.map(renderCircleText(props))}</g>;

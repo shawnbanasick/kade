@@ -1,14 +1,19 @@
 import React from "react";
 import { view } from "react-easy-state";
-import store from "../../store";
+import styled from "styled-components";
+import state from "../../store";
 import Chart from "./FactorScreePlot/Chart";
 // import { Transition } from 'semantic-ui-react';
 import EigenTable from "./FactorTableEigen/EigenTable";
 import CentroidTable from "./FactorTable/CentroidTable";
 
+function resetSpinner() {
+  state.setState({ showCentroidSpinner: false });
+}
+
 class UnrotatedFactorsTransitionContainer extends React.Component {
   render() {
-    const showUnrotatedFactorTable = store.getState("showUnrotatedFactorTable");
+    const showUnrotatedFactorTable = state.getState("showUnrotatedFactorTable");
     // let showEigenvaluesTable = store.getState("showEigenvaluesTable");
     // let showScreePlot = store.getState("showScreePlot");
     {
@@ -17,12 +22,13 @@ class UnrotatedFactorsTransitionContainer extends React.Component {
     // {/*  </Transition> */}
 
     if (showUnrotatedFactorTable) {
+      resetSpinner();
       return (
-        <div>
+        <Container>
           <CentroidTable />
           <EigenTable />
           <Chart />
-        </div>
+        </Container>
       );
     }
     return null;
@@ -30,3 +36,7 @@ class UnrotatedFactorsTransitionContainer extends React.Component {
 }
 
 export default view(UnrotatedFactorsTransitionContainer);
+
+const Container = styled.div`
+  grid-row-start: 2;
+`;
