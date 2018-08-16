@@ -3,16 +3,18 @@ import { view } from "react-easy-state";
 import styled, { keyframes } from "styled-components";
 import TypeOfAnalysisTransitionContainer from "./TypeOfAnalysisTransitionContainer";
 // import UnrotatedFactorsTransitionContainer from "./UnrotatedFactorsTransitionContainer";
-
 // import styled from "styled-components";
+import ErrorNotification from "../Input/ErrorNotification";
+import state from "../../store";
 
 class Factors extends Component {
   render() {
+    const showCentroidError = state.getState("showCentroidError");
     return (
       <MainContent>
-        <p>Factors Section</p>
         <TypeOfAnalysisTransitionContainer />
         {/* <UnrotatedFactorsTransitionContainer /> */}
+        {showCentroidError ? <ErrorNotification /> : null}
       </MainContent>
     );
   }
@@ -42,8 +44,8 @@ const fadeOut = keyframes`
 
 const MainContent = styled.div`
   display: grid;
-  grid-template-columns: 190px 190px 190px 190px;
-  grid-template-rows: 50px 125px 125px 200px 200px 50px;
+  grid-template-columns: 450px 190px;
+  grid-template-rows: 100px 125px 125px 200px 200px 50px;
   grid-template-areas:
     "row1 row1 row1 row1"
     "titleRow titleRow titleRow titleRow"
@@ -58,4 +60,5 @@ const MainContent = styled.div`
   visibility: ${props => (props.view ? "hidden" : "visible")};
   animation: ${props => (props.view ? fadeOut : fadeIn)} 0.5s linear;
   transition: visibility 0.5s linear;
+  font-family: Helvetica;
 `;

@@ -1,21 +1,23 @@
 import { view } from "react-easy-state";
 import styled from "styled-components";
 import React from "react";
-// import state from "../../../store";
+import state from "../../store";
 
-class SuccessNotification extends React.Component {
+class ErrorNotification extends React.Component {
   render() {
+    const errorMessage = state.getState("errorMessage");
     return (
-      <SuccessBar>
+      <ErrorBar>
         <p>Error </p>
-      </SuccessBar>
+        <p>{errorMessage}</p>
+      </ErrorBar>
     );
   }
 }
 
-export default view(SuccessNotification);
+export default view(ErrorNotification);
 
-const SuccessBar = styled.div`
+const ErrorBar = styled.div`
   position: absolute;
   left: 150px;
   bottom: 0;

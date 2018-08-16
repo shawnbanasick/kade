@@ -4,7 +4,7 @@ import { view } from "react-easy-state";
 // import ResetAnalysisButton from "./ResetAnalysisButton";
 // import PcaButton from "./factorSelection/ExtractPrinCompButton";
 // import NoFacSelectedModal from "./factorSelection/NoFacSelectedModal";
-import CentroidDropDownMenu from "./factorSelection/CentroidSelectDropdown";
+import CentroidSelectDropdown from "./factorSelection/CentroidSelectDropdown";
 
 class TypeOfAnalysisTransitionContainer extends React.Component {
   render() {
@@ -16,7 +16,7 @@ class TypeOfAnalysisTransitionContainer extends React.Component {
       <div>
         <div className="centroidContainer">
           <div style={{ display: "flex" }}>
-            <CentroidDropDownMenu />
+            <CentroidSelectDropdown />
             {/* <NoFacSelectedModal /> */}
           </div>
           {/* <PcaButton /> */}

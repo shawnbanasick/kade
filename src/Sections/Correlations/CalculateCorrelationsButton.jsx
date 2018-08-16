@@ -12,7 +12,7 @@ const handleClick = () => {
   const respondentNames = state.getState("respondentNames");
 
   const mainDataObject = state.getState("mainDataObject");
-  const rawSortsArray = mainDataObject.map((item) => item.rawSort);
+  const rawSortsArray = mainDataObject.map(item => item.rawSort);
 
   mainCorrCalcs(respondentNames, rawSortsArray);
 };
@@ -20,17 +20,20 @@ const handleClick = () => {
 class CalculateCorrelationsButton extends Component {
   render() {
     return (
-      <BeginAnalysisButton buttonColor={ localStore.buttonColor } onClick={ () => handleClick() }>
+      <BeginAnalysisButton
+        buttonColor={localStore.buttonColor}
+        onClick={() => handleClick()}
+      >
         <p>Calculate Correlations</p>
-        { /* <Spinner className="item-loader-container">
+        {/* <Spinner className="item-loader-container">
                                                                                                           <div className="la-ball-pulse la-2x">
                                                                                                             <div />
                                                                                                             <div />
                                                                                                             <div />
                                                                                                           </div>
-                                                                                                        </Spinner> */ }
+                                                                                                        </Spinner> */}
       </BeginAnalysisButton>
-      );
+    );
   }
 }
 

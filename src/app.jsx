@@ -141,6 +141,7 @@ export default view(App);
 
 const AppWrap = styled.div`
   margin-top: 23px;
+  font-family: Helvetica;
 `;
 
 const Header = styled.header`

@@ -2,16 +2,17 @@ import React from "react";
 import { view, store } from "react-easy-state";
 import styled from "styled-components";
 
-
 const localStore = store({
   expanded: false,
-  value:  ""  // "Select Participant Id..."
+  value: "", // "Select Participant Id..."
+  hasClicked: false
 });
 
 class Dropdown extends React.Component {
-
   componentDidMount() {
-    localStore.value = this.props.textValue;
+    if (!localStore.hasClicked) {
+      localStore.value = this.props.textValue;
+    }
   }
 
   expand() {
@@ -26,7 +27,8 @@ class Dropdown extends React.Component {
     const newSelection = e.target.innerText;
     localStore.expanded = false;
     localStore.value = newSelection;
-    this.props.onChangeMessageUpTree(newSelection)
+    this.props.onChangeMessageUpTree(newSelection);
+    localStore.hasClicked = true;
   }
 
   handleTriggerClick() {
@@ -38,29 +40,42 @@ class Dropdown extends React.Component {
     if (localStore.expanded) {
       dropdown = (
         <div className="content">
-          { this.props.options.map((item, index) => (
-              <div role="listbox" key={ item.toString() + index } onClick={ e => {
-                                                                            this.handleItemClick(e);
-                                                                          } } className="item">
-                { item }
-              </div>
-            )) }
+          {this.props.options.map((item, index) => (
+            <div
+              role="listbox"
+              key={item.toString() + index}
+              onClick={e => {
+                this.handleItemClick(e);
+              }}
+              className="item"
+            >
+              {item}
+            </div>
+          ))}
         </div>
       );
     }
 
     return (
-      <DropdownDiv className={ ` ${localStore.expanded ? "active" : ""}` } 
-                    tabIndex="0" 
-                    width={this.props.width} 
-                    onBlur={ () => {  this.collapse();  } }>
-        <div className="trigger" 
-              onClick={ () => {  this.handleTriggerClick(); } }>
-          { localStore.value }
+      <DropdownDiv
+        className={` ${localStore.expanded ? "active" : ""}`}
+        tabIndex="0"
+        width={this.props.width}
+        onBlur={() => {
+          this.collapse();
+        }}
+      >
+        <div
+          className="trigger"
+          onClick={() => {
+            this.handleTriggerClick();
+          }}
+        >
+          {localStore.value}
         </div>
-        { dropdown }
+        {dropdown}
       </DropdownDiv>
-      );
+    );
   }
 }
 
@@ -70,7 +85,7 @@ export default view(Dropdown);
 // blue color => #d6dbe0
 
 const DropdownDiv = styled.div`
-  width: ${(props) => props.width};
+  width: ${props => props.width};
   box-shadow: 0 4px 10px rgba(#7c4dff, 0.2);
   margin-top: 7px;
   outline: none;
@@ -105,6 +120,7 @@ const DropdownDiv = styled.div`
     width: 100%;
     background: #d6dbe0;
     height: 25px;
+    box-shadow: 0 2px 2px 0 black;
   }
 
   .content {
