@@ -1,7 +1,7 @@
 import React from "react";
-import store from "../../store";
+import { view } from "react-easy-state";
+import store from "../../../store";
 import ScatterPlot from "./ScatterPlot";
-import { easyComp } from "react-easy-state";
 import DownloadSvgButtons from "./DownloadSvgButtons";
 
 const styles = {
@@ -12,7 +12,7 @@ const styles = {
 
 class Chart extends React.Component {
   render() {
-    let data = store.getState("screePlotData");
+    const data = store.getState("screePlotData");
     return (
       <div style={{ maxWidth: 1197 }}>
         <h1>Scree Plot</h1>
@@ -25,4 +25,4 @@ class Chart extends React.Component {
   }
 }
 
-export default easyComp(Chart);
+export default view(Chart);

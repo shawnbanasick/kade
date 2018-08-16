@@ -1,7 +1,7 @@
 import React, { Component } from "react";
+import { view } from "react-easy-state";
 import { AgGridReact } from "ag-grid-react";
-import store from "../../store";
-import { easyComp } from "react-easy-state";
+import store from "../../../store";
 
 // let containerStyle = {
 //   marginTop: 30,
@@ -10,22 +10,22 @@ import { easyComp } from "react-easy-state";
 // };
 
 class CentroidTable extends Component {
-  onGridReady = params => {
+  onGridReady(params) {
     this.gridApi = params.api;
     this.columnApi = params.columnApi;
     this.gridApi.sizeColumnsToFit();
-  };
+  }
 
   render() {
-    let numFacsForTableWidth = store.getState("numFacsForTableWidth");
+    const numFacsForTableWidth = store.getState("numFacsForTableWidth");
     let widthVal = 80 + 202 + 80 * numFacsForTableWidth;
     if (widthVal > window.innerWidth - 100) {
       widthVal = window.innerWidth - 100;
     }
-    widthVal = widthVal + "px";
+    widthVal += "px";
 
-    let gridColDefsFactorTable = store.getState("gridColDefsFactorTable");
-    let gridRowDataFactorTable = store.getState("gridRowDataFactorTable");
+    const gridColDefsFactorTable = store.getState("gridColDefsFactorTable");
+    const gridRowDataFactorTable = store.getState("gridRowDataFactorTable");
     const { onGridReady } = this.onGridReady;
     return (
       <div>
@@ -37,7 +37,7 @@ class CentroidTable extends Component {
             // events
             onGridReady={onGridReady}
             domLayout={"autoHeight"}
-            enableSorting={true}
+            enableSorting
           />
         </div>
       </div>
@@ -45,4 +45,4 @@ class CentroidTable extends Component {
   }
 }
 
-export default easyComp(CentroidTable);
+export default view(CentroidTable);

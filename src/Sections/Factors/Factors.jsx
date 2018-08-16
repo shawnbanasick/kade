@@ -2,8 +2,7 @@ import React, { Component } from "react";
 import { view } from "react-easy-state";
 import styled, { keyframes } from "styled-components";
 import TypeOfAnalysisTransitionContainer from "./TypeOfAnalysisTransitionContainer";
-// import UnrotatedFactorsTransitionContainer from "./UnrotatedFactorsTransitionContainer";
-// import styled from "styled-components";
+import UnrotatedFactorsTransitionContainer from "./UnrotatedFactorsTransitionContainer";
 import ErrorNotification from "../Input/ErrorNotification";
 import state from "../../store";
 
@@ -13,7 +12,7 @@ class Factors extends Component {
     return (
       <MainContent>
         <TypeOfAnalysisTransitionContainer />
-        {/* <UnrotatedFactorsTransitionContainer /> */}
+        <UnrotatedFactorsTransitionContainer />
         {showCentroidError ? <ErrorNotification /> : null}
       </MainContent>
     );

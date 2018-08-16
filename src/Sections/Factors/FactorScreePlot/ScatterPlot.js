@@ -1,9 +1,9 @@
 import * as d3 from "d3";
+import { default as Line } from "./DataLine";
+import { default as AxisTextLabels } from "./AxisTextLabels";
 import React from "react";
 import XYAxis from "./XyAxis";
 import DataCircles from "./DataCircles";
-import { default as Line } from "./DataLine";
-import { default as AxisTextLabels } from "./AxisTextLabels";
 
 const styles = {
   container: {
@@ -37,22 +37,18 @@ const yMax = data => {
 };
 
 // Returns a function that "scales" X coordinates from the data to fit the chart
-const xScale = props => {
-  return d3
+const xScale = props => d3
     .scaleLinear()
     .domain([0, xMax])
     .range([props.padding, props.width - props.padding * 2]);
-};
 
 // Returns a function that "scales" Y coordinates from the data to fit the chart
-const yScale = props => {
-  return d3
+const yScale = props => d3
     .scaleLinear()
     .domain([0, yMax(props.data)])
     .range([props.height - props.padding, props.padding]);
-};
 
-let ScatterPlot = props => {
+const ScatterPlot = props => {
   // console.log("scree props: " + JSON.stringify(props));
 
   const scales = {
@@ -60,15 +56,21 @@ let ScatterPlot = props => {
     yScale: yScale(props)
   };
   return (
-    <div style={ styles.container }>
-      <svg xmlns="http://www.w3.org/2000/svg" id="screePlot" style={ styles.svg } width={ props.width + 20 } height={ props.height }>
+    <div style={styles.container}>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        id="screePlot"
+        style={styles.svg}
+        width={props.width + 20}
+        height={props.height}
+      >
         <XYAxis {...props} {...scales} {...styles.XYAxis} />
         <AxisTextLabels />
         <Line {...props} {...scales} />
         <DataCircles {...props} {...scales} />
       </svg>
     </div>
-    );
+  );
 };
 
 export default ScatterPlot;

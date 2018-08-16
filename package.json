@@ -50,6 +50,7 @@
   "dependencies": {
     "ag-grid": "^18.1.2",
     "ag-grid-react": "^18.1.0",
+    "d3": "^5.5.0",
     "date-fns": "^1.29.0",
     "electron-compile": "^6.4.3",
     "electron-devtools-installer": "^2.1.0",
