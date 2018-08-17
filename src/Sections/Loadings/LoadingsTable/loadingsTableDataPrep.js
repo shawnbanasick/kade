@@ -84,7 +84,6 @@ const loadingsTableDataPrep = numFactors => {
         pinned: false,
         width: 70,
         editable: false,
-        sortable: true,
         cellStyle: {
           textAlign: "right"
         }

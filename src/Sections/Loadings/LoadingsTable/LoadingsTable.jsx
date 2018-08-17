@@ -1,4 +1,4 @@
-import store from "../../store";
+import store from "../../../store";
 import React, { Component } from "react";
 import { Button } from "semantic-ui-react";
 import { AgGridReact } from "ag-grid-react";

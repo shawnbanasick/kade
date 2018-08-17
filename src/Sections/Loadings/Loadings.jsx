@@ -9,7 +9,6 @@ class Loadings extends Component {
   render() {
     return (
       <MainContent>
-        <p>Loadings Section</p>
         <LoadingsTableTransitionContainer />
       </MainContent>
     );
@@ -40,8 +39,8 @@ const fadeOut = keyframes`
 
 const MainContent = styled.div`
   display: grid;
-  grid-template-columns: 190px 190px 190px 190px;
-  grid-template-rows: 50px 125px 125px 200px 200px 50px;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr;
   grid-template-areas:
     "row1 row1 row1 row1"
     "titleRow titleRow titleRow titleRow"

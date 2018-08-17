@@ -5,10 +5,10 @@ const rotationTablePrep = function(d3RotChartData, baselineData) {
   const abFactors = store.getState("abFactors");
   const minFac = Math.min(...abFactors);
   const maxFac = Math.max(...abFactors);
-  const factorA = `Fac. ${  minFac}`;
-  const factorB = `Fac. ${  maxFac}`;
-  const factorAchng = `Chg. ${  minFac}`;
-  const factorBchng = `Chg. ${  maxFac}`;
+  const factorA = `Fac. ${minFac}`;
+  const factorB = `Fac. ${maxFac}`;
+  const factorAchng = `Chg. ${minFac}`;
+  const factorBchng = `Chg. ${maxFac}`;
 
   const rotColDefsFactorTable = [
     {
@@ -16,7 +16,6 @@ const rotationTablePrep = function(d3RotChartData, baselineData) {
       field: "resNum",
       pinned: true,
       editable: false,
-      sortable: true,
       width: 50,
       cellStyle: {
         textAlign: "center"
@@ -27,7 +26,6 @@ const rotationTablePrep = function(d3RotChartData, baselineData) {
       field: "respondent",
       pinned: true,
       editable: false,
-      sortable: true,
       width: 130,
       cellStyle: {
         textAlign: "center"
@@ -38,7 +36,6 @@ const rotationTablePrep = function(d3RotChartData, baselineData) {
       field: "factor1",
       pinned: false,
       editable: false,
-      sortable: true,
       width: 80,
       cellStyle(params) {
         const sig = params.node.data.factor1Sig;
@@ -47,11 +44,10 @@ const rotationTablePrep = function(d3RotChartData, baselineData) {
             textAlign: "center",
             background: "aquamarine"
           };
-        } 
-          return {
-            textAlign: "center"
-          };
-        
+        }
+        return {
+          textAlign: "center"
+        };
       }
     },
     {
@@ -59,7 +55,6 @@ const rotationTablePrep = function(d3RotChartData, baselineData) {
       field: "change1",
       pinned: false,
       editable: false,
-      sortable: true,
       width: 80,
       cellStyle: {
         textAlign: "center"
@@ -70,7 +65,6 @@ const rotationTablePrep = function(d3RotChartData, baselineData) {
       field: "factor2",
       pinned: false,
       editable: false,
-      sortable: true,
       width: 80,
       cellStyle(params) {
         const sig = params.node.data.factor2Sig;
@@ -79,11 +73,10 @@ const rotationTablePrep = function(d3RotChartData, baselineData) {
             textAlign: "center",
             background: "#ffe4b2"
           };
-        } 
-          return {
-            textAlign: "center"
-          };
-        
+        }
+        return {
+          textAlign: "center"
+        };
       }
     },
     {
@@ -91,7 +84,6 @@ const rotationTablePrep = function(d3RotChartData, baselineData) {
       field: "change2",
       pinned: false,
       editable: false,
-      sortable: true,
       width: 80,
       cellStyle: {
         textAlign: "center"
@@ -102,7 +94,7 @@ const rotationTablePrep = function(d3RotChartData, baselineData) {
       field: "factor1Sig",
       pinned: false,
       editable: false,
-      sortable: false,
+      supressSorting: true,
       hide: true,
       width: 0
     },
@@ -111,7 +103,7 @@ const rotationTablePrep = function(d3RotChartData, baselineData) {
       field: "change2",
       pinned: false,
       editable: false,
-      sortable: false,
+      supressSorting: true,
       hide: true,
       width: 0
     }

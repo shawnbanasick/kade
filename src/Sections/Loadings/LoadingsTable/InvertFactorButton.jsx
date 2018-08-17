@@ -1,7 +1,7 @@
-import store from "../../store";
 import React, { Component } from "react";
 import { view } from "react-easy-state";
 import { Button, Header, Modal } from "semantic-ui-react";
+import store from "../../../store";
 import InvertFactorDropdownSelect from "./InvertFactorDropdownSelect";
 import invertFactor from "../loadingsLogic/invertFactor";
 
