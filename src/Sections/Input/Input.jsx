@@ -1,13 +1,14 @@
 import React, { Component } from "react";
 import { view, store } from "react-easy-state";
 import styled, { keyframes } from "styled-components";
-import Tabs from "react-simpletabs";
+// import Tabs from "react-simpletabs";
 import CsvPanel from "./CsvPanel";
 import ExcelPanel from "./ExcelPanel";
 import KandedPanel from "./KandedPanel";
 import JsonPanel from "./JsonPanel";
 import PQMethodPanel from "./PQMethodPanel";
 import DemoDataPanel from "./DemoDataPanel";
+import { Tab } from "semantic-ui-react";
 // import SuccessNotification from "./SuccessNotification";
 import ErrorNotification from "./ErrorNotification";
 
@@ -17,33 +18,62 @@ const handleAfter = selectedIndex => {
   localStore.tabActive = selectedIndex;
 };
 
+const panes = [
+  {
+    menuItem: "CSV",
+    render: () => (
+      <Tab.Pane>
+        <CsvPanel />
+      </Tab.Pane>
+    )
+  },
+  {
+    menuItem: "Excel",
+    render: () => (
+      <Tab.Pane>
+        <ExcelPanel />
+      </Tab.Pane>
+    )
+  },
+  {
+    menuItem: "Kanded",
+    render: () => (
+      <Tab.Pane>
+        <KandedPanel />
+      </Tab.Pane>
+    )
+  },
+  {
+    menuItem: "JSON",
+    render: () => (
+      <Tab.Pane>
+        <JsonPanel />
+      </Tab.Pane>
+    )
+  },
+  {
+    menuItem: "PQMethod",
+    render: () => (
+      <Tab.Pane>
+        <PQMethodPanel />
+      </Tab.Pane>
+    )
+  },
+  {
+    menuItem: "Demo Data",
+    render: () => (
+      <Tab.Pane>
+        <DemoDataPanel />
+      </Tab.Pane>
+    )
+  }
+];
+
 class Input extends Component {
   render() {
     return (
       <MainContent>
-        <Tabs
-          tabActive={localStore.tabActive}
-          onAfterChange={e => handleAfter(e)}
-        >
-          <Tabs.Panel title="CSV">
-            <CsvPanel />
-          </Tabs.Panel>
-          <Tabs.Panel title="Excel">
-            <ExcelPanel />
-          </Tabs.Panel>
-          <Tabs.Panel title="KANDED">
-            <KandedPanel />
-          </Tabs.Panel>
-          <Tabs.Panel title="JSON">
-            <JsonPanel />
-          </Tabs.Panel>
-          <Tabs.Panel title="PQMethod">
-            <PQMethodPanel />
-          </Tabs.Panel>
-          <Tabs.Panel title="Demo Data">
-            <DemoDataPanel />
-          </Tabs.Panel>
-        </Tabs>
+        <Tab panes={panes} />
         <ErrorNotification />
         {/* <SuccessNotification /> */}
       </MainContent>
