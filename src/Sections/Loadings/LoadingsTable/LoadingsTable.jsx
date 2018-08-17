@@ -3,7 +3,7 @@ import store from "../../store";
 import React, { Component } from "react";
 import { Button } from "semantic-ui-react";
 import { AgGridReact } from "ag-grid-react";
-import { easyComp } from "react-easy-state";
+import { view } from "react-easy-state";
 import ProjectHistory from "./ProjectHistory";
 import autoFlagFactors from "../loadingsLogic/autoFlagFactors";
 import InvertFactorButton from "./InvertFactorButton";
@@ -244,7 +244,7 @@ class LoadingsTable extends Component {
   }
 }
 
-export default easyComp(LoadingsTable);
+export default view(LoadingsTable);
 
 /*
 

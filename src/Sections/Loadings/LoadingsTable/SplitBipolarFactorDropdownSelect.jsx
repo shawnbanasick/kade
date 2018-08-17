@@ -1,6 +1,6 @@
 import React from "react";
 import store from "../../store";
-import { easyComp } from "react-easy-state";
+import { view } from "react-easy-state";
 import { Dropdown } from "semantic-ui-react";
 
 const saveDropdownValueToState = (event, data) => {
@@ -80,4 +80,4 @@ class InvertFactorDropdownSelect extends React.Component {
             );
     }
 }
-export default easyComp(InvertFactorDropdownSelect);
+export default view(InvertFactorDropdownSelect);

@@ -15,6 +15,7 @@ class Rotation extends Component {
       <MainContent>
         <div className="section">
           <div style={{ maxWidth: 1197 }}>
+            <p>Rotation Section</p>
             <FactorSelectDropdown />
             {/* <FactorsKeptNotification /> */}
           </div>

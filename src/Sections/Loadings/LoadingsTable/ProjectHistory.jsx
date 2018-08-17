@@ -1,7 +1,7 @@
 import store from "../../store";
 import transposeMatrix from "../../Utils/transposeMatrix";
 import React, { Component } from "react";
-import { easyComp } from "react-easy-state";
+import { view } from "react-easy-state";
 import { Button } from "semantic-ui-react";
 import calculateCommunalities from "../../S4-rotation/varimaxLogic/2calculateCommunalities";
 import calcuateSigCriterionValues from "../../S4-rotation/varimaxLogic/2calculateSigCriterionValues";
@@ -177,4 +177,4 @@ class ProjectHistory extends Component {
     }
 }
 
-export default easyComp(ProjectHistory);
+export default view(ProjectHistory);

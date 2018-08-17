@@ -1,6 +1,6 @@
 import store from "../../store";
 import React, { Component } from "react";
-import { easyComp } from "react-easy-state";
+import { view } from "react-easy-state";
 import { Button, Header, Modal } from "semantic-ui-react";
 import splitBipolarFactor from "../loadingsLogic/splitBipolarFactor";
 import SplitBipolarFactorDropdownSelect from "./SplitBipolarFactorDropdownSelect";
@@ -35,4 +35,4 @@ class SplitBipolarFactorButtonModal extends Component {
     }
 }
 
-export default easyComp(SplitBipolarFactorButtonModal);
+export default view(SplitBipolarFactorButtonModal);

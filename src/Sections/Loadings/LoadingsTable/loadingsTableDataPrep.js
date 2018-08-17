@@ -79,8 +79,8 @@ const loadingsTableDataPrep = numFactors => {
     const facNumber = i + 1;
     gridColDefsLoadingsTable.push(
       {
-        headerName: `Factor ${  facNumber}`,
-        field: `factor${  facNumber}`,
+        headerName: `Factor ${facNumber}`,
+        field: `factor${facNumber}`,
         pinned: false,
         width: 70,
         editable: false,
@@ -90,8 +90,8 @@ const loadingsTableDataPrep = numFactors => {
         }
       },
       {
-        headerName: `F${  facNumber}`,
-        field: `check${  facNumber}`,
+        headerName: `F${facNumber}`,
+        field: `check${facNumber}`,
         pinned: false,
         editable: true,
         width: 40,
@@ -120,13 +120,13 @@ const loadingsTableDataPrep = numFactors => {
       const facNum = k + 1;
       // tempArray["factor" + facNum] = evenRound(factorMatrix1[k][j], 4);
       const tempVal = evenRound(factorMatrix1[k][j], 4);
-      tempArray[`factor${  facNum}`] = tempVal;
+      tempArray[`factor${facNum}`] = tempVal;
       // to set up tempRotStateArray
       tempArray2.push(tempVal);
       if (fSigCriterionResults.length > 0) {
-        tempArray[`check${  facNum}`] = fSigCriterionResults[j][k];
+        tempArray[`check${facNum}`] = fSigCriterionResults[j][k];
       } else {
-        tempArray[`check${  facNum}`] = false;
+        tempArray[`check${facNum}`] = false;
       }
     }
     tempRotFacStateArray.push(tempArray2);
@@ -151,6 +151,7 @@ const loadingsTableDataPrep = numFactors => {
 export default loadingsTableDataPrep;
 
 /*
+
 
 [[-0.2913921,-0.38405309,0.36818255,0.33476604,-0.54873003,0.47844413,0.58270093,-0.5156279,0.00535119],
 [0.54946489,0.25842464,0.53279182,0.48828577,-0.55050616,-0.25841561,-0.27694738,0.2516003,0.10235977],

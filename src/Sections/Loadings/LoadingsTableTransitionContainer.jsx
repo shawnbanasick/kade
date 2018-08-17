@@ -1,6 +1,6 @@
 import store from '../store';
 import React, { Component } from "react";
-import { easyComp } from "react-easy-state";
+import { view } from "react-easy-state";
 import LoadingsTable from "./LoadingsTable/LoadingsTable";
 import { Transition } from 'semantic-ui-react';
 
@@ -17,4 +17,4 @@ class LoadingsTableTransitionContainer extends Component {
     }
 }
 
-export default easyComp(LoadingsTableTransitionContainer);
+export default view(LoadingsTableTransitionContainer);

@@ -1,6 +1,6 @@
 import React from "react";
 import store from "../../../store";
-import { easyComp } from "react-easy-state";
+import { view } from "react-easy-state";
 import { Button, Dropdown, Transition } from "semantic-ui-react";
 import FactorSelectButtonModal from "./FactorSelectButtonModal";
 
@@ -111,33 +111,26 @@ class FactorSelectDropdown extends React.Component {
 
   render() {
     const { options } = this.store;
-    let showKeepFacForRotButton = store.getState("showKeepFacForRotButton");
+    //let showKeepFacForRotButton = store.getState("showKeepFacForRotButton");
     return (
-      <Transition
-        visible={showKeepFacForRotButton}
-        animation="fade"
-        duration={1000}
-      >
-        <div>
-          <span style={{ marginRight: 20 }}>
-            How many factors to keep for rotation?{" "}
-          </span>
-          <Button.Group size={"big"}>
-            <Dropdown
-              id="factorSelectDropdown"
-              placeholder={"?"}
-              onChange={saveDropdownValueToState}
-              openOnFocus={true}
-              button
-              simple
-              item
-              options={options}
-            />
-            <FactorSelectButtonModal />
-          </Button.Group>
-        </div>
-      </Transition>
+      <div>
+        <span style={{ marginRight: 20 }}>
+          How many factors to keep for rotation?{" "}
+        </span>
+
+        <Dropdown
+          id="factorSelectDropdown"
+          placeholder={"?"}
+          onChange={saveDropdownValueToState}
+          openOnFocus={true}
+          button
+          simple
+          item
+          options={options}
+        />
+        <FactorSelectButtonModal />
+      </div>
     );
   }
 }
-export default easyComp(FactorSelectDropdown);
+export default view(FactorSelectDropdown);

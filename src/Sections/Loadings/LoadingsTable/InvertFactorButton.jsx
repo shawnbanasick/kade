@@ -1,6 +1,6 @@
 import store from "../../store";
 import React, { Component } from "react";
-import { easyComp } from "react-easy-state";
+import { view } from "react-easy-state";
 import { Button, Header, Modal } from "semantic-ui-react";
 import InvertFactorDropdownSelect from "./InvertFactorDropdownSelect";
 import invertFactor from "../loadingsLogic/invertFactor";
@@ -57,4 +57,4 @@ class InvertFactorButtonModal extends Component {
   }
 }
 
-export default easyComp(InvertFactorButtonModal);
+export default view(InvertFactorButtonModal);
