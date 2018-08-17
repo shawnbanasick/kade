@@ -1,25 +1,25 @@
-import store from "../../../store";
 import cloneDeep from "lodash/cloneDeep";
+import store from "../../../../store";
 
 const doD3ChartDataPrep = function(rotFacStateArray) {
-  let abFactors = store.getState("abFactors");
-  let rotationFactorA = Math.min(...abFactors);
-  let rotationFactorB = Math.max(...abFactors);
+  const abFactors = store.getState("abFactors");
+  const rotationFactorA = Math.min(...abFactors);
+  const rotationFactorB = Math.max(...abFactors);
 
-  var step4 = store.getState("respondentNames");
-  var fSigCriterionResults = store.getState("fSigCriterionResults");
+  const step4 = store.getState("respondentNames");
+  const fSigCriterionResults = store.getState("fSigCriterionResults");
 
-  var chartData = cloneDeep(rotFacStateArray);
+  const chartData = cloneDeep(rotFacStateArray);
 
   // console.log('chartData for insert: ' + JSON.stringify(chartData));
 
-  var dataValuesArray = [];
-  var initialTwoFactorTableArray = [];
-  var step1, step3, ilen, factorNameArrayFrag, respondent2, factor1c, factor2c;
-  var tempObj;
+  const dataValuesArray = [];
+  const initialTwoFactorTableArray = [];
+  let step1, step3, ilen, factorNameArrayFrag, respondent2, factor1c, factor2c;
+  let tempObj;
 
   ilen = chartData.length;
-  for (var i = 0; i < ilen; i++) {
+  for (let i = 0; i < ilen; i++) {
     step1 = chartData[i];
     step3 = fSigCriterionResults[i];
 
@@ -37,8 +37,8 @@ const doD3ChartDataPrep = function(rotFacStateArray) {
 
   factorNameArrayFrag = [];
   respondent2 = "";
-  factor1c = "Factor " + rotationFactorA;
-  factor2c = "Factor " + rotationFactorB;
+  factor1c = `Factor ${  rotationFactorA}`;
+  factor2c = `Factor ${  rotationFactorB}`;
 
   factorNameArrayFrag.push(respondent2, factor1c, factor2c);
   initialTwoFactorTableArray.unshift(factorNameArrayFrag);

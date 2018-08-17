@@ -1,5 +1,5 @@
 import React from "react";
-import store from "../../../store";
+import store from "../../../../store";
 
 // todo - fix mouseover so that it works over circle numbers as well
 
@@ -33,23 +33,23 @@ const closePopUp = function() {
 };
 
 const renderCircles = props => (coords, index) => {
-    const circleProps = {
-      cx: props.xScale(props.data[index].factor2),
-      cy: props.yScale(props.data[index].factor1),
-      r: 9,
-      key: props.data[index].num,
-      fill: getFillColor(props.data[index]),
-      text: props.data[index].num
-      // on:("mouseover", showPopUp())
-    };
-    return (
-      <circle
-        onMouseOver={() => showPopUp(props.data[index])}
-        onMouseOut={() => closePopUp()}
-        {...styles}
-        {...circleProps}
-      />
-    );
+  const circleProps = {
+    cx: props.xScale(props.data[index].factor2),
+    cy: props.yScale(props.data[index].factor1),
+    r: 9,
+    key: props.data[index].num,
+    fill: getFillColor(props.data[index]),
+    text: props.data[index].num
+    // on:("mouseover", showPopUp())
   };
+  return (
+    <circle
+      onMouseOver={() => showPopUp(props.data[index])}
+      onMouseOut={() => closePopUp()}
+      {...styles}
+      {...circleProps}
+    />
+  );
+};
 
 export default props => <g>{props.data.map(renderCircles(props))}</g>;

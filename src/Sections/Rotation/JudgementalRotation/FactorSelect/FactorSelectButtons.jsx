@@ -1,20 +1,20 @@
 import React from "react";
-import data from "../plot/data";
-import store from "../../../store";
-import includes from 'lodash/includes';
+import includes from "lodash/includes";
 import { Button } from "semantic-ui-react";
 import { view } from "react-easy-state";
+import data from "../plot/data";
+import store from "../../../../store";
 import doD3ChartDataPrep from "../rotationLogic/doD3ChartDataPrep";
 import rotationTablePrep from "../rotationTable/rotationTablePrep";
 import displaySelectedFactorsOnPlot from "./displaySelectedFactorsOnPlot";
 import calculateCommunalities from "../../varimaxLogic/2calculateCommunalities";
 import calculatefSigCriterionValues from "../../varimaxLogic/2calculateSigCriterionValues";
-import transposeMatrix from '../../../Utils/transposeMatrix';
+import transposeMatrix from "../../../../Utils/transposeMatrix";
 
 class FactorSelectButtons extends React.Component {
   handleSubmit() {
     // if only 1 factor selected show modal
-    let userSelectedRotFactors = store.getState("userSelectedRotFactors");
+    const userSelectedRotFactors = store.getState("userSelectedRotFactors");
     if (userSelectedRotFactors.length < 2) {
       store.setState({
         showRotFactorSelectWarning: true
@@ -30,7 +30,7 @@ class FactorSelectButtons extends React.Component {
 
   // passing in baseline data from props
   handleClick(event, baselineData) {
-    let factor = event.target.id;
+    const factor = event.target.id;
     let userSelectedRotFactors = store.getState("userSelectedRotFactors");
     let abFactors = store.getState("abFactors");
 
@@ -50,8 +50,8 @@ class FactorSelectButtons extends React.Component {
         highlightRotfactor6: false,
         highlightRotfactor7: false,
         highlightRotfactor8: false,
-        userSelectedRotFactors: userSelectedRotFactors,
-        abFactors: abFactors,
+        userSelectedRotFactors,
+        abFactors,
         showScatterPlotTableDiv: false
       });
     } else {
@@ -62,12 +62,12 @@ class FactorSelectButtons extends React.Component {
           // add button clicked id to userselected factors
           userSelectedRotFactors.push(factor);
           // add id to ab factors array
-          let idValue = factor.substr(factor.length - 1);
+          const idValue = factor.substr(factor.length - 1);
           abFactors.push(parseInt(idValue, 10));
 
           // set new variables - highlighting, abFactors, and userSelectedFactors - to state
-          let newFactorId = "highlightRot" + factor.replace(" ", "");
-          let tempObj1 = {};
+          const newFactorId = `highlightRot${  factor.replace(" ", "")}`;
+          const tempObj1 = {};
           tempObj1[newFactorId] = true;
           tempObj1.userSelectedRotFactors = userSelectedRotFactors;
           tempObj1.abFactors = abFactors;
@@ -76,28 +76,28 @@ class FactorSelectButtons extends React.Component {
         // if length = 2, fire calculations
         if (userSelectedRotFactors.length === 2) {
           // matrix in factor  format
-          let factorMatrix1 = store.getState("factorMatrix");
+          const factorMatrix1 = store.getState("factorMatrix");
 
           // transpose matrix to table display format
-          let factorMatrixTransposed = transposeMatrix(factorMatrix1);
+          const factorMatrixTransposed = transposeMatrix(factorMatrix1);
 
-          // expects bare full array - required to calc significance levels for table/circles 
-          let arrayWithCommunalities = calculateCommunalities(
+          // expects bare full array - required to calc significance levels for table/circles
+          const arrayWithCommunalities = calculateCommunalities(
             factorMatrixTransposed
           );
 
-          // gets array for fSig testing from LS of calculateCommunalities 
+          // gets array for fSig testing from LS of calculateCommunalities
           // - sets fSigCriterionResults for this factor matrix
           calculatefSigCriterionValues("flag");
 
           // returns dataValuesArray for D3 chart
-          let d3Prep = doD3ChartDataPrep(arrayWithCommunalities);
+          const d3Prep = doD3ChartDataPrep(arrayWithCommunalities);
 
           // mutate state
           store.setState({
             d3RotChartData: d3Prep,
             tempRotFacStateArray: factorMatrixTransposed
-          }); 
+          });
 
           // format table data and paint 2-factor table
           rotationTablePrep(d3Prep, baselineData);
@@ -111,13 +111,13 @@ class FactorSelectButtons extends React.Component {
   }
 
   render() {
-    let shouldDisplayRotFactorButtons = store.getState("shouldShowJudgeRotDiv");
-    let numFactorsKeptForRotation = store.getState("numFactorsKeptForRot");
-    let showRotFactorSelectWarning = store.getState(
+    const shouldDisplayRotFactorButtons = store.getState("shouldShowJudgeRotDiv");
+    const numFactorsKeptForRotation = store.getState("numFactorsKeptForRot");
+    const showRotFactorSelectWarning = store.getState(
       "showRotFactorSelectWarning"
     );
-    let buttonsToRenderArray = [];
-    let baselineData = this.props.baselineData;
+    const buttonsToRenderArray = [];
+    const baselineData = this.props.baselineData;
     for (let i = 0; i < 8; i++) {
       if (i < numFactorsKeptForRotation) {
         buttonsToRenderArray.push(true);

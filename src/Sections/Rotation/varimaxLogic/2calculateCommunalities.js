@@ -14,7 +14,7 @@ const calculateCommunalities = function(currentFactorData) {
   }
 
   // for each row (participant q-sort) in table format array
-  calculateCommunalityArray.forEach((n) => {
+  calculateCommunalityArray.forEach(n => {
     // square all array values
     temp = n.map(square);
 

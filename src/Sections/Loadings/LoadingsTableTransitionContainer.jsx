@@ -1,20 +1,20 @@
-import store from '../store';
 import React, { Component } from "react";
+import { Transition } from "semantic-ui-react";
 import { view } from "react-easy-state";
+import store from "../../store";
 import LoadingsTable from "./LoadingsTable/LoadingsTable";
-import { Transition } from 'semantic-ui-react';
 
 class LoadingsTableTransitionContainer extends Component {
-    render() {
-        let showLoadingsTable = store.getState("showLoadingsTable");
-        return (
-            <Transition visible={ showLoadingsTable } animation="fade" duration={ 1000 }>
-              <div>
-                <LoadingsTable />
-              </div>
-            </Transition>
-            );
-    }
+  render() {
+    const showLoadingsTable = store.getState("showLoadingsTable");
+    return (
+      <Transition visible={showLoadingsTable} animation="fade" duration={1000}>
+        <div>
+          <LoadingsTable />
+        </div>
+      </Transition>
+    );
+  }
 }
 
 export default view(LoadingsTableTransitionContainer);

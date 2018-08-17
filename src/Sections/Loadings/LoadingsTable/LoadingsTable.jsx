@@ -1,4 +1,3 @@
-import "./LoadingsTable.css";
 import store from "../../store";
 import React, { Component } from "react";
 import { Button } from "semantic-ui-react";
@@ -55,7 +54,7 @@ class LoadingsTable extends Component {
     tempObj2.outputFactorSelectButtonsDisabled = false;
     // reset cache of factor viz data
     tempObj2.outputForDataViz2 = undefined;
-    
+
     store.setState(tempObj2);
   }
 
@@ -208,7 +207,7 @@ class LoadingsTable extends Component {
             Default sort is by factor group (FG - highest loading factor). Click
             the column headers to re-sort.
           </p>
-          <div style={containerStyle} className="ag-fresh">
+          <div style={containerStyle} className="ag-theme-fresh">
             <AgGridReact
               enableSorting={true}
               id="myGrid"

@@ -1,12 +1,12 @@
-import store from "../../../store";
+import store from "../../../../store";
 
 // todo - basically, just to trigger component update - see if delete possible
 const data = function() {
-    let newRotationVectors = store.getState("d3RotChartData");
+  const newRotationVectors = store.getState("d3RotChartData");
 
-    store.setState({
-        newRotationVectors: newRotationVectors
-    });
+  store.setState({
+    newRotationVectors
+  });
 };
 
 export default data;

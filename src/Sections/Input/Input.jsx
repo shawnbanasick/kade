@@ -1,22 +1,21 @@
 import React, { Component } from "react";
-import { view, store } from "react-easy-state";
+import { view } from "react-easy-state";
 import styled, { keyframes } from "styled-components";
-// import Tabs from "react-simpletabs";
+import { Tab } from "semantic-ui-react";
 import CsvPanel from "./CsvPanel";
 import ExcelPanel from "./ExcelPanel";
 import KandedPanel from "./KandedPanel";
 import JsonPanel from "./JsonPanel";
 import PQMethodPanel from "./PQMethodPanel";
 import DemoDataPanel from "./DemoDataPanel";
-import { Tab } from "semantic-ui-react";
 // import SuccessNotification from "./SuccessNotification";
 import ErrorNotification from "./ErrorNotification";
 
-const localStore = store({ tabActive: 1 });
+// const localStore = store({ tabActive: 1 });
 
-const handleAfter = selectedIndex => {
-  localStore.tabActive = selectedIndex;
-};
+// const handleAfter = selectedIndex => {
+//   localStore.tabActive = selectedIndex;
+// };
 
 const panes = [
   {

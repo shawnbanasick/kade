@@ -1,14 +1,14 @@
 import React from "react";
-import store from "../../../store";
-import { view } from "react-easy-state";
+import { view, store } from "react-easy-state";
 import { Button, Dropdown, Transition } from "semantic-ui-react";
 import FactorSelectButtonModal from "./FactorSelectButtonModal";
+import state from "../../../store";
 
 const saveDropdownValueToState = (event, data) => {
-  let userSelectedRotFactors = [];
-  let abFactors = [];
+  const userSelectedRotFactors = [];
+  const abFactors = [];
 
-  store.setState({
+  state.setState({
     numFactorsKeptForRot: data.value,
     shouldDisplayFacKept: false,
     // hide section 5
@@ -29,7 +29,7 @@ const saveDropdownValueToState = (event, data) => {
     shouldShowJudgeRotDiv: false,
     judgeButtonActive: false,
     showScatterPlotTableDiv: false,
-    abFactors: abFactors,
+    abFactors,
     highlightRotfactor1: false,
     highlightRotfactor2: false,
     highlightRotfactor3: false,
@@ -38,7 +38,7 @@ const saveDropdownValueToState = (event, data) => {
     highlightRotfactor6: false,
     highlightRotfactor7: false,
     highlightRotfactor8: false,
-    userSelectedRotFactors: userSelectedRotFactors,
+    userSelectedRotFactors,
     // reset varimax
     varimaxButtonDisabled: false,
     varimaxButtonText: "Varimax Rotation",
@@ -46,74 +46,74 @@ const saveDropdownValueToState = (event, data) => {
   });
 };
 
-class FactorSelectDropdown extends React.Component {
-  store = {};
+// const localStore = store({ options: [] });
 
-  componentWillUpdate() {
-    this.store.options = this.getOptions();
-  }
-
-  componentWillMount() {
-    this.store.options = this.getOptions();
-  }
-
-  getOptions = () => {
-    let isCentroid = store.getState("activeCentroidFactorsButton");
-    let options = [
-      {
-        key: "factor1",
-        text: "1",
-        value: 1
-      },
-      {
-        key: "factor2",
-        text: "2",
-        value: 2
-      },
-      {
-        key: "factor3",
-        text: "3",
-        value: 3
-      },
-      {
-        key: "factor4",
-        text: "4",
-        value: 4
-      },
-      {
-        key: "factor5",
-        text: "5",
-        value: 5
-      },
-      {
-        key: "factor6",
-        text: "6",
-        value: 6
-      },
-      {
-        key: "factor7",
-        text: "7",
-        value: 7
-      },
-      {
-        key: "factor8",
-        text: "8",
-        value: 8
-      }
-    ];
-    // shorten options list if using centroid
-    if (isCentroid) {
-      let numCentroidFactors = store.getState("numCentroidFactors");
-      options.length = +numCentroidFactors;
+function getOptions() {
+  const isCentroid = state.getState("activeCentroidFactorsButton");
+  const options = [
+    {
+      key: "factor1",
+      text: "1",
+      value: 1
+    },
+    {
+      key: "factor2",
+      text: "2",
+      value: 2
+    },
+    {
+      key: "factor3",
+      text: "3",
+      value: 3
+    },
+    {
+      key: "factor4",
+      text: "4",
+      value: 4
+    },
+    {
+      key: "factor5",
+      text: "5",
+      value: 5
+    },
+    {
+      key: "factor6",
+      text: "6",
+      value: 6
+    },
+    {
+      key: "factor7",
+      text: "7",
+      value: 7
+    },
+    {
+      key: "factor8",
+      text: "8",
+      value: 8
     }
-    return options;
-  };
+  ];
+  // shorten options list if using centroid
+  if (isCentroid) {
+    const numCentroidFactors = state.getState("numCentroidFactors");
+    options.length = +numCentroidFactors;
+  }
+  return options;
+}
+
+class FactorSelectDropdown extends React.Component {
+  // componentWillUpdate() {
+  //   this.state.options = this.getOptions();
+  // }
+
+  // componentDidMount() {
+  //   localStore.options = this.getOptions();
+  // }
 
   render() {
-    const { options } = this.store;
-    //let showKeepFacForRotButton = store.getState("showKeepFacForRotButton");
+    const options = getOptions();
+    // let showKeepFacForRotButton = store.getState("showKeepFacForRotButton");
     return (
-      <div>
+      <div style={{ display: "flex" }}>
         <span style={{ marginRight: 20 }}>
           How many factors to keep for rotation?{" "}
         </span>
@@ -122,7 +122,7 @@ class FactorSelectDropdown extends React.Component {
           id="factorSelectDropdown"
           placeholder={"?"}
           onChange={saveDropdownValueToState}
-          openOnFocus={true}
+          openOnFocus
           button
           simple
           item
