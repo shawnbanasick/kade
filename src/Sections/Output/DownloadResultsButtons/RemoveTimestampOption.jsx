@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { easyComp } from "react-easy-state";
+import { view } from "react-easy-state";
 import TimestampSelectionSwitch from "../FactorViz/TimestampSelectionSwitch";
 
 // const styles = {
@@ -25,4 +25,4 @@ class RemoveTimestampOption extends Component {
   }
 }
 
-export default easyComp(RemoveTimestampOption);
+export default view(RemoveTimestampOption);

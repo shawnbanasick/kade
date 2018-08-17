@@ -1,51 +1,45 @@
 import React from "react";
-import store from "../../store";
-//import { easyComp } from "react-easy-state";
+import store from "../../../store";
+// import { view } from "react-easy-state";
 
 const styles = {
-    // fill: "white",
-    stroke: "black",
-    fontWeight: "bold",
+  // fill: "white",
+  stroke: "black",
+  fontWeight: "bold",
 
-    // strokeWidth: 1,
-    zindex: 99
+  // strokeWidth: 1,
+  zindex: 99
 };
 
 const widthValue = props => {
-    let shouldAdjustWidth = props.factorVizOptions.willAdjustCardWidth;
-    if (shouldAdjustWidth === true) {
-        let cardWidth = props.factorVizOptions.willAdjustCardWidthBy;
-        return cardWidth;
-    }
-    return 110;
+  const shouldAdjustWidth = props.factorVizOptions.willAdjustCardWidth;
+  if (shouldAdjustWidth === true) {
+    const cardWidth = props.factorVizOptions.willAdjustCardWidthBy;
+    return cardWidth;
+  }
+  return 110;
 };
 
 const titleHeight = store.getState("titleHeight");
 
-const renderBaseRectangles = props => {
-    return (coords, index) => {
-        const textProps = {
-            x: index * widthValue(props) + widthValue(props) / 2,
-            y: 20 + titleHeight,
-            // width: widthValue(),
-            // height: heightValue(),
-            key: props.positionData.uniques[index],
-            text: props.positionData.uniques[index],
-            textAnchor: "middle"
-        };
-        return (
-            <text fontFamily="arial" {...styles} {...textProps}>
-              { textProps.text }
-            </text>
-            );
+const renderBaseRectangles = props => (coords, index) => {
+    const textProps = {
+      x: index * widthValue(props) + widthValue(props) / 2,
+      y: 20 + titleHeight,
+      // width: widthValue(),
+      // height: heightValue(),
+      key: props.positionData.uniques[index],
+      text: props.positionData.uniques[index],
+      textAnchor: "middle"
     };
-};
+    return (
+      <text fontFamily="arial" {...styles} {...textProps}>
+        {textProps.text}
+      </text>
+    );
+  };
 
-export default props => {
-    return <g>
-             { props.positionData.uniques.map(renderBaseRectangles(props)) }
-           </g>;
-};
+export default props => <g>{props.positionData.uniques.map(renderBaseRectangles(props))}</g>;
 
 /*
   indexGroup

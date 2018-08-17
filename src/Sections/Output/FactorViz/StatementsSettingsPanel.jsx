@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { easyComp } from "react-easy-state";
+import { view } from "react-easy-state";
 import UserSelectionSwitch from "./UserSelectionSwitch";
 import UserTextInput from "./UserTextInput";
 
@@ -55,4 +55,4 @@ class StatementsSettingsPanel extends Component {
   }
 }
 
-export default easyComp(StatementsSettingsPanel);
+export default view(StatementsSettingsPanel);

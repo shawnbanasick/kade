@@ -1,15 +1,13 @@
-import store from "../../store";
+import store from "../../../store";
 import getInstances from "./getInstances";
 import prepareDataForFactorViz from "./prepareDataForFactorViz";
 
 // helper function
-const capitalizeFirstLetter = string => {
-  return string.charAt(0).toUpperCase() + string.slice(1);
-};
+const capitalizeFirstLetter = string => string.charAt(0).toUpperCase() + string.slice(1);
 
 // exported function
 const createFactorVizDataObjectForProps = factorVizOptions => {
-  let shouldDisplayFactorViz = store.getState("displayFactorVisualizations");
+  const shouldDisplayFactorViz = store.getState("displayFactorVisualizations");
 
   // early return if no display
   if (shouldDisplayFactorViz === false) {
@@ -17,13 +15,13 @@ const createFactorVizDataObjectForProps = factorVizOptions => {
   }
 
   // todo - check to see if still needed
-  let shouldUseUnicode = store.getState("willUseDistingUnicode");
-  let shouldShowZscoreArrows = store.getState(
+  const shouldUseUnicode = store.getState("willUseDistingUnicode");
+  const shouldShowZscoreArrows = store.getState(
     "willDisplayDistingCompareSymbols"
   );
 
   // set default font size for significance indicators
-  let willAdjustIndicatorSize = store.getState("willAdjustDistIndicatorSize");
+  const willAdjustIndicatorSize = store.getState("willAdjustDistIndicatorSize");
   let willAdjustIndicatorSizeBy = 12;
   if (willAdjustIndicatorSize) {
     willAdjustIndicatorSizeBy = store.getState("willAdjustDistIndicatorSizeBy");
@@ -31,36 +29,36 @@ const createFactorVizDataObjectForProps = factorVizOptions => {
 
   // create data object for render mapping
   let customFactorNamesArray;
-  let userSelectedFactors = store.getState("userSelectedFactors");
-  let positionData = getInstances();
-  let numberOfFactors = store.getState("userSelectedFactors").length;
-  let data = prepareDataForFactorViz();
-  let factorData = [];
-  let useCustomNames = factorVizOptions.willAddCustomNames;
+  const userSelectedFactors = store.getState("userSelectedFactors");
+  const positionData = getInstances();
+  const numberOfFactors = store.getState("userSelectedFactors").length;
+  const data = prepareDataForFactorViz();
+  const factorData = [];
+  const useCustomNames = factorVizOptions.willAddCustomNames;
   if (useCustomNames) {
-    let customFactorNamesArray1 = factorVizOptions.customFactorNames;
+    const customFactorNamesArray1 = factorVizOptions.customFactorNames;
     customFactorNamesArray = customFactorNamesArray1.split(",");
   }
 
   // loop thru factors to set up config object
   for (let i = 0; i < numberOfFactors; i++) {
     let name;
-    let factorName = capitalizeFirstLetter(userSelectedFactors[i]);
-    let id = factorName.replace(/\s+/g, "");
+    const factorName = capitalizeFirstLetter(userSelectedFactors[i]);
+    const id = factorName.replace(/\s+/g, "");
     if (useCustomNames) {
       console.log(
-        "custom names: " + JSON.stringify([...customFactorNamesArray])
+        `custom names: ${  JSON.stringify([...customFactorNamesArray])}`
       );
 
       name = customFactorNamesArray[i];
       if (name === undefined || name === "") {
-        name = "Composite Q-sort for " + factorName;
+        name = `Composite Q-sort for ${  factorName}`;
       }
     } else {
-      name = "Composite Q-sort for " + factorName;
+      name = `Composite Q-sort for ${  factorName}`;
     }
     // let tempId = userSelectedFactors[i].replace(/\s+/g, "");
-    let tempObj = {};
+    const tempObj = {};
 
     tempObj.name = name;
 

@@ -1,6 +1,6 @@
 import React from "react";
 import store from "../../store";
-import { easyComp } from "react-easy-state";
+import { view } from "react-easy-state";
 import { Button, Transition } from "semantic-ui-react";
 import createFactorVizDataObjectForProps from "./createFactorVizDataObjectForProps";
 import refreshVizOptionsState from "./refreshVizOptionsState";
@@ -56,4 +56,4 @@ class RefreshFactorVizButton extends React.Component {
     }
 }
 
-export default easyComp(RefreshFactorVizButton);
+export default view(RefreshFactorVizButton);

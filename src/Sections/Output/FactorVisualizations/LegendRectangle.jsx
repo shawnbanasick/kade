@@ -1,6 +1,6 @@
 import React from "react";
-import store from "../../store";
-//import { easyComp } from "react-easy-state";
+import store from "../../../store";
+// import { view } from "react-easy-state";
 
 const styles = {
   fill: "white",
@@ -12,22 +12,25 @@ const styles = {
 const getHeight = props => {
   let legendBoxHeight = 50;
   // get state from props
-  let shouldDisplayConsensus = props.factorVizOptions.willDisplayConsensusStates;
-  let willIndicateDistinguishing = props.factorVizOptions.willIndicateDistinguishing;
-  let willDisplayDistingCompareSymbols = props.factorVizOptions.willDisplayDistingCompareSymbols;
+  const shouldDisplayConsensus =
+    props.factorVizOptions.willDisplayConsensusStates;
+  const willIndicateDistinguishing =
+    props.factorVizOptions.willIndicateDistinguishing;
+  const willDisplayDistingCompareSymbols =
+    props.factorVizOptions.willDisplayDistingCompareSymbols;
 
   // make adjustments to box size
   if (willIndicateDistinguishing === true) {
-    legendBoxHeight = legendBoxHeight + 100;
+    legendBoxHeight += 100;
   }
   if (willDisplayDistingCompareSymbols === true) {
-    legendBoxHeight = legendBoxHeight + 50;
+    legendBoxHeight += 50;
   }
   if (shouldDisplayConsensus === true) {
-    legendBoxHeight = legendBoxHeight + 10;
+    legendBoxHeight += 10;
   }
   if (willIndicateDistinguishing === false && shouldDisplayConsensus === true) {
-    legendBoxHeight = legendBoxHeight + 40;
+    legendBoxHeight += 40;
   }
   return legendBoxHeight;
 };
@@ -35,22 +38,23 @@ const getHeight = props => {
 const getXCoords = props => {
   let totalWidth = props.positionData.instances.length * 110;
   if (props.factorVizOptions.willAdjustCardWidth === true) {
-    totalWidth = props.positionData.instances.length *
-    props.factorVizOptions.willAdjustCardWidthBy;
+    totalWidth =
+      props.positionData.instances.length *
+      props.factorVizOptions.willAdjustCardWidthBy;
   }
-  let halfWidth = totalWidth / 2;
-  let xCoord = halfWidth - 300;
+  const halfWidth = totalWidth / 2;
+  const xCoord = halfWidth - 300;
   return xCoord;
 };
 
 const yValue = props => {
-  let maxColumnHeight = store.getState("maxColumnHeight");
-  let defaultHeight = maxColumnHeight * 110 + 100;
+  const maxColumnHeight = store.getState("maxColumnHeight");
+  const defaultHeight = maxColumnHeight * 110 + 100;
 
-  let shouldAdjustHeight = props.factorVizOptions.willAdjustCardHeight;
+  const shouldAdjustHeight = props.factorVizOptions.willAdjustCardHeight;
   if (shouldAdjustHeight === true) {
-    let cardHeight = props.factorVizOptions.willAdjustCardHeightBy;
-    let yValue = maxColumnHeight * cardHeight + 100;
+    const cardHeight = props.factorVizOptions.willAdjustCardHeightBy;
+    const yValue = maxColumnHeight * cardHeight + 100;
     return yValue;
   }
   return defaultHeight;
@@ -63,7 +67,7 @@ class LegendRectangle extends React.Component {
     this.renderLegendRectangle = this.renderLegendRectangle.bind(this);
   }
 
-  renderLegendRectangle = props => {
+  renderLegendRectangle(props) {
     const legendProps = {
       x: getXCoords(props),
       y: yValue(props),
@@ -71,12 +75,10 @@ class LegendRectangle extends React.Component {
       height: getHeight(props)
     };
     return <rect {...styles} {...legendProps} />;
-  };
+  }
 
   render() {
-    return <g>
-             { this.renderLegendRectangle(this.props) }
-           </g>;
+    return <g>{this.renderLegendRectangle(this.props)}</g>;
   }
 }
 

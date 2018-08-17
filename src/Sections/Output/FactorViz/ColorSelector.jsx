@@ -1,7 +1,7 @@
 import React from "react";
 import reactCSS from "reactcss";
 import { SketchPicker } from "react-color";
-import store from "../../store";
+import store from "../../../store";
 
 class ColorSelector extends React.Component {
     state = {

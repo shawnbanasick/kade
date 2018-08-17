@@ -1,7 +1,7 @@
 import React from "react";
-import { easyComp } from "react-easy-state";
-import store from "../../store";
+import { view } from "react-easy-state";
 import { Button } from "semantic-ui-react";
+import store from "../../../store";
 
 // todo - change this back to normal button
 // display rules prevent premature click now
@@ -58,4 +58,4 @@ class DisplayVisualizationsButtons extends React.Component {
   }
 }
 
-export default easyComp(DisplayVisualizationsButtons);
+export default view(DisplayVisualizationsButtons);

@@ -12,31 +12,31 @@ import ErrorBoundary from "./ErrorBoundary";
 
 const getStyles = props => {
   // set dynamic height and width according to user prefs
-  let positionData = props.positionData;
-  let willAdjustCardWidth = props.factorVizOptions.willAdjustCardWidth;
-  let willAdjustCardHeight = props.factorVizOptions.willAdjustCardHeight;
-  let maxNumCards = Math.max(...positionData.instances);
+  const positionData = props.positionData;
+  const willAdjustCardWidth = props.factorVizOptions.willAdjustCardWidth;
+  const willAdjustCardHeight = props.factorVizOptions.willAdjustCardHeight;
+  const maxNumCards = Math.max(...positionData.instances);
   let containerHeight;
   if (willAdjustCardHeight === true) {
-    let newHeight = props.factorVizOptions.willAdjustCardHeightBy;
+    const newHeight = props.factorVizOptions.willAdjustCardHeightBy;
     containerHeight = 385 + newHeight * maxNumCards;
   } else {
     containerHeight = 145 * maxNumCards + 250;
   }
-  let shouldDisplayLegend = props.factorVizOptions.willIncludeLegend;
+  const shouldDisplayLegend = props.factorVizOptions.willIncludeLegend;
   if (shouldDisplayLegend === false) {
-    containerHeight = containerHeight - 250;
+    containerHeight -= 250;
   }
 
   let containerWidth;
   if (willAdjustCardWidth === true) {
-    let newWidth = props.factorVizOptions.willAdjustCardWidthBy;
+    const newWidth = props.factorVizOptions.willAdjustCardWidthBy;
     containerWidth = 20 + newWidth * positionData.uniques.length;
   } else {
     containerWidth = 125 * positionData.uniques.length;
   }
 
-  let container = {
+  const container = {
     margin: "0 auto",
     textAlign: "center",
     width: containerWidth,
@@ -46,24 +46,24 @@ const getStyles = props => {
   return container;
 };
 
-let FactorViz = props => {
-  let shouldDisplaySig = props.factorVizOptions.willIndicateDistinguishing;
-  let shouldDisplayLegend = props.factorVizOptions.willIncludeLegend;
-  let margin = { top: 10, left: 10, bottom: 10, right: 10 };
+const FactorViz = props => {
+  const shouldDisplaySig = props.factorVizOptions.willIndicateDistinguishing;
+  const shouldDisplayLegend = props.factorVizOptions.willIncludeLegend;
+  const margin = { top: 10, left: 10, bottom: 10, right: 10 };
   return (
     <ErrorBoundary>
       <div style={getStyles(props)}>
         <svg
           className="vizImage"
-          id={"image" + props.id}
+          id={`image${props.id}`}
           // style={styles.svg}
 
-          //width={props.width}
+          // width={props.width}
           width={getStyles(props).width - margin.left - margin.right}
           // height={props.height}
           height={getStyles(props).height - margin.top - margin.bottom}
         >
-          <g transform={"translate(" + margin.left + "," + margin.top + ")"}>
+          <g transform={`translate(${margin.left},${margin.top})`}>
             <FactorTitleText {...props} />
             <HeaderRectangles {...props} />
             <HeaderColNumbers {...props} />

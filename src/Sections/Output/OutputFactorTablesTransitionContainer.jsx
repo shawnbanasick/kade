@@ -1,6 +1,6 @@
 import store from "../store";
 import React, { Component } from "react";
-import { easyComp } from "react-easy-state";
+import { view } from "react-easy-state";
 import FactorCorrelationsTable from "./Factor Info/FactorCorrelationsTable";
 import FactorCharacteristicsTable from "./Factor Info/FactorCharacteristicsTable";
 import StandardErrorsDifferencesTable from "./Factor Info/StandardErrorsDifferencesTable";
@@ -38,4 +38,4 @@ class OutputFactorTablesTranstionContainer extends Component {
   }
 }
 
-export default easyComp(OutputFactorTablesTranstionContainer);
+export default view(OutputFactorTablesTranstionContainer);

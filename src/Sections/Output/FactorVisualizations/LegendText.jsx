@@ -1,5 +1,5 @@
 import React from "react";
-import store from "../../store";
+import store from "../../../store";
 
 const getXCoords = props => {
   let totalWidth = props.positionData.instances.length * 110;
@@ -8,19 +8,19 @@ const getXCoords = props => {
       props.positionData.instances.length *
       props.factorVizOptions.willAdjustCardWidthBy;
   }
-  let halfWidth = totalWidth / 2;
-  let xCoord = halfWidth;
+  const halfWidth = totalWidth / 2;
+  const xCoord = halfWidth;
   return xCoord;
 };
 
-const yValue = props => {
-  let maxColumnHeight = store.getState("maxColumnHeight");
-  let defaultHeight = maxColumnHeight * 110 + 100;
+let yValue = props => {
+  const maxColumnHeight = store.getState("maxColumnHeight");
+  const defaultHeight = maxColumnHeight * 110 + 100;
 
-  let shouldAdjustHeight = props.factorVizOptions.willAdjustCardHeight;
+  const shouldAdjustHeight = props.factorVizOptions.willAdjustCardHeight;
   if (shouldAdjustHeight === true) {
-    let cardHeight = props.factorVizOptions.willAdjustCardHeightBy;
-    let yValue = maxColumnHeight * cardHeight + 100;
+    const cardHeight = props.factorVizOptions.willAdjustCardHeightBy;
+    yValue = maxColumnHeight * cardHeight + 100;
     return yValue;
   }
   return defaultHeight;
@@ -33,14 +33,14 @@ class LegendText extends React.Component {
     this.renderLegendRectangleText = this.renderLegendRectangleText.bind(this);
   }
 
-  renderLegendRectangleText = props => {
-    let displayColor = props.factorVizOptions.consensusIndicator;
-    let xLocation = getXCoords(props);
-    let yLocation = yValue(props) + 5;
-    let useUnicode = props.factorVizOptions.willUseDistingUnicode;
-    let shouldDisplayConsensus =
+  renderLegendRectangleText(props) {
+    const displayColor = props.factorVizOptions.consensusIndicator;
+    const xLocation = getXCoords(props);
+    const yLocation = yValue(props) + 5;
+    const useUnicode = props.factorVizOptions.willUseDistingUnicode;
+    const shouldDisplayConsensus =
       props.factorVizOptions.willDisplayConsensusStates;
-    let willIndicateDistinguishing =
+    const willIndicateDistinguishing =
       props.factorVizOptions.willIndicateDistinguishing;
     let willDisplayDistingCompareSymbols =
       props.factorVizOptions.willDisplayDistingCompareSymbols;
@@ -50,10 +50,10 @@ class LegendText extends React.Component {
     }
     let consensusYLocation = 170;
     if (willIndicateDistinguishing === false) {
-      consensusYLocation = consensusYLocation - 55;
+      consensusYLocation -= 55;
     }
     if (willDisplayDistingCompareSymbols === false) {
-      consensusYLocation = consensusYLocation - 60;
+      consensusYLocation -= 60;
     }
 
     let symbol05 = "*";
@@ -61,16 +61,16 @@ class LegendText extends React.Component {
     let arrowLeft = "\u003C\u003C";
     let arrowRight = "\u003E\u003E";
     if (useUnicode) {
-      //symbol05 = "\u25CE";
+      // symbol05 = "\u25CE";
       symbol05 = "\u2733";
       // symbol01 = "\u25C9";
       symbol01 = "\u2733\u2733";
       arrowLeft = "\u25C4";
       arrowRight = "\u25BA";
     }
-    let additionalXLocationValue = 260;
+    const additionalXLocationValue = 260;
 
-    let titleStyles = {
+    const titleStyles = {
       x: xLocation,
       y: yLocation + 30,
       fontSize: 26,
@@ -79,49 +79,49 @@ class LegendText extends React.Component {
       fontFamily: "Verdana, sans-serif"
     };
 
-    let sigSymbolStyle1 = {
+    const sigSymbolStyle1 = {
       x: xLocation - additionalXLocationValue,
       y: yLocation + 65,
       fontSize: 16,
       fontFamily: "Verdana, sans-serif"
     };
 
-    let sigSymbolStyle2 = {
+    const sigSymbolStyle2 = {
       x: xLocation - additionalXLocationValue,
       y: yLocation + 95,
       fontSize: 16,
       fontFamily: "Verdana, sans-serif"
     };
 
-    let sigSymbolStyle3 = {
+    const sigSymbolStyle3 = {
       x: xLocation - additionalXLocationValue,
       y: yLocation + 125,
       fontSize: 16,
       fontFamily: "Verdana, sans-serif"
     };
 
-    let sigSymbolStyle4 = {
+    const sigSymbolStyle4 = {
       x: xLocation - additionalXLocationValue,
       y: yLocation + 155,
       fontSize: 20,
       fontFamily: "Verdana, sans-serif"
     };
 
-    let sigSymbolStyle5 = {
+    const sigSymbolStyle5 = {
       x: xLocation - additionalXLocationValue + 20,
       y: yLocation + 155,
       fontSize: 16,
       fontFamily: "Verdana, sans-serif"
     };
 
-    let sigSymbolStyle6 = {
+    const sigSymbolStyle6 = {
       x: xLocation - additionalXLocationValue,
       y: yLocation + 155,
       fontSize: 16,
       fontFamily: "Verdana, sans-serif"
     };
 
-    let consensusRectStyles = {
+    const consensusRectStyles = {
       x: xLocation - additionalXLocationValue,
       y: yLocation + consensusYLocation,
       width: 15,
@@ -133,7 +133,7 @@ class LegendText extends React.Component {
       strokeWidth: 1
     };
 
-    let consensusStatementStyle = {
+    const consensusStatementStyle = {
       x: xLocation - additionalXLocationValue + 20,
       y: yLocation + 14 + consensusYLocation,
       fontSize: 16,
@@ -147,12 +147,10 @@ class LegendText extends React.Component {
           {willIndicateDistinguishing && (
             <g>
               <text {...sigSymbolStyle1}>
-                {symbol05} Distinguishing statement at P
-                {"\u003C"} 0.05
+                {symbol05} Distinguishing statement at P{"\u003C"} 0.05
               </text>
               <text {...sigSymbolStyle2}>
-                {symbol01} Distinguishing statement at P
-                {"\u003C"} 0.01
+                {symbol01} Distinguishing statement at P{"\u003C"} 0.01
               </text>
             </g>
           )}
@@ -175,38 +173,36 @@ class LegendText extends React.Component {
           )}
         </g>
       );
-    } else {
-      return (
-        <g>
-          <text {...titleStyles}>Legend </text>
-          {willIndicateDistinguishing && (
-            <g>
-              <text {...sigSymbolStyle1}>
-                {symbol05} {"  "}Distinguishing statement at P
-                {"\u003C"} 0.05
-              </text>
-              <text {...sigSymbolStyle2}>
-                {symbol01} Distinguishing statement at P
-                {"\u003C"} 0.01
-              </text>
-              <text {...sigSymbolStyle3}>
-                {arrowRight} z-Score for the statement is higher than in all the
-                other factors
-              </text>
-              <text {...sigSymbolStyle6}>
-                {arrowLeft} z-Score for the statement is lower than in all the
-                other factors
-              </text>{" "}
-            </g>
-          )}
-          {shouldDisplayConsensus && <rect {...consensusRectStyles} />}
-          {shouldDisplayConsensus && (
-            <text {...consensusStatementStyle}>Consensus statement</text>
-          )}
-        </g>
-      );
     }
-  };
+    return (
+      <g>
+        <text {...titleStyles}>Legend </text>
+        {willIndicateDistinguishing && (
+          <g>
+            <text {...sigSymbolStyle1}>
+              {symbol05} {"  "}
+              Distinguishing statement at P{"\u003C"} 0.05
+            </text>
+            <text {...sigSymbolStyle2}>
+              {symbol01} Distinguishing statement at P{"\u003C"} 0.01
+            </text>
+            <text {...sigSymbolStyle3}>
+              {arrowRight} z-Score for the statement is higher than in all the
+              other factors
+            </text>
+            <text {...sigSymbolStyle6}>
+              {arrowLeft} z-Score for the statement is lower than in all the
+              other factors
+            </text>{" "}
+          </g>
+        )}
+        {shouldDisplayConsensus && <rect {...consensusRectStyles} />}
+        {shouldDisplayConsensus && (
+          <text {...consensusStatementStyle}>Consensus statement</text>
+        )}
+      </g>
+    );
+  }
 
   render() {
     return <g>{this.renderLegendRectangleText(this.props)}</g>;

@@ -1,6 +1,6 @@
 import store from "../store";
 import React, { Component } from "react";
-import { easyComp } from "react-easy-state";
+import { view } from "react-easy-state";
 import { Button, Header, Icon, Modal } from "semantic-ui-react";
 
 class UnforcedWarningModal extends Component {
@@ -47,4 +47,4 @@ class UnforcedWarningModal extends Component {
         }
     }
 }
-export default easyComp(UnforcedWarningModal);
+export default view(UnforcedWarningModal);

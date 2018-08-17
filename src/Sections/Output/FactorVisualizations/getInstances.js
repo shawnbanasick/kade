@@ -1,59 +1,59 @@
-import uniq from 'lodash/uniq';
-import store from "../../store";
+import uniq from "lodash/uniq";
+import store from "../../../store";
 import findOccurances from "./findOccurances";
 import sortTriangleShape from "./sortTriangleShape";
 
 const getInstances = function() {
-  let qSortPattern = sortTriangleShape();
+  const qSortPattern = sortTriangleShape();
 
-  let numRectsArray = [];
+  const numRectsArray = [];
   for (let i = 0; i < qSortPattern.length; i++) {
     numRectsArray.push(i + 1);
   }
 
-  let uniques = uniq(qSortPattern);
-  let instances = [];
+  const uniques = uniq(qSortPattern);
+  const instances = [];
 
   for (let k = 0; k < uniques.length; k++) {
-    let temp1 = findOccurances(qSortPattern, uniques[k]);
+    const temp1 = findOccurances(qSortPattern, uniques[k]);
     instances.push(temp1);
   }
 
   // set max column height to use with factor viz
-  let maxColumnHeight = Math.max(...instances);
+  const maxColumnHeight = Math.max(...instances);
   store.setState({
-    maxColumnHeight: maxColumnHeight
+    maxColumnHeight
   });
 
   // get x position
-  var xPosLoop = [];
-  var counterX = 0;
-  for (var m = 0; m < instances.length; m++) {
-    for (var p = 0; p < instances[m]; p++) {
+  const xPosLoop = [];
+  let counterX = 0;
+  for (let m = 0; m < instances.length; m++) {
+    for (let p = 0; p < instances[m]; p++) {
       xPosLoop.push(counterX);
     }
-    counterX = counterX + 1;
+    counterX += 1;
   }
 
   // get y position
-  var yPosLoop = [];
-  var counterY;
-  for (var r = 0; r < instances.length; r++) {
+  const yPosLoop = [];
+  let counterY;
+  for (let r = 0; r < instances.length; r++) {
     counterY = 0;
-    for (var s = 0; s < instances[r]; s++) {
+    for (let s = 0; s < instances[r]; s++) {
       yPosLoop.push(counterY);
-      counterY = counterY + 1;
+      counterY += 1;
     }
   }
 
-  let positionData = {
-    instances: instances,
-    xPosLoop: xPosLoop,
-    yPosLoop: yPosLoop,
-    numRectsArray: numRectsArray,
-    uniques: uniques
+  const positionData = {
+    instances,
+    xPosLoop,
+    yPosLoop,
+    numRectsArray,
+    uniques
   };
-  store.setState({ positionData: positionData });
+  store.setState({ positionData });
   return positionData;
 };
 

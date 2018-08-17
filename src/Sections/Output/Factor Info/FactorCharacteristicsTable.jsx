@@ -1,6 +1,6 @@
 import store from "../../store";
 import React, { Component } from "react";
-import { easyComp } from "react-easy-state";
+import { view } from "react-easy-state";
 import { AgGridReact } from "ag-grid-react";
 
 // let containerStyle = {
@@ -109,4 +109,4 @@ class FactorCorrelationsTable extends Component {
     }
 }
 
-export default easyComp(FactorCorrelationsTable);
+export default view(FactorCorrelationsTable);

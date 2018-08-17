@@ -1,4 +1,4 @@
-import store from "../../store";
+import store from "../../../store";
 
 const pushUnrotatedFactorsTableToOutputArray = function(
   sheetNames,
@@ -7,14 +7,14 @@ const pushUnrotatedFactorsTableToOutputArray = function(
   sheetNamesXlsx,
   colSizes
 ) {
-  let unrotFactorMatrix = store.getState("unrotatedFactorMatrixOutput");
-  let eigenvals = store.getState("eigenvalues"); // "eigenValuesSorted");
-  let expVar = store.getState("eigensPercentExpVar");
+  const unrotFactorMatrix = store.getState("unrotatedFactorMatrixOutput");
+  const eigenvals = store.getState("eigenvalues"); // "eigenValuesSorted");
+  const expVar = store.getState("eigensPercentExpVar");
 
   sheetNamesXlsx.push("Unrotated Factor Matrix");
 
   // set excel column widths
-  let columns = [
+  const columns = [
     {
       wch: 8
     },
@@ -22,7 +22,7 @@ const pushUnrotatedFactorsTableToOutputArray = function(
       wch: 20
     }
   ];
-  let iiiLen = unrotFactorMatrix[0].length - 2;
+  const iiiLen = unrotFactorMatrix[0].length - 2;
   for (let iii = 0; iii < iiiLen; iii++) {
     columns.push({
       wch: 8
@@ -30,7 +30,7 @@ const pushUnrotatedFactorsTableToOutputArray = function(
   }
   colSizes.push(columns);
 
-  //add eigenvals
+  // add eigenvals
   if (eigenvals[0] === "Eigenvalues") {
     eigenvals.unshift("");
   } else {

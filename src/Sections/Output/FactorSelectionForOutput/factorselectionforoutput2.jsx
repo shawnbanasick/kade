@@ -2,7 +2,7 @@ import React from "react";
 import store from "../../store";
 import includes from 'lodash/includes';
 import { Button } from "semantic-ui-react";
-import { easyComp } from "react-easy-state";
+import { view } from "react-easy-state";
 
 import outputDispatch from "../calcualteOutputLogic/1_outputDispatch";
 
@@ -216,4 +216,4 @@ class FactorSelectionForOutputButtons extends React.Component {
   }
 }
 
-export default easyComp(FactorSelectionForOutputButtons);
+export default view(FactorSelectionForOutputButtons);

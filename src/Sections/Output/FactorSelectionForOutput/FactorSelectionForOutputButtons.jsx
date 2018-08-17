@@ -1,24 +1,24 @@
 import React from "react";
-import store from "../../store";
-import includes from 'lodash/includes';
-import { easyComp } from "react-easy-state";
+import includes from "lodash/includes";
+import { view } from "react-easy-state";
 import { Button, Transition } from "semantic-ui-react";
+import store from "../../../store";
 import outputDispatch from "../calcualteOutputLogic/1_outputDispatch";
 
 class FactorSelectionForOutputButtons extends React.Component {
   clearButtonHighlighting() {
     console.log(JSON.stringify("clear button highlighting called"));
 
-    let btnId = store.getState("outputButtonsArray");
-    let tempObj2 = {};
+    const btnId = store.getState("outputButtonsArray");
+    const tempObj2 = {};
     for (let i = 0; i < btnId.length; i++) {
-      tempObj2["highlightfactor" + btnId[i]] = false;
+      tempObj2[`highlightfactor${  btnId[i]}`] = false;
     }
     store.setState(tempObj2);
   }
 
   handleSubmit() {
-    let userSelectedFactors = store.getState("userSelectedFactors");
+    const userSelectedFactors = store.getState("userSelectedFactors");
     if (userSelectedFactors.length !== 0) {
       outputDispatch();
       store.setState({
@@ -30,26 +30,26 @@ class FactorSelectionForOutputButtons extends React.Component {
 
   initializeButtonActiveState(btnId) {
     // set all highlighting to false (not active)
-    let tempObj = {};
+    const tempObj = {};
     for (let i = 0; i < btnId.length; i++) {
-      tempObj["highlightfactor" + btnId[i]] = false;
+      tempObj[`highlightfactor${  btnId[i]}`] = false;
     }
     store.setState(tempObj);
   }
 
   handleOnclick(event) {
-    let factor = event.target.id;
+    const factor = event.target.id;
     let userSelectedFactors = store.getState("userSelectedFactors");
-    let btnId = store.getState("outputButtonsArray");
+    const btnId = store.getState("outputButtonsArray");
 
     // select all
     if (factor === "selectAllFacs") {
       // construct state object and user selected factors array
-      let tempObj = {};
-      let userSelectedFactors = [];
+      const tempObj = {};
+      const userSelectedFactors = [];
       for (let i = 0; i < btnId.length; i++) {
-        tempObj["highlightfactor" + btnId[i]] = true;
-        let temp1 = "factor " + btnId[i];
+        tempObj[`highlightfactor${  btnId[i]}`] = true;
+        const temp1 = `factor ${  btnId[i]}`;
         userSelectedFactors.push(temp1);
       }
       tempObj.selectAllClicked = true;
@@ -63,11 +63,11 @@ class FactorSelectionForOutputButtons extends React.Component {
 
       store.setState(tempObj);
 
-    // clear all
+      // clear all
     } else if (factor === "clearAllFacs") {
-      let tempObj2 = {};
+      const tempObj2 = {};
       for (let i = 0; i < btnId.length; i++) {
-        tempObj2["highlightfactor" + btnId[i]] = false;
+        tempObj2[`highlightfactor${  btnId[i]}`] = false;
       }
       tempObj2.userSelectedFactors = [];
       tempObj2.showFactorCorrelationsTable = false;
@@ -77,19 +77,19 @@ class FactorSelectionForOutputButtons extends React.Component {
       tempObj2.displayFactorVisualizations = false;
       tempObj2.shouldDisplayFactorVizOptions = false;
       tempObj2.outputFactorSelectButtonsDisabled = false;
-      // reset cache of factor viz data      
+      // reset cache of factor viz data
       tempObj2.outputForDataViz2 = undefined;
       store.setState(tempObj2);
     } else {
       // select individual factors
-      let selectAllClicked = store.getState("selectAllClicked");
+      const selectAllClicked = store.getState("selectAllClicked");
       // select all factors
       if (selectAllClicked) {
         userSelectedFactors = [];
 
-        let tempObj3 = {};
+        const tempObj3 = {};
         for (let i = 0; i < btnId.length; i++) {
-          tempObj3["highlightfactor" + btnId[i]] = false;
+          tempObj3[`highlightfactor${  btnId[i]}`] = false;
         }
         tempObj3.userSelectedFactors = userSelectedFactors;
         tempObj3.showFactorCorrelationsTable = false;
@@ -105,10 +105,10 @@ class FactorSelectionForOutputButtons extends React.Component {
         userSelectedFactors.push(factor);
         userSelectedFactors.sort();
         store.setState({
-          userSelectedFactors: userSelectedFactors
+          userSelectedFactors
         });
-        let newFactorId = "highlight" + factor.replace(" ", "");
-        let tempObj4 = {};
+        const newFactorId = `highlight${  factor.replace(" ", "")}`;
+        const tempObj4 = {};
         tempObj4[newFactorId] = true;
         tempObj4.showDownloadOutputButtons = false;
         tempObj4.showFactorCorrelationsTable = false;
@@ -122,34 +122,53 @@ class FactorSelectionForOutputButtons extends React.Component {
   }
 
   render() {
-    let btnId = store.getState("outputButtonsArray");
-    let showOutputFactorSelection = store.getState("showOutputFactorSelection");
-    let areDisabled = store.getState("outputFactorSelectButtonsDisabled");
+    const btnId = store.getState("outputButtonsArray");
+    const showOutputFactorSelection = store.getState("showOutputFactorSelection");
+    const areDisabled = store.getState("outputFactorSelectButtonsDisabled");
 
     // if (showOutputFactorSelection) {
 
     return (
-      <Transition visible={ showOutputFactorSelection } animation="fade" duration={ 1000 }>
+      <Transition
+        visible={showOutputFactorSelection}
+        animation="fade"
+        duration={1000}
+      >
         <div>
-          <span style={ { marginRight: 5 } }>Select Output Factors:</span>
-          { btnId.map((item, index) => (
-              <Button key={ "f" + item } toggle active={ store.getState("highlightfactor" + item) } disabled={ areDisabled } onClick={ this.handleOnclick.bind(this) } id={ "factor " + item }>
-                { item }
-              </Button>
-            )) }
-          <Button id="selectAllFacs" disabled={ areDisabled } onClick={ this.handleOnclick }>
+          <span style={{ marginRight: 5 }}>Select Output Factors:</span>
+          {btnId.map((item, index) => (
+            <Button
+              key={`f${  item}`}
+              toggle
+              active={store.getState(`highlightfactor${  item}`)}
+              disabled={areDisabled}
+              onClick={this.handleOnclick.bind(this)}
+              id={`factor ${  item}`}
+            >
+              {item}
+            </Button>
+          ))}
+          <Button
+            id="selectAllFacs"
+            disabled={areDisabled}
+            onClick={this.handleOnclick}
+          >
             Select All
           </Button>
-          <Button id="clearAllFacs" onClick={ this.handleOnclick }>
+          <Button id="clearAllFacs" onClick={this.handleOnclick}>
             Clear Selections
           </Button>
-          <Button id="startOutput" className="instagram" onClick={ this.handleSubmit }>
+          <Button
+            id="startOutput"
+            className="instagram"
+            onClick={this.handleSubmit}
+          >
             Submit
           </Button>
         </div>
       </Transition>
-      );
+    );
   }
 }
 
-export default easyComp(FactorSelectionForOutputButtons);
+export default view(FactorSelectionForOutputButtons);

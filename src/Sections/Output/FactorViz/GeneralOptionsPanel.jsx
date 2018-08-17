@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import UserTextInput from "./UserTextInput";
-import { easyComp } from "react-easy-state";
+import { view } from "react-easy-state";
 import UserSelectionSwitch from "./UserSelectionSwitch";
 
 const styles = {
@@ -39,4 +39,4 @@ class GeneralOptionsPanel extends Component {
   }
 }
 
-export default easyComp(GeneralOptionsPanel);
+export default view(GeneralOptionsPanel);

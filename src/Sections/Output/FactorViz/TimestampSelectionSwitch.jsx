@@ -1,6 +1,6 @@
 import React from "react";
-import store from "../../store";
-import "./UserSelectionSwitch.css";
+import store from "../../../store";
+// import "./UserSelectionSwitch.css";
 
 class UserSelectionSwitch extends React.Component {
   constructor(props) {
@@ -18,9 +18,9 @@ class UserSelectionSwitch extends React.Component {
     this.setState({
       toggle: !this.state.toggle
     });
-    let stateFrag = {};
-    let key = this.props.value;
-    let stateValue = !this.state.toggle;
+    const stateFrag = {};
+    const key = this.props.value;
+    const stateValue = !this.state.toggle;
     stateFrag[key] = stateValue;
     store.setState(stateFrag);
   }

@@ -50,9 +50,12 @@ const MainContent = styled.div`
   justify-items: center;
   align-items: center;
   background-color: white;
-  height: 100%;
-  width: 100%;
   visibility: ${props => (props.view ? "hidden" : "visible")};
   animation: ${props => (props.view ? fadeOut : fadeIn)} 0.5s linear;
   transition: visibility 0.5s linear;
+
+  width: calc(100vw - 153px);
+  box-sizing: border-box;
+  max-height: calc(100vh - 22px);
+  overflow: auto;
 `;
