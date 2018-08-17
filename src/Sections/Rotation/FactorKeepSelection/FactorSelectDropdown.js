@@ -1,6 +1,7 @@
 import React from "react";
 import store from "../../../store";
-import { view } from "react-easy-state";
+import { easyComp } from "react-easy-state";
+import { Button, Dropdown, Transition } from "semantic-ui-react";
 import FactorSelectButtonModal from "./FactorSelectButtonModal";
 
 const saveDropdownValueToState = (event, data) => {
@@ -139,4 +140,4 @@ class FactorSelectDropdown extends React.Component {
     );
   }
 }
-export default view(FactorSelectDropdown);
+export default easyComp(FactorSelectDropdown);

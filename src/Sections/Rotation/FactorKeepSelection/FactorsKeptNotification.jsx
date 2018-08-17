@@ -1,7 +1,7 @@
 import store from "../../store";
 import "./FactorsKeptNotification.css";
 import React, { Component } from "react";
-import { view } from "react-easy-state";
+import { easyComp } from "react-easy-state";
 import { Transition } from 'semantic-ui-react';
 
 class FactorsKeptNotification extends Component {
@@ -22,4 +22,4 @@ class FactorsKeptNotification extends Component {
     }
 }
 
-export default view(FactorsKeptNotification);
+export default easyComp(FactorsKeptNotification);
