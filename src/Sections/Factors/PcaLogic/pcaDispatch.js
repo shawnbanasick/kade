@@ -1,5 +1,4 @@
 import cloneDeep from "lodash/cloneDeep";
-import * as numeric from "../../../Utils/numeric";
 import store from "../../../store";
 import sortEigenValues from "./sortEigenValues";
 import calcEigenVectors from "./calcEigenVectors";

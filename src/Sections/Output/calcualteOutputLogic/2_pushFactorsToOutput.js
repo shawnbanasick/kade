@@ -1,6 +1,6 @@
-import store from "../../store";
 import includes from 'lodash/includes';
 import cloneDeep from "lodash/cloneDeep";
+import store from "../../../store";
 import weightRawSorts from "./3_weightRawSorts";
 import calculateZScores from "./3_calculateZScores";
 import weightFactorScores from "./3_weightFactorScores";

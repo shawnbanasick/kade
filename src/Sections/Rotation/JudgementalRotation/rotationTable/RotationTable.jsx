@@ -30,7 +30,7 @@ class RotationTable extends Component {
         <p style={{ marginTop: 15, fontWeight: 300, fontSize: 14 }}>
           (Highlighting levels are set by the flagging options in Section 5){" "}
         </p>
-        <div style={containerStyle} className="ag-fresh">
+        <div style={containerStyle} className="ag-theme-fresh">
           <AgGridReact
             columnDefs={colDefs}
             rowData={rowData}

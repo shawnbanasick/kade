@@ -1,9 +1,8 @@
-import map from 'lodash/map';
-import store from "../../store";
+import map from "lodash/map";
 import cloneDeep from "lodash/cloneDeep";
-import evenRound from "../../Utils/evenRound";
-
-import { getPqmethodCorrelation } from "../../S2-corr/corrLogic/getPqmethodCorrelation";
+import store from "../../../store";
+import evenRound from "../../../Utils/evenRound";
+import getPqmethodCorrelation from "../../Correlations/correlationsLogic/getPqmethodCorrelation";
 
 const pushFactorScoreCorrelationsToOutput = function(
   sheetNames,
@@ -12,18 +11,17 @@ const pushFactorScoreCorrelationsToOutput = function(
   sheetNamesXlsx,
   colSizes
 ) {
-  let appendText1 = "Factor score correlations";
+  const appendText1 = "Factor score correlations";
 
   sheetNamesXlsx.push(appendText1);
 
-  let analysisOutput = store.getState("analysisOutput");
-  let userSelectedFactors = store.getState("userSelectedFactors");
-  let analysisOutput2 = cloneDeep(analysisOutput);
-  let factorScoresCorrelationArray2 = [];
-  let temp1,
-    tempArray;
+  const analysisOutput = store.getState("analysisOutput");
+  const userSelectedFactors = store.getState("userSelectedFactors");
+  const analysisOutput2 = cloneDeep(analysisOutput);
+  const factorScoresCorrelationArray2 = [];
+  let temp1, tempArray;
 
-  let columns = [
+  const columns = [
     {
       wch: 7
     }
@@ -48,20 +46,20 @@ const pushFactorScoreCorrelationsToOutput = function(
   }
 
   // todo - converting to integer gives lots letiation with PQmethod - use evenRound?
-  let factorScoresCorrelationArray = [];
+  const factorScoresCorrelationArray = [];
   for (let q = 0; q < factorScoresCorrelationArray2.length; q++) {
-    let temp11 = map(factorScoresCorrelationArray2[q], evenRoundFunc);
+    const temp11 = map(factorScoresCorrelationArray2[q], evenRoundFunc);
     factorScoresCorrelationArray.push(temp11);
   }
 
   function evenRoundFunc(n) {
-    let temp1 = evenRound(n, 5);
+    const temp1 = evenRound(n, 5);
     return temp1;
   }
 
   let pullX;
   let correlationTableArrayFragment = [];
-  let correlationTableArray = [];
+  const correlationTableArray = [];
   for (let k = 0; k < factorScoresCorrelationArray.length; k++) {
     pullX = factorScoresCorrelationArray[k];
     correlationTableArrayFragment = factorScoresCorrelationsHelper(
@@ -73,11 +71,10 @@ const pushFactorScoreCorrelationsToOutput = function(
   }
 
   function factorScoresCorrelationsHelper(factorScoresCorrelationArray, pullX) {
-    let correlationHolder,
-      correlationHolder2;
-    let correlationTableArrayFragment = [];
+    let correlationHolder, correlationHolder2;
+    const correlationTableArrayFragment = [];
 
-    factorScoresCorrelationArray.forEach(function(element) {
+    factorScoresCorrelationArray.forEach(element => {
       correlationHolder2 = getPqmethodCorrelation(pullX, element);
       correlationHolder = evenRound(correlationHolder2[0], 4);
       correlationTableArrayFragment.push(correlationHolder);
@@ -87,14 +84,14 @@ const pushFactorScoreCorrelationsToOutput = function(
 
   // add factor names to first column
   for (let m = 0; m < correlationTableArray.length; m++) {
-    let temp8 = userSelectedFactors[m];
+    const temp8 = userSelectedFactors[m];
     correlationTableArray[m].unshift(temp8);
   }
 
-  let tempArray3 = [];
+  const tempArray3 = [];
   tempArray3.push("");
   for (let p = 0; p < userSelectedFactors.length; p++) {
-    let temp9 = userSelectedFactors[p];
+    const temp9 = userSelectedFactors[p];
     tempArray3.push(temp9);
   }
   correlationTableArray.unshift(tempArray3);
