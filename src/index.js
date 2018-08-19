@@ -3,7 +3,7 @@ import { enableLiveReload } from "electron-compile";
 
 
 // npm install lru-cache first
-const lru = require('lru-cache')({max: 256, maxAge: 250/*ms*/});
+const lru = require('lru-cache')({max: 256, maxAge: 250});
 
 const fs = require('fs');
 
