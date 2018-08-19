@@ -4,7 +4,7 @@ import { Button, Header, Icon, Modal } from "semantic-ui-react";
 import store from "../../../store";
 
 class NoLoadingsFlaggedWarningModal extends Component {
-  handleClose = () => {
+  handleClose() {
     store.setState({
       showNoLoadingsFlaggedWarningModal: false,
       showOutputFactorSelection: false,
@@ -15,13 +15,13 @@ class NoLoadingsFlaggedWarningModal extends Component {
       shouldDisplayFactorVizOptions: false,
       displayFactorVisualizations: false
     });
-  };
+  }
 
   render() {
-    let showNoLoadingsFlaggedWarningModal = store.getState(
+    const showNoLoadingsFlaggedWarningModal = store.getState(
       "showNoLoadingsFlaggedWarningModal"
     );
-    let factorsWithoutLoading = store.getState("factorsWithoutLoading");
+    const factorsWithoutLoading = store.getState("factorsWithoutLoading");
     if (showNoLoadingsFlaggedWarningModal) {
       return (
         <Modal
@@ -51,9 +51,9 @@ class NoLoadingsFlaggedWarningModal extends Component {
           </Modal.Actions>
         </Modal>
       );
-    } else {
+    } 
       return null;
-    }
+    
   }
 }
 export default view(NoLoadingsFlaggedWarningModal);

@@ -6,30 +6,36 @@ import store from "../../../store";
 // todo - change this back to normal button
 // display rules prevent premature click now
 class DisplayVisualizationsButtons extends React.Component {
-  store = {};
+  // constructor(props) {
+  //   super(props);
 
-  handleOpenVizOptions = () => {
-    let shouldDisplayFactorVizOptions = store.getState(
+  //   store = {};
+  // }
+
+  handleOpenVizOptions() {
+    const shouldDisplayFactorVizOptions = store.getState(
       "shouldDisplayFactorVizOptions"
     );
-    let shouldShow = !shouldDisplayFactorVizOptions;
+    const shouldShow = !shouldDisplayFactorVizOptions;
     store.setState({
       shouldDisplayFactorVizOptions: shouldShow
     });
-  };
+  }
 
-  handleDisplayViz = () => {
-    let displayFactorVisualizations = store.getState(
+  handleDisplayViz() {
+    const displayFactorVisualizations = store.getState(
       "displayFactorVisualizations"
     );
-    let shouldShow = !displayFactorVisualizations;
+    const shouldShow = !displayFactorVisualizations;
     store.setState({
       displayFactorVisualizations: shouldShow
     });
-  };
+  }
 
   render() {
-    let showDownloadOutputButtons = store.getState("showDownloadOutputButtons");
+    const showDownloadOutputButtons = store.getState(
+      "showDownloadOutputButtons"
+    );
     if (showDownloadOutputButtons) {
       return (
         <div style={{ display: "flex" }}>
@@ -52,9 +58,8 @@ class DisplayVisualizationsButtons extends React.Component {
           </Button>
         </div>
       );
-    } else {
-      return null;
     }
+    return null;
   }
 }
 

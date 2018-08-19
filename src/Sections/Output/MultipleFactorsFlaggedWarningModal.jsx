@@ -4,7 +4,7 @@ import { Button, Header, Icon, Modal } from "semantic-ui-react";
 import store from "../../store";
 
 class UnforcedWarningModal extends Component {
-  handleClose = () => {
+  handleClose() {
     store.setState({
       showOutputFactorSelection: false,
       shouldDisplayFactorVizOptions: false,
@@ -16,13 +16,13 @@ class UnforcedWarningModal extends Component {
       displayFactorVisualizations: false,
       showMultipleFactorsFlaggedWarningModal: false
     });
-  };
+  }
 
   render() {
-    let showMultipleFactorsFlaggedWarningModal = store.getState(
+    const showMultipleFactorsFlaggedWarningModal = store.getState(
       "showMultipleFactorsFlaggedWarningModal"
     );
-    let sortsFlaggedOnTwoFactors = store.getState("sortsFlaggedOnTwoFactors");
+    const sortsFlaggedOnTwoFactors = store.getState("sortsFlaggedOnTwoFactors");
     if (showMultipleFactorsFlaggedWarningModal) {
       return (
         <Modal
@@ -52,9 +52,9 @@ class UnforcedWarningModal extends Component {
           </Modal.Actions>
         </Modal>
       );
-    } else {
+    } 
       return null;
-    }
+    
   }
 }
 export default view(UnforcedWarningModal);

@@ -13,7 +13,7 @@ import refreshVizOptionsState from "./refreshVizOptionsState";
 // };
 
 // todo - need to calculate dynamic height here for styles
-let factorVizOptions = store.getState("factorVizOptions");
+const factorVizOptions = store.getState("factorVizOptions");
 
 class RefreshFactorVizButton extends React.Component {
   constructor(props) {
@@ -24,10 +24,10 @@ class RefreshFactorVizButton extends React.Component {
     this.refresh = this.refresh.bind(this);
   }
 
-  refresh = () => {
+  refresh() {
     console.log("refresh called");
 
-    let userValues = refreshVizOptionsState();
+    const userValues = refreshVizOptionsState();
     store.setState({
       factorVizOptions: userValues
     });
@@ -35,10 +35,10 @@ class RefreshFactorVizButton extends React.Component {
     this.setState({
       factorData: createFactorVizDataObjectForProps(userValues)
     });
-  };
+  }
 
   render() {
-    let shouldDisplayFactorVizOptions = store.getState(
+    const shouldDisplayFactorVizOptions = store.getState(
       "shouldDisplayFactorVizOptions"
     );
 
