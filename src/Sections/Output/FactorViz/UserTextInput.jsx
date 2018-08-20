@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Form } from "semantic-ui-react";
 import store from "../../../store";
 
-class FormExampleCaptureValues extends Component {
+class UserTextInput extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -10,15 +10,15 @@ class FormExampleCaptureValues extends Component {
     };
   }
 
-  handleChange = (e, { name, value }) => {
+  handleChange(e, { name, value }) {
     this.setState({
       [name]: value
     });
-    let tempObj = {};
-    let customFactorNames = this.props.name;
+    const tempObj = {};
+    const customFactorNames = this.props.name;
     tempObj[customFactorNames] = e.target.value;
     store.setState(tempObj);
-  };
+  }
 
   render() {
     // const {name} = this.state;
@@ -40,4 +40,4 @@ class FormExampleCaptureValues extends Component {
   }
 }
 
-export default FormExampleCaptureValues;
+export default UserTextInput;
