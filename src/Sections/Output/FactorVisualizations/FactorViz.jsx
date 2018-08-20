@@ -46,6 +46,8 @@ const getStyles = props => {
 };
 
 const FactorViz = props => {
+  console.log(JSON.stringify("factorviz called"));
+
   const shouldDisplaySig = props.factorVizOptions.willIndicateDistinguishing;
   const shouldDisplayLegend = props.factorVizOptions.willIncludeLegend;
   const margin = { top: 10, left: 10, bottom: 10, right: 10 };

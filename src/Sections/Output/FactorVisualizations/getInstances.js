@@ -4,6 +4,8 @@ import findOccurances from "./findOccurances";
 import sortTriangleShape from "./sortTriangleShape";
 
 const getInstances = function() {
+  console.log(JSON.stringify("getInstances called"));
+
   const qSortPattern = sortTriangleShape();
 
   const numRectsArray = [];

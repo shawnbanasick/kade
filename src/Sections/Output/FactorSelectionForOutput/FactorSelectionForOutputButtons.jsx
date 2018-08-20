@@ -12,7 +12,7 @@ class FactorSelectionForOutputButtons extends React.Component {
     const btnId = store.getState("outputButtonsArray");
     const tempObj2 = {};
     for (let i = 0; i < btnId.length; i++) {
-      tempObj2[`highlightfactor${  btnId[i]}`] = false;
+      tempObj2[`highlightfactor${btnId[i]}`] = false;
     }
     store.setState(tempObj2);
   }
@@ -32,7 +32,7 @@ class FactorSelectionForOutputButtons extends React.Component {
     // set all highlighting to false (not active)
     const tempObj = {};
     for (let i = 0; i < btnId.length; i++) {
-      tempObj[`highlightfactor${  btnId[i]}`] = false;
+      tempObj[`highlightfactor${btnId[i]}`] = false;
     }
     store.setState(tempObj);
   }
@@ -48,8 +48,8 @@ class FactorSelectionForOutputButtons extends React.Component {
       const tempObj = {};
       const userSelectedFactors = [];
       for (let i = 0; i < btnId.length; i++) {
-        tempObj[`highlightfactor${  btnId[i]}`] = true;
-        const temp1 = `factor ${  btnId[i]}`;
+        tempObj[`highlightfactor${btnId[i]}`] = true;
+        const temp1 = `factor ${btnId[i]}`;
         userSelectedFactors.push(temp1);
       }
       tempObj.selectAllClicked = true;
@@ -67,7 +67,7 @@ class FactorSelectionForOutputButtons extends React.Component {
     } else if (factor === "clearAllFacs") {
       const tempObj2 = {};
       for (let i = 0; i < btnId.length; i++) {
-        tempObj2[`highlightfactor${  btnId[i]}`] = false;
+        tempObj2[`highlightfactor${btnId[i]}`] = false;
       }
       tempObj2.userSelectedFactors = [];
       tempObj2.showFactorCorrelationsTable = false;
@@ -78,7 +78,7 @@ class FactorSelectionForOutputButtons extends React.Component {
       tempObj2.shouldDisplayFactorVizOptions = false;
       tempObj2.outputFactorSelectButtonsDisabled = false;
       // reset cache of factor viz data
-      tempObj2.outputForDataViz2 = undefined;
+      tempObj2.outputForDataViz2 = [];
       store.setState(tempObj2);
     } else {
       // select individual factors
@@ -89,7 +89,7 @@ class FactorSelectionForOutputButtons extends React.Component {
 
         const tempObj3 = {};
         for (let i = 0; i < btnId.length; i++) {
-          tempObj3[`highlightfactor${  btnId[i]}`] = false;
+          tempObj3[`highlightfactor${btnId[i]}`] = false;
         }
         tempObj3.userSelectedFactors = userSelectedFactors;
         tempObj3.showFactorCorrelationsTable = false;
@@ -107,7 +107,7 @@ class FactorSelectionForOutputButtons extends React.Component {
         store.setState({
           userSelectedFactors
         });
-        const newFactorId = `highlight${  factor.replace(" ", "")}`;
+        const newFactorId = `highlight${factor.replace(" ", "")}`;
         const tempObj4 = {};
         tempObj4[newFactorId] = true;
         tempObj4.showDownloadOutputButtons = false;
@@ -123,7 +123,9 @@ class FactorSelectionForOutputButtons extends React.Component {
 
   render() {
     const btnId = store.getState("outputButtonsArray");
-    const showOutputFactorSelection = store.getState("showOutputFactorSelection");
+    const showOutputFactorSelection = store.getState(
+      "showOutputFactorSelection"
+    );
     const areDisabled = store.getState("outputFactorSelectButtonsDisabled");
 
     // if (showOutputFactorSelection) {
@@ -138,12 +140,12 @@ class FactorSelectionForOutputButtons extends React.Component {
           <span style={{ marginRight: 5 }}>Select Output Factors:</span>
           {btnId.map((item, index) => (
             <Button
-              key={`f${  item}`}
+              key={`f${item}`}
               toggle
-              active={store.getState(`highlightfactor${  item}`)}
+              active={store.getState(`highlightfactor${item}`)}
               disabled={areDisabled}
               onClick={this.handleOnclick.bind(this)}
-              id={`factor ${  item}`}
+              id={`factor ${item}`}
             >
               {item}
             </Button>

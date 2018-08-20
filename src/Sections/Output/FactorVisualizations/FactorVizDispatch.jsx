@@ -16,6 +16,8 @@ const styles = {
 
 class FactorVizDispatch extends React.Component {
   refresh() {
+    console.log(JSON.stringify("refresh in factor viz dispatch called"));
+
     const userValues = refreshVizOptionsState();
     store.setState({
       factorVizOptions: userValues
@@ -23,28 +25,30 @@ class FactorVizDispatch extends React.Component {
   }
 
   render() {
+    console.log(JSON.stringify("factorVizDispatch rendered"));
     const factorVizOptions = store.getState("factorVizOptions");
     const factorData = createFactorVizDataObjectForProps(factorVizOptions);
-    const shouldDisplayFactorViz = store.getState("displayFactorVisualizations");
+    const shouldDisplayFactorViz = store.getState(
+      "displayFactorVisualizations"
+    );
 
     if (shouldDisplayFactorViz) {
       return (
         <div>
           {factorData.map((i, index) => (
-              <div key={index}>
-                <FactorViz
-                  key={`viz${  index}`}
-                  {...factorData[index]}
-                  {...this.props}
-                  {...styles}
-                />
-              </div>
-            ))}
+            <div key={`key${index.toString()}`}>
+              <FactorViz
+                key={`viz${index}`}
+                {...factorData[index]}
+                {...this.props}
+                {...styles}
+              />
+            </div>
+          ))}
         </div>
       );
-    } 
-      return null;
-    
+    }
+    return null;
   }
 }
 

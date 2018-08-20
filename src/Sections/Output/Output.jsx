@@ -16,6 +16,7 @@ import RefreshFactorVizButton from "./FactorVisualizations/RefreshFactorVizButto
 
 class Output extends Component {
   render() {
+    console.log("output rendered");
     const shouldDisplayFactorViz = store.getState(
       "displayFactorVisualizations"
     );

@@ -53,7 +53,7 @@ class LoadingsTable extends Component {
     tempObj2.shouldDisplayFactorVizOptions = false;
     tempObj2.outputFactorSelectButtonsDisabled = false;
     // reset cache of factor viz data
-    tempObj2.outputForDataViz2 = undefined;
+    tempObj2.outputForDataViz2 = [];
 
     store.setState(tempObj2);
   }

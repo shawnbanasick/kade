@@ -3,7 +3,8 @@ import getInstances from "./getInstances";
 import prepareDataForFactorViz from "./prepareDataForFactorViz";
 
 // helper function
-const capitalizeFirstLetter = string => string.charAt(0).toUpperCase() + string.slice(1);
+const capitalizeFirstLetter = string =>
+  string.charAt(0).toUpperCase() + string.slice(1);
 
 // exported function
 const createFactorVizDataObjectForProps = factorVizOptions => {
@@ -47,15 +48,15 @@ const createFactorVizDataObjectForProps = factorVizOptions => {
     const id = factorName.replace(/\s+/g, "");
     if (useCustomNames) {
       console.log(
-        `custom names: ${  JSON.stringify([...customFactorNamesArray])}`
+        `custom names: ${JSON.stringify([...customFactorNamesArray])}`
       );
 
       name = customFactorNamesArray[i];
       if (name === undefined || name === "") {
-        name = `Composite Q-sort for ${  factorName}`;
+        name = `Composite Q-sort for ${factorName}`;
       }
     } else {
-      name = `Composite Q-sort for ${  factorName}`;
+      name = `Composite Q-sort for ${factorName}`;
     }
     // let tempId = userSelectedFactors[i].replace(/\s+/g, "");
     const tempObj = {};
@@ -71,6 +72,8 @@ const createFactorVizDataObjectForProps = factorVizOptions => {
     tempObj.willAdjustIndicatorSizeBy = willAdjustIndicatorSizeBy;
     factorData.push(tempObj);
   }
+  console.log(JSON.stringify("createFactorVizDataObjectForProps"));
+
   return factorData;
 };
 

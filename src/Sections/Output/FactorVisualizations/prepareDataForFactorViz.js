@@ -2,11 +2,13 @@ import store from "../../../store";
 // import addDistinguishingSymbolsToData from "./addDistinguishingSymbolsToData";
 
 const data = function() {
+  console.log(JSON.stringify("prepare data for factor viz called"));
+
   // if first time -> get data from output function
   let outputForDataViz = store.getState("outputForDataViz2");
   const numbersHaveBeenAppended = store.getState("numbersHaveBeenAppended");
 
-  if (outputForDataViz === undefined) {
+  if (outputForDataViz.length === 0) {
     outputForDataViz = store.getState("outputForDataViz");
   }
 
@@ -18,7 +20,7 @@ const data = function() {
       for (let k = 0; k < outputForDataViz[j].length; k++) {
         const stateNum = outputForDataViz[j][k].statement;
         const statement = outputForDataViz[j][k].sortStatement;
-        outputForDataViz[j][k].sortStatement = `${stateNum  }. ${  statement}`;
+        outputForDataViz[j][k].sortStatement = `${stateNum}. ${statement}`;
       }
     }
     store.setState({
@@ -51,9 +53,11 @@ const data = function() {
       return 0;
     });
   }
-  store.setState({
-    outputForDataViz2: outputForDataViz
-  });
+  // store.setState({
+  //   outputForDataViz2: outputForDataViz
+  // });
+
+  // console.log(`dataviz2: ${JSON.stringify(outputForDataViz)}`);
 
   return outputForDataViz;
 };
