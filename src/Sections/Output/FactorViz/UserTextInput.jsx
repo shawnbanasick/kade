@@ -8,6 +8,7 @@ class UserTextInput extends Component {
     this.state = {
       name: ""
     };
+    this.handleChange = this.handleChange.bind(this);
   }
 
   handleChange(e, { name, value }) {

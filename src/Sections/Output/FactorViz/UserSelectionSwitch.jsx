@@ -19,6 +19,8 @@ class UserSelectionSwitch extends React.Component {
     });
     const stateFrag = {};
     const key = this.props.value;
+    console.log(JSON.stringify(key));
+
     const stateValue = !this.state.toggle;
     stateFrag[key] = stateValue;
     store.setState(stateFrag);
@@ -27,9 +29,9 @@ class UserSelectionSwitch extends React.Component {
   render() {
     return (
       <div style={{ marginTop: 5 }}>
-        <label htmlFor="switchCheckbox" className="switch-light switch-holo">
+        <label htmlFor={this.props.name} className="switch-light switch-holo">
           <input
-            id="switchCheckbox"
+            id={this.props.name}
             type="checkbox"
             name={this.props.name}
             defaultChecked={this.state.toggle}

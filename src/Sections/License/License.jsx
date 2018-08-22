@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import { view } from "react-easy-state";
 import styled from "styled-components";
-import DisplayState from "./DisplayState";
-import StatementsInState from "./StatementsInState";
-import SortsInState from "./SortsInState";
+// import DisplayState from "./DisplayState";
+// import StatementsInState from "./StatementsInState";
+// import SortsInState from "./SortsInState";
 import state from "../../store";
 
 // import styled from "styled-components";
@@ -14,9 +14,9 @@ class License extends Component {
     return (
       <MainContent>
         <p>License Section</p>
-        <DisplayState />
+        {/* <DisplayState />
         <StatementsInState />
-        <SortsInState />
+        <SortsInState /> */}
       </MainContent>
     );
   }
