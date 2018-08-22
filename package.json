@@ -34,11 +34,11 @@
       },
       "electronPackagerConfig": {
         "packageManager": "yarn",
-        "icon": "src/assets/icons/mac/KANDED.png.icns"
+        "icon": "src/assets/icons/mac/icon-1024.png",
+        "asar": true
       },
       "electronWinstallerConfig": {
         "name": "Kanded",
-        "setupIcon": "src/assets/icons/win/icon.png.ico",
         "noMsi": true
       },
       "electronInstallerDebian": {},
