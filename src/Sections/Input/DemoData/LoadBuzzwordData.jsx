@@ -14,7 +14,12 @@ const handleClick = () => {
 
 const BuzzwordButton1 = () => (
   <div>
-    <LoadTxtButton id="buzzwordButton" floated="right" onClick={ () => handleClick() } buttonColor={ localStore.buttonColor }>
+    <LoadTxtButton
+      id="buzzwordButton"
+      floated="right"
+      onClick={() => handleClick()}
+      buttonColor={localStore.buttonColor}
+    >
       Load Buzzword
     </LoadTxtButton>
   </div>
@@ -38,6 +43,7 @@ const LoadTxtButton = styled.button`
   margin-right: 3px;
   margin-bottom: 3px;
   box-shadow: 0 3px 3px 0 black;
+  outline: none;
 
   &:hover {
     /* color: white;
@@ -49,6 +55,6 @@ const LoadTxtButton = styled.button`
     box-shadow: 0 0 1px 0 black inset;
     margin-left: 3px;
     margin-top: 3px;
-    background-color: rgba(144,	238, 144, .6);
+    background-color: rgba(144, 238, 144, 0.6);
   }
 `;

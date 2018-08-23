@@ -48,7 +48,7 @@ const handleClick = () => {
 
             // remove empty "" strings from array
             let maxLength = lines2[0].length;
-            for (let i = 0; i < lines2[0].length - 1; i+=1) {
+            for (let i = 0; i < lines2[0].length - 1; i += 1) {
               const value1 = lines2[0][i];
               if (value1 === "") {
                 maxLength = i;
@@ -62,7 +62,7 @@ const handleClick = () => {
             let arrayShiftedPositive;
             const mainDataObject = [];
             const respondentNames = [];
-            for (let j = 0; j < lines2.length; j+=1) {
+            for (let j = 0; j < lines2.length; j += 1) {
               // const activeLine = lines2[j].split(",");
 
               lines2[j].length = maxLength;
@@ -164,6 +164,7 @@ const LoadTxtButton = styled.button`
   margin-right: 3px;
   margin-bottom: 3px;
   box-shadow: 0 3px 3px 0 black;
+  outline: none;
 
   &:hover {
     background-color: white;

@@ -56,6 +56,7 @@ const BeginAnalysisButton = styled.button`
   margin-right: 3px;
   margin-bottom: 3px;
   box-shadow: 0 3px 3px 0 black;
+  outline: none;
 
   &:hover {
     background-color: white;
