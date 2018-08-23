@@ -113,7 +113,7 @@ const SubTitleDiv = styled.p`
   font-weight: normal;
 `;
 
-const HighlightLetter = styled.p`
+const HighlightLetter = styled.span`
   color: #b22222;
   font-weight: bold;
 `;

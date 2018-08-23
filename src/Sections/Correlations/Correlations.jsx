@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { view } from "react-easy-state";
 import styled, { keyframes } from "styled-components";
 import CalculateCorrelationsButton from "./CalculateCorrelationsButton";
-import CorrelationTable from './CorrelationTable/CorrelationTable';
+import CorrelationTable from "./CorrelationTable/CorrelationTable";
 
 // import styled from "styled-components";
 
@@ -10,11 +10,14 @@ class Correlations extends Component {
   render() {
     return (
       <MainContent>
-        <p>Correlations Section</p>
-        <CalculateCorrelationsButton />
-        <CorrelationTable />
+        <Container>
+          <CalculateCorrelationsButton />
+        </Container>
+        <Container>
+          <CorrelationTable />
+        </Container>
       </MainContent>
-      );
+    );
   }
 }
 
@@ -42,20 +45,24 @@ const fadeOut = keyframes`
 
 const MainContent = styled.div`
   display: grid;
-  grid-template-columns: 150px 190px 1fr;
-  grid-template-rows: 120px 1fr 20px;
-  grid-template-areas:
+  grid-template-columns: 1fr;
+  grid-template-rows: 120px 1fr;
+  margin-left: 20px;
+  /* grid-template-areas:
     "header header header"
     "main main main"
-    "footer footer footer";
-  justify-items: center;
+    "footer footer footer"; */
+  justify-items: start;
   align-items: center;
   background-color: white;
   visibility: ${props => (props.view ? "hidden" : "visible")};
   animation: ${props => (props.view ? fadeOut : fadeIn)} 0.5s linear;
   transition: visibility 0.5s linear;
 
-
   width: calc(100vw - 153px);
   overflow: auto;
+`;
+
+const Container = styled.div`
+  justify-self: start;
 `;
