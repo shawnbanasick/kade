@@ -19,6 +19,12 @@ function getWidth(numQsorts) {
   return widthVal;
 }
 
+function getHeight() {
+  let y = window.innerHeight - 120 - 20;
+  y += "px";
+  return y;
+}
+
 class CorrelationTable extends Component {
   onGridReady(params) {
     this.gridApi = params.api;
@@ -34,6 +40,7 @@ class CorrelationTable extends Component {
 
     const numQsorts = state.getState("numQsorts");
     const width = getWidth(numQsorts);
+    const height = getHeight();
 
     const { onGridReady } = this;
 
@@ -44,7 +51,11 @@ class CorrelationTable extends Component {
             Click the table headers to re-sort by column (low-to-high,
             high-to-low, original sort).
           </p>
-          <OuterMostContainer id="outerMostContainer" width={width}>
+          <OuterMostContainer
+            id="outerMostContainer"
+            width={width}
+            height={height}
+          >
             <div id="midContainer" style={{ width: "100%", height: "100%" }}>
               <div id="innerContainer1" className="ag-theme-fresh">
                 <div id="innerContainer2">
