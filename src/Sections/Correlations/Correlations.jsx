@@ -10,12 +10,12 @@ class Correlations extends Component {
   render() {
     return (
       <MainContent>
-        <Container>
+        <Container1>
           <CalculateCorrelationsButton />
-        </Container>
-        <Container>
+        </Container1>
+        <Container2>
           <CorrelationTable />
-        </Container>
+        </Container2>
       </MainContent>
     );
   }
@@ -48,10 +48,10 @@ const MainContent = styled.div`
   grid-template-columns: 1fr;
   grid-template-rows: 120px 1fr;
   margin-left: 20px;
-  /* grid-template-areas:
+  grid-template-areas:
     "header header header"
     "main main main"
-    "footer footer footer"; */
+    "footer footer footer";
   justify-items: start;
   align-items: center;
   background-color: white;
@@ -63,6 +63,12 @@ const MainContent = styled.div`
   overflow: auto;
 `;
 
-const Container = styled.div`
+const Container1 = styled.div`
+  grid-area: header;
+  justify-self: start;
+`;
+
+const Container2 = styled.div`
+  grid-area: main;
   justify-self: start;
 `;

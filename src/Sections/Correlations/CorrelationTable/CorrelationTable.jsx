@@ -19,11 +19,28 @@ function getWidth(numQsorts) {
   return widthVal;
 }
 
-function getHeight() {
-  let y = window.innerHeight - 120 - 20;
-  y += "px";
-  return y;
+function getHeight(numQsorts) {
+  let heightVal = 30 + 25 * numQsorts;
+  let y = window.innerHeight - 120 - 100;
+  if (y < heightVal) {
+    y += "px";
+    return y;
+  }
+  heightVal += "px";
+  return heightVal;
 }
+
+function resetWidthAndHeight() {
+  // this.gridApi.setGridAutoHeight(false);
+  const numQsorts = localStore.numQsorts;
+  const table = document.querySelector("#innerContainer1");
+  table.style.height = getHeight(numQsorts);
+  table.style.width = getWidth(numQsorts);
+}
+
+window.addEventListener("resize", () => {
+  resetWidthAndHeight();
+});
 
 class CorrelationTable extends Component {
   onGridReady(params) {
@@ -39,8 +56,7 @@ class CorrelationTable extends Component {
     const showCorrelationMatrix = state.getState("showCorrelationMatrix");
 
     const numQsorts = state.getState("numQsorts");
-    const width = getWidth(numQsorts);
-    const height = getHeight();
+    localStore.numQsorts = numQsorts;
 
     const { onGridReady } = this;
 
@@ -51,25 +67,23 @@ class CorrelationTable extends Component {
             Click the table headers to re-sort by column (low-to-high,
             high-to-low, original sort).
           </p>
-          <OuterMostContainer
-            id="outerMostContainer"
-            width={width}
-            height={height}
+
+          <div
+            id="innerContainer1"
+            style={{
+              boxSizing: "border-box",
+              width: getWidth(numQsorts),
+              height: getHeight(numQsorts)
+            }}
+            className="ag-theme-fresh"
           >
-            <div id="midContainer" style={{ width: "100%", height: "100%" }}>
-              <div id="innerContainer1" className="ag-theme-fresh">
-                <div id="innerContainer2">
-                  <AgGridReact
-                    columnDefs={gridColDefs}
-                    rowData={gridRowData}
-                    onGridReady={onGridReady}
-                    gridAutoHeight
-                    enableSorting
-                  />
-                </div>
-              </div>
-            </div>
-          </OuterMostContainer>
+            <AgGridReact
+              columnDefs={gridColDefs}
+              rowData={gridRowData}
+              onGridReady={onGridReady}
+              enableSorting
+            />
+          </div>
         </TableHolder>
       );
     }
@@ -79,9 +93,7 @@ class CorrelationTable extends Component {
 
 export default view(CorrelationTable);
 
-const TableHolder = styled.div`
-  grid-area: main;
-`;
+const TableHolder = styled.div``;
 
 const OuterMostContainer = styled.div`
   height: 78vh;

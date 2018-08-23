@@ -1,3 +1,5 @@
+// require('electron-react-devtools').install();
+
 import { app, BrowserWindow, Menu } from "electron";
 import { enableLiveReload } from "electron-compile";
 
