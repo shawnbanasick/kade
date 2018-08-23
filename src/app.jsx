@@ -55,7 +55,7 @@ class App extends React.Component {
     } = this.localState;
     return (
       <AppWrap>
-        <Header>KANDED</Header>
+        <Header>KADE</Header>
         <Split>
           <FilesWindow>
             <StartButton

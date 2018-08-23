@@ -30,7 +30,7 @@ class LoadTxtStatementFile extends Component {
         buttonColor={localStore.buttonColor}
         onClick={() => handleClick()}
       >
-        <p>Load KANDED Excel File</p>
+        <p>Load KADE Excel File</p>
       </LoadTxtButton>
     );
   }

@@ -11,7 +11,7 @@ class ExcelPanel extends Component {
     return (
       <DataWindow>
         <Header>
-          Load a KANDED or Ken-Q Analysis (web) Excel output file.
+          Load a KADE or Ken-Q Analysis (web) Excel output file.
         </Header>
         <CardHolder>
           <KandedCard />

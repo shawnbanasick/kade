@@ -6,7 +6,7 @@ import LoadExcelT3 from "./LoadExcelT3";
 const ExcelT3Card = () => (
   <Card>
     <CardMeta>
-      <CardLabel>KANDED or Ken-Q Analysis File</CardLabel>
+      <CardLabel>KADE or Ken-Q Analysis File</CardLabel>
     </CardMeta>
     <Image>
       <img

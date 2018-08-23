@@ -2,20 +2,37 @@ import React, { Component } from "react";
 import { view } from "react-easy-state";
 import styled, { keyframes } from "styled-components";
 
+function handleClick() {}
+
 class Start extends Component {
   render() {
     return (
       <MainContent>
         <LanguageSelection>Language</LanguageSelection>
-        <TitleDiv>KANDED</TitleDiv>
+        <TitleDiv>KADE</TitleDiv>
+        <SubTitleDiv>
+          <HighlightLetter>K</HighlightLetter>
+          en-Q <HighlightLetter>&nbsp;A</HighlightLetter>
+          nalysis <HighlightLetter>&nbsp;D</HighlightLetter>
+          esktop <HighlightLetter>&nbsp;E</HighlightLetter>
+          dition
+        </SubTitleDiv>
         <WebLinkRow>
-          <p>web links:</p>
-          <hr />
+          <h1>web links:</h1>
+          <hr style={{ width: "700px" }} />
         </WebLinkRow>
-        <WebLinkDiv1>square div 1</WebLinkDiv1>
-        <WebLinkDiv1>square div 2</WebLinkDiv1>
-        <WebLinkDiv2>square div 3</WebLinkDiv2>
-        <WebLinkDiv2>square div 4</WebLinkDiv2>
+        <WebLinkDiv1 onClick={handleClick}>
+          <StyledAnchor
+            target="_blank"
+            rel="noopener noreferrer"
+            href="https://shawnBanasick.github.io/ken-q-analysis/index.html"
+          >
+            Ken-Q Analysis online version
+          </StyledAnchor>
+        </WebLinkDiv1>
+        <WebLinkDiv2>square div 2</WebLinkDiv2>
+        <WebLinkDiv3>square div 3</WebLinkDiv3>
+        <WebLinkDiv4>square div 4</WebLinkDiv4>
       </MainContent>
     );
   }
@@ -43,16 +60,25 @@ const fadeOut = keyframes`
   }
 `;
 
+const StyledAnchor = styled.a`
+  color: black;
+
+  &:hover {
+    color: black;
+  }
+`;
+
 const MainContent = styled.div`
   display: grid;
   grid-template-columns: 190px 190px 190px 190px;
-  grid-template-rows: 50px 125px 125px 200px 200px 50px;
+  grid-template-rows: 50px 175px 50px 155px 120px 200px 50px;
   grid-template-areas:
     "row1 row1 row1 row1"
     "titleRow titleRow titleRow titleRow"
+    "subtitleRow subtitleRow subtitleRow subtitleRow"
     "weblinkRow weblinkRow weblinkRow weblinkRow"
-    "linkboxRow1 linkboxRow1 linkboxRow1 linkboxRow1"
-    "linkboxRow2 linkboxRow2 linkboxRow2 linkboxRow2";
+    "linkboxRow1 linkboxRow1 linkboxRow2 linkboxRow2"
+    "linkboxRow3 linkboxRow3 linkboxRow4 linkboxRow4";
   justify-items: center;
   align-items: center;
   background-color: white;
@@ -75,35 +101,127 @@ const LanguageSelection = styled.div`
 
 const TitleDiv = styled.div`
   grid-area: titleRow;
-  font-family: Helvetica;
-  font-size: 50px;
+  font-size: 80px;
+  font-weight: bold;
+`;
+
+const SubTitleDiv = styled.p`
+  display: flex;
+  grid-area: subtitleRow;
+  font-style: italic;
+  font-size: 40px;
+  font-weight: normal;
+`;
+
+const HighlightLetter = styled.p`
+  color: #b22222;
   font-weight: bold;
 `;
 
 const WebLinkDiv1 = styled.div`
+  display: flex;
   grid-area: linkboxRow1;
-  height: 180px;
+  height: 120px;
   width: 180px;
   display: grid;
   align-items: center;
-  justify-items: center;
+  justify-content: center;
   background-color: #d6dbe0;
   color: black;
-  border-radius: 2px;
+  border-radius: 5px;
   font-size: 22px;
+  margin-right: 3px;
+  margin-bottom: 3px;
+  box-shadow: 0 3px 3px 0 black;
+  text-align: center;
+
+  &:hover {
+    font-weight: bold;
+  }
+
+  &:active {
+    box-shadow: 0 0 1px 0 black inset;
+    margin-left: 3px;
+    margin-top: 3px;
+  }
 `;
 
 const WebLinkDiv2 = styled.div`
   grid-area: linkboxRow2;
+  height: 120px;
+  width: 180px;
   display: grid;
   align-items: center;
   justify-items: center;
-  height: 180px;
+  background-color: #d6dbe0;
+  color: black;
+  border-radius: 5px;
+  font-size: 22px;
+  margin-right: 3px;
+  margin-bottom: 3px;
+  box-shadow: 0 3px 3px 0 black;
+
+  &:hover {
+    font-weight: bold;
+  }
+
+  &:active {
+    box-shadow: 0 0 1px 0 black inset;
+    margin-left: 3px;
+    margin-top: 3px;
+  }
+`;
+
+const WebLinkDiv3 = styled.div`
+  grid-area: linkboxRow3;
+  display: grid;
+  align-items: center;
+  justify-items: center;
+  height: 120px;
   width: 180px;
   background-color: #d6dbe0;
   color: black;
-  border-radius: 2px;
+  border-radius: 5px;
   font-size: 22px;
+  margin-right: 3px;
+  margin-bottom: 3px;
+  box-shadow: 0 3px 3px 0 black;
+
+  &:hover {
+    font-weight: bold;
+  }
+
+  &:active {
+    box-shadow: 0 0 1px 0 black inset;
+    margin-left: 3px;
+    margin-top: 3px;
+  }
+`;
+
+const WebLinkDiv4 = styled.div`
+  grid-area: linkboxRow4;
+  display: grid;
+  align-items: center;
+  justify-items: center;
+  height: 120px;
+  width: 180px;
+  background-color: #d6dbe0;
+  color: black;
+  border-radius: 5px;
+  font-size: 22px;
+  margin-right: 3px;
+  margin-bottom: 3px;
+  box-shadow: 0 3px 3px 0 black;
+
+  &:hover {
+    font-weight: bold;
+  }
+
+  &:active {
+    box-shadow: 0 0 1px 0 black inset;
+    margin-left: 3px;
+    margin-top: 3px;
+  }
 `;
 
 const WebLinkRow = styled.div`

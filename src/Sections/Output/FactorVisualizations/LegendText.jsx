@@ -1,7 +1,7 @@
 import React from "react";
 import store from "../../../store";
 
-const getXCoords = props => {
+function getXCoords(props) {
   let totalWidth = props.positionData.instances.length * 110;
   if (props.factorVizOptions.willAdjustCardWidth === true) {
     totalWidth =
@@ -11,9 +11,9 @@ const getXCoords = props => {
   const halfWidth = totalWidth / 2;
   const xCoord = halfWidth;
   return xCoord;
-};
+}
 
-let yValue = props => {
+function yValue(props) {
   const maxColumnHeight = store.getState("maxColumnHeight");
   const defaultHeight = maxColumnHeight * 110 + 100;
 
@@ -24,7 +24,7 @@ let yValue = props => {
     return yValue;
   }
   return defaultHeight;
-};
+}
 
 class LegendText extends React.Component {
   constructor() {
@@ -34,6 +34,8 @@ class LegendText extends React.Component {
   }
 
   renderLegendRectangleText(props) {
+    // console.log(`props: ${  JSON.stringify(props)}`);
+
     const displayColor = props.factorVizOptions.consensusIndicator;
     const xLocation = getXCoords(props);
     const yLocation = yValue(props) + 5;

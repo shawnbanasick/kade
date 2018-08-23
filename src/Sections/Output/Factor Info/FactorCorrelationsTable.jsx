@@ -10,11 +10,11 @@ import store from "../../../store";
 // };
 
 const getCurrentData = () => {
-  let data = store.getState("factorCorrelationsTableData");
-  let numFacs2 = store.getState("userSelectedFactors");
-  let numFacs = numFacs2.length;
+  const data = store.getState("factorCorrelationsTableData");
+  const numFacs2 = store.getState("userSelectedFactors");
+  const numFacs = numFacs2.length;
   // pull out header row
-  let headerRow = data[3];
+  const headerRow = data[3];
 
   return [data, numFacs, headerRow];
 };
@@ -57,7 +57,7 @@ const getGridRowDataFacCorrTable = (data, headerRow) => {
 
   for (let j = 4; j < data.length; j++) {
     // let responNum = j + 1;
-    let tempObj = {};
+    const tempObj = {};
     tempObj.factorList = data[j][0];
 
     for (let k = 1; k < headerRow.length; k++) {
@@ -70,23 +70,23 @@ const getGridRowDataFacCorrTable = (data, headerRow) => {
 };
 
 class FactorCorrelationsTable extends Component {
-  onGridReady = params => {
+  onGridReady(params) {
     this.gridApi = params.api;
     this.columnApi = params.columnApi;
     // this.gridApi.sizeColumnsToFit();
-  };
+  }
 
   render() {
-    let currentData = getCurrentData();
+    const currentData = getCurrentData();
 
     let widthVal = 182 + 80 * currentData[1];
     if (widthVal > window.innerWidth - 100) {
       widthVal = window.innerWidth - 100;
     }
-    widthVal = widthVal + "px";
+    widthVal += "px";
 
-    let gridColDefsFacCorrTable = getGridColDefsFacCorrTable(...currentData); // store.getState("gridColDefsFacTableEigen");
-    let gridRowDataFacCorrTable = getGridRowDataFacCorrTable(
+    gridColDefsFacCorrTable = getGridColDefsFacCorrTable(...currentData); // store.getState("gridColDefsFacTableEigen");
+    gridRowDataFacCorrTable = getGridRowDataFacCorrTable(
       currentData[0],
       currentData[2]
     );
@@ -103,7 +103,7 @@ class FactorCorrelationsTable extends Component {
             rowData={gridRowDataFacCorrTable}
             onGridReady={this.onGridReady.bind(this)}
             domLayout={"autoHeight"}
-            enableSorting={true}
+            enableSorting
           />
         </div>
       </div>

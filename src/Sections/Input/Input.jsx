@@ -35,7 +35,7 @@ const panes = [
     )
   },
   {
-    menuItem: "Kanded",
+    menuItem: "KADE",
     render: () => (
       <Tab.Pane>
         <KandedPanel />

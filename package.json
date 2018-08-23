@@ -1,6 +1,6 @@
 {
-  "name": "kanded",
-  "productName": "KANDED",
+  "name": "ShawnBanasick",
+  "productName": "KADE",
   "version": "0.0.1",
   "description": "A desktop application for Q Methodology",
   "main": "src/index.js",
@@ -38,7 +38,7 @@
         "asar": true
       },
       "electronWinstallerConfig": {
-        "name": "Kanded",
+        "name": "KADE",
         "noMsi": true
       },
       "electronInstallerDebian": {},
@@ -49,7 +49,7 @@
       },
       "windowsStoreConfig": {
         "packageName": "",
-        "name": "Kanded"
+        "name": "KADE"
       }
     }
   },
