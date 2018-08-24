@@ -11,7 +11,7 @@ class Factors extends Component {
     const showCentroidError = state.getState("showCentroidError");
     return (
       <MainContent>
-        <TypeOfAnalysisTransitionContainer />
+        <TypeOfAnalysisTransitionContainer style={{ gridArea: "row1" }} />
         <UnrotatedFactorsTransitionContainer />
         {showCentroidError ? <ErrorNotification /> : null}
       </MainContent>
@@ -44,7 +44,7 @@ const fadeOut = keyframes`
 const MainContent = styled.div`
   display: grid;
   grid-template-columns: 1fr;
-  grid-template-rows: 250px 1fr;
+  grid-template-rows: 150px 1fr;
   grid-template-areas:
     "row1 row1 row1 row1"
     "titleRow titleRow titleRow titleRow"

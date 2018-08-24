@@ -3,7 +3,7 @@ import React from "react";
 import { view } from "react-easy-state";
 // import ResetAnalysisButton from "./ResetAnalysisButton";
 import PcaButton from "./factorSelection/ExtractPrinCompButton";
-// import NoFacSelectedModal from "./factorSelection/NoFacSelectedModal";
+import NoFacSelectedModal from "./factorSelection/NoFacSelectedModal";
 import CentroidSelectDropdown from "./factorSelection/CentroidSelectDropdown";
 
 class TypeOfAnalysisTransitionContainer extends React.Component {
@@ -17,7 +17,7 @@ class TypeOfAnalysisTransitionContainer extends React.Component {
         <div className="centroidContainer">
           <div style={{ display: "flex" }}>
             <CentroidSelectDropdown />
-            {/* <NoFacSelectedModal /> */}
+            <NoFacSelectedModal />
             <PcaButton />
           </div>
           {/* <ResetAnalysisButton /> */}

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { view } from "react-easy-state";
+import { view, store } from "react-easy-state";
 import styled, { keyframes } from "styled-components";
 import { Tab } from "semantic-ui-react";
 import CsvPanel from "./CsvPanel";
@@ -10,8 +10,6 @@ import PQMethodPanel from "./PQMethodPanel";
 import DemoDataPanel from "./DemoDataPanel";
 // import SuccessNotification from "./SuccessNotification";
 import ErrorNotification from "./ErrorNotification";
-
-// const localStore = store({ tabActive: 1 });
 
 // const handleAfter = selectedIndex => {
 //   localStore.tabActive = selectedIndex;
@@ -68,11 +66,30 @@ const panes = [
   }
 ];
 
+const localStore = store({ activeIndex: 0 });
+
 class Input extends Component {
+  constructor() {
+    super();
+
+    this.handleTabChange = this.handleTabChange.bind(this);
+  }
+
+  handleTabChange(e, { activeIndex }) {
+    console.log(JSON.stringify(activeIndex));
+
+    localStore.activeIndex = activeIndex;
+  }
+
   render() {
+    const { activeIndex } = localStore;
     return (
       <MainContent>
-        <Tab panes={panes} />
+        <Tab
+          panes={panes}
+          activeIndex={activeIndex}
+          onTabChange={this.handleTabChange}
+        />
         <ErrorNotification />
         {/* <SuccessNotification /> */}
       </MainContent>

@@ -1,40 +1,65 @@
 import React from "react";
-import state from "../../../store";
-import Dropdown from "../../../Utils/Dropdown";
-import styled from "styled-components";
-import CallCentroidFactorButton from "./CallCentroidFactorButton";
+import { Button, Dropdown } from "semantic-ui-react";
+import store from "../../../store";
 
-const options = [1, 2, 3, 4, 5, 6, 7, 8];
-
-class DropdownMultipleSelection extends React.Component {
-  handleMessage(jsonIdSelection) {
-    state.setState({
-      numCentroidFactors: jsonIdSelection
+const saveDropdownValueToState = (event, data) => {
+    store.setState({
+        numCentroidFactors: data.value
     });
-    console.log(jsonIdSelection);
-    // displayJsonData(jsonIdSelection);
-  }
-  render() {
-    return (
-      <CentroidSelectDiv>
-        <span style={{ marginRight: 10 }}>Extract</span>
-        <Dropdown
-          id="centroidSelectDropdown"
-          onChangeMessageUpTree={this.handleMessage}
-          textValue={"? \u25BC"}
-          options={options}
-          width="38px"
+};
+
+const options = [
+    {
+        key: "factor1",
+        text: "1",
+        value: 1
+    },
+    {
+        key: "factor2",
+        text: "2",
+        value: 2
+    },
+    {
+        key: "factor3",
+        text: "3",
+        value: 3
+    },
+    {
+        key: "factor4",
+        text: "4",
+        value: 4
+    },
+    {
+        key: "factor5",
+        text: "5",
+        value: 5
+    },
+    {
+        key: "factor6",
+        text: "6",
+        value: 6
+    },
+    {
+        key: "factor7",
+        text: "7",
+        value: 7
+    },
+    {
+        key: "factor8",
+        text: "8",
+        value: 8
+    }
+];
+
+const DropdownMultipleSelection = () => (
+    <div>
+      <span style={ { marginRight: 10 } }>Extract</span>
+      <Button.Group size={ "big" } color="black" basic>
+        <Dropdown id="centroidSelectDropdown" placeholder={ "?" } defaultValue={ 7 } onChange={ saveDropdownValueToState } openOnFocus={ true } button simple item options={ options }
         />
-        <CallCentroidFactorButton />
-      </CentroidSelectDiv>
-    );
-  }
-}
+      </Button.Group>
+    </div>
+);
+
 export default DropdownMultipleSelection;
 
-const CentroidSelectDiv = styled.div`
-  display: flex;
-  align-items: center;
-  justify-items: center;
-  font-size: 20px;
-`;
