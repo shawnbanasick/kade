@@ -114,7 +114,7 @@ class FactorSelectDropdown extends React.Component {
     // let showKeepFacForRotButton = store.getState("showKeepFacForRotButton");
     return (
       <div style={{ display: "flex" }}>
-        <span style={{ marginRight: 20 }}>
+        <span style={{ marginRight: 20, fontSize: "22px" }}>
           How many factors to keep for rotation?{" "}
         </span>
 

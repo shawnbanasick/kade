@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { view } from "react-easy-state";
-import { Button, Transition } from "semantic-ui-react";
+import { Button } from "semantic-ui-react";
 import varimaxDispatch from "../varimaxLogic/varimaxDispatch";
 import store from "../../../store";
 
@@ -62,31 +62,29 @@ class RotationButtonGroup extends Component {
 
     // if (shouldDisplay) {
     return (
-      <Transition visible={shouldDisplay} animation="fade" duration={1000}>
-        <div>
-          <Button
-            id="judgementalRotationButton"
-            size={"big"}
-            toggle
-            active={judgeButtonActive}
-            disabled={isDisabled}
-            onClick={this.onJudgeClick}
-          >
-            Judgmental Rotation
-          </Button>
-          <Button
-            id="pcaRotationButton"
-            size={"big"}
-            toggle
-            active={varimaxButtonActive}
-            loading={isCalculatingVarimax}
-            disabled={varimaxButtonDisabled}
-            onClick={this.onVarimaxClick}
-          >
-            {varimaxButtonText}
-          </Button>
-        </div>
-      </Transition>
+      <div>
+        <Button
+          id="judgementalRotationButton"
+          size={"small"}
+          toggle
+          active={judgeButtonActive}
+          disabled={isDisabled}
+          onClick={this.onJudgeClick}
+        >
+          Judgmental Rotation
+        </Button>
+        <Button
+          id="pcaRotationButton"
+          size={"small"}
+          toggle
+          active={varimaxButtonActive}
+          loading={isCalculatingVarimax}
+          disabled={varimaxButtonDisabled}
+          onClick={this.onVarimaxClick}
+        >
+          {varimaxButtonText}
+        </Button>
+      </div>
     );
     //   }
     //   return null;

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { view } from "react-easy-state";
-import { Transition } from "semantic-ui-react";
+// import { Transition } from "semantic-ui-react";
 import ScatterPlotDiv from "./plot/ScatterPlotDiv";
 import store from "../../../store";
 
@@ -27,18 +27,16 @@ const getStyles = () => {
 class judgementalRotationContainer extends Component {
   render() {
     const shouldShowJudgeRotDiv = store.getState("shouldShowJudgeRotDiv");
+    console.log(JSON.stringify(shouldShowJudgeRotDiv));
+
     return (
-      <Transition
-        visible={shouldShowJudgeRotDiv}
-        animation="fade"
-        duration={1000}
-      >
-        <div>
+      <div>
+        {shouldShowJudgeRotDiv ? (
           <div style={getStyles()}>
             <ScatterPlotDiv />
           </div>
-        </div>
-      </Transition>
+        ) : null}
+      </div>
     );
   }
 }

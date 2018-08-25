@@ -50,7 +50,7 @@ export default class ModalExampleControlled extends Component {
           <Button
             id="noFacSelectedModalButton"
             className="instagram"
-            size={"big"}
+            size={"small"}
             toggle
             active={isActive}
             loading={isCentroidLoading}
@@ -63,7 +63,7 @@ export default class ModalExampleControlled extends Component {
         open={this.state.modalOpen}
         onClose={this.handleClose}
         basic
-        size="small"
+        size={"small"}
       >
         <Header icon="browser" content="Centroid Factor Extraction" />
         <Modal.Content>

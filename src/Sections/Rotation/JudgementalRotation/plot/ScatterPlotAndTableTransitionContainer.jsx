@@ -40,7 +40,7 @@ const plotAndChartStyles = {
 class ScatterPlotAndTableTransitionContainer extends React.Component {
   render() {
     const showScatterPlotTableDiv = store.getState("showScatterPlotTableDiv");
-    const degreesText = `${store.getState("rotationDegrees")  }\u00B0`;
+    const degreesText = `${store.getState("rotationDegrees")}\u00B0`;
     const data = store.getState("newRotationVectors");
     const leftContWidth = window.innerWidth - 518;
     const colDefs = store.getState("rotColDefsFactorTable");
@@ -54,7 +54,7 @@ class ScatterPlotAndTableTransitionContainer extends React.Component {
               <span
                 style={{
                   marginRight: 5,
-                  fontSize: ".9em",
+                  fontSize: "22px",
                   marginBottom: 5,
                   marginTop: "auto"
                 }}
@@ -95,9 +95,8 @@ class ScatterPlotAndTableTransitionContainer extends React.Component {
           </div>
         </div>
       );
-    } 
-      return null;
-    
+    }
+    return null;
   }
 }
 

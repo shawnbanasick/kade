@@ -1,5 +1,5 @@
 import React from "react";
-import { Button } from "semantic-ui-react";
+import { Button, Icon } from "semantic-ui-react";
 import calculateRotatedFactors from "../rotationLogic/calculateRotatedFactors";
 import store from "../../../../store";
 
@@ -17,14 +17,19 @@ class ClockwiseButtons extends React.Component {
     const baselineData = this.props.baselineData;
     return (
       <div>
-        <Button id="clockwise" onClick={e => this.handleClick(e, baselineData)}>
-          Clockwise
+        <Button
+          icon
+          id="clockwise"
+          onClick={e => this.handleClick(e, baselineData)}
+        >
+          <Icon name="redo" />
         </Button>
         <Button
           id="counterClockwise"
+          icon
           onClick={e => this.handleClick(e, baselineData)}
         >
-          Counter-Clockwise
+          <Icon name="undo" />
         </Button>
       </div>
     );

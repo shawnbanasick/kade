@@ -32,14 +32,3 @@ class ScatterPlotDiv extends React.Component {
 }
 
 export default view(ScatterPlotDiv);
-
-/*
-.degreesTextStyles {
-  padding-top: 18px;
-  text-align: center;
-  font-size: 50px;
-  width: 110px;
-  margin-left: 20px;
-  margin-right: 20px;
-}
-*/
