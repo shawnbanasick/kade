@@ -22,22 +22,20 @@ const styles = {
 };
 
 // Returns a function that "scales" X coordinates from the data to fit the chart
-const xScale = props => {
-  return d3
+const xScale = props => d3
     .scaleLinear()
     .domain([-1, 1])
     .range([props.padding, props.width - props.padding]);
-};
 
 // Returns a function that "scales" Y coordinates from the data to fit the chart
-const yScale = props => {
-  return d3
+const yScale = props => d3
     .scaleLinear()
     .domain([-1, 1])
     .range([props.height - props.padding, props.padding]);
-};
 
-let ScatterPlot = props => {
+const ScatterPlot = props => {
+  console.log(`sp props: ${  JSON.stringify(props)}`);
+
   const scales = {
     xScale: xScale(props),
     yScale: yScale(props)

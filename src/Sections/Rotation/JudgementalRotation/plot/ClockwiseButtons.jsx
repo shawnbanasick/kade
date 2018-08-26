@@ -1,6 +1,4 @@
 import React from "react";
-import { Button } from "semantic-ui-react";
-import styled from "styled-components";
 import calculateRotatedFactors from "../rotationLogic/calculateRotatedFactors";
 import store from "../../../../store";
 

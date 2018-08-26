@@ -1,5 +1,5 @@
 import React from "react";
-// import "./ScatterPlotDiv.css";
+import styled from "styled-components";
 import { view } from "react-easy-state";
 import FactorSelectButtons from "../FactorSelect/FactorSelectButtons";
 import ScatterPlotAndTableTransitionContainer from "./ScatterPlotAndTableTransitionContainer";
@@ -20,15 +20,21 @@ class ScatterPlotDiv extends React.Component {
     const baselineData = transposeMatrix(factorMatrix);
 
     return (
-      <div id="outmostDiv" style={{ width: "100%" }}>
+      <JudgeTitleDiv id="outmostDiv">
         <div id="selectButton" style={selectButtonStyles}>
           <h1>Select 2 factors to rotate:</h1>
           <FactorSelectButtons baselineData={baselineData} />
         </div>
         <ScatterPlotAndTableTransitionContainer baselineData={baselineData} />
-      </div>
+      </JudgeTitleDiv>
     );
   }
 }
 
 export default view(ScatterPlotDiv);
+
+const JudgeTitleDiv = styled.div`
+  width: 100%;
+  height: 100%;
+  border: 2px solid red;
+`;

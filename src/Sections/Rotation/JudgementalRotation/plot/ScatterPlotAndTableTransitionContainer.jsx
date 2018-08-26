@@ -1,6 +1,7 @@
 import React from "react";
-import { view } from "react-easy-state";
-import store from "../../../../store";
+import { view, store } from "react-easy-state";
+import styled from "styled-components";
+import state from "../../../../store";
 import ScatterPlot from "./ScatterPlot";
 import ParticipantPopUp from "./ParticipantPopUp";
 import ClockwiseButtons from "./ClockwiseButtons";
@@ -8,24 +9,34 @@ import RotationTable from "../rotationTable/RotationTable";
 import RotationButtons from "../FactorSelect/RotationButtons";
 import SaveRotationButton from "../FactorSelect/SaveRotationButton";
 
-let widthHeight = window.innerWidth - 518 - 100;
-if (widthHeight > 900) {
-  widthHeight = 900;
+// sets scatterplot width and height
+function getWidthHeight() {
+  let widthHeight = window.innerWidth - 518 - 200;
+  if (widthHeight > 900) {
+    widthHeight = 900;
+  }
+  return widthHeight;
 }
 
+const localStore = store({ width: getWidthHeight(), height: getWidthHeight() });
+
+window.addEventListener("resize", () => {
+  const size = getWidthHeight();
+  localStore.width = size;
+  localStore.height = size;
+});
+
 const scatterPlotStyles = {
-  width: widthHeight,
-  height: widthHeight,
   padding: 50,
   marginBottom: 10
 };
 
 const degreesDivStyles = {
   width: "100%",
-  height: 80,
+  height: 60,
   display: "flex",
   flexDirection: "row",
-  // border: "2px solid yellow",
+  alignItems: "flex-end",
   marginTop: 20,
   marginBottom: 20,
   fontSize: ".9em"
@@ -39,12 +50,14 @@ const plotAndChartStyles = {
 
 class ScatterPlotAndTableTransitionContainer extends React.Component {
   render() {
-    const showScatterPlotTableDiv = store.getState("showScatterPlotTableDiv");
-    const degreesText = `${store.getState("rotationDegrees")}\u00B0`;
-    const data = store.getState("newRotationVectors");
-    const leftContWidth = window.innerWidth - 518;
-    const colDefs = store.getState("rotColDefsFactorTable");
-    const rowData = store.getState("rotRowDataFactorTable");
+    const showScatterPlotTableDiv = state.getState("showScatterPlotTableDiv");
+    const degreesText = `${state.getState("rotationDegrees")}\u00B0`;
+    const data = state.getState("newRotationVectors");
+    const leftContWidth = window.innerWidth - 558;
+    const colDefs = state.getState("rotColDefsFactorTable");
+    const rowData = state.getState("rotRowDataFactorTable");
+
+    console.log(`props: ${JSON.stringify(this.props)}`);
 
     if (showScatterPlotTableDiv) {
       return (
@@ -78,7 +91,10 @@ class ScatterPlotAndTableTransitionContainer extends React.Component {
               <div style={{ marginTop: "auto" }}>
                 <ClockwiseButtons baselineData={this.props.baselineData} />
               </div>
-              <span className="degreesTextStyles"> {degreesText} </span>
+              <DegreesText>
+                {" "}
+                <p>{degreesText}</p>
+              </DegreesText>
               <div style={{ marginTop: "auto" }}>
                 <SaveRotationButton />
               </div>
@@ -86,7 +102,13 @@ class ScatterPlotAndTableTransitionContainer extends React.Component {
           </div>
           <div id="scatterPlotDiv" style={plotAndChartStyles}>
             <div style={{ width: leftContWidth }}>
-              <ScatterPlot data={data} {...this.props} {...scatterPlotStyles} />
+              <ScatterPlot
+                data={data}
+                width={localStore.width}
+                height={localStore.height}
+                {...this.props}
+                {...scatterPlotStyles}
+              />
               <ParticipantPopUp />
             </div>
             <div id="rotFactorsTableDiv" style={{ width: 518 }}>
@@ -101,3 +123,51 @@ class ScatterPlotAndTableTransitionContainer extends React.Component {
 }
 
 export default view(ScatterPlotAndTableTransitionContainer);
+
+const DegreesText = styled.div`
+  text-align: center;
+  height: 60px;
+  font-size: 50px;
+  width: 110px;
+  margin-left: 20px;
+  margin-right: 20px;
+`;
+
+/*
+
+function getWidth(numQsorts) {
+  let widthVal = 152 + 80 * numQsorts;
+  let x = window.innerWidth - 40 - 152;
+
+  if (x < widthVal) {
+    x += "px";
+    return x;
+  }
+  widthVal += "px";
+  return widthVal;
+}
+
+function getHeight(numQsorts) {
+  let heightVal = 30 + 25 * numQsorts;
+  let y = window.innerHeight - 120 - 100;
+  if (y < heightVal) {
+    y += "px";
+    return y;
+  }
+  heightVal += "px";
+  return heightVal;
+}
+
+function resetWidthAndHeight() {
+  // this.gridApi.setGridAutoHeight(false);
+  const numQsorts = localStore.numQsorts;
+  const table = document.querySelector("#innerContainer1");
+  table.style.height = getHeight(numQsorts);
+  table.style.width = getWidth(numQsorts);
+}
+
+window.addEventListener("resize", () => {
+  resetWidthAndHeight();
+});
+
+*/

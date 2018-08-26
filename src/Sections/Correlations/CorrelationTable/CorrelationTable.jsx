@@ -99,3 +99,4 @@ const OuterMostContainer = styled.div`
   height: 78vh;
   width: ${props => props.width};
 `;
+

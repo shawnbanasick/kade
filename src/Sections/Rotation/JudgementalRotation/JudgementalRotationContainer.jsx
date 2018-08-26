@@ -5,16 +5,16 @@ import ScatterPlotDiv from "./plot/ScatterPlotDiv";
 import store from "../../../store";
 
 const getStyles = () => {
-  let widthHeight = window.innerWidth - 518 + 125;
-  if (widthHeight > 900) {
-    widthHeight = 1200;
-  }
+  // let widthHeight = window.innerWidth - 518 + 125;
+  // if (widthHeight > 900) {
+  //   widthHeight = 1200;
+  // }
   const styles = {
-    width: "100",
+    width: "100%",
     maxWidth: 1400,
-    height: widthHeight,
+    height: "100%",
     // border: "2px solid purple",
-    marginTop: 50,
+    marginTop: 10,
     display: "flex"
   };
   return styles;
@@ -23,6 +23,8 @@ const getStyles = () => {
 // window.onresize = function() {
 //   widthHeight();
 // };
+
+// const localStore = store({mainWidth: 500, mainHeight: 500});
 
 class judgementalRotationContainer extends Component {
   render() {
