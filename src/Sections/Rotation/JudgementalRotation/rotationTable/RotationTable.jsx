@@ -1,25 +1,30 @@
 import React, { Component } from "react";
 import { AgGridReact } from "ag-grid-react";
-// import store from "../../../store";
 import { view } from "react-easy-state";
 
 class RotationTable extends Component {
-  onGridReady = params => {
+  onGridReady(params) {
     this.gridApi = params.api;
     this.columnApi = params.columnApi;
     // this.gridApi.sizeColumnsToFit();
-  };
+  }
 
   render() {
-    let rowData = this.props.rowData;
-    let colDefs = this.props.colDefs;
+    const rowData = this.props.rowData;
+    const colDefs = this.props.colDefs;
+    const maxHeight = this.props.maxHeight;
 
     let heightVal = rowData.length * 28 + 3;
-    if (heightVal > 600) {
-      heightVal = 600;
+
+    if (heightVal > maxHeight) {
+      heightVal = maxHeight;
     }
 
-    let containerStyle = {
+    if (heightVal > 800) {
+      heightVal = 800;
+    }
+
+    const containerStyle = {
       marginTop: 10,
       height: heightVal,
       width: 515
@@ -34,7 +39,7 @@ class RotationTable extends Component {
           <AgGridReact
             columnDefs={colDefs}
             rowData={rowData}
-            enableSorting={true}
+            enableSorting
             onGridReady={this.onGridReady.bind(this)}
           />
         </div>

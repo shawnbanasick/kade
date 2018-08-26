@@ -15,32 +15,22 @@ const panes = [
     menuItem: "Options",
     render: () => (
       <Tab.Pane>
-        <DataWindow>
-          <div style={{ maxWidth: 1197 }}>
-            <FactorSelectDropdown />
-            <FactorsKeptNotification />
-          </div>
-        </DataWindow>
+        <DataWindow1>
+          <FactorSelectDropdown />
+          <FactorsKeptNotification />
+          <RotationButtonGroup style={{ marginTop: "250px" }} />
+        </DataWindow1>
       </Tab.Pane>
     )
   },
+
   {
-    menuItem: "Button Group",
+    menuItem: "Judgmental Rotation Scatter Plot",
     render: () => (
       <Tab.Pane>
-        <DataWindow>
-          <RotationButtonGroup />
-        </DataWindow>
-      </Tab.Pane>
-    )
-  },
-  {
-    menuItem: "Judgmental Rotation",
-    render: () => (
-      <Tab.Pane>
-        <DataWindow>
+        <DataWindow2>
           <JudgementalRotationContainer />
-        </DataWindow>
+        </DataWindow2>
       </Tab.Pane>
     )
   }
@@ -76,18 +66,16 @@ class Rotation extends Component {
   // }
 
   handleTabChange(e, { activeIndex }) {
-    console.log(JSON.stringify("handletabchange"));
-
-    console.log(JSON.stringify(activeIndex));
-
     localStore.activeIndex = activeIndex;
   }
 
   render() {
     const { activeIndex } = localStore;
+
     return (
       <MainContent>
         <Tab
+          style={{ width: "100%", height: "100%" }}
           panes={panes}
           activeIndex={activeIndex}
           onTabChange={this.handleTabChange}
@@ -120,7 +108,15 @@ export default TabExampleBasicAll
 
 */
 
-const DataWindow = styled.div`
+const DataWindow1 = styled.div`
+  display: grid;
+  grid-template-rows: 150px 150px 1fr;
+  min-height: 600px;
+  background-color: white;
+  max-width: 1197;
+`;
+
+const DataWindow2 = styled.div`
   min-height: 600px;
   background-color: white;
 `;
@@ -148,6 +144,8 @@ const fadeOut = keyframes`
 const MainContent = styled.div`
   margin-top: 20px;
   margin-left: 20px;
+  margin-right: 20px;
+
   /* display: grid;
   grid-template-columns: 600px 1fr;
   grid-template-rows: 250px 125px 125px 1fr; */
@@ -164,7 +162,7 @@ const MainContent = styled.div`
   animation: ${props => (props.view ? fadeOut : fadeIn)} 0.5s linear;
   transition: visibility 0.5s linear;
 
-  width: calc(100vw - 153px);
+  width: calc(100vw - 155px);
   box-sizing: border-box;
   max-height: calc(100vh - 22px);
   overflow: auto;

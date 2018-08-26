@@ -5,7 +5,7 @@ const styles = {
   stroke: "black",
   strokeWidth: 0.5,
   // zindex: 99,
-  fontSize: 8,
+  fontSize: 10,
   cursor: "default"
 };
 

@@ -12,8 +12,8 @@ import SaveRotationButton from "../FactorSelect/SaveRotationButton";
 // sets scatterplot width and height
 function getWidthHeight() {
   let widthHeight = window.innerWidth - 518 - 200;
-  if (widthHeight > 900) {
-    widthHeight = 900;
+  if (widthHeight > 1100) {
+    widthHeight = 1100;
   }
   return widthHeight;
 }
@@ -56,8 +56,6 @@ class ScatterPlotAndTableTransitionContainer extends React.Component {
     const leftContWidth = window.innerWidth - 558;
     const colDefs = state.getState("rotColDefsFactorTable");
     const rowData = state.getState("rotRowDataFactorTable");
-
-    console.log(`props: ${JSON.stringify(this.props)}`);
 
     if (showScatterPlotTableDiv) {
       return (
@@ -112,7 +110,11 @@ class ScatterPlotAndTableTransitionContainer extends React.Component {
               <ParticipantPopUp />
             </div>
             <div id="rotFactorsTableDiv" style={{ width: 518 }}>
-              <RotationTable colDefs={colDefs} rowData={rowData} />
+              <RotationTable
+                colDefs={colDefs}
+                maxHeight={localStore.height}
+                rowData={rowData}
+              />
             </div>
           </div>
         </div>

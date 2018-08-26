@@ -29,7 +29,6 @@ const getStyles = () => {
 class judgementalRotationContainer extends Component {
   render() {
     const shouldShowJudgeRotDiv = store.getState("shouldShowJudgeRotDiv");
-    console.log(JSON.stringify(shouldShowJudgeRotDiv));
 
     return (
       <div>

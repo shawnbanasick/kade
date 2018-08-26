@@ -121,6 +121,7 @@ class FactorSelectDropdown extends React.Component {
         <Dropdown
           id="factorSelectDropdown"
           placeholder={"?"}
+          style={{ maxHeight: "45px" }}
           onChange={saveDropdownValueToState}
           openOnFocus
           button

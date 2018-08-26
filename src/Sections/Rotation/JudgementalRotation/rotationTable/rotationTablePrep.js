@@ -12,7 +12,7 @@ const rotationTablePrep = function(d3RotChartData, baselineData) {
 
   const rotColDefsFactorTable = [
     {
-      headerName: "Num.",
+      headerName: "N.",
       field: "resNum",
       pinned: true,
       editable: false,
