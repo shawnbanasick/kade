@@ -9,7 +9,9 @@ import CentroidTable from "./FactorTable/CentroidTable";
 
 class UnrotatedFactorsTransitionContainer extends React.Component {
   componentDidUpdate() {
-    state.setState({ showCentroidSpinner: false });
+    state.setState({
+      showCentroidSpinner: false
+    });
   }
   render() {
     const showUnrotatedFactorTable = state.getState("showUnrotatedFactorTable");
@@ -27,9 +29,11 @@ class UnrotatedFactorsTransitionContainer extends React.Component {
           <EigenTable />
           <Chart />
         </Container>
-      );
+        );
     }
-    return null;
+    return (
+      <EmptyContainer />
+      );
   }
 }
 
@@ -37,5 +41,15 @@ export default view(UnrotatedFactorsTransitionContainer);
 
 const Container = styled.div`
   grid-row-start: 2;
-  min-height: 250px;
 `;
+
+const EmptyContainer = styled.div`
+  grid-row-start: 2;  
+  width: 100%;
+  height: 300px;
+`;
+
+/* 
+the empty div fixes a problem with the 
+dropdown menu getting cut off
+*/
