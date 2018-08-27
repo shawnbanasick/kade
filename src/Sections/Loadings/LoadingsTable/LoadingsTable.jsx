@@ -3,7 +3,6 @@ import { Button } from "semantic-ui-react";
 import { AgGridReact } from "ag-grid-react";
 import { view } from "react-easy-state";
 import store from "../../../store";
-import ProjectHistory from "./ProjectHistory";
 import autoFlagFactors from "../loadingsLogic/autoFlagFactors";
 import InvertFactorButton from "./InvertFactorButton";
 import SplitBipolarFactorModal from "./SplitBipolarFactorModal";
@@ -231,7 +230,6 @@ class LoadingsTable extends Component {
             Split Bipolar Factor
           </Button>
         </div>
-        <ProjectHistory />
         <Button
           id="generateOutputButton"
           style={{ marginTop: "50px" }}
