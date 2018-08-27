@@ -1,10 +1,14 @@
 // require('electron-react-devtools').install();
+// localStorage.debug = 'worker:*'
 
 import { app, BrowserWindow, Menu } from "electron";
 import { enableLiveReload } from "electron-compile";
 
 // npm install lru-cache first
-const lru = require("lru-cache")({ max: 256, maxAge: 250 });
+const lru = require("lru-cache")({
+  max: 256,
+  maxAge: 250
+});
 
 const fs = require("fs");
 
@@ -39,7 +43,7 @@ const createWindow = async () => {
     width: 960,
     height: 750,
     titleBarStyle: "hidden"
-    // icon: path.join(__dirname, "assets/icons/png/64x64.png")
+  // icon: path.join(__dirname, "assets/icons/png/64x64.png")
   });
 
   // and load the index.html of the app.
@@ -162,9 +166,9 @@ const createWindow = async () => {
       submenu: [
         {
           label: "Learn More"
-          // click() {
-          //   require('electron').shell.openExternal('https://electronjs.org');
-          // },
+        // click() {
+        //   require('electron').shell.openExternal('https://electronjs.org');
+        // },
         }
       ]
     },
@@ -173,8 +177,7 @@ const createWindow = async () => {
       submenu: [
         {
           label: "Toggle Developer Tools",
-          accelerator:
-            process.platform === "darwin" ? "Alt+Cmd+I" : "Ctrl+Shift+I",
+          accelerator: process.platform === "darwin" ? "Alt+Cmd+I" : "Ctrl+Shift+I",
           click() {
             mainWindow.webContents.toggleDevTools();
           }
