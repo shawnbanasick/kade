@@ -5,7 +5,7 @@ import store from "../../../store";
 import pcaDispatch from "../PcaLogic/pcaDispatch";
 
 const style = {
-  // marginLeft: 30,
+  marginLeft: 230
   // marginTop: 12
 };
 

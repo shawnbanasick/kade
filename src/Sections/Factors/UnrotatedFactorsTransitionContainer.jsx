@@ -37,4 +37,5 @@ export default view(UnrotatedFactorsTransitionContainer);
 
 const Container = styled.div`
   grid-row-start: 2;
+  min-height: 250px;
 `;
