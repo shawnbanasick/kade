@@ -6,12 +6,12 @@ import SortsList from "./SortsList";
 import StatementsList from "./StatementsList";
 
 const localStore = store({
-  statements: [],
   sortsDisplayText: [],
+  statements: [],
   projectName: "",
   numQsorts: 0,
   numStatements: 0,
-  qSortPattern: []
+  qSortPattern: ["none"]
 });
 
 class Data extends Component {
@@ -39,7 +39,9 @@ class Data extends Component {
           <h2>Project Name: {projectName}</h2>
           <h2>Number Q sorts: {numQsorts}</h2>
           <h2>Number Statements: {numStatements}</h2>
-          <h2>Q sort Pattern: {qSortPattern.toString()}</h2>
+          {qSortPattern ? (
+            <h2>Q sort Pattern: {qSortPattern.toString()}</h2>
+          ) : null}
         </InformationContainer>
         <StatementListContainer>
           <h1>Statements</h1>

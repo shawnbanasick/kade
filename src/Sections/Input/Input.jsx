@@ -76,8 +76,6 @@ class Input extends Component {
   }
 
   handleTabChange(e, { activeIndex }) {
-    console.log(JSON.stringify(activeIndex));
-
     localStore.activeIndex = activeIndex;
   }
 

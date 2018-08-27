@@ -20,7 +20,7 @@ function getWidth(numQsorts) {
 }
 
 function getHeight(numQsorts) {
-  let heightVal = 30 + 25 * numQsorts;
+  let heightVal = 40 + 25 * numQsorts;
   let y = window.innerHeight - 120 - 100;
   if (y < heightVal) {
     y += "px";
@@ -99,4 +99,3 @@ const OuterMostContainer = styled.div`
   height: 78vh;
   width: ${props => props.width};
 `;
-

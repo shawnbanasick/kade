@@ -58,6 +58,7 @@ const MainContent = styled.div`
   animation: ${props => (props.view ? fadeOut : fadeIn)} 0.5s linear;
   transition: visibility 0.5s linear;
   font-family: Helvetica;
+  margin-left: 20px;
 
   width: calc(100vw - 153px);
   box-sizing: border-box;

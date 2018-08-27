@@ -230,14 +230,21 @@ const ActionWindow = styled.div`
 
 const StartButton = styled.button`
   padding: 10px;
+  padding-right: 25px;
   width: 100%;
-  background-color: rgba(144, 238, 144, 0.6);
-  color: black;
+  background-color: #21ba45;
   border: none;
   text-align: center;
   border-bottom: solid 1px #302b3a;
   transition: 0.3s ease all;
   outline: none !important;
+
+  .title {
+    font-weight: bold;
+    font-size: 1.2rem;
+    margin: 5px 0 5px;
+    color: whitesmoke;
+  }
 
   &:hover {
     opacity: 1;
@@ -251,12 +258,12 @@ const StartButton = styled.button`
     background-color: white;
     opacity: 1;
     border-left: solid 8px #d6dbe0;
-    `};
-
-  .title {
+  
+    .title {
     font-weight: bold;
     font-size: 1.2rem;
     margin: 5px 0 5px;
     color: black;
-  }
+  } 
+    `};
 `;
