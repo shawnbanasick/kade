@@ -89,22 +89,6 @@ const MainContent = styled.div`
     "sortsList sortsList sortsList sortsList"
     "linkboxRow1 linkboxRow1 linkboxRow1 linkboxRow1"
     "linkboxRow2 linkboxRow2 linkboxRow2 linkboxRow2";
-
-  /*
-     
-  ::-webkit-scrollbar {
-    background-color: #fff;
-    width: 0.8em;
-  }
-
-  ::-webkit-scrollbar-thumb:window-inactive,
-  ::-webkit-scrollbar-thumb {
-    background: black;
-  }
-width: 95%;
-  height: 95%;
-    */
-
   overflow: scroll;
   padding: 5px;
   padding-top: 15px;

@@ -3,39 +3,44 @@ import React, { Component } from "react";
 import styled from "styled-components";
 import parseExcelType3 from "./KandedLogic/parseExcelType3.js";
 
-const {dialog} = require("electron").remote;
+const { dialog } = require("electron").remote;
 
 const localStore = store({
-    buttonColor: "#d6dbe0"
+  buttonColor: "#d6dbe0"
 });
 
 const handleClick = () => {
-    dialog.showOpenDialog(
+  dialog.showOpenDialog(
+    {
+      properties: ["openFile"],
+      filters: [
         {
-            properties: ["openFile"],
-            filters: [{
-                name: "Excel",
-                extensions: ["xls", "XLS", "xlsx", "XLSX"]
-            }]
-        },
-        files => {
-            if (files !== undefined) {
-                const excelFile = files[0];
-                parseExcelType3(excelFile);
-                localStore.buttonColor = "rgba(144,	238,	144, .6)";
-            }
+          name: "Excel",
+          extensions: ["xls", "XLS", "xlsx", "XLSX"]
         }
-    );
+      ]
+    },
+    files => {
+      if (files !== undefined) {
+        const excelFile = files[0];
+        parseExcelType3(excelFile);
+        localStore.buttonColor = "rgba(144,	238,	144, .6)";
+      }
+    }
+  );
 };
 
 class LoadTxtStatementFile extends Component {
-    render() {
-        return (
-            <LoadTxtButton buttonColor={ localStore.buttonColor } onClick={ () => handleClick() }>
-              <p>Load KADE Excel File</p>
-            </LoadTxtButton>
-            );
-    }
+  render() {
+    return (
+      <LoadTxtButton
+        buttonColor={localStore.buttonColor}
+        onClick={() => handleClick()}
+      >
+        <p>Load KADE Excel File</p>
+      </LoadTxtButton>
+    );
+  }
 }
 
 export default view(LoadTxtStatementFile);
@@ -51,14 +56,15 @@ const LoadTxtButton = styled.button`
   text-align: center;
   font-size: 16px;
   font-family: Helvetica, sans-serif;
-  font-weight: bold;
+  font-weight: normal;
   border-radius: 4px;
   margin-right: 3px;
   margin-bottom: 3px;
   box-shadow: 0 2px 2px 0 black;
 
   &:hover {
-    background-color: white;
+    background-color: #abafb3;
+    font-weight: 900;
   }
 
   &:active {

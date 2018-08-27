@@ -4,20 +4,25 @@ import styled from "styled-components";
 import uploadLipsetData from "./uploadLipsetData";
 
 const localStore = store({
-    buttonColor: "#d6dbe0"
+  buttonColor: "#d6dbe0"
 });
 
 const handleClick = () => {
-    uploadLipsetData();
-    localStore.buttonColor = "rgba(144,	238, 144, .6)";
+  uploadLipsetData();
+  localStore.buttonColor = "rgba(144,	238, 144, .6)";
 };
 
 const LipsetButton1 = () => (
-    <div>
-      <LoadTxtButton id="lipsetButton" floated="right" onClick={ () => handleClick() } buttonColor={ localStore.buttonColor }>
-        Load Lipset
-      </LoadTxtButton>
-    </div>
+  <div>
+    <LoadTxtButton
+      id="lipsetButton"
+      floated="right"
+      onClick={() => handleClick()}
+      buttonColor={localStore.buttonColor}
+    >
+      Load Lipset
+    </LoadTxtButton>
+  </div>
 );
 
 export default view(LipsetButton1);
@@ -32,7 +37,7 @@ const LoadTxtButton = styled.button`
   text-align: center;
   font-size: 16px;
   font-family: Helvetica, sans-serif;
-  font-weight: bold;
+  font-weight: normal;
   border-radius: 4px;
   margin-right: 3px;
   margin-bottom: 3px;
@@ -41,7 +46,8 @@ const LoadTxtButton = styled.button`
   outline: none;
 
   &:hover {
-    font-size: 22px;
+    background-color: #abafb3;
+    font-weight: 900;
   }
 
   &:active {

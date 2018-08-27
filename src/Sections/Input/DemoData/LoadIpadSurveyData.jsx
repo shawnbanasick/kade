@@ -14,7 +14,12 @@ const handleClick = () => {
 
 const IpadSurveyButton1 = () => (
   <div>
-    <LoadTxtButton id="buzzwordButton" floated="right" onClick={ () => handleClick() } buttonColor={ localStore.buttonColor }>
+    <LoadTxtButton
+      id="buzzwordButton"
+      floated="right"
+      onClick={() => handleClick()}
+      buttonColor={localStore.buttonColor}
+    >
       Load Motivational
     </LoadTxtButton>
   </div>
@@ -33,7 +38,7 @@ const LoadTxtButton = styled.button`
   text-align: center;
   font-size: 16px;
   font-family: Helvetica, sans-serif;
-  font-weight: bold;
+  font-weight: normal;
   border-radius: 4px;
   margin-right: 3px;
   margin-bottom: 3px;
@@ -41,7 +46,8 @@ const LoadTxtButton = styled.button`
   outline: none;
 
   &:hover {
-    font-size: 22px;
+    background-color: #abafb3;
+    font-weight: 900;
   }
 
   &:active {

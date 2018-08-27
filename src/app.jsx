@@ -243,7 +243,7 @@ const StartButton = styled.button`
     font-weight: bold;
     font-size: 1.2rem;
     margin: 5px 0 5px;
-    color: whitesmoke;
+    color: black;
   }
 
   &:hover {

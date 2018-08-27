@@ -29,7 +29,7 @@ class CsvPanel extends Component {
 export default view(CsvPanel);
 
 const DataWindow = styled.div`
-  height: 100%;
+  height: 100vh;
   background-color: white;
 `;
 

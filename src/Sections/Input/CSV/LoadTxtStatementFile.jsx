@@ -3,49 +3,54 @@ import React, { Component } from "react";
 import styled from "styled-components";
 import state from "../../../store";
 
-const {dialog} = require("electron").remote;
+const { dialog } = require("electron").remote;
 const fs = require("fs");
 
 const localStore = store({
-    buttonColor: "#d6dbe0"
+  buttonColor: "#d6dbe0"
 });
 
 const handleClick = () => {
-    dialog.showOpenDialog(
+  dialog.showOpenDialog(
+    {
+      properties: ["openFile"],
+      filters: [
         {
-            properties: ["openFile"],
-            filters: [{
-                name: "Text",
-                extensions: ["txt", "TXT"]
-            }]
-        },
-        files => {
-            if (files !== undefined) {
-                const fileName = files[0];
-                fs.readFile(fileName, "utf-8", (err, data) => {
-                    // split into lines
-                    const lines = data.split(/[\r\n]+/g);
-                    // remove empty strings
-                    const lines2 = lines.filter(e => e === 0 || e);
-                    state.setState({
-                        statements: lines2,
-                        statementsLoaded: true
-                    });
-                    localStore.buttonColor = "rgba(144,	238,	144, .6)";
-                });
-            }
+          name: "Text",
+          extensions: ["txt", "TXT"]
         }
-    );
+      ]
+    },
+    files => {
+      if (files !== undefined) {
+        const fileName = files[0];
+        fs.readFile(fileName, "utf-8", (err, data) => {
+          // split into lines
+          const lines = data.split(/[\r\n]+/g);
+          // remove empty strings
+          const lines2 = lines.filter(e => e === 0 || e);
+          state.setState({
+            statements: lines2,
+            statementsLoaded: true
+          });
+          localStore.buttonColor = "rgba(144,	238,	144, .6)";
+        });
+      }
+    }
+  );
 };
 
 class LoadTxtStatementFile extends Component {
-    render() {
-        return (
-            <LoadTxtButton buttonColor={ localStore.buttonColor } onClick={ () => handleClick() }>
-              <p>Load TXT File</p>
-            </LoadTxtButton>
-            );
-    }
+  render() {
+    return (
+      <LoadTxtButton
+        buttonColor={localStore.buttonColor}
+        onClick={() => handleClick()}
+      >
+        <p>Load TXT File</p>
+      </LoadTxtButton>
+    );
+  }
 }
 
 export default view(LoadTxtStatementFile);
@@ -61,7 +66,7 @@ const LoadTxtButton = styled.button`
   text-align: center;
   font-size: 16px;
   font-family: Helvetica, sans-serif;
-  font-weight: bold;
+  font-weight: normal;
   border-radius: 4px;
   margin-right: 3px;
   margin-bottom: 3px;
@@ -69,7 +74,8 @@ const LoadTxtButton = styled.button`
   outline: none;
 
   &:hover {
-    background-color: white;
+    background-color: #abafb3;
+    font-weight: 900;
   }
 
   &:active {
