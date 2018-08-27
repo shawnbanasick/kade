@@ -5,84 +5,92 @@ import { Tab } from "semantic-ui-react";
 
 import FactorSelectDropdown from "./FactorKeepSelection/FactorSelectDropdown";
 import FactorsKeptNotification from "./FactorKeepSelection/FactorsKeptNotification";
-import RotationButtonGroup from "./RotationButtons/RotationButtonGroup";
+// import RotationButtonGroup from "./RotationButtons/RotationButtonGroup";
 import JudgementalRotationContainer from "./JudgementalRotation/JudgementalRotationContainer";
+import FireVarimaxButton from './RotationButtons/FireVarimaxButton';
+import InitializeJudgementalButton from './RotationButtons/InitializeJudgmentalButton';
 
 // import styled from "styled-components";
 
 const panes = [
-  {
-    menuItem: "Options",
-    render: () => (
-      <Tab.Pane>
-        <DataWindow1>
-          <FactorSelectDropdown />
-          <FactorsKeptNotification />
-          <RotationButtonGroup style={{ marginTop: "250px" }} />
-        </DataWindow1>
-      </Tab.Pane>
-    )
-  },
-
-  {
-    menuItem: "Judgmental Rotation Scatter Plot",
-    render: () => (
-      <Tab.Pane>
-        <DataWindow2>
-          <JudgementalRotationContainer />
-        </DataWindow2>
-      </Tab.Pane>
-    )
-  }
+    {
+        menuItem: "Options",
+        render: () => (
+            <Tab.Pane>
+              <DataWindow1>
+                <FactorSelectDropdown />
+                <FactorsKeptNotification />
+              </DataWindow1>
+            </Tab.Pane>
+        )
+    },
+    {
+        menuItem: "Varimax",
+        render: () => (
+            <Tab.Pane>
+              <DataWindow2>
+                <FireVarimaxButton />
+              </DataWindow2>
+            </Tab.Pane>
+        )
+    },
+    {
+        menuItem: "Judgmental",
+        render: () => (
+            <Tab.Pane>
+              <DataWindow2>
+                <InitializeJudgementalButton />
+                <JudgementalRotationContainer />
+              </DataWindow2>
+            </Tab.Pane>
+        )
+    }
 ];
 
-const localStore = store({ activeIndex: 0 });
+const localStore = store({
+    activeIndex: 0
+});
 
 class Rotation extends Component {
-  // state = { activeIndex: 1 };
+    // state = { activeIndex: 1 };
 
-  // handleRangeChange = e => this.setState({ activeIndex: e.target.value });
-  // handleTabChange = (e, { activeIndex }) => this.setState({ activeIndex });
+    // handleRangeChange = e => this.setState({ activeIndex: e.target.value });
+    // handleTabChange = (e, { activeIndex }) => this.setState({ activeIndex });
 
-  // render() {
-  //   const { activeIndex } = this.state;
+    // render() {
+    //   const { activeIndex } = this.state;
 
-  //   return (
-  //     <div>
-  //       <div>activeIndex: {activeIndex}</div>
-  //       <input
-  //         type="range"
-  //         max="2"
-  //         value={activeIndex}
-  //         onChange={this.handleRangeChange}
-  //       />
-  //       <Tab
-  //         panes={panes}
-  //         activeIndex={activeIndex}
-  //         onTabChange={this.handleTabChange}
-  //       />
-  //     </div>
-  //   );
-  // }
+    //   return (
+    //     <div>
+    //       <div>activeIndex: {activeIndex}</div>
+    //       <input
+    //         type="range"
+    //         max="2"
+    //         value={activeIndex}
+    //         onChange={this.handleRangeChange}
+    //       />
+    //       <Tab
+    //         panes={panes}
+    //         activeIndex={activeIndex}
+    //         onTabChange={this.handleTabChange}
+    //       />
+    //     </div>
+    //   );
+    // }
 
-  handleTabChange(e, { activeIndex }) {
-    localStore.activeIndex = activeIndex;
-  }
+    handleTabChange(e, {activeIndex}) {
+        localStore.activeIndex = activeIndex;
+    }
 
-  render() {
-    const { activeIndex } = localStore;
+    render() {
+        const {activeIndex} = localStore;
 
-    return (
-      <MainContent>
-        <Tab
-          style={{ width: "100%", height: "100%" }}
-          panes={panes}
-          activeIndex={activeIndex}
-          onTabChange={this.handleTabChange}
-        />
-      </MainContent>
-    );
-  }
+        return (
+            <MainContent>
+              <Tab style={ { width: "100%", height: "100%" } } panes={ panes } activeIndex={ activeIndex } onTabChange={ this.handleTabChange } />
+            </MainContent>
+            );
+    }
 }
 
 export default view(Rotation);
@@ -110,13 +118,19 @@ export default TabExampleBasicAll
 
 const DataWindow1 = styled.div`
   display: grid;
-  grid-template-rows: 150px 150px 1fr;
+  grid-template-rows: 100px 100px 1fr;
   min-height: 600px;
   background-color: white;
   max-width: 1197;
 `;
 
+
 const DataWindow2 = styled.div`
+  min-height: 600px;
+  background-color: white;
+`;
+
+const DataWindow3 = styled.div`
   min-height: 600px;
   background-color: white;
 `;

@@ -1,9 +1,10 @@
 import React from "react";
+import { view, store } from "react-easy-state";
 import { Dropdown } from "semantic-ui-react";
-import store from "../../../store";
+import state from "../../../store";
 
 // stateOptions = [ { key: 'AL', value: 'AL', text: 'Alabama' }, ...  ]
-let sigOptions = [
+const sigOptions = [
   {
     key: "99.99",
     value: 3.906,
@@ -36,37 +37,29 @@ let sigOptions = [
   }
 ];
 
-class SigLevelDropdown extends React.Component {
-  state = {
-    value: 1.96
-  };
+const localStore = store({
+  value: 1.96
+});
 
-  handleChange = (e, { value }) => {
-    this.setState({
-      value
-    });
-    store.setState({
+class SigLevelDropdown extends React.Component {
+
+
+  handleChange(e, {value}) {
+    localStore.value = value;
+    state.setState({
       userSelectedSigLevel: value
     });
   };
 
   render() {
-    const { value } = this.state;
+    const value = localStore.value;
     return (
-      <Dropdown
-        onChange={this.handleChange}
-        defaultValue={value}
-        openOnFocus={true}
-        button
-        simple
-        item
-        options={sigOptions}
-      />
-    );
+      <Dropdown onChange={ this.handleChange } defaultValue={ value } openOnFocus button simple item options={ sigOptions } />
+      );
   }
 }
 
-export default SigLevelDropdown;
+export default view(SigLevelDropdown);
 
 /*
 'Significance Threshold'

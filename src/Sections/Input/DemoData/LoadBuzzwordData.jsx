@@ -14,12 +14,7 @@ const handleClick = () => {
 
 const BuzzwordButton1 = () => (
   <div>
-    <LoadTxtButton
-      id="buzzwordButton"
-      floated="right"
-      onClick={() => handleClick()}
-      buttonColor={localStore.buttonColor}
-    >
+    <LoadTxtButton id="buzzwordButton" floated="right" onClick={ () => handleClick() } buttonColor={ localStore.buttonColor }>
       Load Buzzword
     </LoadTxtButton>
   </div>
@@ -42,7 +37,7 @@ const LoadTxtButton = styled.button`
   border-radius: 4px;
   margin-right: 3px;
   margin-bottom: 3px;
-  box-shadow: 0 3px 3px 0 black;
+  box-shadow: 0 2px 2px 0 black;
   outline: none;
 
   &:hover {

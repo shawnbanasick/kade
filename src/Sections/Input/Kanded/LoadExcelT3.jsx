@@ -3,37 +3,39 @@ import React, { Component } from "react";
 import styled from "styled-components";
 import parseExcelType3 from "./KandedLogic/parseExcelType3.js";
 
-const { dialog } = require("electron").remote;
+const {dialog} = require("electron").remote;
 
-const localStore = store({ buttonColor: "#d6dbe0" });
+const localStore = store({
+    buttonColor: "#d6dbe0"
+});
 
 const handleClick = () => {
-  dialog.showOpenDialog(
-    {
-      properties: ["openFile"],
-      filters: [{ name: "Excel", extensions: ["xls", "XLS", "xlsx", "XLSX"] }]
-    },
-    files => {
-      if (files !== undefined) {
-        const excelFile = files[0];
-        parseExcelType3(excelFile);
-        localStore.buttonColor = "rgba(144,	238,	144, .6)";
-      }
-    }
-  );
+    dialog.showOpenDialog(
+        {
+            properties: ["openFile"],
+            filters: [{
+                name: "Excel",
+                extensions: ["xls", "XLS", "xlsx", "XLSX"]
+            }]
+        },
+        files => {
+            if (files !== undefined) {
+                const excelFile = files[0];
+                parseExcelType3(excelFile);
+                localStore.buttonColor = "rgba(144,	238,	144, .6)";
+            }
+        }
+    );
 };
 
 class LoadTxtStatementFile extends Component {
-  render() {
-    return (
-      <LoadTxtButton
-        buttonColor={localStore.buttonColor}
-        onClick={() => handleClick()}
-      >
-        <p>Load KADE Excel File</p>
-      </LoadTxtButton>
-    );
-  }
+    render() {
+        return (
+            <LoadTxtButton buttonColor={ localStore.buttonColor } onClick={ () => handleClick() }>
+              <p>Load KADE Excel File</p>
+            </LoadTxtButton>
+            );
+    }
 }
 
 export default view(LoadTxtStatementFile);
@@ -53,7 +55,7 @@ const LoadTxtButton = styled.button`
   border-radius: 4px;
   margin-right: 3px;
   margin-bottom: 3px;
-  box-shadow: 0 3px 3px 0 black;
+  box-shadow: 0 2px 2px 0 black;
 
   &:hover {
     background-color: white;

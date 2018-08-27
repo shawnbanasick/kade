@@ -1,3 +1,4 @@
+import styled from "styled-components";
 import React, { Component } from "react";
 import { view } from "react-easy-state";
 import { Button } from "semantic-ui-react";
@@ -7,16 +8,6 @@ import calculateCommunalities from "../../Rotation/varimaxLogic/2calculateCommun
 import calcuateSigCriterionValues from "../../Rotation/varimaxLogic/2calculateSigCriterionValues";
 import loadingsTableDataPrep from "../LoadingsTable/loadingsTableDataPrep";
 
-const olStyles = {
-  // border: "solid 2px red",
-  marginTop: "2px",
-  marginBottom: "2px",
-  fontSize: "16px"
-};
-
-const spanStyle = {
-  fontSize: "28px"
-};
 
 const buttonStyle = {
   // border: "solid 2px blue",
@@ -24,24 +15,24 @@ const buttonStyle = {
 };
 
 class ProjectHistory extends Component {
-  handleUndo = () => {
+  handleUndo() {
     // get counter and adjust value
     let archiveCounter = store.getState("archiveCounter");
-    archiveCounter = archiveCounter - 1;
-    let previousFacMatrixArchive = "facMatrixArc" + archiveCounter;
+    archiveCounter -= 1;
+    const previousFacMatrixArchive = `facMatrixArc${  archiveCounter}`;
 
     // remove entry from project history
-    let projectHistoryArray = store.getState("projectHistoryArray");
-    let typeOfUndo3 = projectHistoryArray.pop();
-    let typeOfUndo2 = typeOfUndo3.split(" ");
-    let typeOfUndo = typeOfUndo2[0];
+    const projectHistoryArray = store.getState("projectHistoryArray");
+    const typeOfUndo3 = projectHistoryArray.pop();
+    const typeOfUndo2 = typeOfUndo3.split(" ");
+    const typeOfUndo = typeOfUndo2[0];
 
     // get the previous matrix from archive
     let previousFacMatrix = JSON.parse(
       sessionStorage.getItem(previousFacMatrixArchive)
     );
 
-    let numFactors = store.getState("numFactorsKeptForRot");
+    const numFactors = store.getState("numFactorsKeptForRot");
     // see if there are other bipolar splits
     let bipolarSplitCount = store.getState("bipolarSplitCount");
 
@@ -50,7 +41,7 @@ class ProjectHistory extends Component {
         sessionStorage.getItem("undoAllBipolarMatrix")
       );
 
-      let projectHistoryArrayLength = JSON.parse(
+      const projectHistoryArrayLength = JSON.parse(
         sessionStorage.getItem("projectHistoryArrayLength")
       );
 
@@ -58,13 +49,13 @@ class ProjectHistory extends Component {
       projectHistoryArray.length = projectHistoryArrayLength;
 
       bipolarSplitCount = 0;
-      archiveCounter = archiveCounter - 1;
+      archiveCounter -= 1;
     }
 
     // ************* Regular Undo
 
     // reset significance calculations
-    let previousFacMatrix2 = transposeMatrix([...previousFacMatrix]);
+    const previousFacMatrix2 = transposeMatrix([...previousFacMatrix]);
     calculateCommunalities(previousFacMatrix2);
     calcuateSigCriterionValues("noFlag");
 
@@ -79,8 +70,8 @@ class ProjectHistory extends Component {
     // todo - undo name change of varimax button text on varimax undo
     if (typeOfUndo === "Varimax") {
       store.setState({
-        archiveCounter: archiveCounter,
-        projectHistoryArray: projectHistoryArray,
+        archiveCounter,
+        projectHistoryArray,
         varimaxButtonActive: false,
         varimaxButtonDisabled: false,
         varimaxButtonText: "Varimax Rotation",
@@ -99,8 +90,8 @@ class ProjectHistory extends Component {
 
     if (typeOfUndo === "Selected") {
       store.setState({
-        archiveCounter: archiveCounter,
-        projectHistoryArray: projectHistoryArray,
+        archiveCounter,
+        projectHistoryArray,
         // hide section 4
         shouldDisplayFacKept: false,
         varimaxButtonDisabled: false,
@@ -135,9 +126,9 @@ class ProjectHistory extends Component {
 
     // default undo
     store.setState({
-      archiveCounter: archiveCounter,
-      bipolarSplitCount: bipolarSplitCount,
-      projectHistoryArray: projectHistoryArray,
+      archiveCounter,
+      bipolarSplitCount,
+      projectHistoryArray,
       // hide section 6
       userSelectedFactors: [],
       showOutputFactorSelection: false,
@@ -151,33 +142,62 @@ class ProjectHistory extends Component {
       bipolarIndexArray: [],
       shouldDisplayFactorViz: false
     });
-    return; // normal return
+  // normal return
   };
 
   render() {
-    let projectHistoryArray = store.getState("projectHistoryArray");
-    let shouldDisplayUndoButton = projectHistoryArray.length > 3 ? true : false;
+    const projectHistoryArray = store.getState("projectHistoryArray");
+    const shouldDisplayUndoButton = projectHistoryArray.length > 3;
     return (
-      <div style={{ marginTop: "30px" }}>
-        <span style={spanStyle}>Project History</span>
-        <ol style={olStyles}>
-          {projectHistoryArray.map(function(listValue, index) {
-            return <li key={index}>{listValue}</li>;
-          })}
-        </ol>
-        {shouldDisplayUndoButton && (
-          <Button
-            id="undoButton"
-            onClick={this.handleUndo.bind(this)}
-            style={buttonStyle}
-            size="tiny"
-          >
-            Undo Last Action
-          </Button>
-        )}
+      <div style={ { marginTop: "30px" } }>
+        <TitleDiv>Project History</TitleDiv>
+        <CustomOl>
+          { projectHistoryArray.map((listValue, index) => <li key={ index }>
+                                                            { listValue }
+                                                          </li>) }
+        </CustomOl>
+        { shouldDisplayUndoButton && (
+          <StyledWrapper>
+            <Button id="undoButton" className="wrapper1" onClick={ this.handleUndo.bind(this) } style={ buttonStyle } size="tiny">
+              Undo Last Action
+            </Button>
+          </StyledWrapper>
+          ) }
       </div>
-    );
+      );
   }
 }
 
 export default view(ProjectHistory);
+
+const TitleDiv = styled.div`
+  font-size: 28px;
+  margin-bottom: 5px;
+  height: 35px;
+`;
+
+const CustomOl = styled.ol`
+  margin-top: 2px;
+  margin-bottom: 2px;
+  font-size: 20px;
+`;
+
+const StyledWrapper = styled.div` 
+  margin-top: 10px;
+  margin-left: 20px;
+.wrapper1 { 
+  border: 1px solid black;
+  box-shadow: 0 2px 2px 0 black;
+
+  &:hover {
+    border: 1px solid black;
+    box-shadow: 0 2px 2px 0 black;
+  }
+
+  &:active {
+    box-shadow: 0 0 1px 0 black inset;
+    margin-left: 3px;
+    margin-top: 3px;
+  }
+  } 
+`;

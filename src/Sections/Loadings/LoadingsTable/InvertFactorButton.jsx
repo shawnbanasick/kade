@@ -1,26 +1,24 @@
 import React, { Component } from "react";
-import { view } from "react-easy-state";
+import { view, store } from "react-easy-state";
 import { Button, Header, Modal } from "semantic-ui-react";
-import store from "../../../store";
-import InvertFactorDropdownSelect from "./InvertFactorDropdownSelect";
+import state from "../../../store";
 import invertFactor from "../loadingsLogic/invertFactor";
+import InvertFactorDropdownSelect from "./InvertFactorDropdownSelect";
+
+const localStore = store({ modalOpen: false });
 
 class InvertFactorButtonModal extends Component {
-  store = {
-    modalOpen: false
-  };
+  handleOpen() {
+    localStore.modalOpen = true;
+  }
 
-  handleOpen = () => {
-    this.store.modalOpen = true;
-  };
-
-  handleClose = () => {
-    this.store.modalOpen = false;
+  handleClose() {
+    localStore.modalOpen = false;
     invertFactor();
-  };
+  }
 
   render() {
-    let isDisabled = store.getState("bipolarDisabled");
+    const isDisabled = state.getState("bipolarDisabled");
     return (
       <Modal
         trigger={
@@ -33,7 +31,7 @@ class InvertFactorButtonModal extends Component {
             Invert Factor
           </Button>
         }
-        open={this.store.modalOpen}
+        open={localStore.modalOpen}
         onClose={this.handleClose}
       >
         <Header icon="table" content="Factor Loadings Table" />

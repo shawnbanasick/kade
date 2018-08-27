@@ -1,29 +1,33 @@
 import React from "react";
-import { view } from "react-easy-state";
+import { view, store } from "react-easy-state";
 import { Dropdown } from "semantic-ui-react";
-import store from "../../../store";
+import state from "../../../store";
 
 const saveDropdownValueToState = (event, data) => {
-  let factorToInvert = data.value;
-  store.setState({
-    factorToInvert: factorToInvert
+  const factorToInvert = data.value;
+  state.setState({
+    factorToInvert
   });
 };
 
-class InvertFactorDropdownSelect extends React.Component {
-  store = {};
+const localStore = store({
+  options: []
+});
 
-  componentWillUpdate() {
-    this.store.options = this.getOptions();
-  }
+class InvertFactorDropdownSelect extends React.Component {
+
 
   componentWillMount() {
-    this.store.options = this.getOptions();
+    localStore.options = this.getOptions();
   }
 
-  getOptions = () => {
-    let isCentroid = store.getState("activeCentroidFactorsButton");
-    let options = [
+  componentWillUpdate() {
+    localStore.options = this.getOptions();
+  }
+
+  getOptions() {
+    const isCentroid = state.getState("activeCentroidFactorsButton");
+    const options = [
       {
         key: "factor1",
         text: "1",
@@ -67,30 +71,22 @@ class InvertFactorDropdownSelect extends React.Component {
     ];
     // shorten options list if using centroid
     if (isCentroid) {
-      let numCentroidFactors = store.getState("numCentroidFactors");
+      const numCentroidFactors = state.getState("numCentroidFactors");
       options.length = +numCentroidFactors;
     }
     return options;
   };
 
   render() {
-    const { options } = this.store;
+    const options = this.getOptions();
     return (
       <div>
-        <span style={{ marginRight: 20, fontSize: 30 }}>
-          Select the factor to invert:{" "}
-        </span>
-        <Dropdown
-          placeholder={"?"}
-          onChange={saveDropdownValueToState}
-          openOnFocus={true}
-          button
-          simple
-          item
-          options={options}
-        />
+        <span style={ { marginRight: 20, fontSize: 30 } }>
+                            Select the factor to invert:{ " " }
+                          </span>
+        <Dropdown placeholder={ "?" } onChange={ saveDropdownValueToState } openOnFocus button simple item options={ options } />
       </div>
-    );
+      );
   }
 }
 export default view(InvertFactorDropdownSelect);

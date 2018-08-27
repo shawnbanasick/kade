@@ -1,8 +1,8 @@
-import store from "../../../store";
 import React, { Component } from "react";
 import { Button } from "semantic-ui-react";
 import { AgGridReact } from "ag-grid-react";
 import { view } from "react-easy-state";
+import store from "../../../store";
 import ProjectHistory from "./ProjectHistory";
 import autoFlagFactors from "../loadingsLogic/autoFlagFactors";
 import InvertFactorButton from "./InvertFactorButton";
@@ -18,29 +18,30 @@ const filterArray = item => {
   if (shortened === "factor") {
     return item;
   }
+  return null;
 };
 
 class LoadingsTable extends Component {
-  onGridReady = params => {
+  onGridReady(params) {
     this.gridApi = params.api;
     this.columnApi = params.columnApi;
     // this.gridApi.sizeColumnsToFit();
-  };
+  }
 
   generateOutput() {
     // grab current table data
-    let count = this.gridApi.getDisplayedRowCount();
-    let currentLoadingsTable = [];
+    const count = this.gridApi.getDisplayedRowCount();
+    const currentLoadingsTable = [];
     for (let i = 0; i < count; i++) {
-      let rowNode = this.gridApi.getDisplayedRowAtIndex(i);
+      const rowNode = this.gridApi.getDisplayedRowAtIndex(i);
       currentLoadingsTable.push(rowNode.data);
     }
 
     // initialize output select buttons highlighting to false
-    let btnId = store.getState("outputButtonsArray");
-    let tempObj2 = {};
+    const btnId = store.getState("outputButtonsArray");
+    const tempObj2 = {};
     for (let i = 0; i < btnId.length; i++) {
-      tempObj2["highlightfactor" + btnId[i]] = false;
+      tempObj2[`highlightfactor${btnId[i]}`] = false;
     }
     tempObj2.currentLoadingsTable = currentLoadingsTable;
     tempObj2.userSelectedFactors = [];
@@ -60,14 +61,14 @@ class LoadingsTable extends Component {
 
   doSplitFactor() {
     // grab current table data (including user-added flags)
-    let count = this.gridApi.getDisplayedRowCount();
-    let currentLoadingsTable = [];
+    const count = this.gridApi.getDisplayedRowCount();
+    const currentLoadingsTable = [];
     for (let i = 0; i < count; i++) {
-      let rowNode = this.gridApi.getDisplayedRowAtIndex(i);
+      const rowNode = this.gridApi.getDisplayedRowAtIndex(i);
       currentLoadingsTable.push(rowNode.data);
     }
     store.setState({
-      currentLoadingsTable: currentLoadingsTable,
+      currentLoadingsTable,
       showSplitFactorModal: true
     });
   }
@@ -76,7 +77,7 @@ class LoadingsTable extends Component {
     store.setState({ isLoadingGrayHighlighting: true });
     setTimeout(() => {
       store.setState({ highlighting: "grays" });
-      let numFactors = store.getState("numFactorsKeptForRot");
+      const numFactors = store.getState("numFactorsKeptForRot");
       loadingsTableDataPrep(numFactors);
     }, 10);
   }
@@ -85,7 +86,7 @@ class LoadingsTable extends Component {
     store.setState({ isLoadingColorsHighlighting: true });
     setTimeout(() => {
       store.setState({ highlighting: "colors" });
-      let numFactors = store.getState("numFactorsKeptForRot");
+      const numFactors = store.getState("numFactorsKeptForRot");
       loadingsTableDataPrep(numFactors);
     }, 10);
   }
@@ -94,29 +95,33 @@ class LoadingsTable extends Component {
     store.setState({ isLoadingNoHighlighting: true });
     setTimeout(() => {
       store.setState({ highlighting: "none" });
-      let numFactors = store.getState("numFactorsKeptForRot");
+      const numFactors = store.getState("numFactorsKeptForRot");
       loadingsTableDataPrep(numFactors);
     }, 10);
   }
 
   render() {
-    let gridColDefsLoadingsTable = store.getState("gridColDefsLoadingsTable");
-    let gridRowDataLoadingsTable = store.getState("gridRowDataLoadingsTable");
-    let isLoadingAutoflag = store.getState("isLoadingAutoflag");
-    let isLoadingGrayHighlighting = store.getState("isLoadingGrayHighlighting");
-    let isLoadingColorsHighlighting = store.getState(
+    const gridColDefsLoadingsTable = store.getState("gridColDefsLoadingsTable");
+    const gridRowDataLoadingsTable = store.getState("gridRowDataLoadingsTable");
+    const isLoadingAutoflag = store.getState("isLoadingAutoflag");
+    const isLoadingGrayHighlighting = store.getState(
+      "isLoadingGrayHighlighting"
+    );
+    const isLoadingColorsHighlighting = store.getState(
       "isLoadingColorsHighlighting"
     );
-    let isLoadingNoHighlighting = store.getState("isLoadingNoHighlighting");
-    let numQsorts = store.getState("numQsorts");
+    const isLoadingNoHighlighting = store.getState("isLoadingNoHighlighting");
+    const numQsorts = store.getState("numQsorts");
     let height;
 
     // todo - create output buttons array here to stay in sync, but performance check
-    let outputButtonsArray2 = gridColDefsLoadingsTable.map(item => item.field);
-    let outputButtonsArray3 = outputButtonsArray2.filter(filterArray);
+    const outputButtonsArray2 = gridColDefsLoadingsTable.map(
+      item => item.field
+    );
+    const outputButtonsArray3 = outputButtonsArray2.filter(filterArray);
     outputButtonsArray3.shift();
-    let outputButtonsArray = outputButtonsArray3.map(item => item.slice(6));
-    store.setState({ outputButtonsArray: outputButtonsArray });
+    const outputButtonsArray = outputButtonsArray3.map(item => item.slice(6));
+    store.setState({ outputButtonsArray });
 
     // increase height for cases when scroll bar is visible
     if (gridColDefsLoadingsTable.length > 21) {
@@ -126,26 +131,26 @@ class LoadingsTable extends Component {
     }
 
     // increase height when bipolar split present
-    let bipolarSplitCount = store.getState("bipolarSplitCount");
+    const bipolarSplitCount = store.getState("bipolarSplitCount");
 
-    let isDisabled = store.getState("bipolarDisabled");
+    const isDisabled = store.getState("bipolarDisabled");
 
     let numFacsForTableWidth = store.getState("numFactorsKeptForRot");
 
     // increase width if bipolar present
     if (bipolarSplitCount > 0) {
-      numFacsForTableWidth = numFacsForTableWidth + bipolarSplitCount;
+      numFacsForTableWidth += bipolarSplitCount;
     }
 
     let widthVal = 252 + 110 * numFacsForTableWidth;
     if (widthVal > window.innerWidth - 100) {
       widthVal = window.innerWidth - 100;
     }
-    widthVal = widthVal + "px";
+    widthVal += "px";
 
-    let containerStyle = {
+    const containerStyle = {
       marginTop: 5,
-      height: height,
+      height,
       width: widthVal,
       marginBottom: 15
     };
@@ -209,13 +214,11 @@ class LoadingsTable extends Component {
           </p>
           <div style={containerStyle} className="ag-theme-fresh">
             <AgGridReact
-              enableSorting={true}
+              enableSorting
               id="myGrid"
               columnDefs={gridColDefsLoadingsTable}
               rowData={gridRowDataLoadingsTable}
-              getRowClass={function(params) {
-                return params.data.highlightingClass;
-              }}
+              getRowClass={params => params.data.highlightingClass}
               onGridReady={this.onGridReady.bind(this)}
             />
           </div>
@@ -235,7 +238,7 @@ class LoadingsTable extends Component {
           className="instagram"
           onClick={this.generateOutput.bind(this)}
         >
-          Generate Output
+          Send Table Data to Output
         </Button>
         <SplitBipolarFactorModal />
       </div>

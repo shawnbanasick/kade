@@ -32,19 +32,19 @@ class Output extends Component {
           <MultipleFactorsFlaggedWarningModal />
           <OutputFactorTablesTransitionContainer />
           <div>
-            {showStandardErrorsDifferences && (
-              <span style={{ fontSize: 26 }}>Factor Visualizations</span>
-            )}
+            { showStandardErrorsDifferences && (
+              <span style={ { fontSize: 26 } }>Factor Visualizations</span>
+              ) }
             <div>
               <DisplayVisualizationsButtons />
               <FactorVizOptions />
               <RefreshFactorVizButton />
-              {shouldDisplayFactorViz && <FactorVizDispatch />}
+              { shouldDisplayFactorViz && <FactorVizDispatch /> }
             </div>
           </div>
         </div>
       </MainContent>
-    );
+      );
   }
 }
 
@@ -74,12 +74,13 @@ const MainContent = styled.div`
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: 1fr;
-  grid-template-areas:
+  /* grid-template-areas:
     "row1 row1 row1 row1"
     "titleRow titleRow titleRow titleRow"
     "weblinkRow weblinkRow weblinkRow weblinkRow"
     "linkboxRow1 linkboxRow1 linkboxRow1 linkboxRow1"
-    "linkboxRow2 linkboxRow2 linkboxRow2 linkboxRow2";
+    "linkboxRow2 linkboxRow2 linkboxRow2 linkboxRow2"; */
+  margin-left: 20px;  
   justify-items: center;
   align-items: center;
   background-color: white;

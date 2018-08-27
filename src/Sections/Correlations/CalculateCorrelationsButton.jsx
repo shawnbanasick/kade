@@ -20,20 +20,17 @@ const handleClick = () => {
 class CalculateCorrelationsButton extends Component {
   render() {
     return (
-      <BeginAnalysisButton
-        buttonColor={localStore.buttonColor}
-        onClick={() => handleClick()}
-      >
+      <BeginAnalysisButton buttonColor={ localStore.buttonColor } onClick={ () => handleClick() }>
         <p>Calculate Correlations</p>
-        {/* <Spinner className="item-loader-container">
-                                                                                                          <div className="la-ball-pulse la-2x">
-                                                                                                            <div />
-                                                                                                            <div />
-                                                                                                            <div />
-                                                                                                          </div>
-                                                                                                        </Spinner> */}
+        { /* <Spinner className="item-loader-container">
+                                                                                                                          <div className="la-ball-pulse la-2x">
+                                                                                                                            <div />
+                                                                                                                            <div />
+                                                                                                                            <div />
+                                                                                                                          </div>
+                                                                                                                        </Spinner> */ }
       </BeginAnalysisButton>
-    );
+      );
   }
 }
 
@@ -55,7 +52,7 @@ const BeginAnalysisButton = styled.button`
   border-radius: 4px;
   margin-right: 3px;
   margin-bottom: 3px;
-  box-shadow: 0 3px 3px 0 black;
+  box-shadow: 0 2px 2px 0 black;
   outline: none;
 
   &:hover {

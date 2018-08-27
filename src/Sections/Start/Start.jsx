@@ -2,7 +2,8 @@ import React, { Component } from "react";
 import { view } from "react-easy-state";
 import styled, { keyframes } from "styled-components";
 
-function handleClick() {}
+function handleClick() {
+}
 
 class Start extends Component {
   render() {
@@ -12,21 +13,20 @@ class Start extends Component {
         <TitleDiv>KADE</TitleDiv>
         <SubTitleDiv>
           <HighlightLetter>K</HighlightLetter>
-          en-Q <HighlightLetter>&nbsp;A</HighlightLetter>
-          nalysis <HighlightLetter>&nbsp;D</HighlightLetter>
-          esktop <HighlightLetter>&nbsp;E</HighlightLetter>
+          en-Q
+          <HighlightLetter> A</HighlightLetter>
+          nalysis
+          <HighlightLetter> D</HighlightLetter>
+          esktop
+          <HighlightLetter> E</HighlightLetter>
           dition
         </SubTitleDiv>
         <WebLinkRow>
           <h1>web links:</h1>
-          <hr style={{ width: "700px" }} />
+          <hr style={ { width: "700px" } } />
         </WebLinkRow>
-        <WebLinkDiv1 onClick={handleClick}>
-          <StyledAnchor
-            target="_blank"
-            rel="noopener noreferrer"
-            href="https://shawnBanasick.github.io/ken-q-analysis/index.html"
-          >
+        <WebLinkDiv1 onClick={ handleClick }>
+          <StyledAnchor target="_blank" rel="noopener noreferrer" href="https://shawnBanasick.github.io/ken-q-analysis/index.html">
             Ken-Q Analysis online version
           </StyledAnchor>
         </WebLinkDiv1>
@@ -34,7 +34,7 @@ class Start extends Component {
         <WebLinkDiv3>square div 3</WebLinkDiv3>
         <WebLinkDiv4>square div 4</WebLinkDiv4>
       </MainContent>
-    );
+      );
   }
 }
 
@@ -132,7 +132,7 @@ const WebLinkDiv1 = styled.div`
   font-size: 22px;
   margin-right: 3px;
   margin-bottom: 3px;
-  box-shadow: 0 3px 3px 0 black;
+  box-shadow: 0 2px 2px 0 black;
   text-align: center;
 
   &:hover {
@@ -159,7 +159,7 @@ const WebLinkDiv2 = styled.div`
   font-size: 22px;
   margin-right: 3px;
   margin-bottom: 3px;
-  box-shadow: 0 3px 3px 0 black;
+  box-shadow: 0 2px 2px 0 black;
 
   &:hover {
     font-weight: bold;
@@ -185,7 +185,7 @@ const WebLinkDiv3 = styled.div`
   font-size: 22px;
   margin-right: 3px;
   margin-bottom: 3px;
-  box-shadow: 0 3px 3px 0 black;
+  box-shadow: 0 2px 2px 0 black;
 
   &:hover {
     font-weight: bold;
@@ -211,7 +211,7 @@ const WebLinkDiv4 = styled.div`
   font-size: 22px;
   margin-right: 3px;
   margin-bottom: 3px;
-  box-shadow: 0 3px 3px 0 black;
+  box-shadow: 0 2px 2px 0 black;
 
   &:hover {
     font-weight: bold;
