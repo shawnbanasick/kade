@@ -5,7 +5,9 @@ import { AgGridReact } from "ag-grid-react";
 import state from "../../../store";
 // import calculateCorrelations from "../correlationsLogic/calcCorrelations";
 
-const localStore = store({ numQsorts: state.getState("numQsorts") });
+const localStore = store({
+  numQsorts: state.getState("numQsorts")
+});
 
 function getWidth(numQsorts) {
   let widthVal = 152 + 80 * numQsorts;
@@ -33,7 +35,7 @@ function getHeight(numQsorts) {
 function resetWidthAndHeight() {
   // this.gridApi.setGridAutoHeight(false);
   const numQsorts = localStore.numQsorts;
-  const table = document.querySelector("#innerContainer1");
+  const table = document.querySelector("#innerContainerCorrelations");
   table.style.height = getHeight(numQsorts);
   table.style.width = getWidth(numQsorts);
 }
@@ -46,8 +48,8 @@ class CorrelationTable extends Component {
   onGridReady(params) {
     this.gridApi = params.api;
     this.columnApi = params.columnApi;
-    // this.gridApi.sizeColumnsToFit();
-    // params.api.sizeColumnsToFit();
+  // this.gridApi.sizeColumnsToFit();
+  // params.api.sizeColumnsToFit();
   }
 
   render() {
@@ -58,34 +60,19 @@ class CorrelationTable extends Component {
     const numQsorts = state.getState("numQsorts");
     localStore.numQsorts = numQsorts;
 
-    const { onGridReady } = this;
+    const {onGridReady} = this;
 
     if (showCorrelationMatrix) {
       return (
         <TableHolder>
-          <p style={{ fontWeight: "normal", marginTop: 15, textAlign: "left" }}>
-            Click the table headers to re-sort by column (low-to-high,
-            high-to-low, original sort).
+          <p style={ { fontWeight: "normal", marginTop: 15, textAlign: "left" } }>
+            Click the table headers to re-sort by column (low-to-high, high-to-low, original sort).
           </p>
-
-          <div
-            id="innerContainer1"
-            style={{
-              boxSizing: "border-box",
-              width: getWidth(numQsorts),
-              height: getHeight(numQsorts)
-            }}
-            className="ag-theme-fresh"
-          >
-            <AgGridReact
-              columnDefs={gridColDefs}
-              rowData={gridRowData}
-              onGridReady={onGridReady}
-              enableSorting
-            />
+          <div id="innerContainerCorrelations" style={ { width: getWidth(numQsorts), height: getHeight(numQsorts) } } className="ag-theme-fresh">
+            <AgGridReact columnDefs={ gridColDefs } rowData={ gridRowData } onGridReady={ onGridReady } enableSorting />
           </div>
         </TableHolder>
-      );
+        );
     }
     return null;
   }
@@ -99,3 +86,4 @@ const OuterMostContainer = styled.div`
   height: 78vh;
   width: ${props => props.width};
 `;
+

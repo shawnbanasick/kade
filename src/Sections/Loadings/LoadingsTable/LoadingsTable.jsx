@@ -1,14 +1,16 @@
 import React, { Component } from "react";
 import { Button } from "semantic-ui-react";
 import { AgGridReact } from "ag-grid-react";
-import { view } from "react-easy-state";
-import store from "../../../store";
+import { view, store } from "react-easy-state";
+import state from "../../../store";
 import autoFlagFactors from "../loadingsLogic/autoFlagFactors";
 import InvertFactorButton from "./InvertFactorButton";
 import SplitBipolarFactorModal from "./SplitBipolarFactorModal";
 import loadingsTableDataPrep from "./loadingsTableDataPrep";
 import SigLevelDropdown from "./SigLevelDropdown";
 import MajorityCommonVarianceCheckbox from "./MajorityCommonVarianceCheckbox";
+
+const localStore = store({ numQsorts: 0, numFacsForTableWidth: 0 });
 
 // helper function for filtering btnId when table loads => output buttons
 const filterArray = item => {
@@ -19,6 +21,45 @@ const filterArray = item => {
   }
   return null;
 };
+
+function getWidth(numFacsForTableWidth) {
+  let widthVal = 152 + 80 * numFacsForTableWidth;
+  let x = window.innerWidth - 40 - 152;
+
+  if (x < widthVal) {
+    x += "px";
+    return x;
+  }
+  widthVal += "px";
+  return widthVal;
+}
+
+function getHeight(numQsorts) {
+  let heightVal = 40 + 25 * numQsorts;
+  let y = window.innerHeight - 120 - 100;
+  if (y < heightVal) {
+    y += "px";
+    return y;
+  }
+  heightVal += "px";
+  return heightVal;
+}
+
+function resetWidthAndHeight() {
+  // this.gridApi.setGridAutoHeight(false);
+  const numQsorts = localStore.numQsorts;
+  const table = document.querySelector("#loadingsTableContainer");
+  table.style.height = getHeight(numQsorts);
+  table.style.width = getWidth(numQsorts);
+}
+
+window.addEventListener("resize", () => {
+  resetWidthAndHeight();
+});
+
+/*
+  Component start
+*/
 
 class LoadingsTable extends Component {
   onGridReady(params) {
@@ -37,7 +78,7 @@ class LoadingsTable extends Component {
     }
 
     // initialize output select buttons highlighting to false
-    const btnId = store.getState("outputButtonsArray");
+    const btnId = state.getState("outputButtonsArray");
     const tempObj2 = {};
     for (let i = 0; i < btnId.length; i++) {
       tempObj2[`highlightfactor${btnId[i]}`] = false;
@@ -55,7 +96,7 @@ class LoadingsTable extends Component {
     // reset cache of factor viz data
     tempObj2.outputForDataViz2 = [];
 
-    store.setState(tempObj2);
+    state.setState(tempObj2);
   }
 
   doSplitFactor() {
@@ -66,52 +107,55 @@ class LoadingsTable extends Component {
       const rowNode = this.gridApi.getDisplayedRowAtIndex(i);
       currentLoadingsTable.push(rowNode.data);
     }
-    store.setState({
+    state.setState({
       currentLoadingsTable,
       showSplitFactorModal: true
     });
   }
 
   highlightRowsWithGrays() {
-    store.setState({ isLoadingGrayHighlighting: true });
+    state.setState({ isLoadingGrayHighlighting: true });
     setTimeout(() => {
-      store.setState({ highlighting: "grays" });
-      const numFactors = store.getState("numFactorsKeptForRot");
+      state.setState({ highlighting: "grays" });
+      const numFactors = state.getState("numFactorsKeptForRot");
       loadingsTableDataPrep(numFactors);
     }, 10);
   }
 
   highlightRowsWithColors() {
-    store.setState({ isLoadingColorsHighlighting: true });
+    state.setState({ isLoadingColorsHighlighting: true });
     setTimeout(() => {
-      store.setState({ highlighting: "colors" });
-      const numFactors = store.getState("numFactorsKeptForRot");
+      state.setState({ highlighting: "colors" });
+      const numFactors = state.getState("numFactorsKeptForRot");
       loadingsTableDataPrep(numFactors);
     }, 10);
   }
 
   noRowHighlighting() {
-    store.setState({ isLoadingNoHighlighting: true });
+    state.setState({ isLoadingNoHighlighting: true });
     setTimeout(() => {
-      store.setState({ highlighting: "none" });
-      const numFactors = store.getState("numFactorsKeptForRot");
+      state.setState({ highlighting: "none" });
+      const numFactors = state.getState("numFactorsKeptForRot");
       loadingsTableDataPrep(numFactors);
     }, 10);
   }
 
   render() {
-    const gridColDefsLoadingsTable = store.getState("gridColDefsLoadingsTable");
-    const gridRowDataLoadingsTable = store.getState("gridRowDataLoadingsTable");
-    const isLoadingAutoflag = store.getState("isLoadingAutoflag");
-    const isLoadingGrayHighlighting = store.getState(
+    const { onGridReady } = this;
+
+    const gridColDefsLoadingsTable = state.getState("gridColDefsLoadingsTable");
+    const gridRowDataLoadingsTable = state.getState("gridRowDataLoadingsTable");
+    const isLoadingAutoflag = state.getState("isLoadingAutoflag");
+    const isLoadingGrayHighlighting = state.getState(
       "isLoadingGrayHighlighting"
     );
-    const isLoadingColorsHighlighting = store.getState(
+    const isLoadingColorsHighlighting = state.getState(
       "isLoadingColorsHighlighting"
     );
-    const isLoadingNoHighlighting = store.getState("isLoadingNoHighlighting");
-    const numQsorts = store.getState("numQsorts");
-    let height;
+    const isLoadingNoHighlighting = state.getState("isLoadingNoHighlighting");
+    const numQsorts = state.getState("numQsorts");
+    localStore.numQsorts = numQsorts;
+    // let height;
 
     // todo - create output buttons array here to stay in sync, but performance check
     const outputButtonsArray2 = gridColDefsLoadingsTable.map(
@@ -120,39 +164,40 @@ class LoadingsTable extends Component {
     const outputButtonsArray3 = outputButtonsArray2.filter(filterArray);
     outputButtonsArray3.shift();
     const outputButtonsArray = outputButtonsArray3.map(item => item.slice(6));
-    store.setState({ outputButtonsArray });
+    state.setState({ outputButtonsArray });
 
     // increase height for cases when scroll bar is visible
-    if (gridColDefsLoadingsTable.length > 21) {
-      height = numQsorts * 25 + 50 || 200;
-    } else {
-      height = numQsorts * 25 + 30 || 200;
-    }
+    // if (gridColDefsLoadingsTable.length > 21) {
+    //   height = numQsorts * 25 + 50 || 200;
+    // } else {
+    //   height = numQsorts * 25 + 40 || 200;
+    // }
+
+    let numFacsForTableWidth = state.getState("numFactorsKeptForRot");
 
     // increase height when bipolar split present
-    const bipolarSplitCount = store.getState("bipolarSplitCount");
+    const bipolarSplitCount = state.getState("bipolarSplitCount");
 
-    const isDisabled = store.getState("bipolarDisabled");
-
-    let numFacsForTableWidth = store.getState("numFactorsKeptForRot");
+    const isDisabled = state.getState("bipolarDisabled");
 
     // increase width if bipolar present
     if (bipolarSplitCount > 0) {
       numFacsForTableWidth += bipolarSplitCount;
     }
+    localStore.numFacsForTableWidth = numFacsForTableWidth;
 
-    let widthVal = 252 + 110 * numFacsForTableWidth;
-    if (widthVal > window.innerWidth - 100) {
-      widthVal = window.innerWidth - 100;
-    }
-    widthVal += "px";
+    // let widthVal = 252 + 110 * numFacsForTableWidth;
+    // if (widthVal > window.innerWidth - 100) {
+    //   widthVal = window.innerWidth - 100;
+    // }
+    // widthVal += "px";
 
-    const containerStyle = {
-      marginTop: 5,
-      height,
-      width: widthVal,
-      marginBottom: 15
-    };
+    // const containerStyle = {
+    //   marginTop: 5,
+    //   height: getHeight(numQsorts),
+    //   width: getWidth(numFacsForTableWidth),
+    //   marginBottom: 15
+    // };
 
     return (
       <div>
@@ -211,14 +256,23 @@ class LoadingsTable extends Component {
             Default sort is by factor group (FG - highest loading factor). Click
             the column headers to re-sort.
           </p>
-          <div style={containerStyle} className="ag-theme-fresh">
+          <div
+            id="loadingsTableContainer"
+            style={{
+              marginTop: 5,
+              height: getHeight(numQsorts),
+              width: getWidth(numFacsForTableWidth),
+              marginBottom: 15
+            }}
+            className="ag-theme-fresh"
+          >
             <AgGridReact
               enableSorting
-              id="myGrid"
+              id="loadingsTable"
               columnDefs={gridColDefsLoadingsTable}
               rowData={gridRowDataLoadingsTable}
               getRowClass={params => params.data.highlightingClass}
-              onGridReady={this.onGridReady.bind(this)}
+              onGridReady={onGridReady}
             />
           </div>
           <InvertFactorButton />
