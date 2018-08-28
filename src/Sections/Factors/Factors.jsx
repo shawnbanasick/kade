@@ -9,13 +9,15 @@ import state from "../../store";
 class Factors extends Component {
   render() {
     const showCentroidError = state.getState("showCentroidError");
+    const showCorrelationMatrix = state.getState("showCorrelationMatrix");
+
     return (
       <MainContent>
-        <TypeOfAnalysisTransitionContainer style={{ gridArea: "row1" }} />
+        { showCorrelationMatrix ? <TypeOfAnalysisTransitionContainer style={ { gridArea: "row1" } } /> : <DefaultMessage>Calculate correlations first.</DefaultMessage> }
         <UnrotatedFactorsTransitionContainer />
-        {showCentroidError ? <ErrorNotification /> : null}
+        { showCentroidError ? <ErrorNotification /> : null }
       </MainContent>
-    );
+      );
   }
 }
 
@@ -59,9 +61,14 @@ const MainContent = styled.div`
   transition: visibility 0.5s linear;
   font-family: Helvetica;
   margin-left: 20px;
+  font-family: Helvetica, sans-serif;
 
   width: calc(100vw - 153px);
   box-sizing: border-box;
   max-height: calc(100vh - 22px);
   overflow: auto;
+`;
+
+const DefaultMessage = styled.div`
+  font-size: 22px;
 `;

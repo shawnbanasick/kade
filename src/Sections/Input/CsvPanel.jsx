@@ -22,21 +22,21 @@ class CsvPanel extends Component {
           <CsvSuccessfulLoadBar />
         </CardHolder>
       </DataWindow>
-    );
+      );
   }
 }
 
 export default view(CsvPanel);
 
 const DataWindow = styled.div`
-  height: 100vh;
+  height: 645px;
   background-color: white;
 `;
 
 const CardHolder = styled.div`
   display: grid;
   grid-template-columns: 350px 350px;
-  grid-template-rows: 320px 115px 120px 130px;
+  grid-template-rows: 320px 115px 120px;
 `;
 
 const Header = styled.div`

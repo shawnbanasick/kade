@@ -16,7 +16,7 @@ class ExcelPanel extends Component {
           <ForcedUnforcedRadio />
         </CardHolder>
       </DataWindow>
-    );
+      );
   }
 }
 
@@ -30,7 +30,7 @@ const DataWindow = styled.div`
 const CardHolder = styled.div`
   display: grid;
   grid-template-columns: 350px 350px;
-  grid-template-rows: 320px 115px 120px 130px;
+  grid-template-rows: 320px 115px 180px;
 `;
 
 const Header = styled.div`

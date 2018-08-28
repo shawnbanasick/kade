@@ -8,10 +8,12 @@ class ErrorNotification extends React.Component {
     const errorMessage = state.getState("errorMessage");
     return (
       <ErrorBar>
-        <p>Error </p>
-        <p>{errorMessage}</p>
+        <div>Error </div>
+        <p>
+          { errorMessage }
+        </p>
       </ErrorBar>
-    );
+      );
   }
 }
 
@@ -19,11 +21,15 @@ export default view(ErrorNotification);
 
 const ErrorBar = styled.div`
   position: absolute;
-  left: 150px;
+  display: flex;
+  align-items: center;
+  justify-items: center;
+  left: 155px;
   bottom: 0;
+  margin-bottom: 5px;
   z-index: 9999;
   width: calc(100vw - 188px);
-  background-color: #ff6666;
+  background-color: rgba(255, 102, 102, 0.8);
   height: 50px;
   padding-left: 10px;
   padding-right: 10px;
@@ -33,7 +39,9 @@ const ErrorBar = styled.div`
   justify-content: space-between;
   align-items: center;
 
-  /* grid-column-start: 1;
+  /* 
+   #ff6666
+  grid-column-start: 1;
   grid-column-end: -1;
   grid-row-start: -1; */
   border-radius: 4px;

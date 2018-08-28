@@ -26,25 +26,20 @@ class JsonPanel extends Component {
           <CsvStatementCard />
           <JsonQsortsCard />
           <ProjectNameInput />
-          <Dropdown
-            textValue = {"Select Participant Id..."}
-            options={options}
-            onChangeMessageUpTree={this.handleMessage}
-            width='200px'
-          />
+          <Dropdown textValue={ "Select Participant Id..." } options={ options } onChangeMessageUpTree={ this.handleMessage } width='200px' />
           <ForcedUnforcedRadio />
           <UnforcedQsortDesignInput />
           <DownloadCsvModal />
         </CardHolder>
       </DataWindow>
-    );
+      );
   }
 }
 
 export default view(JsonPanel);
 
 const DataWindow = styled.div`
-  height: 100%;
+  height: 645px;
   background-color: white;
 `;
 
