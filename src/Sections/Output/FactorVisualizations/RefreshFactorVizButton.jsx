@@ -16,61 +16,44 @@ import refreshVizOptionsState from "./refreshVizOptionsState";
 const factorVizOptions = store.getState("factorVizOptions");
 
 class RefreshFactorVizButton extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      factorData: createFactorVizDataObjectForProps(factorVizOptions)
-    };
-    this.refresh = this.refresh.bind(this);
-  }
+    constructor(props) {
+        super(props);
+        this.state = {
+            factorData: createFactorVizDataObjectForProps(factorVizOptions)
+        };
+        this.refresh = this.refresh.bind(this);
+    }
 
-  refresh() {
-    console.log("refresh called");
+    refresh() {
+        console.log("refresh called");
 
-    const userValues = refreshVizOptionsState();
-    store.setState({
-      factorVizOptions: userValues
-    });
+        const userValues = refreshVizOptionsState();
+        store.setState({
+            factorVizOptions: userValues
+        });
 
-    this.setState({
-      factorData: createFactorVizDataObjectForProps(userValues)
-    });
-  }
+        this.setState({
+            factorData: createFactorVizDataObjectForProps(userValues)
+        });
+    }
 
-  render() {
-    const shouldDisplayFactorVizOptions = store.getState(
-      "shouldDisplayFactorVizOptions"
-    );
+    render() {
+        const shouldDisplayFactorVizOptions = store.getState(
+            "shouldDisplayFactorVizOptions"
+        );
 
-    return (
-      <Transition
-        visible={shouldDisplayFactorVizOptions}
-        animation="fade"
-        duration={1000}
-      >
-        <div>
-          <div
-            style={{
-              marginTop: 50,
-              marginBottom: 50,
-              height: 100,
-              display: "block"
-            }}
-          >
-            <Button
-              id="refreshFactorVizButton"
-              onClick={this.refresh}
-              size="huge"
-              className="instagram"
-              floated="left"
-            >
-              Update Factor Visualizations
-            </Button>
-          </div>
-        </div>
-      </Transition>
-    );
-  }
+        return (
+            <Transition visible={ shouldDisplayFactorVizOptions } animation="fade" duration={ 1000 }>
+              <div>
+                <div style={ { marginTop: 50, marginBottom: 50, height: 100, display: "block" } }>
+                  <Button id="refreshFactorVizButton" onClick={ this.refresh } size="huge" floated="left">
+                    Update Factor Visualizations
+                  </Button>
+                </div>
+              </div>
+            </Transition>
+            );
+    }
 }
 
 export default view(RefreshFactorVizButton);

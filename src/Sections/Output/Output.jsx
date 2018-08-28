@@ -16,35 +16,42 @@ import RefreshFactorVizButton from "./FactorVisualizations/RefreshFactorVizButto
 
 class Output extends Component {
   render() {
-    console.log("output rendered");
     const shouldDisplayFactorViz = store.getState(
       "displayFactorVisualizations"
     );
     const showStandardErrorsDifferences = store.getState(
       "showStandardErrorsDifferences"
     );
-    return (
-      <MainContent>
-        <div className="section">
-          <FactorSelectionForOutputButtons />
-          <DownloadResultsButtons />
-          <NoLoadingsFlaggedWarningModal />
-          <MultipleFactorsFlaggedWarningModal />
-          <OutputFactorTablesTransitionContainer />
-          <div>
-            { showStandardErrorsDifferences && (
-              <span style={ { fontSize: 26 } }>Factor Visualizations</span>
-              ) }
+
+    const showOutputFactorSelection = store.getState("showOutputFactorSelection");
+
+    if (showOutputFactorSelection) {
+      return (
+        <MainContent>
+          <div className="section">
+            <FactorSelectionForOutputButtons />
+            <DownloadResultsButtons />
+            <NoLoadingsFlaggedWarningModal />
+            <MultipleFactorsFlaggedWarningModal />
+            <OutputFactorTablesTransitionContainer />
             <div>
-              <DisplayVisualizationsButtons />
-              <FactorVizOptions />
-              <RefreshFactorVizButton />
-              { shouldDisplayFactorViz && <FactorVizDispatch /> }
+              { showStandardErrorsDifferences && (
+                <span style={ { fontSize: 26 } }>Factor Visualizations</span>
+                ) }
+              <div>
+                <DisplayVisualizationsButtons />
+                <FactorVizOptions />
+                <RefreshFactorVizButton />
+                { shouldDisplayFactorViz && <FactorVizDispatch /> }
+              </div>
             </div>
           </div>
-        </div>
-      </MainContent>
-      );
+        </MainContent>
+        );
+    }
+    return (
+      <DefaultMessage>No output. Click "Send Table Data to Output" in the "Loadings" section.</DefaultMessage>
+    )
   }
 }
 
@@ -81,6 +88,8 @@ const MainContent = styled.div`
     "linkboxRow1 linkboxRow1 linkboxRow1 linkboxRow1"
     "linkboxRow2 linkboxRow2 linkboxRow2 linkboxRow2"; */
   margin-left: 20px;  
+  margin-top: 20px;
+  margin-right: 20px;
   justify-items: center;
   align-items: center;
   background-color: white;
@@ -92,4 +101,10 @@ const MainContent = styled.div`
   box-sizing: border-box;
   max-height: calc(100vh - 22px);
   overflow: auto;
+`;
+
+const DefaultMessage = styled.div`
+  margin-top: 50px;
+  font-size: 22px;
+  margin-left: 20px;
 `;

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Transition } from "semantic-ui-react";
+import styled from "styled-components";
 import { view } from "react-easy-state";
 import store from "../../store";
 import LoadingsTable from "./LoadingsTable/LoadingsTable";
@@ -7,14 +7,24 @@ import LoadingsTable from "./LoadingsTable/LoadingsTable";
 class LoadingsTableTransitionContainer extends Component {
   render() {
     const showLoadingsTable = store.getState("showLoadingsTable");
-    return (
-      <Transition visible={showLoadingsTable} animation="fade" duration={1000}>
+    if (showLoadingsTable) {
+      return (
         <div>
           <LoadingsTable />
         </div>
-      </Transition>
-    );
+        );
+    }
+    return (
+      <DefaultMessage>No loadings calculated.</DefaultMessage>
+    )
+
   }
 }
 
 export default view(LoadingsTableTransitionContainer);
+
+const DefaultMessage = styled.div`
+  height: 150px;
+  margin-top: 50px;
+  font-size: 22px;
+`;

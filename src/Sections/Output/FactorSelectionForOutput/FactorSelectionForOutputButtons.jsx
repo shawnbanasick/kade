@@ -7,8 +7,6 @@ import outputDispatch from "../calcualteOutputLogic/1_outputDispatch";
 
 class FactorSelectionForOutputButtons extends React.Component {
   clearButtonHighlighting() {
-    console.log(JSON.stringify("clear button highlighting called"));
-
     const btnId = store.getState("outputButtonsArray");
     const tempObj2 = {};
     for (let i = 0; i < btnId.length; i++) {
@@ -63,7 +61,7 @@ class FactorSelectionForOutputButtons extends React.Component {
 
       store.setState(tempObj);
 
-      // clear all
+    // clear all
     } else if (factor === "clearAllFacs") {
       const tempObj2 = {};
       for (let i = 0; i < btnId.length; i++) {
@@ -131,45 +129,26 @@ class FactorSelectionForOutputButtons extends React.Component {
     // if (showOutputFactorSelection) {
 
     return (
-      <Transition
-        visible={showOutputFactorSelection}
-        animation="fade"
-        duration={1000}
-      >
+      <Transition visible={ showOutputFactorSelection } animation="fade" duration={ 1000 }>
         <div>
-          <span style={{ marginRight: 5 }}>Select Output Factors:</span>
-          {btnId.map((item, index) => (
-            <Button
-              key={`f${item}`}
-              toggle
-              active={store.getState(`highlightfactor${item}`)}
-              disabled={areDisabled}
-              onClick={this.handleOnclick.bind(this)}
-              id={`factor ${item}`}
-            >
-              {item}
-            </Button>
-          ))}
-          <Button
-            id="selectAllFacs"
-            disabled={areDisabled}
-            onClick={this.handleOnclick}
-          >
-            Select All
+          <span style={ { marginRight: 5, fontSize: 16 } }>Select Output Factors:</span>
+          { btnId.map((item, index) => (
+              <Button key={ `f${item}` } toggle active={ store.getState(`highlightfactor${item}`) } disabled={ areDisabled } onClick={ this.handleOnclick.bind(this) } id={ `factor ${item}` }>
+                { item }
+              </Button>
+            )) }
+          <Button id="selectAllFacs" disabled={ areDisabled } onClick={ this.handleOnclick }>
+            All
           </Button>
-          <Button id="clearAllFacs" onClick={this.handleOnclick}>
-            Clear Selections
+          <Button id="clearAllFacs" onClick={ this.handleOnclick }>
+            Clear
           </Button>
-          <Button
-            id="startOutput"
-            className="instagram"
-            onClick={this.handleSubmit}
-          >
+          <Button id="startOutput" onClick={ this.handleSubmit }>
             Submit
           </Button>
         </div>
       </Transition>
-    );
+      );
   }
 }
 

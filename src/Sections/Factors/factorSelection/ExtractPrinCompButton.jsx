@@ -6,7 +6,7 @@ import pcaDispatch from "../PcaLogic/pcaDispatch";
 
 const style = {
   marginLeft: 230
-  // marginTop: 12
+// marginTop: 12
 };
 
 class PCAButton extends React.Component {
@@ -31,21 +31,12 @@ class PCAButton extends React.Component {
     const pcaButtonText = store.getState("pcaButtonText");
     return (
       <div>
-        <Button
-          id="extractPrinCompButton"
-          className="instagram"
-          size={"small"}
-          toggle
-          active={isActive}
-          loading={isCalculating}
-          disabled={isDisabled}
-          onClick={this.handleClick}
-          style={style}
-        >
-          {pcaButtonText}
+        <Button id="extractPrinCompButton" size={ "small" } toggle active={ isActive } loading={ isCalculating } disabled={ isDisabled } onClick={ this.handleClick }
+          style={ style }>
+          { pcaButtonText }
         </Button>
       </div>
-    );
+      );
   }
 }
 export default view(PCAButton);

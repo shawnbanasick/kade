@@ -1,8 +1,10 @@
 import React from "react";
 import { view, store } from "react-easy-state";
 import { Button, Dropdown, Transition } from "semantic-ui-react";
+import styled from "styled-components";
 import FactorSelectButtonModal from "./FactorSelectButtonModal";
 import state from "../../../store";
+
 
 const saveDropdownValueToState = (event, data) => {
   const userSelectedRotFactors = [];
@@ -111,27 +113,28 @@ class FactorSelectDropdown extends React.Component {
 
   render() {
     const options = getOptions();
-    // let showKeepFacForRotButton = store.getState("showKeepFacForRotButton");
-    return (
-      <div style={{ display: "flex" }}>
-        <span style={{ marginRight: 20, fontSize: "22px" }}>
-          How many factors to keep for rotation?{" "}
-        </span>
-
-        <Dropdown
-          id="factorSelectDropdown"
-          placeholder={"?"}
-          style={{ maxHeight: "45px" }}
-          onChange={saveDropdownValueToState}
-          openOnFocus
-          button
-          simple
-          item
-          options={options}
-        />
-        <FactorSelectButtonModal />
-      </div>
-    );
+    const showKeepFacForRotButton = state.getState("showKeepFacForRotButton");
+    if (showKeepFacForRotButton) {
+      return (
+        <ContainerDiv style={ { display: "flex" } }>
+          <span style={ { marginRight: 20, fontSize: "22px" } }>
+                                                          How many factors to keep for rotation?{ " " }
+                                                        </span>
+          <Dropdown id="factorSelectDropdown" placeholder={ "?" } style={ { maxHeight: "45px" } } onChange={ saveDropdownValueToState } openOnFocus button simple item options={ options }
+          />
+          <FactorSelectButtonModal />
+        </ContainerDiv>
+        );
+    }
+    return (<DefaultMessage>Extract factors first.</DefaultMessage>);
   }
 }
 export default view(FactorSelectDropdown);
+
+const ContainerDiv = styled.div`
+  display: flex;
+`;
+
+const DefaultMessage = styled.div`
+  font-size: 22px;
+`;

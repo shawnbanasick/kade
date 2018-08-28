@@ -130,7 +130,7 @@ export default store({
   archiveCounter: 0,
   varimaxButtonDisabled: false,
   abFactors: [],
-  projectHistoryArray: ["Project loaded"],
+  projectHistoryArray: ["no project loaded"],
   newRotationVectors: [],
   rotColDefsFactorTable: [],
   rotRowDataFactorTable: [],

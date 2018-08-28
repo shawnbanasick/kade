@@ -233,7 +233,6 @@ class LoadingsTable extends Component {
         <Button
           id="generateOutputButton"
           style={{ marginTop: "50px" }}
-          className="instagram"
           onClick={this.generateOutput.bind(this)}
         >
           Send Table Data to Output
