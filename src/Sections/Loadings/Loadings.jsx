@@ -58,5 +58,6 @@ const MainContent = styled.div`
   width: calc(100vw - 153px);
   box-sizing: border-box;
   min-height: 845px;
+  height: 100vh;
   overflow: auto;
 `;

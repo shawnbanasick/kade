@@ -267,11 +267,11 @@ class LoadingsTable extends Component {
           >
             <AgGridReact
               enableSorting
-              id="loadingsTable"
+              id="myGrid"
               columnDefs={gridColDefsLoadingsTable}
               rowData={gridRowDataLoadingsTable}
               getRowClass={params => params.data.highlightingClass}
-              onGridReady={onGridReady}
+              onGridReady={this.onGridReady.bind(this)}
             />
           </div>
           <InvertFactorButton />
