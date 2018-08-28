@@ -57,7 +57,6 @@ const MainContent = styled.div`
 
   width: calc(100vw - 153px);
   box-sizing: border-box;
-  max-height: calc(100vh - 22px);
   min-height: 845px;
   overflow: auto;
 `;

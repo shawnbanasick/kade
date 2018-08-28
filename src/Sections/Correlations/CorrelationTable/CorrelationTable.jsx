@@ -6,7 +6,7 @@ import state from "../../../store";
 // import calculateCorrelations from "../correlationsLogic/calcCorrelations";
 
 const localStore = store({
-  numQsorts: state.getState("numQsorts")
+  numQsorts: 0
 });
 
 function getWidth(numQsorts) {
@@ -55,26 +55,21 @@ class CorrelationTable extends Component {
   render() {
     const gridColDefs = state.getState("gridColDefs");
     const gridRowData = state.getState("gridRowData");
-    const showCorrelationMatrix = state.getState("showCorrelationMatrix");
-
     const numQsorts = state.getState("numQsorts");
     localStore.numQsorts = numQsorts;
 
     const {onGridReady} = this;
 
-    if (showCorrelationMatrix) {
-      return (
-        <TableHolder>
-          <p style={ { fontWeight: "normal", marginTop: 15, textAlign: "left" } }>
-            Click the table headers to re-sort by column (low-to-high, high-to-low, original sort).
-          </p>
-          <div id="innerContainerCorrelations" style={ { width: getWidth(numQsorts), height: getHeight(numQsorts) } } className="ag-theme-fresh">
-            <AgGridReact columnDefs={ gridColDefs } rowData={ gridRowData } onGridReady={ onGridReady } enableSorting />
-          </div>
-        </TableHolder>
-        );
-    }
-    return null;
+    return (
+      <TableHolder>
+        <p style={ { fontWeight: "normal", marginTop: 15, textAlign: "left" } }>
+          Click the table headers to re-sort by column (low-to-high, high-to-low, original sort).
+        </p>
+        <div id="innerContainerCorrelations" style={ { width: getWidth(numQsorts), height: getHeight(numQsorts) } } className="ag-theme-fresh">
+          <AgGridReact columnDefs={ gridColDefs } rowData={ gridRowData } onGridReady={ onGridReady } enableSorting />
+        </div>
+      </TableHolder>
+      );
   }
 }
 

@@ -26,7 +26,7 @@ const loadingsTableDataPrep = numFactors => {
       field: "resNum",
       pinned: true,
       editable: false,
-      width: 40,
+      width: 70,
       cellStyle: {
         textAlign: "center"
       }
@@ -45,7 +45,7 @@ const loadingsTableDataPrep = numFactors => {
       headerName: "FG",
       field: "factorGroup",
       pinned: true,
-      width: 60,
+      width: 70,
       editable: false,
       comparator: factorGroupComparator,
       cellStyle: {
@@ -82,7 +82,7 @@ const loadingsTableDataPrep = numFactors => {
         headerName: `Factor ${facNumber}`,
         field: `factor${facNumber}`,
         pinned: false,
-        width: 70,
+        width: 90,
         editable: false,
         cellStyle: {
           textAlign: "right"
@@ -93,7 +93,7 @@ const loadingsTableDataPrep = numFactors => {
         field: `check${facNumber}`,
         pinned: false,
         editable: true,
-        width: 40,
+        width: 55,
         cellRendererFramework: CheckboxRenderer,
         cellStyle: {
           textAlign: "left"

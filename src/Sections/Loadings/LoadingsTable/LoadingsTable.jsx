@@ -23,8 +23,8 @@ const filterArray = item => {
 };
 
 function getWidth(numFacsForTableWidth) {
-  let widthVal = 152 + 80 * numFacsForTableWidth;
-  let x = window.innerWidth - 40 - 152;
+  let widthVal = 302 + 145 * numFacsForTableWidth;
+  let x = window.innerWidth - 50 - 152;
 
   if (x < widthVal) {
     x += "px";
@@ -36,7 +36,7 @@ function getWidth(numFacsForTableWidth) {
 
 function getHeight(numQsorts) {
   let heightVal = 40 + 25 * numQsorts;
-  let y = window.innerHeight - 120 - 100;
+  let y = window.innerHeight - 160 - 250;
   if (y < heightVal) {
     y += "px";
     return y;
@@ -47,10 +47,9 @@ function getHeight(numQsorts) {
 
 function resetWidthAndHeight() {
   // this.gridApi.setGridAutoHeight(false);
-  const numQsorts = localStore.numQsorts;
   const table = document.querySelector("#loadingsTableContainer");
-  table.style.height = getHeight(numQsorts);
-  table.style.width = getWidth(numQsorts);
+  table.style.height = getHeight(localStore.numQsorts);
+  table.style.width = getWidth(localStore.numFacsForTableWidth);
 }
 
 window.addEventListener("resize", () => {
