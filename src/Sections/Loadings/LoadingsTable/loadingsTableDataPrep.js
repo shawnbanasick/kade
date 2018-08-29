@@ -132,8 +132,6 @@ const loadingsTableDataPrep = numFactors => {
     gridRowDataLoadingsTable.push(tempArray);
   }
 
-  console.log(gridRowDataLoadingsTable);
-
   // to default order chart by highest factor loading
   gridRowDataLoadingsTable.sort((a, b) => a.defaultSort - b.defaultSort);
 
@@ -273,4 +271,3 @@ export default loadingsTableDataPrep;
     }
   ],
   */
-

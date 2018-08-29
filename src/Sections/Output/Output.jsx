@@ -23,7 +23,9 @@ class Output extends Component {
       "showStandardErrorsDifferences"
     );
 
-    const showOutputFactorSelection = store.getState("showOutputFactorSelection");
+    const showOutputFactorSelection = store.getState(
+      "showOutputFactorSelection"
+    );
 
     if (showOutputFactorSelection) {
       return (
@@ -35,23 +37,25 @@ class Output extends Component {
             <MultipleFactorsFlaggedWarningModal />
             <OutputFactorTablesTransitionContainer />
             <div>
-              { showStandardErrorsDifferences && (
-                <span style={ { fontSize: 26 } }>Factor Visualizations</span>
-                ) }
+              {showStandardErrorsDifferences && (
+                <span style={{ fontSize: 26 }}>Factor Visualizations</span>
+              )}
               <div>
                 <DisplayVisualizationsButtons />
                 <FactorVizOptions />
                 <RefreshFactorVizButton />
-                { shouldDisplayFactorViz && <FactorVizDispatch /> }
+                {shouldDisplayFactorViz && <FactorVizDispatch />}
               </div>
             </div>
           </div>
         </MainContent>
-        );
+      );
     }
     return (
-      <DefaultMessage>No output. Click "Send Table Data to Output" in the "Loadings" section.</DefaultMessage>
-    )
+      <DefaultMessage>
+        No output. Click "Send Table Data to Output" in the "Loadings" section.
+      </DefaultMessage>
+    );
   }
 }
 
@@ -87,15 +91,17 @@ const MainContent = styled.div`
     "weblinkRow weblinkRow weblinkRow weblinkRow"
     "linkboxRow1 linkboxRow1 linkboxRow1 linkboxRow1"
     "linkboxRow2 linkboxRow2 linkboxRow2 linkboxRow2"; */
-  margin-left: 20px;  
-  margin-top: 20px;
-  margin-right: 20px;
-  justify-items: center;
-  align-items: center;
-  background-color: white;
+  overflow: scroll;
+  padding: 5px;
+  padding-top: 15px;
+  padding-left: 15px;
   visibility: ${props => (props.view ? "hidden" : "visible")};
   animation: ${props => (props.view ? fadeOut : fadeIn)} 0.5s linear;
   transition: visibility 0.5s linear;
+
+  font-family: Helvetica, sans-serif;
+  font-size: 18px;
+  background-color: white;
 
   width: calc(100vw - 153px);
   box-sizing: border-box;

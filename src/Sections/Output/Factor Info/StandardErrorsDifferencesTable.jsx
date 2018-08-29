@@ -43,7 +43,7 @@ const getGridColDefsFacCorrTable = (data, numFacs, headerRow) => {
       field: headerRow[i],
       pinned: false,
       editable: false,
-      width: 80,
+      width: 90,
       cellStyle: {
         textAlign: "center"
       }
@@ -80,7 +80,7 @@ class FactorCorrelationsTable extends Component {
   render() {
     let currentData = getCurrentData();
 
-    let widthVal = 182 + 80 * currentData[1];
+    let widthVal = 182 + 90 * currentData[1];
     if (widthVal > window.innerWidth - 100) {
       widthVal = window.innerWidth - 100;
     }
@@ -102,7 +102,7 @@ class FactorCorrelationsTable extends Component {
             columnDefs={gridColDefsFacCorrTable}
             rowData={gridRowDataFacCorrTable}
             onGridReady={this.onGridReady.bind(this)}
-            domLayout={"autoHeight"}
+            gridAutoHeight={true}
             enableSorting={true}
           />
         </div>
