@@ -48,8 +48,10 @@ function getHeight(numQsorts) {
 function resetWidthAndHeight() {
   // this.gridApi.setGridAutoHeight(false);
   const table = document.querySelector("#loadingsTableContainer");
-  table.style.height = getHeight(localStore.numQsorts);
-  table.style.width = getWidth(localStore.numFacsForTableWidth);
+  if (table !== null) {
+    table.style.height = getHeight(localStore.numQsorts);
+    table.style.width = getWidth(localStore.numFacsForTableWidth);
+  }
 }
 
 window.addEventListener("resize", () => {
@@ -61,6 +63,13 @@ window.addEventListener("resize", () => {
 */
 
 class LoadingsTable extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      rowClassRules: {}
+    };
+  }
+
   onGridReady(params) {
     this.gridApi = params.api;
     this.columnApi = params.columnApi;

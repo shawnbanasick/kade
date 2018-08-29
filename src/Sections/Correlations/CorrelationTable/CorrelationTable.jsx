@@ -36,8 +36,10 @@ function resetWidthAndHeight() {
   // this.gridApi.setGridAutoHeight(false);
   const numQsorts = localStore.numQsorts;
   const table = document.querySelector("#innerContainerCorrelations");
-  table.style.height = getHeight(numQsorts);
-  table.style.width = getWidth(numQsorts);
+  if (table !== null) {
+    table.style.height = getHeight(numQsorts);
+    table.style.width = getWidth(numQsorts);
+  }
 }
 
 window.addEventListener("resize", () => {

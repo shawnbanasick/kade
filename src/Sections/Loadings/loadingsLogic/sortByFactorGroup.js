@@ -60,7 +60,9 @@ const sortByFactorGroup = function(data, highlighting) {
     return value || b.subSortValue - a.subSortValue;
   });
 
-  let factorGroupNumber, lookUpIndexValue, cssClassName;
+  let factorGroupNumber,
+    lookUpIndexValue,
+    cssClassName;
   let subGroupCounter = 0;
 
   // to set the factor group and sub-group numbers
@@ -73,6 +75,7 @@ const sortByFactorGroup = function(data, highlighting) {
       subGroupCounter = 1;
     }
     cssClassName = `F${lookUpIndexValue + 1}${highlighting}`;
+    // cssClassName = `F${lookUpIndexValue + 1}`;
     factorGroupNumber = `F${lookUpIndexValue + 1}-${subGroupCounter}`;
     // factorGroupNumber = +(lookUpIndexValue + 1 + "." + subGroupCounter);
     factorSortedData.push([
