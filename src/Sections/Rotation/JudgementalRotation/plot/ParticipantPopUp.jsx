@@ -1,6 +1,8 @@
 import React from "react";
 import { view } from "react-easy-state";
+import styled from "styled-components";
 import store from "../../../../store";
+
 
 const styles = {
   height: 150,
@@ -12,7 +14,9 @@ const styles = {
 
 class ParticipantPopUp extends React.Component {
   render() {
-    let respondent, factor1Value, factor2Value;
+    let respondent;
+    let factor1Value;
+    let factor2Value;
     const participantDataObject = store.getState("participantDataObject");
     if (participantDataObject !== false) {
       respondent = participantDataObject.respondent;
@@ -21,14 +25,32 @@ class ParticipantPopUp extends React.Component {
     }
     return (
       <div>
-        {participantDataObject && (
-          <span style={styles}>
-            {respondent} {"  "} {factor1Value}, {factor2Value}{" "}
-          </span>
-        )}
+        { participantDataObject ? (
+          <PopupDiv>
+            <div>
+              { respondent }
+            </div>
+            <div>
+              { factor1Value },
+            </div>
+            <div>
+              { factor2Value }
+            </div>
+          </PopupDiv>
+          ) : <PopupDiv>Hover for participant data</PopupDiv> }
       </div>
-    );
+      );
   }
 }
 
 export default view(ParticipantPopUp);
+
+const PopupDiv = styled.div`
+  display:flex;
+  justify-content: space-around;
+  width: 250px;
+  color: whitesmoke;
+  background: black;
+  border-radius: 4px;
+  padding: 5px;
+`;

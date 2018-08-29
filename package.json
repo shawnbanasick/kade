@@ -39,7 +39,7 @@
       },
       "electronWinstallerConfig": {
         "name": "KADE",
-        "noMsi": true
+        "noMsi": false
       },
       "electronInstallerDebian": {},
       "electronInstallerRedhat": {},

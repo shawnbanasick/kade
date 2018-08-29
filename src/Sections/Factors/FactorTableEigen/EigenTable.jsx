@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { view } from "react-easy-state";
-import styled, { AgGridStyleWrapper } from "styled-components";
+// import styled from "styled-components";
 import { AgGridReact } from "ag-grid-react";
 import state from "../../../store";
 
@@ -14,12 +14,12 @@ class EigenTable extends Component {
   onGridReady(params) {
     this.gridApi = params.api;
     this.columnApi = params.columnApi;
-    // this.gridApi.sizeColumnsToFit();
+  // this.gridApi.sizeColumnsToFit();
   }
 
   render() {
     const numFacsForTableWidth = state.getState("numFacsForTableWidth");
-    let widthVal = 282 + 80 * numFacsForTableWidth;
+    let widthVal = 285 + 90 * numFacsForTableWidth;
     // if (widthVal > window.innerWidth - 100) {
     //   widthVal = window.innerWidth - 100;
     // }
@@ -30,23 +30,17 @@ class EigenTable extends Component {
     // console.log(`defs: ${  JSON.stringify(gridColDefsFacTableEigen)}`);
     // console.log(`defs: ${  JSON.stringify(gridRowDataFacTableEigen)}`);
 
-    const { onGridReady } = this;
+    const {onGridReady} = this;
 
     return (
-      <div style={{ marginTop: 30, height: 200, width: widthVal }}>
+      <div style={ { marginTop: 30, height: 200, width: widthVal } }>
         <div className="ag-theme-fresh">
           <div>
-            <AgGridReact
-              columnDefs={gridColDefsFacTableEigen}
-              rowData={gridRowDataFacTableEigen}
-              onGridReady={onGridReady}
-              gridAutoHeight
-              enableSorting
-            />
+            <AgGridReact columnDefs={ gridColDefsFacTableEigen } rowData={ gridRowDataFacTableEigen } onGridReady={ onGridReady } gridAutoHeight enableSorting />
           </div>
         </div>
       </div>
-    );
+      );
   }
 }
 

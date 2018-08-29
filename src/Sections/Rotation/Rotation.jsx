@@ -13,108 +13,63 @@ import InitializeJudgementalButton from './RotationButtons/InitializeJudgmentalB
 // import styled from "styled-components";
 
 const panes = [
-    {
-        menuItem: "Options",
-        render: () => (
-            <Tab.Pane>
-              <DataWindow1>
-                <FactorSelectDropdown />
-                <FactorsKeptNotification />
-              </DataWindow1>
-            </Tab.Pane>
-        )
-    },
-    {
-        menuItem: "Varimax",
-        render: () => (
-            <Tab.Pane>
-              <DataWindow2>
-                <FireVarimaxButton />
-              </DataWindow2>
-            </Tab.Pane>
-        )
-    },
-    {
-        menuItem: "Judgmental",
-        render: () => (
-            <Tab.Pane>
-              <DataWindow2>
-                <InitializeJudgementalButton />
-                <JudgementalRotationContainer />
-              </DataWindow2>
-            </Tab.Pane>
-        )
-    }
+  {
+    menuItem: "Options",
+    render: () => (
+      <Tab.Pane>
+        <DataWindow1>
+          <FactorSelectDropdown />
+          <FactorsKeptNotification />
+        </DataWindow1>
+      </Tab.Pane>
+    )
+  },
+  {
+    menuItem: "Varimax",
+    render: () => (
+      <Tab.Pane>
+        <DataWindow2>
+          <FireVarimaxButton />
+        </DataWindow2>
+      </Tab.Pane>
+    )
+  },
+  {
+    menuItem: "Judgmental",
+    render: () => (
+      <Tab.Pane>
+        <DataWindow2>
+          <InitializeJudgementalButton />
+          <JudgementalRotationContainer />
+        </DataWindow2>
+      </Tab.Pane>
+    )
+  }
 ];
 
 const localStore = store({
-    activeIndex: 0
+  activeIndex: 0
 });
 
 class Rotation extends Component {
-    // state = { activeIndex: 1 };
 
-    // handleRangeChange = e => this.setState({ activeIndex: e.target.value });
-    // handleTabChange = (e, { activeIndex }) => this.setState({ activeIndex });
+  handleTabChange(e, {activeIndex}) {
+    localStore.activeIndex = activeIndex;
+  }
 
-    // render() {
-    //   const { activeIndex } = this.state;
+  render() {
+    const {activeIndex} = localStore;
 
-    //   return (
-    //     <div>
-    //       <div>activeIndex: {activeIndex}</div>
-    //       <input
-    //         type="range"
-    //         max="2"
-    //         value={activeIndex}
-    //         onChange={this.handleRangeChange}
-    //       />
-    //       <Tab
-    //         panes={panes}
-    //         activeIndex={activeIndex}
-    //         onTabChange={this.handleTabChange}
-    //       />
-    //     </div>
-    //   );
-    // }
-
-    handleTabChange(e, {activeIndex}) {
-        localStore.activeIndex = activeIndex;
-    }
-
-    render() {
-        const {activeIndex} = localStore;
-
-        return (
-            <MainContent>
-              <Tab style={ { width: "100%", height: "100%" } } panes={ panes } activeIndex={ activeIndex } onTabChange={ this.handleTabChange } />
-            </MainContent>
-            );
-    }
+    return (
+      <MainContent>
+        <Tab style={ { width: "100%", height: "100%" } } panes={ panes } activeIndex={ activeIndex } onTabChange={ this.handleTabChange } />
+      </MainContent>
+      );
+  }
 }
 
 export default view(Rotation);
 
-/*
-
-import React from 'react'
-import { Tab } from 'semantic-ui-react'
-
-const panes = [
-  { menuItem: 'Tab 1', pane: 'Tab 1 Content' },
-  { menuItem: 'Tab 2', pane: 'Tab 2 Content' },
-  { menuItem: 'Tab 3', pane: 'Tab 3 Content' },
-]
-
-const TabExampleBasicAll = () => <Tab panes={panes} renderActiveOnly={false} />
-
-export default TabExampleBasicAll
-
-
-
-
-
-*/
 
 const DataWindow1 = styled.div`
   display: grid;
@@ -128,12 +83,16 @@ const DataWindow1 = styled.div`
 const DataWindow2 = styled.div`
   min-height: 600px;
   background-color: white;
+  overflow: scroll;
+  padding: 5px;
+  padding-top: 15px;
+  padding-left: 15px;
+  width: calc(100vw - 203px);
+  box-sizing: border-box;
+  max-height: calc(100vh - 102px);
+  overflow: auto;
 `;
 
-const DataWindow3 = styled.div`
-  min-height: 600px;
-  background-color: white;
-`;
 
 const fadeIn = keyframes`
   from {
@@ -160,23 +119,19 @@ const MainContent = styled.div`
   margin-left: 20px;
   margin-right: 20px;
 
-  /* display: grid;
-  grid-template-columns: 600px 1fr;
-  grid-template-rows: 250px 125px 125px 1fr; */
-  /* grid-template-areas:
-    "row1 row1 row1 row1"
-    "titleRow titleRow titleRow titleRow"
-    "weblinkRow weblinkRow weblinkRow weblinkRow"
-    "linkboxRow1 linkboxRow1 linkboxRow1 linkboxRow1"
-    "linkboxRow2 linkboxRow2 linkboxRow2 linkboxRow2"; */
-  justify-items: center;
-  align-items: center;
-  background-color: white;
   visibility: ${props => (props.view ? "hidden" : "visible")};
   animation: ${props => (props.view ? fadeOut : fadeIn)} 0.5s linear;
   transition: visibility 0.5s linear;
-
-  width: calc(100vw - 155px);
+  
+  font-family: Helvetica, sans-serif;
+  font-size: 18px;
+  background-color: white;
+  
+  overflow: scroll;
+  padding: 5px;
+  padding-top: 15px;
+  padding-left: 15px;
+  width: calc(100vw - 153px);
   box-sizing: border-box;
   max-height: calc(100vh - 22px);
   overflow: auto;

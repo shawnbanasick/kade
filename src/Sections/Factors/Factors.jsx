@@ -53,15 +53,18 @@ const MainContent = styled.div`
     "weblinkRow weblinkRow weblinkRow weblinkRow"
     "linkboxRow1 linkboxRow1 linkboxRow1 linkboxRow1"
     "linkboxRow2 linkboxRow2 linkboxRow2 linkboxRow2";
-  justify-items: center;
-  align-items: center;
-  background-color: white;
+    overflow: scroll;
+  padding: 5px;
+  padding-top: 15px;
+  padding-left: 15px;
+  padding-right: 15px;
   visibility: ${props => (props.view ? "hidden" : "visible")};
   animation: ${props => (props.view ? fadeOut : fadeIn)} 0.5s linear;
   transition: visibility 0.5s linear;
-  font-family: Helvetica;
-  margin-left: 20px;
+
   font-family: Helvetica, sans-serif;
+  font-size: 18px;
+  background-color: white;
 
   width: calc(100vw - 153px);
   box-sizing: border-box;

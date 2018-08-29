@@ -18,7 +18,7 @@ class CentroidTable extends Component {
 
   render() {
     const numFacsForTableWidth = store.getState("numFacsForTableWidth");
-    let widthVal = 80 + 202 + 80 * numFacsForTableWidth;
+    let widthVal = 80 + 190 + 90 * numFacsForTableWidth;
     // if (widthVal > window.innerWidth - 100) {
     //   widthVal = window.innerWidth - 100;
     // }

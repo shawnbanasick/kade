@@ -18,7 +18,10 @@ function getWidthHeight() {
   return widthHeight;
 }
 
-const localStore = store({ width: getWidthHeight(), height: getWidthHeight() });
+const localStore = store({
+  width: getWidthHeight(),
+  height: getWidthHeight()
+});
 
 window.addEventListener("resize", () => {
   const size = getWidthHeight();
@@ -27,7 +30,7 @@ window.addEventListener("resize", () => {
 });
 
 const scatterPlotStyles = {
-  padding: 50,
+  padding: 30,
   marginBottom: 10
 };
 
@@ -37,7 +40,7 @@ const degreesDivStyles = {
   display: "flex",
   flexDirection: "row",
   alignItems: "flex-end",
-  marginTop: 20,
+  marginTop: 5,
   marginBottom: 20,
   fontSize: ".9em"
 };
@@ -60,65 +63,42 @@ class ScatterPlotAndTableTransitionContainer extends React.Component {
     if (showScatterPlotTableDiv) {
       return (
         <div>
-          <div id="degreesDiv" style={degreesDivStyles}>
-            <div style={{ display: "flex" }}>
-              <span
-                style={{
-                  marginRight: 5,
-                  fontSize: "22px",
-                  marginBottom: 5,
-                  marginTop: "auto"
-                }}
-              >
-                Rotate axes
-              </span>
-              <div style={{ marginTop: "auto" }}>
+          <div id="degreesDiv" style={ degreesDivStyles }>
+            <div style={ { display: "flex" } }>
+              <span style={ { marginRight: 5, fontSize: "22px", marginBottom: 5, marginTop: "auto" } }>
+                                        Rotate axes
+                                      </span>
+              <div style={ { marginTop: "auto" } }>
                 <RotationButtons />
               </div>
-              <span
-                style={{
-                  marginLeft: 5,
-                  marginRight: 5,
-                  marginBottom: 5,
-                  marginTop: "auto",
-                  fontSize: ".9em"
-                }}
-              >
-                {" - "}
-              </span>
-              <div style={{ marginTop: "auto" }}>
-                <ClockwiseButtons baselineData={this.props.baselineData} />
+              <span style={ { marginLeft: 5, marginRight: 5, marginBottom: 5, marginTop: "auto", fontSize: ".9em" } }>
+                                        { " - " }
+                                      </span>
+              <div style={ { marginTop: "auto" } }>
+                <ClockwiseButtons baselineData={ this.props.baselineData } />
               </div>
               <DegreesText>
-                {" "}
-                <p>{degreesText}</p>
+                { " " }
+                <p>
+                  { degreesText }
+                </p>
               </DegreesText>
-              <div style={{ marginTop: "auto" }}>
+              <div style={ { marginTop: "auto" } }>
                 <SaveRotationButton />
               </div>
             </div>
           </div>
-          <div id="scatterPlotDiv" style={plotAndChartStyles}>
-            <div style={{ width: leftContWidth }}>
-              <ScatterPlot
-                data={data}
-                width={localStore.width}
-                height={localStore.height}
-                {...this.props}
-                {...scatterPlotStyles}
-              />
+          <div id="scatterPlotDiv" style={ plotAndChartStyles }>
+            <div style={ { width: leftContWidth } }>
               <ParticipantPopUp />
+              <ScatterPlot data={ data } width={ localStore.width } height={ localStore.height } {...this.props} {...scatterPlotStyles} />
             </div>
-            <div id="rotFactorsTableDiv" style={{ width: 518 }}>
-              <RotationTable
-                colDefs={colDefs}
-                maxHeight={localStore.height}
-                rowData={rowData}
-              />
+            <div id="rotFactorsTableDiv" style={ { width: 518 } }>
+              <RotationTable colDefs={ colDefs } maxHeight={ localStore.height } rowData={ rowData } />
             </div>
           </div>
         </div>
-      );
+        );
     }
     return null;
   }

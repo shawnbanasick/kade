@@ -17,7 +17,7 @@ const factorTableDataPrep = (numFactors, factorMatrix) => {
       sort: "asc",
       cellStyle: {
         textAlign: "center"
-        // backgroundColor: "#eee"
+      // backgroundColor: "#eee"
       }
     },
     {
@@ -25,7 +25,7 @@ const factorTableDataPrep = (numFactors, factorMatrix) => {
       field: "respondent",
       pinned: true,
       editable: false,
-      width: 200,
+      width: 180,
       cellStyle: {
         textAlign: "center"
       }
@@ -41,7 +41,7 @@ const factorTableDataPrep = (numFactors, factorMatrix) => {
       field: `factor${  facNumber}`,
       pinned: false,
       editable: false,
-      width: 80,
+      width: 90,
       cellStyle: {
         textAlign: "center"
       }
@@ -55,7 +55,8 @@ const factorTableDataPrep = (numFactors, factorMatrix) => {
     const tempArray = [];
     const responNum = j + 1;
     const tempObj = {};
-    let tempVar, facNum;
+    let tempVar,
+      facNum;
     tempObj.resNum = responNum;
     tempObj.respondent = respondentNames[j];
     tempArray.push(responNum, respondentNames[j]);
