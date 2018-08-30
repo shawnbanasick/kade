@@ -1,13 +1,9 @@
 import React from "react";
-import { Button } from "semantic-ui-react";
+import styled from "styled-components";
 import { view } from "react-easy-state";
+import { Button } from "semantic-ui-react";
 import store from "../../../store";
 import pcaDispatch from "../PcaLogic/pcaDispatch";
-
-const style = {
-  marginLeft: 230
-// marginTop: 12
-};
 
 class PCAButton extends React.Component {
   handleClick() {
@@ -31,12 +27,40 @@ class PCAButton extends React.Component {
     const pcaButtonText = store.getState("pcaButtonText");
     return (
       <div>
-        <Button id="extractPrinCompButton" size={ "small" } toggle active={ isActive } loading={ isCalculating } disabled={ isDisabled } onClick={ this.handleClick }
-          style={ style }>
-          { pcaButtonText }
-        </Button>
+        <StyledWrapper>
+          <Button
+            id="extractPrinCompButton"
+            className="wrapper1"
+            size={"small"}
+            toggle
+            active={isActive}
+            loading={isCalculating}
+            disabled={isDisabled}
+            onClick={this.handleClick}
+          >
+            {pcaButtonText}
+          </Button>
+        </StyledWrapper>
       </div>
-      );
+    );
   }
 }
 export default view(PCAButton);
+
+const StyledWrapper = styled.div`
+  .wrapper1 {
+    border: 1px solid black;
+    box-shadow: 0 2px 2px 0 black;
+
+    &:hover {
+      border: 1px solid black;
+      box-shadow: 0 2px 2px 0 black;
+    }
+
+    &:active {
+      box-shadow: 0 0 1px 0 black inset;
+      margin-left: 3px;
+      margin-top: 3px;
+    }
+  }
+`;

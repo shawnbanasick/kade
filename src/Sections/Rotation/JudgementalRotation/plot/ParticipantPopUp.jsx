@@ -3,7 +3,6 @@ import { view } from "react-easy-state";
 import styled from "styled-components";
 import store from "../../../../store";
 
-
 const styles = {
   height: 150,
   color: "white",
@@ -25,28 +24,24 @@ class ParticipantPopUp extends React.Component {
     }
     return (
       <div>
-        { participantDataObject ? (
+        {participantDataObject ? (
           <PopupDiv>
-            <div>
-              { respondent }
-            </div>
-            <div>
-              { factor1Value },
-            </div>
-            <div>
-              { factor2Value }
-            </div>
+            <div>{respondent}</div>
+            <div>{factor1Value},</div>
+            <div>{factor2Value}</div>
           </PopupDiv>
-          ) : <PopupDiv>Hover for participant data</PopupDiv> }
+        ) : (
+          <PopupDiv>Hover to view participant data</PopupDiv>
+        )}
       </div>
-      );
+    );
   }
 }
 
 export default view(ParticipantPopUp);
 
 const PopupDiv = styled.div`
-  display:flex;
+  display: flex;
   justify-content: space-around;
   width: 250px;
   color: whitesmoke;

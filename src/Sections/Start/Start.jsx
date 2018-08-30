@@ -1,14 +1,43 @@
 import React, { Component } from "react";
-import { view } from "react-easy-state";
+import { view, store } from "react-easy-state";
 import styled, { keyframes } from "styled-components";
 
 function handleClick() {}
 
+const localStore = store({ width: 0, height: 0 });
+
+function getWidth() {
+  const w = Math.max(
+    document.documentElement.clientWidth,
+    window.innerWidth || 0
+  );
+  localStore.width = w;
+  return w;
+}
+
+function getHeight() {
+  const h = Math.max(
+    document.documentElement.clientHeight,
+    window.innerHeight || 0
+  );
+  localStore.height = h;
+  return h;
+}
+
+window.addEventListener("resize", () => {
+  getWidth();
+  getHeight();
+});
+
 class Start extends Component {
   render() {
+    getWidth();
+    getHeight();
+    const width = localStore.width;
+    const height = localStore.height;
     return (
       <MainContent>
-        <LanguageSelection>Language</LanguageSelection>
+        <LanguageSelection>{`${width} x ${height}`}</LanguageSelection>
         <TitleDiv>KADE</TitleDiv>
         <SubTitleDiv>
           <HighlightLetter>K</HighlightLetter>
