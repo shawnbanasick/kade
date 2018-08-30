@@ -1,28 +1,35 @@
-import React, { Component } from "react";
+import styled from "styled-components";
 import { view } from "react-easy-state";
+import React, { Component } from "react";
 import TimestampSelectionSwitch from "../FactorViz/TimestampSelectionSwitch";
-
-// const styles = {
-//   fontSize: 32
-// };
 
 class RemoveTimestampOption extends Component {
   render() {
     return (
-      <div>
+      <SwitchDivContainer>
         <div className="switchDiv">
-          <span className="switchText" style={{ fontSize: 26 }}>
+          <div
+            className="switchText"
+            style={{ fontSize: 26, marginBottom: "5px" }}
+          >
             Include timestamp in download name?
-          </span>
+          </div>
           <TimestampSelectionSwitch
             name="shouldIncludeTimestamp"
             value="shouldIncludeTimestamp"
-            toggle={true}
+            toggle
           />
         </div>
-      </div>
+      </SwitchDivContainer>
     );
   }
 }
 
 export default view(RemoveTimestampOption);
+
+const SwitchDivContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-items: center;
+  border: 2px solid red;
+`;

@@ -30,12 +30,10 @@ function getWidth(numFacsForTableWidth) {
 
   if (x < widthVal) {
     x += "px";
-    console.log(JSON.stringify(x));
 
     return x;
   }
   widthVal += "px";
-  console.log(JSON.stringify(widthVal));
 
   return widthVal;
 }

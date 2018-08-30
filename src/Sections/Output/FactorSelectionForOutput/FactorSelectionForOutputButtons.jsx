@@ -1,5 +1,6 @@
 import React from "react";
 import includes from "lodash/includes";
+import styled from "styled-components";
 import { view } from "react-easy-state";
 import { Button, Transition } from "semantic-ui-react";
 import store from "../../../store";
@@ -61,7 +62,7 @@ class FactorSelectionForOutputButtons extends React.Component {
 
       store.setState(tempObj);
 
-    // clear all
+      // clear all
     } else if (factor === "clearAllFacs") {
       const tempObj2 = {};
       for (let i = 0; i < btnId.length; i++) {
@@ -129,27 +130,68 @@ class FactorSelectionForOutputButtons extends React.Component {
     // if (showOutputFactorSelection) {
 
     return (
-      <Transition visible={ showOutputFactorSelection } animation="fade" duration={ 1000 }>
-        <div>
-          <span style={ { marginRight: 5, fontSize: 16 } }>Select Output Factors:</span>
-          { btnId.map((item, index) => (
-              <Button key={ `f${item}` } toggle active={ store.getState(`highlightfactor${item}`) } disabled={ areDisabled } onClick={ this.handleOnclick.bind(this) } id={ `factor ${item}` }>
-                { item }
-              </Button>
-            )) }
-          <Button id="selectAllFacs" disabled={ areDisabled } onClick={ this.handleOnclick }>
+      <Transition
+        visible={showOutputFactorSelection}
+        animation="fade"
+        duration={1000}
+      >
+        <StyledWrapper>
+          <span style={{ marginRight: 5, fontSize: 16 }}>Select Factors:</span>
+          {btnId.map((item, index) => (
+            <Button
+              key={`f${item}`}
+              toggle
+              className="wrapper1"
+              active={store.getState(`highlightfactor${item}`)}
+              disabled={areDisabled}
+              onClick={this.handleOnclick.bind(this)}
+              id={`factor ${item}`}
+            >
+              {item}
+            </Button>
+          ))}
+          <Button
+            id="selectAllFacs"
+            className="wrapper1"
+            disabled={areDisabled}
+            onClick={this.handleOnclick}
+          >
             All
           </Button>
-          <Button id="clearAllFacs" onClick={ this.handleOnclick }>
+          <Button
+            id="clearAllFacs"
+            className="wrapper1"
+            onClick={this.handleOnclick}
+          >
             Clear
           </Button>
-          <Button id="startOutput" onClick={ this.handleSubmit }>
+          <Button
+            id="startOutput"
+            className="wrapper1"
+            onClick={this.handleSubmit}
+          >
             Submit
           </Button>
-        </div>
+        </StyledWrapper>
       </Transition>
-      );
+    );
   }
 }
 
 export default view(FactorSelectionForOutputButtons);
+
+const StyledWrapper = styled.div`
+  .wrapper1 {
+    border: 1px solid black;
+    box-shadow: 0 2px 2px 0 black;
+
+    &:hover {
+      border: 1px solid black;
+      box-shadow: 0 2px 2px 0 black;
+    }
+
+    &:active {
+      box-shadow: 0 0 1px 0 black inset;
+    }
+  }
+`;
