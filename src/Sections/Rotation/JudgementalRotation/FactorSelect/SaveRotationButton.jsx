@@ -1,6 +1,7 @@
 import React from "react";
 import { Button } from "semantic-ui-react";
 import { view } from "react-easy-state";
+import styled from "styled-components";
 import store from "../../../../store";
 import transposeMatrix from "../../../../Utils/transposeMatrix";
 import calcuateSigCriterionValues from "../../varimaxLogic/2calculateSigCriterionValues";
@@ -93,26 +94,40 @@ class SaveRotationButton extends React.Component {
     const isDisabled = store.getState("bipolarDisabled");
     if (rotationDegrees !== 0) {
       return (
-        <div>
-          <Button
-            id="saveRotationButtonOrange"
-            onClick={this.saveRotations}
-            disabled={isDisabled}
-            color="orange"
-          >
-            {" "}
-            Save Rotation
+        <StyledWrapper>
+          <Button id="saveRotationButtonOrange" onClick={ this.saveRotations } disabled={ isDisabled } color="orange" className="wrapper1" >
+            { " " } Save Rotation
           </Button>
-        </div>
+        </StyledWrapper>
+        );
+    }
+    return (
+      <StyledWrapper>
+        <Button id="saveRotationButtonGray" className="wrapper1"> Save Rotation</Button>
+      </StyledWrapper>
       );
-    } 
-      return (
-        <div>
-          <Button id="saveRotationButtonGray"> Save Rotation</Button>
-        </div>
-      );
-    
+
   }
 }
 
 export default view(SaveRotationButton);
+
+
+const StyledWrapper = styled.div`
+  .wrapper1 {
+    border: 1px solid black;
+    box-shadow: 0 2px 2px 0 black;
+
+    &:hover {
+      border: 1px solid black;
+      box-shadow: 0 2px 2px 0 black;
+    }
+
+    &:active {
+      box-shadow: 0 0 1px 0 black inset;
+      margin-left: 3px;
+      margin-top: 3px;
+    }
+  }
+`;
+

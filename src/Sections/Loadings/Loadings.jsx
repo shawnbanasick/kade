@@ -47,17 +47,22 @@ const MainContent = styled.div`
     "weblinkRow weblinkRow weblinkRow weblinkRow"
     "linkboxRow1 linkboxRow1 linkboxRow1 linkboxRow1"
     "linkboxRow2 linkboxRow2 linkboxRow2 linkboxRow2"; */
-  margin-left: 20px;  
-  justify-items: center;
-  align-items: center;
-  background-color: white;
+  overflow: scroll;
+  padding: 5px;
+  padding-top: 15px;
+  padding-left: 15px;
+  padding-right: 15px;
   visibility: ${props => (props.view ? "hidden" : "visible")};
   animation: ${props => (props.view ? fadeOut : fadeIn)} 0.5s linear;
   transition: visibility 0.5s linear;
 
-  width: calc(100vw - 153px);
-  box-sizing: border-box;
-  min-height: 845px;
-  height: 100vh;
+  font-family: Helvetica, sans-serif;
+  font-size: 18px;
+  background-color: white;
+
+  width: calc(100vw - 150px);
+  height: calc(100vh - 22px);
   overflow: auto;
+  border: 2px solid red;
 `;
+

@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Checkbox } from "semantic-ui-react";
+import styled from "styled-components";
 import { view, store } from "react-easy-state";
 import state from "../../../store";
 
@@ -23,21 +24,17 @@ class MajorityCommonVarianceCheckbox extends Component {
   render() {
     const isChecked = localStore.checked;
     return (
-      <div className="commonVarianceDiv">
+      <CommonVarianceDiv>
         <Checkbox label="Require Majority of Common Variance" onChange={ this.toggle } checked={ isChecked } />
-      </div>
+      </CommonVarianceDiv>
       );
   }
 }
 
 export default view(MajorityCommonVarianceCheckbox);
 
-/*
-label {
-    font-size: 21px;
-}
+const CommonVarianceDiv = styled.div`
+font-size: 21px;
+margin-left: 55px;
+`;
 
-.commonVarianceDiv {
-    margin-left: 55px;
-}
-*/

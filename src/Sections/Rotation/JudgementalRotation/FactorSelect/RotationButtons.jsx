@@ -1,6 +1,7 @@
 import React from "react";
 import { view } from "react-easy-state";
 import { Button } from "semantic-ui-react";
+import styled from "styled-components";
 import store from "../../../../store";
 
 class RotationButtons extends React.Component {
@@ -51,48 +52,41 @@ class RotationButtons extends React.Component {
     );
     if (shouldDisplayDegreeButtonButtons) {
       return (
-        <div>
-          <Button
-            id={"Button1Degree"}
-            toggle
-            active={store.getState("highlightDegreeButton1")}
-            onClick={this.handleOnclick.bind(this)}
-            key={"f1"}
-          >
-            {`${1  }\u00B0`}
+        <StyledWrapper>
+          <Button id={ "Button1Degree" } className="wrapper1" toggle active={ store.getState("highlightDegreeButton1") } onClick={ this.handleOnclick.bind(this) } key={ "f1" }>
+            { `${1  }\u00B0` }
           </Button>
-          <Button
-            id={"Button5Degrees"}
-            toggle
-            active={store.getState("highlightDegreeButton3")}
-            onClick={this.handleOnclick.bind(this)}
-            key={"f3"}
-          >
-            {`${5  }\u00B0`}
+          <Button id={ "Button5Degrees" } className="wrapper1" toggle active={ store.getState("highlightDegreeButton3") } onClick={ this.handleOnclick.bind(this) } key={ "f3" }>
+            { `${5  }\u00B0` }
           </Button>
-          <Button
-            id={"Button10Degrees"}
-            toggle
-            active={store.getState("highlightDegreeButton4")}
-            onClick={this.handleOnclick.bind(this)}
-            key={"f4"}
-          >
-            {`${10  }\u00B0`}
+          <Button id={ "Button10Degrees" } className="wrapper1" toggle active={ store.getState("highlightDegreeButton4") } onClick={ this.handleOnclick.bind(this) } key={ "f4" }>
+            { `${10  }\u00B0` }
           </Button>
-          <Button
-            id={"Button90Degrees"}
-            toggle
-            active={store.getState("highlightDegreeButton5")}
-            onClick={this.handleOnclick.bind(this)}
-            key={"f5"}
-          >
-            {`${90  }\u00B0`}
+          <Button id={ "Button90Degrees" } className="wrapper1" toggle active={ store.getState("highlightDegreeButton5") } onClick={ this.handleOnclick.bind(this) } key={ "f5" }>
+            { `${90  }\u00B0` }
           </Button>
-        </div>
-      );
+        </StyledWrapper>
+        );
     }
     return null;
   }
 }
 
 export default view(RotationButtons);
+
+
+const StyledWrapper = styled.div`
+  .wrapper1 {
+    border: 1px solid black;
+    box-shadow: 0 2px 2px 0 black;
+
+    &:hover {
+      border: 1px solid black;
+      box-shadow: 0 2px 2px 0 black;
+    }
+
+    &:active {
+      box-shadow: 0 0 1px 0 black inset;
+    }
+  }
+`;

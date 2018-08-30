@@ -24,6 +24,7 @@ class InvertFactorButtonModal extends Component {
         trigger={
           <Button
             id="invertFactorsButton"
+            className="wrapper1"
             style={{ marginRight: "250px" }} // loading={isLoadingFactorsKept} //
             disabled={isDisabled}
             onClick={this.handleOpen}

@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Button } from "semantic-ui-react";
 import { AgGridReact } from "ag-grid-react";
 import { view, store } from "react-easy-state";
+import styled from "styled-components";
 import state from "../../../store";
 import autoFlagFactors from "../loadingsLogic/autoFlagFactors";
 import InvertFactorButton from "./InvertFactorButton";
@@ -23,20 +24,25 @@ const filterArray = item => {
 };
 
 function getWidth(numFacsForTableWidth) {
-  let widthVal = 302 + 145 * numFacsForTableWidth;
-  let x = window.innerWidth - 50 - 152;
+  let widthVal = 202 + 110 * numFacsForTableWidth;
+  // let x = window.innerWidth - 50 - 152;
+  let x = window.innerWidth - 202;
 
   if (x < widthVal) {
     x += "px";
+    console.log(JSON.stringify(x));
+
     return x;
   }
   widthVal += "px";
+  console.log(JSON.stringify(widthVal));
+
   return widthVal;
 }
 
 function getHeight(numQsorts) {
   let heightVal = 40 + 25 * numQsorts;
-  let y = window.innerHeight - 160 - 250;
+  let y = window.innerHeight - 390;
   if (y < heightVal) {
     y += "px";
     return y;
@@ -212,9 +218,10 @@ class LoadingsTable extends Component {
         <div style={{ display: "flex", marginTop: 25, paddingBottom: "4px" }}>
           <div style={{ width: 300 }}>
             <span style={{ width: "100%" }}>Row Highlighting:</span>
-            <div style={{ width: "100%" }}>
+            <StyledWrapper style={{ width: "100%" }}>
               <Button
                 id="noHighlightingButton"
+                className="wrapper1"
                 loading={isLoadingNoHighlighting}
                 disabled={isDisabled}
                 onClick={this.noRowHighlighting}
@@ -223,6 +230,7 @@ class LoadingsTable extends Component {
               </Button>
               <Button
                 id="colorsHighlightingButton"
+                className="wrapper1"
                 loading={isLoadingColorsHighlighting}
                 disabled={isDisabled}
                 onClick={this.highlightRowsWithColors}
@@ -231,6 +239,7 @@ class LoadingsTable extends Component {
               </Button>
               <Button
                 id="graysHighlightingButton"
+                className="wrapper1"
                 onClick={this.highlightRowsWithGrays}
                 disabled={isDisabled}
                 loading={isLoadingGrayHighlighting}
@@ -238,15 +247,16 @@ class LoadingsTable extends Component {
               >
                 Gray
               </Button>
-            </div>
+            </StyledWrapper>
           </div>
           <div style={{ width: 700 }}>
-            <div style={{ width: "100%" }}>
+            <StyledWrapper style={{ width: "100%" }}>
               <span style={{ marginRight: 25 }}>Flagging:</span>
               {/* <Button>All</Button>
             <Button>None</Button> */}
               <Button
                 id="autoflagButton"
+                className="wrapper1"
                 loading={isLoadingAutoflag}
                 onClick={autoFlagFactors}
                 disabled={isDisabled}
@@ -255,7 +265,7 @@ class LoadingsTable extends Component {
               </Button>
               <span style={{ marginLeft: 5, marginRight: 10 }}>at</span>
               <SigLevelDropdown style={{ marginLeft: 5 }} />
-            </div>
+            </StyledWrapper>
             <MajorityCommonVarianceCheckbox />
           </div>
         </div>
@@ -283,22 +293,28 @@ class LoadingsTable extends Component {
               onGridReady={this.onGridReady.bind(this)}
             />
           </div>
-          <InvertFactorButton />
-          <Button
-            id="splitFactorsButton"
-            style={{ marginRight: "250px" }} // loading={isLoadingFactorsKept}
-            onClick={this.doSplitFactor}
-          >
-            Split Bipolar Factor
-          </Button>
+          <StyledWrapper>
+            <InvertFactorButton />
+            <Button
+              id="splitFactorsButton"
+              className="wrapper1"
+              style={{ marginRight: "250px" }} // loading={isLoadingFactorsKept}
+              onClick={this.doSplitFactor}
+            >
+              Split Bipolar Factor
+            </Button>
+          </StyledWrapper>
         </div>
-        <Button
-          id="generateOutputButton"
-          style={{ marginTop: "50px" }}
-          onClick={this.generateOutput.bind(this)}
-        >
-          Send Table Data to Output
-        </Button>
+        <StyledWrapper>
+          <Button
+            id="generateOutputButton"
+            className="instagram wrapper1"
+            style={{ marginTop: "50px" }}
+            onClick={this.generateOutput.bind(this)}
+          >
+            Send Table Data to Output
+          </Button>
+        </StyledWrapper>
         <SplitBipolarFactorModal />
       </div>
     );
@@ -306,6 +322,22 @@ class LoadingsTable extends Component {
 }
 
 export default view(LoadingsTable);
+
+const StyledWrapper = styled.div`
+  .wrapper1 {
+    border: 1px solid black;
+    box-shadow: 0 2px 2px 0 black;
+
+    &:hover {
+      border: 1px solid black;
+      box-shadow: 0 2px 2px 0 black;
+    }
+
+    &:active {
+      box-shadow: 0 0 1px 0 black inset;
+    }
+  }
+`;
 
 /*
 
