@@ -66,14 +66,14 @@ class ScatterPlotAndTableTransitionContainer extends React.Component {
           <div id="degreesDiv" style={ degreesDivStyles }>
             <div style={ { display: "flex" } }>
               <span style={ { marginRight: 5, fontSize: "22px", marginBottom: 5, marginTop: "auto" } }>
-                                        Rotate axes
-                                      </span>
+                                                Rotate axes
+                                              </span>
               <div style={ { marginTop: "auto" } }>
                 <RotationButtons />
               </div>
               <span style={ { marginLeft: 5, marginRight: 5, marginBottom: 5, marginTop: "auto", fontSize: ".9em" } }>
-                                        { " - " }
-                                      </span>
+                                                { " - " }
+                                              </span>
               <div style={ { marginTop: "auto" } }>
                 <ClockwiseButtons baselineData={ this.props.baselineData } />
               </div>
@@ -110,46 +110,8 @@ const DegreesText = styled.div`
   text-align: center;
   height: 60px;
   font-size: 50px;
-  width: 110px;
-  margin-left: 20px;
-  margin-right: 20px;
+  width: 105px;
+  margin-left: 17px;
+  margin-right: 17px;
 `;
 
-/*
-
-function getWidth(numQsorts) {
-  let widthVal = 152 + 80 * numQsorts;
-  let x = window.innerWidth - 40 - 152;
-
-  if (x < widthVal) {
-    x += "px";
-    return x;
-  }
-  widthVal += "px";
-  return widthVal;
-}
-
-function getHeight(numQsorts) {
-  let heightVal = 30 + 25 * numQsorts;
-  let y = window.innerHeight - 120 - 100;
-  if (y < heightVal) {
-    y += "px";
-    return y;
-  }
-  heightVal += "px";
-  return heightVal;
-}
-
-function resetWidthAndHeight() {
-  // this.gridApi.setGridAutoHeight(false);
-  const numQsorts = localStore.numQsorts;
-  const table = document.querySelector("#innerContainer1");
-  table.style.height = getHeight(numQsorts);
-  table.style.width = getWidth(numQsorts);
-}
-
-window.addEventListener("resize", () => {
-  resetWidthAndHeight();
-});
-
-*/

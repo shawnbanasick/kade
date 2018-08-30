@@ -7,11 +7,11 @@ import transposeMatrix from "../../../../Utils/transposeMatrix";
 import store from "../../../../store";
 
 // this.refs.child.parentNode.clientWidth
-const selectButtonStyles = {
-  width: "100",
-  height: 100
-  // border: "2px solid green"
-};
+// const selectButtonStyles = {
+//   width: "100",
+//   height: 100
+//   // border: "2px solid green"
+// };
 
 class ScatterPlotDiv extends React.Component {
   render() {
@@ -21,13 +21,13 @@ class ScatterPlotDiv extends React.Component {
 
     return (
       <JudgeTitleDiv id="outmostDiv">
-        <div id="selectButton" style={selectButtonStyles}>
-          <h1>Select 2 factors to rotate:</h1>
-          <FactorSelectButtons baselineData={baselineData} />
-        </div>
-        <ScatterPlotAndTableTransitionContainer baselineData={baselineData} />
+        <FactorSelectionBar id="selectButton">
+          <SelectLabel>Select factors:</SelectLabel>
+          <FactorSelectButtons baselineData={ baselineData } />
+        </FactorSelectionBar>
+        <ScatterPlotAndTableTransitionContainer baselineData={ baselineData } />
       </JudgeTitleDiv>
-    );
+      );
   }
 }
 
@@ -36,4 +36,17 @@ export default view(ScatterPlotDiv);
 const JudgeTitleDiv = styled.div`
   width: 100%;
   height: 100%;
+`;
+
+const FactorSelectionBar = styled.div`
+  display: flex;
+  align-items: center;
+  justify-items: center;
+  font-size: 20px;
+  height: 50px;
+  width: 755px;
+`;
+
+const SelectLabel = styled.div`
+  margin-right: 3px;
 `;

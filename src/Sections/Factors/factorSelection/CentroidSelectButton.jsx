@@ -14,14 +14,7 @@ const isActive = store.getState("activeCentroidFactorsButton");
 const CentroidSelectButton = () => (
   <div>
     <StyledWrapper>
-      <Button
-        id="centroidSelectButton"
-        className="wrapper1"
-        size={"big"}
-        toggle
-        active={isActive}
-        style={styles}
-      >
+      <Button id="centroidSelectButton" className="wrapper1" size={ "big" } toggle active={ isActive } style={ styles }>
         Centroid Factors
       </Button>
     </StyledWrapper>
@@ -47,3 +40,4 @@ const StyledWrapper = styled.div`
     }
   }
 `;
+

@@ -94,7 +94,7 @@ const rotationTablePrep = function(d3RotChartData, baselineData) {
       field: "factor1Sig",
       pinned: false,
       editable: false,
-      supressSorting: true,
+      suppressSorting: true,
       hide: true,
       width: 0
     },
@@ -103,7 +103,7 @@ const rotationTablePrep = function(d3RotChartData, baselineData) {
       field: "change2",
       pinned: false,
       editable: false,
-      supressSorting: true,
+      suppressSorting: true,
       hide: true,
       width: 0
     }

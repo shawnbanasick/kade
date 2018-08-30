@@ -85,9 +85,9 @@ const DataWindow2 = styled.div`
   background-color: white;
   overflow: scroll;
   padding: 5px;
-  padding-top: 15px;
-  padding-left: 15px;
-  width: calc(100vw - 203px);
+  padding-top: 5px;
+  padding-left: 5px;
+  width: calc(100vw - 208px);
   box-sizing: border-box;
   max-height: calc(100vh - 102px);
   overflow: auto;
@@ -115,9 +115,9 @@ const fadeOut = keyframes`
 `;
 
 const MainContent = styled.div`
-  margin-top: 20px;
-  margin-left: 20px;
-  margin-right: 20px;
+  margin-top: 5px;
+  margin-left: 5px;
+  margin-right: 10px;
 
   visibility: ${props => (props.view ? "hidden" : "visible")};
   animation: ${props => (props.view ? fadeOut : fadeIn)} 0.5s linear;

@@ -2,6 +2,7 @@ import React from "react";
 import includes from "lodash/includes";
 import { Button } from "semantic-ui-react";
 import { view } from "react-easy-state";
+import styled from "styled-components";
 import data from "../plot/data";
 import store from "../../../../store";
 import doD3ChartDataPrep from "../rotationLogic/doD3ChartDataPrep";
@@ -66,7 +67,9 @@ class FactorSelectButtons extends React.Component {
           abFactors.push(parseInt(idValue, 10));
 
           // set new variables - highlighting, abFactors, and userSelectedFactors - to state
-          const newFactorId = `highlightRot${  factor.replace(" ", "")}`;
+          const factor2 = factor.replace(" ", "");
+          // const newFactorId = `highlightRot${  factor2}`;
+          const newFactorId = `highlightRot${  factor2}`;
           const tempObj1 = {};
           tempObj1[newFactorId] = true;
           tempObj1.userSelectedRotFactors = userSelectedRotFactors;
@@ -136,120 +139,92 @@ class FactorSelectButtons extends React.Component {
 
     if (shouldDisplayRotFactorButtons) {
       return (
-        <div style={{ display: "flex" }}>
-          {show1 && (
-            <Button
-              id={"factor 1"}
-              toggle
-              active={store.getState("highlightRotfactor1")}
-              onClick={e => this.handleClick(e, baselineData)}
-              key={"f1"}
-            >
+        <StyledWrapper>
+          { show1 && (
+            <Button id={ "factor 1" } toggle className="wrapper1" active={ store.getState("highlightRotfactor1") } onClick={ e => this.handleClick(e, baselineData) } key={ "f1" }>
               1
             </Button>
-          )}
-          {show2 && (
-            <Button
-              id={"factor 2"}
-              toggle
-              active={store.getState("highlightRotfactor2")}
-              onClick={e => this.handleClick(e, baselineData)}
-              key={"f2"}
-            >
+            ) }
+          { show2 && (
+            <Button id={ "factor 2" } toggle className="wrapper1" active={ store.getState("highlightRotfactor2") } onClick={ e => this.handleClick(e, baselineData) } key={ "f2" }>
               2
             </Button>
-          )}
-          {show3 && (
-            <Button
-              id={"factor 3"}
-              toggle
-              active={store.getState("highlightRotfactor3")}
-              onClick={e => this.handleClick(e, baselineData)}
-              key={"f3"}
-            >
+            ) }
+          { show3 && (
+            <Button id={ "factor 3" } toggle className="wrapper1" active={ store.getState("highlightRotfactor3") } onClick={ e => this.handleClick(e, baselineData) } key={ "f3" }>
               3
             </Button>
-          )}
-          {show4 && (
-            <Button
-              id={"factor 4"}
-              toggle
-              active={store.getState("highlightRotfactor4")}
-              onClick={e => this.handleClick(e, baselineData)}
-              key={"f4"}
-            >
+            ) }
+          { show4 && (
+            <Button id={ "factor 4" } toggle className="wrapper1" active={ store.getState("highlightRotfactor4") } onClick={ e => this.handleClick(e, baselineData) } key={ "f4" }>
               4
             </Button>
-          )}
-          {show5 && (
-            <Button
-              id={"factor 5"}
-              toggle
-              active={store.getState("highlightRotfactor5")}
-              onClick={e => this.handleClick(e, baselineData)}
-              key={"f5"}
-            >
+            ) }
+          { show5 && (
+            <Button id={ "factor 5" } toggle className="wrapper1" active={ store.getState("highlightRotfactor5") } onClick={ e => this.handleClick(e, baselineData) } key={ "f5" }>
               5
             </Button>
-          )}
-          {show6 && (
-            <Button
-              id={"factor 6"}
-              toggle
-              active={store.getState("highlightRotfactor6")}
-              onClick={e => this.handleClick(e, baselineData)}
-              key={"f6"}
-            >
+            ) }
+          { show6 && (
+            <Button id={ "factor 6" } toggle className="wrapper1" active={ store.getState("highlightRotfactor6") } onClick={ e => this.handleClick(e, baselineData) } key={ "f6" }>
               6
             </Button>
-          )}
-          {show7 && (
-            <Button
-              id={"factor 7"}
-              toggle
-              active={store.getState("highlightRotfactor7")}
-              onClick={e => this.handleClick(e, baselineData)}
-              key={"f7"}
-            >
+            ) }
+          { show7 && (
+            <Button id={ "factor 7" } toggle className="wrapper1" active={ store.getState("highlightRotfactor7") } onClick={ e => this.handleClick(e, baselineData) } key={ "f7" }>
               7
             </Button>
-          )}
-          {show8 && (
-            <Button
-              id={"factor 8"}
-              toggle
-              active={store.getState("highlightRotfactor8")}
-              onClick={e => this.handleClick(e, baselineData)} // e => this.handleClick(e, baselineData)
-              key={"f8"}
-            >
-              8
-            </Button>
-          )}
-          <Button id="clearAllRotFacs" onClick={this.handleClick}>
+            ) }
+          { show8 && ( 
+                                            <Button
+                                            id={ "factor 8" }
+                                            className="wrapper1"
+                                            toggle
+                                            active={ store.getState("highlightRotfactor8") }
+                                            onClick={ e => this.handleClick(e, baselineData) } // e => this.handleClick(e, baselineData)
+                                            key={ "f8" }
+                                        >
+                                            8
+                                        </Button>
+                                        ) }
+          <Button className="wrapper1" id="clearAllRotFacs" onClick={ this.handleClick }>
             Clear
           </Button>
-          <Button id="startRotationDisplay" onClick={this.handleSubmit}>
-            Display Selected Factors
+          <Button className="wrapper1" id="startRotationDisplay" onClick={ this.handleSubmit }>
+            Display
           </Button>
-          {showRotFactorSelectWarning && (
-            <div style={{ width: 160, backgroundColor: "red" }}>
-              <span
-                style={{
-                  color: "white",
-                  marginRight: 5,
-                  marginLeft: 5,
-                  marginTop: 10
-                }}
-              >
-                Select 2 factors
-              </span>
+          { showRotFactorSelectWarning && (
+            <div style={ { width: 160, backgroundColor: "red" } }>
+              <span style={ { color: "white", marginRight: 5, marginLeft: 5, marginTop: 10 } }>
+                                                Select 2 factor
+                                                </span>
             </div>
-          )}
-        </div>
-      );
+            ) }
+        </StyledWrapper>
+        );
     }
     return null;
   }
 }
 
 export default view(FactorSelectButtons);
+
+
+const StyledWrapper = styled.div`
+  .wrapper1 {
+    border: 1px solid black;
+    box-shadow: 0 2px 2px 0 black;
+
+    &:hover {
+      border: 1px solid black;
+      box-shadow: 0 2px 2px 0 black;
+    }
+
+    &:active {
+      box-shadow: 0 0 1px 0 black inset;
+      margin-left: 3px;
+      margin-top: 3px;
+    }
+  }
+`;
+

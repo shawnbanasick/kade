@@ -15,8 +15,7 @@ class FactorSelectButtonModal extends Component {
     if (isNaN(numFactorsKept)) {
       localStore.modalOpen = true;
     } else {
-      let projectHistoryText =
-        "Selected " + numFactorsKept + " factors for rotation";
+      let projectHistoryText = "Selected " + numFactorsKept + " factors for rotation";
       let projectHistoryArray = state.getState("projectHistoryArray");
       // a shortcut to remove history when selecting a second time
       projectHistoryArray.length = 2;
@@ -51,52 +50,31 @@ class FactorSelectButtonModal extends Component {
   handleClose = () => (localStore.modalOpen = false);
 
   render() {
-    const { active } = localStore.modalOpen;
+    const {active} = localStore.modalOpen;
     let isFacSelectDisabled = state.getState("isFacSelectDisabled");
     let isLoadingFactorsKept = state.getState("isLoadingFactorsKept");
     return (
       <FactorSelectModalDiv>
-        <Modal
-          trigger={
-            <StyledWrapper>
-              <Button
-                id="factorsKeptSubmitButton"
-                className="wrapper1"
-                size={"Medium"}
-                toggle
-                active={active}
-                disabled={isFacSelectDisabled}
-                loading={isLoadingFactorsKept}
-                onClick={this.handleOpen}
-              >
-                Submit
-              </Button>
-            </StyledWrapper>
-          }
-          open={localStore.modalOpen}
-          onClose={this.handleClose}
-          basic
-          size="small"
-        >
+        <Modal trigger={ <StyledWrapper>
+                           <Button id="factorsKeptSubmitButton" className="wrapper1" size={ "medium" } toggle active={ active } disabled={ isFacSelectDisabled } loading={ isLoadingFactorsKept }
+                             onClick={ this.handleOpen }>
+                             Submit
+                           </Button>
+                         </StyledWrapper> } open={ localStore.modalOpen } onClose={ this.handleClose } basic size="small">
           <Header icon="browser" content="Factor Rotation" />
           <Modal.Content>
-            <span style={{ fontSize: 30 }}>
-              Please select the number of factors to keep for rotation.
-            </span>
+            <span style={ { fontSize: 30 } }>
+                    Please select the number of factors to keep for rotation.
+                  </span>
           </Modal.Content>
           <Modal.Actions>
-            <Button
-              id="FactorSelectModalGotItButton"
-              color="green"
-              onClick={this.handleClose}
-              inverted
-            >
+            <Button id="FactorSelectModalGotItButton" color="green" onClick={ this.handleClose } inverted>
               <Icon name="checkmark" /> Got it
             </Button>
           </Modal.Actions>
         </Modal>
       </FactorSelectModalDiv>
-    );
+      );
   }
 }
 
