@@ -20,7 +20,7 @@ class DistinguishingPanel extends Component {
         <hr style={{ width: 900, margin: 0 }} />
         <div className="switchDiv">
           <span className="switchText">
-            15. Add custom name to image downloads?
+            14. Add custom name to image downloads?
           </span>
           <UserSelectionSwitch
             name="willAddCustomNameToDownload"

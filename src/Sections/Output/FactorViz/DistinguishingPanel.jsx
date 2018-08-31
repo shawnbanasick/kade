@@ -63,18 +63,6 @@ class DistinguishingPanel extends Component {
             toggle={true}
           />
         </div>
-        <div className="switchDiv">
-          <span className="switchText">
-            14. Display consensus statement indicator color?
-          </span>
-          <UserSelectionSwitch
-            name="willDisplayConsensusStates"
-            value="willDisplayConsensusStates"
-            toggle={false}
-          />
-          <span className="switchText">Color: </span>
-          <ColorSelector id="consensusIndicator" />
-        </div>
       </div>
     );
   }

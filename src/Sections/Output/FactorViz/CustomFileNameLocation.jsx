@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Form, Radio } from "semantic-ui-react";
 import { view, store } from "react-easy-state";
+import styled from "styled-components";
 import state from "../../../store";
 // import "./CustomFileNameLocation.css";
 
@@ -26,6 +27,7 @@ class CustomFileNameLocation extends Component {
 
   render() {
     return (
+      <HolderDiv>
       <Form style={ styles }>
         <Form.Field>Custom name position:</Form.Field>
         <Form.Field>
@@ -38,6 +40,7 @@ class CustomFileNameLocation extends Component {
           <Radio style={ { marginLeft: 16, fontSize: 20 } } label="Replace" name="radioGroup" value="replace" checked={ localStore.customFileNameLocation === "replace" } onChange={ this.handleChange } />
         </Form.Field>
       </Form>
+      </HolderDiv>
       );
   }
 }
@@ -49,3 +52,9 @@ export default view(CustomFileNameLocation)
     padding-left: 18px !important;
 }
 */
+
+const HolderDiv = styled.div`
+  label {
+    padding-left: 18px !important;
+  }
+`;

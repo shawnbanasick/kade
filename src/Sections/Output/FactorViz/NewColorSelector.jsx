@@ -1,33 +1,56 @@
 import React from "react";
 import reactCSS from "reactcss";
 import { SketchPicker } from "react-color";
-import { view, store } from "react-easy-state";
-import state from "../../../store";
+import store from "../../../store";
+import { clipboard } from 'electron'
+import { getColorHexRGB } from 'electron-color-picker'
+ 
+const getColor = async () => {
+  // color may be `#0099ff` or `` (pick cancelled)
+  const color = await getColorHexRGB().catch((error) => {
+    console.warn(`[ERROR] getColor`, error)
+    return ''
+  })
+ 
+  console.log(`getColor: ${color}`)
+  color && clipboard.writeText(color)
+}
 
-const localStore = store({displayColorPicker: false, color: {
-    r: "232",
-    g: "229",
-    b: "229",
-    a: ".5"
-}})
+
+
+
 
 class ColorSelector extends React.Component {
-    
+    state = {
+        displayColorPicker: false,
+        color: {
+            r: "232",
+            g: "229",
+            b: "229",
+            a: ".5"
+        }
+    };
 
     handleClick = () => {
-        localStore.displayColorPicker = !localStore.displayColorPicker
+        this.setState({
+            displayColorPicker: !this.state.displayColorPicker
+        });
     };
 
     handleClose = () => {
-        localStore.displayColorPicker = false;
+        this.setState({
+            displayColorPicker: false
+        });
     };
 
     handleChange = color => {
         let tempObj = {};
         tempObj[this.props.id] = color.rgb;
-        state.setState(tempObj);
-        localStore.color = color.rgb;
-        state.setState({
+        store.setState(tempObj);
+        this.setState({
+            color: color.rgb
+        });
+        store.setState({
             consensusIndicator: color.rgb
         });
     };
@@ -39,9 +62,9 @@ class ColorSelector extends React.Component {
                     width: "36px",
                     height: "14px",
                     borderRadius: "2px",
-                    background: `rgba(${localStore.color.r}, ${localStore.color.g}, ${
-            localStore.color.b
-          }, ${localStore.color.a})`
+                    background: `rgba(${this.state.color.r}, ${this.state.color.g}, ${
+            this.state.color.b
+          }, ${this.state.color.a})`
                 },
                 swatch: {
                     padding: "5px",
@@ -67,13 +90,13 @@ class ColorSelector extends React.Component {
 
         return (
             <div style={ { marginTop: 15 } }>
-              <div style={ styles.swatch } onClick={ this.handleClick }>
+              <div style={ styles.swatch } onClick={ getColor }>
                 <div style={ styles.color } />
               </div>
-              { localStore.displayColorPicker ? (
+              { this.state.displayColorPicker ? (
                 <div style={ styles.popover }>
                   <div style={ styles.cover } onClick={ this.handleClose } />
-                  <SketchPicker color={ localStore.color } onChange={ this.handleChange } />
+                  <SketchPicker color={ this.state.color } onChange={ this.handleChange } />
                 </div>
                 ) : null }
             </div>
@@ -81,4 +104,4 @@ class ColorSelector extends React.Component {
     }
 }
 
-export default view(ColorSelector);
+export default ColorSelector;
