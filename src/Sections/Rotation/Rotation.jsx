@@ -89,7 +89,7 @@ const DataWindow2 = styled.div`
   padding-left: 5px;
   width: calc(100vw - 208px);
   box-sizing: border-box;
-  max-height: calc(100vh - 102px);
+  max-height: calc(100vh - 22px);
   overflow: auto;
 `;
 

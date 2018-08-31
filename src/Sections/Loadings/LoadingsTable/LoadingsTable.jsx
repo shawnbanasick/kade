@@ -24,7 +24,7 @@ const filterArray = item => {
 };
 
 function getWidth(numFacsForTableWidth) {
-  let widthVal = 202 + 110 * numFacsForTableWidth;
+  let widthVal = 150 + 290 + 145 * numFacsForTableWidth;
   // let x = window.innerWidth - 50 - 152;
   let x = window.innerWidth - 202;
 
