@@ -55,8 +55,10 @@ const createWindow = async () => {
     titleBarStyle: "hidden"
   }
 
+  // todo - check linux icon settings - icon:path
   mainWindow = Splashscreen.initSplashScreen({
     windowOpts: windowOptions,
+    icon: path.join(`${__dirname  }./assets/icons/png/512x512.png`),
     templateUrl: path.join(__dirname, "./assets/splash/", "splashScreen.svg"),
     delay: 0, // force show immediately since example will load fast
     minVisible: 1500, // show for 1.5s so example is obvious
