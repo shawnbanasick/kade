@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Form, Radio } from "semantic-ui-react";
-import store from "../../../store";
+import { view, store } from "react-easy-state";
+import state from "../../../store";
 // import "./CustomFileNameLocation.css";
 
 const styles = {
@@ -9,54 +10,39 @@ const styles = {
   fontSize: 20
 };
 
-export default class CustomFileNameLocation extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
-  handleChange(e, { value }) {
-    this.setState({ value });
-    store.setState({ customFileNameLocation: value });
+const localStore = store({customFileNameLocation:""});
+
+class CustomFileNameLocation extends Component {
+  // constructor(props) {
+  //   super(props);
+  //   this.state = {};
+  // }
+  handleChange(e, {value}) {
+    localStore.customFileNameLocation = value;
+    state.setState({
+      customFileNameLocation: value
+    });
   }
 
   render() {
     return (
-      <Form style={styles}>
+      <Form style={ styles }>
         <Form.Field>Custom name position:</Form.Field>
         <Form.Field>
-          <Radio
-            style={{ marginLeft: 16, fontSize: 20 }}
-            label="Prepend"
-            name="radioGroup"
-            value="prepend"
-            checked={this.state.value === "prepend"}
-            onChange={this.handleChange}
-          />
+          <Radio style={ { marginLeft: 16, fontSize: 20 } } label="Prepend" name="radioGroup" value="prepend" checked={ localStore.customFileNameLocation === "prepend" } onChange={ this.handleChange } />
         </Form.Field>
         <Form.Field>
-          <Radio
-            style={{ marginLeft: 16, fontSize: 20 }}
-            label="Append"
-            name="radioGroup"
-            value="append"
-            checked={this.state.value === "append"}
-            onChange={this.handleChange}
-          />
+          <Radio style={ { marginLeft: 16, fontSize: 20 } } label="Append" name="radioGroup" value="append" checked={ localStore.customFileNameLocation === "append" } onChange={ this.handleChange } />
         </Form.Field>
         <Form.Field>
-          <Radio
-            style={{ marginLeft: 16, fontSize: 20 }}
-            label="Replace"
-            name="radioGroup"
-            value="replace"
-            checked={this.state.value === "replace"}
-            onChange={this.handleChange}
-          />
+          <Radio style={ { marginLeft: 16, fontSize: 20 } } label="Replace" name="radioGroup" value="replace" checked={ localStore.customFileNameLocation === "replace" } onChange={ this.handleChange } />
         </Form.Field>
       </Form>
-    );
+      );
   }
 }
+
+export default view(CustomFileNameLocation)
 
 /*
 .ui.radio.checkbox label {

@@ -59,6 +59,8 @@ const data = function() {
 
   // console.log(`dataviz2: ${JSON.stringify(outputForDataViz)}`);
 
+  console.trace();
+
   return outputForDataViz;
 };
 
