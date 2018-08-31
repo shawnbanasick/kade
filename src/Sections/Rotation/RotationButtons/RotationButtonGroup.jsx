@@ -48,7 +48,7 @@ class RotationButtonGroup extends Component {
 
   render() {
     // const {active} = true;
-    const shouldDisplay = store.getState("shouldDisplayFacKept");
+    // const shouldDisplay = store.getState("shouldDisplayFacKept");
     const varimaxButtonActive = store.getState("varimaxButtonActive");
     const judgeButtonActive = store.getState("judgeButtonActive");
     let varimaxButtonDisabled = store.getState("varimaxButtonDisabled");

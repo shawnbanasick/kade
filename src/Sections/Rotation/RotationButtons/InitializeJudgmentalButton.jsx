@@ -26,29 +26,42 @@ class RotationButtonGroup extends Component {
     const judgeButtonActive = store.getState("judgeButtonActive");
     let varimaxButtonDisabled = store.getState("varimaxButtonDisabled");
     const isDisabled = store.getState("bipolarDisabled");
+    const shouldShowJudgeRotDiv = store.getState("shouldShowJudgeRotDiv");
+
+    // todo - fix this hack for button visiblility
+    let showInitializeButton;
+    if (shouldShowJudgeRotDiv) {
+      showInitializeButton = false;
+    } else {
+      showInitializeButton = true;
+    }
 
     if (varimaxButtonDisabled === true || isDisabled === true) {
       varimaxButtonDisabled = true;
     }
 
     if (shouldDisplay) {
-      return (
-        <div>
-          <StyledWrapper>
-            <Button
-              id="judgementalRotationButton"
-              className="wrapper1"
-              size={"small"}
-              toggle
-              active={judgeButtonActive}
-              disabled={isDisabled}
-              onClick={this.onJudgeClick}
-            >
-              Judgmental Rotation
-            </Button>
-          </StyledWrapper>
-        </div>
-      );
+      if (showInitializeButton) {
+        return (
+          <div>
+            <StyledWrapper>
+              <Button
+                id="judgementalRotationButton"
+                className="wrapper1"
+                size={"small"}
+                toggle
+                active={judgeButtonActive}
+                disabled={isDisabled}
+                onClick={this.onJudgeClick}
+              >
+                Initialize Judgmental Rotation
+              </Button>
+            </StyledWrapper>
+          </div>
+        );
+      } 
+        return null;
+      
     }
     return (
       <p style={{ fontSize: 22 }}>
