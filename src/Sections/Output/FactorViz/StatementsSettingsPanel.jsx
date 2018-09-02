@@ -28,7 +28,7 @@ class StatementsSettingsPanel extends Component {
           <span className="switchText">
                         9. Limit number of lines to prevent overflow?
                       </span>
-          <UserSelectionSwitch name="willTrimStatement" value="willTrimStatement" toggle={ false } />
+          <UserSelectionSwitch name="willTrimStatement" value="willTrimStatement" toggle={ true } />
           <span className="switchText">max. number lines =</span>
           <div style={ styles }>
             <UserTextInput name={ "willTrimStatementBy" } placeholder={ "5" } width={ 6 } />

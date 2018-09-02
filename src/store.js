@@ -117,7 +117,7 @@ export default store({
   willIncludeLegend: true,
   willIndicateDistinguishing: true,
   willPrependStateNums: false,
-  willTrimStatement: false,
+  willTrimStatement: true,
   willTrimStatementBy: 5,
   willUseDistingUnicode: true,
   outputFactorSelectButtonsDisabled: false,
@@ -165,7 +165,7 @@ export default store({
     willIncludeLegend: true,
     willIndicateDistinguishing: true,
     willPrependStateNums: false,
-    willTrimStatement: false,
+    willTrimStatement: true,
     willTrimStatementBy: 5,
     willUseDistingUnicode: true,
     consensusIndicator: {

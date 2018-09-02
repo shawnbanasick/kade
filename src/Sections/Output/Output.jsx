@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { view, store } from "react-easy-state";
 import styled, { keyframes } from "styled-components";
 import { Tab } from "semantic-ui-react";
-import state from "../../store";
+// import state from "../../store";
 import FactorVizOptions from "./FactorViz/FactorVizOptions";
 import FactorVizDispatch from "./FactorVisualizations/FactorVizDispatch";
 import DownloadResultsButtons from "./DownloadResultsButtons/DownloadResultsButtons";
@@ -15,19 +15,18 @@ import RefreshFactorVizButton from "./FactorVisualizations/RefreshFactorVizButto
 
 // import styled from "styled-components";
 
-
 const panes = [
   {
     menuItem: "Options",
     render: () => (
       <Tab.Pane>
         <DataWindow1>
-        <FactorSelectionForOutputButtons />
-        <DownloadResultsButtons />
-        <NoLoadingsFlaggedWarningModal />
-        <MultipleFactorsFlaggedWarningModal />
-        <DisplayVisualizationsButtons />
-        <FactorVizDispatch /> 
+          <FactorSelectionForOutputButtons />
+          <DownloadResultsButtons />
+          <NoLoadingsFlaggedWarningModal />
+          <MultipleFactorsFlaggedWarningModal />
+          <DisplayVisualizationsButtons />
+          <FactorVizDispatch />
         </DataWindow1>
       </Tab.Pane>
     )
@@ -37,7 +36,7 @@ const panes = [
     render: () => (
       <Tab.Pane>
         <DataWindow2>
-        <OutputFactorTablesTransitionContainer />
+          <OutputFactorTablesTransitionContainer />
         </DataWindow2>
       </Tab.Pane>
     )
@@ -47,8 +46,8 @@ const panes = [
     render: () => (
       <Tab.Pane>
         <DataWindow2>
-        <FactorVizOptions />
-                <RefreshFactorVizButton />
+          <FactorVizOptions />
+          <RefreshFactorVizButton />
         </DataWindow2>
       </Tab.Pane>
     )
@@ -59,34 +58,36 @@ const localStore = store({
   activeIndex: 0
 });
 
-
 class Output extends Component {
-
-  handleTabChange(e, {activeIndex}) {
+  handleTabChange(e, { activeIndex }) {
     localStore.activeIndex = activeIndex;
   }
 
   render() {
-    const {activeIndex} = localStore;
+    const { activeIndex } = localStore;
 
-    const shouldDisplayFactorViz = state.getState(
-      "displayFactorVisualizations"
-    );
-    const showStandardErrorsDifferences = state.getState(
-      "showStandardErrorsDifferences"
-    );
+    // const shouldDisplayFactorViz = state.getState(
+    //   "displayFactorVisualizations"
+    // );
+    // const showStandardErrorsDifferences = state.getState(
+    //   "showStandardErrorsDifferences"
+    // );
 
-    const showOutputFactorSelection = state.getState(
-      "showOutputFactorSelection"
-    );
+    // const showOutputFactorSelection = state.getState(
+    //   "showOutputFactorSelection"
+    // );
 
     // if (showOutputFactorSelection) {
-      return (
-        <MainContent>
-        <Tab style={ { width: "100%", height: "100%" } } panes={ panes } activeIndex={ activeIndex } onTabChange={ this.handleTabChange } />
-        </MainContent>
-      );
- //   }
+    return (
+      <MainContent>
+        <Tab
+          panes={panes}
+          activeIndex={activeIndex}
+          onTabChange={this.handleTabChange}
+        />
+      </MainContent>
+    );
+    //   }
     // return (
     //   <DefaultMessage>
     //     No output. Click "Send Table Data to Output" in the "Loadings" section.
@@ -118,16 +119,20 @@ const fadeOut = keyframes`
 `;
 
 const MainContent = styled.div`
+  background-color: #d6dbe0;
+
+  /* 
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: 1fr;
-  /* grid-template-areas:
+  grid-template-areas:
     "row1 row1 row1 row1"
     "titleRow titleRow titleRow titleRow"
     "weblinkRow weblinkRow weblinkRow weblinkRow"
     "linkboxRow1 linkboxRow1 linkboxRow1 linkboxRow1"
-    "linkboxRow2 linkboxRow2 linkboxRow2 linkboxRow2"; */
-  overflow: scroll;
+    "linkboxRow2 linkboxRow2 linkboxRow2 linkboxRow2"; 
+    
+    
   padding: 5px;
   padding-top: 15px;
   padding-left: 15px;
@@ -143,15 +148,75 @@ const MainContent = styled.div`
   box-sizing: border-box;
   max-height: calc(100vh - 22px);
   overflow: auto;
+    */
+  overflow: auto;
+
+ background-color: #d6dbe0;
+  visibility: ${props => (props.view ? "hidden" : "visible")};
+  animation: ${props => (props.view ? fadeOut : fadeIn)} 0.5s linear;
+  transition: visibility 0.5s linear;
+
+  width: 100vw;
+  box-sizing: border-box;
+  max-height: calc(100vh - 22px);
+
+
+
+  .tabular-menu {
+    display: grid;
+    grid-template-columns: 100px 100px 140px 110px 150px 170px;
+    background-color: #d6dbe0;
+    padding-left: 20px !important;
+    height: 45px;
+    align-items: end;
+    list-style: none;
+    font-family: Helvetica;
+    padding: 0;
+    margin: 0;
+    font-size: 25px;
+  }
+
+  .tabular-menu-item {
+    display: grid;
+    align-items: center;
+    justify-items: center;
+    margin-right: 20px;
+    background-color: #d6dbe0;
+    height: 80%;
+    border-top: 5px solid #d6dbe0;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+  }
+
+  .tabular-menu-item a {
+    cursor: pointer;
+    color: black;
+  }
+
+  .tabs-menu-item:not(.is-active):hover {
+    color: #3498db;
+    background-color: white;
+  }
+
+  .tabular-menu-item.is-active {
+    color: #3498db;
+    background-color: white;
+    border-top: 5px solid #0080ff;
+    transition: all 0.25s linear;
+  }
+
+  .tabular-panel {
+    padding: 10px 50px;
+    background-color: white;
+    padding-left: 20px !important;
+  }
 `;
 
-const DefaultMessage = styled.div`
-  margin-top: 50px;
-  font-size: 22px;
-  margin-left: 20px;
-`;
-
-
+// const DefaultMessage = styled.div`
+//   margin-top: 50px;
+//   font-size: 22px;
+//   margin-left: 20px;
+// `;
 
 const DataWindow1 = styled.div`
   display: grid;
@@ -160,7 +225,6 @@ const DataWindow1 = styled.div`
   background-color: white;
   max-width: 1197;
 `;
-
 
 const DataWindow2 = styled.div`
   min-height: 600px;
@@ -174,4 +238,3 @@ const DataWindow2 = styled.div`
   max-height: calc(100vh - 22px);
   overflow: auto;
 `;
-

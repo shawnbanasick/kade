@@ -1,29 +1,34 @@
 import React from "react";
-import store from "../../../store";
+import { view, store } from "react-easy-state";
+import state from "../../../store";
+
+const localStore = store({});
+console.log("localStore", localStore);
 
 class UserSelectionSwitch extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      toggle: this.props.toggle
-    };
+    localStore.toggle = this.props.toggle;
+
+    // this.state = {
+    //   toggle: this.props.toggle
+    // };
 
     this.toggle = this.toggle.bind(this);
   }
 
   toggle(e) {
     e.stopPropagation();
-    this.setState({
-      toggle: !this.state.toggle
-    });
+    localStore.toggle = !localStore.toggle;
     const stateFrag = {};
     const key = this.props.value;
     console.log(JSON.stringify(key));
 
-    const stateValue = !this.state.toggle;
+    const stateValue = !localStore.toggle;
     stateFrag[key] = stateValue;
-    store.setState(stateFrag);
+    console.log("stateFrag", stateFrag);
+    state.setState(stateFrag);
   }
 
   render() {
@@ -34,7 +39,7 @@ class UserSelectionSwitch extends React.Component {
             id={this.props.name}
             type="checkbox"
             name={this.props.name}
-            defaultChecked={this.state.toggle}
+            defaultChecked={localStore.toggle}
             onChange={e => this.toggle(e)}
           />
           <span key={this.props.name} style={{ width: 100, marginTop: 6 }}>
@@ -48,7 +53,7 @@ class UserSelectionSwitch extends React.Component {
   }
 }
 
-export default UserSelectionSwitch;
+export default view(UserSelectionSwitch);
 
 /*
 
