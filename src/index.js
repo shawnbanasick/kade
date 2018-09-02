@@ -50,30 +50,27 @@ const createWindow = async () => {
   // });
 
   const windowOptions = {
-    width: 980,
-    height: 750,
+    width: 1366, // 980,
+    height: 768, // 750,
     titleBarStyle: "hidden"
-  }
+  };
 
   // todo - check linux icon settings - icon:path
   mainWindow = Splashscreen.initSplashScreen({
     windowOpts: windowOptions,
-    icon: path.join(`${__dirname  }./assets/icons/png/512x512.png`),
+    icon: path.join(`${__dirname}./assets/icons/png/512x512.png`),
     templateUrl: path.join(__dirname, "./assets/splash/", "splashScreen.svg"),
     delay: 0, // force show immediately since example will load fast
     minVisible: 1500, // show for 1.5s so example is obvious
     splashScreenOpts: {
       height: 520,
       width: 520,
-      transparent: true,
-    },
+      transparent: true
+    }
   });
-
-
 
   // and load the index.html of the app.
   mainWindow.loadURL(`file://${__dirname}/index.html`);
-
 
   mainWindow.webContents.on("new-window", (e, url) => {
     e.preventDefault();
@@ -177,9 +174,9 @@ const createWindow = async () => {
       submenu: [
         {
           label: "Learn More"
-        // click() {
-        //   require('electron').shell.openExternal('https://electronjs.org');
-        // },
+          // click() {
+          //   require('electron').shell.openExternal('https://electronjs.org');
+          // },
         }
       ]
     },
@@ -188,7 +185,8 @@ const createWindow = async () => {
       submenu: [
         {
           label: "Toggle Developer Tools",
-          accelerator: process.platform === "darwin" ? "Alt+Cmd+I" : "Ctrl+Shift+I",
+          accelerator:
+            process.platform === "darwin" ? "Alt+Cmd+I" : "Ctrl+Shift+I",
           click() {
             mainWindow.webContents.toggleDevTools();
           }

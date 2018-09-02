@@ -5,7 +5,7 @@ import { Transition } from "semantic-ui-react";
 import store from "../../../store";
 import DownloadResultsAsExcel from "./DownloadResultsAsExcel";
 import DownloadResultsAsCsv from "./DownloadResultsAsCsv";
-import RemoveTimestampOption from "./RemoveTimestampOption";
+// import RemoveTimestampOption from "./RemoveTimestampOption";
 
 class DownloadResultsButtons extends React.Component {
   render() {
@@ -26,7 +26,6 @@ class DownloadResultsButtons extends React.Component {
             <DownloadResultsAsExcel />
             <DownloadResultsAsCsv />
           </DownloadOutputButtons>
-          <RemoveTimestampOption />
         </div>
       </Transition>
     );

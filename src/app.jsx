@@ -11,6 +11,20 @@ import Loadings from "./Sections/Loadings/Loadings";
 import Output from "./Sections/Output/Output";
 import ProjectHistory from "./Sections/ProjectHistory/ProjectHistory";
 import License from "./Sections/License/License";
+import state from "./store";
+
+window.onerror = function(errorMsg, url, lineNumber, error) {
+  console.log(`errorMsg: ${JSON.stringify(errorMsg)}`);
+  console.log(`url: ${JSON.stringify(url)}`);
+  console.log(`lineNumber: ${JSON.stringify(lineNumber)}`);
+  console.log(`trace: ${JSON.stringify(error.stack)}`);
+
+  state.setState({
+    errorMessage: "An unexpected error occurred.",
+    extendedErrorMessage: errorMsg,
+    showErrorMessageBar: true
+  });
+};
 
 class App extends React.Component {
   constructor(props) {
@@ -186,6 +200,7 @@ const Header = styled.header`
   width: 100%;
   z-index: 10;
   -webkit-app-region: drag;
+  user-select: none;
 `;
 
 const Split = styled.div`

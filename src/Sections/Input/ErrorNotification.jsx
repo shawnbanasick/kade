@@ -1,19 +1,37 @@
 import { view } from "react-easy-state";
 import styled from "styled-components";
+import { Button } from "semantic-ui-react";
 import React from "react";
 import state from "../../store";
+import ExtendedErrorModal from "./ExtendedErrorModal";
+
+function handleOnClick() {
+  state.setState({
+    showErrorMessageBar: false,
+    errorStackTrace: "no stack trace available"
+  });
+}
 
 class ErrorNotification extends React.Component {
   render() {
+    const showErrorMessageBar = state.getState("showErrorMessageBar");
+    console.log(JSON.stringify(showErrorMessageBar));
+
     const errorMessage = state.getState("errorMessage");
-    return (
-      <ErrorBar>
-        <div>Error </div>
-        <p>
-          { errorMessage }
-        </p>
-      </ErrorBar>
+    if (showErrorMessageBar) {
+      return (
+        <ErrorBar>
+          <div>Error - {errorMessage}</div>
+          <ExtendedErrorModal />
+          <StyledWrapper>
+            <Button className="wrapper1" onClick={handleOnClick}>
+              Close
+            </Button>
+          </StyledWrapper>
+        </ErrorBar>
       );
+    }
+    return null;
   }
 }
 
@@ -45,4 +63,22 @@ const ErrorBar = styled.div`
   grid-column-end: -1;
   grid-row-start: -1; */
   border-radius: 4px;
+`;
+
+const StyledWrapper = styled.div`
+  .wrapper1 {
+    border: 1px solid black;
+    box-shadow: 0 2px 2px 0 black;
+
+    &:hover {
+      border: 1px solid black;
+      box-shadow: 0 2px 2px 0 black;
+    }
+
+    &:active {
+      box-shadow: 0 0 1px 0 black inset;
+      margin-left: 3px;
+      margin-top: 3px;
+    }
+  }
 `;

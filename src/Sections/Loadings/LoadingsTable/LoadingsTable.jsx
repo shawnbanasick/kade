@@ -24,27 +24,27 @@ const filterArray = item => {
 };
 
 function getWidth(numFacsForTableWidth) {
-  let widthVal = 150 + 290 + 145 * numFacsForTableWidth;
+  // + 10 to prevent scroll
+  let tableWidth = 290 + 15 + 145 * numFacsForTableWidth;
   // let x = window.innerWidth - 50 - 152;
-  let x = window.innerWidth - 202;
+  let windowWidth = window.innerWidth - 202;
 
-  if (x < widthVal) {
-    x += "px";
-
-    return x;
+  if (windowWidth < tableWidth) {
+    windowWidth += "px";
+    return windowWidth;
   }
-  widthVal += "px";
 
-  return widthVal;
+  tableWidth += "px";
+  return tableWidth;
 }
 
 function getHeight(numQsorts) {
   let heightVal = 40 + 25 * numQsorts;
-  let y = window.innerHeight - 390;
-  if (y < heightVal) {
-    y += "px";
-    return y;
-  }
+  // let y = window.innerHeight - 390;
+  // if (y < heightVal) {
+  //   y += "px";
+  //   return y;
+  // }
   heightVal += "px";
   return heightVal;
 }
@@ -53,7 +53,7 @@ function resetWidthAndHeight() {
   // this.gridApi.setGridAutoHeight(false);
   const table = document.querySelector("#loadingsTableContainer");
   if (table !== null) {
-    table.style.height = getHeight(localStore.numQsorts);
+    // table.style.height = getHeight(localStore.numQsorts);
     table.style.width = getWidth(localStore.numFacsForTableWidth);
   }
 }
@@ -153,7 +153,7 @@ class LoadingsTable extends Component {
   }
 
   render() {
-    const { onGridReady } = this;
+    // const { onGridReady } = this;
 
     const gridColDefsLoadingsTable = state.getState("gridColDefsLoadingsTable");
     const gridRowDataLoadingsTable = state.getState("gridRowDataLoadingsTable");
@@ -167,7 +167,6 @@ class LoadingsTable extends Component {
     const isLoadingNoHighlighting = state.getState("isLoadingNoHighlighting");
     const numQsorts = state.getState("numQsorts");
     localStore.numQsorts = numQsorts;
-    // let height;
 
     // todo - create output buttons array here to stay in sync, but performance check
     const outputButtonsArray2 = gridColDefsLoadingsTable.map(
@@ -176,14 +175,8 @@ class LoadingsTable extends Component {
     const outputButtonsArray3 = outputButtonsArray2.filter(filterArray);
     outputButtonsArray3.shift();
     const outputButtonsArray = outputButtonsArray3.map(item => item.slice(6));
-    state.setState({ outputButtonsArray });
 
-    // increase height for cases when scroll bar is visible
-    // if (gridColDefsLoadingsTable.length > 21) {
-    //   height = numQsorts * 25 + 50 || 200;
-    // } else {
-    //   height = numQsorts * 25 + 40 || 200;
-    // }
+    state.setState({ outputButtonsArray });
 
     let numFacsForTableWidth = state.getState("numFactorsKeptForRot");
 
@@ -197,19 +190,6 @@ class LoadingsTable extends Component {
       numFacsForTableWidth += bipolarSplitCount;
     }
     localStore.numFacsForTableWidth = numFacsForTableWidth;
-
-    // let widthVal = 252 + 110 * numFacsForTableWidth;
-    // if (widthVal > window.innerWidth - 100) {
-    //   widthVal = window.innerWidth - 100;
-    // }
-    // widthVal += "px";
-
-    // const containerStyle = {
-    //   marginTop: 5,
-    //   height: getHeight(numQsorts),
-    //   width: getWidth(numFacsForTableWidth),
-    //   marginBottom: 15
-    // };
 
     return (
       <div>
@@ -289,6 +269,7 @@ class LoadingsTable extends Component {
               rowData={gridRowDataLoadingsTable}
               getRowClass={params => params.data.highlightingClass}
               onGridReady={this.onGridReady.bind(this)}
+              gridAutoHeight={false}
             />
           </div>
           <StyledWrapper>
@@ -303,16 +284,16 @@ class LoadingsTable extends Component {
             </Button>
           </StyledWrapper>
         </div>
-        <StyledWrapper>
+        <StyledWrapperOutput>
           <Button
             id="generateOutputButton"
-            className="instagram wrapper1"
+            className="wrapper1"
             style={{ marginTop: "50px" }}
             onClick={this.generateOutput.bind(this)}
           >
             Send Table Data to Output
           </Button>
-        </StyledWrapper>
+        </StyledWrapperOutput>
         <SplitBipolarFactorModal />
       </div>
     );
@@ -333,6 +314,24 @@ const StyledWrapper = styled.div`
 
     &:active {
       box-shadow: 0 0 1px 0 black inset;
+    }
+  }
+`;
+
+const StyledWrapperOutput = styled.div`
+  .wrapper1 {
+    background-color: yellow;
+    border: 1px solid black;
+    box-shadow: 0 2px 2px 0 black;
+
+    &:hover {
+      border: 1px solid black;
+      box-shadow: 0 2px 2px 0 black;
+    }
+
+    &:active {
+      box-shadow: 0 0 1px 0 black inset;
+      background-color: lightseagreen;
     }
   }
 `;

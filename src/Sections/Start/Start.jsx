@@ -135,6 +135,7 @@ const TitleDiv = styled.div`
   grid-area: titleRow;
   font-size: 80px;
   font-weight: bold;
+  user-select: none;
 `;
 
 const SubTitleDiv = styled.p`

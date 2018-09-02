@@ -11,7 +11,7 @@ class Loadings extends Component {
       <MainContent>
         <LoadingsTableTransitionContainer />
       </MainContent>
-      );
+    );
   }
 }
 
@@ -63,6 +63,4 @@ const MainContent = styled.div`
   width: calc(100vw - 150px);
   height: calc(100vh - 22px);
   overflow: auto;
-  border: 2px solid red;
 `;
-

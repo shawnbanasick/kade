@@ -13,15 +13,15 @@ class FactorsKeptNotification extends Component {
 
     // if (shouldDisplayDiv) {
     return (
-      <Transition visible={ shouldDisplayDiv } animation="fade" duration={ 1000 }>
+      <Transition visible={shouldDisplayDiv} animation="fade" duration={1000}>
         <FactorsKeptDiv className="factorsKeptDiv">
-          { numFactorsKept } factors kept for rotation. Click the "Varimax"
-          <br/> or "Judgmental" tabs for more options.
+          {numFactorsKept} factors kept for rotation. <br /> Click the "Varimax"
+          or "Judgmental" tabs for more options.
         </FactorsKeptDiv>
       </Transition>
-      );
-  // }
-  // return null;
+    );
+    // }
+    // return null;
   }
 }
 

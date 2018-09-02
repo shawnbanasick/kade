@@ -3,7 +3,7 @@ import React, { Component } from "react";
 import styled from "styled-components";
 import Papa from "papaparse";
 import state from "../../../store";
-import { sortsDisplayText } from "../logic/sortsDisplayText";
+import sortsDisplayText from "../logic/sortsDisplayText";
 import shiftRawSortsPositive from "../logic/shiftRawSortsPositive";
 import calcMultiplierArrayT2 from "../logic/excelLogic/calcMultiplierArrayT2";
 import checkUniqueParticipantNames from "../logic/checkUniqueParticipantName";
@@ -16,6 +16,7 @@ const localStore = store({
 });
 
 const handleClick = () => {
+  console.log("clicked");
   try {
     dialog.showOpenDialog(
       {
@@ -28,114 +29,121 @@ const handleClick = () => {
         ]
       },
       files => {
-        if (files !== undefined) {
-          const fileName = files[0];
-          fs.readFile(fileName, "utf-8", (err, data) => {
-            // parse file
-            const parsedFile = Papa.parse(data);
+        try {
+          if (files !== undefined) {
+            const fileName = files[0];
+            fs.readFile(fileName, "utf-8", (error, data) => {
+              // parse file
+              const parsedFile = Papa.parse(data);
 
-            const lines2 = parsedFile.data;
+              const lines2 = parsedFile.data;
 
-            // // split into lines
-            // const lines = data.split(/[\r\n]+/g);
-            // // remove empty strings
-            // const lines2 = lines.filter(e => e === 0 || e);
+              // // split into lines
+              // const lines = data.split(/[\r\n]+/g);
+              // // remove empty strings
+              // const lines2 = lines.filter(e => e === 0 || e);
 
-            let qSortPatternArray;
+              let qSortPatternArray;
 
-            // remove the first (header) line
-            lines2.shift();
+              // remove the first (header) line
+              lines2.shift();
 
-            // parsing first line of PQMethod file to set qav variables
-            const numberSorts = lines2.length;
+              // parsing first line of PQMethod file to set qav variables
+              const numberSorts = lines2.length;
+              console.log(lines2);
 
-            if (lines2[0][1] === "") {
-              throw new Error("Can't find any Q-sorts in the file!");
-            }
-
-            // remove empty "" strings from array
-            let maxLength = lines2[0].length;
-            for (let i = 0; i < lines2[0].length - 1; i += 1) {
-              const value1 = lines2[0][i];
-              if (value1 === "") {
-                maxLength = i;
-                break;
+              if (lines2.length < 2) {
+                throw new Error("Can't find any Q sorts in the file!");
               }
-            }
 
-            // todo - check if other data import methods check to see if min value is above zero
-            // before doing positive shift for raw sorts
-            let minValue;
-            let arrayShiftedPositive;
-            const mainDataObject = [];
-            const respondentNames = [];
-            for (let j = 0; j < lines2.length; j += 1) {
-              // const activeLine = lines2[j].split(",");
-
-              lines2[j].length = maxLength;
-
-              const tempObj = {};
-
-              // get name
-              const name = lines2[j].shift();
-
-              // slice off name
-              lines2[j] = lines2[j].slice(1, -1);
-              tempObj.name = name;
-              respondentNames.push(name);
-              const asNumbers = lines2[j].map(Number);
-              if (j === 0) {
-                minValue = Math.min(...asNumbers);
+              // remove empty "" strings from array
+              let maxLength = lines2[0].length;
+              for (let i = 0; i < lines2[0].length - 1; i += 1) {
+                const value1 = lines2[0][i];
+                if (value1 === "") {
+                  maxLength = i;
+                  break;
+                }
               }
-              // grab last for for qSortPattern
-              qSortPatternArray = asNumbers;
 
-              if (minValue < 1) {
-                arrayShiftedPositive = shiftRawSortsPositive(
-                  asNumbers,
-                  minValue
-                );
-              } else {
-                arrayShiftedPositive = [...asNumbers];
+              // todo - check if other data import methods check to see if min value is above zero
+              // before doing positive shift for raw sorts
+              let minValue;
+              let arrayShiftedPositive;
+              const mainDataObject = [];
+              const respondentNames = [];
+              for (let j = 0; j < lines2.length; j += 1) {
+                // const activeLine = lines2[j].split(",");
+
+                lines2[j].length = maxLength;
+
+                const tempObj = {};
+
+                // get name
+                const name = lines2[j].shift();
+
+                // slice off name
+                lines2[j] = lines2[j].slice(1, -1);
+                tempObj.name = name;
+                respondentNames.push(name);
+                const asNumbers = lines2[j].map(Number);
+                if (j === 0) {
+                  minValue = Math.min(...asNumbers);
+                }
+                // grab last for for qSortPattern
+                qSortPatternArray = asNumbers;
+
+                if (minValue < 1) {
+                  arrayShiftedPositive = shiftRawSortsPositive(
+                    asNumbers,
+                    minValue
+                  );
+                } else {
+                  arrayShiftedPositive = [...asNumbers];
+                }
+                tempObj.posShiftSort = arrayShiftedPositive;
+                tempObj.rawSort = asNumbers;
+                tempObj.displaySort = lines2[j].toString();
+                mainDataObject.push(tempObj);
               }
-              tempObj.posShiftSort = arrayShiftedPositive;
-              tempObj.rawSort = asNumbers;
-              tempObj.displaySort = lines2[j].toString();
-              mainDataObject.push(tempObj);
-            }
 
-            qSortPatternArray.sort((a, b) => a - b);
+              qSortPatternArray.sort((a, b) => a - b);
 
-            const multiplierArray = calcMultiplierArrayT2([
-              ...qSortPatternArray
-            ]);
+              const multiplierArray = calcMultiplierArrayT2([
+                ...qSortPatternArray
+              ]);
 
-            const sortsDisplayTextArray = sortsDisplayText(mainDataObject);
+              const sortsDisplayTextArray = sortsDisplayText(mainDataObject);
 
-            const participantNames = checkUniqueParticipantNames(
-              respondentNames
-            );
+              const participantNames = checkUniqueParticipantNames(
+                respondentNames
+              );
 
-            state.setState({
-              numQsorts: numberSorts,
-              qSortPattern: qSortPatternArray,
-              numStatements: lines2[0].length,
-              respondentNames: participantNames,
-              mainDataObject,
-              sortsDisplayText: sortsDisplayTextArray,
-              multiplierArray,
-              dataOrigin: "csv",
-              sortsLoaded: true
+              state.setState({
+                numQsorts: numberSorts,
+                qSortPattern: qSortPatternArray,
+                numStatements: lines2[0].length,
+                respondentNames: participantNames,
+                mainDataObject,
+                sortsDisplayText: sortsDisplayTextArray,
+                multiplierArray,
+                dataOrigin: "csv",
+                sortsLoaded: true
+              });
+              localStore.buttonColor = "rgba(144,	238,	144, .6)";
             });
-            localStore.buttonColor = "rgba(144,	238,	144, .6)";
-          });
+          }
+        } catch (error) {
+          console.log("error");
         }
       }
     );
   } catch (error) {
+    console.log(JSON.stringify("catch called"));
+
     state.setState({
-      csvErrorMessage1: error.message,
-      showCsvErrorModal: true
+      errorMessage: error.message,
+      showErrorMessageBar: true
     });
   }
 };

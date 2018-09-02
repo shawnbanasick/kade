@@ -1,8 +1,8 @@
 import React, { Component } from "react";
-import { view, store } from "react-easy-state";
+import { view } from "react-easy-state";
 import styled, { keyframes } from "styled-components";
 import { Tab } from "semantic-ui-react";
-import state from "../../store";
+import store from "../../store";
 import FactorVizOptions from "./FactorViz/FactorVizOptions";
 import FactorVizDispatch from "./FactorVisualizations/FactorVizDispatch";
 import DownloadResultsButtons from "./DownloadResultsButtons/DownloadResultsButtons";
@@ -15,41 +15,46 @@ import RefreshFactorVizButton from "./FactorVisualizations/RefreshFactorVizButto
 
 // import styled from "styled-components";
 
-
 const panes = [
   {
     menuItem: "Options",
     render: () => (
       <Tab.Pane>
         <DataWindow1>
-        <FactorSelectionForOutputButtons />
-        <DownloadResultsButtons />
-        <NoLoadingsFlaggedWarningModal />
-        <MultipleFactorsFlaggedWarningModal />
-        <DisplayVisualizationsButtons />
-        <FactorVizDispatch /> 
+          <FactorSelectionForOutputButtons />
+          <DownloadResultsButtons />
+          <NoLoadingsFlaggedWarningModal />
+          <MultipleFactorsFlaggedWarningModal />
+          <div>
+            {showStandardErrorsDifferences && (
+              <span style={{ fontSize: 26 }}>Factor Visualizations</span>
+            )}
+            <div>
+              <DisplayVisualizationsButtons />
+              <FactorVizOptions />
+              <RefreshFactorVizButton />
+              {shouldDisplayFactorViz && <FactorVizDispatch />}
+            </div>
+          </div>
         </DataWindow1>
       </Tab.Pane>
     )
   },
   {
-    menuItem: "Factor Tables",
+    menuItem: "Varimax",
     render: () => (
       <Tab.Pane>
         <DataWindow2>
-        <OutputFactorTablesTransitionContainer />
+          <OutputFactorTablesTransitionContainer />
         </DataWindow2>
       </Tab.Pane>
     )
   },
   {
-    menuItem: "Factor Visualization Options",
+    menuItem: "Judgmental",
     render: () => (
       <Tab.Pane>
-        <DataWindow2>
-        <FactorVizOptions />
-                <RefreshFactorVizButton />
-        </DataWindow2>
+        <DataWindow2 />
       </Tab.Pane>
     )
   }
@@ -59,39 +64,48 @@ const localStore = store({
   activeIndex: 0
 });
 
-
 class Output extends Component {
-
-  handleTabChange(e, {activeIndex}) {
-    localStore.activeIndex = activeIndex;
-  }
-
   render() {
-    const {activeIndex} = localStore;
-
-    const shouldDisplayFactorViz = state.getState(
+    const shouldDisplayFactorViz = store.getState(
       "displayFactorVisualizations"
     );
-    const showStandardErrorsDifferences = state.getState(
+    const showStandardErrorsDifferences = store.getState(
       "showStandardErrorsDifferences"
     );
 
-    const showOutputFactorSelection = state.getState(
+    const showOutputFactorSelection = store.getState(
       "showOutputFactorSelection"
     );
 
-    // if (showOutputFactorSelection) {
+    if (showOutputFactorSelection) {
       return (
         <MainContent>
-        <Tab style={ { width: "100%", height: "100%" } } panes={ panes } activeIndex={ activeIndex } onTabChange={ this.handleTabChange } />
+          <div className="section">
+            <FactorSelectionForOutputButtons />
+            <DownloadResultsButtons />
+            <NoLoadingsFlaggedWarningModal />
+            <MultipleFactorsFlaggedWarningModal />
+            <OutputFactorTablesTransitionContainer />
+            <div>
+              {showStandardErrorsDifferences && (
+                <span style={{ fontSize: 26 }}>Factor Visualizations</span>
+              )}
+              <div>
+                <DisplayVisualizationsButtons />
+                <FactorVizOptions />
+                <RefreshFactorVizButton />
+                {shouldDisplayFactorViz && <FactorVizDispatch />}
+              </div>
+            </div>
+          </div>
         </MainContent>
       );
- //   }
-    // return (
-    //   <DefaultMessage>
-    //     No output. Click "Send Table Data to Output" in the "Loadings" section.
-    //   </DefaultMessage>
-    // );
+    }
+    return (
+      <DefaultMessage>
+        No output. Click "Send Table Data to Output" in the "Loadings" section.
+      </DefaultMessage>
+    );
   }
 }
 
@@ -151,8 +165,6 @@ const DefaultMessage = styled.div`
   margin-left: 20px;
 `;
 
-
-
 const DataWindow1 = styled.div`
   display: grid;
   grid-template-rows: 100px 100px 1fr;
@@ -160,7 +172,6 @@ const DataWindow1 = styled.div`
   background-color: white;
   max-width: 1197;
 `;
-
 
 const DataWindow2 = styled.div`
   min-height: 600px;
@@ -174,4 +185,3 @@ const DataWindow2 = styled.div`
   max-height: calc(100vh - 22px);
   overflow: auto;
 `;
-
