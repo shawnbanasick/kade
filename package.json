@@ -12,11 +12,22 @@
     "make:linux": "electron-forge make --platform=linux --arch=ia32",
     "make:windows": "electron-forge make --platform=win32 --arch=ia32,x64",
     "publish": "electron-forge publish",
-    "lint": "eslint --cache --color --ext .jsx,.js src"
+    "lint": "eslint --cache --color --ext .jsx,.js src",
+    "dist:macOS": "electron-builder --mac",
+    "dist:windows": "electron-builder --windows",
+    "dist:linux": "electron-builder --linux"
   },
   "keywords": [],
   "author": "ShawnBanasick",
   "license": "MIT",
+  "build": {
+    "appId": "com.kade.app",
+    "mac": {
+      "target": [
+        "dmg"
+      ]
+    }
+  },
   "config": {
     "forge": {
       "make_targets": {
@@ -98,6 +109,7 @@
     "babel-preset-env": "^1.7.0",
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-react": "^6.24.1",
+    "electron-builder": "^20.36.2",
     "electron-forge": "^5.2.2",
     "electron-installer-debian": "^0.8.1",
     "electron-installer-redhat": "^0.5.0",

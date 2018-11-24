@@ -1,0 +1,8 @@
+directories:
+  output: dist
+  buildResources: build
+appId: com.kade.app
+mac:
+  target:
+    - dmg
+electronVersion: 2.0.7
