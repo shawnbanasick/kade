@@ -13,6 +13,7 @@
     "make:windows": "electron-forge make --platform=win32 --arch=ia32,x64",
     "publish": "electron-forge publish",
     "lint": "eslint --cache --color --ext .jsx,.js src",
+    "pack": "electron-builder --dir",
     "dist:macOS": "electron-builder --mac",
     "dist:windows": "electron-builder --windows",
     "dist:linux": "electron-builder --linux"
@@ -22,12 +23,24 @@
   "license": "MIT",
   "build": {
     "appId": "com.kade.app",
+    "linux": {
+      "target": [
+        "AppImage"
+      ]
+    },
+    "win": {
+      "target": [
+        "nsis",
+        "portable"
+      ]
+    },
     "mac": {
       "target": [
         "dmg"
       ]
     }
   },
+
   "config": {
     "forge": {
       "make_targets": {

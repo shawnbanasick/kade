@@ -2,7 +2,16 @@ directories:
   output: dist
   buildResources: build
 appId: com.kade.app
+linux:
+  icon: ./src/assets/icons/png/icon.png
+  target:
+    - AppImage
+win:
+  icon: ./src/assets/icons/win/icon.ico
+  target:
+    - nsis
 mac:
+  icon: ./src/assets/icons/mac/icon.icns
   target:
     - dmg
 electronVersion: 2.0.7
