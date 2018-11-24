@@ -9,6 +9,7 @@ import calcEigenCumulPercentArray from "./calcEigenCumulPercentArray";
 import inflectPrincipalComponents from "./inflectPrincipalComponents";
 import factorTableEigenDataPrep from "../FactorTableEigen/FactorTableEigenDataPrep";
 import calculateCommunalities from "../../Rotation/varimaxLogic/2calculateCommunalities";
+import getSvd from './svd';
 
 const pcaDispatch = () => {
   const projectHistoryArray = store.getState("projectHistoryArray");
@@ -18,12 +19,12 @@ const pcaDispatch = () => {
   const numberOfSorts = m;
   const numberofPrincipalComps = determineNumberPCs();
 
-  const eigens = numeric.eig(X);
+  // calcualte svd from correlations
+  const svdResults = getSvd(X);
+  const eigens = svdResults.S;
+  const svd = svdResults.U;
+  const eigenValuesSorted = sortEigenValues(eigens);
 
-  const sigma = numeric.div(numeric.dot(numeric.transpose(X), X), m);
-  const svd = numeric.svd(sigma).U;
-
-  const eigenValuesSorted = sortEigenValues(eigens.lambda.x);
   const getEigenCumulPercentArray = calcEigenCumulPercentArray(
     eigenValuesSorted,
     m
