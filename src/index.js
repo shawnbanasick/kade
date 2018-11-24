@@ -81,9 +81,6 @@ const createWindow = async () => {
           role: "paste"
         },
         {
-          role: "pasteandmatchstyle"
-        },
-        {
           role: "delete"
         },
         {
@@ -139,9 +136,9 @@ const createWindow = async () => {
       submenu: [
         {
           label: "Learn More"
-          // click() {
-          //   require('electron').shell.openExternal('https://electronjs.org');
-          // },
+        // click() {
+        //   require('electron').shell.openExternal('https://electronjs.org');
+        // },
         }
       ]
     },
@@ -150,8 +147,7 @@ const createWindow = async () => {
       submenu: [
         {
           label: "Toggle Developer Tools",
-          accelerator:
-            process.platform === "darwin" ? "Alt+Cmd+I" : "Ctrl+Shift+I",
+          accelerator: process.platform === "darwin" ? "Alt+Cmd+I" : "Ctrl+Shift+I",
           click() {
             mainWindow.webContents.toggleDevTools();
           }
