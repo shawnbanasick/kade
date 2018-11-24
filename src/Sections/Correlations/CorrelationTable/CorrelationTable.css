@@ -1,0 +1,7 @@
+.ui-grid-row:nth-child(even):hover .ui-grid-cell {
+    background: #F5F5F5
+}
+
+.ui-grid-row:nth-child(odd):hover .ui-grid-cell {
+    background: #F5F5F5
+}

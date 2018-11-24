@@ -1,231 +1,197 @@
+import { view, store } from "react-easy-state";
 import React from "react";
-import Markdown from "markdown-to-jsx";
-import AceEditor from "react-ace";
-import "brace/mode/markdown";
-import "brace/theme/dracula";
 import styled from "styled-components";
-import fs from "fs";
-import { ipcRenderer } from "electron";
-import settings from "electron-settings";
-import dateFns from "date-fns";
+import Start from "./Sections/Start/Start";
+import Input from "./Sections/Input/Input";
+import Data from "./Sections/Data/Data";
+import Correlations from "./Sections/Correlations/Correlations";
+import Factors from "./Sections/Factors/Factors";
+import Rotation from "./Sections/Rotation/Rotation";
+import Loadings from "./Sections/Loadings/Loadings";
+import Output from "./Sections/Output/Output";
+import ProjectHistory from "./Sections/ProjectHistory/ProjectHistory";
+import License from "./Sections/License/License";
+import state from "./store";
 
-// paste into console to get react tools in dev console
-//  require('electron-react-devtools').install();
+window.onerror = function(errorMsg, url, lineNumber, error) {
+  console.log(`errorMsg: ${JSON.stringify(errorMsg)}`);
+  console.log(`url: ${JSON.stringify(url)}`);
+  console.log(`lineNumber: ${JSON.stringify(lineNumber)}`);
+  console.log(`trace: ${JSON.stringify(error.stack)}`);
 
-const formatDate = date => dateFns.format(new Date(date), "MMMM Do YYYY");
+  state.setState({
+    errorMessage: "An unexpected error occurred.",
+    extendedErrorMessage: errorMsg,
+    showErrorMessageBar: true
+  });
+};
 
 class App extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
-    this.state = {
-      loadedFile: "",
-      filesData: [],
-      activeIndex: 0,
-      newEntry: false,
-      newEntryName: "",
-      directory: settings.get("directory") || null
-    };
-
-    // On load
-    const directory = settings.get("directory");
-    if (directory) {
-      this.loadandReadFiles(directory);
-    }
-
-    ipcRenderer.on("save-file", event => {
-      this.saveFile();
+    this.localState = store({
+      viewStart: true,
+      viewInput: false,
+      viewData: false,
+      viewCorrelations: false,
+      viewFactors: false,
+      viewRotation: false,
+      viewLoadings: false,
+      viewOutput: false,
+      viewProjectHistory: false,
+      viewLicense: false,
+      viewHelp: false,
+      viewAttribution: false,
+      activeWindow: "viewStart"
     });
 
-    ipcRenderer.on("new-dir", (event, directory) => {
-      this.setState({
-        directory
-      });
-      settings.set("directory", directory);
-      this.loadandReadFiles(directory);
-    });
-
-    this.changeFile = this.changeFile.bind(this);
-    this.newFile = this.newFile.bind(this);
-    this.loadFile = this.loadFile.bind(this);
-    this.loadandReadFiles = this.loadandReadFiles.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
 
-  saveFile() {
-    const { activeIndex, loadedFile, filesData } = this.state;
-
-    fs.writeFile(filesData[activeIndex].path, loadedFile, err => {
-      if (err) {
-        console.log(err);
-      } else {
-        console.log("saved");
-      }
-    });
-  }
-
-  changeFile(index) {
-    return () => {
-      const { activeIndex } = this.state;
-      if (index !== activeIndex) {
-        this.saveFile();
-        this.loadFile(index);
-      }
-    };
-  }
-
-  loadandReadFiles(directory) {
-    fs.readdir(directory, (err, files) => {
-      const filteredFiles = files.filter(file => file.includes(".md"));
-      const filesData = filteredFiles.map(file => {
-        const date = file.substr(
-          file.indexOf("_") + 1,
-          file.indexOf(".") - file.indexOf("_") - 1
-        );
-
-        return {
-          date,
-          path: `${directory}/${file}`,
-          title: file.substr(0, file.indexOf("_"))
-        };
-      });
-
-      filesData.sort((a, b) => {
-        const aDate = new Date(a.date);
-        const bDate = new Date(b.date);
-        const aSec = aDate.getTime();
-        const bSec = bDate.getTime();
-        return bSec - aSec;
-      });
-
-      this.setState(
-        {
-          filesData
-        },
-        () => this.loadFile(0)
-      );
-    });
-  }
-
-  loadFile(index) {
-    const { filesData } = this.state;
-
-    const content = fs.readFileSync(filesData[index].path).toString();
-
-    // console.log(content);
-
-    this.setState({
-      loadedFile: content,
-      activeIndex: index
-    });
-  }
-
-  newFile(e) {
-    e.preventDefault();
-    const { newEntryName, directory, filesData } = this.state;
-    const fileDate = dateFns.format(new Date(), "MM-DD-YYYY");
-    const filePath = `${directory}/${newEntryName}_${fileDate}.md`;
-    fs.writeFile(filePath, "", err => {
-      if (err) {
-        console.log(err);
-      } else {
-        filesData.unshift({
-          path: filePath,
-          date: fileDate,
-          title: newEntryName
-        });
-
-        this.setState({
-          newEntry: false,
-          newEntryName: "",
-          loadedFile: "",
-          filesData
-        });
-
-        console.log("created");
-      }
-    });
+  handleClick(target) {
+    const activeWindow = this.localState.activeWindow;
+    this.localState[activeWindow] = false;
+    this.localState[target] = true;
+    this.localState.activeWindow = target;
   }
 
   render() {
     const {
-      activeIndex,
-      loadedFile,
-      directory,
-      filesData,
-      newEntry,
-      newEntryName
-    } = this.state;
+      viewStart,
+      viewInput,
+      viewData,
+      viewCorrelations,
+      viewFactors,
+      viewRotation,
+      viewLoadings,
+      viewOutput,
+      viewProjectHistory,
+      viewHelp,
+      viewAttribution,
+      viewLicense
+    } = this.localState;
+    let showTopBar = false;
+    if (process.platform === "darwin") {
+      showTopBar = true;
+    }
+
     return (
       <AppWrap>
-        <Header>Journal</Header>
-        {directory ? (
-          <Split>
-            <FilesWindow>
-              <Button onClick={() => this.setState({ newEntry: !newEntry })}>
-                + New Entry
-              </Button>
-              {newEntry && (
-                <form onSubmit={this.newFile}>
-                  <input
-                    value={newEntryName}
-                    onChange={e =>
-                      this.setState({ newEntryName: e.target.value })
-                    }
-                    autoFocus
-                    type="text"
-                  />
-                </form>
-              )}
-              {filesData.map((file, index) => (
-                <FileButton
-                  key={`${index}_key`}
-                  active={activeIndex === index}
-                  onClick={this.changeFile(index)}
-                >
-                  <p className="title">{file.title}</p>
-                  <p className="date">{formatDate(file.date)}</p>
-                </FileButton>
-              ))}
-            </FilesWindow>
-            <CodeWindow>
-              <AceEditor
-                editorProps={{ $blockScrolling: Infinity }}
-                mode="markdown"
-                theme="dracula"
-                onChange={newContent => {
-                  this.setState({
-                    loadedFile: newContent
-                  });
-                }}
-                name="markdown_editor"
-                value={loadedFile}
-              />
-            </CodeWindow>
-            <RenderedWindow>
-              <Markdown>{loadedFile}</Markdown>
-            </RenderedWindow>
-          </Split>
-        ) : (
-          <LoadingMessage>
-            <h1>Press CmdORCtrl+O to open directory</h1>
-          </LoadingMessage>
-        )}
+        {showTopBar ? <Header>KADE</Header> : null}
+        <Split>
+          <FilesWindow>
+            <StartButton
+              active={viewStart}
+              onClick={() => this.handleClick("viewStart")}
+            >
+              <p className="title">Start</p>
+            </StartButton>
+            <FileButton
+              active={viewInput}
+              onClick={() => this.handleClick("viewInput")}
+            >
+              <p className="title">1. Input</p>
+            </FileButton>
+            <FileButton
+              active={viewData}
+              onClick={() => this.handleClick("viewData")}
+            >
+              <p className="title">2. Data</p>
+            </FileButton>
+            <FileButton
+              active={viewCorrelations}
+              onClick={() => this.handleClick("viewCorrelations")}
+            >
+              <p className="title">3. Correlations</p>
+            </FileButton>
+            <FileButton
+              active={viewFactors}
+              onClick={() => this.handleClick("viewFactors")}
+            >
+              <p className="title">4. Factors</p>
+            </FileButton>
+            <FileButton
+              active={viewRotation}
+              onClick={() => this.handleClick("viewRotation")}
+            >
+              <p className="title">5. Rotation</p>
+            </FileButton>
+            <FileButton
+              active={viewLoadings}
+              onClick={() => this.handleClick("viewLoadings")}
+            >
+              <p className="title">6. Loadings</p>
+            </FileButton>
+            <FileButton
+              active={viewOutput}
+              onClick={() => this.handleClick("viewOutput")}
+            >
+              <p className="title">7. Output</p>
+            </FileButton>
+            <FileButton
+              active={viewProjectHistory}
+              onClick={() => this.handleClick("viewProjectHistory")}
+            >
+              <p className="title">Project History</p>
+            </FileButton>
+            <SpacerButton>
+              <p className="title" />
+            </SpacerButton>
+            <FileButton
+              active={viewHelp}
+              onClick={() => this.handleClick("viewLicense")}
+            >
+              <p className="title">Help</p>
+            </FileButton>
+            <FileButton
+              active={viewAttribution}
+              onClick={() => this.handleClick("viewLicense")}
+            >
+              <p className="title">Attribution</p>
+            </FileButton>
+            <FileButton
+              active={viewLicense}
+              onClick={() => this.handleClick("viewLicense")}
+            >
+              <p className="title">License</p>
+            </FileButton>
+          </FilesWindow>
+          <ActionWindow>
+            {viewStart && <Start view={viewStart} />}
+            {viewInput && <Input view={viewInput} />}
+            {viewData && <Data view={viewData} />}
+            {viewCorrelations && <Correlations view={viewCorrelations} />}
+            {viewFactors && <Factors view={viewFactors} />}
+            {viewRotation && <Rotation view={viewRotation} />}
+            {viewLoadings && <Loadings view={viewLoadings} />}
+            {viewOutput && <Output view={viewOutput} />}
+            {viewProjectHistory && <ProjectHistory view={viewProjectHistory} />}
+            {viewHelp && <License view={viewLicense} />}
+            {viewAttribution && <License view={viewLicense} />}
+            {viewLicense && <License view={viewLicense} />}
+          </ActionWindow>
+        </Split>
       </AppWrap>
     );
   }
 }
 
-export default App;
+export default view(App);
 
 const AppWrap = styled.div`
   margin-top: 23px;
+  font-family: Helvetica;
 `;
 
 const Header = styled.header`
-  background-color: #191324;
-  color: #75717c;
-  font-size: 0.8rem;
+  display: grid;
+  background-color: black;
+  font-family: Helvetica;
+  color: #d6dbe0;
+  font-size: 1rem;
   height: 23px;
+  align-items: center;
   text-align: center;
   position: fixed;
   box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.2);
@@ -234,27 +200,21 @@ const Header = styled.header`
   width: 100%;
   z-index: 10;
   -webkit-app-region: drag;
-`;
-
-const LoadingMessage = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: white;
-  background-color: #191324;
-  height: 100vh;
+  user-select: none;
 `;
 
 const Split = styled.div`
-  display: flex;
+  display: grid;
+  grid-template-columns: 150px 1fr;
   height: 100vh;
 `;
 
+//  background: #140f1d;
 const FilesWindow = styled.div`
-  background: #140f1d;
+  background: #d6dbe0;
   border-right: solid 1px #302b3a;
   position: relative;
-  width: 20%;
+  width: 150px;
   &:after {
     content: "";
     position: absolute;
@@ -267,81 +227,98 @@ const FilesWindow = styled.div`
   }
 `;
 
-const CodeWindow = styled.div`
-  flex: 1;
-  padding-top: 2rem;
-  background-color: #191324;
-`;
-
-const RenderedWindow = styled.div`
-  background-color: #191324;
-  width: 35%;
-  padding: 20px;
-  color: #fff;
-  border-left: 1px solid #302b3a;
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
-    color: #82d8d8;
-  }
-  h1 {
-    border-bottom: solid 3px #e54b4b;
-    padding-bottom: 10px;
-  }
-  a {
-    color: #e54b4b;
-  }
-`;
+// background: #191324;
 
 const FileButton = styled.button`
   padding: 10px;
   width: 100%;
-  background: #191324;
-  opacity: 0.4;
-  color: white;
+  background: #d6dbe0;
+  opacity: 0.6;
+  color: black;
   border: none;
   text-align: left;
   border-bottom: solid 1px #302b3a;
   transition: 0.3s ease all;
+  outline: none !important;
 
   &:hover {
     opacity: 1;
-    border-left: solid 4px #82d8d8;
+    border-left: solid 8px #d6dbe0;
+    background-color: white;
   }
 
   ${({ active }) =>
     active &&
     `
+    background-color: white;
     opacity: 1;
-    border-left: solid 4px #82d8d8;
+    border-left: solid 8px #d6dbe0;
     `};
 
   .title {
-    font-wight: bold;
+    font-weght: bold;
     font-size: 0.9rem;
     margin: 0 0 5px;
-  }
-
-  .date {
-    margin: 0;
+    color: black;
   }
 `;
 
-const Button = styled.button`
-  background: transparent;
-  color: white;
-  display: block;
-  border: solid 1px #82d8d8;
-  border-radius: 4px;
-  margin: 1rem auto;
-  font-size: 1rem;
+const SpacerButton = styled.button`
+  padding: 10px;
+  width: 100%;
+  height: 75px;
+  background: #d6dbe0;
+  opacity: 0.6;
+  color: black;
+  border: none;
+  text-align: left;
+  border-bottom: solid 1px #302b3a;
   transition: 0.3s ease all;
-  padding: 5px 10px;
-  &:hover {
-    background: #82d8d8;
-    color: #191324;
+  outline: none !important;
+`;
+
+const ActionWindow = styled.div`
+  background-color: white;
+  height: 100%;
+  width: 100%;
+`;
+
+const StartButton = styled.button`
+  padding: 10px;
+  padding-right: 25px;
+  width: 100%;
+  background-color: #21ba45;
+  border: none;
+  text-align: center;
+  border-bottom: solid 1px #302b3a;
+  transition: 0.3s ease all;
+  outline: none !important;
+
+  .title {
+    font-weight: bold;
+    font-size: 1.2rem;
+    margin: 5px 0 5px;
+    color: black;
   }
+
+  &:hover {
+    opacity: 1;
+    border-left: solid 8px #d6dbe0;
+    background-color: white;
+  }
+
+  ${({ active }) =>
+    active &&
+    `
+    background-color: white;
+    opacity: 1;
+    border-left: solid 8px #d6dbe0;
+  
+    .title {
+    font-weight: bold;
+    font-size: 1.2rem;
+    margin: 5px 0 5px;
+    color: black;
+  } 
+    `};
 `;

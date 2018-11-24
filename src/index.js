@@ -1,5 +1,32 @@
-import { app, BrowserWindow, dialog, Menu } from "electron";
+// require('electron-react-devtools').install();
+// localStorage.debug = 'worker:*'
+
+import { app, BrowserWindow, Menu } from "electron";
 import { enableLiveReload } from "electron-compile";
+import * as Splashscreen from "@trodi/electron-splashscreen";
+import * as path from "path";
+import * as url from "url";
+
+// npm install lru-cache first
+// const lru = require("lru-cache")({
+//   max: 256,
+//   maxAge: 250
+// });
+
+// const fs = require("fs");
+
+// const origLstat = fs.lstatSync.bind(fs);
+
+// // NB: The biggest offender of thrashing lstatSync is the node module system
+// // itself, which we can't get into via any sane means.
+// require("fs").lstatSync = function(p) {
+//   let r = lru.get(p);
+//   if (r) return r;
+
+//   r = origLstat(p);
+//   lru.set(p, r);
+//   return r;
+// };
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -15,29 +42,40 @@ if (isDevMode) {
 
 const createWindow = async () => {
   // Create the browser window.
-  mainWindow = new BrowserWindow({
-    width: 960,
-    height: 750,
+  // mainWindow = new BrowserWindow({
+  //   width: 980,
+  //   height: 750,
+  //   titleBarStyle: "hidden"
+  // // icon: path.join(__dirname, "assets/icons/png/64x64.png")
+  // });
+
+  const windowOptions = {
+    width: 1366, // 980,
+    height: 768, // 750,
     titleBarStyle: "hidden"
+  };
+
+  // todo - check linux icon settings - icon:path
+  mainWindow = Splashscreen.initSplashScreen({
+    windowOpts: windowOptions,
+    icon: path.join(`${__dirname}./assets/icons/png/512x512.png`),
+    templateUrl: path.join(__dirname, "./assets/splash/", "splashScreen.svg"),
+    delay: 0, // force show immediately since example will load fast
+    minVisible: 1500, // show for 1.5s so example is obvious
+    splashScreenOpts: {
+      height: 520,
+      width: 520,
+      transparent: true
+    }
   });
 
   // and load the index.html of the app.
   mainWindow.loadURL(`file://${__dirname}/index.html`);
 
-  // to open directory
-  function openDir() {
-    // to open dialog for file input
-    const directory = dialog.showOpenDialog(mainWindow, {
-      properties: ["openDirectory"]
-    });
-
-    // to stop no file error, early return
-    if (!directory) return;
-
-    const dir = directory[0];
-
-    mainWindow.webContents.send("new-dir", dir);
-  }
+  mainWindow.webContents.on("new-window", (e, url) => {
+    e.preventDefault();
+    require("electron").shell.openExternal(url);
+  });
 
   const template = [
     {
@@ -47,7 +85,7 @@ const createWindow = async () => {
           label: "Open Folder",
           accelerator: "CmdOrCtrl+O",
           click() {
-            openDir();
+            // console.log("open");
           }
         },
         {
@@ -136,9 +174,9 @@ const createWindow = async () => {
       submenu: [
         {
           label: "Learn More"
-        // click() {
-        //   require('electron').shell.openExternal('https://electronjs.org');
-        // },
+          // click() {
+          //   require('electron').shell.openExternal('https://electronjs.org');
+          // },
         }
       ]
     },
@@ -147,7 +185,8 @@ const createWindow = async () => {
       submenu: [
         {
           label: "Toggle Developer Tools",
-          accelerator: process.platform === "darwin" ? "Alt+Cmd+I" : "Ctrl+Shift+I",
+          accelerator:
+            process.platform === "darwin" ? "Alt+Cmd+I" : "Ctrl+Shift+I",
           click() {
             mainWindow.webContents.toggleDevTools();
           }

@@ -1,14 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <link rel='stylesheet' type="text/css" href="./custom.css">
 </head>
-<body style="overflow: hidden; background-color: rgba(0,0,0,0); margin: 0" >
+
+<body style="overflow: hidden; background-color: rgba(0,0,0,0); margin: 0">
+  <center>
+    <img src="./assets/splash/splashScreen.svg" style="display: none;" height="520" width="520"></img>
+  </center>
   <div id="App"></div>
 </body>
 
 <script type="text/jsx">
-import React from 'react';
+  import React from 'react';
 import ReactDOM from 'react-dom';
 import {AppContainer} from 'react-hot-loader';
 
@@ -22,4 +28,36 @@ if (module.hot) {
   module.hot.accept(render);
 }
 </script>
+
+
+<script type="text/javascript">
+  /* First CSS File */
+  var speedLoader = document.createElement('link');
+  speedLoader.rel = 'stylesheet';
+  speedLoader.href = './Utils/ag-grid.css';
+  speedLoader.type = 'text/css';
+  var godefer = document.getElementsByTagName('link')[0];
+  godefer.parentNode.insertBefore(speedLoader, godefer);
+
+  /* Second CSS File */
+  var speedLoader2 = document.createElement('link');
+  speedLoader2.rel = 'stylesheet';
+  speedLoader2.href = './Utils/ag-theme-fresh.css';
+  speedLoader2.type = 'text/css';
+  var godefer2 = document.getElementsByTagName('link')[0];
+  godefer2.parentNode.insertBefore(speedLoader2, godefer2);
+
+  /* Third CSS File */
+  var speedLoader3 = document.createElement('link');
+  speedLoader3.rel = 'stylesheet';
+  speedLoader3.href = './Utils/semantic.min.css';
+  speedLoader3.type = 'text/css';
+  var godefer3 = document.getElementsByTagName('link')[0];
+  godefer3.parentNode.insertBefore(speedLoader3, godefer3);
+</script>
+
+<script>
+  window.numeric = require('./numeric-1.2.6.min.js');
+</script>
+
 </html>
