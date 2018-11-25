@@ -182,6 +182,12 @@ export default view(App);
 const AppWrap = styled.div`
   margin-top: 23px;
   font-family: Helvetica;
+
+${({ showTopBar }) =>
+    showTopBar &&
+    `
+    margin-top: 23px;
+    `};
 `;
 
 const Header = styled.header`
