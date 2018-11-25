@@ -1,6 +1,6 @@
 import { view, store } from "react-easy-state";
 import React from "react";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import Start from "./Sections/Start/Start";
 import Input from "./Sections/Input/Input";
 import Data from "./Sections/Data/Data";
@@ -135,9 +135,9 @@ export default view(App);
 const AppWrap = styled.div`
   font-family: Helvetica;
 
-${({ showTopBar }) =>
-    showTopBar &&
-    `
+${({ active }) =>
+    active  &&
+    css`
     margin-top: 23px;
     `};
 `;
