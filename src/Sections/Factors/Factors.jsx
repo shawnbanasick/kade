@@ -46,7 +46,7 @@ const fadeOut = keyframes`
 const MainContent = styled.div`
   display: grid;
   grid-template-columns: 1fr;
-  grid-template-rows: 150px 1fr;
+  grid-template-rows: 70px 1fr;
   grid-template-areas:
     "row1 row1 row1 row1"
     "titleRow titleRow titleRow titleRow"

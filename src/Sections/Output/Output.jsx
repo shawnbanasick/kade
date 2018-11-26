@@ -20,6 +20,7 @@ const panes = [
     menuItem: "Options",
     render: () => (
       <Tab.Pane>
+        <NoDataMessage>No Data - Click the "Send Table Data to Output" button in Section 6</NoDataMessage>
         <DataWindow1>
           <FactorSelectionForOutputButtons />
           <DownloadResultsButtons />
@@ -59,12 +60,12 @@ const localStore = store({
 });
 
 class Output extends Component {
-  handleTabChange(e, { activeIndex }) {
+  handleTabChange(e, {activeIndex}) {
     localStore.activeIndex = activeIndex;
   }
 
   render() {
-    const { activeIndex } = localStore;
+    const {activeIndex} = localStore;
 
     // const shouldDisplayFactorViz = state.getState(
     //   "displayFactorVisualizations"
@@ -80,19 +81,15 @@ class Output extends Component {
     // if (showOutputFactorSelection) {
     return (
       <MainContent>
-        <Tab
-          panes={panes}
-          activeIndex={activeIndex}
-          onTabChange={this.handleTabChange}
-        />
+        <Tab panes={ panes } activeIndex={ activeIndex } onTabChange={ this.handleTabChange } />
       </MainContent>
-    );
-    //   }
-    // return (
-    //   <DefaultMessage>
-    //     No output. Click "Send Table Data to Output" in the "Loadings" section.
-    //   </DefaultMessage>
-    // );
+      );
+  //   }
+  // return (
+  //   <DefaultMessage>
+  //     No output. Click "Send Table Data to Output" in the "Loadings" section.
+  //   </DefaultMessage>
+  // );
   }
 }
 
@@ -237,4 +234,10 @@ const DataWindow2 = styled.div`
   box-sizing: border-box;
   max-height: calc(100vh - 22px);
   overflow: auto;
+`;
+
+const NoDataMessage = styled.div`
+  font-size: 25px;
+  margin-left:50px;
+  margin-top: 100px;
 `;
