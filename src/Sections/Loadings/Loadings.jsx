@@ -60,7 +60,7 @@ const MainContent = styled.div`
   font-size: 18px;
   background-color: white;
 
-  width: calc(100vw - 150px);
+  width: calc(100vw - 122px);
   height: calc(100vh - 22px);
   overflow: auto;
 `;

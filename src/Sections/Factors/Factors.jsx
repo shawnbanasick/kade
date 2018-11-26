@@ -13,11 +13,15 @@ class Factors extends Component {
 
     return (
       <MainContent>
-        { showCorrelationMatrix ? <TypeOfAnalysisTransitionContainer style={ { gridArea: "row1" } } /> : <DefaultMessage>Calculate correlations first.</DefaultMessage> }
+        {showCorrelationMatrix ? (
+          <TypeOfAnalysisTransitionContainer style={{ gridArea: "row1" }} />
+        ) : (
+          <DefaultMessage>Calculate correlations first.</DefaultMessage>
+        )}
         <UnrotatedFactorsTransitionContainer />
-        { showCentroidError ? <ErrorNotification /> : null }
+        {showCentroidError ? <ErrorNotification /> : null}
       </MainContent>
-      );
+    );
   }
 }
 
@@ -53,7 +57,7 @@ const MainContent = styled.div`
     "weblinkRow weblinkRow weblinkRow weblinkRow"
     "linkboxRow1 linkboxRow1 linkboxRow1 linkboxRow1"
     "linkboxRow2 linkboxRow2 linkboxRow2 linkboxRow2";
-    overflow: scroll;
+  overflow: scroll;
   padding: 5px;
   padding-top: 15px;
   padding-left: 15px;
@@ -66,7 +70,7 @@ const MainContent = styled.div`
   font-size: 18px;
   background-color: white;
 
-  width: calc(100vw - 153px);
+  width: calc(100vw - 122px);
   box-sizing: border-box;
   max-height: calc(100vh - 22px);
   overflow: auto;
