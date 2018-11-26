@@ -174,7 +174,7 @@ const FilesWindow = styled.div`
   background: #d6dbe0;
   border-right: solid 1px #302b3a;
   position: relative;
-  width: 150px;
+  width: 120px;
   &:after {
     content: "";
     position: absolute;
@@ -191,6 +191,8 @@ const FilesWindow = styled.div`
 
 const FileButton = styled.button`
   padding: 10px;
+  padding-bottom: 8px;
+  padding-top: 15px;
   width: 100%;
   background: #d6dbe0;
   opacity: 0.6;
@@ -216,7 +218,7 @@ const FileButton = styled.button`
     `};
 
   .title {
-    font-weght: bold;
+    font-weight: bold;
     font-size: 0.9rem;
     margin: 0 0 5px;
     color: black;
@@ -247,7 +249,8 @@ const StartButton = styled.button`
   padding: 10px;
   padding-right: 25px;
   width: 100%;
-  background-color: #21ba45;
+  /* background-color: #21ba45; */
+  background-color: rgba(144,	238,	144, .6);
   border: none;
   text-align: center;
   border-bottom: solid 1px #302b3a;

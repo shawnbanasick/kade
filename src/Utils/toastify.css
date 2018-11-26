@@ -4,30 +4,37 @@
   padding: 4px;
   width: 320px;
   box-sizing: border-box;
-  color: #fff;
+  /* color: #fff; */
+  color: black;
 }
+
 .Toastify__toast-container--top-left {
   top: 1em;
   left: 1em;
 }
+
 .Toastify__toast-container--top-center {
   top: 1em;
   left: 50%;
   margin-left: -160px;
 }
+
 .Toastify__toast-container--top-right {
   top: 1em;
   right: 1em;
 }
+
 .Toastify__toast-container--bottom-left {
   bottom: 1em;
   left: 1em;
 }
+
 .Toastify__toast-container--bottom-center {
   bottom: 1em;
   left: 50%;
   margin-left: -160px;
 }
+
 .Toastify__toast-container--bottom-right {
   bottom: 1em;
   right: 1em;
@@ -40,16 +47,19 @@
     left: 0;
     margin: 0;
   }
+
   .Toastify__toast-container--top-left,
   .Toastify__toast-container--top-center,
   .Toastify__toast-container--top-right {
     top: 0;
   }
+
   .Toastify__toast-container--bottom-left,
   .Toastify__toast-container--bottom-center,
   .Toastify__toast-container--bottom-right {
     bottom: 0;
   }
+
   .Toastify__toast-container--rtl {
     right: 0;
     left: initial;
@@ -74,25 +84,34 @@
   cursor: pointer;
   direction: ltr;
 }
+
 .Toastify__toast--rtl {
   direction: rtl;
 }
+
 .Toastify__toast--default {
-  background: #fff;
+  /* background: #fff; */
+  background: black;
   color: #aaa;
 }
+
 .Toastify__toast--info {
   background: #3498db;
 }
+
 .Toastify__toast--success {
-  background: #07bc0c;
+  /* background: #07bc0c; */
+  background: rgba(144, 238, 144, .8);
 }
+
 .Toastify__toast--warning {
   background: #f1c40f;
 }
+
 .Toastify__toast--error {
   background: #e74c3c;
 }
+
 .Toastify__toast-body {
   margin: auto 0;
   -ms-flex: 1;
@@ -106,7 +125,8 @@
 }
 
 .Toastify__close-button {
-  color: #fff;
+  /* color: #fff; */
+  color: black;
   font-weight: bold;
   font-size: 14px;
   background: transparent;
@@ -119,10 +139,12 @@
   -ms-flex-item-align: start;
   align-self: flex-start;
 }
+
 .Toastify__close-button--default {
   color: #000;
   opacity: 0.3;
 }
+
 .Toastify__close-button:hover,
 .Toastify__close-button:focus {
   opacity: 1;
@@ -132,6 +154,7 @@
   0% {
     transform: scaleX(1);
   }
+
   100% {
     transform: scaleX(0);
   }
@@ -146,27 +169,29 @@
   z-index: 9999;
   opacity: 0.7;
   animation: Toastify__trackProgress linear 1 forwards;
-  background-color: rgba(255, 255, 255, 0.7);
+  /* background-color: rgba(255, 255, 255, 0.7); */
+  background-color: darkgray;
   transform-origin: left;
 }
+
 .Toastify__progress-bar--rtl {
   right: 0;
   left: initial;
   transform-origin: right;
 }
+
 .Toastify__progress-bar--default {
-  background: linear-gradient(
-    to right,
+  background: linear-gradient(to right,
     #4cd964,
     #5ac8fa,
     #007aff,
     #34aadc,
     #5856d6,
-    #ff2d55
-  );
+    #ff2d55);
 }
 
 @keyframes Toastify__bounceInRight {
+
   from,
   60%,
   75%,
@@ -174,20 +199,25 @@
   to {
     animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
   }
+
   from {
     opacity: 0;
     transform: translate3d(3000px, 0, 0);
   }
+
   60% {
     opacity: 1;
     transform: translate3d(-25px, 0, 0);
   }
+
   75% {
     transform: translate3d(10px, 0, 0);
   }
+
   90% {
     transform: translate3d(-5px, 0, 0);
   }
+
   to {
     transform: none;
   }
@@ -198,6 +228,7 @@
     opacity: 1;
     transform: translate3d(-20px, 0, 0);
   }
+
   to {
     opacity: 0;
     transform: translate3d(2000px, 0, 0);
@@ -205,6 +236,7 @@
 }
 
 @keyframes Toastify__bounceInLeft {
+
   from,
   60%,
   75%,
@@ -212,20 +244,25 @@
   to {
     animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
   }
+
   0% {
     opacity: 0;
     transform: translate3d(-3000px, 0, 0);
   }
+
   60% {
     opacity: 1;
     transform: translate3d(25px, 0, 0);
   }
+
   75% {
     transform: translate3d(-10px, 0, 0);
   }
+
   90% {
     transform: translate3d(5px, 0, 0);
   }
+
   to {
     transform: none;
   }
@@ -236,6 +273,7 @@
     opacity: 1;
     transform: translate3d(20px, 0, 0);
   }
+
   to {
     opacity: 0;
     transform: translate3d(-2000px, 0, 0);
@@ -243,6 +281,7 @@
 }
 
 @keyframes Toastify__bounceInUp {
+
   from,
   60%,
   75%,
@@ -250,20 +289,25 @@
   to {
     animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
   }
+
   from {
     opacity: 0;
     transform: translate3d(0, 3000px, 0);
   }
+
   60% {
     opacity: 1;
     transform: translate3d(0, -20px, 0);
   }
+
   75% {
     transform: translate3d(0, 10px, 0);
   }
+
   90% {
     transform: translate3d(0, -5px, 0);
   }
+
   to {
     transform: translate3d(0, 0, 0);
   }
@@ -273,11 +317,13 @@
   20% {
     transform: translate3d(0, -10px, 0);
   }
+
   40%,
   45% {
     opacity: 1;
     transform: translate3d(0, 20px, 0);
   }
+
   to {
     opacity: 0;
     transform: translate3d(0, -2000px, 0);
@@ -285,6 +331,7 @@
 }
 
 @keyframes Toastify__bounceInDown {
+
   from,
   60%,
   75%,
@@ -292,20 +339,25 @@
   to {
     animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
   }
+
   0% {
     opacity: 0;
     transform: translate3d(0, -3000px, 0);
   }
+
   60% {
     opacity: 1;
     transform: translate3d(0, 25px, 0);
   }
+
   75% {
     transform: translate3d(0, -10px, 0);
   }
+
   90% {
     transform: translate3d(0, 5px, 0);
   }
+
   to {
     transform: none;
   }
@@ -315,11 +367,13 @@
   20% {
     transform: translate3d(0, 10px, 0);
   }
+
   40%,
   45% {
     opacity: 1;
     transform: translate3d(0, -20px, 0);
   }
+
   to {
     opacity: 0;
     transform: translate3d(0, 2000px, 0);
@@ -367,6 +421,7 @@
     opacity: 0;
     transform: scale3d(0.3, 0.3, 0.3);
   }
+
   50% {
     opacity: 1;
   }
@@ -376,10 +431,12 @@
   from {
     opacity: 1;
   }
+
   50% {
     opacity: 0;
     transform: scale3d(0.3, 0.3, 0.3);
   }
+
   to {
     opacity: 0;
   }
@@ -399,17 +456,21 @@
     animation-timing-function: ease-in;
     opacity: 0;
   }
+
   40% {
     transform: perspective(400px) rotate3d(1, 0, 0, -20deg);
     animation-timing-function: ease-in;
   }
+
   60% {
     transform: perspective(400px) rotate3d(1, 0, 0, 10deg);
     opacity: 1;
   }
+
   80% {
     transform: perspective(400px) rotate3d(1, 0, 0, -5deg);
   }
+
   to {
     transform: perspective(400px);
   }
@@ -419,10 +480,12 @@
   from {
     transform: perspective(400px);
   }
+
   30% {
     transform: perspective(400px) rotate3d(1, 0, 0, -20deg);
     opacity: 1;
   }
+
   to {
     transform: perspective(400px) rotate3d(1, 0, 0, 90deg);
     opacity: 0;
@@ -442,6 +505,7 @@
     transform: translate3d(110%, 0, 0);
     visibility: visible;
   }
+
   to {
     transform: translate3d(0, 0, 0);
   }
@@ -452,6 +516,7 @@
     transform: translate3d(-110%, 0, 0);
     visibility: visible;
   }
+
   to {
     transform: translate3d(0, 0, 0);
   }
@@ -462,6 +527,7 @@
     transform: translate3d(0, 110%, 0);
     visibility: visible;
   }
+
   to {
     transform: translate3d(0, 0, 0);
   }
@@ -472,6 +538,7 @@
     transform: translate3d(0, -110%, 0);
     visibility: visible;
   }
+
   to {
     transform: translate3d(0, 0, 0);
   }
@@ -481,6 +548,7 @@
   from {
     transform: translate3d(0, 0, 0);
   }
+
   to {
     visibility: hidden;
     transform: translate3d(110%, 0, 0);
@@ -491,6 +559,7 @@
   from {
     transform: translate3d(0, 0, 0);
   }
+
   to {
     visibility: hidden;
     transform: translate3d(-110%, 0, 0);
@@ -501,6 +570,7 @@
   from {
     transform: translate3d(0, 0, 0);
   }
+
   to {
     visibility: hidden;
     transform: translate3d(0, 500px, 0);
@@ -511,6 +581,7 @@
   from {
     transform: translate3d(0, 0, 0);
   }
+
   to {
     visibility: hidden;
     transform: translate3d(0, -500px, 0);
