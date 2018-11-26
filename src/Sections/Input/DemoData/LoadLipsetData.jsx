@@ -2,27 +2,26 @@ import React from "react";
 import { view, store } from "react-easy-state";
 import styled from "styled-components";
 import uploadLipsetData from "./uploadLipsetData";
+import state from '../../../store';
 
 const localStore = store({
-  buttonColor: "#d6dbe0"
+    buttonColor: "#d6dbe0"
 });
 
 const handleClick = () => {
-  uploadLipsetData();
-  localStore.buttonColor = "rgba(144,	238, 144, .6)";
+    uploadLipsetData();
+    localStore.buttonColor = "rgba(144,	238, 144, .6)";
+    state.setState({
+        notifyDataUploadSuccess: true
+    });
 };
 
 const LipsetButton1 = () => (
-  <div>
-    <LoadTxtButton
-      id="lipsetButton"
-      floated="right"
-      onClick={() => handleClick()}
-      buttonColor={localStore.buttonColor}
-    >
-      Load Lipset
-    </LoadTxtButton>
-  </div>
+    <div>
+      <LoadTxtButton id="lipsetButton" floated="right" onClick={ () => handleClick() } buttonColor={ localStore.buttonColor }>
+        Load Lipset
+      </LoadTxtButton>
+    </div>
 );
 
 export default view(LipsetButton1);

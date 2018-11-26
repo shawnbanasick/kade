@@ -10,17 +10,29 @@ import PQMethodPanel from "./PQMethodPanel";
 import DemoDataPanel from "./DemoDataPanel";
 // import SuccessNotification from "./SuccessNotification";
 import ErrorNotification from "./ErrorNotification";
+import { ToastContainer, toast, Slide } from 'react-toastify';
+import state from "../../store";
+
+
 
 // const handleAfter = selectedIndex => {
 //   localStore.tabActive = selectedIndex;
 // };
+
+function notify() {
+  toast.success("Success - Data Loaded");
+  state.setState({
+    notifyDataUploadSuccess: false
+  });
+}
+
 
 const panes = [
   {
     menuItem: "CSV",
     render: () => (
       <Tab.Pane>
-        <CsvPanel />
+        <CsvPanel notify={ notify } />
       </Tab.Pane>
     )
   },
@@ -66,7 +78,9 @@ const panes = [
   }
 ];
 
-const localStore = store({ activeIndex: 0 });
+const localStore = store({
+  activeIndex: 0
+});
 
 class Input extends Component {
   constructor() {
@@ -75,23 +89,27 @@ class Input extends Component {
     this.handleTabChange = this.handleTabChange.bind(this);
   }
 
-  handleTabChange(e, { activeIndex }) {
+
+  handleTabChange(e, {activeIndex}) {
     localStore.activeIndex = activeIndex;
   }
 
   render() {
-    const { activeIndex } = localStore;
+    const {activeIndex} = localStore;
+    const showNotification = state.getState("notifyDataUploadSuccess");
+    if (showNotification) {
+      notify();
+    }
     return (
-      <MainContent>
-        <Tab
-          panes={panes}
-          activeIndex={activeIndex}
-          onTabChange={this.handleTabChange}
-        />
-        <ErrorNotification />
-        {/* <SuccessNotification /> */}
-      </MainContent>
-    );
+      <React.Fragment>
+        <ToastContainer transition={ Slide } />
+        <MainContent>
+          <Tab panes={ panes } activeIndex={ activeIndex } onTabChange={ this.handleTabChange } />
+          <ErrorNotification />
+          { /* <SuccessNotification /> */ }
+        </MainContent>
+      </React.Fragment>
+      );
   }
 }
 

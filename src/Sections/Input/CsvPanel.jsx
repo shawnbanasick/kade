@@ -9,21 +9,21 @@ import CsvStatementCard from "./CSV/CsvStatementCard";
 import CsvSuccessfulLoadBar from "./CSV/CsvSuccessfulLoadBar";
 
 class CsvPanel extends Component {
-  render() {
-    return (
-      <DataWindow>
-        <Header>Load both a statements TXT file and Q sorts CSV file.</Header>
-        <CardHolder>
-          <CsvStatementCard />
-          <CsvQsortsCard />
-          <ProjectNameInput />
-          <ForcedUnforcedRadio />
-          <UnforcedQsortDesignInput />
-          <CsvSuccessfulLoadBar />
-        </CardHolder>
-      </DataWindow>
-      );
-  }
+    render() {
+        return (
+            <DataWindow>
+              <Header>Load both a statements TXT file and Q sorts CSV file.</Header>
+              <CardHolder>
+                <CsvStatementCard />
+                <CsvQsortsCard />
+                <ProjectNameInput />
+                <ForcedUnforcedRadio />
+                <UnforcedQsortDesignInput />
+                <CsvSuccessfulLoadBar />
+              </CardHolder>
+            </DataWindow>
+            );
+    }
 }
 
 export default view(CsvPanel);

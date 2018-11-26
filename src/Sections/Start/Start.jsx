@@ -2,9 +2,13 @@ import React, { Component } from "react";
 import { view, store } from "react-easy-state";
 import styled, { keyframes } from "styled-components";
 
-function handleClick() {}
+function handleClick() {
+}
 
-const localStore = store({ width: 0, height: 0 });
+const localStore = store({
+  width: 0,
+  height: 0
+});
 
 function getWidth() {
   const w = Math.max(
@@ -37,7 +41,9 @@ class Start extends Component {
     const height = localStore.height;
     return (
       <MainContent>
-        <LanguageSelection>{`${width} x ${height}`}</LanguageSelection>
+        <LanguageSelection>
+          { `${width} x ${height}` }
+        </LanguageSelection>
         <TitleDiv>KADE</TitleDiv>
         <SubTitleDiv>
           <HighlightLetter>K</HighlightLetter>
@@ -49,24 +55,33 @@ class Start extends Component {
           <HighlightLetter> E</HighlightLetter>
           dition
         </SubTitleDiv>
+        <SubTitleDiv2>version 0.0.1 alpha</SubTitleDiv2>
         <WebLinkRow>
           <h1>web links:</h1>
-          <hr style={{ width: "700px" }} />
+          <hr style={ { width: "700px" } } />
         </WebLinkRow>
-        <WebLinkDiv1 onClick={handleClick}>
-          <StyledAnchor
-            target="_blank"
-            rel="noopener noreferrer"
-            href="https://shawnBanasick.github.io/ken-q-analysis/index.html"
-          >
-            Ken-Q Analysis online version
+        <WebLinkDiv1 onClick={ handleClick }>
+          <StyledAnchor target="_blank" rel="noopener noreferrer" href="https://github.com/shawnbanasick/kade">
+            KADE Main Page and Change Log
           </StyledAnchor>
         </WebLinkDiv1>
-        <WebLinkDiv2>square div 2</WebLinkDiv2>
-        <WebLinkDiv3>square div 3</WebLinkDiv3>
-        <WebLinkDiv4>square div 4</WebLinkDiv4>
+        <WebLinkDiv2>
+          <StyledAnchor target="_blank" rel="noopener noreferrer" href="https://github.com/shawnbanasick/kade/wiki">
+            KADE Reference Guide and User Manual
+          </StyledAnchor>
+        </WebLinkDiv2>
+        <WebLinkDiv3>
+          <StyledAnchor target="_blank" rel="noopener noreferrer" href="https://shawnBanasick.github.io/ken-q-analysis/index.html">
+            Ken-Q Analysis Web Application
+          </StyledAnchor>
+        </WebLinkDiv3>
+        <WebLinkDiv4>
+          <StyledAnchor target="_blank" rel="noopener noreferrer" href="https://shawnbanasick.github.io/ken-q-data/index.html">
+            Ken-Q Data
+          </StyledAnchor>
+        </WebLinkDiv4>
       </MainContent>
-    );
+      );
   }
 }
 
@@ -103,11 +118,12 @@ const StyledAnchor = styled.a`
 const MainContent = styled.div`
   display: grid;
   grid-template-columns: 190px 190px 190px 190px;
-  grid-template-rows: 50px 155px 50px 135px 120px 180px 20px;
+  grid-template-rows: 20px 155px 50px 30px 115px 120px 180px 20px;
   grid-template-areas:
     "row1 row1 row1 row1"
     "titleRow titleRow titleRow titleRow"
     "subtitleRow subtitleRow subtitleRow subtitleRow"
+    "subtitleRow2 subtitleRow2 subtitleRow2 subtitleRow2"
     "weblinkRow weblinkRow weblinkRow weblinkRow"
     "linkboxRow1 linkboxRow1 linkboxRow2 linkboxRow2"
     "linkboxRow3 linkboxRow3 linkboxRow4 linkboxRow4";
@@ -146,6 +162,15 @@ const SubTitleDiv = styled.p`
   font-weight: normal;
 `;
 
+const SubTitleDiv2 = styled.p`
+  display: flex;
+  grid-area: subtitleRow2;
+  font-style: italic;
+  font-size: 30px;
+  font-weight: normal;
+`;
+
+
 const HighlightLetter = styled.span`
   color: #b22222;
   font-weight: bold;
@@ -168,6 +193,7 @@ const WebLinkDiv1 = styled.div`
   box-shadow: 0 2px 2px 0 black;
   text-align: center;
   user-select: none;
+  line-height: 1.2;
 
   &:hover {
     font-weight: bold;
@@ -181,12 +207,13 @@ const WebLinkDiv1 = styled.div`
 `;
 
 const WebLinkDiv2 = styled.div`
+  display: flex;
   grid-area: linkboxRow2;
   height: 120px;
   width: 180px;
   display: grid;
   align-items: center;
-  justify-items: center;
+  justify-content: center;
   background-color: #d6dbe0;
   color: black;
   border-radius: 5px;
@@ -194,7 +221,9 @@ const WebLinkDiv2 = styled.div`
   margin-right: 3px;
   margin-bottom: 3px;
   box-shadow: 0 2px 2px 0 black;
+  text-align: center;
   user-select: none;
+  line-height: 1.2;
 
   &:hover {
     font-weight: bold;
@@ -208,12 +237,13 @@ const WebLinkDiv2 = styled.div`
 `;
 
 const WebLinkDiv3 = styled.div`
+  display: flex;
   grid-area: linkboxRow3;
-  display: grid;
-  align-items: center;
-  justify-items: center;
   height: 120px;
   width: 180px;
+  display: grid;
+  align-items: center;
+  justify-content: center;
   background-color: #d6dbe0;
   color: black;
   border-radius: 5px;
@@ -221,7 +251,9 @@ const WebLinkDiv3 = styled.div`
   margin-right: 3px;
   margin-bottom: 3px;
   box-shadow: 0 2px 2px 0 black;
+  text-align: center;
   user-select: none;
+  line-height: 1.2;
 
   &:hover {
     font-weight: bold;
@@ -235,12 +267,13 @@ const WebLinkDiv3 = styled.div`
 `;
 
 const WebLinkDiv4 = styled.div`
+  display: flex;
   grid-area: linkboxRow4;
-  display: grid;
-  align-items: center;
-  justify-items: center;
   height: 120px;
   width: 180px;
+  display: grid;
+  align-items: center;
+  justify-content: center;
   background-color: #d6dbe0;
   color: black;
   border-radius: 5px;
@@ -248,7 +281,9 @@ const WebLinkDiv4 = styled.div`
   margin-right: 3px;
   margin-bottom: 3px;
   box-shadow: 0 2px 2px 0 black;
+  text-align: center;
   user-select: none;
+  line-height: 1.2;
 
   &:hover {
     font-weight: bold;

@@ -2,27 +2,26 @@ import React from "react";
 import { view, store } from "react-easy-state";
 import styled from "styled-components";
 import uploadIpadSurveyData from "./uploadIpadSurveyData";
+import state from '../../../store';
 
 const localStore = store({
-  buttonColor: "#d6dbe0"
+    buttonColor: "#d6dbe0"
 });
 
 const handleClick = () => {
-  uploadIpadSurveyData();
-  localStore.buttonColor = "rgba(144,	238, 144, .6)";
+    uploadIpadSurveyData();
+    localStore.buttonColor = "rgba(144,	238, 144, .6)";
+    state.setState({
+        notifyDataUploadSuccess: true
+    });
 };
 
 const IpadSurveyButton1 = () => (
-  <div>
-    <LoadTxtButton
-      id="buzzwordButton"
-      floated="right"
-      onClick={() => handleClick()}
-      buttonColor={localStore.buttonColor}
-    >
-      Load Motivational
-    </LoadTxtButton>
-  </div>
+    <div>
+      <LoadTxtButton id="buzzwordButton" floated="right" onClick={ () => handleClick() } buttonColor={ localStore.buttonColor }>
+        Load Motivational
+      </LoadTxtButton>
+    </div>
 );
 
 export default view(IpadSurveyButton1);

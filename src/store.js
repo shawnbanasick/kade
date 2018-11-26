@@ -79,6 +79,7 @@ export default store({
   showStandardErrorsDifferences: false,
   showFactorCharacteristicsTable: false,
   showErrorMessageBar: false,
+  notifyDataUploadSuccess: false,
   bipolarSplitCount: 0,
   excelType1NonsymmetricArrayText: "",
   activeStartAnalysisButton: false,

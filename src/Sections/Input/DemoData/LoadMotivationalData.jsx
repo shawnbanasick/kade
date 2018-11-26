@@ -2,6 +2,7 @@ import React from "react";
 import { view, store } from "react-easy-state";
 import styled from "styled-components";
 import uploadMotivationalData from "./uploadMotivationalData";
+import state from '../../../store';
 
 const localStore = store({
   buttonColor: "#d6dbe0"
@@ -10,16 +11,14 @@ const localStore = store({
 const handleClick = () => {
   uploadMotivationalData();
   localStore.buttonColor = "rgba(144,	238, 144, .6)";
+  state.setState({
+    notifyDataUploadSuccess: true
+  });
 };
 
 const MotivationalButton1 = () => (
   <div>
-    <LoadTxtButton
-      id="buzzwordButton"
-      floated="right"
-      onClick={() => handleClick()}
-      buttonColor={localStore.buttonColor}
-    >
+    <LoadTxtButton id="buzzwordButton" floated="right" onClick={ () => handleClick() } buttonColor={ localStore.buttonColor }>
       Load Motivational
     </LoadTxtButton>
   </div>

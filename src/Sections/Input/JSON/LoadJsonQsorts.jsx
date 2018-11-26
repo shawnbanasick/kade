@@ -8,7 +8,7 @@ import convertJSONToData from "./convertJSONToData";
 // import calcMultiplierArrayT2 from "../logic/excelLogic/calcMultiplierArrayT2";
 // import checkUniqueParticipantNames from "../logic/checkUniqueParticipantName";
 
-const { dialog } = require("electron").remote;
+const {dialog} = require("electron").remote;
 const fs = require("fs");
 
 const localStore = store({
@@ -71,6 +71,9 @@ const handleClick = () => {
               dataOrigin: "json"
             });
             localStore.buttonColor = "rgba(144,	238,	144, .6)";
+            state.setState({
+              notifyDataUploadSuccess: true
+            });
           });
         }
       }
@@ -86,13 +89,10 @@ const handleClick = () => {
 class LoadTxtStatementFile extends Component {
   render() {
     return (
-      <LoadTxtButton
-        buttonColor={localStore.buttonColor}
-        onClick={() => handleClick()}
-      >
+      <LoadTxtButton buttonColor={ localStore.buttonColor } onClick={ () => handleClick() }>
         <p>Load JSON File</p>
       </LoadTxtButton>
-    );
+      );
   }
 }
 

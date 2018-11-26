@@ -2,27 +2,26 @@ import React from "react";
 import { view, store } from "react-easy-state";
 import styled from "styled-components";
 import uploadBuzzwordData from "./uploadBuzzwordData";
+import state from '../../../store';
 
 const localStore = store({
-  buttonColor: "#d6dbe0"
+    buttonColor: "#d6dbe0"
 });
 
 const handleClick = () => {
-  uploadBuzzwordData();
-  localStore.buttonColor = "rgba(144,	238, 144, .6)";
+    uploadBuzzwordData();
+    localStore.buttonColor = "rgba(144,	238, 144, .6)";
+    state.setState({
+        notifyDataUploadSuccess: true
+    });
 };
 
 const BuzzwordButton1 = () => (
-  <div>
-    <LoadTxtButton
-      id="buzzwordButton"
-      floated="right"
-      onClick={() => handleClick()}
-      buttonColor={localStore.buttonColor}
-    >
-      Load Buzzwords
-    </LoadTxtButton>
-  </div>
+    <div>
+      <LoadTxtButton id="buzzwordButton" floated="right" onClick={ () => handleClick() } buttonColor={ localStore.buttonColor }>
+        Load Buzzwords
+      </LoadTxtButton>
+    </div>
 );
 
 export default view(BuzzwordButton1);
