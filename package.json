@@ -1,5 +1,5 @@
 {
-  "name": "ShawnBanasick",
+  "name": "kade",
   "productName": "KADE",
   "version": "0.0.1",
   "description": "A desktop application for Q Methodology",
@@ -27,7 +27,7 @@
       "target": [
         "AppImage"
       ],
-      "icon": "build/icons/icon.png"
+      "icon": "build/icons"
     },
     "win": {
       "target": [
