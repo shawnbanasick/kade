@@ -81,6 +81,7 @@ export default store({
   showErrorMessageBar: false,
   showTableDataNotSentWarning: true,
   notifyDataUploadSuccess: false,
+  notifyDataSentToOutputSuccess: false,
   bipolarSplitCount: 0,
   excelType1NonsymmetricArrayText: "",
   activeStartAnalysisButton: false,

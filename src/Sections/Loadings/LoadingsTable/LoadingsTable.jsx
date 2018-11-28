@@ -1,17 +1,26 @@
+import styled from "styled-components";
 import React, { Component } from "react";
 import { Button } from "semantic-ui-react";
 import { AgGridReact } from "ag-grid-react";
 import { view, store } from "react-easy-state";
-import styled from "styled-components";
+import { ToastContainer, toast, Slide } from "react-toastify";
 import state from "../../../store";
-import autoFlagFactors from "../loadingsLogic/autoFlagFactors";
-import InvertFactorButton from "./InvertFactorButton";
-import SplitBipolarFactorModal from "./SplitBipolarFactorModal";
-import loadingsTableDataPrep from "./loadingsTableDataPrep";
 import SigLevelDropdown from "./SigLevelDropdown";
+import InvertFactorButton from "./InvertFactorButton";
+import loadingsTableDataPrep from "./loadingsTableDataPrep";
+import autoFlagFactors from "../loadingsLogic/autoFlagFactors";
+import SplitBipolarFactorModal from "./SplitBipolarFactorModal";
 import MajorityCommonVarianceCheckbox from "./MajorityCommonVarianceCheckbox";
 
 const localStore = store({ numQsorts: 0, numFacsForTableWidth: 0 });
+
+// notification of table data sent to output
+function notify() {
+  toast.success("Data sent to Output");
+  state.setState({
+    notifyDataSentToOutputSuccess: false
+  });
+}
 
 // helper function for filtering btnId when table loads => output buttons
 const filterArray = item => {
@@ -105,12 +114,14 @@ class LoadingsTable extends Component {
     tempObj2.displayFactorVisualizations = false;
     tempObj2.shouldDisplayFactorVizOptions = false;
     tempObj2.outputFactorSelectButtonsDisabled = false;
+    tempObj2.notifyDataSentToOutputSuccess = true;
     // remove warning for no data in output section
     tempObj2.showTableDataNotSentWarning = false;
     // reset cache of factor viz data
     tempObj2.outputForDataViz2 = [];
 
     state.setState(tempObj2);
+    notify();
   }
 
   doSplitFactor() {
@@ -195,6 +206,7 @@ class LoadingsTable extends Component {
 
     return (
       <div>
+        <ToastContainer transition={Slide} />
         <div style={{ display: "flex", marginTop: 25, paddingBottom: "4px" }}>
           <div style={{ width: 300 }}>
             <span style={{ width: "100%" }}>Row Highlighting:</span>

@@ -1,17 +1,17 @@
+import { Tab } from "semantic-ui-react";
 import React, { Component } from "react";
 import { view, store } from "react-easy-state";
 import styled, { keyframes } from "styled-components";
-import { Tab } from "semantic-ui-react";
+import { ToastContainer, toast, Slide } from 'react-toastify';
+import state from "../../store";
 import CsvPanel from "./CsvPanel";
+import JsonPanel from "./JsonPanel";
 import ExcelPanel from "./ExcelPanel";
 import KandedPanel from "./KandedPanel";
-import JsonPanel from "./JsonPanel";
 import PQMethodPanel from "./PQMethodPanel";
 import DemoDataPanel from "./DemoDataPanel";
 // import SuccessNotification from "./SuccessNotification";
 import ErrorNotification from "./ErrorNotification";
-import { ToastContainer, toast, Slide } from 'react-toastify';
-import state from "../../store";
 
 
 
