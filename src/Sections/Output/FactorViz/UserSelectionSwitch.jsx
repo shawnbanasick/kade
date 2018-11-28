@@ -3,7 +3,6 @@ import { view, store } from "react-easy-state";
 import state from "../../../store";
 
 const localStore = store({});
-console.log("localStore", localStore);
 
 class UserSelectionSwitch extends React.Component {
   constructor(props) {
@@ -23,11 +22,8 @@ class UserSelectionSwitch extends React.Component {
     localStore.toggle = !localStore.toggle;
     const stateFrag = {};
     const key = this.props.value;
-    console.log(JSON.stringify(key));
-
     const stateValue = !localStore.toggle;
     stateFrag[key] = stateValue;
-    console.log("stateFrag", stateFrag);
     state.setState(stateFrag);
   }
 

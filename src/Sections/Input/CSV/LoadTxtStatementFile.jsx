@@ -1,59 +1,63 @@
-import { view, store } from "react-easy-state";
-import React, { Component } from "react";
 import styled from "styled-components";
+import React, { Component } from "react";
+import { view, store } from "react-easy-state";
+import { ToastContainer, toast } from "react-toastify";
 import state from "../../../store";
-import { ToastContainer, toast } from 'react-toastify';
 
-const {dialog} = require("electron").remote;
+const { dialog } = require("electron").remote;
 const fs = require("fs");
 
 const localStore = store({
-    buttonColor: "#d6dbe0"
+  buttonColor: "#d6dbe0"
 });
 
 const handleClick = () => {
-    dialog.showOpenDialog(
+  dialog.showOpenDialog(
+    {
+      properties: ["openFile"],
+      filters: [
         {
-            properties: ["openFile"],
-            filters: [
-                {
-                    name: "Text",
-                    extensions: ["txt", "TXT"]
-                }
-            ]
-        },
-        files => {
-            if (files !== undefined) {
-                const fileName = files[0];
-                fs.readFile(fileName, "utf-8", (err, data) => {
-                    // split into lines
-                    const lines = data.split(/[\r\n]+/g);
-                    // remove empty strings
-                    const lines2 = lines.filter(e => e === 0 || e);
-                    state.setState({
-                        statements: lines2,
-                        statementsLoaded: true
-                    });
-                    localStore.buttonColor = "rgba(144,	238,	144, .6)";
-                    state.setState({
-                        notifyDataUploadSuccess: true
-                    });
-                });
-            }
+          name: "Text",
+          extensions: ["txt", "TXT"]
         }
-    );
+      ]
+    },
+    files => {
+      if (files !== undefined) {
+        const fileName = files[0];
+        fs.readFile(fileName, "utf-8", (err, data) => {
+          // split into lines
+          const lines = data.split(/[\r\n]+/g);
+          // remove empty strings
+          const lines2 = lines.filter(e => e === 0 || e);
+          state.setState({
+            statements: lines2,
+            statementsLoaded: true
+          });
+          localStore.buttonColor = "rgba(144,	238,	144, .6)";
+
+          state.setState({
+            notifyDataUploadSuccess: true,
+            areStatementsLoaded: true,
+            isInputButtonGreen: state.getState("areQsortsLoaded")
+          });
+        });
+      }
+    }
+  );
 };
 
 class LoadTxtStatementFile extends Component {
-    render() {
-        console.log(`props ${  JSON.stringify(this.props)}`);
-
-        return (
-            <LoadTxtButton buttonColor={ localStore.buttonColor } onClick={ () => handleClick() }>
-              <p>Load TXT File</p>
-            </LoadTxtButton>
-            );
-    }
+  render() {
+    return (
+      <LoadTxtButton
+        buttonColor={localStore.buttonColor}
+        onClick={() => handleClick()}
+      >
+        <p>Load TXT File</p>
+      </LoadTxtButton>
+    );
+  }
 }
 
 export default view(LoadTxtStatementFile);

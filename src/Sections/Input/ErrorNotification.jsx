@@ -15,8 +15,6 @@ function handleOnClick() {
 class ErrorNotification extends React.Component {
   render() {
     const showErrorMessageBar = state.getState("showErrorMessageBar");
-    console.log(JSON.stringify(showErrorMessageBar));
-
     const errorMessage = state.getState("errorMessage");
     if (showErrorMessageBar) {
       return (

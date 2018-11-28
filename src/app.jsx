@@ -1,17 +1,17 @@
-import { view, store } from "react-easy-state";
 import React from "react";
+import { view, store } from "react-easy-state";
 import styled, { css } from "styled-components";
+import state from "./store";
+import Data from "./Sections/Data/Data";
 import Start from "./Sections/Start/Start";
 import Input from "./Sections/Input/Input";
-import Data from "./Sections/Data/Data";
-import Correlations from "./Sections/Correlations/Correlations";
+import Output from "./Sections/Output/Output";
+import License from "./Sections/License/License";
 import Factors from "./Sections/Factors/Factors";
 import Rotation from "./Sections/Rotation/Rotation";
 import Loadings from "./Sections/Loadings/Loadings";
-import Output from "./Sections/Output/Output";
+import Correlations from "./Sections/Correlations/Correlations";
 import ProjectHistory from "./Sections/ProjectHistory/ProjectHistory";
-import License from "./Sections/License/License";
-import state from "./store";
 
 window.onerror = function(errorMsg, url, lineNumber, error) {
   console.log(`errorMsg: ${JSON.stringify(errorMsg)}`);
@@ -57,6 +57,11 @@ class App extends React.Component {
   }
 
   render() {
+    // const isInputButtonGreen = ;
+    const inputButtonColor = state.getState("isInputButtonGreen")
+      ? "lightgreen"
+      : "#d6dbe0";
+
     const {
       viewStart,
       viewInput,
@@ -76,8 +81,6 @@ class App extends React.Component {
       showTopBar = true;
     }
 
-    console.log(showTopBar);
-
     return (
       <AppWrap active={showTopBar}>
         {showTopBar ? <Header>KADE</Header> : null}
@@ -90,12 +93,14 @@ class App extends React.Component {
               <p className="title">Start</p>
             </StartButton>
             <FileButton
+              buttonColor={inputButtonColor}
               active={viewInput}
               onClick={() => this.handleClick("viewInput")}
             >
               <p className="title">1. Input</p>
             </FileButton>
             <FileButton
+              buttonColor={inputButtonColor}
               active={viewData}
               onClick={() => this.handleClick("viewData")}
             >
@@ -241,7 +246,7 @@ const FileButton = styled.button`
   padding-bottom: 8px;
   padding-top: 15px;
   width: 100%;
-  background: #d6dbe0;
+  background: ${props => props.buttonColor || "#d6dbe0"};
   opacity: 0.6;
   color: black;
   border: none;
@@ -271,6 +276,8 @@ const FileButton = styled.button`
     color: black;
   }
 `;
+
+// ${props => props.width};
 
 const SpacerButton = styled.button`
   padding: 10px;

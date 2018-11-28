@@ -12,7 +12,8 @@ const handleClick = () => {
     uploadLipsetData();
     localStore.buttonColor = "rgba(144,	238, 144, .6)";
     state.setState({
-        notifyDataUploadSuccess: true
+        notifyDataUploadSuccess: true,
+        isInputButtonGreen: true
     });
 };
 

@@ -26,7 +26,8 @@ const handleClick = () => {
         parseExcelType3(excelFile);
         localStore.buttonColor = "rgba(144,	238,	144, .6)";
         state.setState({
-          notifyDataUploadSuccess: true
+          notifyDataUploadSuccess: true,
+          isInputButtonGreen: true
         });
 
       }
