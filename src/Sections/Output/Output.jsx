@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { view, store } from "react-easy-state";
 import styled, { keyframes } from "styled-components";
 import { Tab } from "semantic-ui-react";
-// import state from "../../store";
+import state from "../../store";
 import FactorVizOptions from "./FactorViz/FactorVizOptions";
 import FactorVizDispatch from "./FactorVisualizations/FactorVizDispatch";
 import DownloadResultsButtons from "./DownloadResultsButtons/DownloadResultsButtons";
@@ -13,14 +13,15 @@ import OutputFactorTablesTransitionContainer from "./OutputFactorTablesTransitio
 import MultipleFactorsFlaggedWarningModal from "./MultipleFactorsFlaggedWarningModal";
 import RefreshFactorVizButton from "./FactorVisualizations/RefreshFactorVizButton";
 
-// import styled from "styled-components";
+
+let showTableDataNotSentWarning;
 
 const panes = [
   {
     menuItem: "Options",
     render: () => (
       <Tab.Pane>
-        <NoDataMessage>No Data - Click the "Send Table Data to Output" button in Section 6</NoDataMessage>
+        {showTableDataNotSentWarning && <NoDataMessage>No Data - Click the "Send Table Data to Output" button in Section 6</NoDataMessage> }
         <DataWindow1>
           <FactorSelectionForOutputButtons />
           <DownloadResultsButtons />
@@ -66,6 +67,7 @@ class Output extends Component {
 
   render() {
     const {activeIndex} = localStore;
+    showTableDataNotSentWarning = state.getState("showTableDataNotSentWarning");
 
     // const shouldDisplayFactorViz = state.getState(
     //   "displayFactorVisualizations"
