@@ -27,7 +27,7 @@
       "target": [
         "AppImage"
       ],
-      "icon": "build/icon.png"
+      "icon": "build/icons/icon.png"
     },
     "win": {
       "target": [
