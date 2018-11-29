@@ -48,9 +48,8 @@ const pushFactorScoreComparisonRanksTableToOutput = function(
     synFactorArray1[j].sort((a, b) => {
       if (b["Z-score"] === a["Z-score"]) {
         return a["Statement Number"] - b["Statement Number"];
-      } 
-        return b["Z-score"] - a["Z-score"];
-      
+      }
+      return b["Z-score"] - a["Z-score"];
     });
 
     for (let i = 0, iLen = synFactorArray1[j].length; i < iLen; i++) {
@@ -58,7 +57,9 @@ const pushFactorScoreComparisonRanksTableToOutput = function(
       synFactorArray1[j][i].Rank = rankValue;
     }
 
-    synFactorArray1[j].sort((a, b) => a["Statement Number"] - b["Statement Number"]);
+    synFactorArray1[j].sort(
+      (a, b) => a["Statement Number"] - b["Statement Number"]
+    );
   }
 
   // re-sort for use below?
@@ -67,16 +68,17 @@ const pushFactorScoreComparisonRanksTableToOutput = function(
   //         return a["Statement Number"] - b["Statement Number"];
   //     });
 
-  const compositeFactorMasterArray = store.getState("compositeFactorMasterArray");
+  const compositeFactorMasterArray = store.getState(
+    "compositeFactorMasterArray"
+  );
   const factorScoreRanksArray = [];
 
   // sort by statement number and push num and statement and num into ranks array
   compositeFactorMasterArray[0].sort((a, b) => {
     if (a[0] === b[0]) {
       return 0;
-    } 
-      return a[0] < b[0] ? -1 : 1;
-    
+    }
+    return a[0] < b[0] ? -1 : 1;
   });
   for (
     let ww = 0, wwLen = compositeFactorMasterArray[0].length;
@@ -100,9 +102,8 @@ const pushFactorScoreComparisonRanksTableToOutput = function(
     compositeFactorMasterArray[kk].sort((a, b) => {
       if (a[0] === b[0]) {
         return 0;
-      } 
-        return a[0] < b[0] ? -1 : 1;
-      
+      }
+      return a[0] < b[0] ? -1 : 1;
     });
     // insert zScore
     for (
@@ -140,9 +141,8 @@ const pushFactorScoreComparisonRanksTableToOutput = function(
     compositeFactorMasterArray[kk].sort((a, b) => {
       if (a[0] === b[0]) {
         return 0;
-      } 
-        return a[0] < b[0] ? -1 : 1;
-      
+      }
+      return a[0] < b[0] ? -1 : 1;
     });
 
     // get and push ranking numbers
@@ -159,7 +159,11 @@ const pushFactorScoreComparisonRanksTableToOutput = function(
 
   const spacer = ["", ""];
   const tempArrayHeader = ["", "Factor Scores with Corresponding Ranks"];
-  const tempArrayHeader2 = ["Statement Number", "Statement", "Statement Number"];
+  const tempArrayHeader2 = [
+    "Statement Number",
+    "Statement",
+    "Statement Number"
+  ];
   const tempSubHeader = ["", "", ""];
   for (let yy = 0, yyLen = userSelectedFactors.length; yy < yyLen; yy++) {
     tempArrayHeader2.push(userSelectedFactors[yy], userSelectedFactors[yy]);
@@ -174,6 +178,10 @@ const pushFactorScoreComparisonRanksTableToOutput = function(
     tempSubHeader
   );
   outputData.push(factorScoreRanksArray);
+
+  console.log(`ranks array: ${  JSON.stringify(factorScoreRanksArray)}`);
+
+    store.setState({factorScoreRanksArray});
 
   // setup the array of ranked statements
   const factorScoreComparisonArray = [];
@@ -190,8 +198,8 @@ const pushFactorScoreComparisonRanksTableToOutput = function(
     rankingTempArray.push(tempSortValue);
     for (let m = 1, mLen = synFactorArray1.length; m < mLen; m++) {
       const mm = m + 1;
-      tempArray1[`Zscore${  mm}`] = synFactorArray1[m][k]["Z-score"];
-      tempArray1[`Rank${  mm}`] = synFactorArray1[m][k].Rank;
+      tempArray1[`Zscore${mm}`] = synFactorArray1[m][k]["Z-score"];
+      tempArray1[`Rank${mm}`] = synFactorArray1[m][k].Rank;
       const tempSortValue2 = synFactorArray1[m][k]["Sort Values"];
       rankingTempArray.push(tempSortValue2);
     }
@@ -210,9 +218,8 @@ function customSortHelper(array, placeSetter) {
   array.sort((a, b) => {
     if (a[placeSetter] === b[placeSetter]) {
       return 0;
-    } 
-      return b[placeSetter] < a[placeSetter] ? -1 : 1;
-    
+    }
+    return b[placeSetter] < a[placeSetter] ? -1 : 1;
   });
 }
 

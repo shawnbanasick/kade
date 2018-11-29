@@ -16,6 +16,8 @@ import ShowVizOptionsButton from "./DisplayVisualizationsButtons/ShowVizOptionsB
 
 let showTableDataNotSentWarning;
 
+// factorScoreRanksArray
+
 const panes = [
   {
     menuItem: "Options",
@@ -53,7 +55,7 @@ const panes = [
     render: () => (
       <Tab.Pane>
         <DataWindow2>
-  
+      
         </DataWindow2>
       </Tab.Pane>
     )

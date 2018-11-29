@@ -350,20 +350,15 @@ const pushFactorsToOutputArray = function(
     synFactorArray1Holder.push(synFactorArray1);
   }
 
+  console.log('synfactor: ' + JSON.stringify(synFactorArray1));
+  
+
   store.setState({
-    factorWeightFactorArrayHolder: factorWeightFactorArrayHolder
-  });
-  store.setState({
-    miniCorrelationArrayHolder: miniCorrelationArrayHolder
-  });
-  store.setState({
-    synFactorArray1Holder: synFactorArray1Holder
-  });
-  store.setState({
-    matchCount: matchCount
-  });
-  store.setState({
-    compositeFactorMasterArray: compositeFactorMasterArray
+    factorWeightFactorArrayHolder,
+    miniCorrelationArrayHolder,
+    synFactorArray1Holder,
+    matchCount,
+    compositeFactorMasterArray
   });
 
   return [sheetNames, output, outputData, sheetNamesXlsx, colSizes];
