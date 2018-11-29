@@ -1,28 +1,28 @@
-import React, { Component } from "react";
 import { view } from "react-easy-state";
+import React, { Component } from "react";
 import styled, { keyframes } from "styled-components";
+import state from "../../store";
+import ErrorNotification from "../Input/ErrorNotification";
 import TypeOfAnalysisTransitionContainer from "./TypeOfAnalysisTransitionContainer";
 import UnrotatedFactorsTransitionContainer from "./UnrotatedFactorsTransitionContainer";
-import ErrorNotification from "../Input/ErrorNotification";
-import state from "../../store";
 
 class Factors extends Component {
-  render() {
-    const showCentroidError = state.getState("showCentroidError");
-    const showCorrelationMatrix = state.getState("showCorrelationMatrix");
+    render() {
+        const showCentroidError = state.getState("showCentroidError");
+        const showCorrelationMatrix = state.getState("showCorrelationMatrix");
 
-    return (
-      <MainContent>
-        {showCorrelationMatrix ? (
-          <TypeOfAnalysisTransitionContainer style={{ gridArea: "row1" }} />
-        ) : (
-          <DefaultMessage>Calculate correlations first.</DefaultMessage>
-        )}
-        <UnrotatedFactorsTransitionContainer />
-        {showCentroidError ? <ErrorNotification /> : null}
-      </MainContent>
-    );
-  }
+        return (
+            <MainContent>
+              { showCorrelationMatrix ? (
+                <TypeOfAnalysisTransitionContainer style={ { gridArea: "row1" } } />
+                ) : (
+                <DefaultMessage>Calculate correlations first.</DefaultMessage>
+                ) }
+              <UnrotatedFactorsTransitionContainer />
+              { showCentroidError ? <ErrorNotification /> : null }
+            </MainContent>
+            );
+    }
 }
 
 export default view(Factors);
