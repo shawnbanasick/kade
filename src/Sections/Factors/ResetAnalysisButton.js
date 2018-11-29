@@ -1,6 +1,7 @@
-import store from "../../store";
+import styled from "styled-components";
 import React, { Component } from "react";
 import { Button, Header, Modal } from "semantic-ui-react";
+import store from "../../store";
 
 
 export default class ResetAnalysisButton extends Component {
@@ -85,7 +86,11 @@ export default class ResetAnalysisButton extends Component {
             showFactorCharacteristicsTable: false,
             showDownloadOutputButtons: false,
             userSelectedFactors: [],
-            displayFactorVisualizations: false
+            displayFactorVisualizations: false,
+
+            isLoadingsButtonGreen: false,
+            isRotationButtonGreen: false,
+            isFactorsButtonGreen: false
         });
         this.handleClose();
     };
@@ -96,10 +101,12 @@ export default class ResetAnalysisButton extends Component {
         };
 
         return (
-            <Modal trigger={ <Button id="resetAnalysisButton" size={ "big" } className="instagram" color="black" basic style={ style } onClick={ this.handleOpen }>
-                   Reset Analysis
-                 </Button> } open={ this.state.modalOpen } onClose={ this.handleClose } basic size="small">
-              <Header icon="browser" content="Reset Analysis" />
+            <Modal trigger={ <StyledWrapper>
+                   <Button id="resetAnalysisButton" size={ "small" } className="wrapper1" style={ style } onClick={ this.handleOpen }>
+                     Reset Analysis
+                   </Button>
+                 </StyledWrapper> } open={ this.state.modalOpen } onClose={ this.handleClose } basic size="small">
+              <Header content="Reset Analysis" />
               <Modal.Content>
                 <h2>This will remove the current analysis and cannot be reversed.</h2>
                 <h2> Are you sure you want to reset?</h2>
@@ -118,3 +125,23 @@ export default class ResetAnalysisButton extends Component {
             );
     }
 }
+
+
+const StyledWrapper = styled.div`
+  .wrapper1 {
+    border: 1px solid black;
+    box-shadow: 0 2px 2px 0 black;
+    margin-left: 50px;
+
+    &:hover {
+      border: 1px solid black;
+      box-shadow: 0 2px 2px 0 black;
+    }
+
+    &:active {
+      box-shadow: 0 0 1px 0 black inset;
+      margin-left: 3px;
+      margin-top: 3px;
+    }
+  }
+`;

@@ -21,8 +21,8 @@ class TypeOfAnalysisTransitionContainer extends React.Component {
             <CentroidSelectDropdown />
             <NoFacSelectedModal />
             <PcaButton />
+            <ResetAnalysisButton />
           </div>
-          <ResetAnalysisButton />
         </div>
       </div>
       );
