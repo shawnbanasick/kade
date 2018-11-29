@@ -12,7 +12,7 @@ import FactorSelectionForOutputButtons from "./FactorSelectionForOutput/FactorSe
 import OutputFactorTablesTransitionContainer from "./OutputFactorTablesTransitionContainer";
 import MultipleFactorsFlaggedWarningModal from "./MultipleFactorsFlaggedWarningModal";
 import RefreshFactorVizButton from "./FactorVisualizations/RefreshFactorVizButton";
-
+import ShowVizOptionsButton from "./DisplayVisualizationsButtons/ShowVizOptionsButton";
 
 let showTableDataNotSentWarning;
 
@@ -21,20 +21,25 @@ const panes = [
     menuItem: "Options",
     render: () => (
       <Tab.Pane>
-        { showTableDataNotSentWarning && <NoDataMessage>No Data - Click the "Send Table Data to Output" button in Section 6</NoDataMessage> }
+        {showTableDataNotSentWarning && (
+          <NoDataMessage>
+            No Data - Click the "Send Table Data to Output" button in Section 6
+          </NoDataMessage>
+        )}
         <DataWindow1>
           <FactorSelectionForOutputButtons />
           <DownloadResultsButtons />
           <NoLoadingsFlaggedWarningModal />
           <MultipleFactorsFlaggedWarningModal />
-          <DisplayVisualizationsButtons />
-          <FactorVizDispatch />
+          <ShowVizOptionsButton />
+          <FactorVizOptions />
+          <RefreshFactorVizButton />
         </DataWindow1>
       </Tab.Pane>
     )
   },
   {
-    menuItem: "Factor Tables",
+    menuItem: "Factor Characteristics",
     render: () => (
       <Tab.Pane>
         <DataWindow2>
@@ -44,12 +49,22 @@ const panes = [
     )
   },
   {
-    menuItem: "Factor Visualization Options",
+    menuItem: "Factor Tables",
     render: () => (
       <Tab.Pane>
         <DataWindow2>
-          <FactorVizOptions />
-          <RefreshFactorVizButton />
+  
+        </DataWindow2>
+      </Tab.Pane>
+    )
+  },
+    {
+    menuItem: "Factor Visualizations",
+    render: () => (
+      <Tab.Pane>
+        <DataWindow2>
+          <DisplayVisualizationsButtons />
+          <FactorVizDispatch />
         </DataWindow2>
       </Tab.Pane>
     )
@@ -61,12 +76,12 @@ const localStore = store({
 });
 
 class Output extends Component {
-  handleTabChange(e, {activeIndex}) {
+  handleTabChange(e, { activeIndex }) {
     localStore.activeIndex = activeIndex;
   }
 
   render() {
-    const {activeIndex} = localStore;
+    const { activeIndex } = localStore;
     showTableDataNotSentWarning = state.getState("showTableDataNotSentWarning");
 
     // const shouldDisplayFactorViz = state.getState(
@@ -83,15 +98,19 @@ class Output extends Component {
     // if (showOutputFactorSelection) {
     return (
       <MainContent>
-        <Tab panes={ panes } activeIndex={ activeIndex } onTabChange={ this.handleTabChange } />
+        <Tab
+          panes={panes}
+          activeIndex={activeIndex}
+          onTabChange={this.handleTabChange}
+        />
       </MainContent>
-      );
-  //   }
-  // return (
-  //   <DefaultMessage>
-  //     No output. Click "Send Table Data to Output" in the "Loadings" section.
-  //   </DefaultMessage>
-  // );
+    );
+    //   }
+    // return (
+    //   <DefaultMessage>
+    //     No output. Click "Send Table Data to Output" in the "Loadings" section.
+    //   </DefaultMessage>
+    // );
   }
 }
 
@@ -240,6 +259,6 @@ const DataWindow2 = styled.div`
 
 const NoDataMessage = styled.div`
   font-size: 25px;
-  margin-left:50px;
+  margin-left: 50px;
   margin-top: 100px;
 `;

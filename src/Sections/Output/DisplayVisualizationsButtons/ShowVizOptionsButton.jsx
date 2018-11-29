@@ -7,13 +7,13 @@ import store from "../../../store";
 // todo - change this back to normal button
 // display rules prevent premature click now
 class DisplayVisualizationsButtons extends React.Component {
-  handleDisplayViz() {
-    const displayFactorVisualizations = store.getState(
-      "displayFactorVisualizations"
+  handleOpenVizOptions() {
+    const shouldDisplayFactorVizOptions = store.getState(
+      "shouldDisplayFactorVizOptions"
     );
-    const shouldShow = !displayFactorVisualizations;
+    const shouldShow = !shouldDisplayFactorVizOptions;
     store.setState({
-      displayFactorVisualizations: shouldShow
+      shouldDisplayFactorVizOptions: shouldShow
     });
   }
 
@@ -26,13 +26,13 @@ class DisplayVisualizationsButtons extends React.Component {
         <div style={{ display: "flex" }}>
           <StyledWrapper>
             <Button
-              id="displayVisualizationsButton"
+              id="viewVisualizationsDisplayOptions"
               className="wrapper1"
               size={"large"}
-              style={{ marginTop: 50, marginBottom: 50 }}
-              onClick={this.handleDisplayViz}
+              style={{ marginTop: 50, marginLeft: 30, marginBottom: 50 }}
+              onClick={this.handleOpenVizOptions}
             >
-              Display Visualizations of Composite Factors
+              View Visualization Display Options
             </Button>
           </StyledWrapper>
         </div>
