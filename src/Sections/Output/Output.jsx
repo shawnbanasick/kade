@@ -21,7 +21,7 @@ const panes = [
     menuItem: "Options",
     render: () => (
       <Tab.Pane>
-        {showTableDataNotSentWarning && <NoDataMessage>No Data - Click the "Send Table Data to Output" button in Section 6</NoDataMessage> }
+        { showTableDataNotSentWarning && <NoDataMessage>No Data - Click the "Send Table Data to Output" button in Section 6</NoDataMessage> }
         <DataWindow1>
           <FactorSelectionForOutputButtons />
           <DownloadResultsButtons />
@@ -232,7 +232,7 @@ const DataWindow2 = styled.div`
   padding: 5px;
   padding-top: 5px;
   padding-left: 5px;
-  width: calc(100vw - 208px);
+  width: calc(100vw - 122px);
   box-sizing: border-box;
   max-height: calc(100vh - 22px);
   overflow: auto;
