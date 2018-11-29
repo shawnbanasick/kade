@@ -64,6 +64,19 @@ class App extends React.Component {
     const correlationsButtonColor = state.getState("isCorrelationsButtonGreen")
       ? "lightgreen"
       : "#d6dbe0";
+    const factorsButtonColor = state.getState("isFactorsButtonGreen")
+      ? "lightgreen"
+      : "#d6dbe0";
+    const rotationButtonColor = state.getState("isRotationButtonGreen")
+      ? "lightgreen"
+      : "#d6dbe0";
+    const loadingsButtonColor = state.getState("isLoadingsButtonGreen")
+      ? "lightgreen"
+      : "#d6dbe0";
+    const outputButtonColor = state.getState("isOutputButtonGreen")
+      ? "lightgreen"
+      : "#d6dbe0";
+
 
 
     const {viewStart, viewInput, viewData, viewCorrelations, viewFactors, viewRotation, viewLoadings, viewOutput, viewProjectHistory, viewHelp, viewAttribution, viewLicense} = this.localState;
@@ -89,16 +102,16 @@ class App extends React.Component {
             <FileButton buttonColor={ correlationsButtonColor } active={ viewCorrelations } onClick={ () => this.handleClick("viewCorrelations") }>
               <p className="title">3. Correlations</p>
             </FileButton>
-            <FileButton active={ viewFactors } onClick={ () => this.handleClick("viewFactors") }>
+            <FileButton buttonColor={ factorsButtonColor } active={ viewFactors } onClick={ () => this.handleClick("viewFactors") }>
               <p className="title">4. Factors</p>
             </FileButton>
-            <FileButton active={ viewRotation } onClick={ () => this.handleClick("viewRotation") }>
+            <FileButton buttonColor={ rotationButtonColor } active={ viewRotation } onClick={ () => this.handleClick("viewRotation") }>
               <p className="title">5. Rotation</p>
             </FileButton>
-            <FileButton active={ viewLoadings } onClick={ () => this.handleClick("viewLoadings") }>
+            <FileButton buttonColor={ loadingsButtonColor } active={ viewLoadings } onClick={ () => this.handleClick("viewLoadings") }>
               <p className="title">6. Loadings</p>
             </FileButton>
-            <FileButton active={ viewOutput } onClick={ () => this.handleClick("viewOutput") }>
+            <FileButton buttonColor={ outputButtonColor } active={ viewOutput } onClick={ () => this.handleClick("viewOutput") }>
               <p className="title">7. Output</p>
             </FileButton>
             <FileButton active={ viewProjectHistory } onClick={ () => this.handleClick("viewProjectHistory") }>

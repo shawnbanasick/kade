@@ -35,7 +35,8 @@ const handleClick = () => {
         disabledCentroidFactorButton: true,
         showKeepFacForRotButton: true,
         showCentroidSpinner: true,
-        showCentroidError: false
+        showCentroidError: false,
+        isFactorsButtonGreen: true})
       });
     }, 10);
   }

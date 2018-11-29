@@ -18,7 +18,8 @@ const localStore = store({ numQsorts: 0, numFacsForTableWidth: 0 });
 function notify() {
   toast.success("Data sent to Output");
   state.setState({
-    notifyDataSentToOutputSuccess: false
+    notifyDataSentToOutputSuccess: false,
+    isLoadingsButtonGreen: true
   });
 }
 

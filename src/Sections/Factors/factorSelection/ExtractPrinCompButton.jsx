@@ -6,44 +6,39 @@ import store from "../../../store";
 import pcaDispatch from "../PcaLogic/pcaDispatch";
 
 class PCAButton extends React.Component {
-  handleClick() {
-    store.setState({
-      calculatingPca: true,
-      activePcaButton: true,
-      disabledCentroidFactorButton: true,
-      disabledPcaButton: true,
-      showKeepFacForRotButton: true
-    });
-    // to allow time for the spinner to display
-    setTimeout(() => {
-      pcaDispatch();
-    }, 10);
-  }
+    handleClick() {
+        store.setState({
+            calculatingPca: true,
+            activePcaButton: true,
+            disabledCentroidFactorButton: true,
+            disabledPcaButton: true,
+            showKeepFacForRotButton: true
+        });
+        // to allow time for the spinner to display
+        setTimeout(() => {
+            pcaDispatch();
+        }, 10);
+        store.setState({
+            isFactorsButtonGreen: true
+        })
+    }
 
-  render() {
-    const isActive = store.getState("activePcaButton");
-    const isDisabled = store.getState("disabledPcaButton");
-    const isCalculating = store.getState("calculatingPca");
-    const pcaButtonText = store.getState("pcaButtonText");
-    return (
-      <div>
-        <StyledWrapper>
-          <Button
-            id="extractPrinCompButton"
-            className="wrapper1"
-            size={"small"}
-            toggle
-            active={isActive}
-            loading={isCalculating}
-            disabled={isDisabled}
-            onClick={this.handleClick}
-          >
-            {pcaButtonText}
-          </Button>
-        </StyledWrapper>
-      </div>
-    );
-  }
+    render() {
+        const isActive = store.getState("activePcaButton");
+        const isDisabled = store.getState("disabledPcaButton");
+        const isCalculating = store.getState("calculatingPca");
+        const pcaButtonText = store.getState("pcaButtonText");
+        return (
+            <div>
+              <StyledWrapper>
+                <Button id="extractPrinCompButton" className="wrapper1" size={ "small" } toggle active={ isActive } loading={ isCalculating } disabled={ isDisabled }
+                  onClick={ this.handleClick }>
+                  { pcaButtonText }
+                </Button>
+              </StyledWrapper>
+            </div>
+            );
+    }
 }
 export default view(PCAButton);
 
