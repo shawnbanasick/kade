@@ -6,47 +6,47 @@ import SortsList from "./SortsList";
 import StatementsList from "./StatementsList";
 
 const localStore = store({
-    sortsDisplayText: [],
-    statements: [],
-    projectName: "",
-    numQsorts: 0,
-    numStatements: 0,
-    qSortPattern: ["none"]
+  sortsDisplayText: [],
+  statements: [],
+  projectName: "",
+  numQsorts: 0,
+  numStatements: 0,
+  qSortPattern: ["none"]
 });
 
 class Data extends Component {
-    render() {
-        const {sortsDisplayText, statements, projectName, numQsorts, numStatements, qSortPattern} = state;
+  render() {
+    const {sortsDisplayText, statements, projectName, numQsorts, numStatements, qSortPattern} = state;
 
-        localStore.sortsDisplayText = sortsDisplayText;
-        localStore.statements = statements;
-        localStore.projectName = projectName;
-        localStore.numQsorts = numQsorts;
-        localStore.numStatements = numStatements;
-        localStore.qSortPattern = qSortPattern;
+    localStore.sortsDisplayText = sortsDisplayText;
+    localStore.statements = statements;
+    localStore.projectName = projectName;
+    localStore.numQsorts = numQsorts;
+    localStore.numStatements = numStatements;
+    localStore.qSortPattern = qSortPattern;
 
-        return (
-            <MainContent>
-              <ProjectTitle>Project Data</ProjectTitle>
-              <InformationContainer>
-                <h2>Project Name: { projectName }</h2>
-                <h2>Number Q sorts: { numQsorts }</h2>
-                <h2>Number Statements: { numStatements }</h2>
-                { qSortPattern ? (
-                  <h2>Q sort Pattern: { qSortPattern.toString() }</h2>
-                  ) : null }
-              </InformationContainer>
-              <StatementListContainer>
-                <h1>Statements</h1>
-                <StatementsList statements={ localStore.statements } />
-              </StatementListContainer>
-              <SortsListContainer>
-                <h1>Q Sorts</h1>
-                <SortsList displayText={ localStore.sortsDisplayText } />
-              </SortsListContainer>
-            </MainContent>
-            );
-    }
+    return (
+      <MainContent>
+        <ProjectTitle>Project Data</ProjectTitle>
+        <InformationContainer>
+          <h2>Project Name: { projectName }</h2>
+          <h2>Number Q sorts: { numQsorts }</h2>
+          <h2>Number Statements: { numStatements }</h2>
+          { qSortPattern ? (
+            <h2>Q sort Pattern: { qSortPattern.toString() }</h2>
+            ) : null }
+        </InformationContainer>
+        <StatementListContainer>
+          <h1>Statements</h1>
+          <StatementsList statements={ localStore.statements } />
+        </StatementListContainer>
+        <SortsListContainer>
+          <h1>Q Sorts</h1>
+          <SortsList displayText={ localStore.sortsDisplayText } />
+        </SortsListContainer>
+      </MainContent>
+      );
+  }
 }
 
 export default view(Data);
@@ -94,7 +94,7 @@ const MainContent = styled.div`
   font-size: 18px;
   background-color: white;
 
-  width: calc(100vw - 153px);
+  width: calc(100vw - 122px);
   box-sizing: border-box;
   max-height: calc(100vh - 22px);
   overflow: auto;

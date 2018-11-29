@@ -1,6 +1,6 @@
-import { view, store } from "react-easy-state";
-import React, { Component } from "react";
 import styled from "styled-components";
+import React, { Component } from "react";
+import { view, store } from "react-easy-state";
 import state from "../../store";
 import mainCorrCalcs from "./correlationsLogic/mainCorrCalcs";
 
@@ -15,6 +15,9 @@ const handleClick = () => {
   const rawSortsArray = mainDataObject.map(item => item.rawSort);
 
   mainCorrCalcs(respondentNames, rawSortsArray);
+  state.setState({
+    isCorrelationsButtonGreen: true
+  });
 };
 
 class CalculateCorrelationsButton extends Component {
@@ -23,12 +26,12 @@ class CalculateCorrelationsButton extends Component {
       <BeginAnalysisButton buttonColor={ localStore.buttonColor } onClick={ () => handleClick() }>
         <p>Calculate Correlations</p>
         { /* <Spinner className="item-loader-container">
-                                                                                                                          <div className="la-ball-pulse la-2x">
-                                                                                                                            <div />
-                                                                                                                            <div />
-                                                                                                                            <div />
-                                                                                                                          </div>
-                                                                                                                        </Spinner> */ }
+                                                                                                                                          <div className="la-ball-pulse la-2x">
+                                                                                                                                            <div />
+                                                                                                                                            <div />
+                                                                                                                                            <div />
+                                                                                                                                          </div>
+                                                                                                                                        </Spinner> */ }
       </BeginAnalysisButton>
       );
   }

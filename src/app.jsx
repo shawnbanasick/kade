@@ -61,126 +61,79 @@ class App extends React.Component {
     const inputButtonColor = state.getState("isInputButtonGreen")
       ? "lightgreen"
       : "#d6dbe0";
+    const correlationsButtonColor = state.getState("isCorrelationsButtonGreen")
+      ? "lightgreen"
+      : "#d6dbe0";
 
-    const {
-      viewStart,
-      viewInput,
-      viewData,
-      viewCorrelations,
-      viewFactors,
-      viewRotation,
-      viewLoadings,
-      viewOutput,
-      viewProjectHistory,
-      viewHelp,
-      viewAttribution,
-      viewLicense
-    } = this.localState;
+
+    const {viewStart, viewInput, viewData, viewCorrelations, viewFactors, viewRotation, viewLoadings, viewOutput, viewProjectHistory, viewHelp, viewAttribution, viewLicense} = this.localState;
     let showTopBar = false;
     if (process.platform === "darwin") {
       showTopBar = true;
     }
 
     return (
-      <AppWrap active={showTopBar}>
-        {showTopBar ? <Header>KADE</Header> : null}
+      <AppWrap active={ showTopBar }>
+        { showTopBar ? <Header>KADE</Header> : null }
         <Split>
           <FilesWindow>
-            <StartButton
-              active={viewStart}
-              onClick={() => this.handleClick("viewStart")}
-            >
+            <StartButton active={ viewStart } onClick={ () => this.handleClick("viewStart") }>
               <p className="title">Start</p>
             </StartButton>
-            <FileButton
-              buttonColor={inputButtonColor}
-              active={viewInput}
-              onClick={() => this.handleClick("viewInput")}
-            >
+            <FileButton buttonColor={ inputButtonColor } active={ viewInput } onClick={ () => this.handleClick("viewInput") }>
               <p className="title">1. Input</p>
             </FileButton>
-            <FileButton
-              buttonColor={inputButtonColor}
-              active={viewData}
-              onClick={() => this.handleClick("viewData")}
-            >
+            <FileButton buttonColor={ inputButtonColor } active={ viewData } onClick={ () => this.handleClick("viewData") }>
               <p className="title">2. Data</p>
             </FileButton>
-            <FileButton
-              active={viewCorrelations}
-              onClick={() => this.handleClick("viewCorrelations")}
-            >
+            <FileButton buttonColor={ correlationsButtonColor } active={ viewCorrelations } onClick={ () => this.handleClick("viewCorrelations") }>
               <p className="title">3. Correlations</p>
             </FileButton>
-            <FileButton
-              active={viewFactors}
-              onClick={() => this.handleClick("viewFactors")}
-            >
+            <FileButton active={ viewFactors } onClick={ () => this.handleClick("viewFactors") }>
               <p className="title">4. Factors</p>
             </FileButton>
-            <FileButton
-              active={viewRotation}
-              onClick={() => this.handleClick("viewRotation")}
-            >
+            <FileButton active={ viewRotation } onClick={ () => this.handleClick("viewRotation") }>
               <p className="title">5. Rotation</p>
             </FileButton>
-            <FileButton
-              active={viewLoadings}
-              onClick={() => this.handleClick("viewLoadings")}
-            >
+            <FileButton active={ viewLoadings } onClick={ () => this.handleClick("viewLoadings") }>
               <p className="title">6. Loadings</p>
             </FileButton>
-            <FileButton
-              active={viewOutput}
-              onClick={() => this.handleClick("viewOutput")}
-            >
+            <FileButton active={ viewOutput } onClick={ () => this.handleClick("viewOutput") }>
               <p className="title">7. Output</p>
             </FileButton>
-            <FileButton
-              active={viewProjectHistory}
-              onClick={() => this.handleClick("viewProjectHistory")}
-            >
+            <FileButton active={ viewProjectHistory } onClick={ () => this.handleClick("viewProjectHistory") }>
               <p className="title">Project History</p>
             </FileButton>
             <SpacerButton>
               <p className="title" />
             </SpacerButton>
-            <FileButton
-              active={viewHelp}
-              onClick={() => this.handleClick("viewLicense")}
-            >
+            <FileButton active={ viewHelp } onClick={ () => this.handleClick("viewLicense") }>
               <p className="title">Help</p>
             </FileButton>
-            <FileButton
-              active={viewAttribution}
-              onClick={() => this.handleClick("viewLicense")}
-            >
+            <FileButton active={ viewAttribution } onClick={ () => this.handleClick("viewLicense") }>
               <p className="title">Attribution</p>
             </FileButton>
-            <FileButton
-              active={viewLicense}
-              onClick={() => this.handleClick("viewLicense")}
-            >
+            <FileButton active={ viewLicense } onClick={ () => this.handleClick("viewLicense") }>
               <p className="title">License</p>
             </FileButton>
           </FilesWindow>
           <ActionWindow>
-            {viewStart && <Start view={viewStart} />}
-            {viewInput && <Input view={viewInput} />}
-            {viewData && <Data view={viewData} />}
-            {viewCorrelations && <Correlations view={viewCorrelations} />}
-            {viewFactors && <Factors view={viewFactors} />}
-            {viewRotation && <Rotation view={viewRotation} />}
-            {viewLoadings && <Loadings view={viewLoadings} />}
-            {viewOutput && <Output view={viewOutput} />}
-            {viewProjectHistory && <ProjectHistory view={viewProjectHistory} />}
-            {viewHelp && <License view={viewLicense} />}
-            {viewAttribution && <License view={viewLicense} />}
-            {viewLicense && <License view={viewLicense} />}
+            { viewStart && <Start view={ viewStart } /> }
+            { viewInput && <Input view={ viewInput } /> }
+            { viewData && <Data view={ viewData } /> }
+            { viewCorrelations && <Correlations view={ viewCorrelations } /> }
+            { viewFactors && <Factors view={ viewFactors } /> }
+            { viewRotation && <Rotation view={ viewRotation } /> }
+            { viewLoadings && <Loadings view={ viewLoadings } /> }
+            { viewOutput && <Output view={ viewOutput } /> }
+            { viewProjectHistory && <ProjectHistory view={ viewProjectHistory } /> }
+            { viewHelp && <License view={ viewLicense } /> }
+            { viewAttribution && <License view={ viewLicense } /> }
+            { viewLicense && <License view={ viewLicense } /> }
           </ActionWindow>
         </Split>
       </AppWrap>
-    );
+      );
   }
 }
 
