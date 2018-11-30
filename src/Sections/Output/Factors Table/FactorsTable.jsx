@@ -23,10 +23,8 @@ const getGridColDefsFacTable = (numFacs, headerRow) => {
   const colWidthVals = [60, 250, 60, 110, 90, 110, 90, 110, 90, 110, 90, 110, 90, 110, 90, 110, 90, 110, 90];
   const alignmentVals = ["center", "left", "center", "center", "center", "center", "center", "center", "center", "center", "center", "center", "center", "center", "center", "center", "center", "center", "center"];
   const pinnedVals = [true, true, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false];
-  console.log(numFacs);
-  console.log(JSON.stringify(headerRow));
 
-  const gridColDefsFacTable = [ ];
+  const gridColDefsFacTable = [];
 
   for (let i = 0; i < headerRow.length; i++) {
     gridColDefsFacTable.push({
@@ -48,11 +46,6 @@ const getGridColDefsFacTable = (numFacs, headerRow) => {
 const getGridRowDataFacTable = (data2, headerRow) => {
 
   const data = data2.slice(5);
-
-  console.log(JSON.stringify(data));
-  console.log(JSON.stringify(headerRow));
-
-
   const gridRowDataFacTable = [];
 
   for (let j = 0; j < data.length; j++) {
@@ -126,17 +119,16 @@ class FactorsTable extends Component {
     localStore.numFactors = numFactors;
     localStore.numStatements = numStatements;
 
-    const { onGridReady } = this;
+    const {onGridReady} = this;
 
     const gridColDefsFacTable = getGridColDefsFacTable(currentData[1], currentData[2]); // store.getState("gridColDefsFacTableEigen");
     const gridRowDataFacTable = getGridRowDataFacTable(currentData[0], currentData[2]);
 
     return (
       <div>
-      <p style={ { fontWeight: "normal", marginTop: 15, textAlign: "left" } }>
+        <p style={ { fontWeight: "normal", marginTop: 15, textAlign: "left" } }>
           Click the table headers to re-sort by column (low-to-high, high-to-low, original sort).
         </p>
-
         <div id="innerContainerFactors" style={ { width: getWidth(numFactors), height: getHeight(numStatements) } } className="ag-theme-fresh">
           <AgGridReact id="factorsTable" columnDefs={ gridColDefsFacTable } rowData={ gridRowDataFacTable } onGridReady={ onGridReady } enableSorting />
         </div>

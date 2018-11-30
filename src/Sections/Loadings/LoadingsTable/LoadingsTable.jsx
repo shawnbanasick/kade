@@ -49,12 +49,7 @@ function getWidth(numFacsForTableWidth) {
 }
 
 function getHeight(numQsorts) {
-  let heightVal = 40 + 25 * numQsorts;
-  // let y = window.innerHeight - 390;
-  // if (y < heightVal) {
-  //   y += "px";
-  //   return y;
-  // }
+  let heightVal = window.innerHeight - 370;
   heightVal += "px";
   return heightVal;
 }
@@ -63,8 +58,8 @@ function resetWidthAndHeight() {
   // this.gridApi.setGridAutoHeight(false);
   const table = document.querySelector("#loadingsTableContainer");
   if (table !== null) {
-    // table.style.height = getHeight(localStore.numQsorts);
     table.style.width = getWidth(localStore.numFacsForTableWidth);
+    table.style.height = getHeight();
   }
 }
 
