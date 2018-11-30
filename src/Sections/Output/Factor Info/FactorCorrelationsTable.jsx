@@ -1,13 +1,8 @@
-import React, { Component } from "react";
 import { view } from "react-easy-state";
+import React, { Component } from "react";
 import { AgGridReact } from "ag-grid-react";
 import store from "../../../store";
 
-// let containerStyle = {
-//   marginTop: 30,
-//   height: 200,
-//   width: 862
-// };
 
 const getCurrentData = () => {
   const data = store.getState("factorCorrelationsTableData");
@@ -112,3 +107,4 @@ class FactorCorrelationsTable extends Component {
 }
 
 export default view(FactorCorrelationsTable);
+

@@ -350,9 +350,6 @@ const pushFactorsToOutputArray = function(
     synFactorArray1Holder.push(synFactorArray1);
   }
 
-  console.log('synfactor: ' + JSON.stringify(synFactorArray1));
-  
-
   store.setState({
     factorWeightFactorArrayHolder,
     miniCorrelationArrayHolder,

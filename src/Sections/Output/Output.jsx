@@ -13,8 +13,10 @@ import OutputFactorTablesTransitionContainer from "./OutputFactorTablesTransitio
 import MultipleFactorsFlaggedWarningModal from "./MultipleFactorsFlaggedWarningModal";
 import RefreshFactorVizButton from "./FactorVisualizations/RefreshFactorVizButton";
 import ShowVizOptionsButton from "./DisplayVisualizationsButtons/ShowVizOptionsButton";
+import FactorsTable from './Factors Table/FactorsTable';
 
 let showTableDataNotSentWarning;
+let showFactorsTable;
 
 // factorScoreRanksArray
 
@@ -51,11 +53,11 @@ const panes = [
     )
   },
   {
-    menuItem: "Factor Tables",
+    menuItem: "Factors Table",
     render: () => (
       <Tab.Pane>
         <DataWindow2>
-      
+          { showFactorsTable && <FactorsTable /> }
         </DataWindow2>
       </Tab.Pane>
     )
@@ -85,6 +87,8 @@ class Output extends Component {
   render() {
     const { activeIndex } = localStore;
     showTableDataNotSentWarning = state.getState("showTableDataNotSentWarning");
+    showFactorsTable = state.getState("showFactorCorrelationsTable");
+
 
     // const shouldDisplayFactorViz = state.getState(
     //   "displayFactorVisualizations"

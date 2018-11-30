@@ -179,8 +179,6 @@ const pushFactorScoreComparisonRanksTableToOutput = function(
   );
   outputData.push(factorScoreRanksArray);
 
-  console.log(`ranks array: ${  JSON.stringify(factorScoreRanksArray)}`);
-
     store.setState({factorScoreRanksArray});
 
   // setup the array of ranked statements
