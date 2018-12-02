@@ -8,7 +8,6 @@ import calculateCommunalities from "../../Rotation/varimaxLogic/2calculateCommun
 import calcuateSigCriterionValues from "../../Rotation/varimaxLogic/2calculateSigCriterionValues";
 import loadingsTableDataPrep from "../LoadingsTable/loadingsTableDataPrep";
 
-
 const buttonStyle = {
   // border: "solid 2px blue",
   marginTop: "3px"
@@ -19,7 +18,7 @@ class ProjectHistory extends Component {
     // get counter and adjust value
     let archiveCounter = store.getState("archiveCounter");
     archiveCounter -= 1;
-    const previousFacMatrixArchive = `facMatrixArc${  archiveCounter}`;
+    const previousFacMatrixArchive = `facMatrixArc${archiveCounter}`;
 
     // remove entry from project history
     const projectHistoryArray = store.getState("projectHistoryArray");
@@ -83,7 +82,8 @@ class ProjectHistory extends Component {
         showStandardErrorsDifferences: false,
         showFactorCharacteristicsTable: false,
         showDownloadOutputButtons: false,
-        displayFactorVisualizations: false
+        displayFactorVisualizations: false,
+        sendDataToOutputButtonColor: "#d6dbe0"
       });
       return; // early return varimax undo
     }
@@ -119,7 +119,8 @@ class ProjectHistory extends Component {
         showStandardErrorsDifferences: false,
         showFactorCharacteristicsTable: false,
         showDownloadOutputButtons: false,
-        displayFactorVisualizations: false
+        displayFactorVisualizations: false,
+        sendDataToOutputButtonColor: "#d6dbe0"
       });
       return;
     }
@@ -140,31 +141,38 @@ class ProjectHistory extends Component {
       displayFactorVisualizations: false,
       bipolarDisabled: false,
       bipolarIndexArray: [],
-      shouldDisplayFactorViz: false
+      shouldDisplayFactorViz: false,
+      sendDataToOutputButtonColor: "#d6dbe0"
     });
-  // normal return
-  };
+    // normal return
+  }
 
   render() {
     const projectHistoryArray = store.getState("projectHistoryArray");
     const shouldDisplayUndoButton = projectHistoryArray.length > 3;
     return (
-      <div style={ { marginTop: "30px" } }>
+      <div style={{ marginTop: "30px" }}>
         <TitleDiv>Project History</TitleDiv>
         <CustomOl>
-          { projectHistoryArray.map((listValue, index) => <li key={ index }>
-                                                            { listValue }
-                                                          </li>) }
+          {projectHistoryArray.map((listValue, index) => (
+            <li key={index}>{listValue}</li>
+          ))}
         </CustomOl>
-        { shouldDisplayUndoButton && (
+        {shouldDisplayUndoButton && (
           <StyledWrapper>
-            <Button id="undoButton" className="wrapper1" onClick={ this.handleUndo.bind(this) } style={ buttonStyle } size="tiny">
+            <Button
+              id="undoButton"
+              className="wrapper1"
+              onClick={this.handleUndo.bind(this)}
+              style={buttonStyle}
+              size="tiny"
+            >
               Undo Last Action
             </Button>
           </StyledWrapper>
-          ) }
+        )}
       </div>
-      );
+    );
   }
 }
 
@@ -180,24 +188,25 @@ const CustomOl = styled.ol`
   margin-top: 2px;
   margin-bottom: 2px;
   font-size: 20px;
+  line-height: 1.2em;
 `;
 
-const StyledWrapper = styled.div` 
+const StyledWrapper = styled.div`
   margin-top: 10px;
   margin-left: 20px;
-.wrapper1 { 
-  border: 1px solid black;
-  box-shadow: 0 2px 2px 0 black;
-
-  &:hover {
+  .wrapper1 {
     border: 1px solid black;
     box-shadow: 0 2px 2px 0 black;
-  }
 
-  &:active {
-    box-shadow: 0 0 1px 0 black inset;
-    margin-left: 3px;
-    margin-top: 3px;
+    &:hover {
+      border: 1px solid black;
+      box-shadow: 0 2px 2px 0 black;
+    }
+
+    &:active {
+      box-shadow: 0 0 1px 0 black inset;
+      margin-left: 3px;
+      margin-top: 3px;
+    }
   }
-  } 
 `;

@@ -12,7 +12,7 @@ import autoFlagFactors from "../loadingsLogic/autoFlagFactors";
 import SplitBipolarFactorModal from "./SplitBipolarFactorModal";
 import MajorityCommonVarianceCheckbox from "./MajorityCommonVarianceCheckbox";
 
-const localStore = store({ numQsorts: 0, numFacsForTableWidth: 0 });
+  const localStore = store({ numQsorts: 0, numFacsForTableWidth: 0, sendDataToOutputButtonColor: "#d6dbe0"});
 
 // notification of table data sent to output
 function notify() {
@@ -204,6 +204,9 @@ class LoadingsTable extends Component {
     const sendDataToOutputButtonColor = state.getState(
       "sendDataToOutputButtonColor"
     );
+
+    console.log('button color: ' + JSON.stringify(sendDataToOutputButtonColor));
+    
 
     // increase width if bipolar present
     if (bipolarSplitCount > 0) {

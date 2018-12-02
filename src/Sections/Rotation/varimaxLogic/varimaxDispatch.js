@@ -28,7 +28,10 @@ const varimaxDispatch = function() {
   ); // ok, same
 
   // calculate rotations
-  const rotatedResults = doVarimaxRotations(standardizedFactorMatrix, sumSquares);
+  const rotatedResults = doVarimaxRotations(
+    standardizedFactorMatrix,
+    sumSquares
+  );
 
   const numFactors = store.getState("numFactorsKeptForRot");
 
@@ -56,7 +59,8 @@ const varimaxDispatch = function() {
     showStandardErrorsDifferences: false,
     showFactorCharacteristicsTable: false,
     showDownloadOutputButtons: false,
-    displayFactorVisualizations: false
+    displayFactorVisualizations: false,
+    sendDataToOutputButtonColor: "#d6dbe0"
   });
 
   // remember - calc commun must be a matrix in table format
@@ -71,7 +75,7 @@ const varimaxDispatch = function() {
   // archive values for undo function (ProjectHistory component)
   let archiveCounter = store.getState("archiveCounter");
   archiveCounter += 1;
-  const archiveName = `facMatrixArc${  archiveCounter}`;
+  const archiveName = `facMatrixArc${archiveCounter}`;
   store.setState({
     archiveCounter
   });
