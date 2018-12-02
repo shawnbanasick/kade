@@ -1,29 +1,42 @@
 import React from "react";
-import { view, store } from "react-easy-state";
 import styled from "styled-components";
+import { view, store } from "react-easy-state";
+import state from "../../../store";
 import uploadLipsetData from "./uploadLipsetData";
-import state from '../../../store';
+import revertLoadButtonsColors from "./revertLoadButtonsColors";
 
 const localStore = store({
-    buttonColor: "#d6dbe0"
+  buttonColor: "#d6dbe0"
 });
 
 const handleClick = () => {
-    uploadLipsetData();
-    localStore.buttonColor = "rgba(144,	238, 144, .6)";
-    state.setState({
-        notifyDataUploadSuccess: true,
-        isInputButtonGreen: true
-    });
+  uploadLipsetData();
+  revertLoadButtonsColors();
+  state.setState({
+    loadLipsetButtonColor: "rgba(144,	238, 144, .6)",
+    notifyDataUploadSuccess: true,
+    isInputButtonGreen: true
+  });
 };
 
-const LipsetButton1 = () => (
-    <div>
-      <LoadTxtButton id="lipsetButton" floated="right" onClick={ () => handleClick() } buttonColor={ localStore.buttonColor }>
-        Load Lipset
-      </LoadTxtButton>
-    </div>
-);
+class LipsetButton1 extends React.Component {
+  render() {
+    const loadLipsetButtonColor = state.getState("loadLipsetButtonColor");
+    localStore.buttonColor = loadLipsetButtonColor;
+    return (
+      <div>
+        <LoadTxtButton
+          id="lipsetButton"
+          floated="right"
+          onClick={() => handleClick()}
+          buttonColor={localStore.buttonColor}
+        >
+          Load Lipset
+        </LoadTxtButton>
+      </div>
+    );
+  }
+}
 
 export default view(LipsetButton1);
 
@@ -53,7 +66,7 @@ const LoadTxtButton = styled.button`
   &:active {
     box-shadow: 0 0 1px 0 black inset;
     margin-left: 3px;
-    margin-top: 3px;
+    /* margin-top: 3px; */
     background-color: rgba(144, 238, 144, 0.6);
   }
 `;

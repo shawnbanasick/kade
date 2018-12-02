@@ -1,8 +1,9 @@
 import React from "react";
-import { view, store } from "react-easy-state";
 import styled from "styled-components";
+import { view, store } from "react-easy-state";
+import state from "../../../store";
 import uploadMotivationalData from "./uploadMotivationalData";
-import state from '../../../store';
+import revertLoadButtonsColors from "./revertLoadButtonsColors";
 
 const localStore = store({
   buttonColor: "#d6dbe0"
@@ -10,20 +11,34 @@ const localStore = store({
 
 const handleClick = () => {
   uploadMotivationalData();
-  localStore.buttonColor = "rgba(144,	238, 144, .6)";
+  revertLoadButtonsColors();
   state.setState({
+    loadMotivationalButtonColor: "rgba(144,	238, 144, .6)",
     notifyDataUploadSuccess: true,
     isInputButtonGreen: true
   });
 };
 
-const MotivationalButton1 = () => (
-  <div>
-    <LoadTxtButton id="buzzwordButton" floated="right" onClick={ () => handleClick() } buttonColor={ localStore.buttonColor }>
-      Load Motivational
-    </LoadTxtButton>
-  </div>
-);
+class MotivationalButton1 extends React.Component {
+  render() {
+    const loadMotivationalButtonColor = state.getState(
+      "loadMotivationalButtonColor"
+    );
+    localStore.buttonColor = loadMotivationalButtonColor;
+    return (
+      <div>
+        <LoadTxtButton
+          id="motivationalButton"
+          floated="right"
+          onClick={() => handleClick()}
+          buttonColor={localStore.buttonColor}
+        >
+          Load Motivational
+        </LoadTxtButton>
+      </div>
+    );
+  }
+}
 
 export default view(MotivationalButton1);
 
@@ -52,7 +67,6 @@ const LoadTxtButton = styled.button`
   &:active {
     box-shadow: 0 0 1px 0 black inset;
     margin-left: 3px;
-    margin-top: 3px;
     background-color: rgba(144, 238, 144, 0.6);
   }
 `;

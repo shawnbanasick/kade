@@ -167,7 +167,7 @@ const StyledWrapper = styled.div`
 
     &:active {
       box-shadow: 0 0 1px 0 black inset;
-      margin-left: 3px;
+      margin-left: 53px;
       margin-top: 3px;
     }
   }
