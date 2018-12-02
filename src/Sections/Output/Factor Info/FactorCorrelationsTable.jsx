@@ -3,7 +3,6 @@ import React, { Component } from "react";
 import { AgGridReact } from "ag-grid-react";
 import store from "../../../store";
 
-
 const getCurrentData = () => {
   const data = store.getState("factorCorrelationsTableData");
   const numFacs2 = store.getState("userSelectedFactors");
@@ -107,4 +106,3 @@ class FactorCorrelationsTable extends Component {
 }
 
 export default view(FactorCorrelationsTable);
-

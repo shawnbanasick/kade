@@ -67,6 +67,7 @@ export default store({
   showOutputFactorSelection: false,
   showDownloadOutputButtons: false,
   showFactorExtractionButtons: false,
+  sendDataToOuputButtonColor: "#d6dbe0",
   showUnrotatedFactorTable: false,
   showEigenvaluesTable: false,
   showScreePlot: false,

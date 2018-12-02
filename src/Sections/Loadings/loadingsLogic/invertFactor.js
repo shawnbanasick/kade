@@ -15,7 +15,7 @@ const invertFactor = () => {
     // archive current data for undo function in loadings table
     let archiveCounter = store.getState("archiveCounter");
     archiveCounter += 1;
-    const archiveName = `facMatrixArc${  archiveCounter}`;
+    const archiveName = `facMatrixArc${archiveCounter}`;
 
     // send archive to local storage to use with the undo function in Project History
     sessionStorage.setItem(archiveName, JSON.stringify([...currentLoadings]));
@@ -29,7 +29,7 @@ const invertFactor = () => {
     }
 
     // update project history
-    const projectHistoryArrayText = `Factor ${  factorToInvert  } was inverted`;
+    const projectHistoryArrayText = `Factor ${factorToInvert} was inverted`;
     projectHistoryArray.push(projectHistoryArrayText);
 
     store.setState({
@@ -45,7 +45,8 @@ const invertFactor = () => {
       showStandardErrorsDifferences: false,
       showFactorCharacteristicsTable: false,
       showDownloadOutputButtons: false,
-      displayFactorVisualizations: false
+      displayFactorVisualizations: false,
+      sendDataToOutputButtonColor: "orange"
     });
 
     // call table update with new inverted factor

@@ -159,7 +159,8 @@ const splitBipolarFactor = () => {
       showDownloadOutputButtons: false,
       displayFactorVisualizations: false,
       bipolarDisabled: true,
-      bipolarIndexArray
+      bipolarIndexArray,
+      sendDataToOutputButtonColor: "orange"
     });
   }
 };

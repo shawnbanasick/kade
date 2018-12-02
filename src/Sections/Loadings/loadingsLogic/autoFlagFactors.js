@@ -37,7 +37,7 @@ const autoFlagFactors = function() {
       comVarText = " and a majority of common variance was required";
     }
     const autoFlagHistory = [
-      `Autoflagging set to ${  criticalLevelText  }${comVarText}`
+      `Autoflagging set to ${criticalLevelText}${comVarText}`
     ];
 
     const numFactorsKeptForRot = store.getState("numFactorsKeptForRot");
@@ -73,7 +73,8 @@ const autoFlagFactors = function() {
       showFactorCharacteristicsTable: false,
       showDownloadOutputButtons: false,
       shouldDisplayFactorVizOptions: false,
-      displayFactorVisualizations: false
+      displayFactorVisualizations: false,
+      sendDataToOutputButtonColor: "orange"
     });
     return null;
   }, 10);

@@ -3,27 +3,48 @@ import React, { Component } from "react";
 import { AgGridReact } from "ag-grid-react";
 import state from "../../../store";
 
-const getCurrentData = () => {
-  const data = state.getState("factorScoreRanksArray");
-  const numFacs2 = state.getState("userSelectedFactors");
-  const numFacs = numFacs2.length;
-  // set up header row
-  const headerRow = [
-    "Nm", "Statement", "N", "F1 Z-score", "F1 Rank", "F2 Z-score", "F2 Rank", "F3 Z-score", "F3 Rank", "F4 Z-score", "F4 Rank", "F5 Z-score", "F5 Rank", "F6 Z-score", "F6 Rank", "F7 Z-score", "F7 Rank", "F8 Z-score", "F8 Rank"
-  ];
+const getArrayValues = userSelectedFactors => {
+  const headerRow = ["Nm", "Statement", "N"];
 
-  const lengthCutOff = (numFacs * 2) + 3;
-  headerRow.length = lengthCutOff;
+  const colWidthVals = [60, 250, 60];
+  // 110,
+  //  90,
 
-  return [data, numFacs, headerRow];
+  const alignmentVals = ["center", "left", "center"];
+  // center
+
+  const pinnedVals = [true, true, true];
+  // false
+
+  for (let i = 0; i < userSelectedFactors.length; i++) {
+    const identifier3 = userSelectedFactors[i].slice(7);
+    const identifier2 = `F${identifier3} Z-score`;
+    const identifier = `F${identifier3} Rank`;
+    headerRow.push(identifier2, identifier);
+    colWidthVals.push(110, 90);
+    alignmentVals.push("center", "center");
+    pinnedVals.push(false, false);
+  }
+
+  return [headerRow, colWidthVals, alignmentVals, pinnedVals];
 };
 
-const getGridColDefsFacTable = (numFacs, headerRow) => {
+const getCurrentData = (headerRow, numFacs) => {
+  const data = state.getState("factorScoreRanksArray");
 
-  const colWidthVals = [60, 250, 60, 110, 90, 110, 90, 110, 90, 110, 90, 110, 90, 110, 90, 110, 90, 110, 90];
-  const alignmentVals = ["center", "left", "center", "center", "center", "center", "center", "center", "center", "center", "center", "center", "center", "center", "center", "center", "center", "center", "center"];
-  const pinnedVals = [true, true, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false];
+  const lengthCutOff = numFacs * 2 + 3;
+  headerRow.length = lengthCutOff;
 
+  return [data, numFacs];
+};
+
+const getGridColDefsFacTable = (
+  numFacs,
+  headerRow,
+  pinnedVals,
+  colWidthVals,
+  alignmentVals
+) => {
   const gridColDefsFacTable = [];
 
   for (let i = 0; i < headerRow.length; i++) {
@@ -42,9 +63,7 @@ const getGridColDefsFacTable = (numFacs, headerRow) => {
   return gridColDefsFacTable;
 };
 
-
 const getGridRowDataFacTable = (data2, headerRow) => {
-
   const data = data2.slice(5);
   const gridRowDataFacTable = [];
 
@@ -68,7 +87,7 @@ const localStore = store({
 });
 
 function getWidth(numFactors) {
-  let widthVal = 375 + (200 * numFactors);
+  let widthVal = 383 + 200 * numFactors;
   let x = window.innerWidth - 40 - 152;
 
   if (x < widthVal) {
@@ -109,31 +128,62 @@ class FactorsTable extends Component {
   onGridReady(params) {
     this.gridApi = params.api;
     this.columnApi = params.columnApi;
-  // this.gridApi.sizeColumnsToFit();
+    // this.gridApi.sizeColumnsToFit();
   }
 
   render() {
-    const currentData = getCurrentData();
+    // return [headerRow, colWidthVals, alignmentVals, pinnedVals];
+    const userSelectedFactors = state.getState("userSelectedFactors");
+    const numFacs = userSelectedFactors.length;
+
+    // const outputButtonsArrayNumbers = state.getState("outputButtonsArray");
+    const arrayValues = getArrayValues(userSelectedFactors);
+
+    const currentData = getCurrentData(arrayValues[0], numFacs);
+
     const numFactors = currentData[1];
     const numStatements = state.getState("numStatements");
     localStore.numFactors = numFactors;
     localStore.numStatements = numStatements;
 
-    const {onGridReady} = this;
+    const { onGridReady } = this;
 
-    const gridColDefsFacTable = getGridColDefsFacTable(currentData[1], currentData[2]); // store.getState("gridColDefsFacTableEigen");
-    const gridRowDataFacTable = getGridRowDataFacTable(currentData[0], currentData[2]);
+    const gridColDefsFacTable = getGridColDefsFacTable(
+      currentData[1], // numFacs
+      arrayValues[0], // headerRow
+      arrayValues[3], // pinnedVals
+      arrayValues[1], // colWidthVals
+      arrayValues[2] // alighmentVals
+    ); // store.getState("gridColDefsFacTableEigen");
+    const gridRowDataFacTable = getGridRowDataFacTable(
+      currentData[0], // data
+      arrayValues[0] // headerRow
+    );
 
     return (
       <div>
-        <p style={ { fontWeight: "normal", marginTop: 15, textAlign: "left" } }>
-          Click the table headers to re-sort by column (low-to-high, high-to-low, original sort).
+        <p style={{ fontWeight: "normal", marginTop: 15, textAlign: "left" }}>
+          Click the table headers to re-sort by column (low-to-high,
+          high-to-low, original sort).
         </p>
-        <div id="innerContainerFactors" style={ { width: getWidth(numFactors), height: getHeight(numStatements) } } className="ag-theme-fresh">
-          <AgGridReact id="factorsTable" columnDefs={ gridColDefsFacTable } rowData={ gridRowDataFacTable } onGridReady={ onGridReady } enableSorting />
+        <div
+          id="innerContainerFactors"
+          style={{
+            width: getWidth(numFactors),
+            height: getHeight(numStatements)
+          }}
+          className="ag-theme-fresh"
+        >
+          <AgGridReact
+            id="factorsTable"
+            columnDefs={gridColDefsFacTable}
+            rowData={gridRowDataFacTable}
+            onGridReady={onGridReady}
+            enableSorting
+          />
         </div>
       </div>
-      );
+    );
   }
 }
 

@@ -1,28 +1,28 @@
 import React from "react";
-import { view } from "react-easy-state";
+import { view, store } from "react-easy-state";
 import { Dropdown } from "semantic-ui-react";
-import store from "../../../store";
+import state from "../../../store";
 
 const saveDropdownValueToState = (event, data) => {
-  let factorToSplit = data.value;
-  store.setState({
-    factorToSplit: factorToSplit
+  const factorToSplit = data.value;
+  state.setState({
+    factorToSplit
   });
 };
 
+const localStore = store({ options: [] });
+
 class InvertFactorDropdownSelect extends React.Component {
-  store = {};
+  // componentWillUpdate() {
+  //   this.store.options = this.getOptions();
+  // }
 
-  componentWillUpdate() {
-    this.store.options = this.getOptions();
-  }
+  // componentWillMount() {
+  //   this.store.options = this.getOptions();
+  // }
 
-  componentWillMount() {
-    this.store.options = this.getOptions();
-  }
-
-  getOptions = () => {
-    let options = [
+  getOptions() {
+    const options = [
       {
         key: "factor1",
         text: "1",
@@ -64,14 +64,14 @@ class InvertFactorDropdownSelect extends React.Component {
         value: 8
       }
     ];
-    let numFactorsKeptForRot = store.getState("numFactorsKeptForRot");
+    const numFactorsKeptForRot = state.getState("numFactorsKeptForRot");
     options.length = +numFactorsKeptForRot;
 
     return options;
-  };
+  }
 
   render() {
-    const { options } = this.store;
+    const options = this.getOptions();
     return (
       <div style={{ display: "flex" }}>
         <span style={{ marginRight: 20, fontSize: 30 }}>
@@ -80,7 +80,7 @@ class InvertFactorDropdownSelect extends React.Component {
         <Dropdown
           placeholder={"?"}
           onChange={saveDropdownValueToState}
-          openOnFocus={true}
+          openOnFocus
           button
           simple
           item

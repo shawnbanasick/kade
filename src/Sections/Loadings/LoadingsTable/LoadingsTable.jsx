@@ -16,7 +16,7 @@ const localStore = store({ numQsorts: 0, numFacsForTableWidth: 0 });
 
 // notification of table data sent to output
 function notify() {
-  toast.success("Data sent to Output");
+  toast.success("Data sent to Output", { autoClose: 1500 });
   state.setState({
     notifyDataSentToOutputSuccess: false,
     isLoadingsButtonGreen: true
@@ -49,9 +49,14 @@ function getWidth(numFacsForTableWidth) {
 }
 
 function getHeight(numQsorts) {
-  let heightVal = window.innerHeight - 370;
-  heightVal += "px";
-  return heightVal;
+  let heightVal1 = 40 + 25 * numQsorts;
+  let heightVal2 = window.innerHeight - 370;
+  if (heightVal1 < heightVal2) {
+    heightVal1 += "px";
+    return heightVal1;
+  }
+  heightVal2 += "px";
+  return heightVal2;
 }
 
 function resetWidthAndHeight() {
@@ -77,6 +82,7 @@ class LoadingsTable extends Component {
     this.state = {
       rowClassRules: {}
     };
+    this.onGridReady = this.onGridReady.bind(this);
   }
 
   onGridReady(params) {
@@ -115,6 +121,7 @@ class LoadingsTable extends Component {
     tempObj2.showTableDataNotSentWarning = false;
     // reset cache of factor viz data
     tempObj2.outputForDataViz2 = [];
+    tempObj2.sendDataToOutputButtonColor = "rgba(144, 238, 144, 0.6)";
 
     state.setState(tempObj2);
     notify();
@@ -194,11 +201,16 @@ class LoadingsTable extends Component {
 
     const isDisabled = state.getState("bipolarDisabled");
 
+    const sendDataToOutputButtonColor = state.getState(
+      "sendDataToOutputButtonColor"
+    );
+
     // increase width if bipolar present
     if (bipolarSplitCount > 0) {
       numFacsForTableWidth += bipolarSplitCount;
     }
     localStore.numFacsForTableWidth = numFacsForTableWidth;
+    localStore.sendDataToOutputButtonColor = sendDataToOutputButtonColor;
 
     return (
       <div>
@@ -278,7 +290,7 @@ class LoadingsTable extends Component {
               columnDefs={gridColDefsLoadingsTable}
               rowData={gridRowDataLoadingsTable}
               getRowClass={params => params.data.highlightingClass}
-              onGridReady={this.onGridReady.bind(this)}
+              onGridReady={this.onGridReady}
               gridAutoHeight={false}
             />
           </div>
@@ -288,21 +300,20 @@ class LoadingsTable extends Component {
               id="splitFactorsButton"
               className="wrapper1"
               style={{ marginRight: "250px" }} // loading={isLoadingFactorsKept}
-              onClick={this.doSplitFactor}
+              onClick={this.doSplitFactor.bind(this)}
             >
               Split Bipolar Factor
             </Button>
           </StyledWrapper>
         </div>
-        <StyledWrapperOutput>
-          <Button
-            id="generateOutputButton"
-            className="wrapper1"
-            style={{ marginTop: "50px" }}
-            onClick={this.generateOutput.bind(this)}
-          >
-            Send Table Data to Output
-          </Button>
+        <StyledWrapperOutput
+          buttonColor={localStore.sendDataToOutputButtonColor}
+          id="generateOutputButton"
+          className="wrapper1"
+          style={{ marginTop: "50px" }}
+          onClick={this.generateOutput.bind(this)}
+        >
+          Send Table Data to Output
         </StyledWrapperOutput>
         <SplitBipolarFactorModal />
       </div>
@@ -328,9 +339,41 @@ const StyledWrapper = styled.div`
   }
 `;
 
-const StyledWrapperOutput = styled.div`
+//
+const StyledWrapperOutput = styled.button`
+  display: grid;
+  align-items: center;
+  justify-items: center;
+  background-color: ${props => props.buttonColor};
+  height: 40px;
+  width: 240px;
+  border: 1px solid black;
+  text-align: center;
+  font-size: 16px;
+  font-family: Helvetica, sans-serif;
+  font-weight: normal;
+  border-radius: 4px;
+  margin-right: 3px;
+  margin-bottom: 3px;
+  box-shadow: 0 2px 2px 0 black;
+  outline: none;
+
+  &:hover {
+    background-color: #abafb3;
+    font-weight: 900;
+  }
+
+  &:active {
+    box-shadow: 0 0 1px 0 black inset;
+    margin-left: 3px;
+    margin-top: 3px;
+    background-color: rgba(144, 238, 144, 0.6);
+  }
+`;
+/*
   .wrapper1 {
-    background-color: yellow;
+    background-color: ${props => props.buttonColor || "#d6dbe0"};
+
     border: 1px solid black;
     box-shadow: 0 2px 2px 0 black;
 
@@ -341,10 +384,10 @@ const StyledWrapperOutput = styled.div`
 
     &:active {
       box-shadow: 0 0 1px 0 black inset;
-      background-color: lightseagreen;
+      background-color: lightgreen;
     }
   }
-`;
+*/
 
 /*
 
