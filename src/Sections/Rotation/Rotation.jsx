@@ -52,18 +52,23 @@ const localStore = store({
 });
 
 class Rotation extends Component {
-  handleTabChange(e, {activeIndex}) {
+  handleTabChange(e, { activeIndex }) {
     localStore.activeIndex = activeIndex;
   }
 
   render() {
-    const {activeIndex} = localStore;
+    const { activeIndex } = localStore;
 
     return (
       <MainContent>
-        <Tab style={ { width: "100%", height: "100%" } } panes={ panes } activeIndex={ activeIndex } onTabChange={ this.handleTabChange } />
+        <Tab
+          style={{ width: "100%", height: "100%" }}
+          panes={panes}
+          activeIndex={activeIndex}
+          onTabChange={this.handleTabChange}
+        />
       </MainContent>
-      );
+    );
   }
 }
 
@@ -84,7 +89,7 @@ const DataWindow2 = styled.div`
   padding: 5px;
   padding-top: 5px;
   padding-left: 5px;
-  width: calc(100vw - 208px);
+  width: calc(100vw - 198px);
   box-sizing: border-box;
   max-height: calc(100vh - 22px);
   overflow: auto;

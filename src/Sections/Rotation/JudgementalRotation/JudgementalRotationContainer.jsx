@@ -11,7 +11,7 @@ const getStyles = () => {
   // }
   const styles = {
     width: "100%",
-    maxWidth: 1400,
+    maxWidth: 1800,
     height: "100%",
     // border: "2px solid purple",
     marginTop: 10,

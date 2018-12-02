@@ -23,11 +23,11 @@ class ScatterPlotDiv extends React.Component {
       <JudgeTitleDiv id="outmostDiv">
         <FactorSelectionBar id="selectButton">
           <SelectLabel>Select factors:</SelectLabel>
-          <FactorSelectButtons baselineData={ baselineData } />
+          <FactorSelectButtons baselineData={baselineData} />
         </FactorSelectionBar>
-        <ScatterPlotAndTableTransitionContainer baselineData={ baselineData } />
+        <ScatterPlotAndTableTransitionContainer baselineData={baselineData} />
       </JudgeTitleDiv>
-      );
+    );
   }
 }
 
@@ -44,7 +44,7 @@ const FactorSelectionBar = styled.div`
   justify-items: center;
   font-size: 20px;
   height: 50px;
-  width: 755px;
+  width: 100%;
 `;
 
 const SelectLabel = styled.div`
