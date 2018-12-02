@@ -2,7 +2,7 @@ import { Tab } from "semantic-ui-react";
 import React, { Component } from "react";
 import { view, store } from "react-easy-state";
 import styled, { keyframes } from "styled-components";
-import { ToastContainer, toast, Slide } from 'react-toastify';
+import { ToastContainer, toast, Slide } from "react-toastify";
 import state from "../../store";
 import CsvPanel from "./CsvPanel";
 import JsonPanel from "./JsonPanel";
@@ -10,14 +10,8 @@ import ExcelPanel from "./ExcelPanel";
 import KandedPanel from "./KandedPanel";
 import PQMethodPanel from "./PQMethodPanel";
 import DemoDataPanel from "./DemoDataPanel";
-// import SuccessNotification from "./SuccessNotification";
 import ErrorNotification from "./ErrorNotification";
 
-
-
-// const handleAfter = selectedIndex => {
-//   localStore.tabActive = selectedIndex;
-// };
 
 function notify() {
   toast.success("Success - Data Loaded");
@@ -26,13 +20,12 @@ function notify() {
   });
 }
 
-
 const panes = [
   {
     menuItem: "CSV",
     render: () => (
       <Tab.Pane>
-        <CsvPanel notify={ notify } />
+        <CsvPanel notify={notify} />
       </Tab.Pane>
     )
   },
@@ -89,27 +82,29 @@ class Input extends Component {
     this.handleTabChange = this.handleTabChange.bind(this);
   }
 
-
-  handleTabChange(e, {activeIndex}) {
+  handleTabChange(e, { activeIndex }) {
     localStore.activeIndex = activeIndex;
   }
 
   render() {
-    const {activeIndex} = localStore;
+    const { activeIndex } = localStore;
     const showNotification = state.getState("notifyDataUploadSuccess");
     if (showNotification) {
       notify();
     }
     return (
       <React.Fragment>
-        <ToastContainer transition={ Slide } />
+        <ToastContainer transition={Slide} />
         <MainContent>
-          <Tab panes={ panes } activeIndex={ activeIndex } onTabChange={ this.handleTabChange } />
+          <Tab
+            panes={panes}
+            activeIndex={activeIndex}
+            onTabChange={this.handleTabChange}
+          />
           <ErrorNotification />
-          { /* <SuccessNotification /> */ }
         </MainContent>
       </React.Fragment>
-      );
+    );
   }
 }
 

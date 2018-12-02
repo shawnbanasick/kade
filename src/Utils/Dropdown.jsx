@@ -1,6 +1,8 @@
 import React from "react";
-import { view, store } from "react-easy-state";
 import styled from "styled-components";
+import { view, store } from "react-easy-state";
+import { ToastContainer, toast, Slide } from "react-toastify";
+import state from "../store";
 
 const localStore = store({
   expanded: false,
@@ -29,6 +31,8 @@ class Dropdown extends React.Component {
     localStore.value = newSelection;
     this.props.onChangeMessageUpTree(newSelection);
     localStore.hasClicked = true;
+    toast.dismiss();
+    state.setState({ notifyDataUploadSuccess: true });
   }
 
   handleTriggerClick() {
@@ -81,15 +85,15 @@ class Dropdown extends React.Component {
 
 export default view(Dropdown);
 
-// <Dropdown options={['Strawberry Cream', 'Chocolate Flakes', 'Marshmallow Sprinkles']} />
 // blue color => #d6dbe0
 
 const DropdownDiv = styled.div`
   width: ${props => props.width};
   box-shadow: 0 4px 10px rgba(#7c4dff, 0.2);
-  margin-top: 7px;
+  margin-top: 3px;
   outline: none;
   position: relative;
+  margin-left: 40px;
   transition: box-shadow 0.1s linear;
   font-family: Helvetica, sans-serif;
   font-size: 18px;
@@ -122,7 +126,7 @@ const DropdownDiv = styled.div`
     padding: 10px;
     width: 100%;
     background: #d6dbe0;
-    height: 25px;
+    height: 35px;
     box-shadow: 0 2px 2px 0 black;
     z-index: 99;
     overflow: visible;

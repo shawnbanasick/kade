@@ -3,17 +3,20 @@ import React, { Component } from "react";
 import styled from "styled-components";
 import state from "../../../store";
 import convertJSONToData from "./convertJSONToData";
-// import { sortsDisplayText } from "../logic/sortsDisplayText";
-// import shiftRawSortsPositive from "../logic/shiftRawSortsPositive";
-// import calcMultiplierArrayT2 from "../logic/excelLogic/calcMultiplierArrayT2";
-// import checkUniqueParticipantNames from "../logic/checkUniqueParticipantName";
+import { ToastContainer, toast, Slide } from "react-toastify";
 
-const {dialog} = require("electron").remote;
+const { dialog } = require("electron").remote;
 const fs = require("fs");
 
 const localStore = store({
   buttonColor: "#d6dbe0"
 });
+
+function notifyWarning() {
+  toast.warn("Select Participant Id to complete JSON import", {
+    autoClose: false
+  });
+}
 
 const handleClick = () => {
   try {
@@ -32,9 +35,6 @@ const handleClick = () => {
           const fileName = files[0];
           fs.readFile(fileName, "utf8", (err, data) => {
             const results = JSON.parse(data);
-
-            // console.log("results: " + (JSON.stringify(results)));
-
             const resultsArray = [];
             for (const key in results) {
               if (results.hasOwnProperty(key)) {
@@ -45,20 +45,6 @@ const handleClick = () => {
             // transform to md array
             // todo - this is the source of the extra brackets
             const csvData = convertJSONToData(results);
-
-            // console.log(`csvData ${  JSON.stringify(csvData[0][0])}`);
-
-            // get options for id selection dropdown
-            // console.log(JSON.stringify(csvData[0][0]));
-            // const jsonParticipantId = [];
-            // const columnHeaders = csvData[0][0];
-            // for (let i = 0; i < columnHeaders.length; i += 1) {
-            //   const tempObj = {};
-            //   tempObj.key = i + 1;
-            //   tempObj.text = columnHeaders[i];
-            //   tempObj.value = columnHeaders[i];
-            //   jsonParticipantId.push(tempObj);
-            // }
 
             //  const jsonParticipantId = [];
             const columnHeaders = csvData[0][0];
@@ -72,11 +58,11 @@ const handleClick = () => {
             });
             localStore.buttonColor = "rgba(144,	238,	144, .6)";
             state.setState({
-              notifyDataUploadSuccess: true,
               areQsortsLoaded: true,
               isInputButtonGreen: state.getState("areStatementsLoaded")
             });
           });
+          notifyWarning();
         }
       }
     );
@@ -91,10 +77,16 @@ const handleClick = () => {
 class LoadTxtStatementFile extends Component {
   render() {
     return (
-      <LoadTxtButton buttonColor={ localStore.buttonColor } onClick={ () => handleClick() }>
-        <p>Load JSON File</p>
-      </LoadTxtButton>
-      );
+      <React.Fragment>
+        <LoadTxtButton
+          buttonColor={localStore.buttonColor}
+          onClick={() => handleClick()}
+        >
+          <p>Load JSON File</p>
+        </LoadTxtButton>
+        <ToastContainer transition={Slide} />
+      </React.Fragment>
+    );
   }
 }
 
