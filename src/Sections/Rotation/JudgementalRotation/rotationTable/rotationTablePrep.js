@@ -42,7 +42,7 @@ const rotationTablePrep = function(d3RotChartData, baselineData) {
         if (sig) {
           return {
             textAlign: "center",
-            background: "aquamarine"
+            background: "#83cafe" // "aquamarine"
           };
         }
         return {

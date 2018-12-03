@@ -12,7 +12,7 @@ const styles = {
 
 const getFillColor = data => {
   if (data.factor1Sig === true) {
-    return "aquamarine"; // "#ffe4b2";
+    return "#83cafe"; // "aquamarine"; // "#ffe4b2";
   }
   if (data.factor2Sig === true) {
     return "#ffe4b2";

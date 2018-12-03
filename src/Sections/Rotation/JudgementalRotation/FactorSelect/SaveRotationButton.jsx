@@ -89,18 +89,18 @@ class SaveRotationButton extends React.Component {
     const isDisabled = store.getState("bipolarDisabled");
     if (rotationDegrees !== 0) {
       return (
-        <StyledWrapper>
+        <StyledWrapper2>
           <Button
             id="saveRotationButtonOrange"
             onClick={this.saveRotations}
             disabled={isDisabled}
-            color="orange"
-            className="wrapper1"
+            // color="orange"
+            className="wrapper2"
           >
             {" "}
             Save Rotation
           </Button>
-        </StyledWrapper>
+        </StyledWrapper2>
       );
     }
     return (
@@ -122,6 +122,25 @@ const StyledWrapper = styled.div`
   .wrapper1 {
     border: 1px solid black;
     box-shadow: 0 2px 2px 0 black;
+
+    &:hover {
+      border: 1px solid black;
+      box-shadow: 0 2px 2px 0 black;
+    }
+
+    &:active {
+      box-shadow: 0 0 1px 0 black inset;
+      margin-left: 3px;
+      margin-top: 3px;
+    }
+  }
+`;
+
+const StyledWrapper2 = styled.div`
+  .wrapper2 {
+    border: 1px solid black;
+    box-shadow: 0 2px 2px 0 black;
+    background-color: orange !important;
 
     &:hover {
       border: 1px solid black;
