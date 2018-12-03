@@ -1,6 +1,6 @@
 import React from "react";
-import { view, store } from "react-easy-state";
 import { Dropdown } from "semantic-ui-react";
+import { view, store } from "react-easy-state";
 import state from "../../../store";
 
 // stateOptions = [ { key: 'AL', value: 'AL', text: 'Alabama' }, ...  ]
@@ -42,20 +42,27 @@ const localStore = store({
 });
 
 class SigLevelDropdown extends React.Component {
-
-
-  handleChange(e, {value}) {
+  handleChange(e, { value }) {
     localStore.value = value;
     state.setState({
       userSelectedSigLevel: value
     });
-  };
+  }
 
   render() {
     const value = localStore.value;
     return (
-      <Dropdown onChange={ this.handleChange } defaultValue={ value } openOnFocus button simple item options={ sigOptions } />
-      );
+      <Dropdown
+        style={{ border: "1px solid black" }}
+        onChange={this.handleChange}
+        defaultValue={value}
+        openOnFocus
+        button
+        simple
+        item
+        options={sigOptions}
+      />
+    );
   }
 }
 
