@@ -105,7 +105,7 @@ export default store({
   isFacSelectDisabled: false,
   jsonParticipantId: [],
   outputButtonsArray: ["1", "2", "3", "4", "5", "6", "7", "8"],
-  pcaButtonText: "Extract Principal Components",
+  pcaButtonText: "Principal Components",
   varimaxButtonText: "Varimax Rotation",
   isCalculatingVarimax: false,
   disabledPcaButton: false,

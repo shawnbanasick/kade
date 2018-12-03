@@ -158,7 +158,7 @@ const StyledWrapper = styled.div`
   .wrapper1 {
     border: 1px solid black;
     box-shadow: 0 2px 2px 0 black;
-    margin-left: 50px;
+    margin-left: 103px;
 
     &:hover {
       border: 1px solid black;
@@ -167,7 +167,7 @@ const StyledWrapper = styled.div`
 
     &:active {
       box-shadow: 0 0 1px 0 black inset;
-      margin-left: 53px;
+      margin-left: 103px;
       margin-top: 3px;
     }
   }

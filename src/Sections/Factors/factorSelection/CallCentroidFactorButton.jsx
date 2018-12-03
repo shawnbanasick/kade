@@ -24,7 +24,6 @@ const handleClick = () => {
     });
     setTimeout(() => {
       centroidDispatch(numFactors);
-      console.log("calling centroid");
       state.setState({
         numFacsForTableWidth: numFactors,
         showUnrotatedFactorTable: true,
@@ -71,10 +70,9 @@ const BeginCentroidButton = styled.button`
   font-family: Helvetica, sans-serif;
   font-weight: normal;
   border-radius: 4px;
-  margin-right: 3px;
   outline: none;
-  margin-left: 30px;
-  margin-top: 3px;
+  margin-left: 33px;
+  /* margin-top: 3px; */
   box-shadow: 0 2px 2px 0 black;
 
   &:hover {
@@ -83,8 +81,8 @@ const BeginCentroidButton = styled.button`
 
   &:active {
     box-shadow: 0 0 1px 0 black inset;
-    margin-left: 32px;
-    margin-top: 3px;
+    margin-left: 27px;
+    /* margin-top: 3px; */
   }
 `;
 

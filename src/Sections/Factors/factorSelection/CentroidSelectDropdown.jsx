@@ -52,8 +52,19 @@ const options = [
 ];
 
 const DropdownMultipleSelection = () => (
-  <div>
-    <span style={{ marginRight: 10, fontSize: 22 }}>Extract</span>
+  <div style={{ display: "flex" }}>
+    <span
+      style={{
+        textAlign: "center",
+        marginRight: 30,
+        height: 35,
+        marginTop: 4,
+        paddingTop: 7,
+        fontSize: 22
+      }}
+    >
+      Extract
+    </span>
     <Button.Group size={"small"} color="black" basic>
       <Dropdown
         id="centroidSelectDropdown"
