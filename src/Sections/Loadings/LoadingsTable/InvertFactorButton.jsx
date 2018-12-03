@@ -35,7 +35,7 @@ class InvertFactorButtonModal extends Component {
         open={localStore.modalOpen}
         onClose={this.handleClose}
       >
-        <Header icon="table" content="Factor Loadings Table" />
+        <Header content="Factor Loadings Table" />
         <Modal.Content>
           <InvertFactorDropdownSelect />
         </Modal.Content>

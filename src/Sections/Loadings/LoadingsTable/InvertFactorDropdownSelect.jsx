@@ -1,6 +1,6 @@
 import React from "react";
-import { view, store } from "react-easy-state";
 import { Dropdown } from "semantic-ui-react";
+import { view, store } from "react-easy-state";
 import state from "../../../store";
 
 const saveDropdownValueToState = (event, data) => {
@@ -15,8 +15,6 @@ const localStore = store({
 });
 
 class InvertFactorDropdownSelect extends React.Component {
-
-
   componentWillMount() {
     localStore.options = this.getOptions();
   }
@@ -70,23 +68,29 @@ class InvertFactorDropdownSelect extends React.Component {
       }
     ];
     // shorten options list if using centroid
-    if (isCentroid) {
-      const numCentroidFactors = state.getState("numCentroidFactors");
-      options.length = +numCentroidFactors;
-    }
+    const numFactorsKeptForRot = state.getState("numFactorsKeptForRot");
+    options.length = +numFactorsKeptForRot;
     return options;
-  };
+  }
 
   render() {
     const options = this.getOptions();
     return (
       <div>
-        <span style={ { marginRight: 20, fontSize: 30 } }>
-                            Select the factor to invert:{ " " }
-                          </span>
-        <Dropdown placeholder={ "?" } onChange={ saveDropdownValueToState } openOnFocus button simple item options={ options } />
+        <span style={{ marginRight: 20, fontSize: 30 }}>
+          Select the factor to invert:{" "}
+        </span>
+        <Dropdown
+          placeholder={"?"}
+          onChange={saveDropdownValueToState}
+          openOnFocus
+          button
+          simple
+          item
+          options={options}
+        />
       </div>
-      );
+    );
   }
 }
 export default view(InvertFactorDropdownSelect);
