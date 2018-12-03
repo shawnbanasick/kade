@@ -5,25 +5,30 @@ import FactorSelectButtons from "../FactorSelect/FactorSelectButtons";
 import ScatterPlotAndTableTransitionContainer from "./ScatterPlotAndTableTransitionContainer";
 import transposeMatrix from "../../../../Utils/transposeMatrix";
 import store from "../../../../store";
+import { ToastContainer, toast, Slide } from "react-toastify";
 
-// this.refs.child.parentNode.clientWidth
-// const selectButtonStyles = {
-//   width: "100",
-//   height: 100
-//   // border: "2px solid green"
-// };
+// notification of table data sent to output
+function notify() {
+  toast.success("Rotation Data Saved to Loadings Table", { autoClose: 5000 });
+  store.setState({ notifyForSavedRotation: false });
+}
 
 class ScatterPlotDiv extends React.Component {
   render() {
     // store.setState({"rotPlotContainerWidth": leftContWidth});
     const factorMatrix = store.getState("factorMatrix");
     const baselineData = transposeMatrix(factorMatrix);
+    const notifyForSavedRotation = store.getState("notifyForSavedRotation");
+    if (notifyForSavedRotation) {
+      notify();
+    }
 
     return (
       <JudgeTitleDiv id="outmostDiv">
         <FactorSelectionBar id="selectButton">
           <SelectLabel>Select factors:</SelectLabel>
           <FactorSelectButtons baselineData={baselineData} />
+          <ToastContainer transition={Slide} />
         </FactorSelectionBar>
         <ScatterPlotAndTableTransitionContainer baselineData={baselineData} />
       </JudgeTitleDiv>

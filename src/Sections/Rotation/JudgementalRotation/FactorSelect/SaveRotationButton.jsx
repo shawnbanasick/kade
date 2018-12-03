@@ -1,7 +1,7 @@
 import React from "react";
-import { Button } from "semantic-ui-react";
 import { view } from "react-easy-state";
 import styled from "styled-components";
+import { Button } from "semantic-ui-react";
 import store from "../../../../store";
 import transposeMatrix from "../../../../Utils/transposeMatrix";
 import calcuateSigCriterionValues from "../../varimaxLogic/2calculateSigCriterionValues";
@@ -41,7 +41,7 @@ class SaveRotationButton extends React.Component {
     // to archive current rot factor matrix
     let archiveCounter = store.getState("archiveCounter");
     archiveCounter += 1;
-    const archiveName = `facMatrixArc${  archiveCounter}`;
+    const archiveName = `facMatrixArc${archiveCounter}`;
     store.setState({
       archiveCounter
     });
@@ -52,13 +52,7 @@ class SaveRotationButton extends React.Component {
     // update Project History
     const projectHistoryArray = store.getState("projectHistoryArray");
     projectHistoryArray.push(
-      `Factors ${ 
-        factorA 
-        } and ${ 
-        factorB 
-        } rotated by ${ 
-        rotationDegrees 
-        } degrees`
+      `Factors ${factorA} and ${factorB} rotated by ${rotationDegrees} degrees`
     );
 
     // remove plot and table from DOM and update state
@@ -85,7 +79,8 @@ class SaveRotationButton extends React.Component {
       showStandardErrorsDifferences: false,
       showFactorCharacteristicsTable: false,
       showDownloadOutputButtons: false,
-      displayFactorVisualizations: false
+      displayFactorVisualizations: false,
+      notifyForSavedRotation: true
     });
   }
 
@@ -95,23 +90,33 @@ class SaveRotationButton extends React.Component {
     if (rotationDegrees !== 0) {
       return (
         <StyledWrapper>
-          <Button id="saveRotationButtonOrange" onClick={ this.saveRotations } disabled={ isDisabled } color="orange" className="wrapper1" >
-            { " " } Save Rotation
+          <Button
+            id="saveRotationButtonOrange"
+            onClick={this.saveRotations}
+            disabled={isDisabled}
+            color="orange"
+            className="wrapper1"
+          >
+            {" "}
+            Save Rotation
           </Button>
         </StyledWrapper>
-        );
+      );
     }
     return (
-      <StyledWrapper>
-        <Button id="saveRotationButtonGray" className="wrapper1"> Save Rotation</Button>
-      </StyledWrapper>
-      );
-
+      <React.Fragment>
+        <StyledWrapper>
+          <Button id="saveRotationButtonGray" className="wrapper1">
+            {" "}
+            Save Rotation
+          </Button>
+        </StyledWrapper>
+      </React.Fragment>
+    );
   }
 }
 
 export default view(SaveRotationButton);
-
 
 const StyledWrapper = styled.div`
   .wrapper1 {
@@ -130,4 +135,3 @@ const StyledWrapper = styled.div`
     }
   }
 `;
-

@@ -83,6 +83,7 @@ export default store({
   showTableDataNotSentWarning: true,
   notifyDataUploadSuccess: false,
   notifyDataSentToOutputSuccess: false,
+  notifyForSavedRotation: false,
   loadLipsetButtonColor: "#d6dbe0",
   loadBuzzwordsButtonColor: "#d6dbe0",
   loadMotivationalButtonColor: "#d6dbe0",
