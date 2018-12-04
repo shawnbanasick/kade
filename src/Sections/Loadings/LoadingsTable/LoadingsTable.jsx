@@ -104,6 +104,8 @@ class LoadingsTable extends Component {
       currentLoadingsTable.push(rowNode.data);
     }
 
+    // console.log('current loadings ' + JSON.stringify(currentLoadingsTable));
+
     // initialize output select buttons highlighting to false
     const btnId = state.getState("outputButtonsArray");
     const tempObj2 = {};
@@ -155,12 +157,30 @@ class LoadingsTable extends Component {
   }
 
   highlightRowsWithColors() {
-    state.setState({ isLoadingColorsHighlighting: true });
-    setTimeout(() => {
-      state.setState({ highlighting: "colors" });
-      const numFactors = state.getState("numFactorsKeptForRot");
-      loadingsTableDataPrep(numFactors);
-    }, 10);
+    // state.setState({ isLoadingColorsHighlighting: true });
+    // setTimeout(() => {
+    //   state.setState({ highlighting: "colors" });
+    //   const numFactors = state.getState("numFactorsKeptForRot");
+    //   loadingsTableDataPrep(numFactors);
+    // }, 10);
+
+    const currentLoadingsTable2 = [];
+    const count = this.gridApi.getDisplayedRowCount();
+    for (let i = 0; i < count; i++) {
+      const rowNode = this.gridApi.getDisplayedRowAtIndex(i);
+
+      console.log(`rowNode ${rowNode.data}`);
+
+      const holder = rowNode.data.highlightingClass;
+      const holder2 = holder.slice(0, 2);
+      const holder3 = `${holder2}colors`;
+      rowNode.data.highlightingClass = holder3;
+      currentLoadingsTable2.push(rowNode.data);
+    }
+
+    state.setState({ gridRowDataLoadingsTable: currentLoadingsTable2 });
+
+    console.log(`current loadings ${JSON.stringify(currentLoadingsTable2)}`);
   }
 
   noRowHighlighting() {
@@ -237,7 +257,7 @@ class LoadingsTable extends Component {
                 className="wrapper1"
                 loading={isLoadingColorsHighlighting}
                 disabled={isDisabled}
-                onClick={this.highlightRowsWithColors}
+                onClick={this.highlightRowsWithColors.bind(this)}
               >
                 Colors
               </Button>
