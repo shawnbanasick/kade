@@ -7,7 +7,7 @@ import { ToastContainer, toast, Slide } from "react-toastify";
 import state from "../../../store";
 import SigLevelDropdown from "./SigLevelDropdown";
 import InvertFactorButton from "./InvertFactorButton";
-import loadingsTableDataPrep from "./loadingsTableDataPrep";
+// import loadingsTableDataPrep from "./loadingsTableDataPrep";
 import autoFlagFactors from "../loadingsLogic/autoFlagFactors";
 import SplitBipolarFactorModal from "./SplitBipolarFactorModal";
 import MajorityCommonVarianceCheckbox from "./MajorityCommonVarianceCheckbox";
@@ -147,56 +147,31 @@ class LoadingsTable extends Component {
     });
   }
 
-  highlightRowsWithGrays() {
-    state.setState({ isLoadingGrayHighlighting: true });
-    setTimeout(() => {
-      state.setState({ highlighting: "grays" });
-      const numFactors = state.getState("numFactorsKeptForRot");
-      loadingsTableDataPrep(numFactors);
-    }, 10);
-  }
-
-  highlightRowsWithColors() {
-    // state.setState({ isLoadingColorsHighlighting: true });
-    // setTimeout(() => {
-    //   state.setState({ highlighting: "colors" });
-    //   const numFactors = state.getState("numFactorsKeptForRot");
-    //   loadingsTableDataPrep(numFactors);
-    // }, 10);
-
+  highlightRows(highlightType) {
     const currentLoadingsTable2 = [];
     const count = this.gridApi.getDisplayedRowCount();
     for (let i = 0; i < count; i++) {
       const rowNode = this.gridApi.getDisplayedRowAtIndex(i);
-
-      console.log(`rowNode ${rowNode.data}`);
-
       const holder = rowNode.data.highlightingClass;
       const holder2 = holder.slice(0, 2);
-      const holder3 = `${holder2}colors`;
+      const holder3 = `${holder2}${highlightType}`;
       rowNode.data.highlightingClass = holder3;
       currentLoadingsTable2.push(rowNode.data);
     }
-
-    state.setState({ gridRowDataLoadingsTable: currentLoadingsTable2 });
-
-    console.log(`current loadings ${JSON.stringify(currentLoadingsTable2)}`);
-  }
-
-  noRowHighlighting() {
-    state.setState({ isLoadingNoHighlighting: true });
-    setTimeout(() => {
-      state.setState({ highlighting: "none" });
-      const numFactors = state.getState("numFactorsKeptForRot");
-      loadingsTableDataPrep(numFactors);
-    }, 10);
+    this.gridApi.redrawRows(currentLoadingsTable2);
+    state.setState({
+      gridRowDataLoadingsTable: currentLoadingsTable2,
+      highlighting: highlightType
+    });
   }
 
   render() {
-    // const { onGridReady } = this;
-
     const gridColDefsLoadingsTable = state.getState("gridColDefsLoadingsTable");
     const gridRowDataLoadingsTable = state.getState("gridRowDataLoadingsTable");
+
+    localStore.gridColDefsLoadingsTable = gridColDefsLoadingsTable;
+    localStore.gridRowDataLoadingsTable = gridRowDataLoadingsTable;
+
     const isLoadingAutoflag = state.getState("isLoadingAutoflag");
     const isLoadingGrayHighlighting = state.getState(
       "isLoadingGrayHighlighting"
@@ -248,7 +223,7 @@ class LoadingsTable extends Component {
                 className="wrapper1"
                 loading={isLoadingNoHighlighting}
                 disabled={isDisabled}
-                onClick={this.noRowHighlighting}
+                onClick={() => this.highlightRows("none")}
               >
                 None
               </Button>
@@ -257,14 +232,14 @@ class LoadingsTable extends Component {
                 className="wrapper1"
                 loading={isLoadingColorsHighlighting}
                 disabled={isDisabled}
-                onClick={this.highlightRowsWithColors.bind(this)}
+                onClick={() => this.highlightRows("colors")}
               >
                 Colors
               </Button>
               <Button
                 id="graysHighlightingButton"
                 className="wrapper1"
-                onClick={this.highlightRowsWithGrays}
+                onClick={() => this.highlightRows("grays")}
                 disabled={isDisabled}
                 loading={isLoadingGrayHighlighting}
                 style={{ marginRight: "40px" }}
@@ -310,9 +285,9 @@ class LoadingsTable extends Component {
           >
             <AgGridReact
               enableSorting
-              id="myGrid"
-              columnDefs={gridColDefsLoadingsTable}
-              rowData={gridRowDataLoadingsTable}
+              id="loadingsTable"
+              columnDefs={localStore.gridColDefsLoadingsTable}
+              rowData={localStore.gridRowDataLoadingsTable}
               getRowClass={params => params.data.highlightingClass}
               onGridReady={this.onGridReady}
               gridAutoHeight={false}

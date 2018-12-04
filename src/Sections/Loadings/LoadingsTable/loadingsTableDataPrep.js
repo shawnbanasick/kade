@@ -145,6 +145,8 @@ const loadingsTableDataPrep = numFactors => {
     isLoadingColorsHighlighting: false,
     isLoadingGrayHighlighting: false
   });
+
+  // console.log(`row data: ${  JSON.stringify(gridRowDataLoadingsTable)}`);
 };
 
 export default loadingsTableDataPrep;

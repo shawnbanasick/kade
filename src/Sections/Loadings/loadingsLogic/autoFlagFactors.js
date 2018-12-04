@@ -1,10 +1,10 @@
 import store from "../../../store";
-import loadingsTableDataPrep from "../LoadingsTable/loadingsTableDataPrep";
-import calculateSigCriterionValues from "../../Rotation/varimaxLogic/2calculateSigCriterionValues";
 import transposeMatrix from "../../../Utils/transposeMatrix";
+import loadingsTableDataPrep from "../LoadingsTable/loadingsTableDataPrep";
 import calculateCommunalities from "../../Rotation/varimaxLogic/2calculateCommunalities";
+import calculateSigCriterionValues from "../../Rotation/varimaxLogic/2calculateSigCriterionValues";
 
-const autoFlagFactors = function() {
+const autoFlagFactors = () => {
   store.setState({
     isLoadingAutoflag: true
   });
