@@ -89,10 +89,26 @@ class LoadingsTable extends Component {
     this.onGridReady = this.onGridReady.bind(this);
   }
 
+  componentWillUnmount() {
+    state.setState({
+      gridRowDataLoadingsTable: localStore.temp_gridRowDataLoadingsTable
+    });
+  }
+
   onGridReady(params) {
     this.gridApi = params.api;
     this.columnApi = params.columnApi;
     // this.gridApi.sizeColumnsToFit();
+  }
+
+  updateTableLocalState() {
+    const count = this.gridApi.getDisplayedRowCount();
+    const currentLoadingsTable = [];
+    for (let i = 0; i < count; i++) {
+      const rowNode = this.gridApi.getDisplayedRowAtIndex(i);
+      currentLoadingsTable.push(rowNode.data);
+    }
+    localStore.temp_gridRowDataLoadingsTable = currentLoadingsTable;
   }
 
   generateOutput() {
@@ -291,6 +307,7 @@ class LoadingsTable extends Component {
               getRowClass={params => params.data.highlightingClass}
               onGridReady={this.onGridReady}
               gridAutoHeight={false}
+              onCellClicked={this.updateTableLocalState.bind(this)}
             />
           </div>
           <StyledWrapper>
