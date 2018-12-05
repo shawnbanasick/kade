@@ -8,7 +8,7 @@ const splitBipolarFactor = () => {
   if (val !== undefined) {
     // Archive current table
 
-    // get bipolar split counter
+    // get bipolar split counter and archive counter, then increment
     let bipolarSplitCounter = store.getState("bipolarSplitCount");
     let archiveCounter = store.getState("archiveCounter");
     archiveCounter += 1;
@@ -25,6 +25,7 @@ const splitBipolarFactor = () => {
       // increment the bipolar split counter
       bipolarSplitCounter += 1;
 
+      // send counters back to state
       store.setState({
         archiveCounter,
         bipolarSplitCount: bipolarSplitCounter

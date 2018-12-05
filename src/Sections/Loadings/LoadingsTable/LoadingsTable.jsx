@@ -89,10 +89,14 @@ class LoadingsTable extends Component {
     this.onGridReady = this.onGridReady.bind(this);
   }
 
-  componentWillUnmount() {
+  sendLocalStoreToState() {
     state.setState({
       gridRowDataLoadingsTable: localStore.temp_gridRowDataLoadingsTable
     });
+  }
+
+  componentWillUnmount() {
+    this.sendLocalStoreToState();
   }
 
   onGridReady(params) {
@@ -311,7 +315,9 @@ class LoadingsTable extends Component {
             />
           </div>
           <StyledWrapper>
-            <InvertFactorButton />
+            <InvertFactorButton
+              data={"test"}
+            />
             <Button
               id="splitFactorsButton"
               className="wrapper1"
@@ -336,6 +342,8 @@ class LoadingsTable extends Component {
     );
   }
 }
+
+//  {/* data={localStore.temp_gridRowDataLoadingsTable} */}
 
 export default view(LoadingsTable);
 

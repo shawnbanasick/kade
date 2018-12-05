@@ -6,6 +6,7 @@ const invertFactor = () => {
 
   // only if a factor is selected
   if (factorToInvert !== undefined) {
+    // pull project history and number facs from state
     const projectHistoryArray = store.getState("projectHistoryArray");
     const numFactorsKeptForRot = store.getState("numFactorsKeptForRot");
 

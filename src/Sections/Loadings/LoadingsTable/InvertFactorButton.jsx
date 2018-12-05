@@ -14,10 +14,14 @@ class InvertFactorButtonModal extends Component {
 
   handleClose() {
     localStore.modalOpen = false;
+    console.log(JSON.stringify(this.props));
+    // send localStore data here - begin inversion process
     invertFactor();
   }
 
   render() {
+    console.log(`props: ${JSON.stringify(this.props)}`);
+
     const isDisabled = state.getState("bipolarDisabled");
     return (
       <Modal
