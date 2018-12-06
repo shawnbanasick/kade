@@ -167,6 +167,20 @@ class LoadingsTable extends Component {
     });
   }
 
+  doInvertFactor() {
+    // grab current table data (including user-added flags)
+    const count = this.gridApi.getDisplayedRowCount();
+    const currentLoadingsTable = [];
+    for (let i = 0; i < count; i++) {
+      const rowNode = this.gridApi.getDisplayedRowAtIndex(i);
+      currentLoadingsTable.push(rowNode.data);
+    }
+    state.setState({
+      currentLoadingsTable,
+      showInvertFactorModal: true
+    });
+  }
+
   highlightRows(highlightType) {
     const currentLoadingsTable2 = [];
     const count = this.gridApi.getDisplayedRowCount();
@@ -218,11 +232,11 @@ class LoadingsTable extends Component {
     // increase height when bipolar split present
     const bipolarSplitCount = state.getState("bipolarSplitCount");
 
-    const isDisabled = state.getState("bipolarDisabled");
-
     const sendDataToOutputButtonColor = state.getState(
       "sendDataToOutputButtonColor"
     );
+
+    const isDisabled = state.getState("bipolarDisabled");
 
     // increase width if bipolar present
     if (bipolarSplitCount > 0) {
@@ -315,9 +329,16 @@ class LoadingsTable extends Component {
             />
           </div>
           <StyledWrapper>
-            <InvertFactorButton
-              data={"test"}
-            />
+            <Button
+              id="invertFactorsButton"
+              className="wrapper1"
+              style={{ marginRight: "250px" }} // loading={isLoadingFactorsKept} //
+              disabled={isDisabled}
+              onClick={this.doInvertFactor.bind(this)}
+            >
+              Invert Factor
+            </Button>
+
             <Button
               id="splitFactorsButton"
               className="wrapper1"
@@ -338,6 +359,7 @@ class LoadingsTable extends Component {
           Send Table Data to Output
         </StyledWrapperOutput>
         <SplitBipolarFactorModal />
+        <InvertFactorButton />
       </div>
     );
   }

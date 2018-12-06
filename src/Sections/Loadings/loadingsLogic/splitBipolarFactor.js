@@ -22,6 +22,9 @@ const splitBipolarFactor = () => {
       // if yes, archive the usual way
       const factorMatrix = store.getState("factorMatrix");
 
+      console.log(`factorMatrix ${  JSON.stringify(factorMatrix)}`);
+
+
       // increment the bipolar split counter
       bipolarSplitCounter += 1;
 
@@ -61,6 +64,8 @@ const splitBipolarFactor = () => {
         JSON.stringify([columnDefs, currentLoadingsTable])
       );
     }
+    // *** end IF ELSE ***
+
 
     // begin factor split process
     const dataRows = store.getState("currentLoadingsTable");
