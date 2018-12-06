@@ -41,7 +41,7 @@ function getWidth(numFacsForTableWidth) {
   // + 10 to prevent scroll
   let tableWidth = 290 + 15 + 145 * numFacsForTableWidth;
   // let x = window.innerWidth - 50 - 152;
-  let windowWidth = window.innerWidth - 202;
+  let windowWidth = window.innerWidth - 205;
 
   if (windowWidth < tableWidth) {
     windowWidth += "px";
@@ -54,7 +54,7 @@ function getWidth(numFacsForTableWidth) {
 
 function getHeight(numQsorts) {
   let heightVal1 = 40 + 25 * numQsorts;
-  let heightVal2 = window.innerHeight - 370;
+  let heightVal2 = window.innerHeight - 270;
   if (heightVal1 < heightVal2) {
     heightVal1 += "px";
     return heightVal1;
@@ -200,12 +200,15 @@ class LoadingsTable extends Component {
   }
 
   render() {
+    // pull headers and data from states
     const gridColDefsLoadingsTable = state.getState("gridColDefsLoadingsTable");
     const gridRowDataLoadingsTable = state.getState("gridRowDataLoadingsTable");
 
+    // push headers and data to preserve local state for remount after unmount
     localStore.gridColDefsLoadingsTable = gridColDefsLoadingsTable;
     localStore.gridRowDataLoadingsTable = gridRowDataLoadingsTable;
 
+    // get highlighting options
     const isLoadingAutoflag = state.getState("isLoadingAutoflag");
     const isLoadingGrayHighlighting = state.getState(
       "isLoadingGrayHighlighting"
@@ -214,6 +217,8 @@ class LoadingsTable extends Component {
       "isLoadingColorsHighlighting"
     );
     const isLoadingNoHighlighting = state.getState("isLoadingNoHighlighting");
+
+    // pull number Q sorts for table height calcs
     const numQsorts = state.getState("numQsorts");
     localStore.numQsorts = numQsorts;
 
@@ -224,18 +229,20 @@ class LoadingsTable extends Component {
     const outputButtonsArray3 = outputButtonsArray2.filter(filterArray);
     outputButtonsArray3.shift();
     const outputButtonsArray = outputButtonsArray3.map(item => item.slice(6));
-
     state.setState({ outputButtonsArray });
 
+    // pull number factors to calc responsive table width
     let numFacsForTableWidth = state.getState("numFactorsKeptForRot");
 
-    // increase height when bipolar split present
+    // increase height / width when bipolar split present
     const bipolarSplitCount = state.getState("bipolarSplitCount");
 
+    // communication with user - has data been sent to output section?
     const sendDataToOutputButtonColor = state.getState(
       "sendDataToOutputButtonColor"
     );
 
+    // disable buttons after bipolar split
     const isDisabled = state.getState("bipolarDisabled");
 
     // increase width if bipolar present
@@ -247,11 +254,14 @@ class LoadingsTable extends Component {
 
     return (
       <div>
-        <ToastContainer transition={Slide} />
-        <div style={{ display: "flex", marginTop: 25, paddingBottom: "4px" }}>
-          <div style={{ width: 300 }}>
-            <span style={{ width: "100%" }}>Row Highlighting:</span>
-            <StyledWrapper style={{ width: "100%" }}>
+        <LoadingsContainerDiv>
+          <ToastContainer transition={Slide} />
+          <HighlightingAndFlaggingTextBar>
+            <span style={{ marginRight: 255 }}>Row Highlighting:</span>
+            <span>Flagging:</span>
+          </HighlightingAndFlaggingTextBar>
+          <HighlightingAndFlaggingButtonBar>
+            <StyledWrapper>
               <Button
                 id="noHighlightingButton"
                 className="wrapper1"
@@ -276,17 +286,10 @@ class LoadingsTable extends Component {
                 onClick={() => this.highlightRows("grays")}
                 disabled={isDisabled}
                 loading={isLoadingGrayHighlighting}
-                style={{ marginRight: "40px" }}
+                style={{ marginRight: 150 }}
               >
                 Gray
               </Button>
-            </StyledWrapper>
-          </div>
-          <div style={{ width: 700 }}>
-            <StyledWrapper style={{ width: "100%" }}>
-              <span style={{ marginRight: 25 }}>Flagging:</span>
-              {/* <Button>All</Button>
-            <Button>None</Button> */}
               <Button
                 id="autoflagButton"
                 className="wrapper1"
@@ -298,68 +301,76 @@ class LoadingsTable extends Component {
               </Button>
               <span style={{ marginLeft: 5, marginRight: 10 }}>at</span>
               <SigLevelDropdown style={{ marginLeft: 5 }} />
+              <Button className="wrapper1" style={{ marginLeft: "40px" }}>
+                All
+              </Button>
+              <Button className="wrapper1" style={{ marginLeft: "40px" }}>
+                None
+              </Button>
             </StyledWrapper>
-            <MajorityCommonVarianceCheckbox />
-          </div>
-        </div>
-        <div>
-          <p style={{ fontWeight: "normal", marginTop: 15, textAlign: "left" }}>
-            Default sort is by factor group (FG - highest loading factor). Click
-            the column headers to re-sort.
-          </p>
-          <div
-            id="loadingsTableContainer"
-            style={{
-              marginTop: 5,
-              height: getHeight(numQsorts),
-              width: getWidth(numFacsForTableWidth),
-              marginBottom: 15
-            }}
-            className="ag-theme-fresh"
-          >
-            <AgGridReact
-              enableSorting
-              id="loadingsTable"
-              columnDefs={localStore.gridColDefsLoadingsTable}
-              rowData={localStore.gridRowDataLoadingsTable}
-              getRowClass={params => params.data.highlightingClass}
-              onGridReady={this.onGridReady}
-              gridAutoHeight={false}
-              onCellClicked={this.updateTableLocalState.bind(this)}
-            />
-          </div>
-          <StyledWrapper>
-            <Button
-              id="invertFactorsButton"
-              className="wrapper1"
-              style={{ marginRight: "250px" }} // loading={isLoadingFactorsKept} //
-              disabled={isDisabled}
-              onClick={this.doInvertFactor.bind(this)}
+          </HighlightingAndFlaggingButtonBar>
+          <CommonVarianceCheckboxDiv>
+            <MajorityCommonVarianceCheckbox style={{ marginLeft: 300 }} />
+          </CommonVarianceCheckboxDiv>
+          <div>
+            <ColumnSortText>
+              Default sort is by factor group (FG - highest loading factor).
+              Click the column headers to re-sort.
+            </ColumnSortText>
+            <div
+              id="loadingsTableContainer"
+              style={{
+                marginTop: 2,
+                height: getHeight(numQsorts),
+                width: getWidth(numFacsForTableWidth),
+                marginBottom: 15
+              }}
+              className="ag-theme-fresh"
             >
-              Invert Factor
-            </Button>
-
-            <Button
-              id="splitFactorsButton"
+              <AgGridReact
+                enableSorting
+                id="loadingsTable"
+                columnDefs={localStore.gridColDefsLoadingsTable}
+                rowData={localStore.gridRowDataLoadingsTable}
+                getRowClass={params => params.data.highlightingClass}
+                onGridReady={this.onGridReady}
+                gridAutoHeight={false}
+                onCellClicked={this.updateTableLocalState.bind(this)}
+              />
+            </div>
+          </div>
+          <ButtonBarBottom>
+            <StyledWrapperOutput
+              buttonColor={localStore.sendDataToOutputButtonColor}
+              id="generateOutputButton"
               className="wrapper1"
-              style={{ marginRight: "250px" }} // loading={isLoadingFactorsKept}
-              onClick={this.doSplitFactor.bind(this)}
+              onClick={this.generateOutput.bind(this)}
             >
-              Split Bipolar Factor
-            </Button>
-          </StyledWrapper>
-        </div>
-        <StyledWrapperOutput
-          buttonColor={localStore.sendDataToOutputButtonColor}
-          id="generateOutputButton"
-          className="wrapper1"
-          style={{ marginTop: "50px" }}
-          onClick={this.generateOutput.bind(this)}
-        >
-          Send Table Data to Output
-        </StyledWrapperOutput>
-        <SplitBipolarFactorModal />
-        <InvertFactorButton />
+              Send Table Data to Output
+            </StyledWrapperOutput>
+            <StyledWrapper>
+              <Button
+                id="invertFactorsButton"
+                className="wrapper1"
+                disabled={isDisabled}
+                onClick={this.doInvertFactor.bind(this)}
+              >
+                Invert Factor
+              </Button>
+            </StyledWrapper>
+            <StyledWrapper>
+              <Button
+                id="splitFactorsButton"
+                className="wrapper1"
+                onClick={this.doSplitFactor.bind(this)}
+              >
+                Split Bipolar Factor
+              </Button>
+            </StyledWrapper>
+          </ButtonBarBottom>
+          <SplitBipolarFactorModal />
+          <InvertFactorButton />
+        </LoadingsContainerDiv>
       </div>
     );
   }
@@ -369,10 +380,40 @@ class LoadingsTable extends Component {
 
 export default view(LoadingsTable);
 
+const ColumnSortText = styled.p`
+  font-size: 12px;
+  font-weight: normal;
+  margin-top: 15px;
+  text-align: left;
+  width: 900px;
+`;
+
+const LoadingsContainerDiv = styled.div`
+  display: grid;
+  grid-template-columns: 1fr;
+`;
+
+const HighlightingAndFlaggingTextBar = styled.div`
+  display: flex;
+  width: 900px;
+  height: 30px;
+`;
+
+const HighlightingAndFlaggingButtonBar = styled.div`
+  width: 900px;
+`;
+
+const CommonVarianceCheckboxDiv = styled.div`
+  width: 900px;
+  margin-top: 3px;
+  margin-bottom: 25px;
+`;
+
 const StyledWrapper = styled.div`
   .wrapper1 {
     border: 1px solid black;
     box-shadow: 0 2px 2px 0 black;
+    user-select: none
 
     &:hover {
       border: 1px solid black;
@@ -387,9 +428,9 @@ const StyledWrapper = styled.div`
 
 //
 const StyledWrapperOutput = styled.button`
-  display: grid;
+  /* display: grid;
   align-items: center;
-  justify-items: center;
+  justify-items: center; */
   background-color: ${props => props.buttonColor};
   height: 40px;
   width: 240px;
@@ -403,6 +444,7 @@ const StyledWrapperOutput = styled.button`
   margin-bottom: 3px;
   box-shadow: 0 2px 2px 0 black;
   outline: none;
+  user-select: none;
 
   &:hover {
     background-color: #abafb3;
@@ -416,32 +458,20 @@ const StyledWrapperOutput = styled.button`
     background-color: rgba(144, 238, 144, 0.6);
   }
 `;
-/*
-  .wrapper1 {
-    background-color: ${props => props.buttonColor || "#d6dbe0"};
 
-    border: 1px solid black;
-    box-shadow: 0 2px 2px 0 black;
-
-    &:hover {
-      border: 1px solid black;
-      box-shadow: 0 2px 2px 0 black;
-    }
-
-    &:active {
-      box-shadow: 0 0 1px 0 black inset;
-      background-color: lightgreen;
-    }
-  }
-*/
+const ButtonBarBottom = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 900px;
+  height: 60px;
+`;
 
 /*
-
 99 = 2.575
 98 = 2.33
 95 = 1.96
 90 = 1.645
 85 = 1.44
 80 = 1.28
-
 */

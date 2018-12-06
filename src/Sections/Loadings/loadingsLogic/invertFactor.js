@@ -1,26 +1,28 @@
-import store from "../../../store";
-import loadingsTableDataPrep from "../LoadingsTable/loadingsTableDataPrep";
+import state from "../../../store";
+// import loadingsTableDataPrep from "../LoadingsTable/loadingsTableDataPrep";
 
 const invertFactor = () => {
-  const factorToInvert = store.getState("factorToInvert");
+  const factorToInvert = state.getState("factorToInvert");
 
   // only if a factor is selected
   if (factorToInvert !== undefined) {
-
-
-    const test = store.getState("currentLoadingsTable");
-    console.log(`currentLoadingsTable ${  JSON.stringify(currentLoadingsTable)}`);
-
+    // flip the sign for the current table (includes user checked checkboxes)
+    const factorToInvertText = `factor${factorToInvert}`;
+    const currentLoadingsTable = state.getState("currentLoadingsTable");
+    for (let i = 0; i < currentLoadingsTable.length; i++) {
+      currentLoadingsTable[i][factorToInvertText] = -currentLoadingsTable[i][
+        factorToInvertText
+      ];
+    }
 
     // pull project history and number facs from state
-    const projectHistoryArray = store.getState("projectHistoryArray");
-    const numFactorsKeptForRot = store.getState("numFactorsKeptForRot");
+    const projectHistoryArray = state.getState("projectHistoryArray");
 
     // get data
-    const currentLoadings = store.getState("factorMatrix");
+    const currentLoadings = state.getState("factorMatrix");
 
     // archive current data for undo function in loadings table
-    let archiveCounter = store.getState("archiveCounter");
+    let archiveCounter = state.getState("archiveCounter");
     archiveCounter += 1;
     const archiveName = `facMatrixArc${archiveCounter}`;
 
@@ -39,7 +41,7 @@ const invertFactor = () => {
     const projectHistoryArrayText = `Factor ${factorToInvert} was inverted`;
     projectHistoryArray.push(projectHistoryArrayText);
 
-    store.setState({
+    state.setState({
       factorMatrix: currentLoadings,
       factorToInvert: undefined, // reset for modal
       archiveCounter,
@@ -53,11 +55,9 @@ const invertFactor = () => {
       showFactorCharacteristicsTable: false,
       showDownloadOutputButtons: false,
       displayFactorVisualizations: false,
-      sendDataToOutputButtonColor: "orange"
+      sendDataToOutputButtonColor: "orange",
+      gridRowDataLoadingsTable: currentLoadingsTable
     });
-
-    // call table update with new inverted factor
-    loadingsTableDataPrep(numFactorsKeptForRot);
   }
 };
 

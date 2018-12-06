@@ -61,6 +61,6 @@ const MainContent = styled.div`
   background-color: white;
 
   width: calc(100vw - 122px);
-  height: calc(100vh - 22px);
+  height: 100vh;
   overflow: auto;
 `;
