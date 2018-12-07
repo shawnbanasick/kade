@@ -5,12 +5,16 @@ import FactorSelectButtons from "../FactorSelect/FactorSelectButtons";
 import ScatterPlotAndTableTransitionContainer from "./ScatterPlotAndTableTransitionContainer";
 import transposeMatrix from "../../../../Utils/transposeMatrix";
 import store from "../../../../store";
-import { ToastContainer, toast, Slide } from "react-toastify";
+import { ToastContainer, toast, Zoom } from "react-toastify";
 
 // notification of table data sent to output
 function notify() {
-  toast.success("Rotation Data Saved to Loadings Table", { autoClose: 5000 });
-  store.setState({ notifyForSavedRotation: false });
+  toast.success("Rotation Data Saved to Loadings Table", {
+    autoClose: 5000
+  });
+  store.setState({
+    notifyForSavedRotation: false
+  });
 }
 
 class ScatterPlotDiv extends React.Component {
@@ -27,12 +31,12 @@ class ScatterPlotDiv extends React.Component {
       <JudgeTitleDiv id="outmostDiv">
         <FactorSelectionBar id="selectButton">
           <SelectLabel>Select factors:</SelectLabel>
-          <FactorSelectButtons baselineData={baselineData} />
-          <ToastContainer transition={Slide} />
+          <FactorSelectButtons baselineData={ baselineData } />
+          <ToastContainer transition={ Zoom } />
         </FactorSelectionBar>
-        <ScatterPlotAndTableTransitionContainer baselineData={baselineData} />
+        <ScatterPlotAndTableTransitionContainer baselineData={ baselineData } />
       </JudgeTitleDiv>
-    );
+      );
   }
 }
 

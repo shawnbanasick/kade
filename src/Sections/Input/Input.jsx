@@ -2,7 +2,7 @@ import { Tab } from "semantic-ui-react";
 import React, { Component } from "react";
 import { view, store } from "react-easy-state";
 import styled, { keyframes } from "styled-components";
-import { ToastContainer, toast, Slide } from "react-toastify";
+import { ToastContainer, toast, Zoom } from "react-toastify";
 import state from "../../store";
 import CsvPanel from "./CsvPanel";
 import JsonPanel from "./JsonPanel";
@@ -25,7 +25,7 @@ const panes = [
     menuItem: "CSV",
     render: () => (
       <Tab.Pane>
-        <CsvPanel notify={notify} />
+        <CsvPanel notify={ notify } />
       </Tab.Pane>
     )
   },
@@ -82,29 +82,25 @@ class Input extends Component {
     this.handleTabChange = this.handleTabChange.bind(this);
   }
 
-  handleTabChange(e, { activeIndex }) {
+  handleTabChange(e, {activeIndex}) {
     localStore.activeIndex = activeIndex;
   }
 
   render() {
-    const { activeIndex } = localStore;
+    const {activeIndex} = localStore;
     const showNotification = state.getState("notifyDataUploadSuccess");
     if (showNotification) {
       notify();
     }
     return (
       <React.Fragment>
-        <ToastContainer transition={Slide} />
+        <ToastContainer transition={ Zoom } />
         <MainContent>
-          <Tab
-            panes={panes}
-            activeIndex={activeIndex}
-            onTabChange={this.handleTabChange}
-          />
+          <Tab panes={ panes } activeIndex={ activeIndex } onTabChange={ this.handleTabChange } />
           <ErrorNotification />
         </MainContent>
       </React.Fragment>
-    );
+      );
   }
 }
 

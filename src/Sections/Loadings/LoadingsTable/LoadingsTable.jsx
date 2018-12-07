@@ -3,7 +3,7 @@ import React, { Component } from "react";
 import { Button } from "semantic-ui-react";
 import { AgGridReact } from "ag-grid-react";
 import { view, store } from "react-easy-state";
-import { ToastContainer, toast, Slide } from "react-toastify";
+import { ToastContainer, toast, Zoom } from "react-toastify";
 import state from "../../../store";
 import SigLevelDropdown from "./SigLevelDropdown";
 import InvertFactorButton from "./InvertFactorButton";
@@ -201,23 +201,30 @@ class LoadingsTable extends Component {
 
   flagAllQsorts() {
     const currentLoadingsTable = this.grabTableLocalState();
-    console.log(`current loadings ${  JSON.stringify(currentLoadingsTable)}`);
     const numFacsForTableWidth = state.getState("numFactorsKeptForRot");
+    const factorGroupArray = ["F1", "F2", "F3", "F4", "F5", "F6", "F7", "F8"]
     for (let i = 0; i < currentLoadingsTable.length; i++) {
-      for (let k = 0; k < numFacsForTableWidth - 1; k++) {
-
+      const factorGroup = currentLoadingsTable[i].factorGroup.slice(0, 2);
+      const factorGroupIndexValue = factorGroupArray.indexOf(factorGroup);
+      for (let k = 0; k < numFacsForTableWidth; k++) {
+        const checkboxIndex = `check${ k + 1}`;
+        if (factorGroupIndexValue === (k)) {
+          currentLoadingsTable[i][checkboxIndex] = true;
+        } else {
+          currentLoadingsTable[i][checkboxIndex] = false;
+        }
       }
     }
+    this.gridApi.redrawRows(currentLoadingsTable);
+    localStore.temp_gridRowDataLoadingsTable = currentLoadingsTable;
+    state.setState({
+      gridRowDataLoadingsTable: currentLoadingsTable,
+    });
   }
 
   clearAllCheckboxes() {
     const currentLoadingsTable = this.grabTableLocalState();
-    console.log(`current loadings ${  JSON.stringify(currentLoadingsTable)}`);
     const numFacsForTableWidth = state.getState("numFactorsKeptForRot");
-    // const numFactsArray = [];
-    // for (let x=0; x<numFacsForTableWidth; x++) {
-    //   numFactsArray.push(x+1);
-    // }
     for (let i = 0; i < currentLoadingsTable.length; i++) {
       for (let k = 0; k < numFacsForTableWidth; k++) {
         const index = `check${  k + 1}`;
@@ -229,7 +236,6 @@ class LoadingsTable extends Component {
     state.setState({
       gridRowDataLoadingsTable: currentLoadingsTable,
     });
-
   }
 
 
@@ -301,7 +307,7 @@ class LoadingsTable extends Component {
     return (
       <div>
         <LoadingsContainerDiv>
-          <ToastContainer transition={ Slide } />
+          <ToastContainer transition={ Zoom } />
           <HighlightingAndFlaggingTextBar>
             <span style={ { marginRight: 255 } }>Row Highlighting:</span>
             <span>Flagging:</span>
