@@ -24,8 +24,11 @@ const exportToCsv = function(filename, rows) {
         csvFile += processRow(rows[i]);
     }
 
-    var blob = new Blob(['\ufeff' + csvFile], {
-        type: "text/CSV;charset=utf-8"
+    // var blob = new Blob(['\ufeff' + csvFile], {
+    //     type: "text/csv;charset=utf-8"
+    // });
+    var blob = new Blob(['\uFEFF' + csvFile], {
+        type: "text/csv; charset=utf-18"
     });
     if (navigator.msSaveBlob) {
         // IE 10+

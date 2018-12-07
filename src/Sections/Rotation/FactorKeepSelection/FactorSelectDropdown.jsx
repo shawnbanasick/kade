@@ -122,7 +122,7 @@ class FactorSelectDropdown extends React.Component {
                   <span style={ { marginRight: 20, fontSize: "22px" } }>
                                                                                   How many factors to keep for rotation?{ " " }
                                                                                 </span>
-                  <Dropdown id="factorSelectDropdown" placeholder={ "?" } style={ { maxHeight: "45px" } } disabled={ isFacSelectDisabled } onChange={ saveDropdownValueToState } openOnFocus button simple item options={ options }
+                  <Dropdown id="factorSelectDropdown" placeholder={ "?" } style={ { height: "38px", border: "1px solid black" } } disabled={ isFacSelectDisabled } onChange={ saveDropdownValueToState } openOnFocus button simple item options={ options }
                   />
                   <FactorSelectButtonModal />
                 </ContainerDiv>
