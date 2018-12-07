@@ -35,9 +35,6 @@ const panes = [
           <DownloadResultsButtons />
           <NoLoadingsFlaggedWarningModal />
           <MultipleFactorsFlaggedWarningModal />
-          <ShowVizOptionsButton />
-          <FactorVizOptions />
-          <RefreshFactorVizButton />
         </DataWindow1>
       </Tab.Pane>
     )
@@ -68,6 +65,10 @@ const panes = [
       <Tab.Pane>
         <DataWindow2>
           <DisplayVisualizationsButtons />
+          <ShowVizOptionsButton />
+          <RefreshFactorVizButton />
+          <FactorVizOptions />
+          <RefreshFactorVizButton />
           <FactorVizDispatch />
         </DataWindow2>
       </Tab.Pane>
