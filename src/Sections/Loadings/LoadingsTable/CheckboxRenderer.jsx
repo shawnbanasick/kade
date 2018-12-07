@@ -13,7 +13,7 @@ class CheckboxRenderer extends React.PureComponent {
 
   handleCheckboxChange(event) {
     this.props.data[this.props.colDef.field] = !this.props.data[
-      this.props.colDef.field
+        this.props.colDef.field
     ];
     this.setState({
       value: this.props.data[this.props.colDef.field]
@@ -32,11 +32,8 @@ class CheckboxRenderer extends React.PureComponent {
 
   render() {
     return (
-      <Checkbox
-        checked={this.state.value}
-        onChange={this.handleCheckboxChange}
-      />
-    );
+      <Checkbox style={ { marginTop: 3, marginLeft: -3 } } checked={ this.state.value } onChange={ this.handleCheckboxChange } />
+      );
   }
 }
 

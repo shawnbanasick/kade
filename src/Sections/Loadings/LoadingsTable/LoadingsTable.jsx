@@ -20,7 +20,9 @@ const localStore = store({
 
 // notification of table data sent to output
 function notify() {
-  toast.success("Data sent to Output", { autoClose: 1500 });
+  toast.success("Data sent to Output", {
+    autoClose: 1500
+  });
   state.setState({
     notifyDataSentToOutputSuccess: false,
     isLoadingsButtonGreen: true
@@ -87,6 +89,10 @@ class LoadingsTable extends Component {
       rowClassRules: {}
     };
     this.onGridReady = this.onGridReady.bind(this);
+    this.updateTableLocalState = this.updateTableLocalState.bind(this);
+    this.generateOutput = this.generateOutput.bind(this);
+    this.doInvertFactor = this.doInvertFactor.bind(this);
+    this.doSplitFactor = this.doSplitFactor.bind(this);
   }
 
   sendLocalStoreToState() {
@@ -102,7 +108,7 @@ class LoadingsTable extends Component {
   onGridReady(params) {
     this.gridApi = params.api;
     this.columnApi = params.columnApi;
-    // this.gridApi.sizeColumnsToFit();
+  // this.gridApi.sizeColumnsToFit();
   }
 
   updateTableLocalState() {
@@ -229,7 +235,9 @@ class LoadingsTable extends Component {
     const outputButtonsArray3 = outputButtonsArray2.filter(filterArray);
     outputButtonsArray3.shift();
     const outputButtonsArray = outputButtonsArray3.map(item => item.slice(6));
-    state.setState({ outputButtonsArray });
+    state.setState({
+      outputButtonsArray
+    });
 
     // pull number factors to calc responsive table width
     let numFacsForTableWidth = state.getState("numFactorsKeptForRot");
@@ -255,115 +263,58 @@ class LoadingsTable extends Component {
     return (
       <div>
         <LoadingsContainerDiv>
-          <ToastContainer transition={Slide} />
+          <ToastContainer transition={ Slide } />
           <HighlightingAndFlaggingTextBar>
-            <span style={{ marginRight: 255 }}>Row Highlighting:</span>
+            <span style={ { marginRight: 255 } }>Row Highlighting:</span>
             <span>Flagging:</span>
           </HighlightingAndFlaggingTextBar>
           <HighlightingAndFlaggingButtonBar>
             <StyledWrapper>
-              <Button
-                id="noHighlightingButton"
-                className="wrapper1"
-                loading={isLoadingNoHighlighting}
-                disabled={isDisabled}
-                onClick={() => this.highlightRows("none")}
-              >
+              <Button id="noHighlightingButton" className="wrapper1" loading={ isLoadingNoHighlighting } disabled={ isDisabled } onClick={ () => this.highlightRows("none") }>
                 None
               </Button>
-              <Button
-                id="colorsHighlightingButton"
-                className="wrapper1"
-                loading={isLoadingColorsHighlighting}
-                disabled={isDisabled}
-                onClick={() => this.highlightRows("colors")}
-              >
+              <Button id="colorsHighlightingButton" className="wrapper1" loading={ isLoadingColorsHighlighting } disabled={ isDisabled } onClick={ () => this.highlightRows("colors") }>
                 Colors
               </Button>
-              <Button
-                id="graysHighlightingButton"
-                className="wrapper1"
-                onClick={() => this.highlightRows("grays")}
-                disabled={isDisabled}
-                loading={isLoadingGrayHighlighting}
-                style={{ marginRight: 150 }}
-              >
+              <Button id="graysHighlightingButton" className="wrapper1" onClick={ () => this.highlightRows("grays") } disabled={ isDisabled } loading={ isLoadingGrayHighlighting } style={ { marginRight: 150 } }>
                 Gray
               </Button>
-              <Button
-                id="autoflagButton"
-                className="wrapper1"
-                loading={isLoadingAutoflag}
-                onClick={autoFlagFactors}
-                disabled={isDisabled}
-              >
+              <Button id="autoflagButton" className="wrapper1" loading={ isLoadingAutoflag } onClick={ autoFlagFactors } disabled={ isDisabled }>
                 Auto-Flag
               </Button>
-              <span style={{ marginLeft: 5, marginRight: 10 }}>at</span>
-              <SigLevelDropdown style={{ marginLeft: 5 }} />
-              <Button className="wrapper1" style={{ marginLeft: "40px" }}>
+              <span style={ { marginLeft: 5, marginRight: 10 } }>at</span>
+              <SigLevelDropdown style={ { marginLeft: 5 } } />
+              <Button className="wrapper1" style={ { marginLeft: "40px" } }>
                 All
               </Button>
-              <Button className="wrapper1" style={{ marginLeft: "40px" }}>
+              <Button className="wrapper1" style={ { marginLeft: "40px" } }>
                 None
               </Button>
             </StyledWrapper>
           </HighlightingAndFlaggingButtonBar>
           <CommonVarianceCheckboxDiv>
-            <MajorityCommonVarianceCheckbox style={{ marginLeft: 300 }} />
+            <MajorityCommonVarianceCheckbox style={ { marginLeft: 300 } } />
           </CommonVarianceCheckboxDiv>
           <div>
             <ColumnSortText>
-              Default sort is by factor group (FG - highest loading factor).
-              Click the column headers to re-sort.
+              Default sort is by factor group (FG - highest loading factor). Click the column headers to re-sort.
             </ColumnSortText>
-            <div
-              id="loadingsTableContainer"
-              style={{
-                marginTop: 2,
-                height: getHeight(numQsorts),
-                width: getWidth(numFacsForTableWidth),
-                marginBottom: 15
-              }}
-              className="ag-theme-fresh"
-            >
-              <AgGridReact
-                enableSorting
-                id="loadingsTable"
-                columnDefs={localStore.gridColDefsLoadingsTable}
-                rowData={localStore.gridRowDataLoadingsTable}
-                getRowClass={params => params.data.highlightingClass}
-                onGridReady={this.onGridReady}
-                gridAutoHeight={false}
-                onCellClicked={this.updateTableLocalState.bind(this)}
-              />
+            <div id="loadingsTableContainer" style={ { marginTop: 2, height: getHeight(numQsorts), width: getWidth(numFacsForTableWidth), marginBottom: 15 } } className="ag-theme-fresh">
+              <AgGridReact enableSorting id="loadingsTable" columnDefs={ localStore.gridColDefsLoadingsTable } rowData={ localStore.gridRowDataLoadingsTable } getRowClass={ params => params.data.highlightingClass } onGridReady={ this.onGridReady }
+                gridAutoHeight={ false } onCellClicked={ this.updateTableLocalState } />
             </div>
           </div>
           <ButtonBarBottom>
-            <StyledWrapperOutput
-              buttonColor={localStore.sendDataToOutputButtonColor}
-              id="generateOutputButton"
-              className="wrapper1"
-              onClick={this.generateOutput.bind(this)}
-            >
+            <StyledWrapperOutput buttonColor={ localStore.sendDataToOutputButtonColor } id="generateOutputButton" className="wrapper1" onClick={ this.generateOutput }>
               Send Table Data to Output
             </StyledWrapperOutput>
             <StyledWrapper>
-              <Button
-                id="invertFactorsButton"
-                className="wrapper1"
-                disabled={isDisabled}
-                onClick={this.doInvertFactor.bind(this)}
-              >
+              <Button id="invertFactorsButton" className="wrapper1" disabled={ isDisabled } onClick={ this.doInvertFactor }>
                 Invert Factor
               </Button>
             </StyledWrapper>
             <StyledWrapper>
-              <Button
-                id="splitFactorsButton"
-                className="wrapper1"
-                onClick={this.doSplitFactor.bind(this)}
-              >
+              <Button id="splitFactorsButton" className="wrapper1" onClick={ this.doSplitFactor }>
                 Split Bipolar Factor
               </Button>
             </StyledWrapper>
@@ -372,7 +323,7 @@ class LoadingsTable extends Component {
           <InvertFactorButton />
         </LoadingsContainerDiv>
       </div>
-    );
+      );
   }
 }
 
