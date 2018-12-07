@@ -6,147 +6,148 @@ import sortByFactorGroup from "../loadingsLogic/sortByFactorGroup";
 
 // todo - re-organize factor groupings and sorts to optimize number of required loops
 const loadingsTableDataPrep = numFactors => {
-  // factorMatrix should be factors as rows - in Lipset => 9 cols, 7 -8 rows
-  const factorMatrix1 = store.getState("factorMatrix");
+    // factorMatrix should be factors as rows - in Lipset => 9 cols, 7 -8 rows
+    const factorMatrix1 = store.getState("factorMatrix");
 
-  const respondentNames = store.getState("respondentNames");
+    const respondentNames = store.getState("respondentNames");
 
-  // get matrix autoflag booleans
-  const fSigCriterionResults = store.getState("fSigCriterionResults");
+    // get matrix autoflag booleans
+    const fSigCriterionResults = store.getState("fSigCriterionResults");
 
-  // calculate the factor groupings so they can be assigned in col defs
-  const highlighting = store.getState("highlighting");
-  const factorGroupings = sortByFactorGroup([...factorMatrix1], highlighting);
+    // calculate the factor groupings so they can be assigned in col defs
+    const highlighting = store.getState("highlighting");
+    const factorGroupings = sortByFactorGroup([...factorMatrix1], highlighting);
 
-  // set up Table Headers
-  const tempRotFacStateArray = [];
-  const gridColDefsLoadingsTable = [
-    {
-      headerName: "Num",
-      field: "resNum",
-      pinned: true,
-      editable: false,
-      width: 70,
-      cellStyle: {
-        textAlign: "center"
-      }
-    },
-    {
-      headerName: "Participant",
-      field: "respondent",
-      width: 150,
-      pinned: true,
-      editable: false,
-      cellStyle: {
-        textAlign: "center"
-      }
-    },
-    {
-      headerName: "FG",
-      field: "factorGroup",
-      pinned: true,
-      width: 70,
-      editable: false,
-      comparator: factorGroupComparator,
-      cellStyle: {
-        textAlign: "center"
-      }
-    },
+    // set up Table Headers
+    const tempRotFacStateArray = [];
+    const gridColDefsLoadingsTable = [
+        {
+            headerName: "Num",
+            field: "resNum",
+            pinned: true,
+            editable: false,
+            width: 70,
+            cellStyle: {
+                textAlign: "center"
+            }
+        },
+        {
+            headerName: "Participant",
+            field: "respondent",
+            width: 150,
+            pinned: true,
+            editable: false,
+            cellStyle: {
+                textAlign: "center"
+            }
+        },
+        {
+            headerName: "FG",
+            field: "factorGroup",
+            pinned: true,
+            width: 70,
+            editable: false,
+            comparator: factorGroupComparator,
+            cellStyle: {
+                textAlign: "center"
+            }
+        },
 
-    {
-      headerName: "highlighting",
-      field: "highlighting",
-      pinned: false,
-      editable: false,
-      cellStyle: {
-        textAlign: "center"
-      },
-      hide: true
-    },
-    {
-      headerName: "defaultSort",
-      field: "defaultSort",
-      pinned: false,
-      editable: false,
-      cellStyle: {
-        textAlign: "center"
-      },
-      hide: true
-    }
-  ];
-
-  for (let i = 0; i < numFactors; i++) {
-    const facNumber = i + 1;
-    gridColDefsLoadingsTable.push(
-      {
-        headerName: `Factor ${facNumber}`,
-        field: `factor${facNumber}`,
-        pinned: false,
-        width: 90,
-        editable: false,
-        cellStyle: {
-          textAlign: "right"
+        {
+            headerName: "highlighting",
+            field: "highlighting",
+            pinned: false,
+            editable: false,
+            cellStyle: {
+                textAlign: "center"
+            },
+            hide: true
+        },
+        {
+            headerName: "defaultSort",
+            field: "defaultSort",
+            pinned: false,
+            editable: false,
+            cellStyle: {
+                textAlign: "center"
+            },
+            hide: true
         }
-      },
-      {
-        headerName: `F${facNumber}`,
-        field: `check${facNumber}`,
-        pinned: false,
-        editable: true,
-        width: 55,
-        cellRendererFramework: CheckboxRenderer,
-        cellStyle: {
-          textAlign: "left"
+    ];
+
+    for (let i = 0; i < numFactors; i++) {
+        const facNumber = i + 1;
+        gridColDefsLoadingsTable.push(
+            {
+                headerName: `Factor ${facNumber}`,
+                field: `factor${facNumber}`,
+                pinned: false,
+                width: 90,
+                editable: false,
+                cellStyle: {
+                    textAlign: "right"
+                }
+            },
+            {
+                headerName: `F${facNumber}`,
+                field: `check${facNumber}`,
+                pinned: false,
+                editable: true,
+                width: 55,
+                cellRendererFramework: CheckboxRenderer,
+                cellStyle: {
+                    textAlign: "left"
+                }
+            }
+        ); // end push
+    } // end loop
+
+    // set up row data
+    const gridRowDataLoadingsTable = [];
+    // for (let j = 0; j < factorMatrix1[0].length; j++) {
+    for (let j = 0; j < respondentNames.length; j++) {
+        const responNum = j + 1;
+        const tempArray = {};
+        const tempArray2 = [];
+        tempArray.resNum = responNum;
+        tempArray.respondent = respondentNames[j];
+        tempArray.factorGroup = factorGroupings[j][1];
+        tempArray.highlightingClass = factorGroupings[j][3];
+        tempArray.defaultSort = factorGroupings[j][2];
+
+        for (let k = 0; k < factorMatrix1.length; k++) {
+            const facNum = k + 1;
+            // tempArray["factor" + facNum] = evenRound(factorMatrix1[k][j], 4);
+            const tempVal = evenRound(factorMatrix1[k][j], 4);
+            tempArray[`factor${facNum}`] = tempVal;
+            // to set up tempRotStateArray
+            tempArray2.push(tempVal);
+            if (fSigCriterionResults.length > 0) {
+                tempArray[`check${facNum}`] = fSigCriterionResults[j][k];
+            } else {
+                tempArray[`check${facNum}`] = false;
+            }
         }
-      }
-    ); // end push
-  } // end loop
-
-  // set up row data
-  const gridRowDataLoadingsTable = [];
-  // for (let j = 0; j < factorMatrix1[0].length; j++) {
-  for (let j = 0; j < respondentNames.length; j++) {
-    const responNum = j + 1;
-    const tempArray = {};
-    const tempArray2 = [];
-    tempArray.resNum = responNum;
-    tempArray.respondent = respondentNames[j];
-    tempArray.factorGroup = factorGroupings[j][1];
-    tempArray.highlightingClass = factorGroupings[j][3];
-    tempArray.defaultSort = factorGroupings[j][2];
-
-    for (let k = 0; k < factorMatrix1.length; k++) {
-      const facNum = k + 1;
-      // tempArray["factor" + facNum] = evenRound(factorMatrix1[k][j], 4);
-      const tempVal = evenRound(factorMatrix1[k][j], 4);
-      tempArray[`factor${facNum}`] = tempVal;
-      // to set up tempRotStateArray
-      tempArray2.push(tempVal);
-      if (fSigCriterionResults.length > 0) {
-        tempArray[`check${facNum}`] = fSigCriterionResults[j][k];
-      } else {
-        tempArray[`check${facNum}`] = false;
-      }
+        tempRotFacStateArray.push(tempArray2);
+        gridRowDataLoadingsTable.push(tempArray);
     }
-    tempRotFacStateArray.push(tempArray2);
-    gridRowDataLoadingsTable.push(tempArray);
-  }
 
-  // to default order chart by highest factor loading
-  gridRowDataLoadingsTable.sort((a, b) => a.defaultSort - b.defaultSort);
+    // to default order chart by highest factor loading
+    gridRowDataLoadingsTable.sort((a, b) => a.defaultSort - b.defaultSort);
 
-  store.setState({
-    gridColDefsLoadingsTable,
-    gridRowDataLoadingsTable,
-    // tempRotFacStateArray: tempRotFacStateArray,
-    isLoadingFactorsKept: false,
-    isLoadingAutoflag: false,
-    isLoadingNoHighlighting: false,
-    isLoadingColorsHighlighting: false,
-    isLoadingGrayHighlighting: false
-  });
+    store.setState({
+        gridColDefsLoadingsTable,
+        gridRowDataLoadingsTable,
+        // tempRotFacStateArray: tempRotFacStateArray,
+        isLoadingFactorsKept: false,
+        isLoadingAutoflag: false,
+        isLoadingNoHighlighting: false,
+        isLoadingColorsHighlighting: false,
+        isLoadingGrayHighlighting: false,
+        isLoadingsTableInitialRender: true,
+    });
 
-  // console.log(`row data: ${  JSON.stringify(gridRowDataLoadingsTable)}`);
+// console.log(`row data: ${  JSON.stringify(gridRowDataLoadingsTable)}`);
 };
 
 export default loadingsTableDataPrep;

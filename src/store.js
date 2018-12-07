@@ -98,6 +98,7 @@ export default store({
     isRotationButtonGreen: false,
     isLoadingsButtonGreen: false,
     isOutputButtonGreen: false,
+    isLoadingsTableInitialRender: false,
     bipolarSplitCount: 0,
     excelType1NonsymmetricArrayText: "",
     activeStartAnalysisButton: false,

@@ -88,6 +88,7 @@ class LoadingsTable extends Component {
     this.state = {
       rowClassRules: {}
     };
+
     this.onGridReady = this.onGridReady.bind(this);
     this.updateTableLocalState = this.updateTableLocalState.bind(this);
     this.generateOutput = this.generateOutput.bind(this);
@@ -96,9 +97,11 @@ class LoadingsTable extends Component {
   }
 
   sendLocalStoreToState() {
+
     state.setState({
       gridRowDataLoadingsTable: localStore.temp_gridRowDataLoadingsTable
     });
+  // console.log(JSON.stringify(localStore.temp_gridRowDataLoadingsTable));
   }
 
   componentWillUnmount() {
@@ -206,13 +209,29 @@ class LoadingsTable extends Component {
   }
 
   render() {
+
+    // console.log(JSON.stringify("render called"));
+
     // pull headers and data from states
     const gridColDefsLoadingsTable = state.getState("gridColDefsLoadingsTable");
     const gridRowDataLoadingsTable = state.getState("gridRowDataLoadingsTable");
 
+    // console.log(`col defs ${  JSON.stringify(gridRowDataLoadingsTable)}`);
+
+
     // push headers and data to preserve local state for remount after unmount
     localStore.gridColDefsLoadingsTable = gridColDefsLoadingsTable;
     localStore.gridRowDataLoadingsTable = gridRowDataLoadingsTable;
+
+    // push data on initial render so if user unmounts without doing anything, will still remount properly
+    const isLoadingsTableInitialRender = state.getState("isLoadingsTableInitialRender");
+    if (isLoadingsTableInitialRender) {
+      localStore.temp_gridColDefsLoadingsTable = gridColDefsLoadingsTable;
+      localStore.temp_gridRowDataLoadingsTable = gridRowDataLoadingsTable;
+      state.setState({
+        isLoadingsTableInitialRender: false
+      });
+    }
 
     // get highlighting options
     const isLoadingAutoflag = state.getState("isLoadingAutoflag");
