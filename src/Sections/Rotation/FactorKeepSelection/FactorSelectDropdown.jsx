@@ -113,6 +113,7 @@ class FactorSelectDropdown extends React.Component {
     // }
 
     render() {
+        const isFacSelectDisabled = state.getState("isFacSelectDisabled");
         const options = getOptions();
         const showKeepFacForRotButton = state.getState("showKeepFacForRotButton");
         if (showKeepFacForRotButton) {
@@ -121,7 +122,7 @@ class FactorSelectDropdown extends React.Component {
                   <span style={ { marginRight: 20, fontSize: "22px" } }>
                                                                                   How many factors to keep for rotation?{ " " }
                                                                                 </span>
-                  <Dropdown id="factorSelectDropdown" placeholder={ "?" } style={ { maxHeight: "45px" } } onChange={ saveDropdownValueToState } openOnFocus button simple item options={ options }
+                  <Dropdown id="factorSelectDropdown" placeholder={ "?" } style={ { maxHeight: "45px" } } disabled={ isFacSelectDisabled } onChange={ saveDropdownValueToState } openOnFocus button simple item options={ options }
                   />
                   <FactorSelectButtonModal />
                 </ContainerDiv>

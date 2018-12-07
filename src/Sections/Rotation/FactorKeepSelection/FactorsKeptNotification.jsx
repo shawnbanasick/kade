@@ -15,7 +15,11 @@ class FactorsKeptNotification extends Component {
     return (
       <Transition visible={shouldDisplayDiv} animation="fade" duration={1000}>
         <FactorsKeptDiv className="factorsKeptDiv">
-          {numFactorsKept} factors kept for rotation. <br /> Click the "Varimax"
+          {numFactorsKept} factors kept for rotation. 
+          <br />
+          <br />
+          <br /> 
+          Click the "Varimax"
           or "Judgmental" tabs for more options.
         </FactorsKeptDiv>
       </Transition>

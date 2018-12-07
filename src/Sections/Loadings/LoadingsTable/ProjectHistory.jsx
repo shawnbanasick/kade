@@ -188,7 +188,7 @@ const CustomOl = styled.ol`
   margin-top: 2px;
   margin-bottom: 2px;
   font-size: 20px;
-  line-height: 1.2em;
+  line-height: 2em;
 `;
 
 const StyledWrapper = styled.div`
