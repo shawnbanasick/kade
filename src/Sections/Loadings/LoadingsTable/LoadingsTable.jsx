@@ -78,6 +78,14 @@ window.addEventListener("resize", () => {
   resetWidthAndHeight();
 });
 
+function sendLocalStoreToState() {
+  state.setState({
+    gridRowDataLoadingsTable: localStore.temp_gridRowDataLoadingsTable
+  });
+}
+
+
+
 /*
   Component start
 */
@@ -94,18 +102,12 @@ class LoadingsTable extends Component {
     this.generateOutput = this.generateOutput.bind(this);
     this.doInvertFactor = this.doInvertFactor.bind(this);
     this.doSplitFactor = this.doSplitFactor.bind(this);
-  }
-
-  sendLocalStoreToState() {
-
-    state.setState({
-      gridRowDataLoadingsTable: localStore.temp_gridRowDataLoadingsTable
-    });
-  // console.log(JSON.stringify(localStore.temp_gridRowDataLoadingsTable));
+    this.flagAllQsorts = this.flagAllQsorts.bind(this);
+    this.clearAllCheckboxes = this.clearAllCheckboxes.bind(this);
   }
 
   componentWillUnmount() {
-    this.sendLocalStoreToState();
+    sendLocalStoreToState();
   }
 
   onGridReady(params) {
@@ -114,26 +116,27 @@ class LoadingsTable extends Component {
   // this.gridApi.sizeColumnsToFit();
   }
 
-  updateTableLocalState() {
+
+  grabTableLocalState() {
+    // grab current table data (including user-added flags)
     const count = this.gridApi.getDisplayedRowCount();
     const currentLoadingsTable = [];
     for (let i = 0; i < count; i++) {
       const rowNode = this.gridApi.getDisplayedRowAtIndex(i);
       currentLoadingsTable.push(rowNode.data);
     }
+    return currentLoadingsTable;
+  }
+
+
+  updateTableLocalState() {
+    const currentLoadingsTable = this.grabTableLocalState();
     localStore.temp_gridRowDataLoadingsTable = currentLoadingsTable;
   }
 
   generateOutput() {
     // grab current table data
-    const count = this.gridApi.getDisplayedRowCount();
-    const currentLoadingsTable = [];
-    for (let i = 0; i < count; i++) {
-      const rowNode = this.gridApi.getDisplayedRowAtIndex(i);
-      currentLoadingsTable.push(rowNode.data);
-    }
-
-    // console.log('current loadings ' + JSON.stringify(currentLoadingsTable));
+    const currentLoadingsTable = this.grabTableLocalState();
 
     // initialize output select buttons highlighting to false
     const btnId = state.getState("outputButtonsArray");
@@ -163,13 +166,7 @@ class LoadingsTable extends Component {
   }
 
   doSplitFactor() {
-    // grab current table data (including user-added flags)
-    const count = this.gridApi.getDisplayedRowCount();
-    const currentLoadingsTable = [];
-    for (let i = 0; i < count; i++) {
-      const rowNode = this.gridApi.getDisplayedRowAtIndex(i);
-      currentLoadingsTable.push(rowNode.data);
-    }
+    const currentLoadingsTable = this.grabTableLocalState();
     state.setState({
       currentLoadingsTable,
       showSplitFactorModal: true
@@ -177,13 +174,7 @@ class LoadingsTable extends Component {
   }
 
   doInvertFactor() {
-    // grab current table data (including user-added flags)
-    const count = this.gridApi.getDisplayedRowCount();
-    const currentLoadingsTable = [];
-    for (let i = 0; i < count; i++) {
-      const rowNode = this.gridApi.getDisplayedRowAtIndex(i);
-      currentLoadingsTable.push(rowNode.data);
-    }
+    const currentLoadingsTable = this.grabTableLocalState();
     state.setState({
       currentLoadingsTable,
       showInvertFactorModal: true
@@ -208,16 +199,44 @@ class LoadingsTable extends Component {
     });
   }
 
+  flagAllQsorts() {
+    const currentLoadingsTable = this.grabTableLocalState();
+    console.log(`current loadings ${  JSON.stringify(currentLoadingsTable)}`);
+    const numFacsForTableWidth = state.getState("numFactorsKeptForRot");
+    for (let i = 0; i < currentLoadingsTable.length; i++) {
+      for (let k = 0; k < numFacsForTableWidth - 1; k++) {
+
+      }
+    }
+  }
+
+  clearAllCheckboxes() {
+    const currentLoadingsTable = this.grabTableLocalState();
+    console.log(`current loadings ${  JSON.stringify(currentLoadingsTable)}`);
+    const numFacsForTableWidth = state.getState("numFactorsKeptForRot");
+    // const numFactsArray = [];
+    // for (let x=0; x<numFacsForTableWidth; x++) {
+    //   numFactsArray.push(x+1);
+    // }
+    for (let i = 0; i < currentLoadingsTable.length; i++) {
+      for (let k = 0; k < numFacsForTableWidth; k++) {
+        const index = `check${  k + 1}`;
+        currentLoadingsTable[i][index] = false;
+      }
+    }
+    this.gridApi.redrawRows(currentLoadingsTable);
+    localStore.temp_gridRowDataLoadingsTable = currentLoadingsTable;
+    state.setState({
+      gridRowDataLoadingsTable: currentLoadingsTable,
+    });
+
+  }
+
+
   render() {
-
-    // console.log(JSON.stringify("render called"));
-
     // pull headers and data from states
     const gridColDefsLoadingsTable = state.getState("gridColDefsLoadingsTable");
     const gridRowDataLoadingsTable = state.getState("gridRowDataLoadingsTable");
-
-    // console.log(`col defs ${  JSON.stringify(gridRowDataLoadingsTable)}`);
-
 
     // push headers and data to preserve local state for remount after unmount
     localStore.gridColDefsLoadingsTable = gridColDefsLoadingsTable;
@@ -303,10 +322,10 @@ class LoadingsTable extends Component {
               </Button>
               <span style={ { marginLeft: 5, marginRight: 10 } }>at</span>
               <SigLevelDropdown style={ { marginLeft: 5 } } />
-              <Button className="wrapper1" style={ { marginLeft: "40px" } }>
+              <Button className="wrapper1" style={ { marginLeft: "40px" } } onClick={ this.flagAllQsorts }>
                 All
               </Button>
-              <Button className="wrapper1" style={ { marginLeft: "40px" } }>
+              <Button className="wrapper1" style={ { marginLeft: "40px" } } onClick={ this.clearAllCheckboxes }>
                 None
               </Button>
             </StyledWrapper>
