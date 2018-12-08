@@ -425,7 +425,10 @@ const StyledWrapper = styled.div`
 const StyledWrapperOutput = styled.button`
   /* display: grid;
   align-items: center;
-  justify-items: center; */
+  justify-items: center; 
+  
+  background-color: #abafb3;
+  */
   background-color: ${props => props.buttonColor};
   height: 40px;
   width: 240px;
@@ -442,8 +445,8 @@ const StyledWrapperOutput = styled.button`
   user-select: none;
 
   &:hover {
-    background-color: #abafb3;
-    font-weight: 900;
+    
+    font-weight: bold;
   }
 
   &:active {

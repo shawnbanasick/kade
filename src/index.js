@@ -79,25 +79,6 @@ const createWindow = async () => {
 
   const template = [
     {
-      label: "File",
-      submenu: [
-        {
-          label: "Open Folder",
-          accelerator: "CmdOrCtrl+O",
-          click() {
-            // console.log("open");
-          }
-        },
-        {
-          label: "Save File",
-          accelerator: "CmdOrCtrl+S",
-          click() {
-            mainWindow.webContents.send("save-file");
-          }
-        }
-      ]
-    },
-    {
       label: "Edit",
       submenu: [
         {
@@ -170,29 +151,31 @@ const createWindow = async () => {
       ]
     },
     {
-      role: "help",
+      label: "Help",
       submenu: [
         {
-          label: "Learn More"
-          // click() {
-          //   require('electron').shell.openExternal('https://electronjs.org');
-          // },
-        }
-      ]
-    },
-    {
-      label: "Developer",
-      submenu: [
-        {
-          label: "Toggle Developer Tools",
+          label: "User Guide",
           accelerator:
-            process.platform === "darwin" ? "Alt+Cmd+I" : "Ctrl+Shift+I",
+          process.platform === "darwin" ? "Alt+Cmd+U" : "Ctrl+Shift+U",
+          click() {
+            require('electron').shell.openExternal('https://github.com/shawnbanasick/kade/wiki');
+          }
+        },
+        {
+          label: "Show / Hide Developer Tools",
           click() {
             mainWindow.webContents.toggleDevTools();
+          }
+        },
+        {
+          label: "Report a Bug -> ken.q.tools@gmail.com",
+          click() {
+            require('electron').shell.openExternal('mailto:ken.q.tools@gmail.com');          
           }
         }
       ]
     }
+   
   ];
 
   if (process.platform === "darwin") {
@@ -204,10 +187,6 @@ const createWindow = async () => {
         },
         {
           type: "separator"
-        },
-        {
-          role: "services",
-          submenu: []
         },
         {
           type: "separator"
@@ -230,26 +209,9 @@ const createWindow = async () => {
       ]
     });
 
-    // Edit menu
-    template[2].submenu.push(
-      {
-        type: "separator"
-      },
-      {
-        label: "Speech",
-        submenu: [
-          {
-            role: "startspeaking"
-          },
-          {
-            role: "stopspeaking"
-          }
-        ]
-      }
-    );
 
     // Window menu
-    template[4].submenu = [
+    template[3].submenu = [
       {
         role: "close"
       },

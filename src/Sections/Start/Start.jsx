@@ -9,38 +9,38 @@ const localStore = store({
   height: 0
 });
 
-function getWidth() {
-  const w = Math.max(
-    document.documentElement.clientWidth,
-    window.innerWidth || 0
-  );
-  localStore.width = w;
-  return w;
-}
+// function getWidth() {
+//   const w = Math.max(
+//     document.documentElement.clientWidth,
+//     window.innerWidth || 0
+//   );
+//   localStore.width = w;
+//   return w;
+// }
 
-function getHeight() {
-  const h = Math.max(
-    document.documentElement.clientHeight,
-    window.innerHeight || 0
-  );
-  localStore.height = h;
-  return h;
-}
+// function getHeight() {
+//   const h = Math.max(
+//     document.documentElement.clientHeight,
+//     window.innerHeight || 0
+//   );
+//   localStore.height = h;
+//   return h;
+// }
 
-window.addEventListener("resize", () => {
-  getWidth();
-  getHeight();
-});
+// window.addEventListener("resize", () => {
+//   getWidth();
+//   getHeight();
+// });
 
 class Start extends Component {
   render() {
-    getWidth();
-    getHeight();
-    const width = localStore.width;
-    const height = localStore.height;
+    // getWidth();
+    // getHeight();
+    // const width = localStore.width;
+    // const height = localStore.height;
     return (
       <MainContent>
-        <LanguageSelection>{`${width} x ${height}`}</LanguageSelection>
+        {/* <LanguageSelection>{`${width} x ${height}`}</LanguageSelection> */}
         <TitleDiv>KADE</TitleDiv>
         <SubTitleDiv>
           <HighlightLetter>K</HighlightLetter>
@@ -128,9 +128,10 @@ const StyledAnchor = styled.a`
   }
 `;
 
+// 240px 240px 240px 240px;
 const MainContent = styled.div`
   display: grid;
-  grid-template-columns: 240px 240px 240px 240px;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
   grid-template-rows: 20px 155px 50px 30px 115px 120px 180px 20px;
   grid-template-areas:
     "row1 row1 row1 row1"

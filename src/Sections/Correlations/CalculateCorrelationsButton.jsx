@@ -51,7 +51,7 @@ const BeginAnalysisButton = styled.button`
   text-align: center;
   font-size: 16px;
   font-family: Helvetica, sans-serif;
-  font-weight: bold;
+  font-weight: normal;
   border-radius: 4px;
   margin-right: 3px;
   margin-bottom: 3px;
@@ -59,13 +59,13 @@ const BeginAnalysisButton = styled.button`
   outline: none;
 
   &:hover {
-    background-color: white;
+    font-weight: bold
   }
 
   &:active {
-    box-shadow: 0 0 1px 0 black inset;
+    box-shadow: 0 1px 1px 0 black;
     margin-left: 3px;
-    margin-top: 3px;
+    transform: translateY(1px);  
   }
 `;
 

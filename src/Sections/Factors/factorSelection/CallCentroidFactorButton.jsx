@@ -80,8 +80,9 @@ const BeginCentroidButton = styled.button`
   }
 
   &:active {
-    box-shadow: 0 0 1px 0 black inset;
+    box-shadow: 0 1px 1px 0 black inset;
     margin-left: 27px;
+    transform: translateY(1px);
     /* margin-top: 3px; */
   }
 `;

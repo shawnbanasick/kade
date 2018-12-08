@@ -141,6 +141,7 @@ class FactorSelectButtons extends React.Component {
 
     if (shouldDisplayRotFactorButtons) {
       return (
+        <React.Fragment>
         <StyledWrapper>
           {show1 && (
             <Button
@@ -154,6 +155,8 @@ class FactorSelectButtons extends React.Component {
               1
             </Button>
           )}
+          </StyledWrapper>
+          <StyledWrapper>
           {show2 && (
             <Button
               id={"factor 2"}
@@ -166,6 +169,8 @@ class FactorSelectButtons extends React.Component {
               2
             </Button>
           )}
+          </StyledWrapper>
+          <StyledWrapper>
           {show3 && (
             <Button
               id={"factor 3"}
@@ -267,6 +272,7 @@ class FactorSelectButtons extends React.Component {
             </div>
           )}
         </StyledWrapper>
+        </React.Fragment>
       );
     }
     return null;
@@ -286,7 +292,8 @@ const StyledWrapper = styled.div`
     }
 
     &:active {
-      box-shadow: 0 0 1px 0 black inset;
+      box-shadow: 0 1px 1px 0 black;
+      transform: translateY(1px);
       background-color: lightgreen !important;
     }
   }
