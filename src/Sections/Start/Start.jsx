@@ -130,7 +130,7 @@ const StyledAnchor = styled.a`
 
 const MainContent = styled.div`
   display: grid;
-  grid-template-columns: 190px 190px 190px 190px;
+  grid-template-columns: 240px 240px 240px 240px;
   grid-template-rows: 20px 155px 50px 30px 115px 120px 180px 20px;
   grid-template-areas:
     "row1 row1 row1 row1"
