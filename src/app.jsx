@@ -123,11 +123,11 @@ class App extends React.Component {
             <FileButton active={ viewHelp } onClick={ () => this.handleClick("viewLicense") }>
               <p className="title">Help</p>
             </FileButton>
-            <FileButton active={ viewAttribution } onClick={ () => this.handleClick("viewLicense") }>
-              <p className="title">Attribution</p>
-            </FileButton>
             <FileButton active={ viewLicense } onClick={ () => this.handleClick("viewLicense") }>
               <p className="title">License</p>
+            </FileButton>
+            <FileButton active={ viewAttribution } onClick={ () => this.handleClick("viewLicense") }>
+              <p className="title">Attribution</p>
             </FileButton>
           </FilesWindow>
           <ActionWindow>

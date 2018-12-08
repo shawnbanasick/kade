@@ -50,8 +50,8 @@ const createWindow = async () => {
   // });
 
   const windowOptions = {
-    width: 1366, // 980,
-    height: 768, // 750,
+    width: 1100, // 980,  1366
+    height: 750, // 750,  768
     titleBarStyle: "hidden"
   };
 
@@ -59,7 +59,7 @@ const createWindow = async () => {
   mainWindow = Splashscreen.initSplashScreen({
     windowOpts: windowOptions,
     icon: path.join(`${__dirname}./assets/icons/png/512x512.png`),
-    templateUrl: path.join(__dirname, "./assets/splash/", "splashScreen.svg"),
+    templateUrl: path.join(__dirname, "./assets/splash/", "splashScreen3.svg"),
     delay: 0, // force show immediately since example will load fast
     minVisible: 1500, // show for 1.5s so example is obvious
     splashScreenOpts: {
