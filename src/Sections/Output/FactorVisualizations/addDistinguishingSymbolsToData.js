@@ -1,11 +1,8 @@
 import pull from "lodash/pull";
 import store from "../../../store";
 
-const addDistinguishingSymbolsToData = (
-  outputForDataViz,
-  distStatementDataVizArray,
-  consensusStatementArrays
-) => {
+// consensusStatementArrays 
+function addDistinguishingSymbolsToData(outputForDataViz, distStatementDataVizArray) {
   const consensus01Statements = store.getState("consensus01Statements");
   const consensus05Statements = store.getState("consensus05Statements");
   const userSelectedFactors2 = store.getState("userSelectedFactors");
@@ -45,13 +42,13 @@ const addDistinguishingSymbolsToData = (
       const statementId = distStatementDataVizArray[i][j]["No."];
 
       // avoid empty objects
-      let sigSymbol, sigSymbolUni;
+      let sigSymbol,
+        sigSymbolUni;
       const testValue = parseInt(statementId, 10);
       if (!isNaN(testValue)) {
         // get values for calc of direction symbol
         const sigFactorZscoreKey = `Z-SCR-${  userSelectedFactors[i]}`;
-        const sigFactorZscoreValue =
-          distStatementDataVizArray[i][j][sigFactorZscoreKey];
+        const sigFactorZscoreValue = distStatementDataVizArray[i][j][sigFactorZscoreKey];
         const allFactorZscores = [];
 
         // loop through all of the factor z-scores and push to array
@@ -75,7 +72,8 @@ const addDistinguishingSymbolsToData = (
         }
 
         // for distinguishing
-        let directionSymbol, directionSymbolUni;
+        let directionSymbol,
+          directionSymbolUni;
         if (
           otherFactorZscores.length === arrowPointerArrayRight.length &&
           userSelectedFactors.length > 1
@@ -96,11 +94,11 @@ const addDistinguishingSymbolsToData = (
         if (sigAt01Level === "*") {
           sigSymbol = "** "; // "**";  "&#9673;";  sig at .01
           sigSymbolUni = "\u2733\u2733";
-          // sigSymbolUni = "\u25C9";
+        // sigSymbolUni = "\u25C9";
         } else if (sigAt01Level === "") {
           sigSymbol = "* "; // "*";  "&#9678;";  sig at .05
           sigSymbolUni = "\u2733";
-          // sigSymbolUni = "\u25CE";
+        // sigSymbolUni = "\u25CE";
         }
 
         outputForDataViz[i][location].sigVisualization = sigSymbol;
@@ -111,6 +109,7 @@ const addDistinguishingSymbolsToData = (
     }
   }
   return outputForDataViz;
-};
+}
+;
 
 export default addDistinguishingSymbolsToData;
