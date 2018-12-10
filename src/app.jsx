@@ -10,6 +10,7 @@ import License from "./Sections/License/License";
 import Factors from "./Sections/Factors/Factors";
 import Rotation from "./Sections/Rotation/Rotation";
 import Loadings from "./Sections/Loadings/Loadings";
+import Attribution from './Sections/Attribution/Attribution';
 import Correlations from "./Sections/Correlations/Correlations";
 import ProjectHistory from "./Sections/ProjectHistory/ProjectHistory";
 
@@ -126,7 +127,7 @@ class App extends React.Component {
             <FileButton active={ viewLicense } onClick={ () => this.handleClick("viewLicense") }>
               <p className="title">License</p>
             </FileButton>
-            <FileButton active={ viewAttribution } onClick={ () => this.handleClick("viewLicense") }>
+            <FileButton active={ viewAttribution } onClick={ () => this.handleClick("viewAttribution") }>
               <p className="title">Attribution</p>
             </FileButton>
           </FilesWindow>
@@ -141,7 +142,7 @@ class App extends React.Component {
             { viewOutput && <Output view={ viewOutput } /> }
             { viewProjectHistory && <ProjectHistory view={ viewProjectHistory } /> }
             { viewHelp && <License view={ viewLicense } /> }
-            { viewAttribution && <License view={ viewLicense } /> }
+            { viewAttribution && <Attribution view={ viewAttribution } /> }
             { viewLicense && <License view={ viewLicense } /> }
           </ActionWindow>
         </Split>
