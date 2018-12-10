@@ -132,9 +132,9 @@ const MainContent = styled.div`
   animation: ${props => (props.view ? fadeOut : fadeIn)} 0.5s linear;
   transition: visibility 0.5s linear;
 
-  width: calc(100vw - 153px);
+  width: calc(100vw - 120px);
   box-sizing: border-box;
-  max-height: calc(100vh - 22px);
+  height: calc(100vh - 22px);
   overflow: auto;
 
   .tabs-menu {
@@ -184,5 +184,6 @@ const MainContent = styled.div`
     padding: 10px 50px;
     background-color: white;
     padding-left: 20px !important;
+    height: 100%;
   }
 `;
