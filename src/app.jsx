@@ -3,6 +3,7 @@ import { view, store } from "react-easy-state";
 import styled, { css } from "styled-components";
 import state from "./store";
 import Data from "./Sections/Data/Data";
+import Help from './Sections/Help/Help';
 import Start from "./Sections/Start/Start";
 import Input from "./Sections/Input/Input";
 import Output from "./Sections/Output/Output";
@@ -12,6 +13,7 @@ import Rotation from "./Sections/Rotation/Rotation";
 import Loadings from "./Sections/Loadings/Loadings";
 import Attribution from './Sections/Attribution/Attribution';
 import Correlations from "./Sections/Correlations/Correlations";
+import ClearProject from './Sections/ClearProject/ClearProject';
 import ProjectHistory from "./Sections/ProjectHistory/ProjectHistory";
 
 window.onerror = function(errorMsg, url, lineNumber, error) {
@@ -35,6 +37,7 @@ class App extends React.Component {
       viewStart: true,
       viewInput: false,
       viewData: false,
+      viewClearProject: false,
       viewCorrelations: false,
       viewFactors: false,
       viewRotation: false,
@@ -80,7 +83,7 @@ class App extends React.Component {
 
 
 
-    const {viewStart, viewInput, viewData, viewCorrelations, viewFactors, viewRotation, viewLoadings, viewOutput, viewProjectHistory, viewHelp, viewAttribution, viewLicense} = this.localState;
+    const {viewStart, viewInput, viewData, viewClearProject, viewCorrelations, viewFactors, viewRotation, viewLoadings, viewOutput, viewProjectHistory, viewHelp, viewAttribution, viewLicense} = this.localState;
     let showTopBar = false;
     if (process.platform === "darwin") {
       showTopBar = true;
@@ -121,27 +124,31 @@ class App extends React.Component {
             <SpacerButton>
               <p className="title" />
             </SpacerButton>
-            <FileButton active={ viewHelp } onClick={ () => this.handleClick("viewLicense") }>
+            <FileButton active={ viewClearProject } onClick={ () => this.handleClick("viewClearProject") }>
+              <p className="title">Clear Project</p>
+            </FileButton>
+            <FileButton active={ viewHelp } onClick={ () => this.handleClick("viewHelp") }>
               <p className="title">Help</p>
             </FileButton>
             <FileButton active={ viewLicense } onClick={ () => this.handleClick("viewLicense") }>
               <p className="title">License</p>
             </FileButton>
-            <FileButton active={ viewAttribution } onClick={ () => this.handleClick("viewAttribution") }>
-              <p className="title">Attribution</p>
-            </FileButton>
+            { /* <FileButton active={ viewAttribution } onClick={ () => this.handleClick("viewAttribution") }>
+                                                                                                              <p className="title">Attribution</p>
+                                                                                                            </FileButton> */ }
           </FilesWindow>
           <ActionWindow>
             { viewStart && <Start view={ viewStart } /> }
             { viewInput && <Input view={ viewInput } /> }
             { viewData && <Data view={ viewData } /> }
             { viewCorrelations && <Correlations view={ viewCorrelations } /> }
+            { viewClearProject && <ClearProject view={ viewClearProject } /> }
             { viewFactors && <Factors view={ viewFactors } /> }
             { viewRotation && <Rotation view={ viewRotation } /> }
             { viewLoadings && <Loadings view={ viewLoadings } /> }
             { viewOutput && <Output view={ viewOutput } /> }
             { viewProjectHistory && <ProjectHistory view={ viewProjectHistory } /> }
-            { viewHelp && <License view={ viewLicense } /> }
+            { viewHelp && <Help view={ viewHelp } /> }
             { viewAttribution && <Attribution view={ viewAttribution } /> }
             { viewLicense && <License view={ viewLicense } /> }
           </ActionWindow>
