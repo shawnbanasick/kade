@@ -1,45 +1,39 @@
 import React from "react";
-import { view } from "react-easy-state";
 import styled from "styled-components";
+import { view } from "react-easy-state";
 import { Button } from "semantic-ui-react";
 import store from "../../../store";
 
 // todo - change this back to normal button
 // display rules prevent premature click now
 class DisplayVisualizationsButtons extends React.Component {
-  handleDisplayViz() {
-    const displayFactorVisualizations = store.getState(
-      "displayFactorVisualizations"
-    );
-    const shouldShow = !displayFactorVisualizations;
-    store.setState({
-      displayFactorVisualizations: shouldShow
-    });
-  }
-
-  render() {
-    const showDownloadOutputButtons = store.getState(
-      "showDownloadOutputButtons"
-    );
-    if (showDownloadOutputButtons) {
-      return (
-        <div style={{ display: "flex" }}>
-          <StyledWrapper>
-            <Button
-              id="displayVisualizationsButton"
-              className="wrapper1"
-              size={"large"}
-              style={{ marginTop: 50, marginBottom: 50 }}
-              onClick={this.handleDisplayViz}
-            >
-              Display Visualizations of Composite Factors
-            </Button>
-          </StyledWrapper>
-        </div>
-      );
+    handleDisplayViz() {
+        const displayFactorVisualizations = store.getState(
+            "displayFactorVisualizations"
+        );
+        const shouldShow = !displayFactorVisualizations;
+        store.setState({
+            displayFactorVisualizations: shouldShow
+        });
     }
-    return null;
-  }
+
+    render() {
+        const showDownloadOutputButtons = store.getState(
+            "showDownloadOutputButtons"
+        );
+        if (showDownloadOutputButtons) {
+            return (
+                <div style={ { display: "flex" } }>
+                  <StyledWrapper>
+                    <Button id="displayVisualizationsButton" className="wrapper1" size={ "large" } style={ { marginTop: 50, marginBottom: 50 } } onClick={ this.handleDisplayViz }>
+                      Display Visualizations of Composite Factors
+                    </Button>
+                  </StyledWrapper>
+                </div>
+                );
+        }
+        return null;
+    }
 }
 
 export default view(DisplayVisualizationsButtons);
@@ -61,3 +55,4 @@ const StyledWrapper = styled.div`
     }
   }
 `;
+

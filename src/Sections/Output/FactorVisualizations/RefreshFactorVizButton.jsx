@@ -1,9 +1,10 @@
 import React from "react";
+import styled from "styled-components";
 import { view } from "react-easy-state";
 import { Button, Transition } from "semantic-ui-react";
 import store from "../../../store";
-import createFactorVizDataObjectForProps from "./createFactorVizDataObjectForProps";
 import refreshVizOptionsState from "./refreshVizOptionsState";
+import createFactorVizDataObjectForProps from "./createFactorVizDataObjectForProps";
 
 // const styles = {
 //     width: "100%",
@@ -46,9 +47,11 @@ class RefreshFactorVizButton extends React.Component {
             <Transition visible={ shouldDisplayFactorVizOptions } animation="fade" duration={ 1000 }>
               <div>
                 <div style={ { marginTop: 50, marginBottom: 50, height: 100, display: "block" } }>
-                  <Button id="refreshFactorVizButton" onClick={ this.refresh } size="huge" floated="left">
-                    Update Factor Visualizations
-                  </Button>
+                  <StyledWrapper>
+                    <Button id="refreshFactorVizButton" className="wrapper1" onClick={ this.refresh } size="huge" floated="left">
+                      Update Factor Visualizations
+                    </Button>
+                  </StyledWrapper>
                 </div>
               </div>
             </Transition>
@@ -57,3 +60,22 @@ class RefreshFactorVizButton extends React.Component {
 }
 
 export default view(RefreshFactorVizButton);
+
+
+const StyledWrapper = styled.div`
+  .wrapper1 {
+    border: 1px solid black;
+    box-shadow: 0 2px 2px 0 black;
+
+    &:hover {
+      border: 1px solid black;
+      box-shadow: 0 2px 2px 0 black;
+    }
+
+    &:active {
+      box-shadow: 0 0 1px 0 black inset;
+      margin-left: 3px;
+      margin-top: 3px;
+    }
+  }
+`;
