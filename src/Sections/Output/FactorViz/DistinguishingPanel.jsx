@@ -15,56 +15,40 @@ const styles = {
 class DistinguishingPanel extends Component {
   render() {
     return (
-      <div style={{ marginTop: 30 }}>
-        <span style={{ fontSize: 32 }}>
-          Distinguishing and Consensus Statements
-        </span>
-        <hr style={{ width: 900, margin: 0 }} />
+      <div style={ { marginTop: 30 } }>
+        <span style={ { fontSize: 32 } }>
+                Distinguishing and Consensus Statements
+              </span>
+        <hr style={ { width: "100%", margin: 0 } } />
         <div className="switchDiv">
           <span className="switchText">
-            12. Indicate distinguishing statements?
-          </span>
-          <UserSelectionSwitch
-            name="willIndicateDistinguishing"
-            value="willIndicateDistinguishing"
-            toggle={true}
-          />
+                  12. Indicate distinguishing statements?
+                </span>
+          <UserSelectionSwitch name="willIndicateDistinguishing" value="willIndicateDistinguishing" toggle />
         </div>
-        {/* <div className="switchDiv">
-                <span className="switchText">
-                        -- Use unicode as distinguishing statement indicator?
-                      </span>
-                <UserSelectionSwitch name="willUseDistingUnicode" value="willUseDistingUnicode" toggle={ true } />
-              </div> */}
+        { /* <div className="switchDiv">
+                                <span className="switchText">
+                                        -- Use unicode as distinguishing statement indicator?
+                                      </span>
+                                <UserSelectionSwitch name="willUseDistingUnicode" value="willUseDistingUnicode" toggle={ true } />
+                              </div> */ }
         <div className="switchDiv">
           <span className="switchText">
-            -- Adjust distinguishing statement indicator size?
-          </span>
-          <UserSelectionSwitch
-            name="willAdjustDistIndicatorSize"
-            value="willAdjustDistIndicatorSize"
-            toggle={false}
-          />
-          <div style={styles}>
-            <UserTextInput
-              name={"willAdjustDistIndicatorSizeBy"}
-              placeholder={"12"}
-              width={8}
-            />
+                  -- Adjust distinguishing statement indicator size?
+                </span>
+          <UserSelectionSwitch name="willAdjustDistIndicatorSize" value="willAdjustDistIndicatorSize" toggle={ false } />
+          <div style={ styles }>
+            <UserTextInput name={ "willAdjustDistIndicatorSizeBy" } placeholder={ "12" } width={ 8 } />
           </div>
         </div>
         <div className="switchDiv">
           <span className="switchText">
-            13. Display distinguishing statement comparison triangles?
-          </span>
-          <UserSelectionSwitch
-            name="willDisplayDistingCompareSymbols"
-            value="willDisplayDistingCompareSymbols"
-            toggle={true}
-          />
+                  13. Display distinguishing statement comparison triangles?
+                </span>
+          <UserSelectionSwitch name="willDisplayDistingCompareSymbols" value="willDisplayDistingCompareSymbols" toggle />
         </div>
       </div>
-    );
+      );
   }
 }
 
