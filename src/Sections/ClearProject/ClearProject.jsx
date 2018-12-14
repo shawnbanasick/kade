@@ -6,22 +6,22 @@ import state from '../../store';
 import { Button } from 'semantic-ui-react';
 
 function handleClick() {
-    console.log(JSON.stringify("clicked"));
-    const initialStateValues = initialState();
-    state.setState(initialStateValues);
+  console.log(JSON.stringify("clicked"));
+  const initialStateValues = initialState();
+  state.setState(initialStateValues);
 }
 
 
 class ClearProject extends Component {
-    render() {
-        return (
-            <MainContent>
-              <h1>Clear Project</h1>
-              <h2 style={ { width: 800 } }>Click this button to begin a new project. This will clear all data and analysis from the current project. The action cannot be reversed.</h2>
-              <BeginAnalysisButton onClick={ handleClick } size='large'>Clear Project</BeginAnalysisButton>
-            </MainContent>
-            );
-    }
+  render() {
+    return (
+      <MainContent>
+        <h1>Clear Project</h1>
+        <h2 style={ { width: 800 } }>Click this button to begin a new project. This will clear all data and analysis from the current project. The action cannot be reversed.</h2>
+        <BeginAnalysisButton onClick={ handleClick } size='large'>Clear Project</BeginAnalysisButton>
+      </MainContent>
+      );
+  }
 }
 
 export default view(ClearProject);
@@ -77,7 +77,7 @@ const MainContent = styled.div`
   font-family: Helvetica, sans-serif;
   font-size: 18px;
 
-  width: calc(100vw - 125px);
+  width: calc(100vw - 122px);
   box-sizing: border-box;
   max-height: calc(100vh - 22px);
   overflow: auto;
@@ -89,14 +89,13 @@ const BeginAnalysisButton = styled.button`
   justify-items: center;
   background-color: ${props => props.buttonColor};
   height: 40px;
-  width: 200px;
+  width: 195px;
   border: 1px solid black;
   text-align: center;
   font-size: 16px;
   font-family: Helvetica, sans-serif;
   font-weight: normal;
   border-radius: 4px;
-  margin-right: 3px;
   margin-bottom: 3px;
   box-shadow: 0 2px 2px 0 black;
   outline: none;
@@ -107,7 +106,6 @@ const BeginAnalysisButton = styled.button`
 
   &:active {
     box-shadow: 0 1px 1px 0 black;
-    margin-left: 3px;
     transform: translateY(1px);  
   }
 `;
