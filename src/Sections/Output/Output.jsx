@@ -1,22 +1,21 @@
+import { Tab } from "semantic-ui-react";
 import React, { Component } from "react";
 import { view, store } from "react-easy-state";
 import styled, { keyframes } from "styled-components";
-import { Tab } from "semantic-ui-react";
 import state from "../../store";
+import FactorsTable from './Factors Table/FactorsTable';
 import FactorVizOptions from "./FactorViz/FactorVizOptions";
 import FactorVizDispatch from "./FactorVisualizations/FactorVizDispatch";
+import RefreshFactorVizButton from "./FactorVisualizations/RefreshFactorVizButton";
 import DownloadResultsButtons from "./DownloadResultsButtons/DownloadResultsButtons";
+import MultipleFactorsFlaggedWarningModal from "./MultipleFactorsFlaggedWarningModal";
+import ShowVizOptionsButton from "./DisplayVisualizationsButtons/ShowVizOptionsButton";
+import OutputFactorTablesTransitionContainer from "./OutputFactorTablesTransitionContainer";
 import NoLoadingsFlaggedWarningModal from "../Loadings/LoadingsTable/NoLoadingsFlaggedWarningModal";
 import DisplayVisualizationsButtons from "./DisplayVisualizationsButtons/DisplayVisualizationsButtons";
 import FactorSelectionForOutputButtons from "./FactorSelectionForOutput/FactorSelectionForOutputButtons";
-import OutputFactorTablesTransitionContainer from "./OutputFactorTablesTransitionContainer";
-import MultipleFactorsFlaggedWarningModal from "./MultipleFactorsFlaggedWarningModal";
-import RefreshFactorVizButton from "./FactorVisualizations/RefreshFactorVizButton";
-import ShowVizOptionsButton from "./DisplayVisualizationsButtons/ShowVizOptionsButton";
-import FactorsTable from './Factors Table/FactorsTable';
 
 let showTableDataNotSentWarning;
-let showFactorsTable;
 
 // factorScoreRanksArray
 
@@ -25,11 +24,11 @@ const panes = [
     menuItem: "Options",
     render: () => (
       <Tab.Pane>
-        {showTableDataNotSentWarning && (
+        { showTableDataNotSentWarning && (
           <NoDataMessage>
             No Data - Click the "Send Table Data to Output" button in Section 6
           </NoDataMessage>
-        )}
+          ) }
         <DataWindow1>
           <FactorSelectionForOutputButtons />
           <DownloadResultsButtons />
@@ -54,12 +53,12 @@ const panes = [
     render: () => (
       <Tab.Pane>
         <DataWindow2>
-          { showFactorsTable && <FactorsTable /> }
+          <FactorsTable />
         </DataWindow2>
       </Tab.Pane>
     )
   },
-    {
+  {
     menuItem: "Factor Visualizations",
     render: () => (
       <Tab.Pane>
@@ -81,14 +80,13 @@ const localStore = store({
 });
 
 class Output extends Component {
-  handleTabChange(e, { activeIndex }) {
+  handleTabChange(e, {activeIndex}) {
     localStore.activeIndex = activeIndex;
   }
 
   render() {
-    const { activeIndex } = localStore;
+    const {activeIndex} = localStore;
     showTableDataNotSentWarning = state.getState("showTableDataNotSentWarning");
-    showFactorsTable = state.getState("showFactorCorrelationsTable");
 
 
     // const shouldDisplayFactorViz = state.getState(
@@ -105,19 +103,15 @@ class Output extends Component {
     // if (showOutputFactorSelection) {
     return (
       <MainContent>
-        <Tab
-          panes={panes}
-          activeIndex={activeIndex}
-          onTabChange={this.handleTabChange}
-        />
+        <Tab panes={ panes } activeIndex={ activeIndex } onTabChange={ this.handleTabChange } />
       </MainContent>
-    );
-    //   }
-    // return (
-    //   <DefaultMessage>
-    //     No output. Click "Send Table Data to Output" in the "Loadings" section.
-    //   </DefaultMessage>
-    // );
+      );
+  //   }
+  // return (
+  //   <DefaultMessage>
+  //     No output. Click "Send Table Data to Output" in the "Loadings" section.
+  //   </DefaultMessage>
+  // );
   }
 }
 

@@ -1,6 +1,6 @@
-import { view, store } from "react-easy-state";
 import React, { Component } from "react";
 import { AgGridReact } from "ag-grid-react";
+import { view, store } from "react-easy-state";
 import state from "../../../store";
 
 const getArrayValues = userSelectedFactors => {
@@ -64,6 +64,9 @@ const getGridColDefsFacTable = (
 };
 
 const getGridRowDataFacTable = (data2, headerRow) => {
+  if (data2 === undefined) {
+    return;
+  }
   const data = data2.slice(5);
   const gridRowDataFacTable = [];
 
@@ -128,10 +131,12 @@ class FactorsTable extends Component {
   onGridReady(params) {
     this.gridApi = params.api;
     this.columnApi = params.columnApi;
-    // this.gridApi.sizeColumnsToFit();
+  // this.gridApi.sizeColumnsToFit();
   }
 
   render() {
+    const showFactorsTable = state.getState("showFactorCorrelationsTable");
+
     // return [headerRow, colWidthVals, alignmentVals, pinnedVals];
     const userSelectedFactors = state.getState("userSelectedFactors");
     const numFacs = userSelectedFactors.length;
@@ -146,7 +151,7 @@ class FactorsTable extends Component {
     localStore.numFactors = numFactors;
     localStore.numStatements = numStatements;
 
-    const { onGridReady } = this;
+    const {onGridReady} = this;
 
     const gridColDefsFacTable = getGridColDefsFacTable(
       currentData[1], // numFacs
@@ -160,30 +165,21 @@ class FactorsTable extends Component {
       arrayValues[0] // headerRow
     );
 
-    return (
-      <div>
-        <p style={{ fontWeight: "normal", marginTop: 15, textAlign: "left" }}>
-          Click the table headers to re-sort by column (low-to-high,
-          high-to-low, original sort).
-        </p>
-        <div
-          id="innerContainerFactors"
-          style={{
-            width: getWidth(numFactors),
-            height: getHeight(numStatements)
-          }}
-          className="ag-theme-fresh"
-        >
-          <AgGridReact
-            id="factorsTable"
-            columnDefs={gridColDefsFacTable}
-            rowData={gridRowDataFacTable}
-            onGridReady={onGridReady}
-            enableSorting
-          />
+    if (showFactorsTable) {
+      return (
+        <div>
+          <p style={ { fontWeight: "normal", marginTop: 15, textAlign: "left" } }>
+            Click the table headers to re-sort by column (low-to-high, high-to-low, original sort).
+          </p>
+          <div id="innerContainerFactors" style={ { width: getWidth(numFactors), height: getHeight(numStatements) } } className="ag-theme-fresh">
+            <AgGridReact id="factorsTable" columnDefs={ gridColDefsFacTable } rowData={ gridRowDataFacTable } onGridReady={ onGridReady } enableSorting />
+          </div>
         </div>
-      </div>
-    );
+        );
+    }
+    return (
+      <h2 style={ { marginTop: 50, marginLeft: 50 } }>Select factors to output in the Options tab</h2>
+      );
   }
 }
 

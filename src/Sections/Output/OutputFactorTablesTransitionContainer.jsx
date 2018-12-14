@@ -12,37 +12,39 @@ class OutputFactorTablesTranstionContainer extends Component {
     const showFactorCorrelationsTable = store.getState(
       "showFactorCorrelationsTable"
     );
+
+    if (showFactorCorrelationsTable) {
+      return (
+        <Transition visible={ showFactorCorrelationsTable } animation="fade" duration={ 1000 }>
+          <div className="section">
+            <div className="outputFactorTables">
+              <span className="outputFactorTablesSpan3">
+                                      Correlations between Factor Scores
+                                    </span>
+              <FactorCorrelationsTable />
+            </div>
+            <div className="outputFactorTables">
+              <span className="outputFactorTablesSpan3">
+                                      Factor Characteristics
+                                    </span>
+              <FactorCharacteristicsTable />
+            </div>
+            <div className="outputFactorTables">
+              <span className="outputFactorTablesSpan3">
+                                      Standard Errors for Differences in Factor Z-scores
+                                    </span>
+              <span className="outputFactorTablesSpan2">
+                                      (Diagonal Entries Are S.E. Within Factors)
+                                    </span>
+              <StandardErrorsDifferencesTable />
+            </div>
+          </div>
+        </Transition>
+        );
+    }
     return (
-      <Transition
-        visible={showFactorCorrelationsTable}
-        animation="fade"
-        duration={1000}
-      >
-        <div className="section">
-          <div className="outputFactorTables">
-            <span className="outputFactorTablesSpan3">
-              Correlations between Factor Scores
-            </span>
-            <FactorCorrelationsTable />
-          </div>
-          <div className="outputFactorTables">
-            <span className="outputFactorTablesSpan3">
-              Factor Characteristics
-            </span>
-            <FactorCharacteristicsTable />
-          </div>
-          <div className="outputFactorTables">
-            <span className="outputFactorTablesSpan3">
-              Standard Errors for Differences in Factor Z-scores
-            </span>
-            <span className="outputFactorTablesSpan2">
-              (Diagonal Entries Are S.E. Within Factors)
-            </span>
-            <StandardErrorsDifferencesTable />
-          </div>
-        </div>
-      </Transition>
-    );
+      <h2 style={ { marginTop: 50, marginLeft: 50 } }>Select factors to output in the Options tab</h2>
+      );
   }
 }
 
