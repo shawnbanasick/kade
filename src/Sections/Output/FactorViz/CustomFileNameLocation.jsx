@@ -11,41 +11,65 @@ const styles = {
   fontSize: 20
 };
 
-const localStore = store({customFileNameLocation:""});
+const localStore = store({ customFileNameLocation: "" });
 
 class CustomFileNameLocation extends Component {
   // constructor(props) {
   //   super(props);
   //   this.state = {};
   // }
-  handleChange(e, {value}) {
+  handleChange(e, { value }) {
+    const factorVizOptions = state.getState("factorVizOptions");
     localStore.customFileNameLocation = value;
+    factorVizOptions.customFileNameLocation = value;
     state.setState({
-      customFileNameLocation: value
+      factorVizOptions,
+      updateFactorVisualizationsButtonColor: "orange"
     });
   }
 
   render() {
     return (
       <HolderDiv>
-      <Form style={ styles }>
-        <Form.Field>Custom name position:</Form.Field>
-        <Form.Field>
-          <Radio style={ { marginLeft: 16, fontSize: 20 } } label="Prepend" name="radioGroup" value="prepend" checked={ localStore.customFileNameLocation === "prepend" } onChange={ this.handleChange } />
-        </Form.Field>
-        <Form.Field>
-          <Radio style={ { marginLeft: 16, fontSize: 20 } } label="Append" name="radioGroup" value="append" checked={ localStore.customFileNameLocation === "append" } onChange={ this.handleChange } />
-        </Form.Field>
-        <Form.Field>
-          <Radio style={ { marginLeft: 16, fontSize: 20 } } label="Replace" name="radioGroup" value="replace" checked={ localStore.customFileNameLocation === "replace" } onChange={ this.handleChange } />
-        </Form.Field>
-      </Form>
+        <Form style={styles}>
+          <Form.Field>Custom name position:</Form.Field>
+          <Form.Field>
+            <Radio
+              style={{ marginLeft: 16, fontSize: 20 }}
+              label="Prepend"
+              name="radioGroup"
+              value="prepend"
+              checked={localStore.customFileNameLocation === "prepend"}
+              onChange={this.handleChange}
+            />
+          </Form.Field>
+          <Form.Field>
+            <Radio
+              style={{ marginLeft: 16, fontSize: 20 }}
+              label="Append"
+              name="radioGroup"
+              value="append"
+              checked={localStore.customFileNameLocation === "append"}
+              onChange={this.handleChange}
+            />
+          </Form.Field>
+          <Form.Field>
+            <Radio
+              style={{ marginLeft: 16, fontSize: 20 }}
+              label="Replace"
+              name="radioGroup"
+              value="replace"
+              checked={localStore.customFileNameLocation === "replace"}
+              onChange={this.handleChange}
+            />
+          </Form.Field>
+        </Form>
       </HolderDiv>
-      );
+    );
   }
 }
 
-export default view(CustomFileNameLocation)
+export default view(CustomFileNameLocation);
 
 /*
 .ui.radio.checkbox label {

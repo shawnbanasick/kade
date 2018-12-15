@@ -6,38 +6,25 @@ import { default as currentDate } from "../../../Utils/currentDate1";
 import { default as currentTime } from "../../../Utils/currentTime1";
 
 const downloadSvgImage = imageId => {
-  const imageName = `#image${  imageId}`;
+  const factorVizOptions = store.getState("factorVizOptions");
+  const shouldAddName = factorVizOptions.willAddCustomNameToDownload;
+  const imageName = `#image${imageId}`;
   const projectName = store.getState("projectName");
   const date = currentDate();
   const time = currentTime();
-  const dateTime = `${date  }__${  time}`;
-  const cleanFactorName = `${imageId  }__`;
+  const dateTime = `${date}__${time}`;
+  const cleanFactorName = `${imageId}__`;
   let config;
-  const shouldAddName = store.getState("willAddCustomNameToDownload");
-  const customName = store.getState("customDownloadFileNames");
-  const customNameLocation = store.getState("customFileNameLocation");
+  const customName = factorVizOptions.customDownloadFileNames;
+  const customNameLocation = factorVizOptions.customFileNameLocation;
   if (shouldAddName === true) {
     if (customNameLocation === "prepend") {
       config = {
-        filename:
-          `${customName 
-          }__${ 
-          projectName 
-          }_${ 
-          cleanFactorName 
-          }__${ 
-          dateTime}`
+        filename: `${customName}__${projectName}_${cleanFactorName}__${dateTime}`
       };
     } else if (customNameLocation === "append") {
       config = {
-        filename:
-          `${projectName 
-          }_${ 
-          cleanFactorName 
-          }__${ 
-          dateTime 
-          }__${ 
-          customName}`
+        filename: `${projectName}_${cleanFactorName}__${dateTime}__${customName}`
       };
     } else if (customNameLocation === "replace") {
       config = {
@@ -45,12 +32,12 @@ const downloadSvgImage = imageId => {
       };
     } else {
       config = {
-        filename: `${projectName  }_${  cleanFactorName  }__${  dateTime}`
+        filename: `${projectName}_${cleanFactorName}__${dateTime}`
       };
     }
   } else {
     config = {
-      filename: `${projectName  }_${  cleanFactorName  }__${  dateTime}`
+      filename: `${projectName}_${cleanFactorName}__${dateTime}`
     };
   }
 
@@ -77,31 +64,31 @@ const downloadSvgImage = imageId => {
 };
 
 const downloadFacVizAsPng = imageId => {
-  const imageName = `image${  imageId}`;
+  const factorVizOptions = store.getState("factorVizOptions");
+  const shouldAddName = factorVizOptions.willAddCustomNameToDownload;
+
+  const imageName = `image${imageId}`;
   const projectName = store.getState("projectName");
   const date = currentDate();
   const time = currentTime();
-  const dateTime = `${date  }__${  time}`;
-  const shouldAddName = store.getState("willAddCustomNameToDownload");
-  const customName = store.getState("customDownloadFileNames");
-  const customNameLocation = store.getState("customFileNameLocation");
-  const cleanFactorName = `${imageId  }__`;
+  const dateTime = `${date}__${time}`;
+  const customName = factorVizOptions.customDownloadFileNames;
+  const customNameLocation = factorVizOptions.customFileNameLocation;
+  const cleanFactorName = `${imageId}__`;
   let nameConfig;
 
   if (shouldAddName === true) {
     if (customNameLocation === "prepend") {
-      nameConfig =
-        `${customName  }_${  projectName  }_${  cleanFactorName  }${dateTime}`;
+      nameConfig = `${customName}_${projectName}_${cleanFactorName}${dateTime}`;
     } else if (customNameLocation === "append") {
-      nameConfig =
-        `${projectName  }__${  cleanFactorName  }${dateTime  }_${  customName}`;
+      nameConfig = `${projectName}__${cleanFactorName}${dateTime}_${customName}`;
     } else if (customNameLocation === "replace") {
       nameConfig = customName;
     } else {
-      nameConfig = `${projectName  }__${  cleanFactorName  }${dateTime}`;
+      nameConfig = `${projectName}__${cleanFactorName}${dateTime}`;
     }
   } else {
-    nameConfig = `${projectName  }__${  cleanFactorName  }${dateTime}`;
+    nameConfig = `${projectName}__${cleanFactorName}${dateTime}`;
   }
   saveSvgAsPng(document.getElementById(imageName), nameConfig, {
     encoderOptions: 1
@@ -114,7 +101,7 @@ class DownloadFactorVizButtons extends React.Component {
       <div>
         <Button.Group floated="left">
           <Button
-            id={`downloadSvgButtonFacViz${  this.props.id}`}
+            id={`downloadSvgButtonFacViz${this.props.id}`}
             size={"big"}
             onClick={() => downloadSvgImage(this.props.id)}
             style={{ marginRight: 5 }}
@@ -122,7 +109,7 @@ class DownloadFactorVizButtons extends React.Component {
             Download SVG
           </Button>
           <Button
-            id={`downloadPngButtonFacViz${  this.props.id}`}
+            id={`downloadPngButtonFacViz${this.props.id}`}
             onClick={() => downloadFacVizAsPng(this.props.id)}
             size={"big"}
           >

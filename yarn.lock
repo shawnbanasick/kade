@@ -2536,6 +2536,10 @@ electron-builder@^20.36.2:
     update-notifier "^2.5.0"
     yargs "^12.0.2"
 
+electron-color-picker@^0.1.1:
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/electron-color-picker/-/electron-color-picker-0.1.1.tgz#0321f386ee51761a36e565b2813e8884358af07c"
+
 electron-compile@*, electron-compile@^6.4.3:
   version "6.4.3"
   resolved "https://registry.yarnpkg.com/electron-compile/-/electron-compile-6.4.3.tgz#54a9ec4418ab5faf77ba48f75ab5eb80156a64d4"

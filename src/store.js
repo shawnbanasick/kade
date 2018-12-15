@@ -161,8 +161,10 @@ export default store({
   shouldDisplayFactorVizOptions: false,
   projectName: "unnamed project",
   participantDataObject: false,
+  updateFactorVisualizationsButtonColor: "#d6dbe0",
   factorVizOptions: {
     willAddCustomNames: false,
+    willAddCustomNameToDownload: false,
     willAdjustCardFontSize: false,
     willAdjustCardFontSizeBy: 13,
     willAdjustCardHeight: false,
@@ -190,12 +192,7 @@ export default store({
     willTrimStatement: true,
     willTrimStatementBy: 5,
     willUseDistingUnicode: true,
-    consensusIndicator: {
-      r: "232",
-      g: "229",
-      b: "229",
-      a: ".5"
-    },
+    consensusIndicator: "#42b6f4",
     customFactorNames: [],
     customFileNameLocation: "append",
     qSortPattern: []

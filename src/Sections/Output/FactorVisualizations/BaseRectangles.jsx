@@ -32,39 +32,47 @@ const heightValue = props => {
 const titleHeight = store.getState("titleHeight");
 
 const renderBaseRectangles = props => (coords, index) => {
-    const factorVizOptions = store.getState("factorVizOptions");
-    const shouldUseColor = factorVizOptions.willDisplayConsensusStates;
+  const factorVizOptions = store.getState("factorVizOptions");
+  const shouldUseColor = factorVizOptions.willDisplayConsensusStates;
 
-    const newFillColor = factorVizOptions.consensusIndicator;
+  const newFillColor = factorVizOptions.consensusIndicator;
 
-    let fillColor = "white";
-    if (shouldUseColor === true) {
-      if (props.data[index].isConsensus01State) {
-        fillColor = `rgba(${newFillColor.r}, ${newFillColor.g}, ${
-          newFillColor.b
-        }, ${newFillColor.a})`;
-      }
-      if (props.data[index].isConsensus05State) {
-        fillColor = `rgba(${newFillColor.r}, ${newFillColor.g}, ${
-          newFillColor.b
-        }, ${newFillColor.a})`;
-      }
+  let fillColor = "white";
+  // if (shouldUseColor === true) {
+  //   if (props.data[index].isConsensus01State) {
+  //     fillColor = `rgba(${newFillColor.r}, ${newFillColor.g}, ${
+  //       newFillColor.b
+  //     }, ${newFillColor.a})`;
+  //   }
+  //   if (props.data[index].isConsensus05State) {
+  //     fillColor = `rgba(${newFillColor.r}, ${newFillColor.g}, ${
+  //       newFillColor.b
+  //     }, ${newFillColor.a})`;
+  //   }
+  // }
+  if (shouldUseColor === true) {
+    if (props.data[index].isConsensus01State) {
+      fillColor = newFillColor;
     }
+    if (props.data[index].isConsensus05State) {
+      fillColor = newFillColor;
+    }
+  }
 
-    const rectangleProps = {
-      x: props.positionData.xPosLoop[index] * widthValue(props),
-      y:
-        props.positionData.yPosLoop[index] * heightValue(props) +
-        headerHeight() +
-        titleHeight,
-      width: widthValue(props),
-      height: heightValue(props),
-      key: props.positionData.numRectsArray[index],
-      fill: fillColor
-    };
-    return <rect {...styles} {...rectangleProps} />;
+  const rectangleProps = {
+    x: props.positionData.xPosLoop[index] * widthValue(props),
+    y:
+      props.positionData.yPosLoop[index] * heightValue(props) +
+      headerHeight() +
+      titleHeight,
+    width: widthValue(props),
+    height: heightValue(props),
+    key: props.positionData.numRectsArray[index],
+    fill: fillColor
   };
+  return <rect {...styles} {...rectangleProps} />;
+};
 
 export default props => (
-    <g>{props.positionData.numRectsArray.map(renderBaseRectangles(props))}</g>
-  );
+  <g>{props.positionData.numRectsArray.map(renderBaseRectangles(props))}</g>
+);

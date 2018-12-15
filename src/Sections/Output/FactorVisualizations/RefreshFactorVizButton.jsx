@@ -42,7 +42,11 @@ class RefreshFactorVizButton extends React.Component {
       factorVizOptions[updateKeys[i]] = factorVizOptionsHolder[updateKeys[i]];
     }
 
-    state.setState({ factorVizOptions, factorVizOptionsHolder: {} });
+    state.setState({
+      factorVizOptions,
+      factorVizOptionsHolder: {},
+      updateFactorVisualizationsButtonColor: "rgba(144,	238,	144, .6)"
+    });
 
     // const userValues = refreshVizOptionsState();
     // state.setState({
@@ -60,6 +64,9 @@ class RefreshFactorVizButton extends React.Component {
     const shouldDisplayFactorVizOptions = state.getState(
       "shouldDisplayFactorVizOptions"
     );
+    const updateFactorVisualizationsButtonColor = state.getState(
+      "updateFactorVisualizationsButtonColor"
+    );
 
     return (
       <Transition
@@ -76,17 +83,16 @@ class RefreshFactorVizButton extends React.Component {
               display: "block"
             }}
           >
-            <StyledWrapper>
-              <Button
-                id="refreshFactorVizButton"
-                className="wrapper1"
-                onClick={this.refresh}
-                size="huge"
-                floated="left"
-              >
-                Update Factor Visualizations
-              </Button>
-            </StyledWrapper>
+            <RefreshButton
+              id="refreshFactorVizButton"
+              className="wrapper1"
+              onClick={this.refresh}
+              size="huge"
+              floated="left"
+              buttonColor={updateFactorVisualizationsButtonColor}
+            >
+              Update Factor Visualizations
+            </RefreshButton>
           </div>
         </div>
       </Transition>
@@ -111,5 +117,36 @@ const StyledWrapper = styled.div`
       margin-left: 3px;
       margin-top: 3px;
     }
+  }
+`;
+
+const RefreshButton = styled.button`
+  display: grid;
+  align-items: center;
+  justify-items: center;
+  background-color: ${props => props.buttonColor};
+  height: 40px;
+  width: 240px;
+  text-align: center;
+  font-size: 16px;
+  font-family: Helvetica, sans-serif;
+  font-weight: normal;
+  border-radius: 4px;
+  margin-right: 3px;
+  margin-bottom: 3px;
+  border: 1px solid black;
+  box-shadow: 0 2px 2px 0 black;
+  outline: none;
+
+  &:hover {
+    background-color: ${props => props.buttonColor};
+    font-weight: 900;
+  }
+
+  &:active {
+    box-shadow: 0 0 1px 0 black inset;
+    margin-left: 3px;
+    /* margin-top: 3px; */
+    /* background-color: rgba(144, 238, 144, 0.6); */
   }
 `;

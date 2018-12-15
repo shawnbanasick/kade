@@ -33,7 +33,10 @@ class UserSelectionSwitch extends React.Component {
     // stateFrag[key] = stateValue;
     console.log(`holder: ${JSON.stringify(factorVizOptionsHolder)}`);
 
-    state.setState({ factorVizOptionsHolder });
+    state.setState({
+      factorVizOptionsHolder,
+      updateFactorVisualizationsButtonColor: "orange"
+    });
   }
 
   render() {
