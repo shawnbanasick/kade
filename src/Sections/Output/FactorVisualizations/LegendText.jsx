@@ -4,8 +4,9 @@ import store from "../../../store";
 function getXCoords(props) {
   let totalWidth = props.positionData.instances.length * 110;
   if (props.factorVizOptions.willAdjustCardWidth === true) {
-    totalWidth = props.positionData.instances.length *
-    props.factorVizOptions.willAdjustCardWidthBy;
+    totalWidth =
+      props.positionData.instances.length *
+      props.factorVizOptions.willAdjustCardWidthBy;
   }
   const halfWidth = totalWidth / 2;
   const xCoord = halfWidth;
@@ -41,12 +42,16 @@ class LegendText extends React.Component {
     const xLocation = getXCoords(props);
     const yLocation = getYValue(props) + 5;
     const useUnicode = props.factorVizOptions.willUseDistingUnicode;
-    const shouldDisplayConsensus = props.factorVizOptions.willDisplayConsensusStates;
-    const willIndicateDistinguishing = props.factorVizOptions.willIndicateDistinguishing;
-    let willDisplayDistingCompareSymbols = props.factorVizOptions.willDisplayDistingCompareSymbols;
+    const shouldDisplayConsensus =
+      props.factorVizOptions.willDisplayConsensusStates;
+    const willIndicateDistinguishing =
+      props.factorVizOptions.willIndicateDistinguishing;
+    let willDisplayDistingCompareSymbols =
+      props.factorVizOptions.willDisplayDistingCompareSymbols;
+    // hide the comparison symbols if distinguishing is not displayed
     if (willIndicateDistinguishing === false) {
       willDisplayDistingCompareSymbols = false;
-      store.setState("willDisplayDistingCompareSymbols");
+      // store.setState("willDisplayDistingCompareSymbols");
     }
     let consensusYLocation = 170;
     if (willIndicateDistinguishing === false) {
@@ -144,73 +149,67 @@ class LegendText extends React.Component {
       return (
         <g>
           <text {...titleStyles}>Legend </text>
-          { willIndicateDistinguishing && (
+          {willIndicateDistinguishing && (
             <g>
               <text {...sigSymbolStyle1}>
-                { symbol05 } Distinguishing statement at P
-                { "\u003C" } 0.05
+                {symbol05} Distinguishing statement at P{"\u003C"} 0.05
               </text>
               <text {...sigSymbolStyle2}>
-                { symbol01 } Distinguishing statement at P
-                { "\u003C" } 0.01
+                {symbol01} Distinguishing statement at P{"\u003C"} 0.01
               </text>
             </g>
-            ) }
-          { willDisplayDistingCompareSymbols && (
+          )}
+          {willDisplayDistingCompareSymbols && (
             <g>
               <text {...sigSymbolStyle3}>
-                { arrowRight } z-Score for the statement is higher than in all the other factors
+                {arrowRight} z-Score for the statement is higher than in all the
+                other factors
               </text>
-              <text {...sigSymbolStyle4}>
-                { arrowLeft }
-              </text>
+              <text {...sigSymbolStyle4}>{arrowLeft}</text>
               <text {...sigSymbolStyle5}>
                 z-Score for the statement is lower than in all the other factors
               </text>
             </g>
-            ) }
-          { shouldDisplayConsensus && <rect {...consensusRectStyles} /> }
-          { shouldDisplayConsensus && (
+          )}
+          {shouldDisplayConsensus && <rect {...consensusRectStyles} />}
+          {shouldDisplayConsensus && (
             <text {...consensusStatementStyle}>Consensus statement</text>
-            ) }
+          )}
         </g>
-        );
+      );
     }
     return (
       <g>
         <text {...titleStyles}>Legend </text>
-        { willIndicateDistinguishing && (
+        {willIndicateDistinguishing && (
           <g>
             <text {...sigSymbolStyle1}>
-              { symbol05 }
-              { "  " } Distinguishing statement at P
-              { "\u003C" } 0.05
+              {symbol05}
+              {"  "} Distinguishing statement at P{"\u003C"} 0.05
             </text>
             <text {...sigSymbolStyle2}>
-              { symbol01 } Distinguishing statement at P
-              { "\u003C" } 0.01
+              {symbol01} Distinguishing statement at P{"\u003C"} 0.01
             </text>
             <text {...sigSymbolStyle3}>
-              { arrowRight } z-Score for the statement is higher than in all the other factors
+              {arrowRight} z-Score for the statement is higher than in all the
+              other factors
             </text>
             <text {...sigSymbolStyle6}>
-              { arrowLeft } z-Score for the statement is lower than in all the other factors
-            </text>
-            { " " }
+              {arrowLeft} z-Score for the statement is lower than in all the
+              other factors
+            </text>{" "}
           </g>
-          ) }
-        { shouldDisplayConsensus && <rect {...consensusRectStyles} /> }
-        { shouldDisplayConsensus && (
+        )}
+        {shouldDisplayConsensus && <rect {...consensusRectStyles} />}
+        {shouldDisplayConsensus && (
           <text {...consensusStatementStyle}>Consensus statement</text>
-          ) }
+        )}
       </g>
-      );
+    );
   }
 
   render() {
-    return <g>
-             { this.renderLegendRectangleText(this.props) }
-           </g>;
+    return <g>{this.renderLegendRectangleText(this.props)}</g>;
   }
 }
 

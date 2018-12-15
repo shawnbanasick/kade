@@ -2,7 +2,7 @@ import React from "react";
 import { view } from "react-easy-state";
 import store from "../../../store";
 import FactorViz from "./FactorViz";
-import refreshVizOptionsState from "./refreshVizOptionsState";
+// import refreshVizOptionsState from "./refreshVizOptionsState";
 import createFactorVizDataObjectForProps from "./createFactorVizDataObjectForProps";
 
 const styles = {
@@ -15,19 +15,21 @@ const styles = {
 // todo - need to calculate dynamic height here for styles
 
 class FactorVizDispatch extends React.Component {
-  refresh() {
-    console.log(JSON.stringify("refresh in factor viz dispatch called"));
+  // refresh() {
+  //   console.log(JSON.stringify("refresh in factor viz dispatch called"));
 
-    const userValues = refreshVizOptionsState();
-    store.setState({
-      factorVizOptions: userValues
-    });
-  }
+  //   const userValues = refreshVizOptionsState();
+  //   store.setState({
+  //     factorVizOptions: userValues
+  //   });
+  // }
 
   render() {
     console.log(JSON.stringify("factorVizDispatch rendered"));
     const factorVizOptions = store.getState("factorVizOptions");
     const factorData = createFactorVizDataObjectForProps(factorVizOptions);
+    // console.log(`factor data: ${  JSON.stringify(factorData)}`);
+
     const shouldDisplayFactorViz = store.getState(
       "displayFactorVisualizations"
     );

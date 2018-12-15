@@ -27,9 +27,13 @@ const styles = {
 };
 
 const renderSigSortsIndicators = props => {
-  const shouldUseUnicode = props.shouldUseUnicode;
-  const shouldShowZscoreArrows = props.shouldShowZscoreArrows;
-  const willAdjustIndicatorSizeBy = props.willAdjustIndicatorSizeBy;
+  const shouldUseUnicode = true; // props.factorVizOptions.shouldUseUnicode;
+  const willDisplayDistingCompareSymbols =
+    props.factorVizOptions.willDisplayDistingCompareSymbols;
+  const willAdjustIndicatorSizeBy =
+    props.factorVizOptions.willAdjustDistIndicatorSizeBy;
+
+  // console.log(`props: ${  JSON.stringify(props)}`);
 
   const width = widthValue(props);
   const height = heightValue(props);
@@ -39,20 +43,20 @@ const renderSigSortsIndicators = props => {
     let arrow;
     let symbol;
     if (shouldUseUnicode) {
-      if (shouldShowZscoreArrows) {
+      if (willDisplayDistingCompareSymbols) {
         symbol = props.data[index].sigVisualizationUni;
         arrow = props.data[index].directionSymbolUni;
         text = symbol + arrow;
       } else {
         text = props.data[index].sigVisualizationUni;
       }
-    } else if (shouldShowZscoreArrows) {
-        symbol = props.data[index].sigVisualization;
-        arrow = props.data[index].directionSymbol;
-        text = symbol + arrow;
-      } else {
-        text = props.data[index].sigVisualization;
-      }
+    } else if (willDisplayDistingCompareSymbols) {
+      symbol = props.data[index].sigVisualization;
+      arrow = props.data[index].directionSymbol;
+      text = symbol + arrow;
+    } else {
+      text = props.data[index].sigVisualization;
+    }
     // todo - set user selected custom value for dy for symbols
     const sigSymbolProps = {
       x: props.positionData.xPosLoop[index] * width + 10,
@@ -74,4 +78,6 @@ const renderSigSortsIndicators = props => {
   };
 };
 
-export default props => <g>{props.data.map(renderSigSortsIndicators(props))}</g>;
+export default props => (
+  <g>{props.data.map(renderSigSortsIndicators(props))}</g>
+);

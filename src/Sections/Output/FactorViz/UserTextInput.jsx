@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Form } from "semantic-ui-react";
-import store from "../../../store";
+import state from "../../../store";
 
 class UserTextInput extends Component {
   constructor(props) {
@@ -11,14 +11,24 @@ class UserTextInput extends Component {
     this.handleChange = this.handleChange.bind(this);
   }
 
-  handleChange(e, { name, value }) {
-    this.setState({
-      [name]: value
-    });
-    const tempObj = {};
-    const customFactorNames = this.props.name;
-    tempObj[customFactorNames] = e.target.value;
-    store.setState(tempObj);
+  handleChange(e) {
+    // this.setState({
+    //   [name]: value
+    // });
+    // const tempObj = {};
+    // const customFactorNames = this.props.name;
+    // tempObj[customFactorNames] = e.target.value;
+    // state.setState(tempObj);
+
+    const factorVizOptionsHolder = state.getState("factorVizOptionsHolder");
+    // const stateFrag = {};
+    const key = this.props.name;
+    // const stateValue = !localStore.toggle;
+    factorVizOptionsHolder[key] = e.target.value;
+    // stateFrag[key] = stateValue;
+    console.log(`holder: ${JSON.stringify(factorVizOptionsHolder)}`);
+
+    state.setState({ factorVizOptionsHolder });
   }
 
   render() {

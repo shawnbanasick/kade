@@ -15,6 +15,8 @@ const data = () => {
   // append statement numbers
   const options = store.getState("factorVizOptions");
   const shouldAppend = options.willPrependStateNums;
+  console.log(`append numbers?: ${  JSON.stringify(shouldAppend)}`);
+
   if (shouldAppend === true && numbersHaveBeenAppended === false) {
     for (let j = 0; j < outputForDataViz.length; j += 1) {
       for (let k = 0; k < outputForDataViz[j].length; k += 1) {

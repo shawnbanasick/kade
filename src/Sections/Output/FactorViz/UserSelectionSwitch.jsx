@@ -8,23 +8,32 @@ class UserSelectionSwitch extends React.Component {
   constructor(props) {
     super(props);
 
-    localStore.toggle = this.props.toggle;
+    // localStore.toggle = this.props.toggle;
+    console.log(`toggle initial: ${JSON.stringify(localStore.toggle)}`);
 
-    // this.state = {
-    //   toggle: this.props.toggle
-    // };
+    this.state = {
+      toggle: this.props.toggle
+    };
 
     this.toggle = this.toggle.bind(this);
   }
 
   toggle(e) {
+    console.log(`initial val: ${JSON.stringify(localStore.toggle)}`);
+
     e.stopPropagation();
-    localStore.toggle = !localStore.toggle;
-    const stateFrag = {};
+    const oldValue = this.state.toggle;
+    const newValue = !oldValue;
+    const factorVizOptionsHolder = state.getState("factorVizOptionsHolder");
+    // const stateFrag = {};
     const key = this.props.value;
-    const stateValue = !localStore.toggle;
-    stateFrag[key] = stateValue;
-    state.setState(stateFrag);
+    // const stateValue = localStore.toggle;
+    factorVizOptionsHolder[key] = newValue;
+    this.state.toggle = newValue;
+    // stateFrag[key] = stateValue;
+    console.log(`holder: ${JSON.stringify(factorVizOptionsHolder)}`);
+
+    state.setState({ factorVizOptionsHolder });
   }
 
   render() {
@@ -35,7 +44,7 @@ class UserSelectionSwitch extends React.Component {
             id={this.props.name}
             type="checkbox"
             name={this.props.name}
-            defaultChecked={localStore.toggle}
+            defaultChecked={this.state.toggle}
             onChange={e => this.toggle(e)}
           />
           <span key={this.props.name} style={{ width: 100, marginTop: 6 }}>
