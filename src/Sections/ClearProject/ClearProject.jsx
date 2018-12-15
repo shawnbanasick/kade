@@ -1,12 +1,10 @@
 import React, { Component } from "react";
-import { view, store } from "react-easy-state";
+import { view } from "react-easy-state";
 import styled, { keyframes } from "styled-components";
 import initialState from '../../initialState';
 import state from '../../store';
-import { Button } from 'semantic-ui-react';
 
 function handleClick() {
-  console.log(JSON.stringify("clicked"));
   const initialStateValues = initialState();
   state.setState(initialStateValues);
 }
@@ -46,13 +44,6 @@ const fadeOut = keyframes`
   }
 `;
 
-const StyledAnchor = styled.a`
-  color: black;
-
-  &:hover {
-    color: black;
-  }
-`;
 
 // 240px 240px 240px 240px;
 const MainContent = styled.div`
