@@ -1,22 +1,20 @@
 import React from "react";
 
 const widthValue = props => {
-  let shouldAdjustWidth = props.factorVizOptions.willAdjustCardWidth;
+  const shouldAdjustWidth = props.factorVizOptions.willAdjustCardWidth;
   if (shouldAdjustWidth === true) {
-    let newCardWidth = props.factorVizOptions.willAdjustCardWidthBy;
+    const newCardWidth = props.factorVizOptions.willAdjustCardWidthBy;
     return newCardWidth;
   }
   return 110;
 };
 
-const headerHeight = () => {
-  return 26;
-};
+const headerHeight = () => 26;
 
 const heightValue = props => {
-  let shouldAdjustHeight = props.factorVizOptions.willAdjustCardHeight;
+  const shouldAdjustHeight = props.factorVizOptions.willAdjustCardHeight;
   if (shouldAdjustHeight === true) {
-    let cardHeight = props.factorVizOptions.willAdjustCardHeightBy;
+    const cardHeight = props.factorVizOptions.willAdjustCardHeightBy;
     return cardHeight;
   }
   return 110;
@@ -29,17 +27,17 @@ const styles = {
 };
 
 const renderSigSortsIndicators = props => {
-  let shouldUseUnicode = props.shouldUseUnicode;
-  let shouldShowZscoreArrows = props.shouldShowZscoreArrows;
-  let willAdjustIndicatorSizeBy = props.willAdjustIndicatorSizeBy;
+  const shouldUseUnicode = props.shouldUseUnicode;
+  const shouldShowZscoreArrows = props.shouldShowZscoreArrows;
+  const willAdjustIndicatorSizeBy = props.willAdjustIndicatorSizeBy;
 
-  let width = widthValue(props);
-  let height = heightValue(props);
-  let headerHeight1 = headerHeight();
+  const width = widthValue(props);
+  const height = heightValue(props);
+  const headerHeight1 = headerHeight();
   return (coords, index) => {
-    let text,
-      arrow,
-      symbol;
+    let text;
+    let arrow;
+    let symbol;
     if (shouldUseUnicode) {
       if (shouldShowZscoreArrows) {
         symbol = props.data[index].sigVisualizationUni;
@@ -48,37 +46,32 @@ const renderSigSortsIndicators = props => {
       } else {
         text = props.data[index].sigVisualizationUni;
       }
-    } else {
-      if (shouldShowZscoreArrows) {
+    } else if (shouldShowZscoreArrows) {
         symbol = props.data[index].sigVisualization;
         arrow = props.data[index].directionSymbol;
         text = symbol + arrow;
       } else {
         text = props.data[index].sigVisualization;
       }
-    }
     // todo - set user selected custom value for dy for symbols
     const sigSymbolProps = {
       x: props.positionData.xPosLoop[index] * width + 10,
-      y: props.positionData.yPosLoop[index] * height +
+      y:
+        props.positionData.yPosLoop[index] * height +
         headerHeight1 +
         22 +
         1.9 * willAdjustIndicatorSizeBy,
       key: props.positionData.numRectsArray[index],
-      text: text,
+      text,
       textAnchor: "left",
       fontSize: willAdjustIndicatorSizeBy
     };
     return (
       <text {...styles} {...sigSymbolProps}>
-        { sigSymbolProps.text }
+        {sigSymbolProps.text}
       </text>
-      );
+    );
   };
 };
 
-export default props => {
-  return <g>
-           { props.data.map(renderSigSortsIndicators(props)) }
-         </g>;
-};
+export default props => <g>{props.data.map(renderSigSortsIndicators(props))}</g>;

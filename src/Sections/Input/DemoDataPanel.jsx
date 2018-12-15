@@ -18,7 +18,7 @@ class CsvPanel extends Component {
           <IpadSurveyCard />
         </CardHolder>
       </DataWindow>
-      );
+    );
   }
 }
 
@@ -26,13 +26,17 @@ export default view(CsvPanel);
 
 const DataWindow = styled.div`
   height: calc(100vh-150px);
+  padding-top: 10px;
+  padding-left: 10px;
   background-color: white;
 `;
 
 const CardHolder = styled.div`
+  padding-top: 30px;
+  padding-left: 30px;
   display: grid;
   grid-template-columns: 350px 350px;
-  grid-template-rows: 270px 270px 75px;
+  grid-template-rows: 270px 270px 35px;
 `;
 
 const Header = styled.div`
@@ -42,4 +46,3 @@ const Header = styled.div`
   height: 30px;
   margin-top: 10px;
 `;
-
