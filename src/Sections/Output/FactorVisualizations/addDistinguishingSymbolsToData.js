@@ -1,24 +1,27 @@
 import pull from "lodash/pull";
+import cloneDeep from "lodash/cloneDeep"
 import store from "../../../store";
 
 // consensusStatementArrays 
-function addDistinguishingSymbolsToData(outputForDataViz, distStatementDataVizArray) {
+function addDistinguishingSymbolsToData(outputForDataViz2, distStatementDataVizArray) {
     const consensus01Statements = store.getState("consensus01Statements");
     const consensus05Statements = store.getState("consensus05Statements");
     const userSelectedFactors2 = store.getState("userSelectedFactors");
     const userSelectedFactors = [];
 
+    const outputForDataViz = cloneDeep(outputForDataViz2);
+
     // to delete spaces between text "Factor " and factor number
-    for (let r = 0; r < userSelectedFactors2.length; r++) {
+    for (let r = 0; r < userSelectedFactors2.length; r += 1) {
         const temp1 = userSelectedFactors2[r];
         const temp2 = temp1.replace(/\s/g, "");
         userSelectedFactors.push(temp2);
     }
 
     // Assign Consensus values - loop through userSelectedFactors to get each synFactorViz
-    for (let i = 0; i < outputForDataViz.length; i++) {
+    for (let i = 0; i < outputForDataViz.length; i += 1) {
         // for consensus loop - all statements
-        for (let jj = 0, jjLen = outputForDataViz[i].length; jj < jjLen; jj++) {
+        for (let jj = 0, jjLen = outputForDataViz[i].length; jj < jjLen; jj += 1) {
             // for consensus
             const testValue = +outputForDataViz[i][jj].statement;
             const consensus01 = consensus01Statements.includes(testValue);
@@ -38,13 +41,13 @@ function addDistinguishingSymbolsToData(outputForDataViz, distStatementDataVizAr
 
         // for distingishing symbols
         // loop through each distinguishing statement in distStatementDataVizArray[i]
-        for (let j = 0, jLen = distStatementDataVizArray[i].length; j < jLen; j++) {
+        for (let j = 0, jLen = distStatementDataVizArray[i].length; j < jLen; j += 1) {
             // get statement number
             const statementId = distStatementDataVizArray[i][j]["No."];
 
             // avoid empty objects
-            let sigSymbol,
-                sigSymbolUni;
+            let sigSymbol;
+            let sigSymbolUni;
             const testValue = parseInt(statementId, 10);
             if (!isNaN(testValue)) {
                 // get values for calc of direction symbol
@@ -53,7 +56,7 @@ function addDistinguishingSymbolsToData(outputForDataViz, distStatementDataVizAr
                 const allFactorZscores = [];
 
                 // loop through all of the factor z-scores and push to array
-                for (let k = 0; k < userSelectedFactors.length; k++) {
+                for (let k = 0; k < userSelectedFactors.length; k += 1) {
                     const temp1 = `Z-SCR-${  userSelectedFactors[k]}`;
                     const temp2 = distStatementDataVizArray[i][j][temp1];
                     allFactorZscores.push(temp2);
@@ -62,9 +65,9 @@ function addDistinguishingSymbolsToData(outputForDataViz, distStatementDataVizAr
                 const otherFactorZscores = pull(allFactorZscores, sigFactorZscoreValue);
 
                 // let factorZscoreAverage = d3.mean(otherFactorZscores);
-                let arrowPointerArrayLeft = [],
-                    arrowPointerArrayRight = [];
-                for (let kk = 0; kk < otherFactorZscores.length; kk++) {
+                const arrowPointerArrayLeft = [];
+                const arrowPointerArrayRight = [];
+                for (let kk = 0; kk < otherFactorZscores.length; kk += 1) {
                     if (sigFactorZscoreValue - otherFactorZscores[kk] > 0) {
                         arrowPointerArrayRight.push("1");
                     } else {
@@ -73,8 +76,8 @@ function addDistinguishingSymbolsToData(outputForDataViz, distStatementDataVizAr
                 }
 
                 // for distinguishing
-                let directionSymbol,
-                    directionSymbolUni;
+                let directionSymbol;
+                let directionSymbolUni;
                 if (
                     otherFactorZscores.length === arrowPointerArrayRight.length &&
                     userSelectedFactors.length > 1

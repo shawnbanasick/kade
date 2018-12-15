@@ -1,8 +1,8 @@
 import React from "react";
 import styled from "styled-components";
-import { view } from "react-easy-state";
+import { view, store } from "react-easy-state";
 import { Button, Transition } from "semantic-ui-react";
-import store from "../../../store";
+import state from "../../../store";
 import refreshVizOptionsState from "./refreshVizOptionsState";
 import createFactorVizDataObjectForProps from "./createFactorVizDataObjectForProps";
 
@@ -14,49 +14,58 @@ import createFactorVizDataObjectForProps from "./createFactorVizDataObjectForPro
 // };
 
 // todo - need to calculate dynamic height here for styles
-const factorVizOptions = store.getState("factorVizOptions");
+const factorVizOptions = state.getState("factorVizOptions");
+
+// const localStore = store({
+//   factorData: createFactorVizDataObjectForProps(factorVizOptions)
+// });
 
 class RefreshFactorVizButton extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            factorData: createFactorVizDataObjectForProps(factorVizOptions)
-        };
-        this.refresh = this.refresh.bind(this);
-    }
+  constructor(props) {
+    super(props);
 
-    refresh() {
-        console.log("refresh called");
+    this.state = {
+      factorData: createFactorVizDataObjectForProps(factorVizOptions)
+    };
 
-        const userValues = refreshVizOptionsState();
-        store.setState({
-            factorVizOptions: userValues
-        });
 
-        this.setState({
-            factorData: createFactorVizDataObjectForProps(userValues)
-        });
-    }
+    this.refresh = this.refresh.bind(this);
+  }
 
-    render() {
-        const shouldDisplayFactorVizOptions = store.getState(
-            "shouldDisplayFactorVizOptions"
-        );
+  refresh() {
+    console.log("refresh called");
 
-        return (
-            <Transition visible={ shouldDisplayFactorVizOptions } animation="fade" duration={ 1000 }>
-              <div>
-                <div style={ { marginTop: 50, marginBottom: 50, height: 100, display: "block" } }>
-                  <StyledWrapper>
-                    <Button id="refreshFactorVizButton" className="wrapper1" onClick={ this.refresh } size="huge" floated="left">
-                      Update Factor Visualizations
-                    </Button>
-                  </StyledWrapper>
-                </div>
-              </div>
-            </Transition>
-            );
-    }
+    const userValues = refreshVizOptionsState();
+    state.setState({
+      factorVizOptions: userValues
+    });
+
+    // createFactorVizDataObjectForProps(userValues);
+
+    this.setState({
+      factorData: createFactorVizDataObjectForProps(userValues)
+    });
+  }
+
+  render() {
+    const shouldDisplayFactorVizOptions = state.getState(
+      "shouldDisplayFactorVizOptions"
+    );
+
+    return (
+      <Transition visible={ shouldDisplayFactorVizOptions } animation="fade" duration={ 1000 }>
+        <div>
+          <div style={ { marginTop: 50, marginBottom: 50, height: 100, display: "block" } }>
+            <StyledWrapper>
+              <Button id="refreshFactorVizButton" className="wrapper1" onClick={ this.refresh } size="huge" floated="left">
+                Update Factor Visualizations
+              </Button>
+            </StyledWrapper>
+          </div>
+        </div>
+      </Transition>
+      );
+  }
 }
 
 export default view(RefreshFactorVizButton);

@@ -1,7 +1,7 @@
 import store from "../../../store";
 // import addDistinguishingSymbolsToData from "./addDistinguishingSymbolsToData";
 
-const data = function() {
+const data = () => {
   console.log(JSON.stringify("prepare data for factor viz called"));
 
   // if first time -> get data from output function
@@ -16,8 +16,8 @@ const data = function() {
   const options = store.getState("factorVizOptions");
   const shouldAppend = options.willPrependStateNums;
   if (shouldAppend === true && numbersHaveBeenAppended === false) {
-    for (let j = 0; j < outputForDataViz.length; j++) {
-      for (let k = 0; k < outputForDataViz[j].length; k++) {
+    for (let j = 0; j < outputForDataViz.length; j += 1) {
+      for (let k = 0; k < outputForDataViz[j].length; k += 1) {
         const stateNum = outputForDataViz[j][k].statement;
         const statement = outputForDataViz[j][k].sortStatement;
         outputForDataViz[j][k].sortStatement = `${stateNum}. ${statement}`;
@@ -35,7 +35,7 @@ const data = function() {
   }
 
   // sort by sort values, then by Z-scores
-  for (let i = 0; i < outputForDataViz.length; i++) {
+  for (let i = 0; i < outputForDataViz.length; i += 1) {
     outputForDataViz[i].sort((a, b) => {
       if (a.sortValue > b.sortValue) {
         return 1;
@@ -59,7 +59,7 @@ const data = function() {
 
   // console.log(`dataviz2: ${JSON.stringify(outputForDataViz)}`);
 
-  console.trace();
+  // console.trace();
 
   return outputForDataViz;
 };
