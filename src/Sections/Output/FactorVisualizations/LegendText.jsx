@@ -67,11 +67,11 @@ class LegendText extends React.Component {
     let arrowRight = "\u003E\u003E";
     if (useUnicode) {
       // symbol05 = "\u25CE";
-      symbol05 = "\u2733";
+      symbol05 = "\u2733\u0020\u0020";
       // symbol01 = "\u25C9";
       symbol01 = "\u2733\u2733";
-      arrowLeft = "\u25C4";
-      arrowRight = "\u25BA";
+      arrowLeft = "\u25C4\u0020";
+      arrowRight = "\u25BA\u0020";
     }
     const additionalXLocationValue = 260;
 
@@ -84,15 +84,29 @@ class LegendText extends React.Component {
       fontFamily: "Verdana, sans-serif"
     };
 
-    const sigSymbolStyle1 = {
-      x: xLocation - additionalXLocationValue,
+    const sigSymbolTextStyle1 = {
+      x: xLocation - additionalXLocationValue + 20,
       y: yLocation + 65,
       fontSize: 16,
       fontFamily: "Verdana, sans-serif"
     };
 
-    const sigSymbolStyle2 = {
+    const astrick05Style = {
+      x: xLocation - additionalXLocationValue + 8,
+      y: yLocation + 65,
+      fontSize: 16,
+      fontFamily: "Verdana, sans-serif"
+    };
+
+    const astrick01Style = {
       x: xLocation - additionalXLocationValue,
+      y: yLocation + 95,
+      fontSize: 16,
+      fontFamily: "Verdana, sans-serif"
+    };
+
+    const sigSymbolTextStyle2 = {
+      x: xLocation - additionalXLocationValue + 20,
       y: yLocation + 95,
       fontSize: 16,
       fontFamily: "Verdana, sans-serif"
@@ -131,9 +145,7 @@ class LegendText extends React.Component {
       y: yLocation + consensusYLocation,
       width: 15,
       height: 15,
-      fill: `rgba(${displayColor.r}, ${displayColor.g}, ${displayColor.b}, ${
-        displayColor.a
-      })`,
+      fill: displayColor,
       stroke: "black",
       strokeWidth: 1
     };
@@ -151,23 +163,25 @@ class LegendText extends React.Component {
           <text {...titleStyles}>Legend </text>
           {willIndicateDistinguishing && (
             <g>
-              <text {...sigSymbolStyle1}>
-                {symbol05} Distinguishing statement at P{"\u003C"} 0.05
+              <text {...astrick05Style}>{symbol05}</text>
+              <text {...sigSymbolTextStyle1}>
+                Distinguishing statement at P{"\u003C"} 0.05
               </text>
-              <text {...sigSymbolStyle2}>
-                {symbol01} Distinguishing statement at P{"\u003C"} 0.01
+              <text {...astrick01Style}>{symbol01}</text>
+              <text {...sigSymbolTextStyle2}>
+                Distinguishing statement at P{"\u003C"} 0.01
               </text>
             </g>
           )}
           {willDisplayDistingCompareSymbols && (
             <g>
               <text {...sigSymbolStyle3}>
-                {arrowRight} z-Score for the statement is higher than in all the
+                {arrowRight} z-Score for the statement is higher than in all
                 other factors
               </text>
               <text {...sigSymbolStyle4}>{arrowLeft}</text>
               <text {...sigSymbolStyle5}>
-                z-Score for the statement is lower than in all the other factors
+                z-Score for the statement is lower than in all other factors
               </text>
             </g>
           )}

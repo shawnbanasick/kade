@@ -64,7 +64,7 @@ const renderSigSortsIndicators = props => {
         props.positionData.yPosLoop[index] * height +
         headerHeight1 +
         22 +
-        1.9 * willAdjustIndicatorSizeBy,
+        1.7 * willAdjustIndicatorSizeBy,
       key: props.positionData.numRectsArray[index],
       text,
       textAnchor: "left",

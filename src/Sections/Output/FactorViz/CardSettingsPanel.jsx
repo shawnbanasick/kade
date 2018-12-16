@@ -1,8 +1,8 @@
-import React, { Component } from "react";
-import { view } from "react-easy-state";
-import UserSelectionSwitch from "./UserSelectionSwitch";
-import UserTextInput from "./UserTextInput";
 import styled from "styled-components";
+import { view } from "react-easy-state";
+import React, { Component } from "react";
+import UserTextInput from "./UserTextInput";
+import UserSelectionSwitch from "./UserSelectionSwitch";
 
 const styles = {
   width: 150
@@ -13,7 +13,7 @@ class CardSettingsPanel extends Component {
     return (
       <div style={{ marginTop: 40 }}>
         <span style={{ fontSize: 32 }}>Cards</span>
-        <hr style={{ width: "100%", margin: 15 }} />
+        <hr style={{ width: "100%", marginBottom: 15 }} />
         <OptionStatementRow>
           <OptionStatementText>5. Adjust card height?</OptionStatementText>
           <UserSelectionSwitch
@@ -70,7 +70,7 @@ const OptionStatementRow = styled.div`
   display: flex;
   align-items: center;
   margin-bottom: 25px;
-  padding-left:10px;
+  padding-left: 10px;
 `;
 
 const OptionStatementText = styled.div`
