@@ -37,9 +37,9 @@ const wordwrap = (text, max, factorVizOptions) => {
   // special adjustments for asian text because no spaces between words
   if (factorVizOptions.willAdjustWidthAsian === true) {
     const newMax = factorVizOptions.willAdjustWidthAsianBy;
-    lines = text.match(new RegExp(`.{1,${  newMax  }}`, "g"));
+    lines = text.match(new RegExp(`.{1,${newMax}}`, "g"));
   } else {
-    const regex = new RegExp(`.{0,${  max  }}(?:\\s|$)`, "g");
+    const regex = new RegExp(`.{0,${max}}(?:\\s|$)`, "g");
     do {
       line = regex.exec(text);
       lines.push(...line);
@@ -74,6 +74,8 @@ function statementList(texts, xCoord, factorVizOptions) {
 }
 
 const renderRectangleText = props => {
+  // console.log(`props: ${  JSON.stringify(props)}`);
+
   // set default size
   let fontSize = 13;
   // set custom fontSize by user selection
@@ -92,9 +94,17 @@ const renderRectangleText = props => {
     // check if sentences or statement numbers only
     const willDisplayOnlyStateNums =
       props.factorVizOptions.willDisplayOnlyStateNums;
+    const willPrependStateNums = props.factorVizOptions.willPrependStateNums;
+
     if (willDisplayOnlyStateNums === true) {
       texts = wordwrap(
         props.data[index].statement,
+        maxLineLength,
+        props.factorVizOptions
+      );
+    } else if (willPrependStateNums === true) {
+      texts = wordwrap(
+        props.data[index].sortStatementAndNums,
         maxLineLength,
         props.factorVizOptions
       );

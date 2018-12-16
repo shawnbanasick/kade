@@ -6,35 +6,36 @@ const data = () => {
 
   // if first time -> get data from output function
   let outputForDataViz = store.getState("outputForDataViz2");
-  const numbersHaveBeenAppended = store.getState("numbersHaveBeenAppended");
+  // const numbersHaveBeenAppended = store.getState("numbersHaveBeenAppended");
 
   if (outputForDataViz.length === 0) {
     outputForDataViz = store.getState("outputForDataViz");
   }
 
   // append statement numbers
-  const options = store.getState("factorVizOptions");
-  const shouldAppend = options.willPrependStateNums;
-  console.log(`append numbers?: ${  JSON.stringify(shouldAppend)}`);
+  // const options = store.getState("factorVizOptions");
+  // const shouldAppend = options.willPrependStateNums;
+  // console.log(`append numbers?: ${  JSON.stringify(shouldAppend)}`);
 
-  if (shouldAppend === true && numbersHaveBeenAppended === false) {
-    for (let j = 0; j < outputForDataViz.length; j += 1) {
-      for (let k = 0; k < outputForDataViz[j].length; k += 1) {
-        const stateNum = outputForDataViz[j][k].statement;
-        const statement = outputForDataViz[j][k].sortStatement;
-        outputForDataViz[j][k].sortStatement = `${stateNum}. ${statement}`;
-      }
+  // if (shouldAppend === true && numbersHaveBeenAppended === false) {
+  for (let j = 0; j < outputForDataViz.length; j += 1) {
+    for (let k = 0; k < outputForDataViz[j].length; k += 1) {
+      const stateNum = outputForDataViz[j][k].statement;
+      const statement = outputForDataViz[j][k].sortStatement;
+      outputForDataViz[j][k].sortStatementAndNums = `${stateNum}. ${statement}`;
     }
-    store.setState({
-      numbersHaveBeenAppended: true
-    });
+    // console.log('output for data viz: ' + JSON.stringify(outputForDataViz));
   }
-  if (shouldAppend === false && numbersHaveBeenAppended === true) {
-    outputForDataViz = store.getState("outputForDataViz");
-    store.setState({
-      numbersHaveBeenAppended: false
-    });
-  }
+  // store.setState({
+  //   numbersHaveBeenAppended: true
+  // });
+  // }
+  // if (shouldAppend === false && numbersHaveBeenAppended === true) {
+  //   outputForDataViz = store.getState("outputForDataViz");
+  //   store.setState({
+  //     numbersHaveBeenAppended: false
+  //   });
+  // }
 
   // sort by sort values, then by Z-scores
   for (let i = 0; i < outputForDataViz.length; i += 1) {
