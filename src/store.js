@@ -20,7 +20,6 @@ export default store({
   sortsDisplayText: [],
   isForcedQsortPattern: true,
   dataOrigin: "",
-
   version: "1.0.1",
   mainDataObject: {},
   gridColDefs: [],

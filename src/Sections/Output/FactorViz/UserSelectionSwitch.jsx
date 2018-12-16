@@ -41,7 +41,7 @@ class UserSelectionSwitch extends React.Component {
 
   render() {
     return (
-      <div style={{ marginTop: 5 }}>
+      <div>
         <label htmlFor={this.props.name} className="switch-light switch-holo">
           <input
             id={this.props.name}
@@ -50,7 +50,10 @@ class UserSelectionSwitch extends React.Component {
             defaultChecked={this.state.toggle}
             onChange={e => this.toggle(e)}
           />
-          <span key={this.props.name} style={{ width: 100, marginTop: 6 }}>
+          <span
+            key={this.props.name}
+            style={{ width: 100, marginRight: 15, marginLeft: 20 }}
+          >
             <span>No</span>
             <span>YES</span>
             <a>.</a>
