@@ -10,7 +10,7 @@ const localStore = store({
 });
 
 class FactorSelectButtonModal extends Component {
-  handleOpen = () => {
+  handleOpen() {
     let numFactorsKept = state.getState("numFactorsKeptForRot");
     if (isNaN(numFactorsKept)) {
       localStore.modalOpen = true;
@@ -64,8 +64,8 @@ class FactorSelectButtonModal extends Component {
           <Header content="Factor Rotation" />
           <Modal.Content>
             <span style={ { fontSize: 30 } }>
-                          Please select the number of factors to keep for rotation.
-                        </span>
+                                Please select the number of factors to keep for rotation.
+                              </span>
           </Modal.Content>
           <Modal.Actions>
             <Button id="FactorSelectModalGotItButton" color="green" onClick={ this.handleClose } inverted>

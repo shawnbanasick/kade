@@ -1,51 +1,54 @@
 import React from "react";
 import styled from "styled-components";
-import { view } from "react-easy-state";
+import { view, store } from "react-easy-state";
 import { Button, Header, Icon, Modal } from "semantic-ui-react";
 import downloadResultsAsCsv from "../downloadCsvLogic/downloadCsvOutputFile";
-import store from "../../../store";
+import state from "../../../store";
+
+const localStore = {
+  modalOpen: false
+};
+
 
 class DownloadResultsAsExcel extends React.Component {
-    store = {
-        modalOpen: false
-    };
 
-    handleOpen = () => {
-        let userSelectedFactors = store.getState("userSelectedFactors");
-        if (userSelectedFactors.length === 0) {
-            console.log("must select factors first");
-            this.store.modalOpen = true;
-        } else {
-            downloadResultsAsCsv();
-        }
-    };
 
-    handleClose = () => {
-        this.store.modalOpen = false;
-    };
+  handleOpen() {
+    let userSelectedFactors = state.getState("userSelectedFactors");
+    if (userSelectedFactors.length === 0) {
+      console.log("must select factors first");
+      localStore.modalOpen = true;
+    } else {
+      downloadResultsAsCsv();
+    }
+  };
 
-    render() {
-        const {active} = this.store;
-        return (
-            <Modal trigger={ <StyledWrapper>
+  handleClose = () => {
+    localStoretore.modalOpen = false;
+  };
+
+  render() {
+    const {active} = localStore;
+    return (
+      <Modal trigger={ <StyledWrapper>
                    <Button id="downloadResultsAsCsvButton" className="wrapper1" size={ "large" } toggle active={ active } onClick={ this.handleOpen }>
                      CSV File
                    </Button>
-                 </StyledWrapper> } open={ this.store.modalOpen } onClose={ this.handleClose } basic size="small">
-              <Header content="Analysis Output" />
-              <Modal.Content>
-                <span style={ { fontSize: 30 } }>
-                              Select the factors to output first.
-                            </span>
-              </Modal.Content>
-              <Modal.Actions>
-                <Button id="downloadResultsAsCsvModalGotItButton" size={ "huge" } color="green" onClick={ this.handleClose } inverted>
-                  <Icon name="checkmark" /> Got it
-                </Button>
-              </Modal.Actions>
-            </Modal>
-            );
-    }
+                 </StyledWrapper> } open={ localStore.modalOpen } onClose={ this.handleClose } basic size="small">
+        <Header content="Analysis Output" />
+        <Modal.Content>
+          <span style={ { fontSize: 30 } }>
+                                    Select the factors to output first.
+                                  </span>
+        </Modal.Content>
+        <Modal.Actions>
+          <Button id="downloadResultsAsCsvModalGotItButton" size={ "huge" } color="green" onClick={ this.handleClose } inverted>
+            <Icon name="checkmark" /> Got it
+          </Button>
+        </Modal.Actions>
+      </Modal>
+      );
+  }
 }
 
 export default view(DownloadResultsAsExcel);

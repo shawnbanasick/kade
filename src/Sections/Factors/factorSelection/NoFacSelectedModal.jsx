@@ -1,70 +1,75 @@
 import styled from "styled-components";
+import { view } from "react-easy-state";
 import React, { Component } from "react";
 import { Button, Header, Icon, Modal } from "semantic-ui-react";
-import centroidDispatch from "../centroidLogic/centroidDispatch";
 import store from "../../../store";
-import { view } from "react-easy-state";
+import centroidDispatch from "../centroidLogic/centroidDispatch";
 
 class noFacSelectedModal extends Component {
-    state = {
-        modalOpen: false
-    };
+  constructor(props) {
+    super(props);
 
-    handleOpen = () => {
-        let numFactors = store.getState("numCentroidFactors");
-        if (isNaN(numFactors)) {
-            console.log("try again");
-            this.setState({
-                modalOpen: true
-            });
-        } else {
-            store.setState({
-                isCentroidLoading: true
-            });
-            setTimeout(() => {
-                centroidDispatch(numFactors);
-                store.setState({
-                    numFacsForTableWidth: numFactors,
-                    showUnrotatedFactorTable: true,
-                    showEigenvaluesTable: true,
-                    showScreePlot: true,
-                    activeCentroidFactorsButton: true,
-                    disabledPcaButton: true,
-                    disabledCentroidFactorButton: true,
-                    showKeepFacForRotButton: true,
-                    isFactorsButtonGreen: true
-                });
-            }, 10);
-        }
+    this.state = {
+      modalOpen: false
     };
+  }
 
-    handleClose = () => this.setState({
-        modalOpen: false
+  handleOpen() {
+    const numFactors = store.getState("numCentroidFactors");
+    if (isNaN(numFactors)) {
+      this.setState({
+        modalOpen: true
+      });
+    } else {
+      store.setState({
+        isCentroidLoading: true
+      });
+      setTimeout(() => {
+        centroidDispatch(numFactors);
+        store.setState({
+          numFacsForTableWidth: numFactors,
+          showUnrotatedFactorTable: true,
+          showEigenvaluesTable: true,
+          showScreePlot: true,
+          activeCentroidFactorsButton: true,
+          disabledPcaButton: true,
+          disabledCentroidFactorButton: true,
+          showKeepFacForRotButton: true,
+          isFactorsButtonGreen: true
+        });
+      }, 10);
+    }
+  };
+
+  handleClose() {
+    this.setState({
+      modalOpen: false
     });
+  }
 
-    render() {
-        let isActive = store.getState("activeCentroidFactorsButton");
-        let isDisabled = store.getState("disabledCentroidFactorButton");
-        let isCentroidLoading = store.getState("isCentroidLoading");
-        return (
-            <Modal trigger={ <StyledWrapper>
+  render() {
+    const isActive = store.getState("activeCentroidFactorsButton");
+    const isDisabled = store.getState("disabledCentroidFactorButton");
+    const isCentroidLoading = store.getState("isCentroidLoading");
+    return (
+      <Modal trigger={ <StyledWrapper>
                    <Button id="noFacSelectedModalButton" className="wrapper1" size={ "small" } toggle active={ isActive } loading={ isCentroidLoading } disabled={ isDisabled }
                      onClick={ this.handleOpen }>
                      Centroid Factors
                    </Button>
                  </StyledWrapper> } open={ this.state.modalOpen } className="wrapper1" onClose={ this.handleClose } basic size={ "small" }>
-              <Header content="Centroid Factor Extraction" />
-              <Modal.Content>
-                <h3>Please select the number of factors to extract first.</h3>
-              </Modal.Content>
-              <Modal.Actions>
-                <Button id="noFacSelectedModalGotItButton" color="green" onClick={ this.handleClose } inverted>
-                  <Icon name="checkmark" /> Got it
-                </Button>
-              </Modal.Actions>
-            </Modal>
-            );
-    }
+        <Header content="Centroid Factor Extraction" />
+        <Modal.Content>
+          <h3>Please select the number of factors to extract first.</h3>
+        </Modal.Content>
+        <Modal.Actions>
+          <Button id="noFacSelectedModalGotItButton" color="green" onClick={ this.handleClose } inverted>
+            <Icon name="checkmark" /> Got it
+          </Button>
+        </Modal.Actions>
+      </Modal>
+      );
+  }
 }
 
 export default view(noFacSelectedModal);
