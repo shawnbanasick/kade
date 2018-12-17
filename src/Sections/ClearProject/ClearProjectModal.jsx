@@ -1,70 +1,38 @@
 import styled from "styled-components";
-import { view } from "react-easy-state";
+import { view, store } from "react-easy-state";
 import React, { Component } from "react";
 import { Button, Header, Icon, Modal } from "semantic-ui-react";
-import store from "../../../store";
-import centroidDispatch from "../centroidLogic/centroidDispatch";
+// import store from "../../store";
+import initialState from '../../initialState';
+import state from '../../store';
+
+const localStore = store({
+    modalOpen: false
+});
 
 class noFacSelectedModal extends Component {
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            modalOpen: false
-        };
-    }
 
     handleOpen() {
-        const numFactors = store.getState("numCentroidFactors");
-        if (isNaN(numFactors)) {
-            this.setState({
-                modalOpen: true
-            });
-        } else {
-            store.setState({
-                isCentroidLoading: true
-            });
-            setTimeout(() => {
-                centroidDispatch(numFactors);
-                store.setState({
-                    numFacsForTableWidth: numFactors,
-                    showUnrotatedFactorTable: true,
-                    showEigenvaluesTable: true,
-                    showScreePlot: true,
-                    activeCentroidFactorsButton: true,
-                    disabledPcaButton: true,
-                    disabledCentroidFactorButton: true,
-                    showKeepFacForRotButton: true,
-                    isFactorsButtonGreen: true
-                });
-            }, 10);
-        }
+        localStore.modalOpen = true
     };
 
     handleClose() {
-        this.setState({
-            modalOpen: false
-        });
-    }
+        localStore.modalOpen = false
+    };
 
     render() {
-        const isActive = store.getState("activeCentroidFactorsButton");
-        const isDisabled = store.getState("disabledCentroidFactorButton");
-        const isCentroidLoading = store.getState("isCentroidLoading");
+        // const isActive = store.getState("activeCentroidFactorsButton");
+        // const isDisabled = store.getState("disabledCentroidFactorButton");
+        // const isCentroidLoading = store.getState("isCentroidLoading");
         return (
-            <Modal trigger={ <StyledWrapper>
-                   <Button id="noFacSelectedModalButton" className="wrapper1" size={ "small" } toggle active={ isActive } loading={ isCentroidLoading } disabled={ isDisabled }
-                     onClick={ this.handleOpen }>
-                     Centroid Factors
-                   </Button>
-                 </StyledWrapper> } open={ this.state.modalOpen } className="wrapper1" onClose={ this.handleClose } basic size={ "small" }>
+            <Modal trigger={ <BeginAnalysisButton onClick={ this.handleOpen } size='large'>Clear Project</BeginAnalysisButton> } open={ localStore.modalOpen } className="wrapper1" onClose={ this.handleClose } basic size={ "small" }>
               <Header content="Centroid Factor Extraction" />
               <Modal.Content>
-                <h3>Please select the number of factors to extract first.</h3>
+                <h3>Are you sure you want to clear the project?</h3>
               </Modal.Content>
               <Modal.Actions>
                 <Button id="noFacSelectedModalGotItButton" color="green" onClick={ this.handleClose } inverted>
-                  <Icon name="checkmark" /> Got it
+                  Got it
                 </Button>
               </Modal.Actions>
             </Modal>
@@ -74,23 +42,52 @@ class noFacSelectedModal extends Component {
 
 export default view(noFacSelectedModal);
 
-const StyledWrapper = styled.div`
-  margin-right: 140px;
+// const StyledWrapper = styled.div`
+//   margin-right: 140px;
 
-  .wrapper1 {
-    border: 1px solid black;
-    box-shadow: 0 2px 2px 0 black;
+//   .wrapper1 {
+//     border: 1px solid black;
+//     box-shadow: 0 2px 2px 0 black;
 
-    &:hover {
-      border: 1px solid black;
-      box-shadow: 0 2px 2px 0 black;
-    }
+//     &:hover {
+//       border: 1px solid black;
+//       box-shadow: 0 2px 2px 0 black;
+//     }
 
-    &:active {
-      box-shadow: 0 1px 1px 0 black;
-      transform: translateY(1px);
-      /* margin-left: 3px; */
-      margin-top: 3px;
-    }
+//     &:active {
+//       box-shadow: 0 1px 1px 0 black;
+//       transform: translateY(1px);
+//       /* margin-left: 3px; */
+//       margin-top: 3px;
+//     }
+//   }
+// `;
+
+const BeginAnalysisButton = styled.button`
+  display: grid;
+  align-items: center;
+  justify-items: center;
+  background-color: ${props => props.buttonColor};
+  height: 40px;
+  width: 195px;
+  border: 1px solid black;
+  text-align: center;
+  font-size: 16px;
+  font-family: Helvetica, sans-serif;
+  font-weight: normal;
+  border-radius: 4px;
+  margin-bottom: 3px;
+  box-shadow: 0 2px 2px 0 black;
+  outline: none;
+
+  &:hover {
+    font-weight: bold
+  }
+
+  &:active {
+    box-shadow: 0 1px 1px 0 black;
+    transform: translateY(1px);  
   }
 `;
+
+// import styled, { keyframes } from "styled-components";

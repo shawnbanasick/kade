@@ -1,13 +1,11 @@
 import React, { Component } from "react";
 import { view } from "react-easy-state";
 import styled, { keyframes } from "styled-components";
-import initialState from '../../initialState';
-import state from '../../store';
-
-function handleClick() {
-    const initialStateValues = initialState();
-    state.setState(initialStateValues);
-}
+import ClearProjectModal from './ClearProjectModal';
+// function handleClick() {
+//     const initialStateValues = initialState();
+//     state.setState(initialStateValues);
+// }
 
 
 class ClearProject extends Component {
@@ -16,7 +14,7 @@ class ClearProject extends Component {
             <MainContent>
               <h1>Clear Project</h1>
               <h2 style={ { width: 800 } }>Click this button to begin a new project. This will clear all data and analysis from the current project. The action cannot be reversed.</h2>
-              <BeginAnalysisButton onClick={ handleClick } size='large'>Clear Project</BeginAnalysisButton>
+              <ClearProjectModal />
             </MainContent>
             );
     }
@@ -74,31 +72,3 @@ const MainContent = styled.div`
   overflow: auto;
 `;
 
-const BeginAnalysisButton = styled.button`
-  display: grid;
-  align-items: center;
-  justify-items: center;
-  background-color: ${props => props.buttonColor};
-  height: 40px;
-  width: 195px;
-  border: 1px solid black;
-  text-align: center;
-  font-size: 16px;
-  font-family: Helvetica, sans-serif;
-  font-weight: normal;
-  border-radius: 4px;
-  margin-bottom: 3px;
-  box-shadow: 0 2px 2px 0 black;
-  outline: none;
-
-  &:hover {
-    font-weight: bold
-  }
-
-  &:active {
-    box-shadow: 0 1px 1px 0 black;
-    transform: translateY(1px);  
-  }
-`;
-
-// import styled, { keyframes } from "styled-components";
