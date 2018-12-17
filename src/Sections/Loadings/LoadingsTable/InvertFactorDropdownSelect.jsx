@@ -1,6 +1,6 @@
 import React from "react";
 import { Dropdown } from "semantic-ui-react";
-import { view, store } from "react-easy-state";
+import { view } from "react-easy-state";
 import state from "../../../store";
 
 const saveDropdownValueToState = (event, data) => {
@@ -10,21 +10,8 @@ const saveDropdownValueToState = (event, data) => {
   });
 };
 
-// const localStore = store({
-//   options: []
-// });
-
 class InvertFactorDropdownSelect extends React.Component {
-  // componentWillMount() {
-  //   localStore.options = this.getOptions();
-  // }
-
-  // componentWillUpdate() {
-  //   localStore.options = this.getOptions();
-  // }
-
   getOptions() {
-    // const isCentroid = state.getState("activeCentroidFactorsButton");
     const options = [
       {
         key: "factor1",

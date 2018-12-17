@@ -304,6 +304,8 @@ class LoadingsTable extends Component {
     localStore.numFacsForTableWidth = numFacsForTableWidth;
     localStore.sendDataToOutputButtonColor = sendDataToOutputButtonColor;
 
+
+
     return (
       <div>
         <LoadingsContainerDiv>
@@ -328,10 +330,10 @@ class LoadingsTable extends Component {
               </Button>
               <span style={ { marginLeft: 5, marginRight: 10 } }>at</span>
               <SigLevelDropdown style={ { marginLeft: 5 } } />
-              <Button className="wrapper1" style={ { marginLeft: "40px" } } onClick={ this.flagAllQsorts }>
+              <Button className="wrapper1" style={ { marginLeft: "40px" } } disabled={ isDisabled } onClick={ this.flagAllQsorts }>
                 All
               </Button>
-              <Button className="wrapper1" style={ { marginLeft: "40px" } } onClick={ this.clearAllCheckboxes }>
+              <Button className="wrapper1" style={ { marginLeft: "40px" } } disabled={ isDisabled } onClick={ this.clearAllCheckboxes }>
                 None
               </Button>
             </StyledWrapper>
