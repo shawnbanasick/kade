@@ -82,15 +82,6 @@ const createWindow = async () => {
       label: "Edit",
       submenu: [
         {
-          role: "undo"
-        },
-        {
-          role: "redo"
-        },
-        {
-          type: "separator"
-        },
-        {
           role: "cut"
         },
         {
@@ -156,9 +147,11 @@ const createWindow = async () => {
         {
           label: "User Guide",
           accelerator:
-          process.platform === "darwin" ? "Alt+Cmd+U" : "Ctrl+Shift+U",
+            process.platform === "darwin" ? "Alt+Cmd+U" : "Ctrl+Shift+U",
           click() {
-            require('electron').shell.openExternal('https://github.com/shawnbanasick/kade/wiki');
+            require("electron").shell.openExternal(
+              "https://github.com/shawnbanasick/kade/wiki"
+            );
           }
         },
         {
@@ -170,12 +163,13 @@ const createWindow = async () => {
         {
           label: "Report a Bug -> ken.q.tools@gmail.com",
           click() {
-            require('electron').shell.openExternal('mailto:ken.q.tools@gmail.com');          
+            require("electron").shell.openExternal(
+              "mailto:ken.q.tools@gmail.com"
+            );
           }
         }
       ]
     }
-   
   ];
 
   if (process.platform === "darwin") {
@@ -208,7 +202,6 @@ const createWindow = async () => {
         }
       ]
     });
-
 
     // Window menu
     template[3].submenu = [
