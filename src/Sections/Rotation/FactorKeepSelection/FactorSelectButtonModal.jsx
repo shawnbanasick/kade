@@ -61,11 +61,11 @@ class FactorSelectButtonModal extends Component {
                              Submit
                            </Button>
                          </StyledWrapper> } open={ localStore.modalOpen } onClose={ this.handleClose } basic size="small">
-          <Header icon="browser" content="Factor Rotation" />
+          <Header content="Factor Rotation" />
           <Modal.Content>
             <span style={ { fontSize: 30 } }>
-                    Please select the number of factors to keep for rotation.
-                  </span>
+                          Please select the number of factors to keep for rotation.
+                        </span>
           </Modal.Content>
           <Modal.Actions>
             <Button id="FactorSelectModalGotItButton" color="green" onClick={ this.handleClose } inverted>
