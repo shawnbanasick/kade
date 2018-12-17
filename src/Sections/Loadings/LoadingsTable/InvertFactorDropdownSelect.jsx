@@ -10,21 +10,21 @@ const saveDropdownValueToState = (event, data) => {
   });
 };
 
-const localStore = store({
-  options: []
-});
+// const localStore = store({
+//   options: []
+// });
 
 class InvertFactorDropdownSelect extends React.Component {
-  componentWillMount() {
-    localStore.options = this.getOptions();
-  }
+  // componentWillMount() {
+  //   localStore.options = this.getOptions();
+  // }
 
-  componentWillUpdate() {
-    localStore.options = this.getOptions();
-  }
+  // componentWillUpdate() {
+  //   localStore.options = this.getOptions();
+  // }
 
   getOptions() {
-    const isCentroid = state.getState("activeCentroidFactorsButton");
+    // const isCentroid = state.getState("activeCentroidFactorsButton");
     const options = [
       {
         key: "factor1",
