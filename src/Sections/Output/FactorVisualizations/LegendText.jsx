@@ -82,7 +82,7 @@ class LegendText extends React.Component {
 
 
     const astrick05Style = {
-      x: xLocation - additionalXLocationValue + 10,
+      x: xLocation - additionalXLocationValue + 12,
       y: yLocation + 65,
       fontSize: 16,
       fontFamily: "Verdana, sans-serif"
@@ -109,36 +109,36 @@ class LegendText extends React.Component {
       fontFamily: "Verdana, sans-serif"
     };
 
-    const sigSymbolStyle3 = {
-      x: xLocation - additionalXLocationValue,
+    const zScoreTextHigherStyle3 = {
+      x: xLocation - additionalXLocationValue + 30,
       y: yLocation + 125,
       fontSize: 16,
       fontFamily: "Verdana, sans-serif"
     };
 
-    const sigSymbolStyle4 = {
-      x: xLocation - additionalXLocationValue,
-      y: yLocation + 155,
-      fontSize: 20,
-      fontFamily: "Verdana, sans-serif"
-    };
-
-    const sigSymbolStyle5 = {
-      x: xLocation - additionalXLocationValue + 20,
+    const arrowLeftStyle4 = {
+      x: xLocation - additionalXLocationValue + 9,
       y: yLocation + 155,
       fontSize: 16,
       fontFamily: "Verdana, sans-serif"
     };
 
-    const sigSymbolStyle6 = {
-      x: xLocation - additionalXLocationValue,
+    const zScoreTextLowerStyle5 = {
+      x: xLocation - additionalXLocationValue + 30,
       y: yLocation + 155,
+      fontSize: 16,
+      fontFamily: "Verdana, sans-serif"
+    };
+
+    const arrowRightStyle6 = {
+      x: xLocation - additionalXLocationValue + 9,
+      y: yLocation + 125,
       fontSize: 16,
       fontFamily: "Verdana, sans-serif"
     };
 
     const consensusRectStyles = {
-      x: xLocation - additionalXLocationValue,
+      x: xLocation - additionalXLocationValue + 9,
       y: yLocation + consensusYLocation,
       width: 15,
       height: 15,
@@ -148,7 +148,7 @@ class LegendText extends React.Component {
     };
 
     const consensusStatementStyle = {
-      x: xLocation - additionalXLocationValue + 20,
+      x: xLocation - additionalXLocationValue + 30,
       y: yLocation + 14 + consensusYLocation,
       fontSize: 16,
       fontFamily: "Verdana, sans-serif"
@@ -178,13 +178,16 @@ class LegendText extends React.Component {
             ) }
           { willDisplayDistingCompareSymbols && (
             <g>
-              <text {...sigSymbolStyle3}>
-                { arrowRight } z-Score for the statement is higher than in all other factors
+              <text {...arrowRightStyle6}>
+                { arrowRight }
               </text>
-              <text {...sigSymbolStyle4}>
+              <text {...zScoreTextHigherStyle3}>
+                z-Score for the statement is higher than in all other factors
+              </text>
+              <text {...arrowLeftStyle4}>
                 { arrowLeft }
               </text>
-              <text {...sigSymbolStyle5}>
+              <text {...zScoreTextLowerStyle5}>
                 z-Score for the statement is lower than in all other factors
               </text>
             </g>
