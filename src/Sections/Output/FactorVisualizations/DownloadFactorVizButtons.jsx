@@ -1,9 +1,10 @@
 import React from "react";
-import { Button } from "semantic-ui-react";
+// import { Button } from "semantic-ui-react";
+import styled from "styled-components";
 import { saveSvgAsPng } from "save-svg-as-png";
 import store from "../../../store";
-import { default as currentDate } from "../../../Utils/currentDate1";
-import { default as currentTime } from "../../../Utils/currentTime1";
+import currentDate from "../../../Utils/currentDate1";
+import currentTime from "../../../Utils/currentTime1";
 
 const downloadSvgImage = imageId => {
   const factorVizOptions = store.getState("factorVizOptions");
@@ -98,26 +99,45 @@ const downloadFacVizAsPng = imageId => {
 class DownloadFactorVizButtons extends React.Component {
   render() {
     return (
-      <div>
-        <Button.Group floated="left">
-          <Button
-            id={`downloadSvgButtonFacViz${this.props.id}`}
-            size={"big"}
-            onClick={() => downloadSvgImage(this.props.id)}
-            style={{ marginRight: 5 }}
-          >
-            Download SVG
-          </Button>
-          <Button
-            id={`downloadPngButtonFacViz${this.props.id}`}
-            onClick={() => downloadFacVizAsPng(this.props.id)}
-            size={"big"}
-          >
-            Download PNG
-          </Button>
-        </Button.Group>
+      <div style={ { display: "flex" } }>
+        <DownloadButton id={ `downloadSvgButtonFacViz${this.props.id}` } onClick={ () => downloadSvgImage(this.props.id) } style={ { marginRight: 5 } }>
+          Download SVG
+        </DownloadButton>
+        <DownloadButton id={ `downloadPngButtonFacViz${this.props.id}` } onClick={ () => downloadFacVizAsPng(this.props.id) }>
+          Download PNG
+        </DownloadButton>
       </div>
-    );
+      );
   }
 }
 export default DownloadFactorVizButtons;
+
+const DownloadButton = styled.button`
+  display: grid;
+  align-items: center;
+  justify-items: center;
+  height: 40px;
+  width: 195px;
+  border: 1px solid black;
+  text-align: center;
+  font-size: 16px;
+  font-family: Helvetica, sans-serif;
+  font-weight: normal;
+  border-radius: 4px;
+  margin-bottom: 3px;
+  margin-right: 15px;
+  box-shadow: 0 2px 2px 0 black;
+  outline: none;
+  user-select: none;
+
+  &:hover {
+    font-weight: bold
+  }
+
+  &:active {
+    box-shadow: 0 1px 1px 0 black;
+    transform: translateY(1px);  
+  }
+`;
+
+// import styled, { keyframes } from "styled-components";

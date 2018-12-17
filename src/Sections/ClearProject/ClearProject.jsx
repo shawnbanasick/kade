@@ -5,21 +5,21 @@ import initialState from '../../initialState';
 import state from '../../store';
 
 function handleClick() {
-  const initialStateValues = initialState();
-  state.setState(initialStateValues);
+    const initialStateValues = initialState();
+    state.setState(initialStateValues);
 }
 
 
 class ClearProject extends Component {
-  render() {
-    return (
-      <MainContent>
-        <h1>Clear Project</h1>
-        <h2 style={ { width: 800 } }>Click this button to begin a new project. This will clear all data and analysis from the current project. The action cannot be reversed.</h2>
-        <BeginAnalysisButton onClick={ handleClick } size='large'>Clear Project</BeginAnalysisButton>
-      </MainContent>
-      );
-  }
+    render() {
+        return (
+            <MainContent>
+              <h1>Clear Project</h1>
+              <h2 style={ { width: 800 } }>Click this button to begin a new project. This will clear all data and analysis from the current project. The action cannot be reversed.</h2>
+              <BeginAnalysisButton onClick={ handleClick } size='large'>Clear Project</BeginAnalysisButton>
+            </MainContent>
+            );
+    }
 }
 
 export default view(ClearProject);
@@ -100,3 +100,5 @@ const BeginAnalysisButton = styled.button`
     transform: translateY(1px);  
   }
 `;
+
+// import styled, { keyframes } from "styled-components";
