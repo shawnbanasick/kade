@@ -137,6 +137,9 @@ class LoadingsTable extends Component {
   generateOutput() {
     // grab current table data
     const currentLoadingsTable = this.grabTableLocalState();
+    // send current to local state
+    localStore.temp_gridRowDataLoadingsTable = currentLoadingsTable;
+
 
     // initialize output select buttons highlighting to false
     const btnId = state.getState("outputButtonsArray");
@@ -240,6 +243,10 @@ class LoadingsTable extends Component {
 
 
   render() {
+
+    console.log(JSON.stringify("table re-rendered"));
+
+
     // pull headers and data from states
     const gridColDefsLoadingsTable = state.getState("gridColDefsLoadingsTable");
     const gridRowDataLoadingsTable = state.getState("gridRowDataLoadingsTable");
