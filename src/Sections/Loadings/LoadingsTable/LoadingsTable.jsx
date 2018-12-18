@@ -84,8 +84,6 @@ function sendLocalStoreToState() {
   });
 }
 
-
-
 /*
   Component start
 */
@@ -113,9 +111,8 @@ class LoadingsTable extends Component {
   onGridReady(params) {
     this.gridApi = params.api;
     this.columnApi = params.columnApi;
-  // this.gridApi.sizeColumnsToFit();
+    // this.gridApi.sizeColumnsToFit();
   }
-
 
   grabTableLocalState() {
     // grab current table data (including user-added flags)
@@ -128,8 +125,9 @@ class LoadingsTable extends Component {
     return currentLoadingsTable;
   }
 
-
   updateTableLocalState() {
+    console.log(JSON.stringify("updateTableLocalState called"));
+
     const currentLoadingsTable = this.grabTableLocalState();
     localStore.temp_gridRowDataLoadingsTable = currentLoadingsTable;
   }
@@ -139,7 +137,6 @@ class LoadingsTable extends Component {
     const currentLoadingsTable = this.grabTableLocalState();
     // send current to local state
     localStore.temp_gridRowDataLoadingsTable = currentLoadingsTable;
-
 
     // initialize output select buttons highlighting to false
     const btnId = state.getState("outputButtonsArray");
@@ -163,6 +160,7 @@ class LoadingsTable extends Component {
     // reset cache of factor viz data
     tempObj2.outputForDataViz2 = [];
     tempObj2.sendDataToOutputButtonColor = "rgba(144, 238, 144, 0.6)";
+    tempObj2.gridRowDataLoadingsTable = currentLoadingsTable;
 
     state.setState(tempObj2);
     notify();
@@ -205,13 +203,13 @@ class LoadingsTable extends Component {
   flagAllQsorts() {
     const currentLoadingsTable = this.grabTableLocalState();
     const numFacsForTableWidth = state.getState("numFactorsKeptForRot");
-    const factorGroupArray = ["F1", "F2", "F3", "F4", "F5", "F6", "F7", "F8"]
+    const factorGroupArray = ["F1", "F2", "F3", "F4", "F5", "F6", "F7", "F8"];
     for (let i = 0; i < currentLoadingsTable.length; i++) {
       const factorGroup = currentLoadingsTable[i].factorGroup.slice(0, 2);
       const factorGroupIndexValue = factorGroupArray.indexOf(factorGroup);
       for (let k = 0; k < numFacsForTableWidth; k++) {
-        const checkboxIndex = `check${ k + 1}`;
-        if (factorGroupIndexValue === (k)) {
+        const checkboxIndex = `check${k + 1}`;
+        if (factorGroupIndexValue === k) {
           currentLoadingsTable[i][checkboxIndex] = true;
         } else {
           currentLoadingsTable[i][checkboxIndex] = false;
@@ -221,7 +219,7 @@ class LoadingsTable extends Component {
     this.gridApi.redrawRows(currentLoadingsTable);
     localStore.temp_gridRowDataLoadingsTable = currentLoadingsTable;
     state.setState({
-      gridRowDataLoadingsTable: currentLoadingsTable,
+      gridRowDataLoadingsTable: currentLoadingsTable
     });
   }
 
@@ -230,22 +228,19 @@ class LoadingsTable extends Component {
     const numFacsForTableWidth = state.getState("numFactorsKeptForRot");
     for (let i = 0; i < currentLoadingsTable.length; i++) {
       for (let k = 0; k < numFacsForTableWidth; k++) {
-        const index = `check${  k + 1}`;
+        const index = `check${k + 1}`;
         currentLoadingsTable[i][index] = false;
       }
     }
     this.gridApi.redrawRows(currentLoadingsTable);
     localStore.temp_gridRowDataLoadingsTable = currentLoadingsTable;
     state.setState({
-      gridRowDataLoadingsTable: currentLoadingsTable,
+      gridRowDataLoadingsTable: currentLoadingsTable
     });
   }
 
-
   render() {
-
     console.log(JSON.stringify("table re-rendered"));
-
 
     // pull headers and data from states
     const gridColDefsLoadingsTable = state.getState("gridColDefsLoadingsTable");
@@ -256,7 +251,9 @@ class LoadingsTable extends Component {
     localStore.gridRowDataLoadingsTable = gridRowDataLoadingsTable;
 
     // push data on initial render so if user unmounts without doing anything, will still remount properly
-    const isLoadingsTableInitialRender = state.getState("isLoadingsTableInitialRender");
+    const isLoadingsTableInitialRender = state.getState(
+      "isLoadingsTableInitialRender"
+    );
     if (isLoadingsTableInitialRender) {
       localStore.temp_gridColDefsLoadingsTable = gridColDefsLoadingsTable;
       localStore.temp_gridRowDataLoadingsTable = gridRowDataLoadingsTable;
@@ -311,63 +308,128 @@ class LoadingsTable extends Component {
     localStore.numFacsForTableWidth = numFacsForTableWidth;
     localStore.sendDataToOutputButtonColor = sendDataToOutputButtonColor;
 
-
-
     return (
       <div>
         <LoadingsContainerDiv>
-          <ToastContainer transition={ Zoom } />
+          <ToastContainer transition={Zoom} />
           <HighlightingAndFlaggingTextBar>
-            <span style={ { marginRight: 255 } }>Row Highlighting:</span>
+            <span style={{ marginRight: 255 }}>Row Highlighting:</span>
             <span>Flagging:</span>
           </HighlightingAndFlaggingTextBar>
           <HighlightingAndFlaggingButtonBar>
             <StyledWrapper>
-              <Button id="noHighlightingButton" className="wrapper1" loading={ isLoadingNoHighlighting } disabled={ isDisabled } onClick={ () => this.highlightRows("none") }>
+              <Button
+                id="noHighlightingButton"
+                className="wrapper1"
+                loading={isLoadingNoHighlighting}
+                disabled={isDisabled}
+                onClick={() => this.highlightRows("none")}
+              >
                 None
               </Button>
-              <Button id="colorsHighlightingButton" className="wrapper1" loading={ isLoadingColorsHighlighting } disabled={ isDisabled } onClick={ () => this.highlightRows("colors") }>
+              <Button
+                id="colorsHighlightingButton"
+                className="wrapper1"
+                loading={isLoadingColorsHighlighting}
+                disabled={isDisabled}
+                onClick={() => this.highlightRows("colors")}
+              >
                 Colors
               </Button>
-              <Button id="graysHighlightingButton" className="wrapper1" onClick={ () => this.highlightRows("grays") } disabled={ isDisabled } loading={ isLoadingGrayHighlighting } style={ { marginRight: 150 } }>
+              <Button
+                id="graysHighlightingButton"
+                className="wrapper1"
+                onClick={() => this.highlightRows("grays")}
+                disabled={isDisabled}
+                loading={isLoadingGrayHighlighting}
+                style={{ marginRight: 150 }}
+              >
                 Gray
               </Button>
-              <Button id="autoflagButton" className="wrapper1" loading={ isLoadingAutoflag } onClick={ autoFlagFactors } disabled={ isDisabled }>
+              <Button
+                id="autoflagButton"
+                className="wrapper1"
+                loading={isLoadingAutoflag}
+                onClick={autoFlagFactors}
+                disabled={isDisabled}
+              >
                 Auto-Flag
               </Button>
-              <span style={ { marginLeft: 5, marginRight: 10 } }>at</span>
-              <SigLevelDropdown style={ { marginLeft: 5 } } />
-              <Button className="wrapper1" style={ { marginLeft: "40px" } } disabled={ isDisabled } onClick={ this.flagAllQsorts }>
+              <span style={{ marginLeft: 5, marginRight: 10 }}>at</span>
+              <SigLevelDropdown style={{ marginLeft: 5 }} />
+              <Button
+                className="wrapper1"
+                style={{ marginLeft: "40px" }}
+                disabled={isDisabled}
+                onClick={this.flagAllQsorts}
+              >
                 All
               </Button>
-              <Button className="wrapper1" style={ { marginLeft: "40px" } } disabled={ isDisabled } onClick={ this.clearAllCheckboxes }>
+              <Button
+                className="wrapper1"
+                style={{ marginLeft: "40px" }}
+                disabled={isDisabled}
+                onClick={this.clearAllCheckboxes}
+              >
                 None
               </Button>
             </StyledWrapper>
           </HighlightingAndFlaggingButtonBar>
           <CommonVarianceCheckboxDiv>
-            <MajorityCommonVarianceCheckbox style={ { marginLeft: 300 } } />
+            <MajorityCommonVarianceCheckbox style={{ marginLeft: 300 }} />
           </CommonVarianceCheckboxDiv>
           <div>
             <ColumnSortText>
-              Default sort is by factor group (FG - highest loading factor). Click the column headers to re-sort.
+              Default sort is by factor group (FG - highest loading factor).
+              Click the column headers to re-sort.
             </ColumnSortText>
-            <div id="loadingsTableContainer" style={ { marginTop: 2, height: getHeight(numQsorts), width: getWidth(numFacsForTableWidth), marginBottom: 15 } } className="ag-theme-fresh">
-              <AgGridReact enableSorting id="loadingsTable" columnDefs={ localStore.gridColDefsLoadingsTable } rowData={ localStore.gridRowDataLoadingsTable } getRowClass={ params => params.data.highlightingClass } onGridReady={ this.onGridReady }
-                gridAutoHeight={ false } onCellClicked={ this.updateTableLocalState } />
+            <div
+              id="loadingsTableContainer"
+              style={{
+                marginTop: 2,
+                height: getHeight(numQsorts),
+                width: getWidth(numFacsForTableWidth),
+                marginBottom: 15
+              }}
+              className="ag-theme-fresh"
+            >
+              <AgGridReact
+                enableSorting
+                id="loadingsTable"
+                columnDefs={localStore.gridColDefsLoadingsTable}
+                rowData={localStore.gridRowDataLoadingsTable}
+                getRowClass={params => params.data.highlightingClass}
+                onGridReady={this.onGridReady}
+                gridAutoHeight={false}
+                onCellClicked={this.updateTableLocalState}
+              />
             </div>
           </div>
           <ButtonBarBottom>
-            <StyledWrapperOutput buttonColor={ localStore.sendDataToOutputButtonColor } id="generateOutputButton" className="wrapper1" onClick={ this.generateOutput }>
+            <StyledWrapperOutput
+              buttonColor={localStore.sendDataToOutputButtonColor}
+              id="generateOutputButton"
+              className="wrapper1"
+              onClick={this.generateOutput}
+            >
               Send Table Data to Output
             </StyledWrapperOutput>
             <StyledWrapper>
-              <Button id="invertFactorsButton" className="wrapper1" disabled={ isDisabled } onClick={ this.doInvertFactor }>
+              <Button
+                id="invertFactorsButton"
+                className="wrapper1"
+                disabled={isDisabled}
+                onClick={this.doInvertFactor}
+              >
                 Invert Factor
               </Button>
             </StyledWrapper>
             <StyledWrapper>
-              <Button id="splitFactorsButton" className="wrapper1" onClick={ this.doSplitFactor }>
+              <Button
+                id="splitFactorsButton"
+                className="wrapper1"
+                onClick={this.doSplitFactor}
+              >
                 Split Bipolar Factor
               </Button>
             </StyledWrapper>
@@ -376,7 +438,7 @@ class LoadingsTable extends Component {
           <InvertFactorButton />
         </LoadingsContainerDiv>
       </div>
-      );
+    );
   }
 }
 
@@ -454,7 +516,6 @@ const StyledWrapperOutput = styled.button`
   user-select: none;
 
   &:hover {
-    
     font-weight: bold;
   }
 
