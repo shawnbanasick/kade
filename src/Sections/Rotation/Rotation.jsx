@@ -52,23 +52,18 @@ const localStore = store({
 });
 
 class Rotation extends Component {
-  handleTabChange(e, { activeIndex }) {
+  handleTabChange(e, {activeIndex}) {
     localStore.activeIndex = activeIndex;
   }
 
   render() {
-    const { activeIndex } = localStore;
+    const {activeIndex} = localStore;
 
     return (
       <MainContent>
-        <Tab
-          style={{ width: "100%", height: "100%" }}
-          panes={panes}
-          activeIndex={activeIndex}
-          onTabChange={this.handleTabChange}
-        />
+        <Tab style={ { width: "100%", minHeight:"calc(100%-22px)",border: "2px solid red" } } panes={ panes } activeIndex={ activeIndex } onTabChange={ this.handleTabChange } />
       </MainContent>
-    );
+      );
   }
 }
 
@@ -83,7 +78,7 @@ const DataWindow1 = styled.div`
 `;
 
 const DataWindow2 = styled.div`
-  min-height: 600px;
+  min-height: calc(100vh -22px);
   background-color: white;
   overflow: scroll;
   padding: 5px;
@@ -91,7 +86,8 @@ const DataWindow2 = styled.div`
   padding-left: 5px;
   width: calc(100vw - 198px);
   box-sizing: border-box;
-  max-height: calc(100vh - 22px);
+  height: calc(100vh - 22px);
+  border: 2px solid green;
   overflow: auto;
 `;
 
@@ -136,8 +132,10 @@ const MainContent = styled.div`
   padding-left: 15px;
   width: calc(100vw - 121px);
   box-sizing: border-box;
-  max-height: calc(100vh - 22px);
+  height: calc(100vh - 22px);
   overflow: auto;
+  border: 2px solid blue;
+
 
   .tabs-menu {
     display: grid;
@@ -186,5 +184,6 @@ const MainContent = styled.div`
     padding: 10px 50px;
     background-color: white;
     padding-left: 20px !important;
+    border: 2px solid red;
   }
 `;
