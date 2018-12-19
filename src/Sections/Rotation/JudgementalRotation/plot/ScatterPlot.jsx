@@ -10,8 +10,9 @@ const styles = {
   container: {
     margin: "0 auto",
     textAlign: "center",
-    width: "100%",
-    height: "90%"
+    width: "auto",
+    height: "auto",
+    // border: "2px solid orange"
   },
   svg: {
     position: "relative"

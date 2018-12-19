@@ -61,7 +61,7 @@ class Rotation extends Component {
 
     return (
       <MainContent>
-        <Tab style={ { width: "100%", minHeight:"calc(100%-22px)",border: "2px solid red" } } panes={ panes } activeIndex={ activeIndex } onTabChange={ this.handleTabChange } />
+        <Tab style={ { width: "100%", minHeight:"calc(100%-22px)" } } panes={ panes } activeIndex={ activeIndex } onTabChange={ this.handleTabChange } />
       </MainContent>
       );
   }
@@ -87,7 +87,7 @@ const DataWindow2 = styled.div`
   width: calc(100vw - 198px);
   box-sizing: border-box;
   height: calc(100vh - 22px);
-  border: 2px solid green;
+  /* border: 2px solid green; */
   overflow: auto;
 `;
 
@@ -134,7 +134,7 @@ const MainContent = styled.div`
   box-sizing: border-box;
   height: calc(100vh - 22px);
   overflow: auto;
-  border: 2px solid blue;
+  /* border: 2px solid blue; */
 
 
   .tabs-menu {
@@ -184,6 +184,6 @@ const MainContent = styled.div`
     padding: 10px 50px;
     background-color: white;
     padding-left: 20px !important;
-    border: 2px solid red;
+    /* border: 2px solid red; */
   }
 `;

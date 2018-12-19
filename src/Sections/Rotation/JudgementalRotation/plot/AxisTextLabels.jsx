@@ -6,12 +6,6 @@ const styles = {
     position: "absolute",
     color: "red",
     backgroundColor: "red"
-    // border: "solid 2px red"
-    // textAnchor: "center",
-    // transform: "rotate(90deg)",
-    // transformOrigin: "left top 0"
-    // top: "40%",
-    // left: "10%",
   },
   xAxis: {
     position: "absolute",
@@ -21,11 +15,10 @@ const styles = {
 
 class AxisTextLables extends Component {
   render() {
-    // console.log('textLabels props: ' + JSON.stringify(this.props));
     const size = this.props.width - this.props.padding;
     const abFactors = store.getState("abFactors");
-    const factorA = `Factor ${  abFactors[0]}`;
-    const factorB = `Factor ${  abFactors[1]}`;
+    const factorA = `Factor ${abFactors[0]}`;
+    const factorB = `Factor ${abFactors[1]}`;
     return (
       <g>
         <text
@@ -35,7 +28,7 @@ class AxisTextLables extends Component {
         >
           {factorA}
         </text>
-        <text x={size / 2 - 10} y={size + 40} style={styles.xAxis}>
+        <text x={size / 2 - 10} y={size + 45} style={styles.xAxis}>
           {factorB}
         </text>
       </g>
