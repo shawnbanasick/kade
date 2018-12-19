@@ -10,6 +10,12 @@ class SplitBipolarFactorButtonModal extends Component {
         store.setState({
             showSplitFactorModal: false
         });
+    }
+
+    handleClick() {
+        store.setState({
+            showSplitFactorModal: false
+        });
         splitBipolarFactor();
     }
 
@@ -23,7 +29,7 @@ class SplitBipolarFactorButtonModal extends Component {
                     <SplitBipolarFactorDropdownSelect />
                   </Modal.Content>
                   <Modal.Actions>
-                    <Button id="splitBipolarModalSubmitButton" color="green" style={ { margin: 15 } } floated="right" onClick={ this.handleClose } inverted>
+                    <Button id="splitBipolarModalSubmitButton" color="green" style={ { margin: 15 } } floated="right" onClick={ this.handleClick } inverted>
                       Submit
                     </Button>
                   </Modal.Actions>
