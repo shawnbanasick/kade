@@ -9,15 +9,15 @@ import ClearProjectModal from './ClearProjectModal';
 
 
 class ClearProject extends Component {
-    render() {
-        return (
-            <MainContent>
-              <h1>Clear Project</h1>
-              <h2 style={ { width: 800 } }>Click this button to begin a new project. This will clear all data and analysis from the current project. The action cannot be reversed.</h2>
-              <ClearProjectModal />
-            </MainContent>
-            );
-    }
+  render() {
+    return (
+      <MainContent>
+        <h1>Clear Project</h1>
+        <h2>Click this button to begin a new project. This will clear all data and analysis from the current project. The action cannot be reversed.</h2>
+        <ClearProjectModal />
+      </MainContent>
+      );
+  }
 }
 
 export default view(ClearProject);
@@ -45,9 +45,14 @@ const fadeOut = keyframes`
 
 // 240px 240px 240px 240px;
 const MainContent = styled.div`
-  display: grid;
-  grid-template-columns: 1fr;
-  grid-template-rows: 220px 1fr;
+  display: flex;
+  flex-direction: column;
+  padding-top: 50px;
+  padding-right: 100px;
+  padding-left: 100px;
+
+  /* grid-template-columns: 1fr 10px;
+  grid-template-rows: 220px 220px 1fr; */
   /* grid-template-areas:
     "row1 row1 row1 row1"
     "titleRow titleRow titleRow titleRow"
@@ -69,6 +74,6 @@ const MainContent = styled.div`
   width: calc(100vw - 122px);
   box-sizing: border-box;
   max-height: calc(100vh - 22px);
-  overflow: auto;
+  overflow: hidden;
 `;
 
