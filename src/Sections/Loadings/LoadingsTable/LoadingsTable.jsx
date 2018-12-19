@@ -236,7 +236,8 @@ class LoadingsTable extends Component {
     this.gridApi.redrawRows(currentLoadingsTable);
     localStore.temp_gridRowDataLoadingsTable = currentLoadingsTable;
     state.setState({
-      gridRowDataLoadingsTable: currentLoadingsTable
+      gridRowDataLoadingsTable: currentLoadingsTable,
+      sendDataToOutputButtonColor: "#d6dbe0"
     });
   }
 
