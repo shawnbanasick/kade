@@ -58,9 +58,12 @@ const LoadTxtButton = styled.button`
   margin-right: 3px;
   margin-bottom: 3px;
   box-shadow: 0 2px 2px 0 black;
+  user-select: none;
+  outline: none;
 
   &:hover {
-    background-color: #abafb3;
+    background-color: ${props => props.buttonColor};
+    /* background-color: #abafb3; */
     font-weight: 900;
   }
 
