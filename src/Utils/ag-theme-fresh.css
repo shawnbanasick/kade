@@ -677,7 +677,8 @@
   background-color: white;
 }
 .ag-theme-fresh .ag-row-hover {
-  background-color: #f5e802;
+  background-color: rgba(255, 165, 0, 0.5);
+  /* background-color: #f5e802; */
 }
 .ag-theme-fresh .ag-numeric-cell {
   text-align: right;
