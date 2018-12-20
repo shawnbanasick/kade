@@ -12,43 +12,27 @@ class UserTextInput extends Component {
   }
 
   handleChange(e) {
-    // this.setState({
-    //   [name]: value
-    // });
-    // const tempObj = {};
-    // const customFactorNames = this.props.name;
-    // tempObj[customFactorNames] = e.target.value;
-    // state.setState(tempObj);
-
     const factorVizOptionsHolder = state.getState("factorVizOptionsHolder");
-    // const stateFrag = {};
     const key = this.props.name;
-    // const stateValue = !localStore.toggle;
     factorVizOptionsHolder[key] = e.target.value;
-    // stateFrag[key] = stateValue;
-    console.log(`holder: ${JSON.stringify(factorVizOptionsHolder)}`);
-
-    state.setState({ factorVizOptionsHolder });
+    state.setState({
+      factorVizOptionsHolder,
+      updateFactorVisualizationsButtonColor: "orange"
+    });
   }
 
   render() {
-    // const {name} = this.state;
     return (
       <div>
         <Form>
           <Form.Field>
-            <Form.Input
-              placeholder={this.props.placeholder}
-              width={this.props.width}
-              name={this.props.name}
-              value={this.props.value}
-              onChange={this.handleChange}
-            />
+            <Form.Input placeholder={ this.props.placeholder } width={ this.props.width } name={ this.props.name } value={ this.props.value } onChange={ this.handleChange } />
           </Form.Field>
         </Form>
       </div>
-    );
+      );
   }
 }
 
 export default UserTextInput;
+
