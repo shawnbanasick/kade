@@ -83,7 +83,21 @@ class ProjectHistory extends Component {
         showFactorCharacteristicsTable: false,
         showDownloadOutputButtons: false,
         displayFactorVisualizations: false,
-        sendDataToOutputButtonColor: "#d6dbe0"
+        sendDataToOutputButtonColor: "#d6dbe0",
+        // reset manual rotation
+        shouldShowJudgeRotDiv: false,
+        judgeButtonActive: false,
+        showScatterPlotTableDiv: false,
+        abFactors: [],
+        highlightRotfactor1: false,
+        highlightRotfactor2: false,
+        highlightRotfactor3: false,
+        highlightRotfactor4: false,
+        highlightRotfactor5: false,
+        highlightRotfactor6: false,
+        highlightRotfactor7: false,
+        highlightRotfactor8: false,
+        userSelectedRotFactors: []
       });
       return; // early return varimax undo
     }
