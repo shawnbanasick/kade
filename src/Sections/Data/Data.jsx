@@ -4,6 +4,7 @@ import styled, { keyframes } from "styled-components";
 import state from "../../store";
 import SortsList from "./SortsList";
 import StatementsList from "./StatementsList";
+import ParticipantsQsortsGrid from "./ParticipantQsortsGrid";
 
 const localStore = store({
   sortsDisplayText: [],
@@ -16,7 +17,15 @@ const localStore = store({
 
 class Data extends Component {
   render() {
-    const {sortsDisplayText, statements, projectName, numQsorts, numStatements, qSortPattern} = state;
+    const {
+      mainDataObject,
+      sortsDisplayText,
+      statements,
+      projectName,
+      numQsorts,
+      numStatements,
+      qSortPattern
+    } = state;
 
     localStore.sortsDisplayText = sortsDisplayText;
     localStore.statements = statements;
@@ -24,28 +33,30 @@ class Data extends Component {
     localStore.numQsorts = numQsorts;
     localStore.numStatements = numStatements;
     localStore.qSortPattern = qSortPattern;
+    localStore.mainDataObject = mainDataObject;
 
     return (
       <MainContent>
         <ProjectTitle>Project Data</ProjectTitle>
         <InformationContainer>
-          <h2>Project Name: { projectName }</h2>
-          <h2>Number Q sorts: { numQsorts }</h2>
-          <h2>Number Statements: { numStatements }</h2>
-          { qSortPattern ? (
-            <h2>Q sort Pattern: { qSortPattern.toString() }</h2>
-            ) : null }
+          <h2>Project Name: {projectName}</h2>
+          <h2>Number Q sorts: {numQsorts}</h2>
+          <h2>Number Statements: {numStatements}</h2>
+          {qSortPattern ? (
+            <h2>Q sort Pattern: {qSortPattern.toString()}</h2>
+          ) : null}
         </InformationContainer>
         <StatementListContainer>
           <h1>Statements</h1>
-          <StatementsList statements={ localStore.statements } />
+          <StatementsList statements={localStore.statements} />
         </StatementListContainer>
         <SortsListContainer>
           <h1>Q Sorts</h1>
-          <SortsList displayText={ localStore.sortsDisplayText } />
+          <SortsList displayText={localStore.sortsDisplayText} />
+          <ParticipantsQsortsGrid data={localStore.mainDataObject} />
         </SortsListContainer>
       </MainContent>
-      );
+    );
   }
 }
 
@@ -110,6 +121,7 @@ const ProjectTitle = styled.h1`
 
 const StatementListContainer = styled.div`
   grid-area: statementList;
+  padding-bottom: 50px;
 `;
 
 const SortsListContainer = styled.div`
@@ -119,4 +131,3 @@ const SortsListContainer = styled.div`
 const InformationContainer = styled.div`
   grid-area: informationContainer;
 `;
-

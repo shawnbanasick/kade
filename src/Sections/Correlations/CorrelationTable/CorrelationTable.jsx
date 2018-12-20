@@ -79,8 +79,8 @@ export default view(CorrelationTable);
 
 const TableHolder = styled.div``;
 
-const OuterMostContainer = styled.div`
-  height: 78vh;
-  width: ${props => props.width};
-`;
+// const OuterMostContainer = styled.div`
+//   height: 78vh;
+//   width: ${props => props.width};
+// `;
 
