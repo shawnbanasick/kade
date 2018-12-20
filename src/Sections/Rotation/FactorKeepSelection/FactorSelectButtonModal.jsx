@@ -69,7 +69,7 @@ class FactorSelectButtonModal extends Component {
           </Modal.Content>
           <Modal.Actions>
             <Button id="FactorSelectModalGotItButton" color="green" onClick={ this.handleClose } inverted>
-              <Icon name="checkmark" /> Got it
+               Got it
             </Button>
           </Modal.Actions>
         </Modal>

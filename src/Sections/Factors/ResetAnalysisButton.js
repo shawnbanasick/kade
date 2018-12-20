@@ -35,6 +35,8 @@ export default class ResetAnalysisButton extends Component {
 
     store.setState({
       projectHistoryArray: newProjectHistoryArray,
+      // reset num factors kept for rotation - so warning modal triggers on no selected
+      numFactorsKeptForRot: undefined,
       // hide section 3
       showUnrotatedFactorTable: false,
       showEigenvaluesTable: false,
