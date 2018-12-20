@@ -10,8 +10,9 @@ import PQMethodQsortsCard from "./PQMethod/PQMethodQsortsCard";
 
 class CsvPanel extends Component {
     render() {
+        const windowHeight = window.innerHeight - 100;
         return (
-            <DataWindow>
+            <DataWindow height={ windowHeight }>
               <Header>Load both a statements STA file and Q sorts DAT file.</Header>
               <CardHolder>
                 <PQMethodStaCard />
@@ -27,7 +28,7 @@ class CsvPanel extends Component {
 export default view(CsvPanel);
 
 const DataWindow = styled.div`
-  height: 100%;
+  height: ${props => (`${props.height}px`)};    
   background-color: white;
 `;
 

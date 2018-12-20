@@ -7,25 +7,26 @@ import ForcedUnforcedRadio from "./CSV/ForcedUnforcedRadio";
 // import ExcelT2Card from "./Excel/ExcelT2Card";
 
 class ExcelPanel extends Component {
-  render() {
-    return (
-      <DataWindow>
-        <Header>
-          Load a KADE or Ken-Q Analysis (web) Excel output file.
-        </Header>
-        <CardHolder>
-          <KandedCard />
-          <ForcedUnforcedRadio />
-        </CardHolder>
-      </DataWindow>
-      );
-  }
+    render() {
+        const windowHeight = window.innerHeight - 100;
+        return (
+            <DataWindow height={ windowHeight }>
+              <Header>
+                Load a KADE or Ken-Q Analysis (web) Excel output file.
+              </Header>
+              <CardHolder>
+                <KandedCard />
+                <ForcedUnforcedRadio />
+              </CardHolder>
+            </DataWindow>
+            );
+    }
 }
 
 export default view(ExcelPanel);
 
 const DataWindow = styled.div`
-  height: 100%;
+  height: ${props => (`${props.height}px`)};  
   background-color: white;
 `;
 

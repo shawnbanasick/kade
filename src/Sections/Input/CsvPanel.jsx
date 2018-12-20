@@ -9,28 +9,31 @@ import CsvStatementCard from "./CSV/CsvStatementCard";
 import CsvSuccessfulLoadBar from "./CSV/CsvSuccessfulLoadBar";
 
 class CsvPanel extends Component {
-    render() {
-        return (
-            <DataWindow>
-              <Header>Load both a statements TXT file and Q sorts CSV file.</Header>
-              <CardHolder>
-                <CsvStatementCard />
-                <CsvQsortsCard />
-                <ProjectNameInput />
-                <ForcedUnforcedRadio />
-                <UnforcedQsortDesignInput />
-                <CsvSuccessfulLoadBar />
-              </CardHolder>
-            </DataWindow>
-            );
-    }
+  render() {
+    const windowHeight = window.innerHeight - 100;
+    return (
+      <DataWindow height={ windowHeight }>
+        <Header>Load both a statements TXT file and Q sorts CSV file.</Header>
+        <CardHolder>
+          <CsvStatementCard />
+          <CsvQsortsCard />
+          <ProjectNameInput />
+          <ForcedUnforcedRadio />
+          <UnforcedQsortDesignInput />
+          <CsvSuccessfulLoadBar />
+        </CardHolder>
+      </DataWindow>
+      );
+  }
 }
 
 export default view(CsvPanel);
 
+// 645px  ;
 const DataWindow = styled.div`
-  height: 645px;
+  height: ${props => (`${props.height  }px`)};
   background-color: white;
+  overflow: hidden;
 `;
 
 const CardHolder = styled.div`

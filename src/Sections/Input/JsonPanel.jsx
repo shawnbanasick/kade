@@ -12,34 +12,34 @@ import displayJsonData from "./JSON/displayJsonData";
 import DownloadCsvModal from "./JSON/DownloadCsvModal";
 
 class JsonPanel extends Component {
-  handleMessage(jsonIdSelection) {
-    displayJsonData(jsonIdSelection);
-  }
+    handleMessage(jsonIdSelection) {
+        displayJsonData(jsonIdSelection);
+    }
 
-  render() {
-    const options = state.getState("jsonParticipantId") || [];
-
-    return (
-      <DataWindow>
-        <Header>Load both a statements TXT file and Q sorts CSV file.</Header>
-        <CardHolder id="JsonCardHolder">
-          <CsvStatementCard />
-          <JsonQsortsCard />
-          <ProjectNameInput />
-          <Dropdown textValue={ "Select Participant Id..." } options={ options } onChangeMessageUpTree={ this.handleMessage } width='200px' />
-          <ForcedUnforcedRadio />
-          <UnforcedQsortDesignInput />
-          <DownloadCsvModal />
-        </CardHolder>
-      </DataWindow>
-      );
-  }
+    render() {
+        const options = state.getState("jsonParticipantId") || [];
+        const windowHeight = window.innerHeight - 100;
+        return (
+            <DataWindow height={ windowHeight }>
+              <Header>Load both a statements TXT file and Q sorts CSV file.</Header>
+              <CardHolder id="JsonCardHolder">
+                <CsvStatementCard />
+                <JsonQsortsCard />
+                <ProjectNameInput />
+                <Dropdown textValue={ "Select Participant Id..." } options={ options } onChangeMessageUpTree={ this.handleMessage } width='200px' />
+                <ForcedUnforcedRadio />
+                <UnforcedQsortDesignInput />
+                <DownloadCsvModal />
+              </CardHolder>
+            </DataWindow>
+            );
+    }
 }
 
 export default view(JsonPanel);
 
 const DataWindow = styled.div`
-  height: 645px;
+  height: ${props => (`${props.height}px`)};    
   background-color: white;
 `;
 

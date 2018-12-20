@@ -8,8 +8,9 @@ import IpadSurveyCard from "./DemoData/IpadSurveyCard";
 
 class CsvPanel extends Component {
   render() {
+    const windowHeight = window.innerHeight - 100;
     return (
-      <DataWindow>
+      <DataWindow height={ windowHeight }>
         <Header>Choose a Demo Data file.</Header>
         <CardHolder>
           <LipsetCard />
@@ -18,14 +19,14 @@ class CsvPanel extends Component {
           <IpadSurveyCard />
         </CardHolder>
       </DataWindow>
-    );
+      );
   }
 }
 
 export default view(CsvPanel);
 
 const DataWindow = styled.div`
-  height: calc(100vh-150px);
+  height: ${props => (`${props.height}px`)};    
   padding-top: 10px;
   padding-left: 10px;
   background-color: white;

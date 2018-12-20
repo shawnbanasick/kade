@@ -14,94 +14,94 @@ import ErrorNotification from "./ErrorNotification";
 
 
 function notify() {
-    toast.success("Success - Data Loaded");
-    state.setState({
-        notifyDataUploadSuccess: false
-    });
+  toast.success("Success - Data Loaded");
+  state.setState({
+    notifyDataUploadSuccess: false
+  });
 }
 
 const panes = [
-    {
-        menuItem: "CSV",
-        render: () => (
-            <Tab.Pane>
-              <CsvPanel notify={ notify } />
-            </Tab.Pane>
-        )
-    },
-    {
-        menuItem: "Excel",
-        render: () => (
-            <Tab.Pane>
-              <ExcelPanel />
-            </Tab.Pane>
-        )
-    },
-    {
-        menuItem: "KADE",
-        render: () => (
-            <Tab.Pane>
-              <KandedPanel />
-            </Tab.Pane>
-        )
-    },
-    {
-        menuItem: "JSON",
-        render: () => (
-            <Tab.Pane>
-              <JsonPanel />
-            </Tab.Pane>
-        )
-    },
-    {
-        menuItem: "PQMethod",
-        render: () => (
-            <Tab.Pane>
-              <PQMethodPanel />
-            </Tab.Pane>
-        )
-    },
-    {
-        menuItem: "Demo Data",
-        render: () => (
-            <Tab.Pane>
-              <DemoDataPanel />
-            </Tab.Pane>
-        )
-    }
+  {
+    menuItem: "CSV",
+    render: () => (
+      <Tab.Pane>
+        <CsvPanel notify={ notify } />
+      </Tab.Pane>
+    )
+  },
+  {
+    menuItem: "Excel",
+    render: () => (
+      <Tab.Pane>
+        <ExcelPanel />
+      </Tab.Pane>
+    )
+  },
+  {
+    menuItem: "KADE",
+    render: () => (
+      <Tab.Pane>
+        <KandedPanel />
+      </Tab.Pane>
+    )
+  },
+  {
+    menuItem: "JSON",
+    render: () => (
+      <Tab.Pane>
+        <JsonPanel />
+      </Tab.Pane>
+    )
+  },
+  {
+    menuItem: "PQMethod",
+    render: () => (
+      <Tab.Pane>
+        <PQMethodPanel />
+      </Tab.Pane>
+    )
+  },
+  {
+    menuItem: "Demo Data",
+    render: () => (
+      <Tab.Pane>
+        <DemoDataPanel />
+      </Tab.Pane>
+    )
+  }
 ];
 
 const localStore = store({
-    activeIndex: 0
+  activeIndex: 0
 });
 
 class Input extends Component {
-    constructor() {
-        super();
+  constructor() {
+    super();
 
-        this.handleTabChange = this.handleTabChange.bind(this);
-    }
+    this.handleTabChange = this.handleTabChange.bind(this);
+  }
 
-    handleTabChange(e, {activeIndex}) {
-        localStore.activeIndex = activeIndex;
-    }
+  handleTabChange(e, {activeIndex}) {
+    localStore.activeIndex = activeIndex;
+  }
 
-    render() {
-        const {activeIndex} = localStore;
-        const showNotification = state.getState("notifyDataUploadSuccess");
-        if (showNotification) {
-            notify();
-        }
-        return (
-            <React.Fragment>
-              <ToastContainer transition={ Zoom } />
-              <MainContent>
-                <Tab panes={ panes } activeIndex={ activeIndex } onTabChange={ this.handleTabChange } />
-                <ErrorNotification />
-              </MainContent>
-            </React.Fragment>
-            );
+  render() {
+    const {activeIndex} = localStore;
+    const showNotification = state.getState("notifyDataUploadSuccess");
+    if (showNotification) {
+      notify();
     }
+    return (
+      <React.Fragment>
+        <ToastContainer transition={ Zoom } />
+        <MainContent>
+          <Tab panes={ panes } activeIndex={ activeIndex } onTabChange={ this.handleTabChange } />
+          <ErrorNotification />
+        </MainContent>
+      </React.Fragment>
+      );
+  }
 }
 
 export default view(Input);
@@ -126,6 +126,7 @@ const fadeOut = keyframes`
   }
 `;
 
+// #d6dbe0;
 const MainContent = styled.div`
   background-color: #d6dbe0;
   visibility: ${props => (props.view ? "hidden" : "visible")};
@@ -140,7 +141,7 @@ const MainContent = styled.div`
   .tabs-menu {
     display: grid;
     grid-template-columns: 100px 100px 140px 110px 150px 170px;
-    background-color: #d6dbe0;
+    background-color: #d6dbe0 !important;
     padding-left: 20px !important;
     height: 45px;
     align-items: end;
@@ -168,9 +169,21 @@ const MainContent = styled.div`
     color: black;
   }
 
+
+  .tabs-menu-item  {
+    background-color: #d6dbe0 !important;    
+    color: black;
+  }
+
   .tabs-menu-item:not(.is-active):hover {
     color: #3498db;
-    background-color: white;
+    background-color: orange;
+  }
+
+
+  .tabs-menu-item:not(.is-active) {
+    color: #3498db;
+    background-color: #d6dbe0 !important;
   }
 
   .tabs-menu-item.is-active {
