@@ -119,10 +119,10 @@ class FactorSelectDropdown extends React.Component {
         if (showKeepFacForRotButton) {
             return (
                 <ContainerDiv style={ { display: "flex" } }>
-                  <span style={ { marginRight: 20, marginTop: 10, fontSize: 22 } }>
-                                                                                  How many factors to keep for rotation?{ " " }
-                                                                                </span>
-                  <Dropdown id="factorSelectDropdown" placeholder={ "?" } style={ { height: "38px", border: "1px solid black" } } disabled={ isFacSelectDisabled } onChange={ saveDropdownValueToState } openOnFocus button simple item options={ options }
+                  <DropdownText>
+                        How many factors to keep for rotation?{ " " }
+                    </DropdownText>
+                  <Dropdown id="factorSelectDropdown" placeholder={ "?" } style={ { height: "38px", width: "72px", border: "1px solid black" } } disabled={ isFacSelectDisabled } onChange={ saveDropdownValueToState } openOnFocus button simple item options={ options }
                   />
                   <FactorSelectButtonModal />
                 </ContainerDiv>
@@ -139,4 +139,10 @@ const ContainerDiv = styled.div`
 
 const DefaultMessage = styled.div`
   font-size: 22px;
+`;
+
+const DropdownText = styled.div`
+    margin-right: 20px;
+    margin-top: 10px;
+    font-size: 22px;
 `;
