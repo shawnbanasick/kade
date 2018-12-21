@@ -47,6 +47,9 @@ window.addEventListener("resize", () => {
 });
 
 function generateGridColDefs(props) {
+  if (props.data.length === undefined) {
+    return;
+  }
   const gridColDefsQsorts = [
     {
       headerName: "Num",
@@ -76,13 +79,18 @@ function generateGridColDefs(props) {
     tempObj.width = 65;
     tempObj.pinned = false;
     tempObj.editable = false;
-    tempObj.cellStyle = { textAlign: "right" };
+    tempObj.cellStyle = {
+      textAlign: "right"
+    };
     gridColDefsQsorts.push(tempObj);
   }
-  return gridColDefsQsorts;
+  localStore.gridColDefsQsorts = gridColDefsQsorts;
 }
 
 function generateGridRowData(props) {
+  if (props.data.length === undefined) {
+    return;
+  }
   const gridRowDataQsorts = [];
   for (let i = 0; i < props.data.length; i += 1) {
     const tempObj = {};
@@ -93,46 +101,38 @@ function generateGridRowData(props) {
     }
     gridRowDataQsorts.push(tempObj);
   }
-  return gridRowDataQsorts;
+  localStore.gridRowDataQsorts = gridRowDataQsorts;
 }
 
 class ParticipantQsortsGrid extends Component {
   onGridReady(params) {
     this.gridApi = params.api;
     this.columnApi = params.columnApi;
-    // this.gridApi.sizeColumnsToFit();
-    // params.api.sizeColumnsToFit();
+  // this.gridApi.sizeColumnsToFit();
+  // params.api.sizeColumnsToFit();
   }
 
   render() {
-    const gridColDefsQsorts = generateGridColDefs(this.props);
-    const gridRowDataQsorts = generateGridRowData(this.props);
-    const numQsorts = state.getState("numQsorts");
-    const statements = state.getState("statements");
-    localStore.numQsorts = numQsorts;
-    localStore.numStatements = statements.length;
+    let statements;
+    let numQsorts;
+    if (this.props) {
+      generateGridColDefs(this.props);
+      generateGridRowData(this.props);
+      numQsorts = state.getState("numQsorts");
+      statements = state.getState("statements");
+      localStore.numQsorts = numQsorts;
+      localStore.numStatements = statements.length;
+    }
 
-    const { onGridReady } = this;
+    const {onGridReady} = this;
 
     return (
       <TableHolder>
-        <div
-          id="participantQsortData"
-          style={{
-            width: getWidth(statements.length),
-            height: getHeight(numQsorts)
-          }}
-          className="ag-theme-fresh"
-        >
-          <AgGridReact
-            columnDefs={gridColDefsQsorts}
-            rowData={gridRowDataQsorts}
-            onGridReady={onGridReady}
-            enableSorting
-          />
+        <div id="participantQsortData" style={ { width: getWidth(statements.length), height: getHeight(numQsorts) } } className="ag-theme-fresh">
+          <AgGridReact columnDefs={ localStore.gridColDefsQsorts } rowData={ localStore.gridRowDataQsorts } onGridReady={ onGridReady } enableSorting />
         </div>
       </TableHolder>
-    );
+      );
   }
 }
 

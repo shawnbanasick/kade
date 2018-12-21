@@ -4,6 +4,8 @@ import styled, { keyframes } from "styled-components";
 import state from "../../store";
 import StatementsList from "./StatementsList";
 import ParticipantsQsortsGrid from "./ParticipantQsortsGrid";
+import calcMultiplierArrayT2 from '../Input/Excel/excelLogic/calcMultiplierArrayT2';
+import QsortsPatternList from './QsortsPatternList'
 
 const localStore = store({
   sortsDisplayText: [],
@@ -11,20 +13,35 @@ const localStore = store({
   projectName: "",
   numQsorts: 0,
   numStatements: 0,
-  qSortPattern: ["none"]
+  qSortPattern: ["none"],
+  multiplierArray: [],
+  mainDataObject: []
 });
+
+function calcPatternArray(multiplierArray) {
+  const labelArray = ["-6", "-5", "-4", "-3", "-2", "-1", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13"];
+  const patternArray = [];
+  for (let i = 0; i < labelArray.length; i += 1) {
+    const indexer = multiplierArray[i];
+    if (indexer !== 0) {
+      const text = `${labelArray[i]  } column: ${  multiplierArray[i]  } cards`;
+      patternArray.push(text);
+    }
+  }
+  return patternArray;
+}
+
 
 class Data extends Component {
   render() {
-    const {
-      mainDataObject,
-      sortsDisplayText,
-      statements,
-      projectName,
-      numQsorts,
-      numStatements,
-      qSortPattern
-    } = state;
+    const {mainDataObject, sortsDisplayText, statements, projectName, numQsorts, numStatements, qSortPattern, } = state;
+    let texts;
+    let multiplierArray;
+
+    if (qSortPattern) {
+      multiplierArray = calcMultiplierArrayT2(qSortPattern);
+      texts = calcPatternArray(multiplierArray);
+    }
 
     localStore.sortsDisplayText = sortsDisplayText;
     localStore.statements = statements;
@@ -33,28 +50,32 @@ class Data extends Component {
     localStore.numStatements = numStatements;
     localStore.qSortPattern = qSortPattern;
     localStore.mainDataObject = mainDataObject;
+    localStore.multiplierArray = multiplierArray;
 
     return (
       <MainContent>
         <ProjectTitle>Project Data</ProjectTitle>
         <InformationContainer>
-          <h2>Project Name: {projectName}</h2>
-          <h2>Number Q sorts: {numQsorts}</h2>
-          <h2>Number Statements: {numStatements}</h2>
-          {qSortPattern ? (
-            <h2>Q sort Pattern: {qSortPattern.toString()}</h2>
-          ) : null}
+          <h2>Project Name: { projectName }</h2>
+          <h2>Number Q sorts: { numQsorts }</h2>
+          <h2>Number Statements: { numStatements }</h2>
+          { qSortPattern ? (
+            <React.Fragment>
+              <h2>Q sort Pattern:</h2>
+              <QsortsPatternList texts={ texts } />
+            </React.Fragment>
+            ) : null }
         </InformationContainer>
         <StatementListContainer>
           <h1>Statements</h1>
-          <StatementsList statements={localStore.statements} />
+          <StatementsList statements={ localStore.statements } />
         </StatementListContainer>
         <SortsListContainer>
           <h1>Participant Q Sorts</h1>
-          <ParticipantsQsortsGrid data={localStore.mainDataObject} />
+          <ParticipantsQsortsGrid data={ localStore.mainDataObject } />
         </SortsListContainer>
       </MainContent>
-    );
+      );
   }
 }
 
@@ -82,8 +103,8 @@ const fadeOut = keyframes`
 
 const MainContent = styled.div`
   display: grid;
-  grid-template-columns: 190px 190px 190px 1fr;
-  grid-template-rows: 100px 250px 1fr 1fr;
+  grid-template-columns: 190px 270px 190px 1fr;
+  grid-template-rows: 100px 1fr 1fr 1fr;
   grid-template-areas:
     "pageTitle pageTitle pageTitle pageTitle"
     "informationContainer informationContainer informationContainer informationContainer "

@@ -1,19 +1,28 @@
 import React, { Component } from "react";
 import { view } from "react-easy-state";
-// import store from "../../store";
+import styled, { keyframes } from "styled-components";
+
+
 
 class StatementList extends Component {
     render() {
         return (
-            <ol>
-              { this.props.statements.map((listValue) => (
+            <CustomUl>
+              { this.props.texts.map((listValue) => (
                     <li key={ listValue }>
                       { listValue }
                     </li>
                 )) }
-            </ol>
+            </CustomUl>
             );
     }
 }
 
 export default view(StatementList);
+
+const CustomUl = styled.ul`
+    list-style-type: none;
+    text-align: right;
+    width: 167px;
+    padding-left: 5px !important;
+`;
