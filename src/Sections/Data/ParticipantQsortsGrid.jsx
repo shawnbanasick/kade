@@ -42,10 +42,6 @@ function resetWidthAndHeight() {
   }
 }
 
-window.addEventListener("resize", () => {
-  resetWidthAndHeight();
-});
-
 function generateGridColDefs(props) {
   if (props.data.length === undefined) {
     return;
@@ -105,6 +101,20 @@ function generateGridRowData(props) {
 }
 
 class ParticipantQsortsGrid extends Component {
+  componentDidMount() {
+    window.addEventListener("resize", () => {
+      resetWidthAndHeight();
+    });
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener("resize", () => {
+      resetWidthAndHeight();
+    });
+  }
+
+
+
   onGridReady(params) {
     this.gridApi = params.api;
     this.columnApi = params.columnApi;
