@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { view, store } from "react-easy-state";
 import styled, { keyframes } from "styled-components";
 import state from "../../store";
-import SortsList from "./SortsList";
 import StatementsList from "./StatementsList";
 import ParticipantsQsortsGrid from "./ParticipantQsortsGrid";
 
@@ -51,8 +50,7 @@ class Data extends Component {
           <StatementsList statements={localStore.statements} />
         </StatementListContainer>
         <SortsListContainer>
-          <h1>Q Sorts</h1>
-          <SortsList displayText={localStore.sortsDisplayText} />
+          <h1>Participant Q Sorts</h1>
           <ParticipantsQsortsGrid data={localStore.mainDataObject} />
         </SortsListContainer>
       </MainContent>
@@ -97,6 +95,7 @@ const MainContent = styled.div`
   padding: 5px;
   padding-top: 15px;
   padding-left: 15px;
+  padding-bottom: 50px;
   visibility: ${props => (props.view ? "hidden" : "visible")};
   animation: ${props => (props.view ? fadeOut : fadeIn)} 0.5s linear;
   transition: visibility 0.5s linear;

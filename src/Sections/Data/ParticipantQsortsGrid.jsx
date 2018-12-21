@@ -10,7 +10,7 @@ const localStore = store({
 });
 
 function getWidth(numStatements) {
-  let widthVal = 200 + 65 * numStatements;
+  let widthVal = 230 + 65 * numStatements;
   let x = window.innerWidth - 40 - 152;
 
   if (x < widthVal) {
@@ -53,7 +53,7 @@ function generateGridColDefs(props) {
       field: "resNum",
       pinned: true,
       editable: false,
-      width: 50,
+      width: 80,
       cellStyle: {
         textAlign: "center"
       }
