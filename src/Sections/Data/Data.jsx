@@ -57,8 +57,8 @@ class Data extends Component {
         <ProjectTitle>Project Data</ProjectTitle>
         <InformationContainer>
           <h2>Project Name: { projectName }</h2>
-          <h2>Number Q sorts: { numQsorts }</h2>
-          <h2>Number Statements: { numStatements }</h2>
+          <h2>Participants: { numQsorts }</h2>
+          <h2>Number of Statements: { numStatements }</h2>
           { qSortPattern ? (
             <React.Fragment>
               <h2>Q sort Pattern:</h2>

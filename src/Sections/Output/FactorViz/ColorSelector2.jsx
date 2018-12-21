@@ -3,7 +3,7 @@ import { view, store } from "react-easy-state";
 import state from "../../../store";
 
 const localStore = store({
-  color: "#42b6f4"
+  color: "#d9effe"
 });
 
 class ColorSelector extends React.Component {

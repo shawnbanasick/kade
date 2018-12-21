@@ -133,6 +133,8 @@ function setInitialState() {
       willAdjustStatementWidthBy: 15,
       willAdjustWidthAsian: false,
       willAdjustWidthAsianBy: 12,
+      willAdjustTopMargin: false,
+      willAdjustTopMarginBy: 5,  
       willDisplayConsensusStates: false,
       willDisplayDistingCompareSymbols: true,
       willDisplayOnlyStateNums: false,
@@ -142,7 +144,7 @@ function setInitialState() {
       willTrimStatement: true,
       willTrimStatementBy: 5,
       willUseDistingUnicode: true,
-      consensusIndicator: "#42b6f4",
+      consensusIndicator: "#d9effe",
       customFactorNames: [],
       customFileNameLocation: "append",
       qSortPattern: []

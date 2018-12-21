@@ -21,7 +21,7 @@ class DistinguishingPanel extends Component {
         <hr style={{ width: "100%", marginBottom: 15 }} />
         <OptionStatementRow>
           <OptionStatementText>
-            15. Add custom name to image downloads?
+            16. Add custom name to image downloads?
           </OptionStatementText>
           <UserSelectionSwitch
             name="willAddCustomNameToDownload"
@@ -49,7 +49,7 @@ const OptionStatementRow = styled.div`
   display: flex;
   align-items: center;
   margin-bottom: 25px;
-  padding-left:10px;
+  padding-left: 10px;
 `;
 
 const OptionStatementText = styled.div`

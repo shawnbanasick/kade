@@ -23,7 +23,7 @@ class DistinguishingPanel extends Component {
         <hr style={{ width: "100%", marginBottom: 15 }} />
         <OptionStatementRow>
           <OptionStatementText>
-            12. Indicate distinguishing statements?
+            13. Indicate distinguishing statements?
           </OptionStatementText>
           <UserSelectionSwitch
             name="willIndicateDistinguishing"
@@ -51,7 +51,7 @@ class DistinguishingPanel extends Component {
         </OptionStatementRow>
         <OptionStatementRow>
           <OptionStatementText>
-            13. Display distinguishing statement comparison triangles?
+            14. Display distinguishing statement comparison triangles?
           </OptionStatementText>
           <UserSelectionSwitch
             name="willDisplayDistingCompareSymbols"
@@ -61,7 +61,7 @@ class DistinguishingPanel extends Component {
         </OptionStatementRow>
         <OptionStatementRow>
           <OptionStatementText>
-            14. Display consensus statement indicator color?
+            15. Display consensus statement indicator color?
           </OptionStatementText>
           <UserSelectionSwitch
             name="willDisplayConsensusStates"
@@ -84,7 +84,7 @@ const OptionStatementRow = styled.div`
   display: flex;
   align-items: center;
   margin-bottom: 25px;
-  padding-left:10px;
+  padding-left: 10px;
 `;
 
 const OptionStatementText = styled.div`

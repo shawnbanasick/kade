@@ -27,6 +27,15 @@ const heightValue = props => {
   return 110;
 };
 
+const topMarginValue = props => {
+  const willAdjustTopMargin = props.factorVizOptions.willAdjustTopMargin;
+  if (willAdjustTopMargin === true) {
+    const newMargin = +props.factorVizOptions.willAdjustTopMarginBy;
+    return newMargin;
+  }
+  return 15;
+};
+
 const titleHeight = store.getState("titleHeight");
 
 const wordwrap = (text, max, factorVizOptions) => {
@@ -66,8 +75,8 @@ function statementList(texts, xCoord, factorVizOptions) {
   }
   // map out locations for multi-line text
   const textItems = texts.map((text, index) => (
-    <tspan key={ text + index } dy={ dyValue } x={ xCoord } textAnchor={ "middle" }>
-      { text }
+    <tspan key={text + index} dy={dyValue} x={xCoord} textAnchor={"middle"}>
+      {text}
     </tspan>
   ));
   return textItems;
@@ -92,7 +101,8 @@ const renderRectangleText = props => {
       maxLineLength = props.factorVizOptions.willAdjustStatementWidthBy;
     }
     // check if sentences or statement numbers only
-    const willDisplayOnlyStateNums = props.factorVizOptions.willDisplayOnlyStateNums;
+    const willDisplayOnlyStateNums =
+      props.factorVizOptions.willDisplayOnlyStateNums;
     const willPrependStateNums = props.factorVizOptions.willPrependStateNums;
 
     if (willDisplayOnlyStateNums === true) {
@@ -115,15 +125,18 @@ const renderRectangleText = props => {
       );
     }
 
-    const xCoord = props.positionData.xPosLoop[index] * widthValue(props) +
+    const xCoord =
+      props.positionData.xPosLoop[index] * widthValue(props) +
       widthValue(props) / 2;
     // set up statement object
     const textProps = {
-      x: props.positionData.xPosLoop[index] * widthValue(props) +
+      x:
+        props.positionData.xPosLoop[index] * widthValue(props) +
         widthValue(props) / 2, // (index * widthValue()) + (widthValue() / 2),
-      y: props.positionData.yPosLoop[index] * heightValue(props) +
+      y:
+        props.positionData.yPosLoop[index] * heightValue(props) +
         20 +
-        15 +
+        topMarginValue(props) +
         titleHeight,
       key: props.positionData.numRectsArray[index],
       text: statementList(texts, xCoord, props.factorVizOptions),
@@ -132,12 +145,10 @@ const renderRectangleText = props => {
     };
     return (
       <text {...styles} {...textProps}>
-        { textProps.text }
+        {textProps.text}
       </text>
-      );
+    );
   };
 };
 
-export default props => <g>
-                          { props.data.map(renderRectangleText(props)) }
-                        </g>;
+export default props => <g>{props.data.map(renderRectangleText(props))}</g>;

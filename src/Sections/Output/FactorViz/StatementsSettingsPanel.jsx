@@ -30,8 +30,23 @@ class StatementsSettingsPanel extends Component {
           </div>
         </OptionStatementRow>
         <OptionStatementRow>
+          <OptionStatementText>9. Adjust top margin?</OptionStatementText>
+          <UserSelectionSwitch
+            name="willAdjustTopMargin"
+            value="willAdjustTopMargin"
+            toggle={false}
+          />
+          <div style={styles}>
+            <UserTextInput
+              name={"willAdjustTopMarginBy"}
+              placeholder={"15"}
+              width={8}
+            />
+          </div>
+        </OptionStatementRow>
+        <OptionStatementRow>
           <OptionStatementText>
-            9. Limit number of lines to prevent overflow?
+            10. Limit number of lines to prevent overflow?
           </OptionStatementText>
           <UserSelectionSwitch
             name="willTrimStatement"
@@ -48,7 +63,7 @@ class StatementsSettingsPanel extends Component {
           </div>
         </OptionStatementRow>
         <OptionStatementRow>
-          <OptionStatementText>10. Adjust statement width?</OptionStatementText>
+          <OptionStatementText>11. Adjust statement width?</OptionStatementText>
           <UserSelectionSwitch
             name="willAdjustStatementWidth"
             value="willAdjustStatementWidth"
@@ -64,7 +79,7 @@ class StatementsSettingsPanel extends Component {
         </OptionStatementRow>
         <OptionStatementRow>
           <OptionStatementText>
-            11. (Asian languages only) Adjust width of statement rows?
+            12. (Asian languages only) Adjust width of statement rows?
           </OptionStatementText>
           <UserSelectionSwitch
             name="willAdjustWidthAsian"
@@ -90,7 +105,7 @@ const OptionStatementRow = styled.div`
   display: flex;
   align-items: center;
   margin-bottom: 25px;
-  padding-left:10px;
+  padding-left: 10px;
 `;
 
 const OptionStatementText = styled.div`
