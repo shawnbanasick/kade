@@ -8,8 +8,8 @@ class StatementList extends Component {
     render() {
         return (
             <CustomUl>
-              { this.props.texts.map((listValue) => (
-                    <li key={ listValue }>
+              { this.props.texts.map((listValue, index) => (
+                    <li key={ listValue + index }>
                       { listValue }
                     </li>
                 )) }
