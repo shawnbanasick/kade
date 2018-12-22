@@ -50,10 +50,6 @@ const createFactorVizDataObjectForProps = factorVizOptions => {
         const factorName = capitalizeFirstLetter(userSelectedFactors[i]);
         const id = factorName.replace(/\s+/g, "");
         if (useCustomNames) {
-            console.log(
-                `custom names: ${JSON.stringify([...customFactorNamesArray])}`
-            );
-
             name = customFactorNamesArray[i];
             if (name === undefined || name === "") {
                 name = `Composite Q sort for ${factorName}`;
@@ -61,11 +57,8 @@ const createFactorVizDataObjectForProps = factorVizOptions => {
         } else {
             name = `Composite Q sort for ${factorName}`;
         }
-        // let tempId = userSelectedFactors[i].replace(/\s+/g, "");
         const tempObj = {};
-
         tempObj.name = name;
-
         tempObj.id = id;
         tempObj.data = data[i];
         tempObj.positionData = positionData;
@@ -75,8 +68,6 @@ const createFactorVizDataObjectForProps = factorVizOptions => {
         tempObj.willAdjustIndicatorSizeBy = factorVizOptions.willAdjustIndicatorSizeBy;
         factorData.push(tempObj);
     }
-    console.log(JSON.stringify("createFactorVizDataObjectForProps"));
-
     return factorData;
 };
 

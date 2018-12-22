@@ -46,9 +46,16 @@ const getStyles = props => {
 };
 
 const FactorViz = props => {
-  console.log(JSON.stringify("factorviz called"));
 
-  const shouldDisplaySig = props.factorVizOptions.willIndicateDistinguishing;
+  const willIndicateDistinguishing =
+    props.factorVizOptions.willIndicateDistinguishing;
+  const showDistinguishingAs = props.factorVizOptions.showDistinguishingAs;
+
+  let shouldDisplaySig = false;
+  if (willIndicateDistinguishing && showDistinguishingAs === "symbol") {
+    shouldDisplaySig = true;
+  }
+
   const shouldDisplayLegend = props.factorVizOptions.willIncludeLegend;
   const margin = { top: 10, left: 10, bottom: 10, right: 10 };
   return (
@@ -56,11 +63,7 @@ const FactorViz = props => {
       <svg
         className="vizImage"
         id={`image${props.id}`}
-        // style={styles.svg}
-
-        // width={props.width}
         width={getStyles(props).width - margin.left - margin.right}
-        // height={props.height}
         height={getStyles(props).height - margin.top - margin.bottom}
       >
         <g transform={`translate(${margin.left},${margin.top})`}>

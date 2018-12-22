@@ -135,8 +135,6 @@ class LoadingsTable extends Component {
     }
 
     updateTableLocalState() {
-        console.log(JSON.stringify("updateTableLocalState called"));
-
         const currentLoadingsTable = this.grabTableLocalState();
         localStore.temp_gridRowDataLoadingsTable = currentLoadingsTable;
     }
@@ -251,8 +249,6 @@ class LoadingsTable extends Component {
     }
 
     render() {
-        console.log(JSON.stringify("table re-rendered"));
-
         // pull headers and data from states
         const gridColDefsLoadingsTable = state.getState("gridColDefsLoadingsTable");
         const gridRowDataLoadingsTable = state.getState("gridRowDataLoadingsTable");

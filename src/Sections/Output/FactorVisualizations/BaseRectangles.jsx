@@ -39,10 +39,10 @@ const renderBaseRectangles = props => (coords, index) => {
     factorVizOptions.willIndicateDistinguishing;
   const showDistinguishingAs = factorVizOptions.showDistinguishingAs;
   const newFillColorConsensus = factorVizOptions.consensusIndicator;
-  const newFillColorDistinguishing01 = factorVizOptions.distinguishingIndicator01;
-  const newFillColorDistinguishing05 = factorVizOptions.distinguishingIndicator05;
-
-  console.log(`props: ${JSON.stringify(props)}`);
+  const newFillColorDistinguishing01 =
+    factorVizOptions.distinguishingIndicator01;
+  const newFillColorDistinguishing05 =
+    factorVizOptions.distinguishingIndicator05;
 
   // set default color
   let fillColor = "white";
@@ -51,8 +51,6 @@ const renderBaseRectangles = props => (coords, index) => {
     willIndicateDistinguishing === true &&
     showDistinguishingAs === "distinguishingColor"
   ) {
-    console.log(JSON.stringify("called"));
-
     if (props.data[index].isDistinguishing01 === true) {
       fillColor = newFillColorDistinguishing01;
     }

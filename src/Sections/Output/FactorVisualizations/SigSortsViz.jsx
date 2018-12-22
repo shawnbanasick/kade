@@ -42,6 +42,7 @@ const renderSigSortsIndicators = props => {
     let text;
     let arrow;
     let symbol;
+
     if (shouldUseUnicode) {
       if (willDisplayDistingCompareSymbols) {
         symbol = props.data[index].sigVisualizationUni;
@@ -57,6 +58,7 @@ const renderSigSortsIndicators = props => {
     } else {
       text = props.data[index].sigVisualization;
     }
+
     // todo - set user selected custom value for dy for symbols
     const sigSymbolProps = {
       x: props.positionData.xPosLoop[index] * width + 10,

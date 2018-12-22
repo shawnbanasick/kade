@@ -8,9 +8,6 @@ const localStore = store({
 
 function handleChange(e) {
   const factorVizOptionsHolder = state.getState("factorVizOptionsHolder");
-  console.log(JSON.stringify(e.target.id));
-  console.log(JSON.stringify(e.target.id));
-  console.log(e.target);
   localStore.color = e.target.value;
   const colorProperty = e.target.id;
   factorVizOptionsHolder[colorProperty] = e.target.value;
