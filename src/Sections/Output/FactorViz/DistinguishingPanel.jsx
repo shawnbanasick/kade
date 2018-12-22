@@ -1,9 +1,11 @@
+import styled from "styled-components";
 import React, { Component } from "react";
-import { view } from "react-easy-state";
-import UserSelectionSwitch from "./UserSelectionSwitch";
+import { view, store } from "react-easy-state";
+import { Form, Radio } from "semantic-ui-react";
+import state from "../../../store";
 import UserTextInput from "./UserTextInput";
 import ColorSelector from "./ColorSelector2";
-import styled from "styled-components";
+import UserSelectionSwitch from "./UserSelectionSwitch";
 
 const styles = {
   // marginLeft: 10,
@@ -12,6 +14,25 @@ const styles = {
   // marginBottom: 1,
   // height: 15
 };
+
+const styles2 = {
+  display: "flex",
+  marginTop: 20,
+  marginRight: 5,
+  fontSize: 20
+};
+
+const localStore = store({ showDistinguishingAs: "symbol" });
+
+function handleChange(e, { value }) {
+  const factorVizOptionsHolder = state.getState("factorVizOptionsHolder");
+  localStore.showDistinguishingAs = value;
+  factorVizOptionsHolder.showDistinguishingAs = value;
+  state.setState({
+    factorVizOptionsHolder,
+    updateFactorVisualizationsButtonColor: "orange"
+  });
+}
 
 class DistinguishingPanel extends Component {
   render() {
@@ -29,6 +50,35 @@ class DistinguishingPanel extends Component {
             name="willIndicateDistinguishing"
             value="willIndicateDistinguishing"
             toggle
+          />
+          <HolderDiv>
+            <Form style={styles2}>
+              <Form.Field>as</Form.Field>
+              <Form.Field>
+                <Radio
+                  style={{ marginLeft: 16, fontSize: 20 }}
+                  label="Symbol"
+                  name="radioGroup1"
+                  value="symbol"
+                  checked={localStore.showDistinguishingAs === "symbol"}
+                  onChange={handleChange}
+                />
+              </Form.Field>
+              <Form.Field>
+                <Radio
+                  style={{ marginLeft: 16, fontSize: 20 }}
+                  label="Color:"
+                  name="radioGroup1"
+                  value="color"
+                  checked={localStore.showDistinguishingAs === "color"}
+                  onChange={handleChange}
+                />
+              </Form.Field>
+            </Form>
+          </HolderDiv>
+          <ColorSelector
+            id="distinguishingIndicator"
+            style={{ marginLeft: 5 }}
           />
         </OptionStatementRow>
         <OptionStatementRow>
@@ -91,4 +141,10 @@ const OptionStatementText = styled.div`
   font-size: 20px;
 `;
 
+const HolderDiv = styled.div`
+  label {
+    padding-left: 18px !important;
+    padding-top: 3px;
+  }
+`;
 // import styled from "styled-components";

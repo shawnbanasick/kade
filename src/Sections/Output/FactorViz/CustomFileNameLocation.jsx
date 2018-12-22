@@ -19,11 +19,11 @@ class CustomFileNameLocation extends Component {
   //   this.state = {};
   // }
   handleChange(e, { value }) {
-    const factorVizOptions = state.getState("factorVizOptions");
+    const factorVizOptionsHolder = state.getState("factorVizOptionsHolder");
     localStore.customFileNameLocation = value;
-    factorVizOptions.customFileNameLocation = value;
+    factorVizOptionsHolder.customFileNameLocation = value;
     state.setState({
-      factorVizOptions,
+      factorVizOptionsHolder,
       updateFactorVisualizationsButtonColor: "orange"
     });
   }
