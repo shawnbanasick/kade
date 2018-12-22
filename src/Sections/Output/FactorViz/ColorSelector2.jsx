@@ -6,38 +6,33 @@ const localStore = store({
   color: "#d9effe"
 });
 
+function handleChange(e) {
+  const factorVizOptionsHolder = state.getState("factorVizOptionsHolder");
+  console.log(JSON.stringify(e.target.id));
+  console.log(JSON.stringify(e.target.id));
+  console.log(e.target);
+  localStore.color = e.target.value;
+  const colorProperty = e.target.id;
+  factorVizOptionsHolder[colorProperty] = e.target.value;
+  state.setState({
+    factorVizOptionsHolder,
+    updateFactorVisualizationsButtonColor: "orange"
+  });
+}
+
 class ColorSelector extends React.Component {
-  //   state = {
-  //   };
-
-  handleChange(e) {
-    // preventDefault(e);
-    const factorVizOptionsHolder = state.getState("factorVizOptionsHolder");
-    console.log(JSON.stringify(e.target.value));
-    localStore.color = e.target.value;
-    factorVizOptionsHolder.consensusIndicator = e.target.value;
-    state.setState({
-      factorVizOptionsHolder,
-      updateFactorVisualizationsButtonColor: "orange"
-    });
-
-    // this.setState({ displayColorPicker: !this.state.displayColorPicker });
-  }
-
-  handleClose = () => {
+  handleClose() {
     this.setState({ displayColorPicker: false });
-  };
+  }
 
   render() {
     return (
-      <div>
-        <input
-          type="color"
-          id="color"
-          defaultValue={localStore.color}
-          onChange={this.handleChange}
-        />
-      </div>
+      <input
+        id={this.props.id}
+        type="color"
+        defaultValue={this.props.defaultColor}
+        onChange={handleChange}
+      />
     );
   }
 }

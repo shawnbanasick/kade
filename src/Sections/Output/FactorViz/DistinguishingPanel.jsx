@@ -53,7 +53,7 @@ class DistinguishingPanel extends Component {
           />
           <HolderDiv>
             <Form style={styles2}>
-              <Form.Field>as</Form.Field>
+              <Form.Field>with</Form.Field>
               <Form.Field>
                 <Radio
                   style={{ marginLeft: 16, fontSize: 20 }}
@@ -67,18 +67,29 @@ class DistinguishingPanel extends Component {
               <Form.Field>
                 <Radio
                   style={{ marginLeft: 16, fontSize: 20 }}
-                  label="Color:"
+                  label="Color - 05:"
                   name="radioGroup1"
-                  value="color"
-                  checked={localStore.showDistinguishingAs === "color"}
+                  value="distinguishingColor"
+                  checked={
+                    localStore.showDistinguishingAs === "distinguishingColor"
+                  }
                   onChange={handleChange}
                 />
               </Form.Field>
             </Form>
           </HolderDiv>
           <ColorSelector
-            id="distinguishingIndicator"
+            id="distinguishingIndicator05"
             style={{ marginLeft: 5 }}
+            defaultColor={"#ededed"}
+          />
+          <OptionStatementText style={{ marginLeft: 5, marginRight: 5 }}>
+            01:
+          </OptionStatementText>
+          <ColorSelector
+            id="distinguishingIndicator01"
+            style={{ marginLeft: 5 }}
+            defaultColor={"#bdbdbd"}
           />
         </OptionStatementRow>
         <OptionStatementRow>
@@ -121,7 +132,7 @@ class DistinguishingPanel extends Component {
           <OptionStatementText style={{ marginRight: 10 }}>
             Color:{" "}
           </OptionStatementText>
-          <ColorSelector id="consensusIndicator" />
+          <ColorSelector id="consensusIndicator" defaultColor={"#d9effe"} />
         </OptionStatementRow>
       </div>
     );

@@ -18,7 +18,8 @@ const widthValue = props => {
   return 110;
 };
 
-const headerHeight = userValues => 26;
+// const headerHeight = userValues => 26;
+const headerHeight = () => 26;
 
 const heightValue = props => {
   const shouldAdjustHeight = props.factorVizOptions.willAdjustCardHeight;
@@ -34,28 +35,38 @@ const titleHeight = store.getState("titleHeight");
 const renderBaseRectangles = props => (coords, index) => {
   const factorVizOptions = store.getState("factorVizOptions");
   const shouldUseColor = factorVizOptions.willDisplayConsensusStates;
+  const willIndicateDistinguishing =
+    factorVizOptions.willIndicateDistinguishing;
+  const showDistinguishingAs = factorVizOptions.showDistinguishingAs;
+  const newFillColorConsensus = factorVizOptions.consensusIndicator;
+  const newFillColorDistinguishing01 = factorVizOptions.distinguishingIndicator01;
+  const newFillColorDistinguishing05 = factorVizOptions.distinguishingIndicator05;
 
-  const newFillColor = factorVizOptions.consensusIndicator;
+  console.log(`props: ${JSON.stringify(props)}`);
 
+  // set default color
   let fillColor = "white";
-  // if (shouldUseColor === true) {
-  //   if (props.data[index].isConsensus01State) {
-  //     fillColor = `rgba(${newFillColor.r}, ${newFillColor.g}, ${
-  //       newFillColor.b
-  //     }, ${newFillColor.a})`;
-  //   }
-  //   if (props.data[index].isConsensus05State) {
-  //     fillColor = `rgba(${newFillColor.r}, ${newFillColor.g}, ${
-  //       newFillColor.b
-  //     }, ${newFillColor.a})`;
-  //   }
-  // }
+  // check if show distinguishing checked and color selected
+  if (
+    willIndicateDistinguishing === true &&
+    showDistinguishingAs === "distinguishingColor"
+  ) {
+    console.log(JSON.stringify("called"));
+
+    if (props.data[index].isDistinguishing01 === true) {
+      fillColor = newFillColorDistinguishing01;
+    }
+    if (props.data[index].isDistinguishing05 === true) {
+      fillColor = newFillColorDistinguishing05;
+    }
+  }
+
   if (shouldUseColor === true) {
     if (props.data[index].isConsensus01State) {
-      fillColor = newFillColor;
+      fillColor = newFillColorConsensus;
     }
     if (props.data[index].isConsensus05State) {
-      fillColor = newFillColor;
+      fillColor = newFillColorConsensus;
     }
   }
 

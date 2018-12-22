@@ -13,21 +13,17 @@ const styles = {
 
 const localStore = store({ customFileNameLocation: "" });
 
-class CustomFileNameLocation extends Component {
-  // constructor(props) {
-  //   super(props);
-  //   this.state = {};
-  // }
-  handleChange(e, { value }) {
-    const factorVizOptionsHolder = state.getState("factorVizOptionsHolder");
-    localStore.customFileNameLocation = value;
-    factorVizOptionsHolder.customFileNameLocation = value;
-    state.setState({
-      factorVizOptionsHolder,
-      updateFactorVisualizationsButtonColor: "orange"
-    });
-  }
+function handleChange(e, { value }) {
+  const factorVizOptionsHolder = state.getState("factorVizOptionsHolder");
+  localStore.customFileNameLocation = value;
+  factorVizOptionsHolder.customFileNameLocation = value;
+  state.setState({
+    factorVizOptionsHolder,
+    updateFactorVisualizationsButtonColor: "orange"
+  });
+};
 
+class CustomFileNameLocation extends Component {
   render() {
     return (
       <HolderDiv>
@@ -40,7 +36,7 @@ class CustomFileNameLocation extends Component {
               name="radioGroup"
               value="prepend"
               checked={localStore.customFileNameLocation === "prepend"}
-              onChange={this.handleChange}
+              onChange={handleChange}
             />
           </Form.Field>
           <Form.Field>
@@ -50,7 +46,7 @@ class CustomFileNameLocation extends Component {
               name="radioGroup"
               value="append"
               checked={localStore.customFileNameLocation === "append"}
-              onChange={this.handleChange}
+              onChange={handleChange}
             />
           </Form.Field>
           <Form.Field>
@@ -60,7 +56,7 @@ class CustomFileNameLocation extends Component {
               name="radioGroup"
               value="replace"
               checked={localStore.customFileNameLocation === "replace"}
-              onChange={this.handleChange}
+              onChange={handleChange}
             />
           </Form.Field>
         </Form>

@@ -160,7 +160,10 @@ export default store({
     willTrimStatement: true,
     willTrimStatementBy: 5,
     willUseDistingUnicode: true,
+    showDistinguishingAs: "symbol",
     consensusIndicator: "#d9effe",
+    distinguishingIndicator05: "#ededed",
+    distinguishingIndicator01: "#bdbdbd",
     customFactorNames: [],
     customFileNameLocation: "append",
     qSortPattern: []

@@ -4,8 +4,9 @@ import store from "../../../store";
 function getXCoords(props) {
   let totalWidth = props.positionData.instances.length * 110;
   if (props.factorVizOptions.willAdjustCardWidth === true) {
-    totalWidth = props.positionData.instances.length *
-    props.factorVizOptions.willAdjustCardWidthBy;
+    totalWidth =
+      props.positionData.instances.length *
+      props.factorVizOptions.willAdjustCardWidthBy;
   }
   const halfWidth = totalWidth / 2;
   const xCoord = halfWidth;
@@ -38,16 +39,26 @@ class LegendText extends React.Component {
     // console.log(`props: ${  JSON.stringify(props)}`);
 
     const displayColor = props.factorVizOptions.consensusIndicator;
+    const distinguishingIndicator05 =
+      props.factorVizOptions.distinguishingIndicator05;
+    const distinguishingIndicator01 =
+      props.factorVizOptions.distinguishingIndicator01;
+
     const xLocation = getXCoords(props);
     const yLocation = getYValue(props) + 5;
-    const useUnicode = props.factorVizOptions.willUseDistingUnicode;
-    const shouldDisplayConsensus = props.factorVizOptions.willDisplayConsensusStates;
-    const willIndicateDistinguishing = props.factorVizOptions.willIndicateDistinguishing;
-    let willDisplayDistingCompareSymbols = props.factorVizOptions.willDisplayDistingCompareSymbols;
+
+    const showDistinguishingAs = props.factorVizOptions.showDistinguishingAs;
+
+    const shouldDisplayConsensus =
+      props.factorVizOptions.willDisplayConsensusStates;
+    const willIndicateDistinguishing =
+      props.factorVizOptions.willIndicateDistinguishing;
+    let willDisplayDistingCompareSymbols =
+      props.factorVizOptions.willDisplayDistingCompareSymbols;
     // hide the comparison symbols if distinguishing is not displayed
     if (willIndicateDistinguishing === false) {
       willDisplayDistingCompareSymbols = false;
-    // store.setState("willDisplayDistingCompareSymbols");
+      // store.setState("willDisplayDistingCompareSymbols");
     }
     let consensusYLocation = 170;
     if (willIndicateDistinguishing === false) {
@@ -57,18 +68,18 @@ class LegendText extends React.Component {
       consensusYLocation -= 60;
     }
 
-    let symbol05 = "*";
-    let symbol01 = "**";
-    let arrowLeft = "\u003C\u003C";
-    let arrowRight = "\u003E\u003E";
-    if (useUnicode) {
-      // symbol05 = "\u25CE";
-      symbol05 = "\u2733\u0020\u0020";
-      // symbol01 = "\u25C9";
-      symbol01 = "\u2733\u2733";
-      arrowLeft = "\u25C4\u0020";
-      arrowRight = "\u25BA\u0020";
-    }
+    // let symbol05 = "*";
+    // let symbol01 = "**";
+    // let arrowLeft = "\u003C\u003C";
+    // let arrowRight = "\u003E\u003E";
+    // if (useUnicode) {
+    // symbol05 = "\u25CE";
+    const symbol05 = "\u2733\u0020\u0020";
+    // symbol01 = "\u25C9";
+    const symbol01 = "\u2733\u2733";
+    const arrowLeft = "\u25C4\u0020";
+    const arrowRight = "\u25BA\u0020";
+    // }
     const additionalXLocationValue = 260;
 
     const titleStyles = {
@@ -79,7 +90,6 @@ class LegendText extends React.Component {
       textAnchor: "middle",
       fontFamily: "Verdana, sans-serif"
     };
-
 
     const astrick05Style = {
       x: xLocation - additionalXLocationValue + 12,
@@ -147,6 +157,26 @@ class LegendText extends React.Component {
       strokeWidth: 1
     };
 
+    const distingRectStyles01 = {
+      x: xLocation - additionalXLocationValue + 9,
+      y: yLocation + 81,
+      width: 15,
+      height: 15,
+      fill: distinguishingIndicator01,
+      stroke: "black",
+      strokeWidth: 1
+    };
+
+    const distingRectStyles05 = {
+      x: xLocation - additionalXLocationValue + 9,
+      y: yLocation + 51,
+      width: 15,
+      height: 15,
+      fill: distinguishingIndicator05,
+      stroke: "black",
+      strokeWidth: 1
+    };
+
     const consensusStatementStyle = {
       x: xLocation - additionalXLocationValue + 30,
       y: yLocation + 14 + consensusYLocation,
@@ -154,86 +184,78 @@ class LegendText extends React.Component {
       fontFamily: "Verdana, sans-serif"
     };
 
-    if (useUnicode === true) {
+    if (showDistinguishingAs === "symbol") {
       return (
         <g>
           <text {...titleStyles}>Legend </text>
-          { willIndicateDistinguishing && (
+          {willIndicateDistinguishing && (
             <g>
-              <text {...astrick05Style}>
-                { symbol05 }
-              </text>
+              <text {...astrick05Style}>{symbol05}</text>
               <text {...sigSymbolTextStyle1}>
-                Distinguishing statement at P
-                { "\u003C" } 0.05
+                Distinguishing statement at P{"\u003C"} 0.05
               </text>
-              <text {...astrick01Style}>
-                { symbol01 }
-              </text>
+              <text {...astrick01Style}>{symbol01}</text>
               <text {...sigSymbolTextStyle2}>
-                Distinguishing statement at P
-                { "\u003C" } 0.01
+                Distinguishing statement at P{"\u003C"} 0.01
               </text>
             </g>
-            ) }
-          { willDisplayDistingCompareSymbols && (
+          )}
+          {willDisplayDistingCompareSymbols && (
             <g>
-              <text {...arrowRightStyle6}>
-                { arrowRight }
-              </text>
+              <text {...arrowRightStyle6}>{arrowRight}</text>
               <text {...zScoreTextHigherStyle3}>
                 z-Score for the statement is higher than in all other factors
               </text>
-              <text {...arrowLeftStyle4}>
-                { arrowLeft }
-              </text>
+              <text {...arrowLeftStyle4}>{arrowLeft}</text>
               <text {...zScoreTextLowerStyle5}>
                 z-Score for the statement is lower than in all other factors
               </text>
             </g>
-            ) }
-          { shouldDisplayConsensus && <rect {...consensusRectStyles} /> }
-          { shouldDisplayConsensus && (
+          )}
+          {shouldDisplayConsensus && <rect {...consensusRectStyles} />}
+          {shouldDisplayConsensus && (
             <text {...consensusStatementStyle}>Consensus statement</text>
-            ) }
+          )}
         </g>
-        );
+      );
     }
     return (
       <g>
         <text {...titleStyles}>Legend </text>
-        { willIndicateDistinguishing && (
+        {willIndicateDistinguishing && (
           <g>
-            <text {...sigSymbolStyle1}>
-              { symbol05 }
-              { "  " } Distinguishing statement at P
-              { "\u003C" } 0.05
+            <rect {...distingRectStyles05} />
+            <text {...sigSymbolTextStyle1}>
+              Distinguishing statement at P{"\u003C"} 0.05
             </text>
-            <text {...sigSymbolStyle2}>
-              { symbol01 } Distinguishing statement at P
-              { "\u003C" } 0.01
+            <rect {...distingRectStyles01} />
+            <text {...sigSymbolTextStyle2}>
+              Distinguishing statement at P{"\u003C"} 0.01
             </text>
-            <text {...sigSymbolStyle3}>
-              { arrowRight } z-Score for the statement is higher than in all the other factors
-            </text>
-            <text {...sigSymbolStyle6}>
-              { arrowLeft } z-Score for the statement is lower than in all the other factors
-            </text>
-            { " " }
           </g>
-          ) }
-        { shouldDisplayConsensus && <rect {...consensusRectStyles} /> }
-        { shouldDisplayConsensus && (
+        )}
+        {willDisplayDistingCompareSymbols && (
+          <g>
+            <text {...arrowRightStyle6}>{arrowRight}</text>
+            <text {...zScoreTextHigherStyle3}>
+              z-Score for the statement is higher than in all other factors
+            </text>
+            <text {...arrowLeftStyle4}>{arrowLeft}</text>
+            <text {...zScoreTextLowerStyle5}>
+              z-Score for the statement is lower than in all other factors
+            </text>
+          </g>
+        )}
+        {shouldDisplayConsensus && <rect {...consensusRectStyles} />}
+        {shouldDisplayConsensus && (
           <text {...consensusStatementStyle}>Consensus statement</text>
-          ) }
+        )}
       </g>
-      );
+    );
   }
 
   render() {
-    return <g>
-             { this.renderLegendRectangleText(this.props) }
-           </g>;
+    return <g>{this.renderLegendRectangleText(this.props)}</g>;
   }
 }
 
