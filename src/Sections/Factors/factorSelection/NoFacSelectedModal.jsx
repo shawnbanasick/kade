@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { view } from "react-easy-state";
 import React, { Component } from "react";
-import { Button, Header, Icon, Modal } from "semantic-ui-react";
+import { Button, Header, Modal } from "semantic-ui-react";
 import store from "../../../store";
 import centroidDispatch from "../centroidLogic/centroidDispatch";
 
@@ -64,7 +64,7 @@ class noFacSelectedModal extends Component {
         </Modal.Content>
         <Modal.Actions>
           <Button id="noFacSelectedModalGotItButton" color="green" onClick={ this.handleClose } inverted>
-            <Icon name="checkmark" /> Got it
+             Got it
           </Button>
         </Modal.Actions>
       </Modal>

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 import { view, store } from "react-easy-state";
-import { Button, Header, Icon, Modal } from "semantic-ui-react";
+import { Button, Header, Modal } from "semantic-ui-react";
 import loadingsTableDataPrep from "../../Loadings/LoadingsTable/loadingsTableDataPrep";
 import state from "../../../store";
 

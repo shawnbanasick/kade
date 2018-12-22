@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { view, store } from "react-easy-state";
-import { Button, Header, Icon, Modal } from "semantic-ui-react";
+import { Button, Header, Modal } from "semantic-ui-react";
 import downloadResultsAsCsv from "../downloadCsvLogic/downloadCsvOutputFile";
 import state from "../../../store";
 
@@ -9,10 +9,7 @@ const localStore = {
   modalOpen: false
 };
 
-
 class DownloadResultsAsExcel extends React.Component {
-
-
   handleOpen() {
     let userSelectedFactors = state.getState("userSelectedFactors");
     if (userSelectedFactors.length === 0) {
@@ -21,33 +18,54 @@ class DownloadResultsAsExcel extends React.Component {
     } else {
       downloadResultsAsCsv();
     }
-  };
+  }
 
   handleClose = () => {
     localStoretore.modalOpen = false;
   };
 
   render() {
-    const {active} = localStore;
+    const { active } = localStore;
     return (
-      <Modal trigger={ <StyledWrapper>
-                   <Button id="downloadResultsAsCsvButton" className="wrapper1" size={ "large" } toggle active={ active } onClick={ this.handleOpen }>
-                     CSV File
-                   </Button>
-                 </StyledWrapper> } open={ localStore.modalOpen } onClose={ this.handleClose } basic size="small">
+      <Modal
+        trigger={
+          <StyledWrapper>
+            <Button
+              id="downloadResultsAsCsvButton"
+              className="wrapper1"
+              size={"large"}
+              toggle
+              active={active}
+              onClick={this.handleOpen}
+            >
+              CSV File
+            </Button>
+          </StyledWrapper>
+        }
+        open={localStore.modalOpen}
+        onClose={this.handleClose}
+        basic
+        size="small"
+      >
         <Header content="Analysis Output" />
         <Modal.Content>
-          <span style={ { fontSize: 30 } }>
-                                    Select the factors to output first.
-                                  </span>
+          <span style={{ fontSize: 30 }}>
+            Select the factors to output first.
+          </span>
         </Modal.Content>
         <Modal.Actions>
-          <Button id="downloadResultsAsCsvModalGotItButton" size={ "huge" } color="green" onClick={ this.handleClose } inverted>
-            <Icon name="checkmark" /> Got it
+          <Button
+            id="downloadResultsAsCsvModalGotItButton"
+            size={"huge"}
+            color="green"
+            onClick={this.handleClose}
+            inverted
+          >
+            Got it
           </Button>
         </Modal.Actions>
       </Modal>
-      );
+    );
   }
 }
 
