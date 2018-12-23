@@ -1,4 +1,4 @@
-import grabProjectStatements from "../../../S1-data/UploadFile/excelUploadLogic/grabProjectStatements";
+import grabProjectStatements from "../../../Input/logic/excelLogic/grabProjectStatements";
 
 const parameter1 = [{
     "Statement Num.": "1",

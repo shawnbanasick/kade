@@ -1,4 +1,4 @@
-import calcMultiplierArray from "../../../Data/UploadFile/excelUploadLogic/calcMultiplierArrayT2";
+import calcMultiplierArray from "../../../Input/Excel/excelLogic/calcMultiplierArrayT2";
 
 const parameter1 = [
   -4,

@@ -31,3 +31,4 @@ const grabSortsT3 = function(data, numStatements) {
 };
 
 export default grabSortsT3;
+
