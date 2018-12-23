@@ -12,8 +12,10 @@ class CsvPanel extends Component {
   render() {
     const windowHeight = window.innerHeight - 100;
     return (
-      <DataWindow height={ windowHeight }>
-        <Header>Load both a statements TXT file and Q sorts CSV file.</Header>
+      <DataWindow height={windowHeight}>
+        <Header style={{ userSelect: "none" }}>
+          Load both a statements TXT file and Q sorts CSV file.
+        </Header>
         <CardHolder>
           <CsvStatementCard />
           <CsvQsortsCard />
@@ -23,7 +25,7 @@ class CsvPanel extends Component {
           <CsvSuccessfulLoadBar />
         </CardHolder>
       </DataWindow>
-      );
+    );
   }
 }
 
@@ -31,7 +33,7 @@ export default view(CsvPanel);
 
 // 645px  ;
 const DataWindow = styled.div`
-  height: ${props => (`${props.height  }px`)};
+  height: ${props => `${props.height}px`};
   background-color: white;
   overflow: hidden;
 `;
@@ -40,6 +42,7 @@ const CardHolder = styled.div`
   display: grid;
   grid-template-columns: 350px 350px;
   grid-template-rows: 320px 115px 120px;
+  user-select: none;
 `;
 
 const Header = styled.div`
@@ -48,4 +51,5 @@ const Header = styled.div`
   font-weight: bold;
   height: 30px;
   margin-top: 10px;
+  user-select: none;
 `;

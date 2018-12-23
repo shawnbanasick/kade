@@ -4,13 +4,12 @@ import styled from "styled-components";
 // import DisplayState from "./DisplayState";
 // import StatementsInState from "./StatementsInState";
 // import SortsInState from "./SortsInState";
-import state from "../../store";
+// import state from "../../store";
 
-// import styled from "styled-components";
 
 class License extends Component {
   render() {
-    console.log(JSON.stringify(state));
+    // console.log(JSON.stringify(state));
     return (
 
       <MainContent>
@@ -73,12 +72,11 @@ const MainContent = styled.div`
   background-color: white;
   padding-bottom: 50px;
   padding-top: 50px;
-
-
   font-family: Helvetica, sans-serif;
   font-size: 18px;
   width: calc(100vw - 123px);
   box-sizing: border-box;
   height: calc(100vh - 22px);
   overflow: auto;
+  user-select: none;
 `;

@@ -6,26 +6,27 @@ import ExcelT2Card from "./Excel/ExcelT2Card";
 import ForcedUnforcedRadio from "./CSV/ForcedUnforcedRadio";
 
 class ExcelPanel extends Component {
-    render() {
-        const windowHeight = window.innerHeight - 100;
-        return (
-            <DataWindow height={ windowHeight }>
-              <Header>Load a Type 1 or Type 2 Excel file.</Header>
-              <CardHolder>
-                <ExcelT1Card />
-                <ExcelT2Card />
-                <ForcedUnforcedRadio />
-              </CardHolder>
-            </DataWindow>
-            );
-    }
+  render() {
+    const windowHeight = window.innerHeight - 100;
+    return (
+      <DataWindow height={windowHeight}>
+        <Header>Load a Type 1 or Type 2 Excel file.</Header>
+        <CardHolder>
+          <ExcelT1Card />
+          <ExcelT2Card />
+          <ForcedUnforcedRadio />
+        </CardHolder>
+      </DataWindow>
+    );
+  }
 }
 
 export default view(ExcelPanel);
 
 const DataWindow = styled.div`
-  height: ${props => (`${props.height  }px`)};
+  height: ${props => `${props.height}px`};
   background-color: white;
+  user-select: none;
 `;
 
 const CardHolder = styled.div`

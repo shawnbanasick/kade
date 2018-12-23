@@ -75,6 +75,7 @@ const DataWindow1 = styled.div`
   min-height: 600px;
   background-color: white;
   max-width: 1197;
+  user-select: none;
 `;
 
 const DataWindow2 = styled.div`
@@ -87,8 +88,8 @@ const DataWindow2 = styled.div`
   width: calc(100vw - 198px);
   box-sizing: border-box;
   height: calc(100vh - 22px);
-  /* border: 2px solid green; */
   overflow: auto;
+  user-select: none;
 `;
 
 const fadeIn = keyframes`

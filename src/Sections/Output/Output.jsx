@@ -129,7 +129,7 @@ const MainContent = styled.div`
   background-color: #d6dbe0;
   overflow: auto;
 
- background-color: #d6dbe0;
+  background-color: #d6dbe0;
   visibility: ${props => (props.view ? "hidden" : "visible")};
   animation: ${props => (props.view ? fadeOut : fadeIn)} 0.5s linear;
   transition: visibility 0.5s linear;
@@ -137,8 +137,6 @@ const MainContent = styled.div`
   width: 100vw;
   box-sizing: border-box;
   max-height: calc(100vh - 22px);
-
-
 
   .tabular-menu {
     display: grid;
@@ -196,6 +194,7 @@ const DataWindow1 = styled.div`
   min-height: 600px;
   background-color: white;
   max-width: 1197;
+  user-select: none;
 `;
 
 const DataWindow2 = styled.div`
@@ -209,6 +208,7 @@ const DataWindow2 = styled.div`
   box-sizing: border-box;
   max-height: calc(100vh - 22px);
   overflow: auto;
+  user-select: none;
 `;
 
 const NoDataMessage = styled.div`

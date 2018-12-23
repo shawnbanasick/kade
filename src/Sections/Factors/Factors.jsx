@@ -7,22 +7,22 @@ import TypeOfAnalysisTransitionContainer from "./TypeOfAnalysisTransitionContain
 import UnrotatedFactorsTransitionContainer from "./UnrotatedFactorsTransitionContainer";
 
 class Factors extends Component {
-    render() {
-        const showCentroidError = state.getState("showCentroidError");
-        const showCorrelationMatrix = state.getState("showCorrelationMatrix");
+  render() {
+    const showCentroidError = state.getState("showCentroidError");
+    const showCorrelationMatrix = state.getState("showCorrelationMatrix");
 
-        return (
-            <MainContent>
-              { showCorrelationMatrix ? (
-                <TypeOfAnalysisTransitionContainer style={ { gridArea: "row1" } } />
-                ) : (
-                <DefaultMessage>Calculate correlations first.</DefaultMessage>
-                ) }
-              <UnrotatedFactorsTransitionContainer />
-              { showCentroidError ? <ErrorNotification /> : null }
-            </MainContent>
-            );
-    }
+    return (
+      <MainContent>
+        {showCorrelationMatrix ? (
+          <TypeOfAnalysisTransitionContainer style={{ gridArea: "row1" }} />
+        ) : (
+          <DefaultMessage>Calculate correlations first.</DefaultMessage>
+        )}
+        <UnrotatedFactorsTransitionContainer />
+        {showCentroidError ? <ErrorNotification /> : null}
+      </MainContent>
+    );
+  }
 }
 
 export default view(Factors);
@@ -65,15 +65,14 @@ const MainContent = styled.div`
   visibility: ${props => (props.view ? "hidden" : "visible")};
   animation: ${props => (props.view ? fadeOut : fadeIn)} 0.5s linear;
   transition: visibility 0.5s linear;
-
   font-family: Helvetica, sans-serif;
   font-size: 18px;
   background-color: white;
-
   width: calc(100vw - 122px);
   box-sizing: border-box;
   max-height: calc(100vh - 22px);
   overflow: auto;
+  user-select: none;
 `;
 
 const DefaultMessage = styled.div`

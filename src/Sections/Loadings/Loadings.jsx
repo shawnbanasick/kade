@@ -41,12 +41,6 @@ const MainContent = styled.div`
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: 1fr;
-  /* grid-template-areas:
-    "row1 row1 row1 row1"
-    "titleRow titleRow titleRow titleRow"
-    "weblinkRow weblinkRow weblinkRow weblinkRow"
-    "linkboxRow1 linkboxRow1 linkboxRow1 linkboxRow1"
-    "linkboxRow2 linkboxRow2 linkboxRow2 linkboxRow2"; */
   overflow: scroll;
   padding: 5px;
   padding-top: 15px;
@@ -55,12 +49,11 @@ const MainContent = styled.div`
   visibility: ${props => (props.view ? "hidden" : "visible")};
   animation: ${props => (props.view ? fadeOut : fadeIn)} 0.5s linear;
   transition: visibility 0.5s linear;
-
   font-family: Helvetica, sans-serif;
   font-size: 18px;
   background-color: white;
-
   width: calc(100vw - 122px);
   height: 100vh;
   overflow: auto;
+  user-select: none;  
 `;

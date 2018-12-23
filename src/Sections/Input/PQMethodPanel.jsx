@@ -30,6 +30,7 @@ export default view(CsvPanel);
 const DataWindow = styled.div`
   height: ${props => (`${props.height}px`)};    
   background-color: white;
+  user-select: none;
 `;
 
 const CardHolder = styled.div`

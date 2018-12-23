@@ -30,6 +30,7 @@ const DataWindow = styled.div`
   padding-top: 10px;
   padding-left: 10px;
   background-color: white;
+  user-select: none;
 `;
 
 const CardHolder = styled.div`

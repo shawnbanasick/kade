@@ -52,7 +52,7 @@ class Start extends Component {
           <HighlightLetter> E</HighlightLetter>
           dition
         </SubTitleDiv>
-        <SubTitleDiv2>version 0.0.1 alpha</SubTitleDiv2>
+        <SubTitleDiv2>version 1.0.0</SubTitleDiv2>
         <WebLinkRow>
           <h1>web links:</h1>
           <hr style={{ width: "700px" }} />
@@ -147,14 +147,13 @@ const MainContent = styled.div`
   visibility: ${props => (props.view ? "hidden" : "visible")};
   animation: ${props => (props.view ? fadeOut : fadeIn)} 0.5s linear;
   transition: visibility 0.5s linear;
-
   font-family: Helvetica, sans-serif;
   font-size: 18px;
-
   width: calc(100vw - 125px);
   box-sizing: border-box;
   max-height: calc(100vh - 22px);
   overflow: auto;
+  user-select: none;
 `;
 
 const LanguageSelection = styled.div`

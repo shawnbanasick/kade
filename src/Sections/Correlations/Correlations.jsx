@@ -3,7 +3,7 @@ import { view } from "react-easy-state";
 import styled, { keyframes } from "styled-components";
 import CalculateCorrelationsButton from "./CalculateCorrelationsButton";
 import CorrelationTable from "./CorrelationTable/CorrelationTable";
-import state from '../../store';
+import state from "../../store";
 
 // import styled from "styled-components";
 
@@ -17,10 +17,14 @@ class Correlations extends Component {
           <CalculateCorrelationsButton />
         </Container1>
         <Container2>
-          { showCorrelationMatrix ? <CorrelationTable /> : <DefaultMessage>No correlations calculated.</DefaultMessage> }
+          {showCorrelationMatrix ? (
+            <CorrelationTable />
+          ) : (
+            <DefaultMessage>No correlations calculated.</DefaultMessage>
+          )}
         </Container2>
       </MainContent>
-      );
+    );
   }
 }
 
@@ -61,9 +65,9 @@ const MainContent = styled.div`
   visibility: ${props => (props.view ? "hidden" : "visible")};
   animation: ${props => (props.view ? fadeOut : fadeIn)} 0.5s linear;
   transition: visibility 0.5s linear;
-
   width: calc(100vw - 153px);
   overflow: auto;
+  user-select: none;
 `;
 
 const Container1 = styled.div`
@@ -77,7 +81,7 @@ const Container2 = styled.div`
 `;
 
 const DefaultMessage = styled.div`
-  margin-top:50px;
+  margin-top: 50px;
   margin-left: 20px;
   font-size: 22px;
 `;
