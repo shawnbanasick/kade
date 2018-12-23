@@ -19,7 +19,8 @@ const styles2 = {
   display: "flex",
   marginTop: 20,
   marginRight: 5,
-  fontSize: 20
+  fontSize: 20,
+  userSelect: "none"
 };
 
 const localStore = store({ showDistinguishingAs: "symbol" });
@@ -38,7 +39,7 @@ class DistinguishingPanel extends Component {
   render() {
     return (
       <div style={{ marginTop: 40 }}>
-        <span style={{ fontSize: 32 }}>
+        <span style={{ fontSize: 32, userSelect: "none" }}>
           Distinguishing and Consensus Statements
         </span>
         <hr style={{ width: "100%", marginBottom: 15 }} />
@@ -112,7 +113,7 @@ class DistinguishingPanel extends Component {
         </OptionStatementRow>
         <OptionStatementRow>
           <OptionStatementText>
-            14. Display distinguishing statement comparison triangles?
+            --- Display distinguishing statement comparison triangles?
           </OptionStatementText>
           <UserSelectionSwitch
             name="willDisplayDistingCompareSymbols"
@@ -122,7 +123,7 @@ class DistinguishingPanel extends Component {
         </OptionStatementRow>
         <OptionStatementRow>
           <OptionStatementText>
-            15. Display consensus statement indicator color?
+            14. Display consensus statement indicator color?
           </OptionStatementText>
           <UserSelectionSwitch
             name="willDisplayConsensusStates"
@@ -150,6 +151,7 @@ const OptionStatementRow = styled.div`
 
 const OptionStatementText = styled.div`
   font-size: 20px;
+  user-select: none;
 `;
 
 const HolderDiv = styled.div`

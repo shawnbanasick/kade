@@ -35,8 +35,6 @@ class RefreshFactorVizButton extends React.Component {
       "updateFactorVisualizationsButtonColor"
     );
 
-    console.log(`props: ${JSON.stringify(this.props)}`);
-
     return (
       <Transition
         visible={shouldDisplayFactorVizOptions}
@@ -81,6 +79,7 @@ const RefreshButton = styled.button`
   border: 1px solid black;
   box-shadow: 0 2px 2px 0 black;
   outline: none;
+  user-select: none;
 
   &:hover {
     background-color: ${props => props.buttonColor};

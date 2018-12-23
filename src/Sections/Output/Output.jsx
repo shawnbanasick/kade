@@ -91,18 +91,6 @@ class Output extends Component {
     const { activeIndex } = localStore;
     showTableDataNotSentWarning = state.getState("showTableDataNotSentWarning");
 
-    // const shouldDisplayFactorViz = state.getState(
-    //   "displayFactorVisualizations"
-    // );
-    // const showStandardErrorsDifferences = state.getState(
-    //   "showStandardErrorsDifferences"
-    // );
-
-    // const showOutputFactorSelection = state.getState(
-    //   "showOutputFactorSelection"
-    // );
-
-    // if (showOutputFactorSelection) {
     return (
       <MainContent>
         <Tab
@@ -112,12 +100,6 @@ class Output extends Component {
         />
       </MainContent>
     );
-    //   }
-    // return (
-    //   <DefaultMessage>
-    //     No output. Click "Send Table Data to Output" in the "Loadings" section.
-    //   </DefaultMessage>
-    // );
   }
 }
 
@@ -145,35 +127,6 @@ const fadeOut = keyframes`
 
 const MainContent = styled.div`
   background-color: #d6dbe0;
-
-  /* 
-  display: grid;
-  grid-template-columns: 1fr;
-  grid-template-rows: 1fr;
-  grid-template-areas:
-    "row1 row1 row1 row1"
-    "titleRow titleRow titleRow titleRow"
-    "weblinkRow weblinkRow weblinkRow weblinkRow"
-    "linkboxRow1 linkboxRow1 linkboxRow1 linkboxRow1"
-    "linkboxRow2 linkboxRow2 linkboxRow2 linkboxRow2"; 
-    
-    
-  padding: 5px;
-  padding-top: 15px;
-  padding-left: 15px;
-  visibility: ${props => (props.view ? "hidden" : "visible")};
-  animation: ${props => (props.view ? fadeOut : fadeIn)} 0.5s linear;
-  transition: visibility 0.5s linear;
-
-  font-family: Helvetica, sans-serif;
-  font-size: 18px;
-  background-color: white;
-
-  width: calc(100vw - 153px);
-  box-sizing: border-box;
-  max-height: calc(100vh - 22px);
-  overflow: auto;
-    */
   overflow: auto;
 
  background-color: #d6dbe0;
@@ -236,12 +189,6 @@ const MainContent = styled.div`
     padding-left: 20px !important;
   }
 `;
-
-// const DefaultMessage = styled.div`
-//   margin-top: 50px;
-//   font-size: 22px;
-//   margin-left: 20px;
-// `;
 
 const DataWindow1 = styled.div`
   display: grid;

@@ -17,11 +17,11 @@ class DistinguishingPanel extends Component {
   render() {
     return (
       <div style={{ marginTop: 40 }}>
-        <span style={{ fontSize: 32 }}>Downloads</span>
+        <span style={{ fontSize: 32, userSelect: "none" }}>Downloads</span>
         <hr style={{ width: "100%", marginBottom: 15 }} />
         <OptionStatementRow>
           <OptionStatementText>
-            16. Add custom name to image downloads?
+            15. Add custom name to image downloads?
           </OptionStatementText>
           <UserSelectionSwitch
             name="willAddCustomNameToDownload"
@@ -54,6 +54,7 @@ const OptionStatementRow = styled.div`
 
 const OptionStatementText = styled.div`
   font-size: 20px;
+  user-select: none;
 `;
 
 // import styled from "styled-components";

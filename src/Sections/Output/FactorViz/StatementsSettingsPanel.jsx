@@ -12,7 +12,7 @@ class StatementsSettingsPanel extends Component {
   render() {
     return (
       <div style={{ marginTop: 40 }}>
-        <span style={{ fontSize: 32 }}>Statements</span>
+        <span style={{ fontSize: 32, userSelect: "none" }}>Statements</span>
         <hr style={{ width: "100%", marginBottom: 15 }} />
         <OptionStatementRow>
           <OptionStatementText>8. Adjust line spacing?</OptionStatementText>
@@ -110,6 +110,7 @@ const OptionStatementRow = styled.div`
 
 const OptionStatementText = styled.div`
   font-size: 20px;
+  user-select: none;
 `;
 
 // import styled from "styled-components";

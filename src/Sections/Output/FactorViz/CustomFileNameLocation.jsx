@@ -8,7 +8,8 @@ import state from "../../../store";
 const styles = {
   display: "flex",
   marginTop: 15,
-  fontSize: 20
+  fontSize: 20,
+  userSelect: "none"  
 };
 
 const localStore = store({ customFileNameLocation: "" });

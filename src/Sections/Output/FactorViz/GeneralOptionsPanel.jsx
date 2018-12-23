@@ -4,9 +4,9 @@ import React, { Component } from "react";
 import UserTextInput from "./UserTextInput";
 import UserSelectionSwitch from "./UserSelectionSwitch";
 
-
 const styles = {
-  fontSize: 32
+  fontSize: 32,
+  userSelect: "none"
 };
 
 class GeneralOptionsPanel extends Component {
@@ -16,7 +16,9 @@ class GeneralOptionsPanel extends Component {
         <span style={styles}>General</span>
         <hr style={{ width: "100%", marginBottom: 15 }} />
         <OptionStatementRow>
-          <OptionStatementText>1. Include legend with image?</OptionStatementText>
+          <OptionStatementText>
+            1. Include legend with image?
+          </OptionStatementText>
           <UserSelectionSwitch
             name="willIncludeLegend"
             value="willIncludeLegend"
@@ -24,7 +26,9 @@ class GeneralOptionsPanel extends Component {
           />
         </OptionStatementRow>
         <OptionStatementRow>
-          <OptionStatementText>2. Prepend statement numbers?</OptionStatementText>
+          <OptionStatementText>
+            2. Prepend statement numbers?
+          </OptionStatementText>
           <UserSelectionSwitch
             name="willPrependStateNums"
             value="willPrependStateNums"
@@ -32,7 +36,9 @@ class GeneralOptionsPanel extends Component {
           />
         </OptionStatementRow>
         <OptionStatementRow>
-          <OptionStatementText>3. Display only statement numbers?</OptionStatementText>
+          <OptionStatementText>
+            3. Display only statement numbers?
+          </OptionStatementText>
           <UserSelectionSwitch
             name="willDisplayOnlyStateNums"
             value="willDisplayOnlyStateNums"
@@ -64,16 +70,15 @@ class GeneralOptionsPanel extends Component {
 
 export default view(GeneralOptionsPanel);
 
-
-
 const OptionStatementRow = styled.div`
   display: flex;
   align-items: center;
   margin-bottom: 25px;
-  padding-left:10px;
+  padding-left: 10px;
 `;
 
 const OptionStatementText = styled.div`
+  user-select: none;
   font-size: 20px;
 `;
 
