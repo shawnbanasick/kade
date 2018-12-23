@@ -44,7 +44,7 @@ class DistinguishingPanel extends Component {
         <hr style={{ width: "100%", marginBottom: 15 }} />
         <OptionStatementRow>
           <OptionStatementText>
-            13. Indicate distinguishing statements?
+            13. Indicate distinguishing?
           </OptionStatementText>
           <UserSelectionSwitch
             name="willIndicateDistinguishing"

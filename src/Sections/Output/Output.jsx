@@ -3,7 +3,7 @@ import React, { Component } from "react";
 import { view, store } from "react-easy-state";
 import styled, { keyframes } from "styled-components";
 import state from "../../store";
-import FactorsTable from './Factors Table/FactorsTable';
+import FactorsTable from "./Factors Table/FactorsTable";
 import FactorVizOptions from "./FactorViz/FactorVizOptions";
 import FactorVizDispatch from "./FactorVisualizations/FactorVizDispatch";
 import RefreshFactorVizButton from "./FactorVisualizations/RefreshFactorVizButton";
@@ -24,11 +24,11 @@ const panes = [
     menuItem: "Options",
     render: () => (
       <Tab.Pane>
-        { showTableDataNotSentWarning && (
+        {showTableDataNotSentWarning && (
           <NoDataMessage>
             No Data - Click the "Send Table Data to Output" button in Section 6
           </NoDataMessage>
-          ) }
+        )}
         <DataWindow1>
           <FactorSelectionForOutputButtons />
           <DownloadResultsButtons />
@@ -63,11 +63,14 @@ const panes = [
     render: () => (
       <Tab.Pane>
         <DataWindow2>
-          <DisplayVisualizationsButtons />
-          <ShowVizOptionsButton />
-          <RefreshFactorVizButton />
+          <ButtonContainer1>
+            <DisplayVisualizationsButtons />
+            <ShowVizOptionsButton />
+          </ButtonContainer1>
+          <RefreshFactorVizButton marginTop={50} marginBottom={10} />
           <FactorVizOptions />
-          <RefreshFactorVizButton />
+          <RefreshFactorVizButton marginTop={10} marginBottom={50} />
+          <div style={{ height: 50 }} />
           <FactorVizDispatch />
         </DataWindow2>
       </Tab.Pane>
@@ -79,15 +82,14 @@ const localStore = store({
   activeIndex: 0
 });
 
+function handleTabChange(e, { activeIndex }) {
+  localStore.activeIndex = activeIndex;
+}
+
 class Output extends Component {
-  handleTabChange(e, {activeIndex}) {
-    localStore.activeIndex = activeIndex;
-  }
-
   render() {
-    const {activeIndex} = localStore;
+    const { activeIndex } = localStore;
     showTableDataNotSentWarning = state.getState("showTableDataNotSentWarning");
-
 
     // const shouldDisplayFactorViz = state.getState(
     //   "displayFactorVisualizations"
@@ -103,15 +105,19 @@ class Output extends Component {
     // if (showOutputFactorSelection) {
     return (
       <MainContent>
-        <Tab panes={ panes } activeIndex={ activeIndex } onTabChange={ this.handleTabChange } />
+        <Tab
+          panes={panes}
+          activeIndex={activeIndex}
+          onTabChange={handleTabChange}
+        />
       </MainContent>
-      );
-  //   }
-  // return (
-  //   <DefaultMessage>
-  //     No output. Click "Send Table Data to Output" in the "Loadings" section.
-  //   </DefaultMessage>
-  // );
+    );
+    //   }
+    // return (
+    //   <DefaultMessage>
+    //     No output. Click "Send Table Data to Output" in the "Loadings" section.
+    //   </DefaultMessage>
+    // );
   }
 }
 
@@ -262,4 +268,8 @@ const NoDataMessage = styled.div`
   font-size: 25px;
   margin-left: 50px;
   margin-top: 100px;
+`;
+
+const ButtonContainer1 = styled.div`
+  display: flex;
 `;

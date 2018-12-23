@@ -1,8 +1,8 @@
 version: 0.0.1
 files:
   - url: KADE-0.0.1.dmg
-    sha512: bg2XjWBZRAxhc2o9oQr7Ie0EZvTV49hzypeoeDPWc/m/QEOflk0PQrKRHEzpDQjcOI0eH4BdjXSDNQmKyLKXbQ==
-    size: 75567147
+    sha512: a4kJXGzrjPI9DQPbpV8v72HzaN7OmB047mQlKb65AK8+HeRSVGEocEtgdWvyX9x91dcmRM9R3ZNtcSSrqifDGg==
+    size: 75524623
 path: KADE-0.0.1.dmg
-sha512: bg2XjWBZRAxhc2o9oQr7Ie0EZvTV49hzypeoeDPWc/m/QEOflk0PQrKRHEzpDQjcOI0eH4BdjXSDNQmKyLKXbQ==
-releaseDate: '2018-12-15T21:12:17.504Z'
+sha512: a4kJXGzrjPI9DQPbpV8v72HzaN7OmB047mQlKb65AK8+HeRSVGEocEtgdWvyX9x91dcmRM9R3ZNtcSSrqifDGg==
+releaseDate: '2018-12-22T23:34:37.048Z'

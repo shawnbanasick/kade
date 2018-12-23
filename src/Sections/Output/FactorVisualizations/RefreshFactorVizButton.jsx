@@ -12,7 +12,6 @@ class RefreshFactorVizButton extends React.Component {
   }
 
   refresh() {
-
     const factorVizOptions = state.getState("factorVizOptions");
     const factorVizOptionsHolder = state.getState("factorVizOptionsHolder");
     const updateKeys = Object.keys(factorVizOptionsHolder);
@@ -36,6 +35,8 @@ class RefreshFactorVizButton extends React.Component {
       "updateFactorVisualizationsButtonColor"
     );
 
+    console.log(`props: ${JSON.stringify(this.props)}`);
+
     return (
       <Transition
         visible={shouldDisplayFactorVizOptions}
@@ -43,14 +44,7 @@ class RefreshFactorVizButton extends React.Component {
         duration={1000}
       >
         <div>
-          <div
-            style={{
-              marginTop: 50,
-              marginBottom: 50,
-              height: 100,
-              display: "block"
-            }}
-          >
+          <RefreshButtonContainerDiv>
             <RefreshButton
               id="refreshFactorVizButton"
               className="wrapper1"
@@ -61,7 +55,7 @@ class RefreshFactorVizButton extends React.Component {
             >
               Update Factor Visualizations
             </RefreshButton>
-          </div>
+          </RefreshButtonContainerDiv>
         </div>
       </Transition>
     );
@@ -97,4 +91,12 @@ const RefreshButton = styled.button`
     box-shadow: 0 0 1px 0 black inset;
     margin-left: 3px;
   }
+`;
+
+const RefreshButtonContainerDiv = styled.div`
+  margin-top: 10px;
+  /* margin-top: ${props => `${props.marginTop}px`}; */
+  /* margin-bottom: ${props => `${props.marginBottom}px`}; */
+  margin-bottom: 10px;
+  display: block;
 `;
