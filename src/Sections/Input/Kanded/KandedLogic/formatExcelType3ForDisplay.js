@@ -25,10 +25,10 @@ function formatype3ForDisplay(data) {
         "Can't find Q-sort pattern on 'Analysis Overview' worksheet!"
       );
     }
-    console.log(`qsortpattern: ${JSON.stringify(qSortPattern1.length)}`);
+
     const qSortPattern2 = qSortPattern1
-      .split("\\")
-      .toString()
+      // .split("\\")
+      // .toString()
       .split('"');
     const qSortPattern = qSortPattern2[1].split(",").map(Number);
 
@@ -49,7 +49,6 @@ function formatype3ForDisplay(data) {
     if (respondentSorts.length === 0) {
       throw new Error("Cant't find any q-sorts on 'Q-sorts' worksheet!");
     }
-    console.log(`respondent sorts : ${JSON.stringify(respondentSorts)}`);
 
     // store #9 - get statements
     const currentStatements = grabStatementsT3(data[1]);

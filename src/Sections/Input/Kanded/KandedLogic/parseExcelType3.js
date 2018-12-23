@@ -21,7 +21,7 @@ function parseExcelType3(excelFile) {
       worksheet = workbook.Sheets[y];
 
       // find Project information
-      if (y === "Analysis Overview") {
+      if (y === "Project Overview") {
         // turn off error report
         hasAnalysisOverviewWorksheet = true;
 
@@ -38,7 +38,7 @@ function parseExcelType3(excelFile) {
         allWorksheets.push(temp99Array);
 
         // find q sorts
-      } else if (y === "Q-sorts") {
+      } else if (y === "Q-sorts" || y === "Q sorts") {
         // turn off error report
         hasSortsWorksheetFromKenQ = true;
 
@@ -95,9 +95,9 @@ function parseExcelType3(excelFile) {
     }
   } // end error catching
 
-  console.log(`all worksheets ${JSON.stringify(allWorksheets[0])}`);
-  console.log(`all worksheets ${JSON.stringify(allWorksheets[1])}`);
-  console.log(`all worksheets ${JSON.stringify(allWorksheets[2])}`);
+  // console.log(`all worksheets ${JSON.stringify(allWorksheets[0])}`);
+  // console.log(`all worksheets ${JSON.stringify(allWorksheets[1])}`);
+  // console.log(`all worksheets ${JSON.stringify(allWorksheets[2])}`);
 
   if (
     hasSortsWorksheetFromKenQ === true &&
@@ -108,33 +108,5 @@ function parseExcelType3(excelFile) {
     store.setState({ dataOrigin: "excel" });
   }
 }
-// reader.onabort = () => {
-//   console.log("file reading was aborted");
-//   store.setState({
-//     excelErrorMessage1: "The file reader aborted the load process!",
-//     showExcelErrorModal: true
-//   });
-// };
-// reader.onerror = () => {
-//   console.log("The file reader encountered an error");
-//   store.setState({
-//     excelErrorMessage1: "The file reader encountered an error!",
-//     showExcelErrorModal: true
-//   });
-
-// reader.onabort = () => {
-//     console.log("file reading was aborted");
-//     store.setState({
-//         excelErrorMessage1: "The file reader aborted the load process!",
-//         showExcelErrorModal: true,
-//     });
-// }
-// reader.onerror = () => {
-//     console.log("The file reader encountered an error");
-//     store.setState({
-//         excelErrorMessage1: "The file reader encountered an error!",
-//         showExcelErrorModal: true,
-//     });
-// }
 
 export default parseExcelType3;
