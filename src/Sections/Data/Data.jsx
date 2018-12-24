@@ -3,9 +3,9 @@ import { view, store } from "react-easy-state";
 import styled, { keyframes } from "styled-components";
 import state from "../../store";
 import StatementsList from "./StatementsList";
+import QsortsPatternList from "./QsortsPatternList";
 import ParticipantsQsortsGrid from "./ParticipantQsortsGrid";
 import calcMultiplierArrayT2 from "../Input/Excel/excelLogic/calcMultiplierArrayT2";
-import QsortsPatternList from "./QsortsPatternList";
 
 const localStore = store({
   sortsDisplayText: [],

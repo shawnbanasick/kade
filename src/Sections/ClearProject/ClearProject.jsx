@@ -1,11 +1,7 @@
-import React, { Component } from "react";
 import { view } from "react-easy-state";
+import React, { Component } from "react";
 import styled, { keyframes } from "styled-components";
 import ClearProjectModal from './ClearProjectModal';
-// function handleClick() {
-//     const initialStateValues = initialState();
-//     state.setState(initialStateValues);
-// }
 
 
 class ClearProject extends Component {

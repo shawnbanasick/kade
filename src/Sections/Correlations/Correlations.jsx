@@ -1,11 +1,9 @@
-import React, { Component } from "react";
 import { view } from "react-easy-state";
+import React, { Component } from "react";
 import styled, { keyframes } from "styled-components";
-import CalculateCorrelationsButton from "./CalculateCorrelationsButton";
-import CorrelationTable from "./CorrelationTable/CorrelationTable";
 import state from "../../store";
-
-// import styled from "styled-components";
+import CorrelationTable from "./CorrelationTable/CorrelationTable";
+import CalculateCorrelationsButton from "./CalculateCorrelationsButton";
 
 class Correlations extends Component {
   render() {

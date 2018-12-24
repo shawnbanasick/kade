@@ -1,9 +1,7 @@
 import React, { Component } from "react";
-import { view, store } from "react-easy-state";
-import styled from "styled-components";
 import { AgGridReact } from "ag-grid-react";
+import { view, store } from "react-easy-state";
 import state from "../../store";
-// import calculateCorrelations from "../correlationsLogic/calcCorrelations";
 
 const localStore = store({
   numQsorts: 0
@@ -113,13 +111,9 @@ class ParticipantQsortsGrid extends Component {
     });
   }
 
-
-
   onGridReady(params) {
     this.gridApi = params.api;
     this.columnApi = params.columnApi;
-  // this.gridApi.sizeColumnsToFit();
-  // params.api.sizeColumnsToFit();
   }
 
   render() {
@@ -134,23 +128,26 @@ class ParticipantQsortsGrid extends Component {
       localStore.numStatements = statements.length;
     }
 
-    const {onGridReady} = this;
+    const { onGridReady } = this;
 
     return (
-      <TableHolder>
-        <div id="participantQsortData" style={ { width: getWidth(statements.length), height: getHeight(numQsorts) } } className="ag-theme-fresh">
-          <AgGridReact columnDefs={ localStore.gridColDefsQsorts } rowData={ localStore.gridRowDataQsorts } onGridReady={ onGridReady } enableSorting />
-        </div>
-      </TableHolder>
-      );
+      <div
+        id="participantQsortData"
+        style={{
+          width: getWidth(statements.length),
+          height: getHeight(numQsorts)
+        }}
+        className="ag-theme-fresh"
+      >
+        <AgGridReact
+          columnDefs={localStore.gridColDefsQsorts}
+          rowData={localStore.gridRowDataQsorts}
+          onGridReady={onGridReady}
+          enableSorting
+        />
+      </div>
+    );
   }
 }
 
 export default view(ParticipantQsortsGrid);
-
-const TableHolder = styled.div``;
-
-// const OuterMostContainer = styled.div`
-//   height: 78vh;
-//   width: ${props => props.width};
-// `;
