@@ -1,4 +1,4 @@
-import inflectPrincipalComponents from "../../../S3-factor/PcaLogic/inflectPrincipalComponents";
+import inflectPrincipalComponents from "../../../Factors/PcaLogic/inflectPrincipalComponents";
 
 const parameter1 = [
   [
@@ -197,6 +197,6 @@ const testValue1 = [
 ];
 
 test("inflect principal components", () => {
-  let value1 = inflectPrincipalComponents(parameter1, parameter2);
+  const value1 = inflectPrincipalComponents(parameter1, parameter2);
   expect(value1).toEqual(testValue1);
 });

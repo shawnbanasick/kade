@@ -1,4 +1,4 @@
-import removeCorrelations from "../../../S3-factor/centroidLogic/removeCorrelations";
+import removeCorrelations from "../../../Factors/centroidLogic/removeCorrelations";
 
 const parameter1 = [
   [1, 0.5375, -0.20625, -0.225, 0.1, 0.225, 0.31875, 0.2375, -0.05],
@@ -126,6 +126,6 @@ const testValue1 = [
 ];
 
 test("remove correlations", () => {
-  let value1 = removeCorrelations(parameter1, parameter2);
+  const value1 = removeCorrelations(parameter1, parameter2);
   expect(value1).toEqual(testValue1);
 });

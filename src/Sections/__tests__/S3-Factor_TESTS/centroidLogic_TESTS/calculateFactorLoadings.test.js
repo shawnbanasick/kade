@@ -1,4 +1,4 @@
-import calculateFactorLoadings from "../../../S3-factor/centroidLogic/calculateFactorLoadings";
+import calculateFactorLoadings from "../../../Factors/centroidLogic/calculateFactorLoadings";
 
 const parameter1 = [
   [1, 0.5375, 0.20625, 0.225, 0.1, -0.225, -0.31875, 0.2375, 0.05],
@@ -128,6 +128,6 @@ const testValue1 = [
 ];
 
 test("calculate Factor Loadings", () => {
-  let value1 = calculateFactorLoadings(parameter1);
+  const value1 = calculateFactorLoadings(parameter1);
   expect(value1).toEqual(testValue1);
 });

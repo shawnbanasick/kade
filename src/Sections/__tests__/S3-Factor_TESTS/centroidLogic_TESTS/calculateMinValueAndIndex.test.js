@@ -1,4 +1,4 @@
-import calculateMinValueAndIndex from "../../../S3-factor/centroidLogic/calculateMinValueAndIndex";
+import calculateMinValueAndIndex from "../../../Factors/centroidLogic/calculateMinValueAndIndex";
 
 const parameter1 = [
   0.8125,
@@ -15,6 +15,6 @@ const parameter1 = [
 const testValue1 = [-1.0375, 4];
 
 test("calculate min value and index", () => {
-  let value1 = calculateMinValueAndIndex(parameter1);
+  const value1 = calculateMinValueAndIndex(parameter1);
   expect(value1).toEqual(testValue1);
 });

@@ -1,4 +1,4 @@
-import calcEigenCumulPercentArray from "../../../S3-factor/PcaLogic/calcEigenCumulPercentArray";
+import calcEigenCumulPercentArray from "../../../Factors/PcaLogic/calcEigenCumulPercentArray";
 
 const parameter1 = [
   2.383773189005688,
@@ -17,7 +17,7 @@ const testValue1 = [26, 22, 15, 13, 8, 6, 4, 4, 2];
 const testValue2 = [26, 48, 63, 76, 84, 90, 94, 98, 100];
 
 test("calc eigen cumulative percent array", () => {
-  let value1 = calcEigenCumulPercentArray(parameter1, parameter2);
+  const value1 = calcEigenCumulPercentArray(parameter1, parameter2);
   expect(value1[0]).toEqual(testValue1);
   expect(value1[1]).toEqual(testValue2);
 });

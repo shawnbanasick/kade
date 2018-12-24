@@ -1,4 +1,4 @@
-import undoReflection from "../../../S3-factor/centroidLogic/undoReflection";
+import undoReflection from "../../../Factors/centroidLogic/undoReflection";
 
 const parameter1 = [
   [
@@ -230,6 +230,6 @@ const testValue1 = [
 ];
 
 test("undo reflection", () => {
-  let value1 = undoReflection(parameter1, parameter2, parameter3);
+  const value1 = undoReflection(parameter1, parameter2, parameter3);
   expect(value1).toEqual(testValue1);
 });

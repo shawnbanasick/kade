@@ -1,4 +1,4 @@
-import calcScreePlotData from "../../../S3-factor/centroidLogic/calcScreePlotData";
+import calcScreePlotData from "../../../Factors/centroidLogic/calcScreePlotData";
 
 const parameter1 = [
   "Eigenvalues",
@@ -22,6 +22,6 @@ const testValue1 = [
 ];
 
 test("calc scree plot data", () => {
-  let value1 = calcScreePlotData(parameter1);
+  const value1 = calcScreePlotData(parameter1);
   expect(value1).toEqual(testValue1);
 });

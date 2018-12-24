@@ -1,4 +1,4 @@
-import checkPositiveManifold from "../../../S3-factor/centroidLogic/checkPositiveManifold";
+import checkPositiveManifold from "../../../Factors/centroidLogic/checkPositiveManifold";
 
 const parameter1 = [
   [1, 0.5375, 0.20625, 0.225, 0.1, -0.225, -0.31875, 0.2375, 0.05],
@@ -29,6 +29,6 @@ const testValue1 = [
 ];
 
 test("check positive manifold", () => {
-  let value1 = checkPositiveManifold(parameter1);
+  const value1 = checkPositiveManifold(parameter1);
   expect(value1).toEqual(testValue1);
 });

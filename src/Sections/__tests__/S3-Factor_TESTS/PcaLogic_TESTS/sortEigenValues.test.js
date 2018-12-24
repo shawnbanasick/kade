@@ -1,4 +1,4 @@
-import sortEigenValues from "../../../S3-factor/PcaLogic/sortEigenValues";
+import sortEigenValues from "../../../Factors/PcaLogic/sortEigenValues";
 
 const parameter1 = [
   2.383773189005688,
@@ -25,6 +25,6 @@ const testValue1 = [
 ];
 
 test("sort eigen values", () => {
-  let value1 = sortEigenValues(parameter1);
+  const value1 = sortEigenValues(parameter1);
   expect(value1).toEqual(testValue1);
 });

@@ -1,4 +1,4 @@
-import calcEigenVectors from "../../../S3-factor/PcaLogic/calcEigenVectors";
+import calcEigenVectors from "../../../Factors/PcaLogic/calcEigenVectors";
 
 const parameter1 = 9;
 const parameter2 = 8;
@@ -219,7 +219,7 @@ const testValue2 = [
 ];
 
 test("calculate eigen vectors", () => {
-  let value1 = calcEigenVectors(parameter1, parameter2, parameter3, parameter4);
+  const value1 = calcEigenVectors(parameter1, parameter2, parameter3, parameter4);
   expect(value1[0]).toEqual(testValue1);
   expect(value1[1]).toEqual(testValue2);
 });

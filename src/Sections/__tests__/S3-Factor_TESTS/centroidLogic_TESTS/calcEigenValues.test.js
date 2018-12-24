@@ -1,4 +1,4 @@
-import calcEigenValues from "../../../S3-factor/centroidLogic/calcEigenValues";
+import calcEigenValues from "../../../Factors/centroidLogic/calcEigenValues";
 
 const parameter1 = [
   [
@@ -85,7 +85,7 @@ const testValue1 = [1.6155, 1.4113, 0.8401, 0.5535, 0.3844, 0.1831, 0.2783];
 const testValue2 = [18, 16, 9, 6, 4, 2, 3];
 
 test("calc Eigen values", () => {
-  let value1 = calcEigenValues(parameter1, parameter2);
+  const value1 = calcEigenValues(parameter1, parameter2);
   expect(value1[0]).toEqual(testValue1);
   expect(value1[1]).toEqual(testValue2);
 });
