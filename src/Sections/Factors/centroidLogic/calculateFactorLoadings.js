@@ -1,29 +1,28 @@
-import checkPositiveManifold from "./checkPositiveManifold";
+import undoReflection from "./undoReflection";
 import calculateFactor from "./calculateFactor";
 import removeCorrelations from "./removeCorrelations";
-import undoReflection from "./undoReflection";
+import checkPositiveManifold from "./checkPositiveManifold";
 
 const calculateFactorLoadings = dataArray => {
-    var reflectedArray = checkPositiveManifold(dataArray);
-    var reflectedArray1 = reflectedArray[0]; // reflected array
-    var reflectedArrayColumnTotals = reflectedArray[1]; // column totals
-    var reflectedRowCol = reflectedArray[2];
-    var factorLoads1 = calculateFactor(
-        reflectedArray1,
-        reflectedArrayColumnTotals
-    );
-    var subtractArray = removeCorrelations(reflectedArray1, factorLoads1);
-    var undoPositiveManifold = undoReflection(
-        // 1
-        subtractArray,
-        factorLoads1,
-        reflectedRowCol
-    );
-    var factorSubtractedArray = undoPositiveManifold[0];
-    var factorFactorScores = undoPositiveManifold[1];
-    var results = [factorFactorScores, factorSubtractedArray];
+  const reflectedArray = checkPositiveManifold(dataArray);
+  const reflectedArray1 = reflectedArray[0];
+  const reflectedArrayColumnTotals = reflectedArray[1];
+  const reflectedRowCol = reflectedArray[2];
+  const factorLoads1 = calculateFactor(
+    reflectedArray1,
+    reflectedArrayColumnTotals
+  );
+  const subtractArray = removeCorrelations(reflectedArray1, factorLoads1);
+  const undoPositiveManifold = undoReflection(
+    subtractArray,
+    factorLoads1,
+    reflectedRowCol
+  );
+  const factorSubtractedArray = undoPositiveManifold[0];
+  const factorFactorScores = undoPositiveManifold[1];
+  const results = [factorFactorScores, factorSubtractedArray];
 
-    return results;
+  return results;
 };
 
 export default calculateFactorLoadings;
