@@ -1,5 +1,5 @@
-import { default as currentDate } from "../../../Utils/currentDate1";
-import { default as currentTime } from "../../../Utils/currentTime1";
+import currentDate from "../../../Utils/currentDate1";
+import currentTime from "../../../Utils/currentTime1";
 import store from "../../../store";
 
 const downloadSvgImage = () => {

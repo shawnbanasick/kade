@@ -1,5 +1,5 @@
-import store from "../../../store";
 import { saveSvgAsPng } from "save-svg-as-png";
+import store from "../../../store";
 
 const downloadPngImage = () => {
   const projectName = store.getState("projectName");

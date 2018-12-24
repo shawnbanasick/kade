@@ -5,8 +5,8 @@ import transposeMatrix from "../../../Utils/transposeMatrix";
 import calculateFactorLoadings from "./calculateFactorLoadings";
 import calcScreePlotData from "../centroidLogic/calcScreePlotData";
 import factorTableDataPrep from "../FactorTable/factorTableDataPrep";
-import factorTableEigenDataPrep from "../FactorTableEigen/FactorTableEigenDataPrep";
 import calcEigenCumulPercentArray from "../PcaLogic/calcEigenCumulPercentArray";
+import factorTableEigenDataPrep from "../FactorTableEigen/FactorTableEigenDataPrep";
 import calculateCommunalities from "../../Rotation/varimaxLogic/2calculateCommunalities";
 
 // todo - make the centroid dropdown list dynamic in case only few sorts - not
@@ -18,7 +18,7 @@ const centroidDispatch = numFactors => {
   const numCentroidFactors = store.getState("numCentroidFactors");
   const factorMatrix = [];
 
-  for (let i = 0; i < numFactors; i++) {
+  for (let i = 0; i < numFactors; i += 1) {
     const tempArray = calculateFactorLoadings(dataArray);
     factorMatrix.push(tempArray[0]);
     dataArray = tempArray[1];
@@ -54,9 +54,7 @@ const centroidDispatch = numFactors => {
   // expects display style matrix (factor cols), not factor rows
   calculateCommunalities(rotFacStateArray);
 
-  projectHistoryArray.push(
-    `Extracted ${  numCentroidFactors  } Centroid Factors`
-  );
+  projectHistoryArray.push(`Extracted ${numCentroidFactors} Centroid Factors`);
 
   store.setState({
     factorMatrix: rotFacStateArray1, // pulled for first display on loadings table
