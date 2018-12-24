@@ -90,7 +90,7 @@ const StyledWrapper = styled.div`
       box-shadow: 0 1px 1px 0 black;
       transform: translateY(1px);
       /* margin-left: 3px; */
-      margin-top: 3px;
+      /* margin-top: 3px; */
     }
   }
 `;

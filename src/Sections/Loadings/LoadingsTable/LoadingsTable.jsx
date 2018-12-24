@@ -462,7 +462,7 @@ const StyledWrapperOutput = styled.button`
   &:active {
     box-shadow: 0 0 1px 0 black inset;
     margin-left: 3px;
-    margin-top: 3px;
+    /* margin-top: 3px; */
     background-color: rgba(144, 238, 144, 0.6);
   }
 `;

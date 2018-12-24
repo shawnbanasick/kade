@@ -170,7 +170,7 @@ const StyledWrapper = styled.div`
     &:active {
       box-shadow: 0 0 1px 0 black inset;
       margin-left: 103px;
-      margin-top: 3px;
+      /* margin-top: 3px; */
     }
   }
 `;

@@ -214,7 +214,7 @@ const WebLinkDiv1 = styled.div`
   &:active {
     box-shadow: 0 0 1px 0 black inset;
     margin-left: 3px;
-    margin-top: 3px;
+    /* margin-top: 3px; */
   }
 `;
 
@@ -244,7 +244,7 @@ const WebLinkDiv2 = styled.div`
   &:active {
     box-shadow: 0 0 1px 0 black inset;
     margin-left: 3px;
-    margin-top: 3px;
+    /* margin-top: 3px; */
   }
 `;
 
@@ -274,7 +274,7 @@ const WebLinkDiv3 = styled.div`
   &:active {
     box-shadow: 0 0 1px 0 black inset;
     margin-left: 3px;
-    margin-top: 3px;
+    /* margin-top: 3px; */
   }
 `;
 
@@ -304,7 +304,7 @@ const WebLinkDiv4 = styled.div`
   &:active {
     box-shadow: 0 0 1px 0 black inset;
     margin-left: 3px;
-    margin-top: 3px;
+    /* margin-top: 3px; */
   }
 `;
 
