@@ -3,10 +3,10 @@ import evenRound from "../../../Utils/evenRound";
 const calculateColumnSums = sortMatrix => {
   const columnTotals = [];
 
-  for (let j = 0, jLen = sortMatrix.length; j < jLen; j++) {
+  for (let j = 0, jLen = sortMatrix.length; j < jLen; j += 1) {
     let sum = 0;
 
-    for (let i = 0, iLen = sortMatrix.length; i < iLen; i++) {
+    for (let i = 0, iLen = sortMatrix.length; i < iLen; i += 1) {
       sum += sortMatrix[i][j];
     }
 
