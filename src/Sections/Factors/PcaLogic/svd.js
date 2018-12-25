@@ -1,8 +1,8 @@
 
-  function zeros(i,j){
-      let array = [];
-      for (let z=0; z<i; z++) {
-      	let temp = [];
+  function zeros(i){
+      const array = [];
+      for (let z=0; z<i; z+=1) {
+      	const temp = [];
         temp.length = i;
         temp.fill(0);
         array.push(temp);
@@ -14,8 +14,8 @@
    const svd =  function(A){
         let temp;
         // Compute the thin SVD from G. H. Golub and C. Reinsch, Numer. Math. 14, 403-420 (1970)
-        let prec = Math.pow(2,-52) // assumes double prec
-        let tolerance = 1.e-64/prec;
+        let prec = (2 ** -52); // assumes double prec
+        const tolerance = 1.e-64/prec;
         const itmax = 50;
         let c = 0;
         let i = 0;
@@ -23,27 +23,29 @@
         let k = 0;
         let l = 0;
         
-        let u = A.map(function(row){ return row.slice(0); });
-        let m = u.length;
-        let n = u[0].length;
+        const u = A.map((row) => row.slice(0));
+        const m = u.length;
+        const n = u[0].length;
         
-        console.assert(m >= n, 'Need more rows than columns');
+        // console.assert(m >= n, 'Need more rows than columns');
         
         
-      let e = [];
+      const e = [];
       e.length = n;
       e.fill(0);
       
-      let q = e.slice();    
-      let v = zeros(n,n);
+      const q = e.slice();    
+      const v = zeros(n,n);
         
         function pythag(a,b){
-            a = Math.abs(a)
-            b = Math.abs(b)
-            if (a > b)
-                return a*Math.sqrt(1.0+(b*b/a/a))
-            else if (b === 0) 
-                return a
+            a = Math.abs(a);
+            b = Math.abs(b);
+            if (a > b) {
+                return a*Math.sqrt(1.0+(b*b/a/a));
+            }
+            else if (b === 0) {
+                return a;
+            }
             return b*Math.sqrt(1.0+(a*a/b/b))
         }
 
@@ -56,34 +58,37 @@
         let z = 0;
         let s = 0;
         
-        for (i=0; i < n; i++)
+        for (i=0; i < n; i+=1)
         {
             e[i]= g;
             s= 0.0;
             l= i+1;
-            for (j=i; j < m; j++) 
+            for (j=i; j < m; j+=1) 
                 s += (u[j][i]*u[j][i]);
-            if (s <= tolerance)
+            if (s <= tolerance) {
                 g= 0.0;
+            }
             else
             {
                 f= u[i][i];
                 g= Math.sqrt(s);
                 if (f >= 0.0) g= -g;
-                h= f*g-s
+                h= f*g-s;
                 u[i][i]=f-g;
-                for (j=l; j < n; j++)
+                for (j=l; j < n; j+=1)
                 {
                     s= 0.0
-                    for (k=i; k < m; k++) 
+                    for (k=i; k < m; k+=1) {
                         s += u[k][i]*u[k][j]
-                    f= s/h
-                    for (k=i; k < m; k++) 
+                    } 
+                    f= s/h;
+                    for (k=i; k < m; k++) {
                         u[k][j]+=f*u[k][i]
+                    } 
                 }
             }
-            q[i]= g
-            s= 0.0
+            q[i]= g;
+            s= 0.0;
             for (j=l; j < n; j++) 
                 s= s + u[i][j]*u[i][j]
             if (s <= tolerance)
