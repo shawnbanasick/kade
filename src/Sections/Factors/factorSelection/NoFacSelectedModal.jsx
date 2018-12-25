@@ -39,7 +39,7 @@ class noFacSelectedModal extends Component {
         });
       }, 10);
     }
-  };
+  }
 
   handleClose() {
     this.setState({
@@ -52,23 +52,45 @@ class noFacSelectedModal extends Component {
     const isDisabled = store.getState("disabledCentroidFactorButton");
     const isCentroidLoading = store.getState("isCentroidLoading");
     return (
-      <Modal trigger={ <StyledWrapper>
-                   <Button id="noFacSelectedModalButton" className="wrapper1" size={ "small" } toggle active={ isActive } loading={ isCentroidLoading } disabled={ isDisabled }
-                     onClick={ this.handleOpen }>
-                     Centroid Factors
-                   </Button>
-                 </StyledWrapper> } open={ this.state.modalOpen } className="wrapper1" onClose={ this.handleClose } basic size={ "small" }>
+      <Modal
+        trigger={
+          <StyledWrapper>
+            <Button
+              id="noFacSelectedModalButton"
+              className="wrapper1"
+              size={"small"}
+              toggle
+              active={isActive}
+              loading={isCentroidLoading}
+              disabled={isDisabled}
+              onClick={this.handleOpen}
+            >
+              Centroid Factors
+            </Button>
+          </StyledWrapper>
+        }
+        open={this.state.modalOpen}
+        className="wrapper1"
+        onClose={this.handleClose}
+        basic
+        size={"small"}
+      >
         <Header content="Centroid Factor Extraction" />
         <Modal.Content>
           <h3>Please select the number of factors to extract first.</h3>
         </Modal.Content>
         <Modal.Actions>
-          <Button id="noFacSelectedModalGotItButton" color="green" onClick={ this.handleClose } inverted>
-             Got it
+          <Button
+            id="noFacSelectedModalGotItButton"
+            color="green"
+            onClick={this.handleClose}
+            inverted
+          >
+            Got it
           </Button>
         </Modal.Actions>
       </Modal>
-      );
+    );
   }
 }
 
@@ -89,8 +111,6 @@ const StyledWrapper = styled.div`
     &:active {
       box-shadow: 0 1px 1px 0 black;
       transform: translateY(1px);
-      /* margin-left: 3px; */
-      /* margin-top: 3px; */
     }
   }
 `;

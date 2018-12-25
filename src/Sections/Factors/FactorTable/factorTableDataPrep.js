@@ -17,7 +17,7 @@ const factorTableDataPrep = (numFactors, factorMatrix) => {
       sort: "asc",
       cellStyle: {
         textAlign: "center"
-      // backgroundColor: "#eee"
+        // backgroundColor: "#eee"
       }
     },
     {
@@ -33,12 +33,12 @@ const factorTableDataPrep = (numFactors, factorMatrix) => {
   ];
 
   const unrotFacTableHeader = ["Part.Num.", "Participant"];
-  for (let i = 0; i < numFactors; i++) {
+  for (let i = 0; i < numFactors; i += 1) {
     const facNumber = i + 1;
-    unrotFacTableHeader.push(`Factor ${  facNumber}`);
+    unrotFacTableHeader.push(`Factor ${facNumber}`);
     gridColDefsFactorTable.push({
-      headerName: `Factor ${  facNumber}`,
-      field: `factor${  facNumber}`,
+      headerName: `Factor ${facNumber}`,
+      field: `factor${facNumber}`,
       pinned: false,
       editable: false,
       width: 90,
@@ -51,19 +51,19 @@ const factorTableDataPrep = (numFactors, factorMatrix) => {
   const gridRowDataFactorTable = [];
   const unrotatedFactorArray = [];
 
-  for (let j = 0; j < factorMatrix1[0].length; j++) {
+  for (let j = 0; j < factorMatrix1[0].length; j += 1) {
     const tempArray = [];
     const responNum = j + 1;
     const tempObj = {};
-    let tempVar,
-      facNum;
+    let tempVar;
+    let facNum;
     tempObj.resNum = responNum;
     tempObj.respondent = respondentNames[j];
     tempArray.push(responNum, respondentNames[j]);
-    for (let k = 0; k < factorMatrix1.length; k++) {
+    for (let k = 0; k < factorMatrix1.length; k += 1) {
       facNum = k + 1;
       tempVar = evenRound(factorMatrix1[k][j], 4);
-      tempObj[`factor${  facNum}`] = tempVar;
+      tempObj[`factor${facNum}`] = tempVar;
       tempArray.push(tempVar);
     }
     gridRowDataFactorTable.push(tempObj);

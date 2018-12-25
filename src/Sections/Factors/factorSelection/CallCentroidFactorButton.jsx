@@ -10,10 +10,8 @@ const localStore = store({
 
 const handleClick = () => {
   const numFactors = state.getState("numCentroidFactors");
-  console.log(numFactors);
 
   if (isNaN(numFactors)) {
-    console.log("try again");
     state.setState({
       showCentroidError: true,
       errorMessage: "Select the number of factors to extract first"

@@ -1,4 +1,5 @@
 import cloneDeep from "lodash/cloneDeep";
+import getSvd from "./svd";
 import store from "../../../store";
 import sortEigenValues from "./sortEigenValues";
 import calcEigenVectors from "./calcEigenVectors";
@@ -9,7 +10,6 @@ import calcEigenCumulPercentArray from "./calcEigenCumulPercentArray";
 import inflectPrincipalComponents from "./inflectPrincipalComponents";
 import factorTableEigenDataPrep from "../FactorTableEigen/FactorTableEigenDataPrep";
 import calculateCommunalities from "../../Rotation/varimaxLogic/2calculateCommunalities";
-import getSvd from './svd';
 
 const pcaDispatch = () => {
   const projectHistoryArray = store.getState("projectHistoryArray");

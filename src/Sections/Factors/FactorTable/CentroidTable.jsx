@@ -3,12 +3,6 @@ import { view } from "react-easy-state";
 import { AgGridReact } from "ag-grid-react";
 import store from "../../../store";
 
-// let containerStyle = {
-//   marginTop: 30,
-//   // height: 400,
-//   width: 922
-// };
-
 class CentroidTable extends Component {
   onGridReady(params) {
     this.gridApi = params.api;
@@ -19,9 +13,6 @@ class CentroidTable extends Component {
   render() {
     const numFacsForTableWidth = store.getState("numFacsForTableWidth");
     let widthVal = 80 + 190 + 90 * numFacsForTableWidth;
-    // if (widthVal > window.innerWidth - 100) {
-    //   widthVal = window.innerWidth - 100;
-    // }
     widthVal += "px";
 
     const gridColDefsFactorTable = store.getState("gridColDefsFactorTable");

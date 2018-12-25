@@ -1,25 +1,28 @@
 import evenRound from "../../../Utils/evenRound";
 
-const calcEigenVectors = function(
+const calcEigenVectors = (
   numberOfSorts,
   numberofPrincipalComps,
   eigenValuesSorted,
   svd
-) {
+) => {
   const inflectionArray = [];
-  let temp1, critInflectionValue, temp3, temp4;
+  let temp1;
+  let critInflectionValue;
+  let temp3;
+  let temp4;
   // setup empty array
   const eigenVecs = [];
-  for (let p = 0; p < numberOfSorts; p++) {
+  for (let p = 0; p < numberOfSorts; p += 1) {
     eigenVecs.push([]);
   }
   // loop through each component
-  for (let i = 0, iLen = numberofPrincipalComps; i < iLen; i++) {
+  for (let i = 0, iLen = numberofPrincipalComps; i < iLen; i += 1) {
     temp1 = Math.sqrt(eigenValuesSorted[i]);
     critInflectionValue = 0;
 
     // loop through each QSort to get loading and also calc CRIT
-    for (let j = 0, jLen = svd.length; j < jLen; j++) {
+    for (let j = 0, jLen = svd.length; j < jLen; j += 1) {
       temp3 = evenRound(svd[j][i] * temp1, 8);
       eigenVecs[j][i] = temp3;
       // set up data for influection test

@@ -1,6 +1,6 @@
 import React from "react";
-import { Button } from "semantic-ui-react";
 import styled from "styled-components";
+import { Button } from "semantic-ui-react";
 import store from "../../../store";
 
 const styles = {
