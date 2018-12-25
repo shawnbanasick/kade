@@ -6,18 +6,12 @@ import PcaButton from "./factorSelection/ExtractPrinCompButton";
 import NoFacSelectedModal from "./factorSelection/NoFacSelectedModal";
 import CentroidSelectDropdown from "./factorSelection/CentroidSelectDropdown";
 
-
-
 class TypeOfAnalysisTransitionContainer extends React.Component {
   render() {
-    // const showFactorExtractionButtons = store.getState(
-    //   "showFactorExtractionButtons"
-    // );
-
     return (
       <div>
         <div className="centroidContainer">
-          <div style={ { display: "flex" } }>
+          <div style={{ display: "flex" }}>
             <CentroidSelectDropdown />
             <NoFacSelectedModal />
             <PcaButton />
@@ -25,7 +19,7 @@ class TypeOfAnalysisTransitionContainer extends React.Component {
           </div>
         </div>
       </div>
-      );
+    );
   }
 }
 
