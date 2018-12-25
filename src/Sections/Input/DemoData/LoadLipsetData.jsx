@@ -28,7 +28,7 @@ class LipsetButton1 extends React.Component {
         <LoadTxtButton
           id="lipsetButton"
           floated="right"
-          onClick={() => handleClick()}
+          onClick={handleClick}
           buttonColor={localStore.buttonColor}
         >
           Load Lipset
@@ -61,14 +61,12 @@ const LoadTxtButton = styled.button`
 
   &:hover {
     background-color: ${props => props.buttonColor};
-    /* background-color: #abafb3; */
     font-weight: 900;
   }
 
   &:active {
     box-shadow: 0 0 1px 0 black inset;
     margin-left: 3px;
-    /* margin-top: 3px; */
     background-color: rgba(144, 238, 144, 0.6);
   }
 `;

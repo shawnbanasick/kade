@@ -3239,13 +3239,13 @@ function uploadBuzzwordData() {
     "Appropriately communicate one - to - one technology after plug - and - play networks."
   ];
 
-  let sortsData = motivationalToArray(data, 50, -5);
-  let sortsDisplayText2 = sortsDisplayText(sortsData[1]);
+  const sortsData = motivationalToArray(data, 50, -5);
+  const sortsDisplayText2 = sortsDisplayText(sortsData[1]);
 
   store.setState({
     projectName: "Buzzwords",
     projectHistoryArray: ["Buzzwords project loaded from demo data"],
-    statements: statements,
+    statements,
     numQsorts: 60,
     numStatements: 50,
     multiplierArray: ["not loaded"],

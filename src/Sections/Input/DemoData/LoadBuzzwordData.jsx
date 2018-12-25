@@ -28,7 +28,7 @@ class BuzzwordButton1 extends React.Component {
         <LoadTxtButton
           id="buzzwordButton"
           floated="right"
-          onClick={() => handleClick()}
+          onClick={handleClick}
           buttonColor={localStore.buttonColor}
         >
           Load Buzzwords
@@ -58,7 +58,6 @@ const LoadTxtButton = styled.button`
   box-shadow: 0 2px 2px 0 black;
   outline: none;
   user-select: none;
-
 
   &:hover {
     background-color: ${props => props.buttonColor};

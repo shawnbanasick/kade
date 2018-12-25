@@ -147,13 +147,13 @@ const uploadJapaneseData = () => {
         "授業中のiPadを使用すると、不便でした"];
 
 
-  let sortsData = motivationalToArray(data, 60, -5);
-  let sortsDisplayText2 = sortsDisplayText(sortsData[1]);
+  const sortsData = motivationalToArray(data, 60, -5);
+  const sortsDisplayText2 = sortsDisplayText(sortsData[1]);
 
   store.setState({
     projectName: "iPad Survey (Japanese)",
     projectHistoryArray: ["iPad project loaded from demo data"],
-    statements: statements,
+    statements,
     numQsorts: 80,
     numStatements: 60,
     multiplierArray: ["not loaded"],

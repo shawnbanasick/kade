@@ -30,7 +30,7 @@ class MotivationalButton1 extends React.Component {
         <LoadTxtButton
           id="motivationalButton"
           floated="right"
-          onClick={() => handleClick()}
+          onClick={handleClick}
           buttonColor={localStore.buttonColor}
         >
           Load Motivational

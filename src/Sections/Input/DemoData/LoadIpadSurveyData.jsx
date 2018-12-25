@@ -30,7 +30,7 @@ class IpadSurveyButton1 extends React.Component {
         <LoadTxtButton
           id="ipadSurveyButton"
           floated="right"
-          onClick={() => handleClick()}
+          onClick={handleClick}
           buttonColor={localStore.buttonColor}
         >
           Load iPad Survey
@@ -63,7 +63,6 @@ const LoadTxtButton = styled.button`
 
   &:hover {
     background-color: ${props => props.buttonColor};
-    /* background-color: #abafb3; */
     font-weight: 900;
   }
 

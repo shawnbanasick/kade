@@ -207,13 +207,13 @@ const uploadMotivationalData = () => {
     "Argue for your limitations, and sure enough, they are yours"
   ];
 
-  let sortsData = motivationalToArray(data, 80, -5);
-  let sortsDisplayText2 = sortsDisplayText(sortsData[1]);
+  const sortsData = motivationalToArray(data, 80, -5);
+  const sortsDisplayText2 = sortsDisplayText(sortsData[1]);
 
   store.setState({
     projectName: "Motivational",
     projectHistoryArray: ["Motivational project loaded from demo data"],
-    statements: statements,
+    statements,
     numQsorts: 120,
     numStatements: 80,
     multiplierArray: ["not loaded"],
