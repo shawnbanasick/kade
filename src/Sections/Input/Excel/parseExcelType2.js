@@ -12,7 +12,6 @@ function parseExcelType2(excelFile) {
   let tempArray = [];
   const allWorksheets = [];
   let worksheet;
-  // let  data;
   let hasSortsWorksheet = false;
   let hasStatementsWorksheet = false;
   const filetype = "unforced"; // EXCEL TYPE 1
@@ -21,8 +20,6 @@ function parseExcelType2(excelFile) {
   const sheetNameList = workbook.SheetNames;
 
   try {
-    // data = e.target.result;
-
     sheetNameList.forEach(y => {
       const y2 = y.toLowerCase();
       /* iterate through sheets */
@@ -68,19 +65,5 @@ function parseExcelType2(excelFile) {
     });
   }
 }
-// reader.onabort = () => {
-//     console.log("file reading was aborted");
-//     store.setState({
-//         excelErrorMessage1: "The file reader aborted the load process!",
-//         showExcelErrorModal: true,
-//     });
-// }
-// reader.onerror = () => {
-//     console.log("The file reader encountered an error");
-//     store.setState({
-//         excelErrorMessage1: "The file reader encountered an error!",
-//         showExcelErrorModal: true,
-//     });
-// }
 
 export default parseExcelType2;

@@ -7,8 +7,6 @@ import grabRespondentNamesAndSorts from "./grabRespondentNamesAndSorts";
 import checkUniqueParticipantNames from "../../logic/checkUniqueParticipantName";
 
 export default function formatype2ForDisplay(data) {
-  // let multiplierArray = [];
-
   try {
     // store #1
     const projectName1 = data[0][0][1];
@@ -30,7 +28,6 @@ export default function formatype2ForDisplay(data) {
     // grab respondent names and sorts
     const sortsDataT2 = data[0][0];
     const calcSorts = grabRespondentNamesAndSorts(sortsDataT2);
-
     const respondentNames = calcSorts[0];
     const sortsDisplayText = calcSorts[1];
     const symmetryCheckArray = calcSorts[2];
@@ -87,8 +84,8 @@ export default function formatype2ForDisplay(data) {
       respondentNames: participantNames
     });
   } catch (error) {
-    console.log(error.message);
-    console.log(error.stack);
+    // console.log(error.message);
+    // console.log(error.stack);
     store.setState({
       excelErrorMessage1: error.message,
       showExcelErrorModal: true

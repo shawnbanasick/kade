@@ -4,7 +4,6 @@ import formatExcelType1ForDisplay from "./excelLogic/formatExcelType1ForDisplay"
 
 function parseExcelType1(excelFile) {
   const workbook = XLSX.readFile(excelFile, { type: "binary" });
-  // console.log(`workbook: ${JSON.stringify(workbook)}`);
 
   let tester;
   let tester2;
@@ -56,8 +55,6 @@ function parseExcelType1(excelFile) {
       throw new Error("Can't find the 'statements' worksheet!");
     }
 
-    // console.log(`allWorksheets: ${JSON.stringify(allWorksheets)}`);
-
     formatExcelType1ForDisplay(allWorksheets);
     store.setState({ dataOrigin: "excel" });
 
@@ -69,22 +66,6 @@ function parseExcelType1(excelFile) {
       showExcelErrorModal: true
     });
   }
-  // end reader on load
-
-  //   reader.onabort = () => {
-  //     console.log("file reading was aborted");
-  //     store.setState({
-  //       excelErrorMessage1: "The file reader aborted the load process!",
-  //       showExcelErrorModal: true
-  //     });
-  //   };
-  //   reader.onerror = () => {
-  //     console.log("The file reader encountered an error");
-  //     store.setState({
-  //       excelErrorMessage1: "The file reader encountered an error!",
-  //       showExcelErrorModal: true
-  //     });
-  //   };
 }
 
 export default parseExcelType1;

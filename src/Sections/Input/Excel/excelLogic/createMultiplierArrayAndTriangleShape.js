@@ -1,4 +1,4 @@
-export function createMultiplierArrayAndTriangleShape(inputData1) {
+export default function createMultiplierArrayAndTriangleShape(inputData1) {
   const qavSortTriangleShape = [];
   const multiplierArray = [];
   for (let i = 4; i < 24; i += 1) {

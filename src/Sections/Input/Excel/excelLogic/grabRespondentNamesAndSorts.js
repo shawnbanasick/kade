@@ -35,7 +35,6 @@ function grabRespondentNamesAndSorts(sortsDataT2) {
     respondentSortsArray.push(temp5);
     symmetryCheckArray.push(temp3);
   }
-
   return [respondentNames, sortsForDisplay, symmetryCheckArray];
 }
 

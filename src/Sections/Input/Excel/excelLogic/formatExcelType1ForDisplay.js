@@ -5,7 +5,7 @@ import getRespondentNamesExcelT1 from "./getRespondentNamesExcelT1";
 import getRespondentSortsExcelT1 from "./getRespondentSortsExcelT1";
 import createMainDataObject from "./createMainDataObject";
 import checkUniqueParticipantNames from "../../logic/checkUniqueParticipantName";
-import { createMultiplierArrayAndTriangleShape } from "./createMultiplierArrayAndTriangleShape";
+import createMultiplierArrayAndTriangleShape from "./createMultiplierArrayAndTriangleShape";
 
 export default function formatExcelType1ForDisplay(data) {
   // console.log(JSON.stringify("called"));
@@ -94,8 +94,8 @@ export default function formatExcelType1ForDisplay(data) {
       respondentNames: participantNames
     });
   } catch (error) {
-    console.log(error.message);
-    console.log(error.stack);
+    // console.log(error.message);
+    // console.log(error.stack);
     store.setState({
       excelErrorMessage1: error.message,
       showExcelErrorModal: true

@@ -1,12 +1,10 @@
 import { view, store } from "react-easy-state";
 import React, { Component } from "react";
-// import XLSX from "xlsx";
 import styled from "styled-components";
 import state from "../../../store";
 import parseExcelType1 from "./parseExcelType1";
 
 const { dialog } = require("electron").remote;
-// const fs = require("fs");
 
 const localStore = store({
   buttonColor: "#d6dbe0"
@@ -27,11 +25,6 @@ const handleClick = () => {
       if (files !== undefined) {
         const excelFile = files[0];
         parseExcelType1(excelFile);
-
-        // state.setState({
-        //   // statements: lines2,
-        //   statementsLoaded: true
-        // });
         localStore.buttonColor = "rgba(144,	238,	144, .6)";
         state.setState({
           notifyDataUploadSuccess: true,
@@ -45,10 +38,7 @@ const handleClick = () => {
 class LoadTxtStatementFile extends Component {
   render() {
     return (
-      <LoadTxtButton
-        buttonColor={localStore.buttonColor}
-        onClick={() => handleClick()}
-      >
+      <LoadTxtButton buttonColor={localStore.buttonColor} onClick={handleClick}>
         <p>Load Type 1 Excel File</p>
       </LoadTxtButton>
     );

@@ -5,7 +5,7 @@ import { getRespondentNamesExcelT1 } from "./getRespondentNamesExcelT1";
 import { getRespondentSortsExcelT1 } from "./getRespondentSortsExcelT1";
 import createMainDataObject from "../excelUploadLogic/createMainDataObject";
 import checkUniqueParticipantNames from '../../SortsList/checkUniqueParticipantName';
-import { createMultiplierArrayAndTriangleShape } from "./createMultiplierArrayAndTriangleShape";
+import createMultiplierArrayAndTriangleShape from "./createMultiplierArrayAndTriangleShape";
 
 export function formatExcelType1ForDisplay(data) {
   try {
