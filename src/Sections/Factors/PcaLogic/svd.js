@@ -79,40 +79,42 @@
                 {
                     s= 0.0
                     for (k=i; k < m; k+=1) {
-                        s += u[k][i]*u[k][j]
+                        s += u[k][i]*u[k][j];
                     } 
                     f= s/h;
-                    for (k=i; k < m; k++) {
-                        u[k][j]+=f*u[k][i]
+                    for (k=i; k < m; k+=1) {
+                        u[k][j]+=f*u[k][i];
                     } 
                 }
             }
             q[i]= g;
             s= 0.0;
-            for (j=l; j < n; j++) 
-                s= s + u[i][j]*u[i][j]
-            if (s <= tolerance)
-                g= 0.0
+            for (j=l; j < n; j+=1) {
+                s += u[i][j]*u[i][j];
+            }
+            if (s <= tolerance) {
+                g= 0.0;
+            }
             else
             {
-                f= u[i][i+1]
-                g= Math.sqrt(s)
-                if (f >= 0.0) g= -g
-                h= f*g - s
+                f= u[i][i+1];
+                g= Math.sqrt(s);
+                if (f >= 0.0) { g= -g };
+                h= f*g - s;
                 u[i][i+1] = f-g;
-                for (j=l; j < n; j++) e[j]= u[i][j]/h
-                for (j=l; j < m; j++)
+                for (j=l; j < n; j+=1) { e[j] = u[i][j]/h; };
+                for (j=l; j < m; j+=1)
                 {
-                    s=0.0
-                    for (k=l; k < n; k++) 
-                        s += (u[j][k]*u[i][k])
-                    for (k=l; k < n; k++) 
-                        u[j][k]+=s*e[k]
+                    s=0.0;
+                    for (k=l; k < n; k+=1) 
+                        { s += (u[j][k]*u[i][k]); };
+                    for (k=l; k < n; k+=1) 
+                        { u[j][k]+=s*e[k]; };
                 }
             }
-            y= Math.abs(q[i])+Math.abs(e[i])
-            if (y>x) 
-                x=y
+            y = Math.abs(q[i])+Math.abs(e[i]);
+            if (y > x) 
+               { x = y; }
         }
         
         // accumulation of right hand gtransformations
@@ -120,84 +122,84 @@
         {
             if (g !== 0.0)
             {
-                h= g*u[i][i+1]
-                for (j=l; j < n; j++) 
-                    v[j][i]=u[i][j]/h
-                for (j=l; j < n; j++)
+                h= g*u[i][i+1];
+                for (j=l; j < n; j+=1) 
+                    { v[j][i]=u[i][j]/h; }
+                for (j=l; j < n; j+=1)
                 {
-                    s=0.0
-                    for (k=l; k < n; k++) 
-                        s += u[i][k]*v[k][j]
-                    for (k=l; k < n; k++) 
-                        v[k][j]+=(s*v[k][i])
+                    s = 0.0;
+                    for (k=l; k < n; k+=1) 
+                        { s += u[i][k]*v[k][j]; };
+                    for (k=l; k < n; k+=1) 
+                        { v[k][j]+=(s*v[k][i]); };
                 }
             }
-            for (j=l; j < n; j++)
+            for (j=l; j < n; j+=1)
             {
                 v[i][j] = 0;
                 v[j][i] = 0;
             }
             v[i][i] = 1;
-            g= e[i]
-            l= i
-        }
+            g= e[i];
+            l= i;
+        };
         
         // accumulation of left hand transformations
         for (i=n-1; i !== -1; i+= -1)
         {
-            l= i+1
-            g= q[i]
-            for (j=l; j < n; j++) 
-                u[i][j] = 0;
+            l= i+1;
+            g= q[i];
+            for (j=l; j < n; j+=1) 
+                { u[i][j] = 0; };
             if (g !== 0.0)
             {
-                h= u[i][i]*g
-                for (j=l; j < n; j++)
+                h= u[i][i]*g;
+                for (j=l; j < n; j+=1)
                 {
-                    s=0.0
-                    for (k=l; k < m; k++) s += u[k][i]*u[k][j];
-                    f= s/h
-                    for (k=i; k < m; k++) u[k][j]+=f*u[k][i];
+                    s=0.0;
+                    for (k=l; k < m; k+=1) { s += u[k][i]*u[k][j]; };
+                    f= s/h;
+                    for (k=i; k < m; k+=1) { u[k][j]+=f*u[k][i]; };
                 }
-                for (j=i; j < m; j++) u[j][i] = u[j][i]/g;
+                for (j=i; j < m; j+=1) { u[j][i] /= g; };
             }
             else
-                for (j=i; j < m; j++) u[j][i] = 0;
+                for (j=i; j < m; j+=1) { u[j][i] = 0; };
             u[i][i] += 1;
         }
         
         // diagonalization of the bidiagonal form
-        prec= prec*x
+        prec *= x;
         for (k=n-1; k !== -1; k+= -1)
         {
-            for (let iteration=0; iteration < itmax; iteration++)
+            for (let iteration=0; iteration < itmax; iteration+=1)
             {// test f splitting
-                let test_convergence = false
+                let testConvergence = false;
                 for (l=k; l !== -1; l+= -1)
                 {
                     if (Math.abs(e[l]) <= prec){
-                        test_convergence= true
-                        break 
+                        testConvergence= true;
+                        break; 
                     }
                     if (Math.abs(q[l-1]) <= prec)
-                        break 
+                       { break; } 
                 }
-                if (!test_convergence){
+                if (!testConvergence){
                     // cancellation of e[l] if l>0
-                    c= 0.0
-                    s= 1.0
-                    let l1= l-1
-                    for (i =l; i<k+1; i++)
+                    c= 0.0;
+                    s= 1.0;
+                    const l1= l-1;
+                    for (i =l; i<k+1; i+=1)
                     {
-                        f= s*e[i]
-                        e[i]= c*e[i]
+                        f= s*e[i];
+                        e[i] *= c;
                         if (Math.abs(f) <= prec)
-                            break
-                        g= q[i]
-                        h= pythag(f,g)
-                        q[i]= h
-                        c= g/h
-                        s= -f/h
+                            { break; }
+                        g= q[i];
+                        h= pythag(f,g);
+                        q[i]= h;
+                        c= g/h;
+                        s= -f/h;
                         for (j=0; j < m; j++)
                         {
                             y= u[j][l1]
