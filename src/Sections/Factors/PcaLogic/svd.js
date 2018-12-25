@@ -11,7 +11,7 @@
     }
  
     // translated from http://stitchpanorama.sourceforge.net/Python/svd.py
-   const svd =  function(A){
+   const svd = (A) => {
         let temp;
         // Compute the thin SVD from G. H. Golub and C. Reinsch, Numer. Math. 14, 403-420 (1970)
         let prec = (2 ** -52); // assumes double prec
@@ -200,101 +200,101 @@
                         q[i]= h;
                         c= g/h;
                         s= -f/h;
-                        for (j=0; j < m; j++)
+                        for (j=0; j < m; j+=1)
                         {
-                            y= u[j][l1]
-                            z= u[j][i]
-                            u[j][l1] =  y*c+(z*s)
-                            u[j][i] = -y*s+(z*c)
+                            y= u[j][l1];
+                            z= u[j][i];
+                            u[j][l1] =  y*c+(z*s);
+                            u[j][i] = -y*s+(z*c);
                         } 
                     }
                 }
                 // test f convergence
-                z= q[k]
+                z= q[k];
                 if (l=== k){
-                    //convergence
+                    // convergence
                     if (z<0.0)
-                    { //q[k] is made non-negative
-                        q[k]= -z
-                        for (j=0; j < n; j++)
-                            v[j][k] = -v[j][k]
+                    { // q[k] is made non-negative
+                        q[k]= -z;
+                        for (j=0; j < n; j+=1)
+                            { v[j][k] = -v[j][k]; }
                     }
-                    break  //break out of iteration loop and move on to next k value
+                    break;  // break out of iteration loop and move on to next k value
                 }
 
                 console.assert(iteration < itmax-1, 'Error: no convergence.');
 
                 // shift from bottom 2x2 minor
-                x= q[l]
-                y= q[k-1]
-                g= e[k-1]
-                h= e[k]
-                f= ((y-z)*(y+z)+(g-h)*(g+h))/(2.0*h*y)
-                g= pythag(f,1.0)
+                x= q[l];
+                y= q[k-1];
+                g= e[k-1];
+                h= e[k];
+                f= ((y-z)*(y+z)+(g-h)*(g+h))/(2.0*h*y);
+                g= pythag(f,1.0);
                 if (f < 0.0)
-                    f= ((x-z)*(x+z)+h*(y/(f-g)-h))/x
+                    { f= ((x-z)*(x+z)+h*(y/(f-g)-h))/x; }
                 else
-                    f= ((x-z)*(x+z)+h*(y/(f+g)-h))/x
+                    { f= ((x-z)*(x+z)+h*(y/(f+g)-h))/x; };
                 // next QR transformation
-                c= 1.0
-                s= 1.0
-                for (i=l+1; i< k+1; i++)
+                c= 1.0;
+                s= 1.0;
+                for (i=l+1; i< k+1; i+=1)
                 {
-                    g = e[i]
-                    y = q[i]
-                    h = s*g
-                    g = c*g
-                    z = pythag(f,h)
-                    e[i-1] = z
-                    c = f/z
-                    s = h/z
-                    f = x*c+g*s
-                    g = -x*s+g*c
-                    h = y*s
-                    y = y*c
-                    for (j =0; j < n; j++)
+                    g = e[i];
+                    y = q[i];
+                    h = s*g;
+                    g *= c;
+                    z = pythag(f,h);
+                    e[i-1] = z;
+                    c = f/z;
+                    s = h/z;
+                    f = x*c+g*s;
+                    g = -x*s+g*c;
+                    h = y*s;
+                    y *= c;
+                    for (j =0; j < n; j+=1)
                     {
-                        x = v[j][i-1]
-                        z = v[j][i]
-                        v[j][i-1]  = x*c+z*s
-                        v[j][i]  = -x*s+z*c
-                    }
-                    z = pythag(f,h)
-                    q[i-1] = z
-                    c = f/z
-                    s = h/z
-                    f = c*g+s*y
-                    x = -s*g+c*y
-                    for (j =0; j < m; j++)
+                        x = v[j][i-1];
+                        z = v[j][i];
+                        v[j][i-1]  = x*c+z*s;
+                        v[j][i]  = -x*s+z*c;
+                    };
+                    z = pythag(f,h);
+                    q[i-1] = z;
+                    c = f/z;
+                    s = h/z;
+                    f = c*g+s*y;
+                    x = -s*g+c*y;
+                    for (j =0; j < m; j+=1)
                     {
-                        y = u[j][i-1]
-                        z = u[j][i]
-                        u[j][i-1]  = y*c+z*s
-                        u[j][i]  = -y*s+z*c
+                        y = u[j][i-1];
+                        z = u[j][i];
+                        u[j][i-1]  = y*c+z*s;
+                        u[j][i]  = -y*s+z*c;
                     }
                 }
-                e[l] = 0.0
-                e[k] = f
-                q[k] = x
+                e[l] = 0.0;
+                e[k] = f;
+                q[k] = x;
             } 
         }
             
         // vt = transpose(v)
         // return (u,q,vt)
-        for (let i=0, qLen=q.length;i<qLen; i++) 
-            if (q[i] < prec) q[i] = 0
+        for (let ii=0, qLen=q.length; ii<qLen; ii+=1) 
+            { if (q[ii] < prec) { q[ii] = 0; }; };
           
         // sort eigenvalues
-        for (i=0; i< n; i++){ 
+        for (i=0; i< n; i+=1){ 
             // writeln(q)
-            for (j=i-1; j >= 0; j--){
+            for (j=i-1; j >= 0; j-=1){
                 if (q[j] < q[i]){
                     // writeln(i,'-',j)
-                    c = q[j]
-                    q[j] = q[i]
-                    q[i] = c
-                    for (let k=0, uLen=u.length;k<uLen;k++) { temp = u[k][i]; u[k][i] = u[k][j]; u[k][j] = temp; }
-                    for (let k=0, vLen=v.length;k<vLen;k++) { temp = v[k][i]; v[k][i] = v[k][j]; v[k][j] = temp; }
+                    c = q[j];
+                    q[j] = q[i];
+                    q[i] = c;
+                    for (let k1=0, uLen=u.length;k1<uLen;k1+=1) { temp = u[k1][i]; u[k1][i] = u[k1][j]; u[k1][j] = temp; };
+                    for (let k2=0, vLen=v.length;k2<vLen;k2+=1) { temp = v[k2][i]; v[k2][i] = v[k2][j]; v[k2][j] = temp; };
                     i = j   
                 }
             }
