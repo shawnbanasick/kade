@@ -1,6 +1,6 @@
+import styled from "styled-components";
 import React, { Component } from "react";
 import { view, store } from "react-easy-state";
-import styled from "styled-components";
 import state from "../../../store";
 
 const localStore = store({ value: "forced" });

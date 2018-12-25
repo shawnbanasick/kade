@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import React, { Component } from "react";
 import { view, store } from "react-easy-state";
-import { ToastContainer, toast } from "react-toastify";
 import state from "../../../store";
 
 const { dialog } = require("electron").remote;
@@ -50,10 +49,7 @@ const handleClick = () => {
 class LoadTxtStatementFile extends Component {
   render() {
     return (
-      <LoadTxtButton
-        buttonColor={localStore.buttonColor}
-        onClick={() => handleClick()}
-      >
+      <LoadTxtButton buttonColor={localStore.buttonColor} onClick={handleClick}>
         <p>Load TXT File</p>
       </LoadTxtButton>
     );
@@ -81,13 +77,12 @@ const LoadTxtButton = styled.button`
   outline: none;
 
   &:hover {
-    background-color: #abafb3;
+    background-color: ${props => props.buttonColor};
     font-weight: 900;
   }
 
   &:active {
     box-shadow: 0 0 1px 0 black inset;
     margin-left: 3px;
-    /* margin-top: 3px; */
   }
 `;

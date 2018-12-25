@@ -1,29 +1,28 @@
 import React, { Component } from "react";
-import { view, store } from "react-easy-state";
+import { view } from "react-easy-state";
 import styled, { keyframes } from "styled-components";
-import initialState from '../../initialState';
-import state from '../../store';
-import { Button } from 'semantic-ui-react';
+// import initialState from '../../initialState';
+// import state from '../../store';
+// import { Button } from 'semantic-ui-react';
 
-function handleClick() {
-    console.log(JSON.stringify("clicked"));
-    const initialStateValues = initialState();
-    state.setState(initialStateValues);
+// function handleClick() {
+//     console.log(JSON.stringify("clicked"));
+//     const initialStateValues = initialState();
+//     state.setState(initialStateValues);
+// }
+
+class HelpSection extends Component {
+  render() {
+    return (
+      <MainContent>
+        <h1>Help</h1>
+        <h2 style={{ width: 800 }}>Help Section Here</h2>
+      </MainContent>
+    );
+  }
 }
 
-
-class ClearProject extends Component {
-    render() {
-        return (
-            <MainContent>
-              <h1>Help</h1>
-              <h2 style={ { width: 800 } }>Help Section Here</h2>
-            </MainContent>
-            );
-    }
-}
-
-export default view(ClearProject);
+export default view(HelpSection);
 
 const fadeIn = keyframes`
   from {
@@ -45,13 +44,13 @@ const fadeOut = keyframes`
   }
 `;
 
-const StyledAnchor = styled.a`
-  color: black;
+// const StyledAnchor = styled.a`
+//   color: black;
 
-  &:hover {
-    color: black;
-  }
-`;
+//   &:hover {
+//     color: black;
+//   }
+// `;
 
 // 240px 240px 240px 240px;
 const MainContent = styled.div`
@@ -82,31 +81,31 @@ const MainContent = styled.div`
   overflow: auto;
 `;
 
-const BeginAnalysisButton = styled.button`
-  display: grid;
-  align-items: center;
-  justify-items: center;
-  background-color: ${props => props.buttonColor};
-  height: 40px;
-  width: 200px;
-  border: 1px solid black;
-  text-align: center;
-  font-size: 16px;
-  font-family: Helvetica, sans-serif;
-  font-weight: normal;
-  border-radius: 4px;
-  margin-right: 3px;
-  margin-bottom: 3px;
-  box-shadow: 0 2px 2px 0 black;
-  outline: none;
+// const BeginAnalysisButton = styled.button`
+//   display: grid;
+//   align-items: center;
+//   justify-items: center;
+//   background-color: ${props => props.buttonColor};
+//   height: 40px;
+//   width: 200px;
+//   border: 1px solid black;
+//   text-align: center;
+//   font-size: 16px;
+//   font-family: Helvetica, sans-serif;
+//   font-weight: normal;
+//   border-radius: 4px;
+//   margin-right: 3px;
+//   margin-bottom: 3px;
+//   box-shadow: 0 2px 2px 0 black;
+//   outline: none;
 
-  &:hover {
-    font-weight: bold
-  }
+//   &:hover {
+//     font-weight: bold
+//   }
 
-  &:active {
-    box-shadow: 0 1px 1px 0 black;
-    margin-left: 3px;
-    transform: translateY(1px);  
-  }
-`;
+//   &:active {
+//     box-shadow: 0 1px 1px 0 black;
+//     margin-left: 3px;
+//     transform: translateY(1px);
+//   }
+// `;

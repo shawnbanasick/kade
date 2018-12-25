@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import state from "../../../store";
 import { view, store } from "react-easy-state";
+import state from "../../../store";
 
 const localStore = store({ projectName: "" });
 

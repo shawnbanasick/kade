@@ -1,7 +1,7 @@
-import { view, store } from "react-easy-state";
-import React, { Component } from "react";
-import styled from "styled-components";
 import Papa from "papaparse";
+import styled from "styled-components";
+import React, { Component } from "react";
+import { view, store } from "react-easy-state";
 import state from "../../../store";
 import sortsDisplayText from "../logic/sortsDisplayText";
 import shiftRawSortsPositive from "../logic/shiftRawSortsPositive";
@@ -16,7 +16,6 @@ const localStore = store({
 });
 
 const handleClick = () => {
-  console.log("clicked");
   try {
     dialog.showOpenDialog(
       {
@@ -35,14 +34,7 @@ const handleClick = () => {
             fs.readFile(fileName, "utf-8", (error, data) => {
               // parse file
               const parsedFile = Papa.parse(data);
-
               const lines2 = parsedFile.data;
-
-              // // split into lines
-              // const lines = data.split(/[\r\n]+/g);
-              // // remove empty strings
-              // const lines2 = lines.filter(e => e === 0 || e);
-
               let qSortPatternArray;
 
               // remove the first (header) line
@@ -50,8 +42,6 @@ const handleClick = () => {
 
               // parsing first line of PQMethod file to set qav variables
               const numberSorts = lines2.length;
-              console.log(lines2);
-
               if (lines2.length < 2) {
                 throw new Error("Can't find any Q sorts in the file!");
               }
@@ -73,15 +63,10 @@ const handleClick = () => {
               const mainDataObject = [];
               const respondentNames = [];
               for (let j = 0; j < lines2.length; j += 1) {
-                // const activeLine = lines2[j].split(",");
-
                 lines2[j].length = maxLength;
-
                 const tempObj = {};
-
                 // get name
                 const name = lines2[j].shift();
-
                 // slice off name
                 lines2[j] = lines2[j].slice(1, -1);
                 tempObj.name = name;
@@ -139,13 +124,12 @@ const handleClick = () => {
             });
           }
         } catch (error) {
-          console.log("error");
+          // console.log("error");
         }
       }
     );
   } catch (error) {
-    console.log(JSON.stringify("catch called"));
-
+    // console.log(JSON.stringify("catch called"));
     state.setState({
       errorMessage: error.message,
       showErrorMessageBar: true
@@ -156,10 +140,7 @@ const handleClick = () => {
 class LoadTxtStatementFile extends Component {
   render() {
     return (
-      <LoadTxtButton
-        buttonColor={localStore.buttonColor}
-        onClick={() => handleClick()}
-      >
+      <LoadTxtButton buttonColor={localStore.buttonColor} onClick={handleClick}>
         <p>Load CSV File</p>
       </LoadTxtButton>
     );
@@ -187,13 +168,12 @@ const LoadTxtButton = styled.button`
   outline: none;
 
   &:hover {
-    background-color: #abafb3;
+    background-color: ${props => props.buttonColor};
     font-weight: 900;
   }
 
   &:active {
     box-shadow: 0 0 1px 0 black inset;
     margin-left: 3px;
-    /* margin-top: 3px; */
   }
 `;

@@ -1,7 +1,6 @@
 import React from "react";
 import styled from "styled-components";
 import { view } from "react-easy-state";
-// import QsortsDropzone from "./DropzoneCsvQsorts";
 import LoadCsvQsorts from "./LoadCsvQsorts";
 
 const CsvQsortsCard = () => (
@@ -35,19 +34,6 @@ const Card = styled.div`
   border-radius: 5px;
 `;
 
-// const CardContent = styled.div`
-//   height: 390px;
-//   width: 240px;
-//   background-color: white;
-//   border: 2px solid red;
-// `;
-
-// const CardHeader = styled.div`
-//   width: 100%;
-//   height: 30px;
-//   background-color: white;
-// `;
-
 const Image = styled.div`
   background-color: white;
   width: 275px;
@@ -60,13 +46,6 @@ const CardMeta = styled.div`
   font-size: 18px;
   font-weight: bold;
 `;
-
-// const CardDescription = styled.div`
-//   height: 90px;
-//   width: 270px;
-//   background-color: white;
-//   border: 2px solid black;
-// `;
 
 const CardLabel = styled.div`
   font-family: Helvetica, sans-serif;
