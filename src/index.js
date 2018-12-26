@@ -1,7 +1,7 @@
 // require('electron-react-devtools').install();
 // localStorage.debug = 'worker:*'
 
-import { app, BrowserWindow, Menu } from "electron";
+import { app, BrowserWindow, Menu, dialog } from "electron";
 import { enableLiveReload } from "electron-compile";
 import * as Splashscreen from "@trodi/electron-splashscreen";
 import * as path from "path";
@@ -264,5 +264,20 @@ app.on("activate", () => {
   }
 });
 
+app.on("before-quit", e => {
+  const options = {
+    type: "question",
+    buttons: ["Yes", "No"],
+    defaultId: 1,
+    title: "Confirm",
+    message: "Are you sure you want to quit?"
+  };
+
+  dialog.showMessageBox(null, options, response => {
+    if (response === 1) {
+      e.preventDefault();
+    }
+  });
+});
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and import them here.
