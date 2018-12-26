@@ -6,6 +6,7 @@ const { dialog } = require("electron").remote;
 function saveFile(fileName, csvFile) {
   dialog.showSaveDialog(
     {
+      defaultPath: `*/${fileName}`,
       filters: [
         {
           name: "csv",
@@ -16,10 +17,10 @@ function saveFile(fileName, csvFile) {
     fileName => {
       if (fileName === undefined) return;
 
-      fs.writeFile(fileName, csvFile, err => {
+      fs.writeFile(fileName, csvFile, "utf-8", err => {
         if (err === undefined || err === null) {
           dialog.showMessageBox({
-            message: "The file has been saved!",
+            message: "The file has been saved.",
             buttons: ["OK"]
           });
         } else {
@@ -31,9 +32,9 @@ function saveFile(fileName, csvFile) {
 }
 
 function exportToCsv(fileName, rows) {
-  const processRow = function(row) {
+  const processRow = row => {
     let finalVal = "";
-    for (let j = 0; j < row.length; j++) {
+    for (let j = 0; j < row.length; j += 1) {
       let value = row[j];
       if (value === null || value === undefined) {
         value = "";
@@ -54,7 +55,7 @@ function exportToCsv(fileName, rows) {
   };
 
   let csvFile = "";
-  for (let i = 0; i < rows.length; i++) {
+  for (let i = 0; i < rows.length; i += 1) {
     csvFile += processRow(rows[i]);
   }
 
