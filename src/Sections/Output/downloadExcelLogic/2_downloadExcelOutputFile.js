@@ -1,15 +1,18 @@
 import * as XLSX from "xlsx";
-import { saveAs } from "filesaver.js-npm";
+// import { saveAs } from "filesaver.js-npm";
 import store from "../../../store";
 import currentDate1 from "../../../Utils/currentDate1";
 import currentTime1 from "../../../Utils/currentTime1";
 
-const downloadExcelOutputFile = function(dataXlsx, sheetNamesXlsx, colSizes) {
+// const fs = require("fs");
+const { dialog } = require("electron").remote;
+
+const downloadExcelOutputFile = (dataXlsx, sheetNamesXlsx, colSizes) => {
   const data = dataXlsx;
-  const ws_name = sheetNamesXlsx;
+  const wsName = sheetNamesXlsx;
   const wscols = colSizes;
 
-  function sheet_from_array_of_arrays(data, opts) {
+  function sheetFromArrayOfArrays(data) {
     const ws = {};
     const range = {
       s: {
@@ -61,27 +64,27 @@ const downloadExcelOutputFile = function(dataXlsx, sheetNamesXlsx, colSizes) {
   const wb = new Workbook();
 
   /* add worksheet to workbook */
-  for (let i = 0; i < ws_name.length; i++) {
-    const ws = sheet_from_array_of_arrays(data[i]);
+  for (let i = 0; i < wsName.length; i += 1) {
+    const ws = sheetFromArrayOfArrays(data[i]);
     ws["!cols"] = wscols[i];
-    wb.SheetNames.push(ws_name[i]);
-    wb.Sheets[ws_name[i]] = ws;
+    wb.SheetNames.push(wsName[i]);
+    wb.Sheets[wsName[i]] = ws;
   }
 
-  const wbout = XLSX.write(wb, {
-    bookType: "xlsx",
-    bookSST: true,
-    type: "binary"
-  });
+  // const wbout = XLSX.write(wb, {
+  //   bookType: "xlsx",
+  //   bookSST: true,
+  //   type: "binary"
+  // });
 
-  function s2ab(s) {
-    const buf = new ArrayBuffer(s.length);
-    const view = new Uint8Array(buf);
-    for (let i = 0; i !== s.length; ++i) view[i] = s.charCodeAt(i) & 0xff;
-    return buf;
-  }
+  // function s2ab(s) {
+  //   const buf = new ArrayBuffer(s.length);
+  //   const view = new Uint8Array(buf);
+  //   for (let i = 0; i !== s.length; ++i) view[i] = s.charCodeAt(i) & 0xff;
+  //   return buf;
+  // }
 
-  const timeStamp = `${currentDate1()  }_${  currentTime1()}`;
+  const timeStamp = `${currentDate1()}_${currentTime1()}`;
   const projectName = store.getState("projectName");
 
   // to create option for no timestamp - useful for automated testing
@@ -89,17 +92,22 @@ const downloadExcelOutputFile = function(dataXlsx, sheetNamesXlsx, colSizes) {
 
   let nameFile;
   if (shouldIncludeTimestamp === true) {
-    nameFile = `KenQ_output_${  projectName  }_${  timeStamp  }.xlsx`;
+    nameFile = `KenQ_output_${projectName}_${timeStamp}.xlsx`;
   } else {
-    nameFile = `KenQ_output_${  projectName  }.xlsx`;
+    nameFile = `KenQ_output_${projectName}.xlsx`;
   }
 
-  saveAs(
-    new Blob([s2ab(wbout)], {
-      type: "application/octet-stream"
-    }),
-    nameFile
-  );
+  const o = dialog.showSaveDialog({
+    defaultPath: `*/${nameFile}`,
+    filters: [
+      {
+        name: "xlsx",
+        extensions: ["xlsx"]
+      }
+    ]
+  });
+  XLSX.writeFile(wb, o);
+  dialog.showMessageBox({ message: `File saved to ${o}`, buttons: ["OK"] });
 };
 
 export default downloadExcelOutputFile;
