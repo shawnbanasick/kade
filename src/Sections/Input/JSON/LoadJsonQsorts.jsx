@@ -1,9 +1,9 @@
-import { view, store } from "react-easy-state";
-import React, { Component } from "react";
 import styled from "styled-components";
+import React, { Component } from "react";
+import { view, store } from "react-easy-state";
+import { ToastContainer, toast, Slide } from "react-toastify";
 import state from "../../../store";
 import convertJSONToData from "./convertJSONToData";
-import { ToastContainer, toast, Slide } from "react-toastify";
 
 const { dialog } = require("electron").remote;
 const fs = require("fs");
@@ -45,8 +45,6 @@ const handleClick = () => {
             // transform to md array
             // todo - this is the source of the extra brackets
             const csvData = convertJSONToData(results);
-
-            //  const jsonParticipantId = [];
             const columnHeaders = csvData[0][0];
 
             state.setState({
@@ -117,6 +115,5 @@ const LoadTxtButton = styled.button`
   &:active {
     box-shadow: 0 0 1px 0 black inset;
     margin-left: 3px;
-    /* margin-top: 3px; */
   }
 `;

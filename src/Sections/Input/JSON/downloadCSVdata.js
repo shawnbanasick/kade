@@ -66,9 +66,7 @@ function downloadCSVdata() {
 
   // todo - find out what is adding the extra set of brackets around the data
   const csvBody = csvBody2[0];
-  // let shouldIncludeTimestamp = store.getState("shouldIncludeTimestamp");
   const projectName = store.getState("projectName");
-
   const nameWithExtension = `${projectName}.csv`;
 
   // export the file

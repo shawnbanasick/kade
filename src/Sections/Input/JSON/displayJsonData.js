@@ -76,12 +76,9 @@ function displayJsonData(selection) {
     tempObj.displaySort = sortsAsNumbers[k].toString();
     mainDataObject.push(tempObj);
   }
-  //    return [sortsDisplayText, qSorts, keys, sort0, participantNames];
 
   const participantNames2 = checkUniqueParticipantName(participantNames);
-
   const projectName = state.getState("projectName");
-
   const qSortPattern = [...minQsortValueArray].sort((a, b) => a - b);
 
   state.setState({

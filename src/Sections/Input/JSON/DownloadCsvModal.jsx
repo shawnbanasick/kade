@@ -3,11 +3,10 @@ https://github.com/reactjs/react-modal
 copyright - 2017 Ryan Florence  (not MIT, copyright only listed in license)
 */
 
-import state from "../../../store";
-import React, { Component } from "react";
-// import downloadCSVdata from "./downloadCSVdata";
 import Modal from "react-modal";
 import styled from "styled-components";
+import React, { Component } from "react";
+import state from "../../../store";
 import downloadCSVdata from "./downloadCSVdata";
 
 const customStyles = {
@@ -22,16 +21,11 @@ const customStyles = {
     width: "100%",
     backgroundColor: "red",
     height: "200px"
-    // marginRight: '-50%',
-    // transform: 'translate(-50%, -50%)',
-    // width: "400px",
   }
 };
 
 class DownloadCsvModal extends Component {
   // Make sure to bind modal to your appElement (http://reactcommunity.org/react-modal/accessibility/)
-  // Modal.setAppElement('#JsonCardHolder');
-
   constructor() {
     super();
 
@@ -46,8 +40,6 @@ class DownloadCsvModal extends Component {
 
   openModal() {
     const isJsonLoaded = state.getState("showJsonFileLoadedMessage");
-
-    console.log(JSON.stringify(isJsonLoaded));
 
     if (isJsonLoaded) {
       downloadCSVdata(); //  OR open modal

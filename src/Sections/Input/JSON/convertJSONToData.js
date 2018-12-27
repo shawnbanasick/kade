@@ -13,34 +13,33 @@ function convertJSONToData(JsonObj) {
   }
 
   const headerArray2 = headerArray.concat(sortHeaders);
-  // do not change to ID - will throw error when opening in MS Excel!
+  // do not change to "ID" - will throw error when opening in MS Excel!
   headerArray2.unshift("Id");
   csvBody.push(headerArray2);
 
   for (let i = 0, iLen = keys.length; i < iLen; i += 1) {
     const tempArray1 = [];
     const namesAndSortsTempArray = [];
-    // let tempArray2 = [];
 
     // get index
     const temp4 = keys[i];
-    // console.log(JSON.stringify(temp4));
 
-    // get object
+    // get row object
     const arrayObj = JsonObj[temp4];
-    // console.log(JSON.stringify(arrayObj));
 
-    // get object keys
+    // get row object keys
     const arrayObjKeys = Object.keys(arrayObj);
-    // console.log(JSON.stringify(arrayObjKeys));
 
     // create unique id from key
     const id = temp4.slice(-10);
     tempArray1.push(id);
     namesAndSortsTempArray.push(temp4);
 
+    // loop through all entries
     for (let m = 0, mLen = arrayObjKeys.length; m < mLen; m += 1) {
-      const value = arrayObj[arrayObjKeys[m]];
+      let value = arrayObj[arrayObjKeys[m]];
+      // remove any line break or extra comma in string
+      value = value.replace(/(\r\n\t|\n|\r\t|,)/gm, "");
       tempArray1.push(value);
     }
 
@@ -56,7 +55,6 @@ function convertJSONToData(JsonObj) {
     csvBody.push(tempArray1);
     namesAndSortsArray.push(namesAndSortsTempArray);
   }
-
   return [csvBody, namesAndSortsArray];
 }
 
