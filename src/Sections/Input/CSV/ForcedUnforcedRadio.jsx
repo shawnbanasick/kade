@@ -45,31 +45,25 @@ class RadioExampleRadioGroup extends Component {
   render() {
     return (
       <RadioDiv>
-        <div>
-          Q-Sorts are: <b>{localStore.value}</b>
-        </div>
-        <Label htmlFor="forcedButton">
-          <input
-            type="radio"
-            name="radioGroup"
-            id="forcedButton"
-            value="forced"
-            checked={localStore.value === "forced"}
-            onChange={e => handleChange(e)}
-          />
-          Forced
-        </Label>
-        <Label htmlFor="unforcedButton">
-          <input
-            type="radio"
-            id="unforcedButton"
-            name="radioGroup"
-            value="unforced"
-            checked={localStore.value === "unforced"}
-            onChange={e => handleChange(e)}
-          />
-          Unforced
-        </Label>
+        <div>Q-Sorts are:</div>
+        <StyledInput
+          type="radio"
+          name="radioGroup"
+          id="forcedButton"
+          value="forced"
+          checked={localStore.value === "forced"}
+          onChange={e => handleChange(e)}
+        />
+        <Label htmlFor="forcedButton">Forced</Label>
+        <StyledInput
+          type="radio"
+          id="unforcedButton"
+          name="radioGroup"
+          value="unforced"
+          checked={localStore.value === "unforced"}
+          onChange={e => handleChange(e)}
+        />
+        <Label htmlFor="unforcedButton">Unforced</Label>
       </RadioDiv>
     );
   }
@@ -78,22 +72,24 @@ class RadioExampleRadioGroup extends Component {
 export default view(RadioExampleRadioGroup);
 
 const RadioDiv = styled.div`
-  display: grid;
-  grid-template-columns: 300px;
-  grid-template-rows: 30px 30px 30px;
-  align-items: center;
+  display: flex;
   font-family: Helvetica, sans-serif;
   margin-top: 0px;
   margin-bottom: 15px;
   font-size: 20px;
   margin-bottom: 0px;
-  margin-left: 20px;
+  height: 30px;
 `;
 
 const Label = styled.label`
-  display: grid;
+  /* display: grid;
   grid-template-columns: 25px 1fr;
   margin-top: 0px;
   margin-left: 10px;
-  align-items: center;
+  align-items: center; */
+`;
+
+const StyledInput = styled.input`
+  margin-left: 15px;
+  margin-right: 2px;
 `;

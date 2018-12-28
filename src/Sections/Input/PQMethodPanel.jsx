@@ -2,33 +2,31 @@ import React, { Component } from "react";
 import { view } from "react-easy-state";
 import styled from "styled-components";
 import ForcedUnforcedRadio from "./CSV/ForcedUnforcedRadio";
-import UnforcedQsortDesignInput from "./CSV/UnforcedQsortDesignInput";
 import PQMethodStaCard from "./PQMethod/PQMethodStaCard";
 import PQMethodQsortsCard from "./PQMethod/PQMethodQsortsCard";
 
 // import CsvSuccessfulLoadBar from "./CSV/CsvSuccessfulLoadBar";
 
 class CsvPanel extends Component {
-    render() {
-        const windowHeight = window.innerHeight - 100;
-        return (
-            <DataWindow height={ windowHeight }>
-              <Header>Load both a statements STA file and Q sorts DAT file.</Header>
-              <CardHolder>
-                <PQMethodStaCard />
-                <PQMethodQsortsCard />
-                <ForcedUnforcedRadio />
-                <UnforcedQsortDesignInput />
-              </CardHolder>
-            </DataWindow>
-            );
-    }
+  render() {
+    const windowHeight = window.innerHeight - 100;
+    return (
+      <DataWindow height={windowHeight}>
+        <Header>Load both a statements STA file and Q sorts DAT file.</Header>
+        <CardHolder>
+          <PQMethodStaCard />
+          <PQMethodQsortsCard />
+          <ForcedUnforcedRadio />
+        </CardHolder>
+      </DataWindow>
+    );
+  }
 }
 
 export default view(CsvPanel);
 
 const DataWindow = styled.div`
-  height: ${props => (`${props.height}px`)};    
+  height: ${props => `${props.height}px`};
   background-color: white;
   user-select: none;
 `;
@@ -46,4 +44,3 @@ const Header = styled.div`
   height: 30px;
   margin-top: 10px;
 `;
-

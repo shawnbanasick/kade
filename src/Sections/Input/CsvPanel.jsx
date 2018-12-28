@@ -1,12 +1,12 @@
 import React, { Component } from "react";
 import { view } from "react-easy-state";
 import styled from "styled-components";
-import ForcedUnforcedRadio from "./CSV/ForcedUnforcedRadio";
-import UnforcedQsortDesignInput from "./CSV/UnforcedQsortDesignInput";
-import ProjectNameInput from "./CSV/ProjectNameInput";
 import CsvQsortsCard from "./CSV/CsvQsortsCard";
+import ProjectNameInput from "./CSV/ProjectNameInput";
 import CsvStatementCard from "./CSV/CsvStatementCard";
+import ForcedUnforcedRadio from "./CSV/ForcedUnforcedRadio";
 import CsvSuccessfulLoadBar from "./CSV/CsvSuccessfulLoadBar";
+import QsortDesignInputElement from "./CSV/QsortDesignInputElement";
 
 class CsvPanel extends Component {
   render() {
@@ -21,7 +21,7 @@ class CsvPanel extends Component {
           <CsvQsortsCard />
           <ProjectNameInput />
           <ForcedUnforcedRadio />
-          <UnforcedQsortDesignInput />
+          <QsortDesignInputElement />
           <CsvSuccessfulLoadBar />
         </CardHolder>
       </DataWindow>

@@ -9,7 +9,8 @@ import CsvStatementCard from "./CSV/CsvStatementCard";
 import ProjectNameInput from "./CSV/ProjectNameInput";
 import DownloadCsvModal from "./JSON/DownloadCsvModal";
 import ForcedUnforcedRadio from "./CSV/ForcedUnforcedRadio";
-import UnforcedQsortDesignInput from "./CSV/UnforcedQsortDesignInput";
+// import UnforcedQsortDesignInput from "./CSV/UnforcedQsortDesignInput";
+import QsortDesignInputElement from "./CSV/QsortDesignInputElement";
 
 class JsonPanel extends Component {
   handleMessage(jsonIdSelection) {
@@ -32,7 +33,8 @@ class JsonPanel extends Component {
             onChangeMessageUpTree={this.handleMessage}
           />
           <ForcedUnforcedRadio />
-          <UnforcedQsortDesignInput />
+          <div />
+          <QsortDesignInputElement style={{ gridRowStart: 4 }} />
           <DownloadCsvModal />
         </CardHolder>
       </DataWindow>
@@ -51,7 +53,14 @@ const DataWindow = styled.div`
 const CardHolder = styled.div`
   display: grid;
   grid-template-columns: 350px 350px;
-  grid-template-rows: 320px 95px 80px 130px;
+  grid-template-rows: 320px 55px 50px 100px 100px;
+  grid-template-areas:
+    "card card"
+    "projectName projectName"
+    "Qsortsare Qsortsare"
+    "design design"
+    "unforced unforced"
+    ". download";
 `;
 
 const Header = styled.div`

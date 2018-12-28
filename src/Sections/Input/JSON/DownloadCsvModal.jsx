@@ -19,7 +19,7 @@ const customStyles = {
     right: "auto",
     bottom: "auto",
     width: "100%",
-    backgroundColor: "red",
+    backgroundColor: "lightpink",
     height: "200px"
   }
 };
@@ -75,12 +75,16 @@ class DownloadCsvModal extends Component {
           style={customStyles}
           contentLabel="Example Modal"
         >
-          <h2 ref={subtitle => (this.subtitle = subtitle)}>Hello</h2>
-          <button onClick={this.closeModal}>close</button>
-          <div>I am a modal</div>
-          <form>
+          <ModalText>
+            <h2 ref={subtitle => (this.subtitle = subtitle)}>
+              Error - No Data to Download
+            </h2>
+            <CloseButton onClick={this.closeModal}>X Close</CloseButton>
+          </ModalText>
+          {/* <div>I am a modal</div> */}
+          {/* <form>
             <input />
-          </form>
+          </form> */}
         </Modal>
       </GridContainerDiv>
     );
@@ -99,5 +103,15 @@ const Button = styled.button`
 
 const GridContainerDiv = styled.div`
   grid-column-start: 2;
-  grid-row-start: 4;
+  grid-row-start: 5;
+`;
+
+const ModalText = styled.div`
+  display: flex;
+`;
+
+const CloseButton = styled.button`
+  margin-left: 400px;
+  height: 25px;
+  background-color: #d6dbe0;
 `;
