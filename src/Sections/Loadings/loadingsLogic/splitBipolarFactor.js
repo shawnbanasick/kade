@@ -1,5 +1,5 @@
-import store from "../../../store";
 import cloneDeep from "lodash/cloneDeep";
+import store from "../../../store";
 
 const splitBipolarFactor = () => {
   const val = store.getState("factorToSplit");
@@ -21,9 +21,6 @@ const splitBipolarFactor = () => {
     if (bipolarSplitCounter === 0) {
       // if yes, archive the usual way
       const factorMatrix = store.getState("factorMatrix");
-
-      console.log(`factorMatrix ${  JSON.stringify(factorMatrix)}`);
-
 
       // increment the bipolar split counter
       bipolarSplitCounter += 1;
@@ -66,7 +63,6 @@ const splitBipolarFactor = () => {
     }
     // *** end IF ELSE ***
 
-
     // begin factor split process
     const dataRows = store.getState("currentLoadingsTable");
     const columnDefs = store.getState("gridColDefsLoadingsTable");
@@ -83,7 +79,7 @@ const splitBipolarFactor = () => {
 
     // get the index value
     const fieldsArray = [];
-    for (let k = 0, kLen = columnDefs.length; k < kLen; k++) {
+    for (let k = 0, kLen = columnDefs.length; k < kLen; k += 1) {
       fieldsArray.push(columnDefs[k].field);
     }
     const spliceIndex = fieldsArray.indexOf(factorValue);
@@ -121,7 +117,7 @@ const splitBipolarFactor = () => {
     );
 
     // cycle through the array of row objects to insert new column values and flags
-    for (let i = 0, iLen = dataRows.length; i < iLen; i++) {
+    for (let i = 0, iLen = dataRows.length; i < iLen; i += 1) {
       const curr_val = dataRows[i][factorValue]; // incoming value
       const curr_check = dataRows[i][checkValue]; // incoming check
 

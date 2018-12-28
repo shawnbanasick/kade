@@ -1,5 +1,4 @@
 import state from "../../../store";
-// import loadingsTableDataPrep from "../LoadingsTable/loadingsTableDataPrep";
 
 const invertFactor = () => {
   const factorToInvert = state.getState("factorToInvert");
@@ -9,7 +8,7 @@ const invertFactor = () => {
     // flip the sign for the current table (includes user checked checkboxes)
     const factorToInvertText = `factor${factorToInvert}`;
     const currentLoadingsTable = state.getState("currentLoadingsTable");
-    for (let i = 0; i < currentLoadingsTable.length; i++) {
+    for (let i = 0; i < currentLoadingsTable.length; i += 1) {
       currentLoadingsTable[i][factorToInvertText] = -currentLoadingsTable[i][
         factorToInvertText
       ];
@@ -33,7 +32,7 @@ const invertFactor = () => {
     const invertArray = currentLoadings[factorToInvert - 1];
 
     // do factor inversion
-    for (let i = 0; i < invertArray.length; i++) {
+    for (let i = 0; i < invertArray.length; i += 1) {
       invertArray[i] = -invertArray[i];
     }
 

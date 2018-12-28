@@ -6,7 +6,7 @@ import transposeMatrix from "../../../Utils/transposeMatrix";
 
 // todo - try to eliminate lodash dependency
 
-const sortByFactorGroup = function(data, highlighting) {
+const sortByFactorGroup = (data, highlighting) => {
   const sortingArray = [];
   const factorSortedData = [];
   let tempObj;
@@ -19,7 +19,7 @@ const sortByFactorGroup = function(data, highlighting) {
   const newData = transposeMatrix(data);
 
   // loop through each table row (participant q-sort) to develop sorting array
-  for (let i = 0, iLen = newData.length; i < iLen; i++) {
+  for (let i = 0, iLen = newData.length; i < iLen; i += 1) {
     tempObj = {};
 
     // grab factor as row
@@ -60,13 +60,13 @@ const sortByFactorGroup = function(data, highlighting) {
     return value || b.subSortValue - a.subSortValue;
   });
 
-  let factorGroupNumber,
-    lookUpIndexValue,
-    cssClassName;
+  let factorGroupNumber;
+  let lookUpIndexValue;
+  let cssClassName;
   let subGroupCounter = 0;
 
   // to set the factor group and sub-group numbers
-  for (let j = 0, jLen = factorSortedArray.length; j < jLen; j++) {
+  for (let j = 0, jLen = factorSortedArray.length; j < jLen; j += 1) {
     lookUpIndexValue = factorSortedArray[j].indexValue;
     // if first time through, or if look up value equals the index value of
     if (j === 0 || lookUpIndexValue === factorSortedArray[j - 1].indexValue) {

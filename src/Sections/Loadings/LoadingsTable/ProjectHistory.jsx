@@ -164,12 +164,13 @@ class ProjectHistory extends Component {
   render() {
     const projectHistoryArray = store.getState("projectHistoryArray");
     const shouldDisplayUndoButton = projectHistoryArray.length > 3;
+    let mapCounter = 1;
     return (
       <div style={{ marginTop: "30px", userSelect: "none" }}>
         <TitleDiv>Project History</TitleDiv>
         <CustomOl>
           {projectHistoryArray.map((listValue, index) => (
-            <li key={index}>{listValue}</li>
+            <li key={mapCounter++}>{listValue}</li>
           ))}
         </CustomOl>
         {shouldDisplayUndoButton && (

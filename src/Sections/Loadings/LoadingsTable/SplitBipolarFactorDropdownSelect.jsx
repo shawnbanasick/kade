@@ -1,5 +1,5 @@
 import React from "react";
-import { view, store } from "react-easy-state";
+import { view } from "react-easy-state";
 import { Dropdown } from "semantic-ui-react";
 import state from "../../../store";
 
@@ -10,7 +10,7 @@ const saveDropdownValueToState = (event, data) => {
   });
 };
 
-const localStore = store({ options: [] });
+// const localStore = store({ options: [] });
 
 class InvertFactorDropdownSelect extends React.Component {
   // componentWillUpdate() {

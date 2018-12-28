@@ -1,4 +1,4 @@
-const factorGroupComparator = function(fg1, fg2) {
+const factorGroupComparator = (fg1, fg2) => {
   const factorGroup1 = +fg1.slice(1, 2);
   const factorGroup2 = +fg2.slice(1, 2);
   const subGroup1 = +fg1.slice(3);

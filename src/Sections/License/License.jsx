@@ -1,45 +1,39 @@
 import React, { Component } from "react";
 import { view } from "react-easy-state";
 import styled from "styled-components";
-// import DisplayState from "./DisplayState";
-// import StatementsInState from "./StatementsInState";
-// import SortsInState from "./SortsInState";
-// import state from "../../store";
-
 
 class License extends Component {
   render() {
     // console.log(JSON.stringify(state));
     return (
-
       <MainContent>
         <div />
         <div>
           <h1>KADE - Ken-Q Analysis Desktop Edition</h1>
           <h2>Copyright (C) 2018 Shawn Banasick</h2>
           <span>
-                                                This program is free software: you can redistribute it and/or modify
-                                                it under the terms of the GNU General Public License as published by
-                                                the Free Software Foundation, either version 3 of the License, or
-                                                (at your option) any later version.
-                                              </span>
+            This program is free software: you can redistribute it and/or modify
+            it under the terms of the GNU General Public License as published by
+            the Free Software Foundation, either version 3 of the License, or
+            (at your option) any later version.
+          </span>
           <hr />
           <span>
-                                                THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-                                                'AS IS ' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-                                                LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
-                                                FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE
-                                                COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
-                                                INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
-                                                BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
-                                                LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
-                                                CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
-                                                LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
-                                                ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
-                                                POSSIBILITY OF SUCH DAMAGE.
-                                              </span>
+            THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+            &#39;AS IS&#39; AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING,
+            BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND
+            FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL
+            THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
+            INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+            (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+            SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+            HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
+            STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+            ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
+            OF THE POSSIBILITY OF SUCH DAMAGE.
+          </span>
           <hr />
-          <div style={ { marginTop: 35 } }>
+          <div style={{ marginTop: 35 }}>
             <span>Built with:</span>
             <ul>
               <li>React (MIT license) </li>
@@ -58,7 +52,7 @@ class License extends Component {
           </div>
         </div>
       </MainContent>
-      );
+    );
   }
 }
 

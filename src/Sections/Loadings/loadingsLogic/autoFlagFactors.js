@@ -10,10 +10,6 @@ const autoFlagFactors = () => {
   });
 
   // should produce for Lipset calc style matrix - 9 cols by 7 rows
-  // console.log(
-  //   "rotFacStateArray (autoflag in [col facs]): " +
-  //     JSON.stringify(rotFacStateArray)
-  // );
 
   // give button time to display loading spinner
   setTimeout(() => {

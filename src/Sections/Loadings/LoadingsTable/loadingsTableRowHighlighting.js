@@ -2,12 +2,10 @@ import store from "../../../store";
 
 function loadingsTableRowHighlighting(highlighting) {
   let rowClassRulesLoadingsTable;
-  console.log("loadingsTableRowHighlighting called");
 
   if (highlighting === "grays") {
     rowClassRulesLoadingsTable = {
       factor1bw(params) {
-
         const factorGroupColorIndicator = +params.data.factorGroup.slice(1, 2);
         return factorGroupColorIndicator === 1;
       },
@@ -87,5 +85,4 @@ function loadingsTableRowHighlighting(highlighting) {
 
   return rowClassRulesLoadingsTable;
 }
-;
 export default loadingsTableRowHighlighting;

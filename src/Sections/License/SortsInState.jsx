@@ -8,7 +8,7 @@ const localStore = store({ sorts });
 
 class StatementsInState extends Component {
   render() {
-    console.log(JSON.stringify(localStore.sorts));
+    // console.log(JSON.stringify(localStore.sorts));
     return (
       <OrderedList>
         {localStore.sorts.map((value, index) => (

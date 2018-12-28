@@ -11,7 +11,6 @@ class DisplayState extends Component {
       if (typeof state[key] === "function") {
         return [key, "function"];
       }
-      console.log(key);
       if (typeof state[key] === "object") {
         return [key, "array or object"];
       }

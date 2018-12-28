@@ -127,7 +127,7 @@ class LoadingsTable extends Component {
         // grab current table data (including user-added flags)
         const count = this.gridApi.getDisplayedRowCount();
         const currentLoadingsTable = [];
-        for (let i = 0; i < count; i++) {
+        for (let i = 0; i < count; i+=1) {
             const rowNode = this.gridApi.getDisplayedRowAtIndex(i);
             currentLoadingsTable.push(rowNode.data);
         }
@@ -148,7 +148,7 @@ class LoadingsTable extends Component {
         // initialize output select buttons highlighting to false
         const btnId = state.getState("outputButtonsArray");
         const tempObj2 = {};
-        for (let i = 0; i < btnId.length; i++) {
+        for (let i = 0; i < btnId.length; i+=1) {
             tempObj2[`highlightfactor${btnId[i]}`] = false;
         }
         tempObj2.currentLoadingsTable = currentLoadingsTable;
@@ -192,7 +192,7 @@ class LoadingsTable extends Component {
     highlightRows(highlightType) {
         const currentLoadingsTable2 = [];
         const count = this.gridApi.getDisplayedRowCount();
-        for (let i = 0; i < count; i++) {
+        for (let i = 0; i < count; i+=1) {
             const rowNode = this.gridApi.getDisplayedRowAtIndex(i);
             const holder = rowNode.data.highlightingClass;
             const holder2 = holder.slice(0, 2);
@@ -211,10 +211,10 @@ class LoadingsTable extends Component {
         const currentLoadingsTable = this.grabTableLocalState();
         const numFacsForTableWidth = state.getState("numFactorsKeptForRot");
         const factorGroupArray = ["F1", "F2", "F3", "F4", "F5", "F6", "F7", "F8"];
-        for (let i = 0; i < currentLoadingsTable.length; i++) {
+        for (let i = 0; i < currentLoadingsTable.length; i+=1) {
             const factorGroup = currentLoadingsTable[i].factorGroup.slice(0, 2);
             const factorGroupIndexValue = factorGroupArray.indexOf(factorGroup);
-            for (let k = 0; k < numFacsForTableWidth; k++) {
+            for (let k = 0; k < numFacsForTableWidth; k+=1) {
                 const checkboxIndex = `check${k + 1}`;
                 if (factorGroupIndexValue === k) {
                     currentLoadingsTable[i][checkboxIndex] = true;
@@ -234,8 +234,8 @@ class LoadingsTable extends Component {
     clearAllCheckboxes() {
         const currentLoadingsTable = this.grabTableLocalState();
         const numFacsForTableWidth = state.getState("numFactorsKeptForRot");
-        for (let i = 0; i < currentLoadingsTable.length; i++) {
-            for (let k = 0; k < numFacsForTableWidth; k++) {
+        for (let i = 0; i < currentLoadingsTable.length; i+=1) {
+            for (let k = 0; k < numFacsForTableWidth; k+=1) {
                 const index = `check${k + 1}`;
                 currentLoadingsTable[i][index] = false;
             }
@@ -419,7 +419,7 @@ const StyledWrapper = styled.div`
   .wrapper1 {
     border: 1px solid black;
     box-shadow: 0 2px 2px 0 black;
-    user-select: none
+    user-select: none;
 
     &:hover {
       border: 1px solid black;
