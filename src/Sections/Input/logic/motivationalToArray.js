@@ -1,17 +1,17 @@
 import shiftRawSortsPositive from "./shiftRawSortsPositive";
 
-const motivationalToArray = function(array, numSortStatements, min) {
-  let respondentNames = [];
-  for (let i = 0; i < array.length; i++) {
-    let temp1 = array[i].shift();
+const motivationalToArray = (array, numSortStatements, min) => {
+  const respondentNames = [];
+  for (let i = 0; i < array.length; i += 1) {
+    const temp1 = array[i].shift();
     respondentNames.push(temp1);
   }
 
-  let mainDataArray = [];
-  for (let j = 0; j < array.length; j++) {
-    let tempObj = {};
-    let tempArray = [...array[j]];
-    let posShiftArray = shiftRawSortsPositive(tempArray, min);
+  const mainDataArray = [];
+  for (let j = 0; j < array.length; j += 1) {
+    const tempObj = {};
+    const tempArray = [...array[j]];
+    const posShiftArray = shiftRawSortsPositive(tempArray, min);
 
     tempObj.name = respondentNames[j];
     tempObj.posShiftSort = posShiftArray;

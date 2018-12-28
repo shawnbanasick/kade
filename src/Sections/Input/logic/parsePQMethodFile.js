@@ -1,5 +1,5 @@
 import cloneDeep from "lodash/cloneDeep";
-import { sortsTextToArray } from "../logic/sortsTextToArray";
+import sortsTextToArray from "./sortsTextToArray";
 
 export default function parsePQMethodFile(dataBlob) {
   // break by new lines
@@ -29,9 +29,7 @@ export default function parsePQMethodFile(dataBlob) {
   const pyramidShapeNumbers = temp1.slice(3, temp1.length);
   // get max sort value to use in shift raw sorts to all positive
   const value = temp1.slice(0, 3);
-  const min = value.reduce(function(a, b) {
-    return Math.min(a, b);
-  });
+  const min = value.reduce((a, b) => Math.min(a, b));
 
   // transform sorts text to name and sorts arrays - returns names, sorts, main data array
   const namesSortsMaindataArray = sortsTextToArray(
@@ -42,10 +40,8 @@ export default function parsePQMethodFile(dataBlob) {
 
   // todo - fix this if unforced sorts are used in project
   // create Q sort pattern from initial respondent sort
-  const sampleSort = cloneDeep(namesSortsMaindataArray[1][0]["rawSort"]);
-  const qSortPattern = sampleSort.sort(function(a, b) {
-    return a - b;
-  });
+  const sampleSort = cloneDeep(namesSortsMaindataArray[1][0].rawSort);
+  const qSortPattern = sampleSort.sort((a, b) => a - b);
 
   return [
     numberSorts,

@@ -1,23 +1,23 @@
-import { parseArrayPQM } from "./parseArrayPQM";
-import { splitNamesAndSorts } from "./splitNamesAndSorts";
+import parseArrayPQM from "./parseArrayPQM";
+import splitNamesAndSorts from "./splitNamesAndSorts";
 import shiftRawSortsPositive from "./shiftRawSortsPositive";
 
-export function sortsTextToArray(array, numSortStatements, min) {
+export default function sortsTextToArray(array, numSortStatements, min) {
   // break text array into names text array and sorts text array
-  let namesAndSortsArray = splitNamesAndSorts(array, numSortStatements);
-  let names = namesAndSortsArray[0];
-  let sorts = namesAndSortsArray[1];
+  const namesAndSortsArray = splitNamesAndSorts(array, numSortStatements);
+  const names = namesAndSortsArray[0];
+  const sorts = namesAndSortsArray[1];
 
-  let mainDataArray = [];
+  const mainDataArray = [];
   // convert sorts array from text to numeric
-  sorts.forEach(function(element, j) {
-    let tempObj = {};
+  sorts.forEach((element, j) => {
+    const tempObj = {};
 
     // parse array
-    let tempArray = parseArrayPQM(element, numSortStatements);
+    const tempArray = parseArrayPQM(element, numSortStatements);
 
     // positive shift raw sorts
-    let tempArray2 = shiftRawSortsPositive(tempArray, min);
+    const tempArray2 = shiftRawSortsPositive(tempArray, min);
 
     tempObj.name = names[j];
     tempObj.posShiftSort = tempArray2;
