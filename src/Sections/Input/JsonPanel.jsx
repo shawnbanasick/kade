@@ -9,14 +9,13 @@ import CsvStatementCard from "./CSV/CsvStatementCard";
 import ProjectNameInput from "./CSV/ProjectNameInput";
 import DownloadCsvModal from "./JSON/DownloadCsvModal";
 import ForcedUnforcedRadio from "./CSV/ForcedUnforcedRadio";
-// import UnforcedQsortDesignInput from "./CSV/UnforcedQsortDesignInput";
 import QsortDesignInputElement from "./CSV/QsortDesignInputElement";
 
-class JsonPanel extends Component {
-  handleMessage(jsonIdSelection) {
-    displayJsonData(jsonIdSelection);
-  }
+const handleMessage = jsonIdSelection => {
+  displayJsonData(jsonIdSelection);
+};
 
+class JsonPanel extends Component {
   render() {
     const options = state.getState("jsonParticipantId") || [];
     const windowHeight = window.innerHeight - 100;
@@ -30,7 +29,7 @@ class JsonPanel extends Component {
           <Dropdown
             options={options}
             class="ui fluid selection dropdown"
-            onChangeMessageUpTree={this.handleMessage}
+            onChangeMessageUpTree={handleMessage}
           />
           <ForcedUnforcedRadio />
           <div />

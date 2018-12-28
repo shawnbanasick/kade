@@ -3,9 +3,14 @@ import styled from "styled-components";
 import React from "react";
 
 class InputDiv extends React.Component {
-  saveInputValueToState = event => {
+  constructor() {
+    super();
+    this.saveInputValueToState = this.saveInputValueToState.bind(this);
+  }
+
+  saveInputValueToState(event) {
     this.props.onChangeCallback(event);
-  };
+  }
 
   render() {
     return (
@@ -14,7 +19,7 @@ class InputDiv extends React.Component {
         <StyledInput
           type="text"
           name={this.props.name}
-          onChange={this.saveInputValueToState.bind(this)}
+          onChange={this.saveInputValueToState}
           value={this.props.value}
         />
       </InputColumn>

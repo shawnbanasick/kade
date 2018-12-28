@@ -49,8 +49,6 @@ function exportToCsv(fileName, rows) {
       }
       finalVal += result;
     }
-    console.log(finalVal);
-
     return `${finalVal}\n`;
   };
 

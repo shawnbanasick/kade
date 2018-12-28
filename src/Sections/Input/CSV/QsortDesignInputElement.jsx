@@ -31,31 +31,31 @@ const localStore = store({
   inputColor: "white"
 });
 
-class QsortDesignInputElement extends React.Component {
-  calcQsortDesign(event) {
-    localStore[`activeValue${event.target.name}`] = event.target.value;
-    const qSortPatternObject = localStore.qSortPatternObject;
-    qSortPatternObject[event.target.name] = event.target.value;
-    localStore.qSortPatternObject = qSortPatternObject;
-    const qSortPattern = convertQsortObjectToArray(qSortPatternObject);
-    const enteredStatements = qSortPattern.length;
-    const difference = localStore.statementsLength - enteredStatements;
+const calcQsortDesign = event => {
+  localStore[`activeValue${event.target.name}`] = event.target.value;
+  const qSortPatternObject = localStore.qSortPatternObject;
+  qSortPatternObject[event.target.name] = event.target.value;
+  localStore.qSortPatternObject = qSortPatternObject;
+  const qSortPattern = convertQsortObjectToArray(qSortPatternObject);
+  const enteredStatements = qSortPattern.length;
+  const difference = localStore.statementsLength - enteredStatements;
 
-    if (difference === 0) {
-      localStore.inputTitle = "All Statements Allocated";
-      localStore.inputColor = "rgba(144,	238,	144, .6)";
-    }
-    if (difference > 0) {
-      localStore.inputTitle = `${difference} Statements Left`;
-      localStore.inputColor = "white";
-    }
-    if (difference < 0) {
-      localStore.inputTitle = `Over-Allocated: ${-difference}`;
-      localStore.inputColor = "lightpink";
-    }
-    state.setState({ qSortPattern });
+  if (difference === 0) {
+    localStore.inputTitle = "All Statements Allocated";
+    localStore.inputColor = "rgba(144,	238,	144, .6)";
   }
+  if (difference > 0) {
+    localStore.inputTitle = `${difference} Statements Left`;
+    localStore.inputColor = "white";
+  }
+  if (difference < 0) {
+    localStore.inputTitle = `Over-Allocated: ${-difference}`;
+    localStore.inputColor = "lightpink";
+  }
+  state.setState({ qSortPattern });
+};
 
+class QsortDesignInputElement extends React.Component {
   render() {
     const statementsLength = state.getState("statements").length;
     localStore.statementsLength = statementsLength;
@@ -76,120 +76,120 @@ class QsortDesignInputElement extends React.Component {
               label={"-6"}
               name={-6}
               value={localStore["activeValue-6"]}
-              onChangeCallback={this.calcQsortDesign}
+              onChangeCallback={calcQsortDesign}
             />
             <InputDiv
               label={"-5"}
               name={-5}
               value={localStore["activeValue-5"]}
-              onChangeCallback={this.calcQsortDesign}
+              onChangeCallback={calcQsortDesign}
             />
             <InputDiv
               label={"-4"}
               name={-4}
-              onChangeCallback={this.calcQsortDesign}
+              onChangeCallback={calcQsortDesign}
               value={localStore["activeValue-4"]}
             />
             <InputDiv
               label={"-3"}
               name={-3}
-              onChangeCallback={this.calcQsortDesign}
+              onChangeCallback={calcQsortDesign}
               value={localStore["activeValue-3"]}
             />
             <InputDiv
               label={"-2"}
               name={-2}
-              onChangeCallback={this.calcQsortDesign}
+              onChangeCallback={calcQsortDesign}
               value={localStore["activeValue-2"]}
             />
             <InputDiv
               label={"-1"}
               name={-1}
-              onChangeCallback={this.calcQsortDesign}
+              onChangeCallback={calcQsortDesign}
               value={localStore["activeValue-1"]}
             />
             <InputDiv
               label={"0"}
               name={0}
-              onChangeCallback={this.calcQsortDesign}
+              onChangeCallback={calcQsortDesign}
               value={localStore.activeValue0}
             />
             <InputDiv
               label={"1"}
               name={1}
-              onChangeCallback={this.calcQsortDesign}
+              onChangeCallback={calcQsortDesign}
               value={localStore.activeValue1}
             />
             <InputDiv
               label={"2"}
               name={2}
-              onChangeCallback={this.calcQsortDesign}
+              onChangeCallback={calcQsortDesign}
               value={localStore.activeValue2}
             />
             <InputDiv
               label={"3"}
               name={3}
-              onChangeCallback={this.calcQsortDesign}
+              onChangeCallback={calcQsortDesign}
               value={localStore.activeValue3}
             />
             <InputDiv
               label={"4"}
               name={4}
-              onChangeCallback={this.calcQsortDesign}
+              onChangeCallback={calcQsortDesign}
               value={localStore.activeValue4}
             />
             <InputDiv
               label={"5"}
               name={5}
-              onChangeCallback={this.calcQsortDesign}
+              onChangeCallback={calcQsortDesign}
               value={localStore.activeValue5}
             />
             <InputDiv
               label={"6"}
               name={6}
-              onChangeCallback={this.calcQsortDesign}
+              onChangeCallback={calcQsortDesign}
               value={localStore.activeValue6}
             />
             <InputDiv
               label={"7"}
               name={7}
-              onChangeCallback={this.calcQsortDesign}
+              onChangeCallback={calcQsortDesign}
               value={localStore.activeValue7}
             />
             <InputDiv
               label={"8"}
               name={8}
-              onChangeCallback={this.calcQsortDesign}
+              onChangeCallback={calcQsortDesign}
               value={localStore.activeValue8}
             />
             <InputDiv
               label={"9"}
               name={9}
-              onChangeCallback={this.calcQsortDesign}
+              onChangeCallback={calcQsortDesign}
               value={localStore.activeValue9}
             />
             <InputDiv
               label={"10"}
               name={10}
-              onChangeCallback={this.calcQsortDesign}
+              onChangeCallback={calcQsortDesign}
               value={localStore.activeValue10}
             />
             <InputDiv
               label={"11"}
               name={11}
-              onChangeCallback={this.calcQsortDesign}
+              onChangeCallback={calcQsortDesign}
               value={localStore.activeValue11}
             />
             <InputDiv
               label={"12"}
               name={12}
-              onChangeCallback={this.calcQsortDesign}
+              onChangeCallback={calcQsortDesign}
               value={localStore.activeValue12}
             />
             <InputDiv
               label={"13"}
               name={13}
-              onChangeCallback={this.calcQsortDesign}
+              onChangeCallback={calcQsortDesign}
               value={localStore.activeValue13}
             />
           </InputRow>

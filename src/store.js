@@ -3,10 +3,9 @@ import { store } from "react-easy-state";
 
 export default store({
   setState(update) {
-    for (const property in update) {
-      if (update.hasOwnProperty(property)) {
-        this[property] = update[property];
-      }
+    const updateKeys = Object.keys(update);
+    for (let i = 0; i < updateKeys.length; i += 1) {
+      this[updateKeys[i]] = update[updateKeys[i]];
     }
   },
 

@@ -35,14 +35,14 @@ const handleClick = () => {
           const fileName = files[0];
           fs.readFile(fileName, "utf8", (err, data) => {
             const results = JSON.parse(data);
+
+            // convert from JSON to array
             const resultsArray = [];
-            for (const key in results) {
-              if (results.hasOwnProperty(key)) {
-                resultsArray.push(results[key]);
-              }
+            const resultsKeys = Object.keys(results);
+            for (let k = 0; k < resultsKeys.length; k += 1) {
+              resultsArray.push(results[resultsKeys[k]]);
             }
 
-            // transform to md array
             // todo - this is the source of the extra brackets
             const csvData = convertJSONToData(results);
             const columnHeaders = csvData[0][0];
@@ -104,7 +104,7 @@ const LoadTxtButton = styled.button`
   font-weight: normal;
   border-radius: 4px;
   margin-right: 3px;
-  margin-bottom: 3px;
+  margin-top: 15px;
   box-shadow: 0 2px 2px 0 black;
 
   &:hover {

@@ -20,12 +20,16 @@ function formatOptions(rawOptions) {
 }
 
 class DropdownJSON extends React.Component {
-  saveDropdownValueToState = (event, data) => {
+  constructor(props) {
+    super(props);
+    this.saveDropdownValueToState = this.saveDropdownValueToState.bind(this);
+  }
+  saveDropdownValueToState(event, data) {
     localStore.activeValue = data.value;
     this.props.onChangeMessageUpTree(data.value);
     toast.dismiss();
     state.setState({ notifyDataUploadSuccess: true });
-  };
+  }
 
   render() {
     const options = formatOptions(this.props.options);
@@ -35,7 +39,7 @@ class DropdownJSON extends React.Component {
         <span style={{ marginRight: 10, fontSize: 20 }}>ID: </span>
         <Dropdown
           placeholder={"Select Participant ID"}
-          onChange={this.saveDropdownValueToState.bind(this)}
+          onChange={this.saveDropdownValueToState}
           openOnFocus
           scrolling
           value={localStore.activeValue}
