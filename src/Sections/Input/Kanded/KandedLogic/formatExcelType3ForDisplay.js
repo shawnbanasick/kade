@@ -98,8 +98,8 @@ function formatype3ForDisplay(data) {
       sortsDisplayText
     });
   } catch (error) {
-    console.log(error.message);
-    console.log(error.stack);
+    // console.log(error.message);//
+    // console.log(error.stack);
     store.setState({
       excelErrorMessage1: error.message,
       showExcelErrorModal: true

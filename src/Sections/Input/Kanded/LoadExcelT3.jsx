@@ -1,9 +1,10 @@
-import { view, store } from "react-easy-state";
-import React, { Component } from "react";
 import styled from "styled-components";
+import React, { Component } from "react";
+import { view, store } from "react-easy-state";
+import state from "../../../store";
 import parseExcelType3 from "./KandedLogic/parseExcelType3.js";
-import state from '../../../store';
-const {dialog} = require("electron").remote;
+
+const { dialog } = require("electron").remote;
 
 const localStore = store({
   buttonColor: "#d6dbe0"
@@ -29,7 +30,6 @@ const handleClick = () => {
           notifyDataUploadSuccess: true,
           isInputButtonGreen: true
         });
-
       }
     }
   );
@@ -38,10 +38,13 @@ const handleClick = () => {
 class LoadTxtStatementFile extends Component {
   render() {
     return (
-      <LoadTxtButton buttonColor={ localStore.buttonColor } onClick={ () => handleClick() }>
+      <LoadTxtButton
+        buttonColor={localStore.buttonColor}
+        onClick={() => handleClick()}
+      >
         <p>Load KADE Excel File</p>
       </LoadTxtButton>
-      );
+    );
   }
 }
 
