@@ -5,7 +5,7 @@ import { view, store } from "react-easy-state";
 import state from "../../../store";
 import sortsDisplayText from "../logic/sortsDisplayText";
 import shiftRawSortsPositive from "../logic/shiftRawSortsPositive";
-import calcMultiplierArrayT2 from "../logic/excelLogic/calcMultiplierArrayT2";
+import calcMultiplierArrayT2 from "../Excel/excelLogic/calcMultiplierArrayT2";
 import checkUniqueParticipantNames from "../logic/checkUniqueParticipantName";
 
 const { dialog } = require("electron").remote;

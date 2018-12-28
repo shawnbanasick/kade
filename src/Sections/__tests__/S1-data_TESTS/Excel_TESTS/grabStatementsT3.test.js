@@ -1,4 +1,4 @@
-import grabStatementsT3 from "../../../Input/logic/excelLogic/grabStatementsT3";
+import grabStatementsT3 from "../../../Input/Kanded/KandedLogic/grabStatementsT3";
 
 const parameter1 = [
   ",",

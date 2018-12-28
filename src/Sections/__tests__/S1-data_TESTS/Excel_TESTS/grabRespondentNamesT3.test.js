@@ -1,4 +1,4 @@
-import grabRespondentNamesT3 from "../../../Input/logic/excelLogic/grabRespondentNamesT3";
+import grabRespondentNamesT3 from "../../../Input/Kanded/KandedLogic/grabRespondentNamesT3";
 
 const parameter1 = [
   [

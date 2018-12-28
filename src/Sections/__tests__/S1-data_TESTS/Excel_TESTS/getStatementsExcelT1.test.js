@@ -1,4 +1,4 @@
-import { getStatementsExcelT1 } from "../../../Input/logic/excelLogic/getStatementsExcelT1";
+import getStatementsExcelT1 from "../../../Input/Excel/excelLogic/getStatementsExcelT1";
 
 const parameter1 = [
   [

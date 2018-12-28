@@ -1,4 +1,4 @@
-import getRespondentSortsExcelT1 from "../../../Input/logic/excelLogic/getRespondentSortsExcelT1";
+import getRespondentSortsExcelT1 from "../../../Input/Excel/excelLogic/getRespondentSortsExcelT1";
 
 const parameter1 = [
   [
