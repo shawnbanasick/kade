@@ -3,6 +3,7 @@ import React, { Component } from "react";
 import { view, store } from "react-easy-state";
 import state from "../../store";
 import mainCorrCalcs from "./correlationsLogic/mainCorrCalcs";
+import ErrorNotification from "../Input/ErrorNotification";
 
 const localStore = store({
   buttonColor: "#d6dbe0"
@@ -14,7 +15,15 @@ const handleClick = () => {
   const mainDataObject = state.getState("mainDataObject");
   const rawSortsArray = mainDataObject.map(item => item.rawSort);
 
-  mainCorrCalcs(respondentNames, rawSortsArray);
+  try {
+    mainCorrCalcs(respondentNames, rawSortsArray);
+  } catch (error) {
+    state.setState({
+      showErrorMessageBar: true,
+      errorMessage: `No data to calculate correlations -- ${  error.message}`
+    });
+  }
+
   state.setState({
     isCorrelationsButtonGreen: true
   });
@@ -23,12 +32,15 @@ const handleClick = () => {
 class CalculateCorrelationsButton extends Component {
   render() {
     return (
-      <BeginAnalysisButton
-        buttonColor={localStore.buttonColor}
-        onClick={() => handleClick()}
-      >
-        <p>Calculate Correlations</p>
-      </BeginAnalysisButton>
+      <React.Fragment>
+        <BeginAnalysisButton
+          buttonColor={localStore.buttonColor}
+          onClick={() => handleClick()}
+        >
+          <p>Calculate Correlations</p>
+        </BeginAnalysisButton>
+        <ErrorNotification />
+      </React.Fragment>
     );
   }
 }

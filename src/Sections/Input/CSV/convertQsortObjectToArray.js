@@ -8,10 +8,7 @@ const convertQsortObjectToArray = data => {
       resultsArray.push(value);
     }
   }
-  console.log(JSON.stringify(resultsArray));
-
   resultsArray.sort((a, b) => a - b);
-
   return resultsArray;
 };
 

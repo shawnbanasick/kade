@@ -29,17 +29,15 @@ const handleClick = () => {
           const lines = data.split(/[\r\n]+/g);
           // remove empty strings
           const lines2 = lines.filter(e => e === 0 || e);
+          const areQsortsLoaded = state.getState("areQsortsLoaded");
           state.setState({
             statements: lines2,
-            statementsLoaded: true
-          });
-          localStore.buttonColor = "rgba(144,	238,	144, .6)";
-
-          state.setState({
+            statementsLoaded: true,
             notifyDataUploadSuccess: true,
             areStatementsLoaded: true,
-            isInputButtonGreen: state.getState("areQsortsLoaded")
+            isInputButtonGreen: areQsortsLoaded
           });
+          localStore.buttonColor = "rgba(144,	238,	144, .6)";
         });
       }
     }
