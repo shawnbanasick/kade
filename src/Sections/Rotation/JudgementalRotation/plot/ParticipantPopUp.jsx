@@ -1,15 +1,7 @@
 import React from "react";
-import { view } from "react-easy-state";
 import styled from "styled-components";
+import { view } from "react-easy-state";
 import store from "../../../../store";
-
-const styles = {
-  height: 150,
-  color: "white",
-  background: "black",
-  margin: 20,
-  padding: 5
-};
 
 class ParticipantPopUp extends React.Component {
   render() {

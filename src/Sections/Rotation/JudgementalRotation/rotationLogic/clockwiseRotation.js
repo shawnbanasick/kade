@@ -4,7 +4,7 @@ import calcCosDegrees from "./calcCosDegrees";
 import calcSinDegrees from "./calcSinDegrees";
 import store from "../../../../store";
 
-const clockwiseRotation = function(calculateRotationsArray, rotationByDegree) {
+const clockwiseRotation = (calculateRotationsArray, rotationByDegree) => {
   const transposedArray = transposeMatrix(calculateRotationsArray);
   const sinDegreesValue = calcSinDegrees(rotationByDegree);
   const cosDegreesValue = calcCosDegrees(rotationByDegree);
@@ -14,13 +14,17 @@ const clockwiseRotation = function(calculateRotationsArray, rotationByDegree) {
     rotationDegrees
   });
 
-  let valueA, valueB, tempArray;
+  let valueA;
+  let valueB;
+  let tempArray;
   const len = transposedArray[0].length;
-  let a1Calculations, b1Calculations;
-  let a2Calculations, b2Calculations;
+  let a1Calculations;
+  let b1Calculations;
+  let a2Calculations;
+  let b2Calculations;
   const rotatedFactorsArray = [];
 
-  for (let k = 0; k < len; k++) {
+  for (let k = 0; k < len; k += 1) {
     a1Calculations = transposedArray[1][k] * sinDegreesValue;
     b1Calculations = transposedArray[0][k] * cosDegreesValue;
     valueA = evenRound(a1Calculations + b1Calculations, 5);

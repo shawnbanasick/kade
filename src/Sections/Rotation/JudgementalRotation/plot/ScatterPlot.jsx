@@ -1,18 +1,16 @@
-import React from "react";
-import DataCircles from "./DataCircles";
-import XYAxis from "./XyAxis";
-import { default as AxisTextLabels } from "./AxisTextLabels";
 import * as d3 from "d3";
+import React from "react";
+import XYAxis from "./XyAxis";
 import CircleText from "./CircleText";
-// import AutoScale from "react-auto-scale";
+import DataCircles from "./DataCircles";
+import AxisTextLabels from "./AxisTextLabels";
 
 const styles = {
   container: {
     margin: "0 auto",
     textAlign: "center",
     width: "auto",
-    height: "auto",
-    // border: "2px solid orange"
+    height: "auto"
   },
   svg: {
     position: "relative"

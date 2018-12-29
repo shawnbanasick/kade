@@ -9,72 +9,93 @@ const localStore = store({
   modalOpen: false
 });
 
+const handleOpen = () => {
+  const numFactorsKept = state.getState("numFactorsKeptForRot");
+  if (isNaN(numFactorsKept)) {
+    localStore.modalOpen = true;
+  } else {
+    const projectHistoryText = `Selected ${numFactorsKept} factors for rotation`;
+    const projectHistoryArray = state.getState("projectHistoryArray");
+    // a shortcut to remove history when selecting a second time
+    projectHistoryArray.length = 2;
+    projectHistoryArray.push(projectHistoryText);
+    const numFactors = state.getState("numFactorsKeptForRot");
+    state.setState({
+      isLoadingFactorsKept: true
+    });
+    setTimeout(() => {
+      loadingsTableDataPrep(numFactors);
+    }, 10);
+    state.setState({
+      // isLoadingFactorsKept: false,
+      isFacSelectDisabled: true,
+      shouldDisplayFacKept: true,
+      showLoadingsTable: true,
+      projectHistoryArray
+    });
+
+    // archive values for undo function (ProjectHistory component)
+    let archiveCounter = state.getState("archiveCounter");
+    const factorMatrix = state.getState("factorMatrix");
+    archiveCounter += 1;
+    const archiveName = `facMatrixArc${archiveCounter}`;
+    state.setState({ archiveCounter });
+    sessionStorage.setItem(archiveName, JSON.stringify(factorMatrix));
+  }
+};
+
+const handleClose = () => {
+  localStore.modalOpen = false;
+};
+
 class FactorSelectButtonModal extends Component {
-  handleOpen() {
-    let numFactorsKept = state.getState("numFactorsKeptForRot");
-    if (isNaN(numFactorsKept)) {
-      localStore.modalOpen = true;
-    } else {
-      let projectHistoryText = "Selected " + numFactorsKept + " factors for rotation";
-      let projectHistoryArray = state.getState("projectHistoryArray");
-      // a shortcut to remove history when selecting a second time
-      projectHistoryArray.length = 2;
-      projectHistoryArray.push(projectHistoryText);
-      let numFactors = state.getState("numFactorsKeptForRot");
-      state.setState({
-        isLoadingFactorsKept: true
-      });
-      setTimeout(() => {
-        loadingsTableDataPrep(numFactors);
-      }, 10);
-      state.setState({
-        // isLoadingFactorsKept: false,
-        isFacSelectDisabled: true,
-        shouldDisplayFacKept: true,
-        showLoadingsTable: true,
-        projectHistoryArray: projectHistoryArray
-      });
-
-      // archive values for undo function (ProjectHistory component)
-      let archiveCounter = state.getState("archiveCounter");
-      let factorMatrix = state.getState("factorMatrix");
-      archiveCounter = archiveCounter + 1;
-      let archiveName = "facMatrixArc" + archiveCounter;
-      state.setState({
-        archiveCounter: archiveCounter
-      });
-      sessionStorage.setItem(archiveName, JSON.stringify(factorMatrix));
-    }
-  };
-
-  handleClose = () => (localStore.modalOpen = false);
-
   render() {
-    const {active} = localStore.modalOpen;
-    let isFacSelectDisabled = state.getState("isFacSelectDisabled");
-    let isLoadingFactorsKept = state.getState("isLoadingFactorsKept");
+    const { active } = localStore.modalOpen;
+    const isFacSelectDisabled = state.getState("isFacSelectDisabled");
+    const isLoadingFactorsKept = state.getState("isLoadingFactorsKept");
     return (
       <FactorSelectModalDiv>
-        <Modal trigger={ <StyledWrapper>
-                           <Button id="factorsKeptSubmitButton" className="wrapper1" size={ "medium" } toggle active={ active } disabled={ isFacSelectDisabled } loading={ isLoadingFactorsKept }
-                             onClick={ this.handleOpen }>
-                             Submit
-                           </Button>
-                         </StyledWrapper> } open={ localStore.modalOpen } onClose={ this.handleClose } basic size="small">
+        <Modal
+          trigger={
+            <StyledWrapper>
+              <Button
+                id="factorsKeptSubmitButton"
+                className="wrapper1"
+                size={"medium"}
+                toggle
+                active={active}
+                disabled={isFacSelectDisabled}
+                loading={isLoadingFactorsKept}
+                onClick={handleOpen}
+              >
+                Submit
+              </Button>
+            </StyledWrapper>
+          }
+          open={localStore.modalOpen}
+          onClose={handleClose}
+          basic
+          size="small"
+        >
           <Header content="Factor Rotation" />
           <Modal.Content>
-            <span style={ { fontSize: 30 } }>
-                                Please select the number of factors to keep for rotation.
-                              </span>
+            <span style={{ fontSize: 30 }}>
+              Please select the number of factors to keep for rotation.
+            </span>
           </Modal.Content>
           <Modal.Actions>
-            <Button id="FactorSelectModalGotItButton" color="green" onClick={ this.handleClose } inverted>
-               Got it
+            <Button
+              id="FactorSelectModalGotItButton"
+              color="green"
+              onClick={handleClose}
+              inverted
+            >
+              Got it
             </Button>
           </Modal.Actions>
         </Modal>
       </FactorSelectModalDiv>
-      );
+    );
   }
 }
 

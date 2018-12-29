@@ -15,7 +15,7 @@ class ClockwiseButtons extends React.Component {
   render() {
     const baselineData = this.props.baselineData;
     return (
-      <div onClick={e => this.handleClick(e, baselineData)}>
+      <div>
         <button
           style={{
             fontSize: "25px",
@@ -24,6 +24,7 @@ class ClockwiseButtons extends React.Component {
             marginRight: "10px"
           }}
           id="clockwise"
+          onClick={e => this.handleClick(e, baselineData)}
         >
           {"\u21BB"}
         </button>
@@ -35,6 +36,7 @@ class ClockwiseButtons extends React.Component {
             fontWeight: "bolder"
           }}
           id="counterClockwise"
+          onClick={e => this.handleClick(e, baselineData)}
         >
           {"\u21BA"}
         </button>

@@ -9,13 +9,13 @@ const styles = {
   cursor: "default"
 };
 
-const showPopUp = function(info) {
+const showPopUp = info => {
   store.setState({
     participantDataObject: info
   });
 };
 
-const closePopUp = function() {
+const closePopUp = () => {
   store.setState({
     participantDataObject: false
   });

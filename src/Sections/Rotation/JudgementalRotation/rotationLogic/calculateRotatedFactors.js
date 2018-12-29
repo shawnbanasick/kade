@@ -7,11 +7,7 @@ import rotationTablePrep from "../rotationTable/rotationTablePrep";
 import calculateCommunalities from "../../varimaxLogic/2calculateCommunalities";
 import calculatefSigCriterionValues from "../../varimaxLogic/2calculateSigCriterionValues";
 
-const calculateRotatedFactors = function(
-  direction,
-  rotateByDegrees,
-  baselineData
-) {
+const calculateRotatedFactors = (direction, rotateByDegrees, baselineData) => {
   const abFactors = store.getState("abFactors");
   const rotationFactorA = Math.min(...abFactors) - 1;
   const rotationFactorB = Math.max(...abFactors) - 1;
@@ -20,7 +16,7 @@ const calculateRotatedFactors = function(
 
   // select the factors to rotate
   const calculateRotationsArray = [];
-  for (let i = 0; i < tempRotFacStateArray.length; i++) {
+  for (let i = 0; i < tempRotFacStateArray.length; i += 1) {
     // let tempArray = [];
     const tempA = tempRotFacStateArray[i][rotationFactorA];
     const tempB = tempRotFacStateArray[i][rotationFactorB];
@@ -45,7 +41,7 @@ const calculateRotatedFactors = function(
   }
 
   // insert rotated factors into temp rotational state array
-  for (let i = 0; i < looplen; i++) {
+  for (let i = 0; i < looplen; i += 1) {
     tempRotFacStateArray[i][rotationFactorA] = rotatedFactors[i][0];
     tempRotFacStateArray[i][rotationFactorB] = rotatedFactors[i][1];
   }

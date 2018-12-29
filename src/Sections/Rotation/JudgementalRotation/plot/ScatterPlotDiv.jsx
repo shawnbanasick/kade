@@ -1,11 +1,11 @@
 import React from "react";
 import styled from "styled-components";
 import { view } from "react-easy-state";
+import { ToastContainer, toast, Zoom } from "react-toastify";
+import store from "../../../../store";
+import transposeMatrix from "../../../../Utils/transposeMatrix";
 import FactorSelectButtons from "../FactorSelect/FactorSelectButtons";
 import ScatterPlotAndTableTransitionContainer from "./ScatterPlotAndTableTransitionContainer";
-import transposeMatrix from "../../../../Utils/transposeMatrix";
-import store from "../../../../store";
-import { ToastContainer, toast, Zoom } from "react-toastify";
 
 // notification of table data sent to output
 function notify() {
@@ -19,7 +19,6 @@ function notify() {
 
 class ScatterPlotDiv extends React.Component {
   render() {
-    // store.setState({"rotPlotContainerWidth": leftContWidth});
     const factorMatrix = store.getState("factorMatrix");
     const baselineData = transposeMatrix(factorMatrix);
     const notifyForSavedRotation = store.getState("notifyForSavedRotation");
@@ -31,12 +30,12 @@ class ScatterPlotDiv extends React.Component {
       <JudgeTitleDiv id="outmostDiv">
         <FactorSelectionBar id="selectButton">
           <SelectLabel>Select factors:</SelectLabel>
-          <FactorSelectButtons baselineData={ baselineData } />
-          <ToastContainer transition={ Zoom } />
+          <FactorSelectButtons baselineData={baselineData} />
+          <ToastContainer transition={Zoom} />
         </FactorSelectionBar>
-        <ScatterPlotAndTableTransitionContainer baselineData={ baselineData } />
+        <ScatterPlotAndTableTransitionContainer baselineData={baselineData} />
       </JudgeTitleDiv>
-      );
+    );
   }
 }
 

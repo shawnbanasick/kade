@@ -3,8 +3,6 @@ import AxisLeft from "./AxisLeft";
 import AxisBottom from "./AxisBottom";
 
 export default props => {
-  // console.log('hoc props: ' + JSON.stringify(props));
-
   const xSettings = {
     translate: `translate(0, ${props.height - props.padding})`,
     scale: props.xScale,

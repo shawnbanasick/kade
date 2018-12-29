@@ -1,6 +1,6 @@
 import React from "react";
-import { view, store } from "react-easy-state";
 import styled from "styled-components";
+import { view, store } from "react-easy-state";
 import state from "../../../../store";
 import ScatterPlot from "./ScatterPlot";
 import ParticipantPopUp from "./ParticipantPopUp";
@@ -46,7 +46,6 @@ const degreesDivStyles = {
 };
 
 class ScatterPlotAndTableTransitionContainer extends React.Component {
-
   componentDidMount() {
     window.addEventListener("resize", () => {
       const size = getWidthHeight();
@@ -63,8 +62,6 @@ class ScatterPlotAndTableTransitionContainer extends React.Component {
     });
   }
 
-
-
   render() {
     const showScatterPlotTableDiv = state.getState("showScatterPlotTableDiv");
     const degreesText = `${state.getState("rotationDegrees")}\u00B0`;
@@ -76,42 +73,65 @@ class ScatterPlotAndTableTransitionContainer extends React.Component {
     if (showScatterPlotTableDiv) {
       return (
         <div>
-          <div id="degreesDiv" style={ degreesDivStyles }>
-            <div style={ { display: "flex" } }>
-              <span style={ { marginRight: 5, fontSize: "22px", marginBottom: 5, marginTop: "auto" } }>
-                        Rotate axes
-                      </span>
-              <div style={ { marginTop: "auto" } }>
+          <div id="degreesDiv" style={degreesDivStyles}>
+            <div style={{ display: "flex" }}>
+              <span
+                style={{
+                  marginRight: 5,
+                  fontSize: "22px",
+                  marginBottom: 5,
+                  marginTop: "auto"
+                }}
+              >
+                Rotate axes
+              </span>
+              <div style={{ marginTop: "auto" }}>
                 <RotationButtons />
               </div>
-              <span style={ { marginLeft: 5, marginRight: 5, marginBottom: 5, marginTop: "auto", fontSize: ".9em" } }>
-                        { " - " }
-                      </span>
-              <div style={ { marginTop: "auto" } }>
-                <ClockwiseButtons baselineData={ this.props.baselineData } />
+              <span
+                style={{
+                  marginLeft: 5,
+                  marginRight: 5,
+                  marginBottom: 5,
+                  marginTop: "auto",
+                  fontSize: ".9em"
+                }}
+              >
+                {" - "}
+              </span>
+              <div style={{ marginTop: "auto" }}>
+                <ClockwiseButtons baselineData={this.props.baselineData} />
               </div>
               <DegreesText>
-                { " " }
-                <p>
-                  { degreesText }
-                </p>
+                {" "}
+                <p>{degreesText}</p>
               </DegreesText>
-              <div style={ { marginTop: "auto" } }>
+              <div style={{ marginTop: "auto" }}>
                 <SaveRotationButton />
               </div>
             </div>
           </div>
           <PlotAndChartDiv id="scatterPlotDiv">
-            <div style={ { width: leftContWidth } }>
+            <div style={{ width: leftContWidth }}>
               <ParticipantPopUp />
-              <ScatterPlot data={ data } width={ localStore.width } height={ localStore.height + 20 } {...this.props} {...scatterPlotStyles} />
+              <ScatterPlot
+                data={data}
+                width={localStore.width}
+                height={localStore.height + 20}
+                {...this.props}
+                {...scatterPlotStyles}
+              />
             </div>
-            <div id="rotFactorsTableDiv" style={ { width: 518 } }>
-              <RotationTable colDefs={ colDefs } maxHeight={ localStore.height } rowData={ rowData } />
+            <div id="rotFactorsTableDiv" style={{ width: 518 }}>
+              <RotationTable
+                colDefs={colDefs}
+                maxHeight={localStore.height}
+                rowData={rowData}
+              />
             </div>
           </PlotAndChartDiv>
         </div>
-        );
+      );
     }
     return null;
   }
@@ -132,5 +152,4 @@ const PlotAndChartDiv = styled.div`
   display: flex;
   width: auto;
   height: auto;
-  /* border: 2px solid purple; */
 `;
