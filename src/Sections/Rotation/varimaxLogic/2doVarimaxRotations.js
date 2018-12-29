@@ -3,18 +3,24 @@ import sumArrayValues from "../../../Utils/sumArrayValues";
 import varimaxIteration from "./3_varimaxIteration";
 import unStandardize from "./3_unStandardize";
 
-const doVarimaxRotations = function(factorMatrix, sumSquares) {
+const doVarimaxRotations = (factorMatrix, sumSquares) => {
   // also calls and loops factor adjustment function varimaxIteration
   let NV; // = 1;  outer big loop counter
   // var TVNV      // total variance of current loop
   let TVLT; //  total variance of previous loop used for kickout test
   let NC;
   let TV = 0; // total variance
-  let aaArray, bbArray, tvArray;
+  let aaArray;
+  let bbArray;
+  let tvArray;
   const FN = factorMatrix[0].length;
   const FFN = FN * FN;
-  let testCondition, intermediateRotation;
-  let AA, BB, FNBB, AASQ;
+  let testCondition;
+  let intermediateRotation;
+  let AA;
+  let BB;
+  let FNBB;
+  let AASQ;
 
   do {
     if (NV) {
@@ -22,14 +28,16 @@ const doVarimaxRotations = function(factorMatrix, sumSquares) {
     }
 
     tvArray = [];
-    var arrayFrag, temp;
-    var i, j;
+    let arrayFrag;
+    let temp;
+    let i;
+    let j;
     const iLoopLen = factorMatrix.length;
 
     TVLT = TV;
 
     // gets sumSquares of new varimaxIteration matrix to check convergence
-    for (i = 0; i < iLoopLen; i++) {
+    for (i = 0; i < iLoopLen; i += 1) {
       // for each factor
       AA = 0;
       BB = 0;
@@ -38,7 +46,7 @@ const doVarimaxRotations = function(factorMatrix, sumSquares) {
 
       aaArray = [];
       bbArray = [];
-      for (j = 0; j < jLoopLen; j++) {
+      for (j = 0; j < jLoopLen; j += 1) {
         // for each sort
         temp = evenRound(arrayFrag[j] * arrayFrag[j], 8); // CC
         aaArray.push(evenRound(temp, 8)); // AA

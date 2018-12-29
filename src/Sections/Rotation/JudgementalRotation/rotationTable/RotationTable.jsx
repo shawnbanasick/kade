@@ -6,7 +6,6 @@ class RotationTable extends Component {
   onGridReady(params) {
     this.gridApi = params.api;
     this.columnApi = params.columnApi;
-  // this.gridApi.sizeColumnsToFit();
   }
 
   render() {
@@ -32,15 +31,20 @@ class RotationTable extends Component {
 
     return (
       <div>
-        <p style={ { marginTop: 15, fontWeight: 300, fontSize: 14 } }>
-          (Highlighting levels are set by the flagging options in Section 6 - Loadings)
-          { " " }
+        <p style={{ marginTop: 15, fontWeight: 300, fontSize: 14 }}>
+          (Highlighting levels are set by the flagging options in Section 6 -
+          Loadings){" "}
         </p>
-        <div style={ containerStyle } className="ag-theme-fresh">
-          <AgGridReact columnDefs={ colDefs } rowData={ rowData } enableSorting onGridReady={ this.onGridReady.bind(this) } />
+        <div style={containerStyle} className="ag-theme-fresh">
+          <AgGridReact
+            columnDefs={colDefs}
+            rowData={rowData}
+            enableSorting
+            onGridReady={this.onGridReady.bind(this)}
+          />
         </div>
       </div>
-      );
+    );
   }
 }
 

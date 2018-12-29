@@ -1,7 +1,7 @@
 import store from "../../../../store";
 import evenRound from "../../../../Utils/evenRound";
 
-const rotationTablePrep = function(d3RotChartData, baselineData) {
+const rotationTablePrep = (d3RotChartData, baselineData) => {
   const abFactors = store.getState("abFactors");
   const minFac = Math.min(...abFactors);
   const maxFac = Math.max(...abFactors);
@@ -111,7 +111,7 @@ const rotationTablePrep = function(d3RotChartData, baselineData) {
 
   const rotRowDataFactorTable = [];
 
-  for (let j = 0; j < d3RotChartData.length; j++) {
+  for (let j = 0; j < d3RotChartData.length; j += 1) {
     const tempObj = {};
     const baselineA = baselineData[j][minFac - 1];
     const baselineB = baselineData[j][maxFac - 1];
