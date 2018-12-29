@@ -1,7 +1,7 @@
-import zip from 'lodash/zip';
+import zip from "lodash/zip";
 
-const transposeMatrix = function(matrix) {
-  let matrixTransposed = zip(...matrix);
+const transposeMatrix = matrix => {
+  const matrixTransposed = zip(...matrix);
   return matrixTransposed;
 };
 

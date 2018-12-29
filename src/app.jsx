@@ -17,10 +17,10 @@ import ClearProject from "./Sections/ClearProject/ClearProject";
 import ProjectHistory from "./Sections/ProjectHistory/ProjectHistory";
 
 window.onerror = function(errorMsg, url, lineNumber, error) {
-  console.log(`errorMsg: ${JSON.stringify(errorMsg)}`);
-  console.log(`url: ${JSON.stringify(url)}`);
-  console.log(`lineNumber: ${JSON.stringify(lineNumber)}`);
-  console.log(`trace: ${JSON.stringify(error.stack)}`);
+  // console.log(`errorMsg: ${JSON.stringify(errorMsg)}`);
+  // console.log(`url: ${JSON.stringify(url)}`);
+  // console.log(`lineNumber: ${JSON.stringify(lineNumber)}`);
+  // console.log(`trace: ${JSON.stringify(error.stack)}`);
 
   state.setState({
     errorMessage: "An unexpected error occurred.",
