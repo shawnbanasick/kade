@@ -26,7 +26,8 @@ const panes = [
       <Tab.Pane>
         {showTableDataNotSentWarning && (
           <NoDataMessage>
-            No Data - Click the "Send Table Data to Output" button in Section 6
+            No Data - Click the &#8220;Send Table Data to Output&#8221; button
+            in Section 6
           </NoDataMessage>
         )}
         <DataWindow1>

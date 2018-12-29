@@ -10,7 +10,7 @@ class FactorSelectionForOutputButtons extends React.Component {
   clearButtonHighlighting() {
     const btnId = store.getState("outputButtonsArray");
     const tempObj2 = {};
-    for (let i = 0; i < btnId.length; i++) {
+    for (let i = 0; i < btnId.length; i += 1) {
       tempObj2[`highlightfactor${btnId[i]}`] = false;
     }
     store.setState(tempObj2);
@@ -30,7 +30,7 @@ class FactorSelectionForOutputButtons extends React.Component {
   initializeButtonActiveState(btnId) {
     // set all highlighting to false (not active)
     const tempObj = {};
-    for (let i = 0; i < btnId.length; i++) {
+    for (let i = 0; i < btnId.length; i += 1) {
       tempObj[`highlightfactor${btnId[i]}`] = false;
     }
     store.setState(tempObj);
@@ -45,8 +45,8 @@ class FactorSelectionForOutputButtons extends React.Component {
     if (factor === "selectAllFacs") {
       // construct state object and user selected factors array
       const tempObj = {};
-      const userSelectedFactors = [];
-      for (let i = 0; i < btnId.length; i++) {
+      userSelectedFactors = [];
+      for (let i = 0; i < btnId.length; i += 1) {
         tempObj[`highlightfactor${btnId[i]}`] = true;
         const temp1 = `factor ${btnId[i]}`;
         userSelectedFactors.push(temp1);
@@ -65,7 +65,7 @@ class FactorSelectionForOutputButtons extends React.Component {
       // clear all
     } else if (factor === "clearAllFacs") {
       const tempObj2 = {};
-      for (let i = 0; i < btnId.length; i++) {
+      for (let i = 0; i < btnId.length; i += 1) {
         tempObj2[`highlightfactor${btnId[i]}`] = false;
       }
       tempObj2.userSelectedFactors = [];
@@ -87,7 +87,7 @@ class FactorSelectionForOutputButtons extends React.Component {
         userSelectedFactors = [];
 
         const tempObj3 = {};
-        for (let i = 0; i < btnId.length; i++) {
+        for (let i = 0; i < btnId.length; i += 1) {
           tempObj3[`highlightfactor${btnId[i]}`] = false;
         }
         tempObj3.userSelectedFactors = userSelectedFactors;
@@ -137,7 +137,7 @@ class FactorSelectionForOutputButtons extends React.Component {
       >
         <StyledWrapper>
           <span style={{ marginRight: 5, fontSize: 16 }}>Select Factors:</span>
-          {btnId.map((item, index) => (
+          {btnId.map(item => (
             <Button
               key={`f${item}`}
               toggle

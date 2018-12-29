@@ -47,14 +47,14 @@ const getXCoords = props => {
   return xCoord;
 };
 
-const yValue = props => {
+let yValue = props => {
   const maxColumnHeight = store.getState("maxColumnHeight");
   const defaultHeight = maxColumnHeight * 110 + 100;
 
   const shouldAdjustHeight = props.factorVizOptions.willAdjustCardHeight;
   if (shouldAdjustHeight === true) {
     const cardHeight = props.factorVizOptions.willAdjustCardHeightBy;
-    const yValue = maxColumnHeight * cardHeight + 100;
+    yValue = maxColumnHeight * cardHeight + 100;
     return yValue;
   }
   return defaultHeight;

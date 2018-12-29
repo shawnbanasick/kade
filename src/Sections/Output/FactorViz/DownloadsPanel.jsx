@@ -1,17 +1,9 @@
-import React, { Component } from "react";
-import { view } from "react-easy-state";
-import UserSelectionSwitch from "./UserSelectionSwitch";
-import UserTextInput from "./UserTextInput";
-import CustomFileNameLocation from "./CustomFileNameLocation";
 import styled from "styled-components";
-
-// const styles = {
-//     marginLeft: 10,
-//     marginTop: 8,
-//     width: 150,
-//     marginBottom: 1,
-//     height: 20
-// };
+import { view } from "react-easy-state";
+import React, { Component } from "react";
+import UserTextInput from "./UserTextInput";
+import UserSelectionSwitch from "./UserSelectionSwitch";
+import CustomFileNameLocation from "./CustomFileNameLocation";
 
 class DistinguishingPanel extends Component {
   render() {
@@ -56,5 +48,3 @@ const OptionStatementText = styled.div`
   font-size: 20px;
   user-select: none;
 `;
-
-// import styled from "styled-components";

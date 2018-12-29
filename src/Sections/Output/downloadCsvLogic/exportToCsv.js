@@ -38,8 +38,9 @@ const exportToCsv = (fileName, rows) => {
   };
 
   dialog.showSaveDialog(saveOptions, fileName => {
+    // prevents an error when user selects cancel
     if (fileName === undefined) {
-      console.log("You didn't save the file");
+      // console.log("You didn't save the file");
       return;
     }
 

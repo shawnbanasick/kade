@@ -2,6 +2,15 @@ import store from "../../../store";
 import evenRound from "../../../Utils/evenRound";
 // import default from './2_pushCumComMatrixToOutputArray';
 
+function customSortHelper(array, placeSetter) {
+  array.sort((a, b) => {
+    if (a[placeSetter] === b[placeSetter]) {
+      return 0;
+    }
+    return b[placeSetter] < a[placeSetter] ? -1 : 1;
+  });
+}
+
 const pushFactorScoreComparisonRanksTableToOutput = function(
   sheetNames,
   output,
@@ -11,7 +20,9 @@ const pushFactorScoreComparisonRanksTableToOutput = function(
 ) {
   const synFactorArray1 = store.getState("synFactorArray1Holder");
   const userSelectedFactors = store.getState("userSelectedFactors");
-  let tempArray1, rankValue, rankingTempArray;
+  let tempArray1;
+  let rankValue;
+  let rankingTempArray;
   const statementRankingArray = [];
 
   // set sheetnam
@@ -179,7 +190,7 @@ const pushFactorScoreComparisonRanksTableToOutput = function(
   );
   outputData.push(factorScoreRanksArray);
 
-    store.setState({factorScoreRanksArray});
+  store.setState({ factorScoreRanksArray });
 
   // setup the array of ranked statements
   const factorScoreComparisonArray = [];
@@ -211,14 +222,5 @@ const pushFactorScoreComparisonRanksTableToOutput = function(
 
   return [sheetNames, output, outputData, sheetNamesXlsx, colSizes];
 };
-
-function customSortHelper(array, placeSetter) {
-  array.sort((a, b) => {
-    if (a[placeSetter] === b[placeSetter]) {
-      return 0;
-    }
-    return b[placeSetter] < a[placeSetter] ? -1 : 1;
-  });
-}
 
 export default pushFactorScoreComparisonRanksTableToOutput;

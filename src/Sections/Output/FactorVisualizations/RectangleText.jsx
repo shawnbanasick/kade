@@ -74,8 +74,9 @@ function statementList(texts, xCoord, factorVizOptions) {
     dyValue = `${dyValueNum}em`;
   }
   // map out locations for multi-line text
-  const textItems = texts.map((text, index) => (
-    <tspan key={text + index} dy={dyValue} x={xCoord} textAnchor={"middle"}>
+  let mapcounter = 1;
+  const textItems = texts.map(text => (
+    <tspan key={mapcounter++} dy={dyValue} x={xCoord} textAnchor={"middle"}>
       {text}
     </tspan>
   ));

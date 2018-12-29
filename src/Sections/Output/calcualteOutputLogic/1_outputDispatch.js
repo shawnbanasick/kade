@@ -18,7 +18,7 @@ import pushStandardErrorsDifferencesToOutput from "./2_pushStandardErrorsDiffere
 import pushDistinguishingStatementsToOutput from "./2_pushDistinguishingStatementsToOutput";
 import pushCribSheetsToOutput from "./2_pushCribSheetsToOutput";
 
-const outputDispatch = function() {
+const outputDispatch = () => {
   // begin output cascade
   const step1 = pushProjectOverviewToOutputArray();
   // returns [sheetNames, output, outputData, sheetNamesXlsx, colSizes]

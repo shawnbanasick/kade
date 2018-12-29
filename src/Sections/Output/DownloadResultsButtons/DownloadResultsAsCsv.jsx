@@ -5,25 +5,25 @@ import { Button, Header, Modal } from "semantic-ui-react";
 import downloadResultsAsCsv from "../downloadCsvLogic/downloadCsvOutputFile";
 import state from "../../../store";
 
-const localStore = {
+const localStore = store({
   modalOpen: false
+});
+
+const handleOpen = () => {
+  const userSelectedFactors = state.getState("userSelectedFactors");
+  if (userSelectedFactors.length === 0) {
+    // console.log("must select factors first");
+    localStore.modalOpen = true;
+  } else {
+    downloadResultsAsCsv();
+  }
 };
 
-class DownloadResultsAsExcel extends React.Component {
-  handleOpen() {
-    let userSelectedFactors = state.getState("userSelectedFactors");
-    if (userSelectedFactors.length === 0) {
-      console.log("must select factors first");
-      localStore.modalOpen = true;
-    } else {
-      downloadResultsAsCsv();
-    }
-  }
+const handleClose = () => {
+  localStore.modalOpen = false;
+};
 
-  handleClose = () => {
-    localStoretore.modalOpen = false;
-  };
-
+class DownloadResultsAsCsv1 extends React.Component {
   render() {
     const { active } = localStore;
     return (
@@ -36,14 +36,14 @@ class DownloadResultsAsExcel extends React.Component {
               size={"large"}
               toggle
               active={active}
-              onClick={this.handleOpen}
+              onClick={handleOpen}
             >
               CSV File
             </Button>
           </StyledWrapper>
         }
         open={localStore.modalOpen}
-        onClose={this.handleClose}
+        onClose={handleClose}
         basic
         size="small"
       >
@@ -58,7 +58,7 @@ class DownloadResultsAsExcel extends React.Component {
             id="downloadResultsAsCsvModalGotItButton"
             size={"huge"}
             color="green"
-            onClick={this.handleClose}
+            onClick={handleClose}
             inverted
           >
             Got it
@@ -69,7 +69,7 @@ class DownloadResultsAsExcel extends React.Component {
   }
 }
 
-export default view(DownloadResultsAsExcel);
+export default view(DownloadResultsAsCsv1);
 
 const StyledWrapper = styled.div`
   .wrapper1 {

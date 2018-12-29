@@ -1,7 +1,7 @@
 import downloadExcelOutputFile from "./2_downloadExcelOutputFile";
 import store from "../../../store";
 
-const downloadExcelDispatch = function() {
+const downloadExcelDispatch = () => {
   // initialize output cascade
 
   const dataXlsx = store.getState("outputData");

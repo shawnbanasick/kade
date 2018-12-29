@@ -3,26 +3,20 @@ import { view } from "react-easy-state";
 import { AgGridReact } from "ag-grid-react";
 import store from "../../../store";
 
-// let containerStyle = {
-//   marginTop: 30,
-//   height: 200,
-//   width: 862
-// };
-
 const getCurrentData = () => {
-  let data = store.getState("factorCharacteristicsArray");
-  let numFacs2 = store.getState("userSelectedFactors");
-  let numFacs = numFacs2.length;
+  const data = store.getState("factorCharacteristicsArray");
+  const numFacs2 = store.getState("userSelectedFactors");
+  const numFacs = numFacs2.length;
 
   // pull out header row
-  let headerRow = data[3];
+  const headerRow = data[3];
 
   return [data, numFacs, headerRow];
 };
 
 let gridRowDataFacCorrTable = [];
 let gridColDefsFacCorrTable = [];
-let characteristicsArray = [
+const characteristicsArray = [
   "No. of Defining Variables",
   "Avg. Rel. Coef.",
   "Composite Reliability",
@@ -43,7 +37,7 @@ const getGridColDefsFacCorrTable = (data, numFacs, headerRow) => {
     }
   ];
 
-  for (let i = 1; i < numFacs + 1; i++) {
+  for (let i = 1; i < numFacs + 1; i += 1) {
     gridColDefsFacCorrTable.push({
       headerName: headerRow[i],
       field: headerRow[i],
@@ -62,12 +56,12 @@ const getGridColDefsFacCorrTable = (data, numFacs, headerRow) => {
 const getGridRowDataFacCorrTable = (data, headerRow) => {
   gridRowDataFacCorrTable = [];
 
-  for (let j = 4; j < data.length; j++) {
+  for (let j = 4; j < data.length; j += 1) {
     // let responNum = j + 1;
-    let tempObj = {};
+    const tempObj = {};
     tempObj.factorList = characteristicsArray[j - 4];
 
-    for (let k = 1; k < headerRow.length; k++) {
+    for (let k = 1; k < headerRow.length; k += 1) {
       tempObj[headerRow[k]] = data[j][k];
     }
     gridRowDataFacCorrTable.push(tempObj);
@@ -77,26 +71,25 @@ const getGridRowDataFacCorrTable = (data, headerRow) => {
 };
 
 class FactorCorrelationsTable extends Component {
-  onGridReady = params => {
+  onGridReady(params) {
     this.gridApi = params.api;
     this.columnApi = params.columnApi;
-    // this.gridApi.sizeColumnsToFit();
-  };
+  }
 
   render() {
-    let currentData = getCurrentData();
+    const currentData = getCurrentData();
 
     let widthVal = 182 + 90 * currentData[1];
     if (widthVal > window.innerWidth - 100) {
       widthVal = window.innerWidth - 100;
     }
-    widthVal = widthVal + "px";
+    widthVal += "px";
 
-    let gridColDefsFacCorrTable = getGridColDefsFacCorrTable(...currentData); // store.getState("gridColDefsFacTableEigen");
-    let gridRowDataFacCorrTable = getGridRowDataFacCorrTable(
+    const gridColDefsFacCorrTable = getGridColDefsFacCorrTable(...currentData); // store.getState("gridColDefsFacTableEigen");
+    const gridRowDataFacCorrTable = getGridRowDataFacCorrTable(
       currentData[0],
       currentData[2]
-    ); //store.getState("gridRowDataFacTableEigen");
+    );
 
     return (
       <div>
@@ -108,8 +101,8 @@ class FactorCorrelationsTable extends Component {
             columnDefs={gridColDefsFacCorrTable}
             rowData={gridRowDataFacCorrTable}
             onGridReady={this.onGridReady.bind(this)}
-            gridAutoHeight={true}
-            enableSorting={true}
+            gridAutoHeight
+            enableSorting
           />
         </div>
       </div>

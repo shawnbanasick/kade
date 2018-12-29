@@ -45,6 +45,11 @@ const pushFactorScoreCorrelationsToOutput = function(
     factorScoresCorrelationArray2.push(tempArray);
   }
 
+  function evenRoundFunc(n) {
+    const temp1a = evenRound(n, 5);
+    return temp1a;
+  }
+
   // todo - converting to integer gives lots letiation with PQmethod - use evenRound?
   const factorScoresCorrelationArray = [];
   for (let q = 0; q < factorScoresCorrelationArray2.length; q++) {
@@ -52,9 +57,17 @@ const pushFactorScoreCorrelationsToOutput = function(
     factorScoresCorrelationArray.push(temp11);
   }
 
-  function evenRoundFunc(n) {
-    const temp1 = evenRound(n, 5);
-    return temp1;
+  function factorScoresCorrelationsHelper(factorScoresCorrelationArray, pullX) {
+    let correlationHolder;
+    let correlationHolder2;
+    const correlationTableArrayFragment = [];
+
+    factorScoresCorrelationArray.forEach(element => {
+      correlationHolder2 = getPqmethodCorrelation(pullX, element);
+      correlationHolder = evenRound(correlationHolder2[0], 4);
+      correlationTableArrayFragment.push(correlationHolder);
+    });
+    return correlationTableArrayFragment;
   }
 
   let pullX;
@@ -68,18 +81,6 @@ const pushFactorScoreCorrelationsToOutput = function(
     );
     correlationTableArray.push(correlationTableArrayFragment);
     correlationTableArrayFragment = [];
-  }
-
-  function factorScoresCorrelationsHelper(factorScoresCorrelationArray, pullX) {
-    let correlationHolder, correlationHolder2;
-    const correlationTableArrayFragment = [];
-
-    factorScoresCorrelationArray.forEach(element => {
-      correlationHolder2 = getPqmethodCorrelation(pullX, element);
-      correlationHolder = evenRound(correlationHolder2[0], 4);
-      correlationTableArrayFragment.push(correlationHolder);
-    });
-    return correlationTableArrayFragment;
   }
 
   // add factor names to first column

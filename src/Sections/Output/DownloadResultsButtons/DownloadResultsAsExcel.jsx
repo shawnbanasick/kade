@@ -1,30 +1,30 @@
 import React from "react";
 import styled from "styled-components";
-import { view } from "react-easy-state";
+import { view, store } from "react-easy-state";
 import { Button, Header, Modal } from "semantic-ui-react";
 import downloadExcelDispatch from "../downloadExcelLogic/1_downloadExcelDispatch";
-import store from "../../../store";
+import state from "../../../store";
+
+const localStore = store({
+  modalOpen: false
+});
+
+const handleOpen = () => {
+  const userSelectedFactors = state.getState("userSelectedFactors");
+  if (userSelectedFactors.length === 0) {
+    localStore.modalOpen = true;
+  } else {
+    downloadExcelDispatch();
+  }
+};
+
+const handleClose = () => {
+  localStore.modalOpen = false;
+};
 
 class DownloadResultsAsExcel extends React.Component {
-  store = {
-    modalOpen: false
-  };
-
-  handleOpen = () => {
-    let userSelectedFactors = store.getState("userSelectedFactors");
-    if (userSelectedFactors.length === 0) {
-      this.store.modalOpen = true;
-    } else {
-      downloadExcelDispatch();
-    }
-  };
-
-  handleClose = () => {
-    this.store.modalOpen = false;
-  };
-
   render() {
-    const { active } = this.store;
+    const { active } = localStore;
     return (
       <Modal
         trigger={
@@ -35,14 +35,14 @@ class DownloadResultsAsExcel extends React.Component {
               size={"large"}
               toggle
               active={active}
-              onClick={this.handleOpen}
+              onClick={handleOpen}
             >
               Excel File
             </Button>
           </StyledWrapper>
         }
-        open={this.store.modalOpen}
-        onClose={this.handleClose}
+        open={localStore.modalOpen}
+        onClose={handleClose}
         basic
         size="small"
       >
@@ -57,7 +57,7 @@ class DownloadResultsAsExcel extends React.Component {
             id="downloadResultsAsExcelModalGotItButton"
             size={"huge"}
             color="green"
-            onClick={this.handleClose}
+            onClick={handleClose}
             inverted
           >
             Got it

@@ -1,52 +1,67 @@
 import React from "react";
-import store from "../../store";
-import includes from 'lodash/includes';
-import { Button } from "semantic-ui-react";
+import includes from "lodash/includes";
 import { view } from "react-easy-state";
+import { Button } from "semantic-ui-react";
+import store from "../../../store";
 
 import outputDispatch from "../calcualteOutputLogic/1_outputDispatch";
 
-class FactorSelectionForOutputButtons extends React.Component {
-  handleSubmit() {
-    outputDispatch();
+const handleSubmit = () => {
+  outputDispatch();
+  store.setState({
+    showDownloadOutputButtons: true
+  });
+};
+
+const handleOnclick = event => {
+  const factor = event.target.id;
+  let userSelectedFactors = store.getState("userSelectedFactors");
+
+  // select all
+  if (factor === "selectAllFacsButton") {
+    const numFactorsKeptForRotation = store.getState("numFactorsKeptForRot");
+    userSelectedFactors = [
+      "factor 1",
+      "factor 2",
+      "factor 3",
+      "factor 4",
+      "factor 5",
+      "factor 6",
+      "factor 7",
+      "factor 8"
+    ];
+    userSelectedFactors.length = numFactorsKeptForRotation;
     store.setState({
-      showDownloadOutputButtons: true
+      highlightfactor1: true,
+      highlightfactor2: true,
+      highlightfactor3: true,
+      highlightfactor4: true,
+      highlightfactor5: true,
+      highlightfactor6: true,
+      highlightfactor7: true,
+      highlightfactor8: true,
+      userSelectedFactors,
+      selectAllClicked: true
     });
-  }
 
-  handleOnclick(event) {
-    let factor = event.target.id;
-    let userSelectedFactors = store.getState("userSelectedFactors");
-
-    // select all
-    if (factor === "selectAllFacsButton") {
-      let numFactorsKeptForRotation = store.getState("numFactorsKeptForRot");
-      userSelectedFactors = [
-        "factor 1",
-        "factor 2",
-        "factor 3",
-        "factor 4",
-        "factor 5",
-        "factor 6",
-        "factor 7",
-        "factor 8"
-      ];
-      userSelectedFactors.length = numFactorsKeptForRotation;
-      store.setState({
-        highlightfactor1: true,
-        highlightfactor2: true,
-        highlightfactor3: true,
-        highlightfactor4: true,
-        highlightfactor5: true,
-        highlightfactor6: true,
-        highlightfactor7: true,
-        highlightfactor8: true,
-        userSelectedFactors: userSelectedFactors,
-        selectAllClicked: true
-      });
-
-      // clear all
-    } else if (factor === "clearAllFacsButton") {
+    // clear all
+  } else if (factor === "clearAllFacsButton") {
+    userSelectedFactors = [];
+    store.setState({
+      highlightfactor1: false,
+      highlightfactor2: false,
+      highlightfactor3: false,
+      highlightfactor4: false,
+      highlightfactor5: false,
+      highlightfactor6: false,
+      highlightfactor7: false,
+      highlightfactor8: false,
+      userSelectedFactors
+    });
+  } else {
+    // select individual factors
+    const selectAllClicked = store.getState("selectAllClicked");
+    if (selectAllClicked) {
       userSelectedFactors = [];
       store.setState({
         highlightfactor1: false,
@@ -57,42 +72,27 @@ class FactorSelectionForOutputButtons extends React.Component {
         highlightfactor6: false,
         highlightfactor7: false,
         highlightfactor8: false,
-        userSelectedFactors: userSelectedFactors
+        userSelectedFactors,
+        selectAllClicked: false
       });
-    } else {
-      // select individual factors
-      let selectAllClicked = store.getState("selectAllClicked");
-      if (selectAllClicked) {
-        userSelectedFactors = [];
-        store.setState({
-          highlightfactor1: false,
-          highlightfactor2: false,
-          highlightfactor3: false,
-          highlightfactor4: false,
-          highlightfactor5: false,
-          highlightfactor6: false,
-          highlightfactor7: false,
-          highlightfactor8: false,
-          userSelectedFactors: userSelectedFactors,
-          selectAllClicked: false
-        });
-      }
-      if (!includes(userSelectedFactors, factor)) {
-        userSelectedFactors.push(factor);
-        store.setState({
-          userSelectedFactors: userSelectedFactors
-        });
-        let newFactorId = "highlight" + factor.replace(" ", "");
-        store[newFactorId] = true;
-      }
+    }
+    if (!includes(userSelectedFactors, factor)) {
+      userSelectedFactors.push(factor);
+      store.setState({ userSelectedFactors });
+      const newFactorId = `highlight${factor.replace(" ", "")}`;
+      store[newFactorId] = true;
     }
   }
+};
 
+class FactorSelectionForOutputButtons extends React.Component {
   render() {
-    let showOutputFactorSelection = store.getState("showOutputFactorSelection");
-    let numFactorsKeptForRotation = store.getState("numFactorsKeptForRot");
-    let buttonsToRenderArray = [];
-    for (let i = 0; i < 8; i++) {
+    const showOutputFactorSelection = store.getState(
+      "showOutputFactorSelection"
+    );
+    const numFactorsKeptForRotation = store.getState("numFactorsKeptForRot");
+    const buttonsToRenderArray = [];
+    for (let i = 0; i < 8; i += 1) {
       if (i < numFactorsKeptForRotation) {
         buttonsToRenderArray.push(true);
       } else {
@@ -117,7 +117,7 @@ class FactorSelectionForOutputButtons extends React.Component {
               id={"factor 1"}
               toggle
               active={store.getState("highlightfactor1")}
-              onClick={this.handleOnclick.bind(this)}
+              onClick={handleOnclick}
               key={"f1"}
             >
               1
@@ -128,7 +128,7 @@ class FactorSelectionForOutputButtons extends React.Component {
               id={"factor 2"}
               toggle
               active={store.getState("highlightfactor2")}
-              onClick={this.handleOnclick.bind(this)}
+              onClick={handleOnclick}
               key={"f2"}
             >
               2
@@ -139,7 +139,7 @@ class FactorSelectionForOutputButtons extends React.Component {
               id={"factor 3"}
               toggle
               active={store.getState("highlightfactor3")}
-              onClick={this.handleOnclick.bind(this)}
+              onClick={handleOnclick}
               key={"f3"}
             >
               3
@@ -150,7 +150,7 @@ class FactorSelectionForOutputButtons extends React.Component {
               id={"factor 4"}
               toggle
               active={store.getState("highlightfactor4")}
-              onClick={this.handleOnclick.bind(this)}
+              onClick={handleOnclick}
               key={"f4"}
             >
               4
@@ -161,7 +161,7 @@ class FactorSelectionForOutputButtons extends React.Component {
               id={"factor 5"}
               toggle
               active={store.getState("highlightfactor5")}
-              onClick={this.handleOnclick.bind(this)}
+              onClick={handleOnclick}
               key={"f5"}
             >
               5
@@ -172,7 +172,7 @@ class FactorSelectionForOutputButtons extends React.Component {
               id={"factor 6"}
               toggle
               active={store.getState("highlightfactor6")}
-              onClick={this.handleOnclick.bind(this)}
+              onClick={handleOnclick}
               key={"f6"}
             >
               6
@@ -183,7 +183,7 @@ class FactorSelectionForOutputButtons extends React.Component {
               id={"factor 7"}
               toggle
               active={store.getState("highlightfactor7")}
-              onClick={this.handleOnclick.bind(this)}
+              onClick={handleOnclick}
               key={"f7"}
             >
               7
@@ -194,19 +194,19 @@ class FactorSelectionForOutputButtons extends React.Component {
               id={"factor 8"}
               toggle
               active={store.getState("highlightfactor8")}
-              onClick={this.handleOnclick.bind(this)}
+              onClick={handleOnclick}
               key={"f8"}
             >
               8
             </Button>
           )}
-          <Button id="selectAllFacsButton" onClick={this.handleOnclick}>
+          <Button id="selectAllFacsButton" onClick={handleOnclick}>
             Select All
           </Button>
-          <Button id="clearAllFacsButton" onClick={this.handleOnclick}>
+          <Button id="clearAllFacsButton" onClick={handleOnclick}>
             Clear
           </Button>
-          <Button id="startOutputButton" onClick={this.handleSubmit}>
+          <Button id="startOutputButton" onClick={handleSubmit}>
             Submit
           </Button>
         </div>

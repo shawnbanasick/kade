@@ -1,4 +1,4 @@
-import includes from 'lodash/includes';
+import includes from "lodash/includes";
 import cloneDeep from "lodash/cloneDeep";
 import store from "../../../store";
 import weightRawSorts from "./3_weightRawSorts";
@@ -9,57 +9,53 @@ import combineWeightedSorts from "./3_combineWeightedSorts";
 import computeFactorWeights from "./3_computeFactorWeights";
 import findLargestFactorWeights from "./3_findLargestFactorWeights";
 
-const pushFactorsToOutputArray = function(
+const pushFactorsToOutputArray = (
   sheetNames,
   output,
   outputData,
   sheetNamesXlsx,
   colSizes
-) {
+) => {
   // pulls array - ["factor 1", "factor 2", "factor 3", "factor 4", "factor 5", "factor 6", "factor 7", "factor 8"]
   let userSelectedFactors = store.getState("userSelectedFactors");
-  //let numFactorsKeptForRot = store.getState("numFactorsKeptForRot");
-  let numFactorsSelectedForOutput = userSelectedFactors.length;
-  let results = store.getState("currentLoadingsTable");
+  const numFactorsSelectedForOutput = userSelectedFactors.length;
+  const results = store.getState("currentLoadingsTable");
 
   // strip spaces from userSelectedFactors
   // create check array of userSelectedFactors
-  let newUserSelectedFactorsArray = [];
-  let userSelectedFactorsCheckArray = [];
-  for (let k = 0; k < userSelectedFactors.length; k++) {
-    // userSelectedFactors[k] = userSelectedFactors[k].replace(/\s/g, "");
-    let temp1 = userSelectedFactors[k].split(" ");
-    let check = "check" + temp1[1];
-    let factorName = "factor" + temp1[1];
+  const newUserSelectedFactorsArray = [];
+  const userSelectedFactorsCheckArray = [];
+  for (let k = 0; k < userSelectedFactors.length; k += 1) {
+    const temp1 = userSelectedFactors[k].split(" ");
+    const check = `check${temp1[1]}`;
+    const factorName = `factor${temp1[1]}`;
     userSelectedFactorsCheckArray.push(check);
     newUserSelectedFactorsArray.push(factorName);
   }
   userSelectedFactors = [...newUserSelectedFactorsArray];
 
   // resort the array of objects
-  userSelectedFactors.sort(function(a, b) {
-    return a - b;
-  });
+  userSelectedFactors.sort((a, b) => a - b);
 
-  let significantLoadingsArray = [];
-  let loadingSortCheckArray = [];
+  const significantLoadingsArray = [];
+  const loadingSortCheckArray = [];
 
   // loop through results array to find user-selected factor loadings
-  for (let i = 0, iLen = results.length; i < iLen; i++) {
+  for (let i = 0, iLen = results.length; i < iLen; i += 1) {
     let respondentName;
-    // let factorNumberCount = 0;
-    let tempArray = [];
-    let thisRow = results[i];
+    // const factorNumberCount = 0;
+    const tempArray = [];
+    const thisRow = results[i];
 
-    for (let j = 0, jLen = numFactorsSelectedForOutput; j < jLen; j++) {
-      // let key1 = "factor" + (j + 1);
-      let key1 = userSelectedFactors[j];
-      // let key2 = "check" + (j + 1);
-      let key2 = userSelectedFactorsCheckArray[j];
-      let factorLoading = thisRow[key1];
-      let isLoadingSignificant = thisRow[key2];
+    for (let j = 0, jLen = numFactorsSelectedForOutput; j < jLen; j += 1) {
+      // const key1 = "factor" + (j + 1);
+      const key1 = userSelectedFactors[j];
+      // const key2 = "check" + (j + 1);
+      const key2 = userSelectedFactorsCheckArray[j];
+      const factorLoading = thisRow[key1];
+      const isLoadingSignificant = thisRow[key2];
       respondentName = thisRow.respondent;
-      // let factor = userSelectedFactors[i];
+      // const factor = userSelectedFactors[i];
 
       if (
         isLoadingSignificant === true &&
@@ -78,15 +74,15 @@ const pushFactorsToOutputArray = function(
   }
 
   // check for sorts flagged for more than one factor - error display
-  let multipleFactorsFlaggedArray = [];
-  for (let p = 0; p < significantLoadingsArray.length; p++) {
-    let test = significantLoadingsArray[p];
+  const multipleFactorsFlaggedArray = [];
+  for (let p = 0; p < significantLoadingsArray.length; p += 1) {
+    const test = significantLoadingsArray[p];
     if (test.length > 3) {
       multipleFactorsFlaggedArray.push(significantLoadingsArray[p][1]);
     }
   }
   if (multipleFactorsFlaggedArray.length > 0) {
-    let flaggedArrayText = multipleFactorsFlaggedArray.join(", ");
+    const flaggedArrayText = multipleFactorsFlaggedArray.join(", ");
     store.setState({
       sortsFlaggedOnTwoFactors: flaggedArrayText,
       showMultipleFactorsFlaggedWarningModal: true,
@@ -104,8 +100,8 @@ const pushFactorsToOutputArray = function(
 
   // check for user-selected factors with no flagged loading sorts - user error
   let problemFactorsArray = [];
-  for (let r = 0; r < userSelectedFactors.length; r++) {
-    let loadingSortCheck = includes(
+  for (let r = 0; r < userSelectedFactors.length; r += 1) {
+    const loadingSortCheck = includes(
       loadingSortCheckArray,
       userSelectedFactors[r]
     );
@@ -117,7 +113,7 @@ const pushFactorsToOutputArray = function(
 
   // show warning modal and stop calcs if factor with no flag selected
   if (problemFactorsArray.length > 0) {
-    console.log("ERROR - no loadings flagged for " + problemFactorsArray);
+    // console.log("ERROR - no loadings flagged for " + problemFactorsArray);
     problemFactorsArray = problemFactorsArray.join(", ");
     store.setState({
       factorsWithoutLoading: problemFactorsArray,
@@ -126,61 +122,62 @@ const pushFactorsToOutputArray = function(
     return "haltOutputProcessing";
   }
 
-  let factorWeights = computeFactorWeights(significantLoadingsArray);
-  let largestFactorWeights = findLargestFactorWeights(factorWeights);
-  let weightedFactorScores = weightFactorScores(...largestFactorWeights);
-  let weightedRawSorts = weightRawSorts(weightedFactorScores);
-  let combinedWeightedSorts = combineWeightedSorts(weightedRawSorts);
-  let calculatedZScores = calculateZScores(combinedWeightedSorts);
+  const factorWeights = computeFactorWeights(significantLoadingsArray);
+  const largestFactorWeights = findLargestFactorWeights(factorWeights);
+  const weightedFactorScores = weightFactorScores(...largestFactorWeights);
+  const weightedRawSorts = weightRawSorts(weightedFactorScores);
+  const combinedWeightedSorts = combineWeightedSorts(weightedRawSorts);
+  const calculatedZScores = calculateZScores(combinedWeightedSorts);
   assignFactorScores(calculatedZScores);
 
   // CONTINUE HERE!
 
-  let analysisOutput2 = store.getState("analysisOutput");
-  let analysisOutput = cloneDeep(analysisOutput2);
-  let sigSortsArray = store.getState("sigSortsArray");
-  let sortsAsNumbers = store.getState("sortsAsNumbers");
-  let qavRespondentNames = store.getState("respondentNames");
-  let correlationTableArray = store.getState(
+  const analysisOutput2 = store.getState("analysisOutput");
+  const analysisOutput = cloneDeep(analysisOutput2);
+  const sigSortsArray = store.getState("sigSortsArray");
+  const sortsAsNumbers = store.getState("sortsAsNumbers");
+  const qavRespondentNames = store.getState("respondentNames");
+  const correlationTableArray = store.getState(
     // still undefined
     "correlationTableArray"
   );
-  let tableHeader = cloneDeep(qavRespondentNames);
+  const tableHeader = cloneDeep(qavRespondentNames);
   tableHeader.unshift("");
   correlationTableArray.unshift(tableHeader);
-  for (let z = 1; z < correlationTableArray.length; z++) {
+  for (let z = 1; z < correlationTableArray.length; z += 1) {
     correlationTableArray[z].unshift(tableHeader[z]);
   }
-  let correlationTableArrayFormatted2 = correlationTableArray;
+  const correlationTableArrayFormatted2 = correlationTableArray;
 
-  // let userSelectedFactors = store.getState("userSelectedFactors");
-  let sortWeights = store.getState("sortWeights");
+  // const userSelectedFactors = store.getState("userSelectedFactors");
+  const sortWeights = store.getState("sortWeights");
 
   // to hold data in STATE until later insertion into output results - to match PQMethod order
-  let factorWeightFactorArrayHolder = [];
-  let miniCorrelationArrayHolder = [];
-  let synFactorArray1Holder = [];
+  const factorWeightFactorArrayHolder = [];
+  const miniCorrelationArrayHolder = [];
+  const synFactorArray1Holder = [];
   let synFactorArray1 = [];
-  let sheetNamesHolder1 = [];
-  let sheetNamesHolder2 = [];
-  let sheetNamesHolder3 = [];
+  const sheetNamesHolder1 = [];
+  const sheetNamesHolder2 = [];
+  const sheetNamesHolder3 = [];
 
-  for (let i = 0; i < analysisOutput.length; i++) {
-    let temp1 = {};
-    let temp1a = {};
-    let temp1b = {};
+  for (let i = 0; i < analysisOutput.length; i += 1) {
+    const temp1 = {};
+    const temp1a = {};
+    const temp1b = {};
 
-    let factorNumber = sigSortsArray[i]["Factor Number"];
-    let factorNumber2 = factorNumber.charAt(0).toUpperCase() + factorNumber.slice(1);
-    let number = factorNumber2.substring(factorNumber2.length - 1);
-    let factorNumber3 = factorNumber2.slice(0, -1);
-    factorNumber = factorNumber3 + " " + number;
+    const factorNumber4 = sigSortsArray[i]["Factor Number"];
+    const factorNumber2 =
+      factorNumber4.charAt(0).toUpperCase() + factorNumber4.slice(1);
+    const number = factorNumber2.substring(factorNumber2.length - 1);
+    const factorNumber3 = factorNumber2.slice(0, -1);
+    const factorNumber = `${factorNumber3} ${number}`;
 
-    temp1a.sheetid = factorNumber + " Sorts Weight";
+    temp1a.sheetid = `${factorNumber} Sorts Weight`;
     temp1a.header = true;
     sheetNamesHolder1.push(temp1a);
 
-    temp1b.sheetid = factorNumber + " Sorts Corr";
+    temp1b.sheetid = `${factorNumber} Sorts Corr`;
     temp1b.header = true;
     sheetNamesHolder2.push(temp1b);
 
@@ -190,23 +187,23 @@ const pushFactorsToOutputArray = function(
   }
 
   store.setState({
-    sheetNamesHolder1: sheetNamesHolder1
+    sheetNamesHolder1
   });
   store.setState({
-    sheetNamesHolder2: sheetNamesHolder2
+    sheetNamesHolder2
   });
   store.setState({
-    sheetNamesHolder3: sheetNamesHolder3
+    sheetNamesHolder3
   });
 
   // pull raw sorts for factor tables
-  let rawSorts = [];
-  for (let p = 0; p < sigSortsArray.length; p++) {
-    let tempArray = [];
-    for (let r = 0; r < sigSortsArray[p].SigSorts.length; r++) {
-      let sigSort = sigSortsArray[p].SigSorts[r];
-      let rawSortIndex = qavRespondentNames.indexOf(sigSort);
-      let rawSortValues = sortsAsNumbers[rawSortIndex];
+  const rawSorts = [];
+  for (let p = 0; p < sigSortsArray.length; p += 1) {
+    const tempArray = [];
+    for (let r = 0; r < sigSortsArray[p].SigSorts.length; r += 1) {
+      const sigSort = sigSortsArray[p].SigSorts[r];
+      const rawSortIndex = qavRespondentNames.indexOf(sigSort);
+      const rawSortValues = sortsAsNumbers[rawSortIndex];
       tempArray.push(rawSortValues);
     }
     rawSorts.push(tempArray);
@@ -215,15 +212,15 @@ const pushFactorsToOutputArray = function(
   // for each factor check get a sigSort (if another remains)
   // get the raw sort for that specific sigSort
   // write that sigSorts raw sort data into testObj
-  let compositeFactorMasterArray = [];
-  let matchCount = [];
+  const compositeFactorMasterArray = [];
+  const matchCount = [];
   //  FOR EACH FACTOR LOOP
-  for (let j = 0; j < analysisOutput.length; j++) {
+  for (let j = 0; j < analysisOutput.length; j += 1) {
     // FACTOR WEIGHTS TABLES STARTS FROM HERE
-    let factorWeightFactorArray = [["Q-Sort", "Weight"]];
-    let factorWeightName = userSelectedFactors[j];
-    for (let w = 0; w < sortWeights.length; w++) {
-      let factorWeightTempArray = [];
+    const factorWeightFactorArray = [["Q-Sort", "Weight"]];
+    const factorWeightName = userSelectedFactors[j];
+    for (let w = 0; w < sortWeights.length; w += 1) {
+      const factorWeightTempArray = [];
       if (sortWeights[w][0] === factorWeightName) {
         factorWeightTempArray.push(sortWeights[w][1], sortWeights[w][3]);
         factorWeightFactorArray.push(factorWeightTempArray);
@@ -235,26 +232,26 @@ const pushFactorsToOutputArray = function(
     // FACTOR SCORE MINI CORRELATION TABLES STARTS FROM HERE
 
     // loop through sigSortsArray to get this factor's sig Sorts
-    let miniSortsID = userSelectedFactors[j];
-    let miniCorrelationFactorsArray = [];
-    for (let t = 0; t < sigSortsArray.length; t++) {
+    const miniSortsID = userSelectedFactors[j];
+    const miniCorrelationFactorsArray = [];
+    for (let t = 0; t < sigSortsArray.length; t += 1) {
       if (sigSortsArray[t]["Factor Number"] === miniSortsID) {
         miniCorrelationFactorsArray.push(sigSortsArray[t].SigSorts);
       }
     }
 
     // pull correlations from table
-    let miniCorrelationArray = [];
-    let miniCorrelationHeaderArray = ["Q-Sort"];
-    let miniCorrelationHeaderIndex = correlationTableArrayFormatted2[0];
+    const miniCorrelationArray = [];
+    const miniCorrelationHeaderArray = ["Q-Sort"];
+    const miniCorrelationHeaderIndex = correlationTableArrayFormatted2[0];
 
     // loop through all sig Sorts
-    for (let t3 = 0; t3 < miniCorrelationFactorsArray[0].length; t3++) {
+    for (let t3 = 0; t3 < miniCorrelationFactorsArray[0].length; t3 += 1) {
       miniCorrelationHeaderArray.push(miniCorrelationFactorsArray[0][t3]);
 
       // loop through correlation table array
-      for (let t1 = 0; t1 < correlationTableArrayFormatted2.length; t1++) {
-        let tempArrayT1 = [];
+      for (let t1 = 0; t1 < correlationTableArrayFormatted2.length; t1 += 1) {
+        const tempArrayT1 = [];
 
         // find row for  the sig sorts, then push data
         if (
@@ -265,8 +262,12 @@ const pushFactorsToOutputArray = function(
           tempArrayT1.push(miniCorrelationFactorsArray[0][t3]);
 
           // cycle through row to find push data for all sigSorts
-          for (let t2 = 0; t2 < miniCorrelationFactorsArray[0].length; t2++) {
-            let index = miniCorrelationHeaderIndex.indexOf(
+          for (
+            let t2 = 0;
+            t2 < miniCorrelationFactorsArray[0].length;
+            t2 += 1
+          ) {
+            const index = miniCorrelationHeaderIndex.indexOf(
               miniCorrelationFactorsArray[0][t2]
             );
             tempArrayT1.push(correlationTableArrayFormatted2[t1][index]);
@@ -282,26 +283,26 @@ const pushFactorsToOutputArray = function(
 
     // SYNTHETIC FACTOR OUTPUT STARTS FROM HERE
     // convert arrays to object
-    let synFactorArray = [];
-    let matchCountArray = [];
-    let compositeFactorArray = [];
+    const synFactorArray = [];
+    const matchCountArray = [];
+    const compositeFactorArray = [];
 
     // simul calc two md arrays - one for tables, one for match counts
-    for (let m = 0, mLen = analysisOutput[0].length; m < mLen; m++) {
+    for (let m = 0, mLen = analysisOutput[0].length; m < mLen; m += 1) {
       // initialize and empty temp objs and arrays
-      let tempObj = {};
-      let tempObj5 = {};
-      //let matchSortValue = [];
+      const tempObj = {};
+      const tempObj5 = {};
+      // const matchSortValue = [];
       let matchingCounter = 0;
-      let compositeFactorTempArray = [];
+      const compositeFactorTempArray = [];
 
       tempObj5.indexer = analysisOutput[j][m].statement;
       tempObj5.matchSortValue = analysisOutput[j][m].sortValue;
       tempObj5.zScore = analysisOutput[j][m].zScore;
-      let testValue = analysisOutput[j][m].sortValue;
+      const testValue = analysisOutput[j][m].sortValue;
 
       tempObj["Statement Number"] = analysisOutput[j][m].statement;
-      tempObj["Statement"] = analysisOutput[j][m].sortStatement;
+      tempObj.Statement = analysisOutput[j][m].sortStatement;
       tempObj["Z-score"] = analysisOutput[j][m].zScore;
       tempObj["Sort Values"] = analysisOutput[j][m].sortValue;
 
@@ -313,18 +314,19 @@ const pushFactorsToOutputArray = function(
         analysisOutput[j][m].sortValue
       );
 
-      for (var s = 0, sLen = rawSorts[j].length; s < sLen; s++) {
-        tempObj["Raw Sort " + sigSortsArray[j].SigSorts[s]] = rawSorts[j][s][m];
+      const sLen = rawSorts[j].length;
+      for (let s = 0; s < sLen; s += 1) {
+        tempObj[`Raw Sort ${sigSortsArray[j].SigSorts[s]}`] = rawSorts[j][s][m];
         // add to new output array
         compositeFactorTempArray.push(rawSorts[j][s][m]);
         // matchSortValue.push(rawSorts[j][s][m]);
         if (testValue === rawSorts[j][s][m]) {
-          matchingCounter++;
+          matchingCounter += 1;
         }
       } // pushing in raw sort vals
       tempObj5.matchingCounts = matchingCounter;
       tempObj5.matchingCountsPercent = parseInt(
-        matchingCounter / sLen * 100,
+        (matchingCounter / sLen) * 100,
         10
       );
       // tempObj5.matchSortValue = matchSortValue;
@@ -338,12 +340,11 @@ const pushFactorsToOutputArray = function(
     matchCount.push(matchCountArray); // push in factor arrays
     synFactorArray1 = cloneDeep(synFactorArray);
 
-    synFactorArray1.sort(function(a, b) {
+    synFactorArray1.sort((a, b) => {
       if (b["Z-score"] === a["Z-score"]) {
         return b["Statement Number"] - a["Statement Number"];
-      } else {
-        return b["Z-score"] - a["Z-score"];
       }
+      return b["Z-score"] - a["Z-score"];
     });
 
     // output.push(synFactorArray1);
