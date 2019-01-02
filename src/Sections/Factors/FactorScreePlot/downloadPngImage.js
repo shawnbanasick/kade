@@ -1,9 +1,15 @@
 import { saveSvgAsPng } from "save-svg-as-png";
 import store from "../../../store";
+import currentDate from "../../../Utils/currentDate1";
+import currentTime from "../../../Utils/currentTime1";
+
 
 const downloadPngImage = () => {
   const projectName = store.getState("projectName");
-  const filename = `${projectName}_scree_plot`;
+  const date = currentDate();
+  const time = currentTime();
+  const dateTime = `${date} ${time}`;
+  const filename = `${projectName}-scree_plot_${dateTime}`;
 
   saveSvgAsPng(document.getElementById("screePlot"), filename, {
     encoderOptions: 1

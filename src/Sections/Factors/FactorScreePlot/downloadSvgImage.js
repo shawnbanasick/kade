@@ -2,14 +2,9 @@ import currentDate from "../../../Utils/currentDate1";
 import currentTime from "../../../Utils/currentTime1";
 import store from "../../../store";
 
-const { dialog } = require("electron").remote;
+const {dialog} = require("electron").remote;
 
-function showMessage() {
-  dialog.showMessageBox({
-    message: "The file has been saved.",
-    buttons: ["OK"]
-  });
-}
+
 
 function saveSvg(svgEl, name) {
   svgEl.setAttribute("xmlns", "http://www.w3.org/2000/svg");
@@ -29,22 +24,16 @@ function saveSvg(svgEl, name) {
 
 function downloadSvgImage() {
   try {
-    let promise1 = new Promise(function(resolve, reject) {
-      const projectName = store.getState("projectName");
-      const date = currentDate();
-      const time = currentTime();
-      const dateTime = `${date} ${time}`;
-      const completeFileName = `${projectName}-scree_plot_${dateTime}`;
-      const svg = document.querySelector("#screePlot");
-      
-      saveSvg(svg, completeFileName);
-  
-      resolve(
-        showMessage();
-      );
+    const projectName = store.getState("projectName");
+    const date = currentDate();
+    const time = currentTime();
+    const dateTime = `${date} ${time}`;
+    const completeFileName = `${projectName}-scree_plot_${dateTime}`;
+    const svg = document.querySelector("#screePlot");
 
-    })
-    
+    saveSvg(svg, completeFileName);
+
+
   } catch (error) {
     dialog.showErrorBox("File Save Error", error.message);
   }
