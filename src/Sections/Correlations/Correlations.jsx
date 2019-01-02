@@ -6,6 +6,7 @@ import CorrelationTable from "./CorrelationTable/CorrelationTable";
 import CalculateCorrelationsButton from "./CalculateCorrelationsButton";
 
 class Correlations extends Component {
+
   render() {
     const showCorrelationMatrix = state.getState("showCorrelationMatrix");
 
@@ -15,14 +16,14 @@ class Correlations extends Component {
           <CalculateCorrelationsButton />
         </Container1>
         <Container2>
-          {showCorrelationMatrix ? (
+          { showCorrelationMatrix ? (
             <CorrelationTable />
-          ) : (
+            ) : (
             <DefaultMessage>No correlations calculated.</DefaultMessage>
-          )}
+            ) }
         </Container2>
       </MainContent>
-    );
+      );
   }
 }
 
