@@ -3,24 +3,24 @@ import includes from "lodash/includes";
 import styled from "styled-components";
 import { view } from "react-easy-state";
 import { Button, Transition } from "semantic-ui-react";
-import store from "../../../store";
+import state from "../../../store";
 import outputDispatch from "../calcualteOutputLogic/1_outputDispatch";
 
 class FactorSelectionForOutputButtons extends React.Component {
   clearButtonHighlighting() {
-    const btnId = store.getState("outputButtonsArray");
+    const btnId = state.getState("outputButtonsArray");
     const tempObj2 = {};
     for (let i = 0; i < btnId.length; i += 1) {
       tempObj2[`highlightfactor${btnId[i]}`] = false;
     }
-    store.setState(tempObj2);
+    state.setState(tempObj2);
   }
 
   handleSubmit() {
-    const userSelectedFactors = store.getState("userSelectedFactors");
+    const userSelectedFactors = state.getState("userSelectedFactors");
     if (userSelectedFactors.length !== 0) {
       outputDispatch();
-      store.setState({
+      state.setState({
         showDownloadOutputButtons: true,
         outputFactorSelectButtonsDisabled: true
       });
@@ -33,13 +33,13 @@ class FactorSelectionForOutputButtons extends React.Component {
     for (let i = 0; i < btnId.length; i += 1) {
       tempObj[`highlightfactor${btnId[i]}`] = false;
     }
-    store.setState(tempObj);
+    state.setState(tempObj);
   }
 
   handleOnclick(event) {
     const factor = event.target.id;
-    let userSelectedFactors = store.getState("userSelectedFactors");
-    const btnId = store.getState("outputButtonsArray");
+    let userSelectedFactors = state.getState("userSelectedFactors");
+    const btnId = state.getState("outputButtonsArray");
 
     // select all
     if (factor === "selectAllFacs") {
@@ -60,7 +60,7 @@ class FactorSelectionForOutputButtons extends React.Component {
       tempObj.displayFactorVisualizations = false;
       tempObj.shouldDisplayFactorVizOptions = false;
 
-      store.setState(tempObj);
+      state.setState(tempObj);
 
       // clear all
     } else if (factor === "clearAllFacs") {
@@ -78,10 +78,10 @@ class FactorSelectionForOutputButtons extends React.Component {
       tempObj2.outputFactorSelectButtonsDisabled = false;
       // reset cache of factor viz data
       tempObj2.outputForDataViz2 = [];
-      store.setState(tempObj2);
+      state.setState(tempObj2);
     } else {
       // select individual factors
-      const selectAllClicked = store.getState("selectAllClicked");
+      const selectAllClicked = state.getState("selectAllClicked");
       // select all factors
       if (selectAllClicked) {
         userSelectedFactors = [];
@@ -98,12 +98,12 @@ class FactorSelectionForOutputButtons extends React.Component {
         tempObj3.displayFactorVisualizations = false;
         tempObj3.shouldDisplayFactorVizOptions = false;
 
-        store.setState(tempObj3);
+        state.setState(tempObj3);
       }
       if (!includes(userSelectedFactors, factor)) {
         userSelectedFactors.push(factor);
         userSelectedFactors.sort();
-        store.setState({
+        state.setState({
           userSelectedFactors
         });
         const newFactorId = `highlight${factor.replace(" ", "")}`;
@@ -115,17 +115,17 @@ class FactorSelectionForOutputButtons extends React.Component {
         tempObj4.showStandardErrorsDifferences = false;
         tempObj4.displayFactorVisualizations = false;
         tempObj4.shouldDisplayFactorVizOptions = false;
-        store.setState(tempObj4);
+        state.setState(tempObj4);
       }
     }
   }
 
   render() {
-    const btnId = store.getState("outputButtonsArray");
-    const showOutputFactorSelection = store.getState(
+    const btnId = state.getState("outputButtonsArray");
+    const showOutputFactorSelection = state.getState(
       "showOutputFactorSelection"
     );
-    const areDisabled = store.getState("outputFactorSelectButtonsDisabled");
+    const areDisabled = state.getState("outputFactorSelectButtonsDisabled");
 
     // if (showOutputFactorSelection) {
 
@@ -142,7 +142,7 @@ class FactorSelectionForOutputButtons extends React.Component {
               key={`f${item}`}
               toggle
               className="wrapper1"
-              active={store.getState(`highlightfactor${item}`)}
+              active={state.getState(`highlightfactor${item}`)}
               disabled={areDisabled}
               onClick={this.handleOnclick.bind(this)}
               id={`factor ${item}`}

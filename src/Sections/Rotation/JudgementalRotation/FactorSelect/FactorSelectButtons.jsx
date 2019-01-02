@@ -4,7 +4,7 @@ import { Button } from "semantic-ui-react";
 import { view } from "react-easy-state";
 import styled from "styled-components";
 import data from "../plot/data";
-import store from "../../../../store";
+import state from "../../../../store";
 import doD3ChartDataPrep from "../rotationLogic/doD3ChartDataPrep";
 import rotationTablePrep from "../rotationTable/rotationTablePrep";
 import displaySelectedFactorsOnPlot from "./displaySelectedFactorsOnPlot";
@@ -15,14 +15,14 @@ import transposeMatrix from "../../../../Utils/transposeMatrix";
 class FactorSelectButtons extends React.Component {
   handleSubmit() {
     // if only 1 factor selected show modal
-    const userSelectedRotFactors = store.getState("userSelectedRotFactors");
+    const userSelectedRotFactors = state.getState("userSelectedRotFactors");
     if (userSelectedRotFactors.length < 2) {
-      store.setState({
+      state.setState({
         showRotFactorSelectWarning: true
       });
     } else {
       // show scatter plot and table
-      store.setState({
+      state.setState({
         showRotFactorSelectWarning: false,
         showScatterPlotTableDiv: true
       });
@@ -32,17 +32,17 @@ class FactorSelectButtons extends React.Component {
   // passing in baseline data from props
   handleClick(event, baselineData) {
     const factor = event.target.id;
-    let userSelectedRotFactors = store.getState("userSelectedRotFactors");
-    let abFactors = store.getState("abFactors");
+    let userSelectedRotFactors = state.getState("userSelectedRotFactors");
+    let abFactors = state.getState("abFactors");
 
     // clear all buttons
     if (factor === "clearAllRotFacs") {
-      store.setState({
+      state.setState({
         rotationDegrees: 0
       });
       userSelectedRotFactors = [];
       abFactors = [];
-      store.setState({
+      state.setState({
         highlightRotfactor1: false,
         highlightRotfactor2: false,
         highlightRotfactor3: false,
@@ -74,12 +74,12 @@ class FactorSelectButtons extends React.Component {
           tempObj1[newFactorId] = true;
           tempObj1.userSelectedRotFactors = userSelectedRotFactors;
           tempObj1.abFactors = abFactors;
-          store.setState(tempObj1);
+          state.setState(tempObj1);
         }
         // if length = 2, fire calculations
         if (userSelectedRotFactors.length === 2) {
           // matrix in factor  format
-          const factorMatrix1 = store.getState("factorMatrix");
+          const factorMatrix1 = state.getState("factorMatrix");
 
           // transpose matrix to table display format
           const factorMatrixTransposed = transposeMatrix(factorMatrix1);
@@ -97,7 +97,7 @@ class FactorSelectButtons extends React.Component {
           const d3Prep = doD3ChartDataPrep(arrayWithCommunalities);
 
           // mutate state
-          store.setState({
+          state.setState({
             d3RotChartData: d3Prep,
             tempRotFacStateArray: factorMatrixTransposed
           });
@@ -114,11 +114,11 @@ class FactorSelectButtons extends React.Component {
   }
 
   render() {
-    const shouldDisplayRotFactorButtons = store.getState(
+    const shouldDisplayRotFactorButtons = state.getState(
       "shouldShowJudgeRotDiv"
     );
-    const numFactorsKeptForRotation = store.getState("numFactorsKeptForRot");
-    const showRotFactorSelectWarning = store.getState(
+    const numFactorsKeptForRotation = state.getState("numFactorsKeptForRot");
+    const showRotFactorSelectWarning = state.getState(
       "showRotFactorSelectWarning"
     );
     const buttonsToRenderArray = [];
@@ -148,7 +148,7 @@ class FactorSelectButtons extends React.Component {
               id={"factor 1"}
               toggle
               className="wrapper1"
-              active={store.getState("highlightRotfactor1")}
+              active={state.getState("highlightRotfactor1")}
               onClick={e => this.handleClick(e, baselineData)}
               key={"f1"}
             >
@@ -162,7 +162,7 @@ class FactorSelectButtons extends React.Component {
               id={"factor 2"}
               toggle
               className="wrapper1"
-              active={store.getState("highlightRotfactor2")}
+              active={state.getState("highlightRotfactor2")}
               onClick={e => this.handleClick(e, baselineData)}
               key={"f2"}
             >
@@ -176,7 +176,7 @@ class FactorSelectButtons extends React.Component {
               id={"factor 3"}
               toggle
               className="wrapper1"
-              active={store.getState("highlightRotfactor3")}
+              active={state.getState("highlightRotfactor3")}
               onClick={e => this.handleClick(e, baselineData)}
               key={"f3"}
             >
@@ -188,7 +188,7 @@ class FactorSelectButtons extends React.Component {
               id={"factor 4"}
               toggle
               className="wrapper1"
-              active={store.getState("highlightRotfactor4")}
+              active={state.getState("highlightRotfactor4")}
               onClick={e => this.handleClick(e, baselineData)}
               key={"f4"}
             >
@@ -200,7 +200,7 @@ class FactorSelectButtons extends React.Component {
               id={"factor 5"}
               toggle
               className="wrapper1"
-              active={store.getState("highlightRotfactor5")}
+              active={state.getState("highlightRotfactor5")}
               onClick={e => this.handleClick(e, baselineData)}
               key={"f5"}
             >
@@ -212,7 +212,7 @@ class FactorSelectButtons extends React.Component {
               id={"factor 6"}
               toggle
               className="wrapper1"
-              active={store.getState("highlightRotfactor6")}
+              active={state.getState("highlightRotfactor6")}
               onClick={e => this.handleClick(e, baselineData)}
               key={"f6"}
             >
@@ -224,7 +224,7 @@ class FactorSelectButtons extends React.Component {
               id={"factor 7"}
               toggle
               className="wrapper1"
-              active={store.getState("highlightRotfactor7")}
+              active={state.getState("highlightRotfactor7")}
               onClick={e => this.handleClick(e, baselineData)}
               key={"f7"}
             >
@@ -236,7 +236,7 @@ class FactorSelectButtons extends React.Component {
               id={"factor 8"}
               className="wrapper1"
               toggle
-              active={store.getState("highlightRotfactor8")}
+              active={state.getState("highlightRotfactor8")}
               onClick={e => this.handleClick(e, baselineData)} // e => this.handleClick(e, baselineData)
               key={"f8"}
             >

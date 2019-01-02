@@ -1,4 +1,4 @@
-import store from "../../../store";
+import state from "../../../store";
 // import evenRound from "../../Utils/evenRound";
 // import transposeMatrix from "../../Utils/transposeMatrix";
 import calcEigenValues from "../../Factors/centroidLogic/calcEigenValues";
@@ -10,7 +10,7 @@ const pushRotFactorsArrayToOutput = function(
   sheetNamesXlsx,
   colSizes
 ) {
-  const results = store.getState("currentLoadingsTable");
+  const results = state.getState("currentLoadingsTable");
 
   // add worksheet name
   sheetNamesXlsx.push("Factor Loadings");
@@ -22,7 +22,7 @@ const pushRotFactorsArrayToOutput = function(
 
   // populate header row
   // pulls array - ["factor 1", "factor 2", "factor 3", "factor 4", "factor 5", "factor 6", "factor 7", "factor 8"]
-  let userSelectedFactors = store.getState("userSelectedFactors");
+  let userSelectedFactors = state.getState("userSelectedFactors");
   const jLoopLen = userSelectedFactors.length;
   const iLoopLen = results.length;
 
@@ -71,8 +71,8 @@ const pushRotFactorsArrayToOutput = function(
   } // end i loop
 
   // calc and output percent explained variance for rotated factors
-  const factorMatrix = store.getState("factorMatrix");
-  const numQsorts = store.getState("numQsorts");
+  const factorMatrix = state.getState("factorMatrix");
+  const numQsorts = state.getState("numQsorts");
   const eigensCalc = calcEigenValues(factorMatrix, numQsorts);
   const expVarArray = ["%Explained Variance", ""];
 

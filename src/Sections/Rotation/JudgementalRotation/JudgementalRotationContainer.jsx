@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { view } from "react-easy-state";
 // import { Transition } from "semantic-ui-react";
 import ScatterPlotDiv from "./plot/ScatterPlotDiv";
-import store from "../../../store";
+import state from "../../../store";
 
 const getStyles = () => {
   // let widthHeight = window.innerWidth - 518 + 125;
@@ -28,7 +28,7 @@ const getStyles = () => {
 
 class judgementalRotationContainer extends Component {
   render() {
-    const shouldShowJudgeRotDiv = store.getState("shouldShowJudgeRotDiv");
+    const shouldShowJudgeRotDiv = state.getState("shouldShowJudgeRotDiv");
 
     return (
       <div>

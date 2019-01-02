@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { view } from "react-easy-state";
 import { Transition } from "semantic-ui-react";
 import DownloadsPanel from "./DownloadsPanel";
-import store from "../../../store";
+import state from "../../../store";
 import CardSettingsPanel from "./CardSettingsPanel";
 import DistinguishingPanel from "./DistinguishingPanel";
 import GeneralOptionsPanel from "./GeneralOptionsPanel";
@@ -18,7 +18,7 @@ const styles = {
 
 class FactorVizOptions extends Component {
   render() {
-    const shouldDisplayFactorVizOptions = store.getState(
+    const shouldDisplayFactorVizOptions = state.getState(
       "shouldDisplayFactorVizOptions"
     );
     return (

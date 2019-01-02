@@ -166,7 +166,7 @@ class FactorsTable extends Component {
       arrayValues[3], // pinnedVals
       arrayValues[1], // colWidthVals
       arrayValues[2] // alighmentVals
-    ); // store.getState("gridColDefsFacTableEigen");
+    ); // state.getState("gridColDefsFacTableEigen");
     const gridRowDataFacTable = getGridRowDataFacTable(
       currentData[0], // data
       arrayValues[0] // headerRow

@@ -1,5 +1,5 @@
 import uniq from "lodash/uniq";
-import store from "../../../store";
+import state from "../../../store";
 import findOccurances from "./findOccurances";
 import sortTriangleShape from "./sortTriangleShape";
 
@@ -22,7 +22,7 @@ const getInstances = function() {
 
   // set max column height to use with factor viz
   const maxColumnHeight = Math.max(...instances);
-  store.setState({
+  state.setState({
     maxColumnHeight
   });
 
@@ -54,7 +54,7 @@ const getInstances = function() {
     numRectsArray,
     uniques
   };
-  store.setState({ positionData });
+  state.setState({ positionData });
   return positionData;
 };
 

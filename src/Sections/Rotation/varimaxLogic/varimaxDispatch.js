@@ -1,5 +1,5 @@
 import cloneDeep from "lodash/cloneDeep";
-import store from "../../../store";
+import state from "../../../store";
 import calcSumSquares from "./2calcSumSquares";
 import doVarimaxRotations from "./2doVarimaxRotations";
 import transposeMatrix from "../../../Utils/transposeMatrix";
@@ -13,12 +13,12 @@ const varimaxDispatch = function() {
   // archiveFactorScoreStateMatrixAndDatatable();
 
   // retrieve and clone factor data
-  const factorsForRotation = store.getState("factorMatrix");
-  const numFactorsKeptForRot = store.getState("numFactorsKeptForRot");
+  const factorsForRotation = state.getState("factorMatrix");
+  const numFactorsKeptForRot = state.getState("numFactorsKeptForRot");
 
   factorsForRotation.length = numFactorsKeptForRot;
 
-  const projectHistoryArray = store.getState("projectHistoryArray");
+  const projectHistoryArray = state.getState("projectHistoryArray");
 
   // do varimax prep work
   const sumSquares = calcSumSquares(factorsForRotation); // ok, same
@@ -33,7 +33,7 @@ const varimaxDispatch = function() {
     sumSquares
   );
 
-  const numFactors = store.getState("numFactorsKeptForRot");
+  const numFactors = state.getState("numFactorsKeptForRot");
 
   // transposedRotatedResults in Lipset is now each factor = row, 9 cols, 7 rows
   const transposedRotatedResults = transposeMatrix(rotatedResults);
@@ -45,7 +45,7 @@ const varimaxDispatch = function() {
   // newRotatedResults in Lipset is now each factor as rows => 9 cols (participants), 7-8 rows
   const newRotatedResults = cloneDeep(rotatedResults);
 
-  store.setState({
+  state.setState({
     factorMatrix: transposedRotatedResults2,
     projectHistoryArray,
     isCalculatingVarimax: false,
@@ -73,10 +73,10 @@ const varimaxDispatch = function() {
   loadingsTableDataPrep(numFactors);
 
   // archive values for undo function (ProjectHistory component)
-  let archiveCounter = store.getState("archiveCounter");
+  let archiveCounter = state.getState("archiveCounter");
   archiveCounter += 1;
   const archiveName = `facMatrixArc${archiveCounter}`;
-  store.setState({
+  state.setState({
     archiveCounter
   });
 

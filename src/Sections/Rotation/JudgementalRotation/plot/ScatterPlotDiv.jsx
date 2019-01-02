@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { view } from "react-easy-state";
 import { ToastContainer, toast, Zoom } from "react-toastify";
-import store from "../../../../store";
+import state from "../../../../store";
 import transposeMatrix from "../../../../Utils/transposeMatrix";
 import FactorSelectButtons from "../FactorSelect/FactorSelectButtons";
 import ScatterPlotAndTableTransitionContainer from "./ScatterPlotAndTableTransitionContainer";
@@ -12,16 +12,16 @@ function notify() {
   toast.success("Rotation Data Saved to Loadings Table", {
     autoClose: 5000
   });
-  store.setState({
+  state.setState({
     notifyForSavedRotation: false
   });
 }
 
 class ScatterPlotDiv extends React.Component {
   render() {
-    const factorMatrix = store.getState("factorMatrix");
+    const factorMatrix = state.getState("factorMatrix");
     const baselineData = transposeMatrix(factorMatrix);
-    const notifyForSavedRotation = store.getState("notifyForSavedRotation");
+    const notifyForSavedRotation = state.getState("notifyForSavedRotation");
     if (notifyForSavedRotation) {
       notify();
     }

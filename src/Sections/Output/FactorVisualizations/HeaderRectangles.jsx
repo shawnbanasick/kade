@@ -1,5 +1,5 @@
 import React from "react";
-import store from "../../../store";
+import state from "../../../store";
 // import { view } from "react-easy-state";
 
 const styles = {
@@ -11,7 +11,7 @@ const styles = {
 
 const heightValue = () => 26;
 
-const titleHeight = store.getState("titleHeight");
+const titleHeight = state.getState("titleHeight");
 
 const widthValue = props => {
   const shouldAdjustWidth = props.factorVizOptions.willAdjustCardWidth;

@@ -2,15 +2,15 @@ import transposeMatrix from "../../../../Utils/transposeMatrix";
 import evenRound from "../../../../Utils/evenRound";
 import calcCosDegrees from "./calcCosDegrees";
 import calcSinDegrees from "./calcSinDegrees";
-import store from "../../../../store";
+import state from "../../../../store";
 
 const counterCockwiseRotation = (calculateRotationsArray, rotationByDegree) => {
   const transposedArray = transposeMatrix(calculateRotationsArray);
   const sinDegreesValue = calcSinDegrees(rotationByDegree);
   const cosDegreesValue = calcCosDegrees(rotationByDegree);
-  let rotationDegrees = store.getState("rotationDegrees");
+  let rotationDegrees = state.getState("rotationDegrees");
   rotationDegrees -= rotationByDegree;
-  store.setState({
+  state.setState({
     rotationDegrees
   });
 

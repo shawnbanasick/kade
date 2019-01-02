@@ -1,4 +1,4 @@
-import store from "../../../store";
+import state from "../../../store";
 
 const pushUnrotatedFactorsTableToOutputArray = function(
   sheetNames,
@@ -7,9 +7,9 @@ const pushUnrotatedFactorsTableToOutputArray = function(
   sheetNamesXlsx,
   colSizes
 ) {
-  const unrotFactorMatrix = store.getState("unrotatedFactorMatrixOutput");
-  const eigenvals = store.getState("eigenvalues"); // "eigenValuesSorted");
-  const expVar = store.getState("eigensPercentExpVar");
+  const unrotFactorMatrix = state.getState("unrotatedFactorMatrixOutput");
+  const eigenvals = state.getState("eigenvalues"); // "eigenValuesSorted");
+  const expVar = state.getState("eigensPercentExpVar");
 
   sheetNamesXlsx.push("Unrotated Factor Matrix");
 

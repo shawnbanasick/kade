@@ -1,5 +1,5 @@
 import React from "react";
-import store from "../../../store";
+import state from "../../../store";
 
 function getXCoords(props) {
   let totalWidth = props.positionData.instances.length * 110;
@@ -16,7 +16,7 @@ function getXCoords(props) {
 function getYValue(props) {
   // console.log(`props ${  JSON.stringify(props)}`);
 
-  const maxColumnHeight = store.getState("maxColumnHeight");
+  const maxColumnHeight = state.getState("maxColumnHeight");
   const defaultHeight = maxColumnHeight * 110 + 100;
 
   const shouldAdjustHeight = props.factorVizOptions.willAdjustCardHeight;
@@ -58,7 +58,7 @@ class LegendText extends React.Component {
     // hide the comparison symbols if distinguishing is not displayed
     if (willIndicateDistinguishing === false) {
       willDisplayDistingCompareSymbols = false;
-      // store.setState("willDisplayDistingCompareSymbols");
+      // state.setState("willDisplayDistingCompareSymbols");
     }
     let consensusYLocation = 170;
     if (willIndicateDistinguishing === false) {

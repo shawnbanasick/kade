@@ -1,8 +1,8 @@
-import store from "../../../store";
+import state from "../../../store";
 import evenRound from "../../../Utils/evenRound";
 
 const calculateFactorLoadingSignificanceLevel = function(totalStatements) {
-  const userSelectedSigLevel = store.getState("userSelectedSigLevel");
+  const userSelectedSigLevel = state.getState("userSelectedSigLevel");
   // var totalStatements = QAV.getState("qavOriginalSortSize");
   const significanceLevel = evenRound(
     userSelectedSigLevel * (1 / Math.sqrt(totalStatements)),

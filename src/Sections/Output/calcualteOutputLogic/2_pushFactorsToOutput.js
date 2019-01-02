@@ -149,7 +149,7 @@ const pushFactorsToOutputArray = (
   }
   const correlationTableArrayFormatted2 = correlationTableArray;
 
-  // const userSelectedFactors = store.getState("userSelectedFactors");
+  // const userSelectedFactors = state.getState("userSelectedFactors");
   const sortWeights = state.getState("sortWeights");
 
   // to hold data in STATE until later insertion into output results - to match PQMethod order

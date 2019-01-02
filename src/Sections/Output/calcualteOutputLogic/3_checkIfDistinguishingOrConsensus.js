@@ -1,15 +1,15 @@
 import includes from "lodash/includes";
-import store from "../../../store";
+import state from "../../../store";
 
 const checkIfDistinguishingOrConsensus = function(statementNumber, loopNumber) {
-  const masterDistingStatementNumbersArray01 = store.getState(
+  const masterDistingStatementNumbersArray01 = state.getState(
     "masterDistingStatementNumbersArray01"
   );
-  const masterDistingStatementNumbersArray05 = store.getState(
+  const masterDistingStatementNumbersArray05 = state.getState(
     "masterDistingStatementNumbersArray05"
   );
-  const consensus05 = store.getState("consensus05Statements");
-  const consensus01 = store.getState("consensus01Statements");
+  const consensus05 = state.getState("consensus05Statements");
+  const consensus01 = state.getState("consensus01Statements");
   if (
     includes(masterDistingStatementNumbersArray05[loopNumber], statementNumber)
   ) {

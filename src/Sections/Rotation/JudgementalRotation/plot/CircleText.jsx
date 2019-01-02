@@ -1,5 +1,5 @@
 import React from "react";
-import store from "../../../../store";
+import state from "../../../../store";
 
 const styles = {
   stroke: "black",
@@ -10,13 +10,13 @@ const styles = {
 };
 
 const showPopUp = info => {
-  store.setState({
+  state.setState({
     participantDataObject: info
   });
 };
 
 const closePopUp = () => {
-  store.setState({
+  state.setState({
     participantDataObject: false
   });
 };

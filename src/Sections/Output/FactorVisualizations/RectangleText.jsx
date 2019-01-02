@@ -1,5 +1,5 @@
 import React from "react";
-import store from "../../../store";
+import state from "../../../store";
 
 const styles = {
   stroke: "black",
@@ -36,7 +36,7 @@ const topMarginValue = props => {
   return 15;
 };
 
-const titleHeight = store.getState("titleHeight");
+const titleHeight = state.getState("titleHeight");
 
 const wordwrap = (text, max, factorVizOptions) => {
   let lines = [];

@@ -1,14 +1,14 @@
 import React from "react";
 import styled from "styled-components";
 import { view } from "react-easy-state";
-import store from "../../../../store";
+import state from "../../../../store";
 
 class ParticipantPopUp extends React.Component {
   render() {
     let respondent;
     let factor1Value;
     let factor2Value;
-    const participantDataObject = store.getState("participantDataObject");
+    const participantDataObject = state.getState("participantDataObject");
     if (participantDataObject !== false) {
       respondent = participantDataObject.respondent;
       factor1Value = participantDataObject.factor1;

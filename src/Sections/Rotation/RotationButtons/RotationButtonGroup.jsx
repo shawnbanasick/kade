@@ -2,16 +2,16 @@ import React, { Component } from "react";
 import { view } from "react-easy-state";
 import { Button } from "semantic-ui-react";
 import varimaxDispatch from "../varimaxLogic/varimaxDispatch";
-import store from "../../../store";
+import state from "../../../store";
 
 class RotationButtonGroup extends Component {
   onVarimaxClick(event) {
-    store.setState({
+    state.setState({
       rotationDegrees: 0
     });
     const userSelectedRotFactors = [];
     const abFactors = [];
-    store.setState({
+    state.setState({
       highlightRotfactor1: false,
       highlightRotfactor2: false,
       highlightRotfactor3: false,
@@ -32,14 +32,14 @@ class RotationButtonGroup extends Component {
   }
 
   onJudgeClick(event) {
-    const shouldShowDiv = store.getState("shouldShowJudgeRotDiv");
+    const shouldShowDiv = state.getState("shouldShowJudgeRotDiv");
     if (shouldShowDiv === false) {
-      store.setState({
+      state.setState({
         shouldShowJudgeRotDiv: true,
         judgeButtonActive: true
       });
     } else {
-      store.setState({
+      state.setState({
         shouldShowJudgeRotDiv: false,
         judgeButtonActive: false
       });
@@ -48,13 +48,13 @@ class RotationButtonGroup extends Component {
 
   render() {
     // const {active} = true;
-    // const shouldDisplay = store.getState("shouldDisplayFacKept");
-    const varimaxButtonActive = store.getState("varimaxButtonActive");
-    const judgeButtonActive = store.getState("judgeButtonActive");
-    let varimaxButtonDisabled = store.getState("varimaxButtonDisabled");
-    const varimaxButtonText = store.getState("varimaxButtonText");
-    const isCalculatingVarimax = store.getState("isCalculatingVarimax");
-    const isDisabled = store.getState("bipolarDisabled");
+    // const shouldDisplay = state.getState("shouldDisplayFacKept");
+    const varimaxButtonActive = state.getState("varimaxButtonActive");
+    const judgeButtonActive = state.getState("judgeButtonActive");
+    let varimaxButtonDisabled = state.getState("varimaxButtonDisabled");
+    const varimaxButtonText = state.getState("varimaxButtonText");
+    const isCalculatingVarimax = state.getState("isCalculatingVarimax");
+    const isDisabled = state.getState("bipolarDisabled");
 
     if (varimaxButtonDisabled === true || isDisabled === true) {
       varimaxButtonDisabled = true;

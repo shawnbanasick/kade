@@ -1,5 +1,5 @@
 import React from "react";
-import store from "../../../store";
+import state from "../../../store";
 // import { view } from "react-easy-state";
 
 const styles = {
@@ -48,7 +48,7 @@ const getXCoords = props => {
 };
 
 let yValue = props => {
-  const maxColumnHeight = store.getState("maxColumnHeight");
+  const maxColumnHeight = state.getState("maxColumnHeight");
   const defaultHeight = maxColumnHeight * 110 + 100;
 
   const shouldAdjustHeight = props.factorVizOptions.willAdjustCardHeight;

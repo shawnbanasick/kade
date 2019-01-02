@@ -2,7 +2,7 @@ import React from "react";
 import { view } from "react-easy-state";
 import styled from "styled-components";
 import { Button } from "semantic-ui-react";
-import store from "../../../../store";
+import state from "../../../../store";
 import transposeMatrix from "../../../../Utils/transposeMatrix";
 import calcuateSigCriterionValues from "../../varimaxLogic/2calculateSigCriterionValues";
 import loadingsTableDataPrep from "../../../Loadings/LoadingsTable/loadingsTableDataPrep";
@@ -11,38 +11,38 @@ class SaveRotationButton extends React.Component {
   saveRotations(e) {
     e.stopPropagation();
 
-    const rotationDegrees = store.getState("rotationDegrees");
+    const rotationDegrees = state.getState("rotationDegrees");
 
     // moved here to give faster DOM update
-    store.setState({
+    state.setState({
       rotationDegrees: 0,
       showScatterPlotTableDiv: false
     });
 
     // replace current rot factor matrix with tempRotFacStateArray
-    const tempRotFacStateArray = store.getState("tempRotFacStateArray");
-    let abFactors = store.getState("abFactors");
+    const tempRotFacStateArray = state.getState("tempRotFacStateArray");
+    let abFactors = state.getState("abFactors");
     const factorA = abFactors[0];
     const factorB = abFactors[1];
 
     // update state before re-drawing loadings table
     const tempRotFacStateArray2 = transposeMatrix(tempRotFacStateArray);
-    store.setState({
+    state.setState({
       factorMatrix: tempRotFacStateArray2
     });
 
     // re-draw loadings table
-    const numFactors = store.getState("numFactorsKeptForRot");
+    const numFactors = state.getState("numFactorsKeptForRot");
 
     calcuateSigCriterionValues("noFlag");
 
     loadingsTableDataPrep(numFactors);
 
     // to archive current rot factor matrix
-    let archiveCounter = store.getState("archiveCounter");
+    let archiveCounter = state.getState("archiveCounter");
     archiveCounter += 1;
     const archiveName = `facMatrixArc${archiveCounter}`;
-    store.setState({
+    state.setState({
       archiveCounter
     });
 
@@ -50,7 +50,7 @@ class SaveRotationButton extends React.Component {
     sessionStorage.setItem(archiveName, JSON.stringify(tempRotFacStateArray2));
 
     // update Project History
-    const projectHistoryArray = store.getState("projectHistoryArray");
+    const projectHistoryArray = state.getState("projectHistoryArray");
     projectHistoryArray.push(
       `Factors ${factorA} and ${factorB} rotated by ${rotationDegrees} degrees`
     );
@@ -58,7 +58,7 @@ class SaveRotationButton extends React.Component {
     // remove plot and table from DOM and update state
     const userSelectedRotFactors = [];
     abFactors = [];
-    store.setState({
+    state.setState({
       projectHistoryArray,
       highlightRotfactor1: false,
       highlightRotfactor2: false,
@@ -85,8 +85,8 @@ class SaveRotationButton extends React.Component {
   }
 
   render() {
-    const rotationDegrees = store.getState("rotationDegrees");
-    const isDisabled = store.getState("bipolarDisabled");
+    const rotationDegrees = state.getState("rotationDegrees");
+    const isDisabled = state.getState("bipolarDisabled");
     if (rotationDegrees !== 0) {
       return (
         <StyledWrapper2>

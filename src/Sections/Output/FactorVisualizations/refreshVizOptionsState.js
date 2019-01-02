@@ -1,39 +1,39 @@
-import store from "../../../store";
+import state from "../../../store";
 
 const refreshVizOptionsState = () => {
   const userValues = {
-    willAddCustomNames: store.getState("willAddCustomNames"),
-    willAdjustCardFontSize: store.getState("willAdjustCardFontSize"),
-    willAdjustCardFontSizeBy: store.getState("willAdjustCardFontSizeBy"),
-    willAdjustCardHeight: store.getState("willAdjustCardHeight"),
-    willAdjustCardHeightBy: store.getState("willAdjustCardHeightBy"),
-    willAdjustCardWidth: store.getState("willAdjustCardWidth"),
-    willAdjustCardWidthBy: store.getState("willAdjustCardWidthBy"),
-    willAdjustDistIndicatorSize: store.getState("willAdjustDistIndicatorSize"),
-    willAdjustDistIndicatorSizeBy: store.getState(
+    willAddCustomNames: state.getState("willAddCustomNames"),
+    willAdjustCardFontSize: state.getState("willAdjustCardFontSize"),
+    willAdjustCardFontSizeBy: state.getState("willAdjustCardFontSizeBy"),
+    willAdjustCardHeight: state.getState("willAdjustCardHeight"),
+    willAdjustCardHeightBy: state.getState("willAdjustCardHeightBy"),
+    willAdjustCardWidth: state.getState("willAdjustCardWidth"),
+    willAdjustCardWidthBy: state.getState("willAdjustCardWidthBy"),
+    willAdjustDistIndicatorSize: state.getState("willAdjustDistIndicatorSize"),
+    willAdjustDistIndicatorSizeBy: state.getState(
       "willAdjustDistIndicatorSizeBy"
     ),
-    willAdjustFontSize: store.getState("willAdjustFontSize"),
-    willAdjustLineSpacing: store.getState("willAdjustLineSpacing"),
-    willAdjustLineSpacingBy: store.getState("willAdjustLineSpacingBy"),
-    willAdjustStatementWidth: store.getState("willAdjustStatementWidth"),
-    willAdjustStatementWidthBy: store.getState("willAdjustStatementWidthBy"),
-    willAdjustWidthAsian: store.getState("willAdjustWidthAsian"),
-    willAdjustWidthAsianBy: store.getState("willAdjustWidthAsianBy"),
-    willDisplayConsensusStates: store.getState("willDisplayConsensusStates"),
-    willDisplayDistingCompareSymbols: store.getState(
+    willAdjustFontSize: state.getState("willAdjustFontSize"),
+    willAdjustLineSpacing: state.getState("willAdjustLineSpacing"),
+    willAdjustLineSpacingBy: state.getState("willAdjustLineSpacingBy"),
+    willAdjustStatementWidth: state.getState("willAdjustStatementWidth"),
+    willAdjustStatementWidthBy: state.getState("willAdjustStatementWidthBy"),
+    willAdjustWidthAsian: state.getState("willAdjustWidthAsian"),
+    willAdjustWidthAsianBy: state.getState("willAdjustWidthAsianBy"),
+    willDisplayConsensusStates: state.getState("willDisplayConsensusStates"),
+    willDisplayDistingCompareSymbols: state.getState(
       "willDisplayDistingCompareSymbols"
     ),
-    willDisplayOnlyStateNums: store.getState("willDisplayOnlyStateNums"),
-    willIncludeLegend: store.getState("willIncludeLegend"),
-    willIndicateDistinguishing: store.getState("willIndicateDistinguishing"),
-    willPrependStateNums: store.getState("willPrependStateNums"),
-    willTrimStatement: store.getState("willTrimStatement"),
-    willTrimStatementBy: store.getState("willTrimStatementBy"),
-    willUseDistingUnicode: store.getState("willUseDistingUnicode"),
-    consensusIndicator: store.getState("consensusIndicator"),
-    customFactorNames: store.getState("customFactorNames"),
-    customFileNameLocation: store.getState("customFileNameLocation")
+    willDisplayOnlyStateNums: state.getState("willDisplayOnlyStateNums"),
+    willIncludeLegend: state.getState("willIncludeLegend"),
+    willIndicateDistinguishing: state.getState("willIndicateDistinguishing"),
+    willPrependStateNums: state.getState("willPrependStateNums"),
+    willTrimStatement: state.getState("willTrimStatement"),
+    willTrimStatementBy: state.getState("willTrimStatementBy"),
+    willUseDistingUnicode: state.getState("willUseDistingUnicode"),
+    consensusIndicator: state.getState("consensusIndicator"),
+    customFactorNames: state.getState("customFactorNames"),
+    customFileNameLocation: state.getState("customFileNameLocation")
   };
 
   return userValues;

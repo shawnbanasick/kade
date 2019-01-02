@@ -1,4 +1,4 @@
-import store from "../../../store";
+import state from "../../../store";
 import evenRound from "../../../Utils/evenRound";
 
 const pushStandardErrorsDifferencesToOutput = function(
@@ -13,8 +13,8 @@ const pushStandardErrorsDifferencesToOutput = function(
 ) {
   const chartText1 = "Standard Errors for Diffs";
   const chartText2 = "Standard Errors for Differences in Factor Z-scores";
-  const sigSortsArray = store.getState("sigSortsArray");
-  const userSelectedFactors = store.getState("userSelectedFactors");
+  const sigSortsArray = state.getState("sigSortsArray");
+  const userSelectedFactors = state.getState("userSelectedFactors");
   const spacer = ["", ""];
 
   sheetNamesXlsx.push(chartText1);
@@ -78,7 +78,7 @@ const pushStandardErrorsDifferencesToOutput = function(
   standardErrorDiffSheetArray.unshift(spacer, [chartText2], spacer);
   outputData.push(standardErrorDiffSheetArray);
 
-  store.setState({ standardErrorDiffSheetArray });
+  state.setState({ standardErrorDiffSheetArray });
 
   return [
     sheetNames,

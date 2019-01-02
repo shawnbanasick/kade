@@ -1,11 +1,11 @@
 import pullAt from "lodash/pullAt";
 import cloneDeep from "lodash/cloneDeep";
-import store from "../../../store";
+import state from "../../../store";
 import evenRound from "../../../Utils/evenRound";
 import calculateFactorLoadingSignificanceLevel from "./3_calculateFactorLoadingSignificanceLevel";
 
 const getAutoflagBoolean = (addFlag, sigLevel2, testValue, othersValue) => {
-  const requireMajorityCommonVariance = store.getState(
+  const requireMajorityCommonVariance = state.getState(
     "requireMajorityCommonVariance"
   );
 
@@ -42,8 +42,8 @@ const getAutoflagBoolean = (addFlag, sigLevel2, testValue, othersValue) => {
 };
 
 const calculatefSigCriterionValues = function(addFlag) {
-  const fSigCriterionArray = store.getState("fSigCriterion");
-  const totalStatements = store.getState("numStatements");
+  const fSigCriterionArray = state.getState("fSigCriterion");
+  const totalStatements = state.getState("numStatements");
   const sigLevel2 = calculateFactorLoadingSignificanceLevel(totalStatements);
   const arrayLength = fSigCriterionArray.length;
   const arrayLength2 = fSigCriterionArray[0].length;
@@ -73,7 +73,7 @@ const calculatefSigCriterionValues = function(addFlag) {
   }
 
   // should be display style -  for example - Lipset - 7 cols, 9 rows
-  store.setState({
+  state.setState({
     fSigCriterionResults
   });
 };

@@ -1,6 +1,6 @@
 import React from "react";
 import { view } from "react-easy-state";
-import store from "../../../store";
+import state from "../../../store";
 import FactorViz from "./FactorViz";
 // import refreshVizOptionsState from "./refreshVizOptionsState";
 import createFactorVizDataObjectForProps from "./createFactorVizDataObjectForProps";
@@ -16,9 +16,9 @@ const styles = {
 
 class FactorVizDispatch extends React.Component {
   render() {
-    const factorVizOptions = store.getState("factorVizOptions");
+    const factorVizOptions = state.getState("factorVizOptions");
     const factorData = createFactorVizDataObjectForProps(factorVizOptions);
-    const shouldDisplayFactorViz = store.getState(
+    const shouldDisplayFactorViz = state.getState(
       "displayFactorVisualizations"
     );
 

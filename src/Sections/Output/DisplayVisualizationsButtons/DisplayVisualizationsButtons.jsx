@@ -2,23 +2,23 @@ import React from "react";
 import styled from "styled-components";
 import { view } from "react-easy-state";
 import { Button } from "semantic-ui-react";
-import store from "../../../store";
+import state from "../../../store";
 
 // todo - change this back to normal button
 // display rules prevent premature click now
 class DisplayVisualizationsButtons extends React.Component {
   handleDisplayViz() {
-    const displayFactorVisualizations = store.getState(
+    const displayFactorVisualizations = state.getState(
       "displayFactorVisualizations"
     );
     const shouldShow = !displayFactorVisualizations;
-    store.setState({
+    state.setState({
       displayFactorVisualizations: shouldShow
     });
   }
 
   render() {
-    const showDownloadOutputButtons = store.getState(
+    const showDownloadOutputButtons = state.getState(
       "showDownloadOutputButtons"
     );
     if (showDownloadOutputButtons) {

@@ -1,4 +1,4 @@
-import store from "../../../store";
+import state from "../../../store";
 
 const pushStatementsToOutputArray = function(
   sheetNames,
@@ -7,7 +7,7 @@ const pushStatementsToOutputArray = function(
   sheetNamesXlsx,
   colSizes
 ) {
-  const statements = store.getState("statements");
+  const statements = state.getState("statements");
 
   // var newSheet = {
   //     sheetid: "Statements",
@@ -39,7 +39,7 @@ const pushStatementsToOutputArray = function(
   ];
   colSizes.push(columns);
 
-  store.setState({
+  state.setState({
     maxStatementLength
   });
 

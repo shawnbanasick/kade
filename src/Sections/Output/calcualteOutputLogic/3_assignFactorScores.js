@@ -1,8 +1,8 @@
 import cloneDeep from "lodash/cloneDeep";
-import store from "../../../store";
+import state from "../../../store";
 
 function assignFactorScores(zScoreArray) {
-  const qavSortTriangleShape = store.getState("qSortPattern");
+  const qavSortTriangleShape = state.getState("qSortPattern");
   const sortedZScoreArray = [];
   for (let i = 0; i < zScoreArray.length; i++) {
     const factorNumbers = zScoreArray[i];
@@ -27,7 +27,7 @@ function assignFactorScores(zScoreArray) {
     temp1.sort((a, b) => a.statement - b.statement);
     sortedZScoreArray.push(temp1);
   }
-  store.setState({
+  state.setState({
     analysisOutput: sortedZScoreArray
   });
   return sortedZScoreArray;

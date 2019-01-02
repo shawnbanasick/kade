@@ -1,11 +1,11 @@
 import { view } from "react-easy-state";
 import React, { Component } from "react";
 import { AgGridReact } from "ag-grid-react";
-import store from "../../../store";
+import state from "../../../store";
 
 const getCurrentData = () => {
-  const data = store.getState("factorCorrelationsTableData");
-  const numFacs2 = store.getState("userSelectedFactors");
+  const data = state.getState("factorCorrelationsTableData");
+  const numFacs2 = state.getState("userSelectedFactors");
   const numFacs = numFacs2.length;
   // pull out header row
   const headerRow = data[3];
@@ -79,7 +79,7 @@ class FactorCorrelationsTable extends Component {
     }
     widthVal += "px";
 
-    gridColDefsFacCorrTable = getGridColDefsFacCorrTable(...currentData); // store.getState("gridColDefsFacTableEigen");
+    gridColDefsFacCorrTable = getGridColDefsFacCorrTable(...currentData); // state.getState("gridColDefsFacTableEigen");
     gridRowDataFacCorrTable = getGridRowDataFacCorrTable(
       currentData[0],
       currentData[2]

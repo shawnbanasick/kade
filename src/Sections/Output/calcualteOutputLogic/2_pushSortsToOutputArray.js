@@ -1,5 +1,5 @@
 import cloneDeep from "lodash/cloneDeep";
-import store from "../../../store";
+import state from "../../../store";
 import average from "../../../Utils/average";
 import evenRound from "../../../Utils/evenRound";
 import standardDeviation from "../../../Utils/standardDeviation";
@@ -13,8 +13,8 @@ const pushSortsToOutputArray = function(
 ) {
   sheetNamesXlsx.push("Q-sorts");
 
-  const mainDataObject = store.getState("mainDataObject");
-  const respondentNames = store.getState("respondentNames");
+  const mainDataObject = state.getState("mainDataObject");
+  const respondentNames = state.getState("respondentNames");
   const dataArray = [];
 
   // pull sorts from mainDataObject
@@ -28,7 +28,7 @@ const pushSortsToOutputArray = function(
   }
 
   const sortsAsNumbers1 = cloneDeep(sortsAsNumbers);
-  store.setState({
+  state.setState({
     posShiftSortArray: posShiftSort,
     sortsAsNumbers: sortsAsNumbers1
   });
@@ -71,7 +71,7 @@ const pushSortsToOutputArray = function(
   }
   outputData.push(dataArray);
 
-  store.setState({
+  state.setState({
     freeDistributionArray
   });
 

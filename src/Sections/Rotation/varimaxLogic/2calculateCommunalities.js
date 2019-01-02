@@ -1,5 +1,5 @@
 import cloneDeep from "lodash/cloneDeep";
-import store from "../../../store";
+import state from "../../../store";
 import evenRound from "../../../Utils/evenRound";
 
 // todo - change function to accept factors as rows format and eliminate need to transpose factorMatrix
@@ -34,7 +34,7 @@ const calculateCommunalities = function(currentFactorData) {
     fSigCriterion.push(temp4);
   });
 
-  store.setState({
+  state.setState({
     fSigCriterion,
     rowH2: communalitiesArray
   });

@@ -1,5 +1,5 @@
 import React from "react";
-// import store from "../../store";
+// import state from "../../store";
 
 const styles = {
   fontSize: 28,

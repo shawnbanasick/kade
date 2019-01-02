@@ -1,5 +1,5 @@
 import React from "react";
-import store from "../../../../store";
+import state from "../../../../store";
 
 // todo - fix mouseover so that it works over circle numbers as well
 
@@ -21,13 +21,13 @@ const getFillColor = data => {
 };
 
 const showPopUp = function(info) {
-  store.setState({
+  state.setState({
     participantDataObject: info
   });
 };
 
 const closePopUp = function() {
-  store.setState({
+  state.setState({
     participantDataObject: false
   });
 };

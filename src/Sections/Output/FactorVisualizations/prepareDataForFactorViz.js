@@ -1,11 +1,11 @@
-import store from "../../../store";
+import state from "../../../store";
 
 const data = () => {
   // if first time -> get data from output function
-  let outputForDataViz = store.getState("outputForDataViz2");
+  let outputForDataViz = state.getState("outputForDataViz2");
 
   if (outputForDataViz.length === 0) {
-    outputForDataViz = store.getState("outputForDataViz");
+    outputForDataViz = state.getState("outputForDataViz");
   }
 
   for (let j = 0; j < outputForDataViz.length; j += 1) {

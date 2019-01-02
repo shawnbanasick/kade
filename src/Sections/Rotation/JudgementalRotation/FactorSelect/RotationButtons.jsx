@@ -2,14 +2,14 @@ import React from "react";
 import { view } from "react-easy-state";
 import { Button } from "semantic-ui-react";
 import styled from "styled-components";
-import store from "../../../../store";
+import state from "../../../../store";
 
 class RotationButtons extends React.Component {
   handleOnclick(event) {
     const buttonId = event.target.id;
 
     // clear all button highlighting
-    store.setState({
+    state.setState({
       highlightDegreeButton1: false,
       highlightDegreeButton2: false,
       highlightDegreeButton3: false,
@@ -18,28 +18,28 @@ class RotationButtons extends React.Component {
     });
 
     if (buttonId === "Button1Degree") {
-      store.setState({
+      state.setState({
         highlightDegreeButton1: true,
         rotateByDegrees: 1
       });
     }
 
     if (buttonId === "Button5Degrees") {
-      store.setState({
+      state.setState({
         highlightDegreeButton3: true,
         rotateByDegrees: 5
       });
     }
 
     if (buttonId === "Button10Degrees") {
-      store.setState({
+      state.setState({
         highlightDegreeButton4: true,
         rotateByDegrees: 10
       });
     }
 
     if (buttonId === "Button90Degrees") {
-      store.setState({
+      state.setState({
         highlightDegreeButton5: true,
         rotateByDegrees: 90
       });
@@ -47,22 +47,22 @@ class RotationButtons extends React.Component {
   }
 
   render() {
-    const shouldDisplayDegreeButtonButtons = store.getState(
+    const shouldDisplayDegreeButtonButtons = state.getState(
       "shouldShowJudgeRotDiv"
     );
     if (shouldDisplayDegreeButtonButtons) {
       return (
         <StyledWrapper>
-          <Button id={ "Button1Degree" } className="wrapper1" toggle active={ store.getState("highlightDegreeButton1") } onClick={ this.handleOnclick.bind(this) } key={ "f1" }>
+          <Button id={ "Button1Degree" } className="wrapper1" toggle active={ state.getState("highlightDegreeButton1") } onClick={ this.handleOnclick.bind(this) } key={ "f1" }>
             { `${1  }\u00B0` }
           </Button>
-          <Button id={ "Button5Degrees" } className="wrapper1" toggle active={ store.getState("highlightDegreeButton3") } onClick={ this.handleOnclick.bind(this) } key={ "f3" }>
+          <Button id={ "Button5Degrees" } className="wrapper1" toggle active={ state.getState("highlightDegreeButton3") } onClick={ this.handleOnclick.bind(this) } key={ "f3" }>
             { `${5  }\u00B0` }
           </Button>
-          <Button id={ "Button10Degrees" } className="wrapper1" toggle active={ store.getState("highlightDegreeButton4") } onClick={ this.handleOnclick.bind(this) } key={ "f4" }>
+          <Button id={ "Button10Degrees" } className="wrapper1" toggle active={ state.getState("highlightDegreeButton4") } onClick={ this.handleOnclick.bind(this) } key={ "f4" }>
             { `${10  }\u00B0` }
           </Button>
-          <Button id={ "Button90Degrees" } className="wrapper1" toggle active={ store.getState("highlightDegreeButton5") } onClick={ this.handleOnclick.bind(this) } key={ "f5" }>
+          <Button id={ "Button90Degrees" } className="wrapper1" toggle active={ state.getState("highlightDegreeButton5") } onClick={ this.handleOnclick.bind(this) } key={ "f5" }>
             { `${90  }\u00B0` }
           </Button>
         </StyledWrapper>

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import store from "../../../../store";
+import state from "../../../../store";
 
 const styles = {
   yAxis: {
@@ -16,7 +16,7 @@ const styles = {
 class AxisTextLables extends Component {
   render() {
     const size = this.props.width - this.props.padding;
-    const abFactors = store.getState("abFactors");
+    const abFactors = state.getState("abFactors");
     const factorA = `Factor ${abFactors[0]}`;
     const factorB = `Factor ${abFactors[1]}`;
     return (

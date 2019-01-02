@@ -1,13 +1,13 @@
 import React from "react";
 import calculateRotatedFactors from "../rotationLogic/calculateRotatedFactors";
-import store from "../../../../store";
+import state from "../../../../store";
 
 class ClockwiseButtons extends React.Component {
   handleClick(event, baselineData) {
     const direction = event.target.id;
     event.stopPropagation();
     // get current setting of rotation degrees
-    const rotateByDegrees = store.getState("rotateByDegrees");
+    const rotateByDegrees = state.getState("rotateByDegrees");
     // call rotation
     calculateRotatedFactors(direction, rotateByDegrees, baselineData);
   }

@@ -1,11 +1,11 @@
-import store from "../../../store";
+import state from "../../../store";
 import evenRound from "../../../Utils/evenRound";
 import average from "../../../Utils/average";
 import standardDeviation from "../../../Utils/standardDeviation";
 
 const combineWeightedSorts = function(weightedSorts) {
   // returns ["factor 1", "factor 2", etc... ]
-  const sigFactorNumbersArray1 = store.getState("sigFactorNumbersArray");
+  const sigFactorNumbersArray1 = state.getState("sigFactorNumbersArray");
   const sigFactorNumbersArray = sigFactorNumbersArray1.sort();
   let tempArray2, summedWeightedSorts;
 
@@ -62,7 +62,7 @@ const combineWeightedSorts = function(weightedSorts) {
     tempArray4.push(tempArray3a);
     summedWeightedSorts.push(tempArray4);
   }
-  store.setState({
+  state.setState({
     sigSortsArray
   });
   return summedWeightedSorts;

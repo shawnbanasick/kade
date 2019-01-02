@@ -1,4 +1,4 @@
-import store from "../../../store";
+import state from "../../../store";
 import getInstances from "./getInstances";
 import prepareDataForFactorViz from "./prepareDataForFactorViz";
 
@@ -8,7 +8,7 @@ const capitalizeFirstLetter = string =>
 
 // exported function
 const createFactorVizDataObjectForProps = factorVizOptions => {
-  const shouldDisplayFactorViz = store.getState("displayFactorVisualizations");
+  const shouldDisplayFactorViz = state.getState("displayFactorVisualizations");
 
   // early return if no display
   if (shouldDisplayFactorViz === false) {
@@ -17,9 +17,9 @@ const createFactorVizDataObjectForProps = factorVizOptions => {
 
   // create data object for render mapping
   let customFactorNamesArray;
-  const userSelectedFactors = store.getState("userSelectedFactors");
+  const userSelectedFactors = state.getState("userSelectedFactors");
   const positionData = getInstances();
-  const numberOfFactors = store.getState("userSelectedFactors").length;
+  const numberOfFactors = state.getState("userSelectedFactors").length;
   const data = prepareDataForFactorViz();
   const factorData = [];
   const useCustomNames = factorVizOptions.willAddCustomNames;

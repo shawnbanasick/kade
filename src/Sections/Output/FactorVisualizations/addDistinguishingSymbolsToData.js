@@ -1,15 +1,15 @@
 import pull from "lodash/pull";
 import cloneDeep from "lodash/cloneDeep";
-import store from "../../../store";
+import state from "../../../store";
 
 // consensusStatementArrays
 function addDistinguishingSymbolsToData(
   outputForDataViz2,
   distStatementDataVizArray
 ) {
-  const consensus01Statements = store.getState("consensus01Statements");
-  const consensus05Statements = store.getState("consensus05Statements");
-  const userSelectedFactors2 = store.getState("userSelectedFactors");
+  const consensus01Statements = state.getState("consensus01Statements");
+  const consensus05Statements = state.getState("consensus05Statements");
+  const userSelectedFactors2 = state.getState("userSelectedFactors");
   const userSelectedFactors = [];
 
   const outputForDataViz = cloneDeep(outputForDataViz2);

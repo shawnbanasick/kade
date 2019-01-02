@@ -1,6 +1,6 @@
 import uniq from "lodash/uniq";
 import cloneDeep from "lodash/cloneDeep";
-import store from "../../../store";
+import state from "../../../store";
 import evenRound from "../../../Utils/evenRound";
 
 const findLargestFactorWeights = function(significantLoadingsArray) {
@@ -43,7 +43,7 @@ const findLargestFactorWeights = function(significantLoadingsArray) {
   });
 
   // array
-  store.setState({
+  state.setState({
     sigFactorNumbersArray
   });
 

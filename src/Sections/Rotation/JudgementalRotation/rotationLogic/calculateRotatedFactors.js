@@ -1,5 +1,5 @@
 import data from "../plot/data";
-import store from "../../../../store";
+import state from "../../../../store";
 import doD3ChartDataPrep from "./doD3ChartDataPrep";
 import clockwiseRotation from "./clockwiseRotation";
 import counterClockwiseRotation from "./counterClockwiseRotation";
@@ -8,11 +8,11 @@ import calculateCommunalities from "../../varimaxLogic/2calculateCommunalities";
 import calculatefSigCriterionValues from "../../varimaxLogic/2calculateSigCriterionValues";
 
 const calculateRotatedFactors = (direction, rotateByDegrees, baselineData) => {
-  const abFactors = store.getState("abFactors");
+  const abFactors = state.getState("abFactors");
   const rotationFactorA = Math.min(...abFactors) - 1;
   const rotationFactorB = Math.max(...abFactors) - 1;
-  // let calculateRotationsArray = store.getState("calculateRotationsArray");
-  const tempRotFacStateArray = store.getState("tempRotFacStateArray");
+  // let calculateRotationsArray = state.getState("calculateRotationsArray");
+  const tempRotFacStateArray = state.getState("tempRotFacStateArray");
 
   // select the factors to rotate
   const calculateRotationsArray = [];
@@ -55,13 +55,13 @@ const calculateRotatedFactors = (direction, rotateByDegrees, baselineData) => {
 
   // returns dataValuesArray for D3 chart
   const d3Prep = doD3ChartDataPrep(arrayWithCommunalities);
-  store.setState({
+  state.setState({
     d3RotChartData: d3Prep
   }); // drawD3Chart(d3Prep);
 
   rotationTablePrep(d3Prep, baselineData);
 
-  store.setState({
+  state.setState({
     calculateRotationsArray: rotatedFactors,
     tempRotFacStateArray
   });

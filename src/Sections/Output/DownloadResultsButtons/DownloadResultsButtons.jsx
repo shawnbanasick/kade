@@ -2,14 +2,14 @@ import React from "react";
 import styled from "styled-components";
 import { view } from "react-easy-state";
 import { Transition } from "semantic-ui-react";
-import store from "../../../store";
+import state from "../../../store";
 import DownloadResultsAsExcel from "./DownloadResultsAsExcel";
 import DownloadResultsAsCsv from "./DownloadResultsAsCsv";
 // import RemoveTimestampOption from "./RemoveTimestampOption";
 
 class DownloadResultsButtons extends React.Component {
   render() {
-    const showDownloadOutputButtons = store.getState(
+    const showDownloadOutputButtons = state.getState(
       "showDownloadOutputButtons"
     );
     return (

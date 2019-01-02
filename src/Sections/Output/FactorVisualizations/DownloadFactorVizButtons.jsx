@@ -2,15 +2,15 @@ import React from "react";
 // import { Button } from "semantic-ui-react";
 import styled from "styled-components";
 import { saveSvgAsPng } from "save-svg-as-png";
-import store from "../../../store";
+import state from "../../../store";
 import currentDate from "../../../Utils/currentDate1";
 import currentTime from "../../../Utils/currentTime1";
 
 const downloadSvgImage = imageId => {
-  const factorVizOptions = store.getState("factorVizOptions");
+  const factorVizOptions = state.getState("factorVizOptions");
   const shouldAddName = factorVizOptions.willAddCustomNameToDownload;
   const imageName = `#image${imageId}`;
-  const projectName = store.getState("projectName");
+  const projectName = state.getState("projectName");
   const date = currentDate();
   const time = currentTime();
   const dateTime = `${date}__${time}`;
@@ -65,11 +65,11 @@ const downloadSvgImage = imageId => {
 };
 
 const downloadFacVizAsPng = imageId => {
-  const factorVizOptions = store.getState("factorVizOptions");
+  const factorVizOptions = state.getState("factorVizOptions");
   const shouldAddName = factorVizOptions.willAddCustomNameToDownload;
 
   const imageName = `image${imageId}`;
-  const projectName = store.getState("projectName");
+  const projectName = state.getState("projectName");
   const date = currentDate();
   const time = currentTime();
   const dateTime = `${date}__${time}`;

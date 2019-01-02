@@ -1,11 +1,11 @@
 import evenRound from "../../../Utils/evenRound";
-import store from "../../../store";
+import state from "../../../store";
 
 const calculateZScores = function(summedWeightedSorts) {
   // changing format from MD array to array of objects
   // add in statements
-  const statements = store.getState("statements");
-  const sigFactorNumbersArray = store.getState("sigFactorNumbersArray");
+  const statements = state.getState("statements");
+  const sigFactorNumbersArray = state.getState("sigFactorNumbersArray");
   // so that the diff 2 factors output is correct
   sigFactorNumbersArray.sort();
   const length = summedWeightedSorts.length;

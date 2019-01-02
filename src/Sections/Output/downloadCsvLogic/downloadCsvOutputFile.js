@@ -1,10 +1,10 @@
 import currentDate1 from "../../../Utils/currentDate1";
 import currentTime1 from "../../../Utils/currentTime1";
-import store from "../../../store";
+import state from "../../../store";
 import exportToCsv from "./exportToCsv";
 
 const downloadCsvOutputFile = function() {
-  const data = store.getState("outputData");
+  const data = state.getState("outputData");
 
   const spacer = ["", "", ""];
 
@@ -19,8 +19,8 @@ const downloadCsvOutputFile = function() {
   newDataArray.shift();
 
   const timeStamp = `${currentDate1()  }_${  currentTime1()}`;
-  const projectName = store.getState("projectName");
-  const shouldIncludeTimestamp = store.getState("shouldIncludeTimestamp");
+  const projectName = state.getState("projectName");
+  const shouldIncludeTimestamp = state.getState("shouldIncludeTimestamp");
 
   let nameFile;
   if (shouldIncludeTimestamp === true) {

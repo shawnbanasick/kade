@@ -1,5 +1,5 @@
 import React from "react";
-import store from "../../../store";
+import state from "../../../store";
 // import { view } from "react-easy-state";
 
 const styles = {
@@ -30,10 +30,10 @@ const heightValue = props => {
   return 110;
 };
 
-const titleHeight = store.getState("titleHeight");
+const titleHeight = state.getState("titleHeight");
 
 const renderBaseRectangles = props => (coords, index) => {
-  const factorVizOptions = store.getState("factorVizOptions");
+  const factorVizOptions = state.getState("factorVizOptions");
   const shouldUseColor = factorVizOptions.willDisplayConsensusStates;
   const willIndicateDistinguishing =
     factorVizOptions.willIndicateDistinguishing;

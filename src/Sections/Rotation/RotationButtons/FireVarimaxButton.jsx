@@ -3,16 +3,16 @@ import { view } from "react-easy-state";
 import { Button } from "semantic-ui-react";
 import styled from "styled-components";
 import varimaxDispatch from "../varimaxLogic/varimaxDispatch";
-import store from "../../../store";
+import state from "../../../store";
 
 class RotationButtonGroup extends Component {
   onVarimaxClick(event) {
-    store.setState({
+    state.setState({
       rotationDegrees: 0
     });
     const userSelectedRotFactors = [];
     const abFactors = [];
-    store.setState({
+    state.setState({
       highlightRotfactor1: false,
       highlightRotfactor2: false,
       highlightRotfactor3: false,
@@ -34,12 +34,12 @@ class RotationButtonGroup extends Component {
 
   render() {
     // const {active} = true;
-    const shouldDisplay = store.getState("shouldDisplayFacKept");
-    const varimaxButtonActive = store.getState("varimaxButtonActive");
-    let varimaxButtonDisabled = store.getState("varimaxButtonDisabled");
-    const varimaxButtonText = store.getState("varimaxButtonText");
-    const isCalculatingVarimax = store.getState("isCalculatingVarimax");
-    const isDisabled = store.getState("bipolarDisabled");
+    const shouldDisplay = state.getState("shouldDisplayFacKept");
+    const varimaxButtonActive = state.getState("varimaxButtonActive");
+    let varimaxButtonDisabled = state.getState("varimaxButtonDisabled");
+    const varimaxButtonText = state.getState("varimaxButtonText");
+    const isCalculatingVarimax = state.getState("isCalculatingVarimax");
+    const isDisabled = state.getState("bipolarDisabled");
 
     if (varimaxButtonDisabled === true || isDisabled === true) {
       varimaxButtonDisabled = true;

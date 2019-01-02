@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { view } from "react-easy-state";
 import { Transition } from "semantic-ui-react";
-import store from "../../store";
+import state from "../../store";
 import FactorCorrelationsTable from "./Factor Info/FactorCorrelationsTable";
 import FactorCharacteristicsTable from "./Factor Info/FactorCharacteristicsTable";
 import StandardErrorsDifferencesTable from "./Factor Info/StandardErrorsDifferencesTable";
@@ -9,7 +9,7 @@ import StandardErrorsDifferencesTable from "./Factor Info/StandardErrorsDifferen
 
 class OutputFactorTablesTranstionContainer extends Component {
   render() {
-    const showFactorCorrelationsTable = store.getState(
+    const showFactorCorrelationsTable = state.getState(
       "showFactorCorrelationsTable"
     );
 

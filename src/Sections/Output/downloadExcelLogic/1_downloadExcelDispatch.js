@@ -1,12 +1,12 @@
 import downloadExcelOutputFile from "./2_downloadExcelOutputFile";
-import store from "../../../store";
+import state from "../../../store";
 
 const downloadExcelDispatch = () => {
   // initialize output cascade
 
-  const dataXlsx = store.getState("outputData");
-  const colSizes = store.getState("colSizes");
-  const sheetNamesXlsx = store.getState("sheetNamesXlsx");
+  const dataXlsx = state.getState("outputData");
+  const colSizes = state.getState("colSizes");
+  const sheetNamesXlsx = state.getState("sheetNamesXlsx");
 
   // needs dataXlsx, sheetNamesXlsx, colSizes from store
   downloadExcelOutputFile(dataXlsx, sheetNamesXlsx, colSizes);

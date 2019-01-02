@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import { view } from "react-easy-state";
 import { Button, Header, Modal } from "semantic-ui-react";
-import store from "../../store";
+import state from "../../store";
 
 function handleClose() {
-  store.setState({
+  state.setState({
     showOutputFactorSelection: false,
     shouldDisplayFactorVizOptions: false,
     showFactorCorrelationsTable: false,
@@ -19,10 +19,10 @@ function handleClose() {
 
 class UnforcedWarningModal extends Component {
   render() {
-    const showMultipleFactorsFlaggedWarningModal = store.getState(
+    const showMultipleFactorsFlaggedWarningModal = state.getState(
       "showMultipleFactorsFlaggedWarningModal"
     );
-    const sortsFlaggedOnTwoFactors = store.getState("sortsFlaggedOnTwoFactors");
+    const sortsFlaggedOnTwoFactors = state.getState("sortsFlaggedOnTwoFactors");
     if (showMultipleFactorsFlaggedWarningModal) {
       return (
         <Modal

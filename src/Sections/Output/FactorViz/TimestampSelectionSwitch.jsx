@@ -1,5 +1,5 @@
 import React from "react";
-import store from "../../../store";
+import state from "../../../store";
 // import "./UserSelectionSwitch.css";
 
 class UserSelectionSwitch extends React.Component {
@@ -22,7 +22,7 @@ class UserSelectionSwitch extends React.Component {
     const key = this.props.value;
     const stateValue = !this.state.toggle;
     stateFrag[key] = stateValue;
-    store.setState(stateFrag);
+    state.setState(stateFrag);
   }
 
   render() {

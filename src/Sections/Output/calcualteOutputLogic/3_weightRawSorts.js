@@ -1,14 +1,14 @@
 import zip from "lodash/zip";
 import map from "lodash/map";
-import store from "../../../store";
+import state from "../../../store";
 import average from "../../../Utils/average";
 import evenRound from "../../../Utils/evenRound";
 import standardDeviation from "../../../Utils/standardDeviation";
 
 function weightRawSorts(significantFactors) {
   // produces MD array with factor number, flagged respondent, weighted values for each statement (for each flagged respondent)
-  const respondentNames = store.getState("respondentNames");
-  const mainDataObject = store.getState("mainDataObject");
+  const respondentNames = state.getState("respondentNames");
+  const mainDataObject = state.getState("mainDataObject");
   // pos shifted
   const rawSorts = [];
   for (let k = 0, kLen = mainDataObject.length; k < kLen; k += 1) {

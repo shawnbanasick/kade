@@ -1,4 +1,4 @@
-import store from "../../../store";
+import state from "../../../store";
 import evenRound from "../../../Utils/evenRound";
 
 const computeFactorWeights = significantLoadingsArray => {
@@ -21,7 +21,7 @@ const computeFactorWeights = significantLoadingsArray => {
     }
     significantLoadingsArray[i].push(w);
   }
-  store.setState({
+  state.setState({
     sortWeights: significantLoadingsArray
   });
 

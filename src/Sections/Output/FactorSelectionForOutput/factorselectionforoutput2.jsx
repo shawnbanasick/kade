@@ -2,24 +2,24 @@ import React from "react";
 import includes from "lodash/includes";
 import { view } from "react-easy-state";
 import { Button } from "semantic-ui-react";
-import store from "../../../store";
+import state from "../../../store";
 
 import outputDispatch from "../calcualteOutputLogic/1_outputDispatch";
 
 const handleSubmit = () => {
   outputDispatch();
-  store.setState({
+  state.setState({
     showDownloadOutputButtons: true
   });
 };
 
 const handleOnclick = event => {
   const factor = event.target.id;
-  let userSelectedFactors = store.getState("userSelectedFactors");
+  let userSelectedFactors = state.getState("userSelectedFactors");
 
   // select all
   if (factor === "selectAllFacsButton") {
-    const numFactorsKeptForRotation = store.getState("numFactorsKeptForRot");
+    const numFactorsKeptForRotation = state.getState("numFactorsKeptForRot");
     userSelectedFactors = [
       "factor 1",
       "factor 2",
@@ -31,7 +31,7 @@ const handleOnclick = event => {
       "factor 8"
     ];
     userSelectedFactors.length = numFactorsKeptForRotation;
-    store.setState({
+    state.setState({
       highlightfactor1: true,
       highlightfactor2: true,
       highlightfactor3: true,
@@ -47,7 +47,7 @@ const handleOnclick = event => {
     // clear all
   } else if (factor === "clearAllFacsButton") {
     userSelectedFactors = [];
-    store.setState({
+    state.setState({
       highlightfactor1: false,
       highlightfactor2: false,
       highlightfactor3: false,
@@ -60,10 +60,10 @@ const handleOnclick = event => {
     });
   } else {
     // select individual factors
-    const selectAllClicked = store.getState("selectAllClicked");
+    const selectAllClicked = state.getState("selectAllClicked");
     if (selectAllClicked) {
       userSelectedFactors = [];
-      store.setState({
+      state.setState({
         highlightfactor1: false,
         highlightfactor2: false,
         highlightfactor3: false,
@@ -78,7 +78,7 @@ const handleOnclick = event => {
     }
     if (!includes(userSelectedFactors, factor)) {
       userSelectedFactors.push(factor);
-      store.setState({ userSelectedFactors });
+      state.setState({ userSelectedFactors });
       const newFactorId = `highlight${factor.replace(" ", "")}`;
       store[newFactorId] = true;
     }
@@ -87,10 +87,10 @@ const handleOnclick = event => {
 
 class FactorSelectionForOutputButtons extends React.Component {
   render() {
-    const showOutputFactorSelection = store.getState(
+    const showOutputFactorSelection = state.getState(
       "showOutputFactorSelection"
     );
-    const numFactorsKeptForRotation = store.getState("numFactorsKeptForRot");
+    const numFactorsKeptForRotation = state.getState("numFactorsKeptForRot");
     const buttonsToRenderArray = [];
     for (let i = 0; i < 8; i += 1) {
       if (i < numFactorsKeptForRotation) {
@@ -116,7 +116,7 @@ class FactorSelectionForOutputButtons extends React.Component {
             <Button
               id={"factor 1"}
               toggle
-              active={store.getState("highlightfactor1")}
+              active={state.getState("highlightfactor1")}
               onClick={handleOnclick}
               key={"f1"}
             >
@@ -127,7 +127,7 @@ class FactorSelectionForOutputButtons extends React.Component {
             <Button
               id={"factor 2"}
               toggle
-              active={store.getState("highlightfactor2")}
+              active={state.getState("highlightfactor2")}
               onClick={handleOnclick}
               key={"f2"}
             >
@@ -138,7 +138,7 @@ class FactorSelectionForOutputButtons extends React.Component {
             <Button
               id={"factor 3"}
               toggle
-              active={store.getState("highlightfactor3")}
+              active={state.getState("highlightfactor3")}
               onClick={handleOnclick}
               key={"f3"}
             >
@@ -149,7 +149,7 @@ class FactorSelectionForOutputButtons extends React.Component {
             <Button
               id={"factor 4"}
               toggle
-              active={store.getState("highlightfactor4")}
+              active={state.getState("highlightfactor4")}
               onClick={handleOnclick}
               key={"f4"}
             >
@@ -160,7 +160,7 @@ class FactorSelectionForOutputButtons extends React.Component {
             <Button
               id={"factor 5"}
               toggle
-              active={store.getState("highlightfactor5")}
+              active={state.getState("highlightfactor5")}
               onClick={handleOnclick}
               key={"f5"}
             >
@@ -171,7 +171,7 @@ class FactorSelectionForOutputButtons extends React.Component {
             <Button
               id={"factor 6"}
               toggle
-              active={store.getState("highlightfactor6")}
+              active={state.getState("highlightfactor6")}
               onClick={handleOnclick}
               key={"f6"}
             >
@@ -182,7 +182,7 @@ class FactorSelectionForOutputButtons extends React.Component {
             <Button
               id={"factor 7"}
               toggle
-              active={store.getState("highlightfactor7")}
+              active={state.getState("highlightfactor7")}
               onClick={handleOnclick}
               key={"f7"}
             >
@@ -193,7 +193,7 @@ class FactorSelectionForOutputButtons extends React.Component {
             <Button
               id={"factor 8"}
               toggle
-              active={store.getState("highlightfactor8")}
+              active={state.getState("highlightfactor8")}
               onClick={handleOnclick}
               key={"f8"}
             >

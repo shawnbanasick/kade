@@ -1,10 +1,10 @@
-import store from "../../../../store";
+import state from "../../../../store";
 
 // todo - basically, just to trigger component update - see if delete possible
 const data = () => {
-  const newRotationVectors = store.getState("d3RotChartData");
+  const newRotationVectors = state.getState("d3RotChartData");
 
-  store.setState({
+  state.setState({
     newRotationVectors
   });
 };

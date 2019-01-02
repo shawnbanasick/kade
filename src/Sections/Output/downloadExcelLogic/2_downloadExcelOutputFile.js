@@ -1,6 +1,6 @@
 import * as XLSX from "xlsx";
 // import { saveAs } from "filesaver.js-npm";
-import store from "../../../store";
+import state from "../../../store";
 import currentDate1 from "../../../Utils/currentDate1";
 import currentTime1 from "../../../Utils/currentTime1";
 
@@ -85,10 +85,10 @@ const downloadExcelOutputFile = (dataXlsx, sheetNamesXlsx, colSizes) => {
   // }
 
   const timeStamp = `${currentDate1()}_${currentTime1()}`;
-  const projectName = store.getState("projectName");
+  const projectName = state.getState("projectName");
 
   // to create option for no timestamp - useful for automated testing
-  const shouldIncludeTimestamp = store.getState("shouldIncludeTimestamp");
+  const shouldIncludeTimestamp = state.getState("shouldIncludeTimestamp");
 
   let nameFile;
   if (shouldIncludeTimestamp === true) {

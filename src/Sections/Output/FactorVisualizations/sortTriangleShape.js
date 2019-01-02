@@ -1,7 +1,7 @@
-import store from "../../../store";
+import state from "../../../store";
 
 const sortTriangleShape = function() {
-  const qSortPattern = store.getState("qSortPattern");
+  const qSortPattern = state.getState("qSortPattern");
   // const qSortPattern = [
   //     -4,
   //     -4,

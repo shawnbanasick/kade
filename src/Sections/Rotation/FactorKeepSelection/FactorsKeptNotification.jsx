@@ -2,14 +2,14 @@ import React, { Component } from "react";
 import styled from "styled-components";
 import { view } from "react-easy-state";
 import { Transition } from "semantic-ui-react";
-import store from "../../../store";
+import state from "../../../store";
 
 // import "./FactorsKeptNotification.css";
 
 class FactorsKeptNotification extends Component {
   render() {
-    const numFactorsKept = store.getState("numFactorsKeptForRot");
-    const shouldDisplayDiv = store.getState("shouldDisplayFacKept");
+    const numFactorsKept = state.getState("numFactorsKeptForRot");
+    const shouldDisplayDiv = state.getState("shouldDisplayFacKept");
 
     // if (shouldDisplayDiv) {
     return (

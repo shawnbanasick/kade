@@ -1,11 +1,11 @@
 import data from "../plot/data";
-import store from "../../../../store";
+import state from "../../../../store";
 import doD3ChartDataPrep from "../rotationLogic/doD3ChartDataPrep";
 import calculateCommunalities from "../../varimaxLogic/2calculateCommunalities";
 import calculatefSigCriterionValues from "../../varimaxLogic/2calculateSigCriterionValues";
 
 const displaySelectedFactorsOnPlot = () => {
-  const tempRotFacStateArray = store.getState("tempRotFacStateArray");
+  const tempRotFacStateArray = state.getState("tempRotFacStateArray");
 
   // expects bare full array - required to calc significance level for circles
   const arrayWithCommunalities = calculateCommunalities(tempRotFacStateArray);
@@ -15,7 +15,7 @@ const displaySelectedFactorsOnPlot = () => {
 
   // returns dataValuesArray for D3 chart
   const d3Prep = doD3ChartDataPrep(arrayWithCommunalities);
-  store.setState({
+  state.setState({
     d3RotChartData: d3Prep
   });
 
