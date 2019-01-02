@@ -1,6 +1,6 @@
 import map from "lodash/map";
 import cloneDeep from "lodash/cloneDeep";
-import store from "../../../store";
+import state from "../../../store";
 import evenRound from "../../../Utils/evenRound";
 import getPqmethodCorrelation from "../../Correlations/correlationsLogic/getPqmethodCorrelation";
 
@@ -15,11 +15,12 @@ const pushFactorScoreCorrelationsToOutput = function(
 
   sheetNamesXlsx.push(appendText1);
 
-  const analysisOutput = store.getState("analysisOutput");
-  const userSelectedFactors = store.getState("userSelectedFactors");
+  const analysisOutput = state.getState("analysisOutput");
+  const userSelectedFactors = state.getState("userSelectedFactors");
   const analysisOutput2 = cloneDeep(analysisOutput);
   const factorScoresCorrelationArray2 = [];
-  let temp1, tempArray;
+  let temp1,
+    tempArray;
 
   const columns = [
     {
@@ -97,7 +98,7 @@ const pushFactorScoreCorrelationsToOutput = function(
   }
   correlationTableArray.unshift(tempArray3);
 
-  store.setState({
+  state.setState({
     correlationTableArrayHolder: correlationTableArray
   });
   output.push(correlationTableArray);
@@ -106,7 +107,7 @@ const pushFactorScoreCorrelationsToOutput = function(
 
   outputData.push(correlationTableArray);
 
-  store.setState({
+  state.setState({
     factorCorrelationsTableData: correlationTableArray
   });
 

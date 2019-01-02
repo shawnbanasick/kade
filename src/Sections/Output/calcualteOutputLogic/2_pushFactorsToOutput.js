@@ -1,6 +1,6 @@
 import includes from "lodash/includes";
 import cloneDeep from "lodash/cloneDeep";
-import store from "../../../store";
+import state from "../../../store";
 import weightRawSorts from "./3_weightRawSorts";
 import calculateZScores from "./3_calculateZScores";
 import weightFactorScores from "./3_weightFactorScores";
@@ -17,9 +17,9 @@ const pushFactorsToOutputArray = (
   colSizes
 ) => {
   // pulls array - ["factor 1", "factor 2", "factor 3", "factor 4", "factor 5", "factor 6", "factor 7", "factor 8"]
-  let userSelectedFactors = store.getState("userSelectedFactors");
+  let userSelectedFactors = state.getState("userSelectedFactors");
   const numFactorsSelectedForOutput = userSelectedFactors.length;
-  const results = store.getState("currentLoadingsTable");
+  const results = state.getState("currentLoadingsTable");
 
   // strip spaces from userSelectedFactors
   // create check array of userSelectedFactors
@@ -83,7 +83,7 @@ const pushFactorsToOutputArray = (
   }
   if (multipleFactorsFlaggedArray.length > 0) {
     const flaggedArrayText = multipleFactorsFlaggedArray.join(", ");
-    store.setState({
+    state.setState({
       sortsFlaggedOnTwoFactors: flaggedArrayText,
       showMultipleFactorsFlaggedWarningModal: true,
       showOutputFactorSelection: false,
@@ -115,7 +115,7 @@ const pushFactorsToOutputArray = (
   if (problemFactorsArray.length > 0) {
     // console.log("ERROR - no loadings flagged for " + problemFactorsArray);
     problemFactorsArray = problemFactorsArray.join(", ");
-    store.setState({
+    state.setState({
       factorsWithoutLoading: problemFactorsArray,
       showNoLoadingsFlaggedWarningModal: true
     });
@@ -132,12 +132,12 @@ const pushFactorsToOutputArray = (
 
   // CONTINUE HERE!
 
-  const analysisOutput2 = store.getState("analysisOutput");
+  const analysisOutput2 = state.getState("analysisOutput");
   const analysisOutput = cloneDeep(analysisOutput2);
-  const sigSortsArray = store.getState("sigSortsArray");
-  const sortsAsNumbers = store.getState("sortsAsNumbers");
-  const qavRespondentNames = store.getState("respondentNames");
-  const correlationTableArray = store.getState(
+  const sigSortsArray = state.getState("sigSortsArray");
+  const sortsAsNumbers = state.getState("sortsAsNumbers");
+  const qavRespondentNames = state.getState("respondentNames");
+  const correlationTableArray = state.getState(
     // still undefined
     "correlationTableArray"
   );
@@ -150,7 +150,7 @@ const pushFactorsToOutputArray = (
   const correlationTableArrayFormatted2 = correlationTableArray;
 
   // const userSelectedFactors = store.getState("userSelectedFactors");
-  const sortWeights = store.getState("sortWeights");
+  const sortWeights = state.getState("sortWeights");
 
   // to hold data in STATE until later insertion into output results - to match PQMethod order
   const factorWeightFactorArrayHolder = [];
@@ -167,8 +167,7 @@ const pushFactorsToOutputArray = (
     const temp1b = {};
 
     const factorNumber4 = sigSortsArray[i]["Factor Number"];
-    const factorNumber2 =
-      factorNumber4.charAt(0).toUpperCase() + factorNumber4.slice(1);
+    const factorNumber2 = factorNumber4.charAt(0).toUpperCase() + factorNumber4.slice(1);
     const number = factorNumber2.substring(factorNumber2.length - 1);
     const factorNumber3 = factorNumber2.slice(0, -1);
     const factorNumber = `${factorNumber3} ${number}`;
@@ -186,13 +185,9 @@ const pushFactorsToOutputArray = (
     sheetNamesHolder3.push(temp1);
   }
 
-  store.setState({
-    sheetNamesHolder1
-  });
-  store.setState({
-    sheetNamesHolder2
-  });
-  store.setState({
+  state.setState({
+    sheetNamesHolder1,
+    sheetNamesHolder2,
     sheetNamesHolder3
   });
 
@@ -351,7 +346,7 @@ const pushFactorsToOutputArray = (
     synFactorArray1Holder.push(synFactorArray1);
   }
 
-  store.setState({
+  state.setState({
     factorWeightFactorArrayHolder,
     miniCorrelationArrayHolder,
     synFactorArray1Holder,

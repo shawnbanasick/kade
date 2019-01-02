@@ -1,4 +1,4 @@
-import store from "../../../store";
+import state from "../../../store";
 import evenRound from "../../../Utils/evenRound";
 
 const pushFactorPowerSetDiffsToOutput = function(
@@ -15,8 +15,9 @@ const pushFactorPowerSetDiffsToOutput = function(
   const chartText4 = "Statement";
   const chartText5 = "Descending Array of Differences Between";
   const chartText6 = "and";
-  let oneFactor, anotherFactor;
-  const maxStatementLength = store.getState("maxStatementLength");
+  let oneFactor,
+    anotherFactor;
+  const maxStatementLength = state.getState("maxStatementLength");
   const spacer = ["", ""];
 
   const factorPairs = [];
@@ -40,8 +41,7 @@ const pushFactorPowerSetDiffsToOutput = function(
     oneFactor = `${factorNumber3  } ${  number}`;
 
     anotherFactor = factorPairs[k][1][0].factor;
-    const factorNumber12 =
-      anotherFactor.charAt(0).toUpperCase() + anotherFactor.slice(1);
+    const factorNumber12 = anotherFactor.charAt(0).toUpperCase() + anotherFactor.slice(1);
     const number2 = factorNumber12.substring(factorNumber12.length - 1);
     const factorNumber13 = factorNumber12.slice(0, -1);
     anotherFactor = `${factorNumber13  } ${  number2}`;
@@ -99,9 +99,9 @@ const pushFactorPowerSetDiffsToOutput = function(
     diffArrayXlsx.sort((a, b) => {
       if (a[4] === b[4]) {
         return 0;
-      } 
-        return b[4] < a[4] ? -1 : 1;
-      
+      }
+      return b[4] < a[4] ? -1 : 1;
+
     });
     diffArrayXlsx.unshift(
       spacer,

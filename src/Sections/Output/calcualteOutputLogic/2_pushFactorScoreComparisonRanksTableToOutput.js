@@ -1,4 +1,4 @@
-import store from "../../../store";
+import state from "../../../store";
 import evenRound from "../../../Utils/evenRound";
 // import default from './2_pushCumComMatrixToOutputArray';
 
@@ -18,8 +18,8 @@ const pushFactorScoreComparisonRanksTableToOutput = function(
   sheetNamesXlsx,
   colSizes
 ) {
-  const synFactorArray1 = store.getState("synFactorArray1Holder");
-  const userSelectedFactors = store.getState("userSelectedFactors");
+  const synFactorArray1 = state.getState("synFactorArray1Holder");
+  const userSelectedFactors = state.getState("userSelectedFactors");
   let tempArray1;
   let rankValue;
   let rankingTempArray;
@@ -29,7 +29,7 @@ const pushFactorScoreComparisonRanksTableToOutput = function(
   sheetNamesXlsx.push("Factor Score Ranks");
 
   // set column width for Excel
-  const maxStatementLength = store.getState("maxStatementLength");
+  const maxStatementLength = state.getState("maxStatementLength");
   const columns = [
     {
       wch: 8
@@ -79,7 +79,7 @@ const pushFactorScoreComparisonRanksTableToOutput = function(
   //         return a["Statement Number"] - b["Statement Number"];
   //     });
 
-  const compositeFactorMasterArray = store.getState(
+  const compositeFactorMasterArray = state.getState(
     "compositeFactorMasterArray"
   );
   const factorScoreRanksArray = [];
@@ -165,7 +165,7 @@ const pushFactorScoreComparisonRanksTableToOutput = function(
       const RankValue3 = compositeFactorMasterArray[kk][pp].pop();
       factorScoreRanksArray[pp].push(RankValue3);
     }
-    // placeSetter = placeSetter + 2;
+  // placeSetter = placeSetter + 2;
   }
 
   const spacer = ["", ""];
@@ -190,7 +190,9 @@ const pushFactorScoreComparisonRanksTableToOutput = function(
   );
   outputData.push(factorScoreRanksArray);
 
-  store.setState({ factorScoreRanksArray });
+  state.setState({
+    factorScoreRanksArray
+  });
 
   // setup the array of ranked statements
   const factorScoreComparisonArray = [];
@@ -216,7 +218,7 @@ const pushFactorScoreComparisonRanksTableToOutput = function(
     statementRankingArray.push(rankingTempArray);
   }
 
-  store.setState({
+  state.setState({
     statementRankingArray
   });
 

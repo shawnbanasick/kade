@@ -1,4 +1,4 @@
-import store from "../../../store";
+import state from "../../../store";
 
 const pushFreeDistributionDataToOutput = function(
   sheetNames,
@@ -25,7 +25,7 @@ const pushFreeDistributionDataToOutput = function(
   ];
   colSizes.push(columns);
 
-  const freeDistributionArray = store.getState("freeDistributionArray");
+  const freeDistributionArray = state.getState("freeDistributionArray");
 
   freeDistributionArray.unshift(
     ["", ""],

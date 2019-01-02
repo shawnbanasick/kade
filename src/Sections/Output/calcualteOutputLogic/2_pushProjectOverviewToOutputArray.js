@@ -1,4 +1,4 @@
-import store from "../../../store";
+import state from "../../../store";
 import currentDate1 from "../../../Utils/currentDate1";
 import currentTime1 from "../../../Utils/currentTime1";
 
@@ -19,12 +19,12 @@ const pushProjectHistoryToOutputArray = function() {
   const settings = [];
   const spacer = ["", ""];
 
-  const projectName = store.getState("projectName");
+  const projectName = state.getState("projectName");
   const projectNameArray = ["Project Name", projectName];
   settings.push(spacer, projectNameArray, spacer);
   dataXlsx.push(spacer, projectNameArray, spacer);
 
-  const totalStatements = store.getState("numStatements").toString();
+  const totalStatements = state.getState("numStatements").toString();
   const totalNumberStatementArray = [
     "Total Number of Statements",
     totalStatements
@@ -32,19 +32,19 @@ const pushProjectHistoryToOutputArray = function() {
   settings.push(totalNumberStatementArray, spacer);
   dataXlsx.push(totalNumberStatementArray, spacer);
 
-  const qSortPattern3 = store.getState("qSortPattern");
+  const qSortPattern3 = state.getState("qSortPattern");
   const qSortPattern2 = qSortPattern3.join();
   const qSortPattern = ["Q-sort Design", qSortPattern2];
   settings.push(qSortPattern, spacer);
   dataXlsx.push(qSortPattern, spacer);
 
-  const totalSorts = store.getState("numQsorts").toString();
+  const totalSorts = state.getState("numQsorts").toString();
   const totalSortsArray = ["Total Number of Q-sorts", totalSorts];
   settings.push(totalSortsArray, spacer);
   dataXlsx.push(totalSortsArray, spacer);
 
   // get project history
-  const list = store.getState("projectHistoryArray");
+  const list = state.getState("projectHistoryArray");
   // let items = list.childNodes;
   settings.push(["Analysis Process", ""]);
   dataXlsx.push(["Analysis Process", ""]);
@@ -54,7 +54,7 @@ const pushProjectHistoryToOutputArray = function() {
     dataXlsx.push(["", list[i]]);
   }
 
-  const autoFlagHistory = store.getState("autoFlagHistory");
+  const autoFlagHistory = state.getState("autoFlagHistory");
   settings.push(spacer, autoFlagHistory);
   dataXlsx.push(spacer, autoFlagHistory);
 
@@ -62,7 +62,7 @@ const pushProjectHistoryToOutputArray = function() {
   settings.push(spacer, ["Analysis completed on:", timeCompleted]);
   dataXlsx.push(spacer, ["Analysis completed on:", timeCompleted]);
 
-  const version = store.getState("version");
+  const version = state.getState("version");
   settings.push(spacer, ["Ken-Q Analysis Version Number: ", version]);
   dataXlsx.push(spacer, ["Ken-Q Analysis Version Number: ", version]);
 
