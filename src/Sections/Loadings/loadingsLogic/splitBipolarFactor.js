@@ -1,32 +1,32 @@
 import cloneDeep from "lodash/cloneDeep";
-import store from "../../../store";
+import state from "../../../store";
 
 const splitBipolarFactor = () => {
-  const val = store.getState("factorToSplit");
+  const val = state.getState("factorToSplit");
 
   // if no factor selected do nothing
   if (val !== undefined) {
     // Archive current table
 
     // get bipolar split counter and archive counter, then increment
-    let bipolarSplitCounter = store.getState("bipolarSplitCount");
-    let archiveCounter = store.getState("archiveCounter");
+    let bipolarSplitCounter = state.getState("bipolarSplitCount");
+    let archiveCounter = state.getState("archiveCounter");
     archiveCounter += 1;
     const archiveName = `facMatrixArc${archiveCounter}`;
-    const projectHistoryArray = store.getState("projectHistoryArray");
+    const projectHistoryArray = state.getState("projectHistoryArray");
     const projectHistoryArrayLength = projectHistoryArray.length;
-    const bipolarIndexArray = store.getState("bipolarIndexArray");
+    const bipolarIndexArray = state.getState("bipolarIndexArray");
 
     // check to see if first bipolar split
     if (bipolarSplitCounter === 0) {
       // if yes, archive the usual way
-      const factorMatrix = store.getState("factorMatrix");
+      const factorMatrix = state.getState("factorMatrix");
 
       // increment the bipolar split counter
       bipolarSplitCounter += 1;
 
       // send counters back to state
-      store.setState({
+      state.setState({
         archiveCounter,
         bipolarSplitCount: bipolarSplitCounter
       });
@@ -43,14 +43,14 @@ const splitBipolarFactor = () => {
       );
     } else {
       // if not first bipolar split, archive the current loadings table AND column defs
-      const currentLoadingsTable = store.getState("currentLoadingsTable");
-      const columnDefs = store.getState("gridColDefsLoadingsTable");
+      const currentLoadingsTable = state.getState("currentLoadingsTable");
+      const columnDefs = state.getState("gridColDefsLoadingsTable");
 
       // increment the bipolar split counter
       bipolarSplitCounter += 1;
 
       // store the new counter values
-      store.setState({
+      state.setState({
         archiveCounter,
         bipolarSplitCount: bipolarSplitCounter
       });
@@ -64,8 +64,8 @@ const splitBipolarFactor = () => {
     // *** end IF ELSE ***
 
     // begin factor split process
-    const dataRows = store.getState("currentLoadingsTable");
-    const columnDefs = store.getState("gridColDefsLoadingsTable");
+    const dataRows = state.getState("currentLoadingsTable");
+    const columnDefs = state.getState("gridColDefsLoadingsTable");
     const factorValue = `factor${val}`;
     const checkValue = `check${val}`;
 
@@ -146,7 +146,7 @@ const splitBipolarFactor = () => {
     const projectHistoryText = `Bipolar Factor ${val} was split into Factor ${val}a and Factor ${val}b`;
     projectHistoryArray.push(projectHistoryText);
 
-    store.setState({
+    state.setState({
       gridColDefsLoadingsTable: columnDefs,
       gridRowDataLoadingsTable: dataRows,
       projectHistoryArray,

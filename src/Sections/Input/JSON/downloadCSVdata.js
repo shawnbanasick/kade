@@ -1,7 +1,7 @@
-import store from "../../../store";
+import state from "../../../store";
 
 const fs = require("fs");
-const { dialog } = require("electron").remote;
+const {dialog} = require("electron").remote;
 
 function saveFile(fileName, csvFile) {
   dialog.showSaveDialog(
@@ -60,11 +60,11 @@ function exportToCsv(fileName, rows) {
   saveFile(fileName, csvFile);
 }
 function downloadCSVdata() {
-  const csvBody2 = store.getState("csvData");
+  const csvBody2 = state.getState("csvData");
 
   // todo - find out what is adding the extra set of brackets around the data
   const csvBody = csvBody2[0];
-  const projectName = store.getState("projectName");
+  const projectName = state.getState("projectName");
   const nameWithExtension = `${projectName}.csv`;
 
   // export the file

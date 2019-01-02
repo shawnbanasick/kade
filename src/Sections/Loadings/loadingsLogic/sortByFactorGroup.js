@@ -1,6 +1,6 @@
 import indexOf from "lodash/indexOf";
 import cloneDeep from "lodash/cloneDeep";
-import store from "../../../store";
+import state from "../../../store";
 import evenRound from "../../../Utils/evenRound";
 import transposeMatrix from "../../../Utils/transposeMatrix";
 
@@ -10,7 +10,7 @@ const sortByFactorGroup = (data, highlighting) => {
   const sortingArray = [];
   const factorSortedData = [];
   let tempObj;
-  const numFactorsKeptForRot = store.getState("numFactorsKeptForRot");
+  const numFactorsKeptForRot = state.getState("numFactorsKeptForRot");
 
   // cut the data => get appropriate factor groups
   data.length = numFactorsKeptForRot;

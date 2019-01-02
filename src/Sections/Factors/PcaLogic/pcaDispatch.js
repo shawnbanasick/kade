@@ -1,6 +1,6 @@
 import cloneDeep from "lodash/cloneDeep";
 import getSvd from "./svd";
-import store from "../../../store";
+import state from "../../../store";
 import sortEigenValues from "./sortEigenValues";
 import calcEigenVectors from "./calcEigenVectors";
 import determineNumberPCs from "./determineNumberPCs";
@@ -12,9 +12,9 @@ import factorTableEigenDataPrep from "../FactorTableEigen/FactorTableEigenDataPr
 import calculateCommunalities from "../../Rotation/varimaxLogic/2calculateCommunalities";
 
 const pcaDispatch = () => {
-  const projectHistoryArray = store.getState("projectHistoryArray");
+  const projectHistoryArray = state.getState("projectHistoryArray");
 
-  const X = store.getState("correlation5Calcs");
+  const X = state.getState("correlation5Calcs");
   const m = X.length;
   const numberOfSorts = m;
   const numberofPrincipalComps = determineNumberPCs();
@@ -71,7 +71,7 @@ const pcaDispatch = () => {
 
   projectHistoryArray.push("Extracted 8 Principal Components");
 
-  store.setState({
+  state.setState({
     factorMatrix: eigenVecsTransposed,
     unrotatedFactorMatrix: eigenVecsTransposed,
     eigenvalues: eigenValuesSorted,
@@ -93,7 +93,7 @@ const pcaDispatch = () => {
   // draw eigenvalues sub table
   factorTableEigenDataPrep(numberofPrincipalComps, eigenvaluesArray);
 
-  store.setState({
+  state.setState({
     showUnrotatedFactorTable: true,
     showEigenvaluesTable: true,
     showScreePlot: true,

@@ -1,4 +1,4 @@
-import store from "../../../../store";
+import state from "../../../../store";
 import grabSortsT3 from "./grabSortsT3";
 import grabStatementsT3 from "./grabStatementsT3";
 import createMainDataObject from "../../Excel/excelLogic/createMainDataObject";
@@ -84,7 +84,7 @@ function formatype3ForDisplay(data) {
 
     const participantNames = checkUniqueParticipantNames(respondentNames);
 
-    store.setState({
+    state.setState({
       projectName,
       projectHistoryArray,
       qSortPattern,
@@ -100,7 +100,7 @@ function formatype3ForDisplay(data) {
   } catch (error) {
     // console.log(error.message);//
     // console.log(error.stack);
-    store.setState({
+    state.setState({
       excelErrorMessage1: error.message,
       showExcelErrorModal: true
     });

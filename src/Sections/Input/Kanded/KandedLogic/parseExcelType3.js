@@ -1,9 +1,11 @@
 import XLSX from "xlsx";
-import store from "../../../../store";
+import state from "../../../../store";
 import formatExcelType3ForDisplay from "../KandedLogic/formatExcelType3ForDisplay";
 
 function parseExcelType3(excelFile) {
-  const workbook = XLSX.readFile(excelFile, { type: "binary" });
+  const workbook = XLSX.readFile(excelFile, {
+    type: "binary"
+  });
 
   const allWorksheets = [];
   let worksheet;
@@ -37,7 +39,7 @@ function parseExcelType3(excelFile) {
         }
         allWorksheets.push(temp99Array);
 
-        // find q sorts
+      // find q sorts
       } else if (y === "Q-sorts" || y === "Q sorts") {
         // turn off error report
         hasSortsWorksheetFromKenQ = true;
@@ -51,7 +53,7 @@ function parseExcelType3(excelFile) {
         });
         allWorksheets.push(tempArray3);
 
-        // find Statements
+      // find Statements
       } else if (y === "Statements") {
         // turn off error report
         hasStatementsWorksheet = true;
@@ -74,21 +76,21 @@ function parseExcelType3(excelFile) {
     // set error message
     if (hasSortsWorksheetFromKenQ === false) {
       console.log("missing sorts worksheet");
-      store.setState({
+      state.setState({
         excelErrorMessage1: "Can't find the Q-sorts worksheet tab!",
         showExcelErrorModal: true
       });
     }
     if (hasStatementsWorksheet === false) {
       console.log(JSON.stringify("missing statements worksheet"));
-      store.setState({
+      state.setState({
         excelErrorMessage1: "Can't find the Statements worksheet tab!",
         showExcelErrorModal: true
       });
     }
     if (hasAnalysisOverviewWorksheet === false) {
       console.log(JSON.stringify("missing overview worksheet"));
-      store.setState({
+      state.setState({
         excelErrorMessage1: "Can't find the Analysis Overview worksheet tab!",
         showExcelErrorModal: true
       });
@@ -105,7 +107,9 @@ function parseExcelType3(excelFile) {
     hasAnalysisOverviewWorksheet === true
   ) {
     formatExcelType3ForDisplay(allWorksheets);
-    store.setState({ dataOrigin: "excel" });
+    state.setState({
+      dataOrigin: "excel"
+    });
   }
 }
 

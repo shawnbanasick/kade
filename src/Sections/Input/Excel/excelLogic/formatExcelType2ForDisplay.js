@@ -1,4 +1,4 @@
-import store from "../../../../store";
+import state from "../../../../store";
 import grabProjectStatements from "./grabProjectStatements";
 import calcMultiplierArrayT2 from "./calcMultiplierArrayT2";
 import createMainDataObject from "./createMainDataObject";
@@ -60,7 +60,9 @@ export default function formatype2ForDisplay(data) {
     let multiplierArray = [];
 
     multiplierArray = calcMultiplierArrayT2(copyTriangleShape);
-    store.setState({ multiplierArray });
+    state.setState({
+      multiplierArray
+    });
 
     // store #8  -  sort data
     const mainDataObject = createMainDataObject(
@@ -70,7 +72,7 @@ export default function formatype2ForDisplay(data) {
 
     const participantNames = checkUniqueParticipantNames(respondentNames);
 
-    store.setState({
+    state.setState({
       projectName,
       projectHistoryArray,
       multiplierArray,
@@ -86,7 +88,7 @@ export default function formatype2ForDisplay(data) {
   } catch (error) {
     // console.log(error.message);
     // console.log(error.stack);
-    store.setState({
+    state.setState({
       excelErrorMessage1: error.message,
       showExcelErrorModal: true
     });

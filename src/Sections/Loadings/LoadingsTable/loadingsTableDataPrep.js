@@ -1,4 +1,4 @@
-import store from "../../../store";
+import state from "../../../store";
 import evenRound from "../../../Utils/evenRound";
 import CheckboxRenderer from "./CheckboxRenderer";
 import factorGroupComparator from "./factorGroupComparator";
@@ -7,15 +7,15 @@ import sortByFactorGroup from "../loadingsLogic/sortByFactorGroup";
 // todo - re-organize factor groupings and sorts to optimize number of required loops
 const loadingsTableDataPrep = numFactors => {
   // factorMatrix should be factors as rows - in Lipset => 9 cols, 7 -8 rows
-  const factorMatrix1 = store.getState("factorMatrix");
+  const factorMatrix1 = state.getState("factorMatrix");
 
-  const respondentNames = store.getState("respondentNames");
+  const respondentNames = state.getState("respondentNames");
 
   // get matrix autoflag booleans
-  const fSigCriterionResults = store.getState("fSigCriterionResults");
+  const fSigCriterionResults = state.getState("fSigCriterionResults");
 
   // calculate the factor groupings so they can be assigned in col defs
-  const highlighting = store.getState("highlighting");
+  const highlighting = state.getState("highlighting");
   const factorGroupings = sortByFactorGroup([...factorMatrix1], highlighting);
 
   // set up Table Headers
@@ -135,7 +135,7 @@ const loadingsTableDataPrep = numFactors => {
   // to default order chart by highest factor loading
   gridRowDataLoadingsTable.sort((a, b) => a.defaultSort - b.defaultSort);
 
-  store.setState({
+  state.setState({
     gridColDefsLoadingsTable,
     gridRowDataLoadingsTable,
     // tempRotFacStateArray: tempRotFacStateArray,
@@ -147,7 +147,7 @@ const loadingsTableDataPrep = numFactors => {
     isLoadingsTableInitialRender: true
   });
 
-  // console.log(`row data: ${  JSON.stringify(gridRowDataLoadingsTable)}`);
+// console.log(`row data: ${  JSON.stringify(gridRowDataLoadingsTable)}`);
 };
 
 export default loadingsTableDataPrep;

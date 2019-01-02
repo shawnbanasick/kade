@@ -1,9 +1,11 @@
 import XLSX from "xlsx";
-import store from "../../../store";
+import state from "../../../store";
 import formatExcelType2ForDisplay from "./excelLogic/formatExcelType2ForDisplay";
 
 function parseExcelType2(excelFile) {
-  const workbook = XLSX.readFile(excelFile, { type: "binary" });
+  const workbook = XLSX.readFile(excelFile, {
+    type: "binary"
+  });
 
   let tester;
   let tester2;
@@ -56,10 +58,12 @@ function parseExcelType2(excelFile) {
     }
 
     formatExcelType2ForDisplay(allWorksheets);
-    store.setState({ dataOrigin: "excel" });
+    state.setState({
+      dataOrigin: "excel"
+    });
   } catch (error) {
     // set error message
-    store.setState({
+    state.setState({
       excelErrorMessage1: error.message,
       showExcelErrorModal: true
     });

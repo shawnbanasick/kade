@@ -1,6 +1,6 @@
 import React from "react";
 import { Checkbox } from "semantic-ui-react";
-import store from "../../../store";
+import state from "../../../store";
 
 class CheckboxRenderer extends React.PureComponent {
   constructor(props) {
@@ -18,7 +18,7 @@ class CheckboxRenderer extends React.PureComponent {
     this.setState({
       value: this.props.data[this.props.colDef.field]
     });
-    store.setState({
+    state.setState({
       showOutputFactorSelection: false,
       showFactorCorrelationsTable: false,
       showStandardErrorsDifferences: false,

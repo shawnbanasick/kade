@@ -1,5 +1,5 @@
 import sortBy from "lodash/sortBy";
-import store from "../../../../store";
+import state from "../../../../store";
 
 export default function getRespondentSortsExcelT1(
   sortData,
@@ -16,8 +16,7 @@ export default function getRespondentSortsExcelT1(
 
   // transpose data
   // todo - check to see if util transposer will work for this
-  const sortDataTransposed = sortData[0].map((col, i) =>
-    sortData.map(row => row[i])
+  const sortDataTransposed = sortData[0].map((col, i) => sortData.map(row => row[i])
   );
 
   const data2 = [];
@@ -53,7 +52,7 @@ export default function getRespondentSortsExcelT1(
 
   const excelType1NonsymmetricArrayText = excelType1NonsymmetricArray.join(",");
 
-  store.setState({
+  state.setState({
     excelType1NonsymmetricArrayText
   });
 

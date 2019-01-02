@@ -1,5 +1,5 @@
 import React from "react";
-// import store from "../../store";
+// import state from "../../store";
 import { view } from "react-easy-state";
 import ResetAnalysisButton from "./ResetAnalysisButton";
 import PcaButton from "./factorSelection/ExtractPrinCompButton";
@@ -11,7 +11,7 @@ class TypeOfAnalysisTransitionContainer extends React.Component {
     return (
       <div>
         <div className="centroidContainer">
-          <div style={{ display: "flex" }}>
+          <div style={ { display: "flex" } }>
             <CentroidSelectDropdown />
             <NoFacSelectedModal />
             <PcaButton />
@@ -19,7 +19,7 @@ class TypeOfAnalysisTransitionContainer extends React.Component {
           </div>
         </div>
       </div>
-    );
+      );
   }
 }
 

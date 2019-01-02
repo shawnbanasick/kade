@@ -1,4 +1,4 @@
-import store from "../../../store";
+import state from "../../../store";
 import sortsDisplayText from "../logic/sortsDisplayText";
 import motivationalToArray from "../logic/motivationalToArray";
 
@@ -150,7 +150,7 @@ const uploadJapaneseData = () => {
   const sortsData = motivationalToArray(data, 60, -5);
   const sortsDisplayText2 = sortsDisplayText(sortsData[1]);
 
-  store.setState({
+  state.setState({
     projectName: "iPad Survey (Japanese)",
     projectHistoryArray: ["iPad project loaded from demo data"],
     statements,

@@ -1,11 +1,11 @@
-import store from "../../../store";
+import state from "../../../store";
 import transposeMatrix from "../../../Utils/transposeMatrix";
 import loadingsTableDataPrep from "../LoadingsTable/loadingsTableDataPrep";
 import calculateCommunalities from "../../Rotation/varimaxLogic/2calculateCommunalities";
 import calculateSigCriterionValues from "../../Rotation/varimaxLogic/2calculateSigCriterionValues";
 
 const autoFlagFactors = () => {
-  store.setState({
+  state.setState({
     isLoadingAutoflag: true
   });
 
@@ -14,7 +14,7 @@ const autoFlagFactors = () => {
   // give button time to display loading spinner
   setTimeout(() => {
     // get data for current user selected significance level
-    const userSelectedSigLevel = store.getState("userSelectedSigLevel");
+    const userSelectedSigLevel = state.getState("userSelectedSigLevel");
     const lookupTable = {
       3.906: "p < 0.0001",
       3.291: "p < 0.001",
@@ -24,7 +24,7 @@ const autoFlagFactors = () => {
       majority: "Majority of Common Variance"
     };
     const criticalLevelText = lookupTable[userSelectedSigLevel];
-    const requireMajorityCommonVariance = store.getState(
+    const requireMajorityCommonVariance = state.getState(
       "requireMajorityCommonVariance"
     );
     // setup Project History Array text
@@ -36,17 +36,17 @@ const autoFlagFactors = () => {
       `Autoflagging set to ${criticalLevelText}${comVarText}`
     ];
 
-    const numFactorsKeptForRot = store.getState("numFactorsKeptForRot");
+    const numFactorsKeptForRot = state.getState("numFactorsKeptForRot");
 
     // reset communalities
-    const factorMatrix1 = store.getState("factorMatrix");
+    const factorMatrix1 = state.getState("factorMatrix");
     const transposedMatrix = transposeMatrix(factorMatrix1);
     calculateCommunalities(transposedMatrix);
 
     calculateSigCriterionValues("flag");
     loadingsTableDataPrep(numFactorsKeptForRot);
 
-    store.setState({
+    state.setState({
       // reset manual rotation
       shouldShowJudgeRotDiv: false,
       judgeButtonActive: false,

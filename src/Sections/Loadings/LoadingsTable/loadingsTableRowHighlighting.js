@@ -1,4 +1,4 @@
-import store from "../../../store";
+import state from "../../../store";
 
 function loadingsTableRowHighlighting(highlighting) {
   let rowClassRulesLoadingsTable;
@@ -79,7 +79,7 @@ function loadingsTableRowHighlighting(highlighting) {
   if (highlighting === "none") {
     rowClassRulesLoadingsTable = {};
   }
-  store.setState({
+  state.setState({
     rowClassRulesLoadingsTable
   });
 

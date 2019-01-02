@@ -1,8 +1,8 @@
-import store from "../../../store";
+import state from "../../../store";
 
 const determineNumberPCs = () => {
-  const totalNumberSorts = store.getState("respondentNames").length;
-  const numStatements = store.getState("numStatements");
+  const totalNumberSorts = state.getState("respondentNames").length;
+  const numStatements = state.getState("numStatements");
 
   const numFactorsCalcArray = [8, totalNumberSorts, numStatements];
 

@@ -1,4 +1,4 @@
-import store from "../../../../store";
+import state from "../../../../store";
 import getExcelT1SortText from "./getExcelT1SortText";
 import getStatementsExcelT1 from "./getStatementsExcelT1";
 import getRespondentNamesExcelT1 from "./getRespondentNamesExcelT1";
@@ -78,7 +78,7 @@ export default function formatExcelType1ForDisplay(data) {
     );
     const participantNames = checkUniqueParticipantNames(respondentNames);
 
-    store.setState({
+    state.setState({
       projectHistoryArray: [
         `${projectName} data loaded from Excel Type 1 file`
       ],
@@ -96,7 +96,7 @@ export default function formatExcelType1ForDisplay(data) {
   } catch (error) {
     // console.log(error.message);
     // console.log(error.stack);
-    store.setState({
+    state.setState({
       excelErrorMessage1: error.message,
       showExcelErrorModal: true
     });

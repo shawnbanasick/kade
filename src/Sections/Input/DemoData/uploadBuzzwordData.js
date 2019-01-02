@@ -1,4 +1,4 @@
-import store from "../../../store";
+import state from "../../../store";
 import sortsDisplayText from "../logic/sortsDisplayText";
 import motivationalToArray from "../logic/motivationalToArray";
 
@@ -3242,7 +3242,7 @@ function uploadBuzzwordData() {
   const sortsData = motivationalToArray(data, 50, -5);
   const sortsDisplayText2 = sortsDisplayText(sortsData[1]);
 
-  store.setState({
+  state.setState({
     projectName: "Buzzwords",
     projectHistoryArray: ["Buzzwords project loaded from demo data"],
     statements,
@@ -3305,6 +3305,7 @@ function uploadBuzzwordData() {
       5
     ]
   });
-};
+}
+;
 
 export default uploadBuzzwordData;
