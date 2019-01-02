@@ -2,11 +2,11 @@ import React from "react";
 import styled from "styled-components";
 import { view } from "react-easy-state";
 import { Button } from "semantic-ui-react";
-import store from "../../../store";
+import state from "../../../store";
 import pcaDispatch from "../PcaLogic/pcaDispatch";
 
 function handleClick() {
-  store.setState({
+  state.setState({
     calculatingPca: true,
     activePcaButton: true,
     disabledCentroidFactorButton: true,
@@ -17,35 +17,27 @@ function handleClick() {
   setTimeout(() => {
     pcaDispatch();
   }, 10);
-  store.setState({
+  state.setState({
     isFactorsButtonGreen: true
   });
 }
 
 class PCAButton extends React.Component {
   render() {
-    const isActive = store.getState("activePcaButton");
-    const isDisabled = store.getState("disabledPcaButton");
-    const isCalculating = store.getState("calculatingPca");
-    const pcaButtonText = store.getState("pcaButtonText");
+    const isActive = state.getState("activePcaButton");
+    const isDisabled = state.getState("disabledPcaButton");
+    const isCalculating = state.getState("calculatingPca");
+    const pcaButtonText = state.getState("pcaButtonText");
     return (
       <div>
         <StyledWrapper>
-          <Button
-            id="extractPrinCompButton"
-            className="wrapper1"
-            size={"small"}
-            toggle
-            active={isActive}
-            loading={isCalculating}
-            disabled={isDisabled}
-            onClick={handleClick}
-          >
-            {pcaButtonText}
+          <Button id="extractPrinCompButton" className="wrapper1" size={ "small" } toggle active={ isActive } loading={ isCalculating } disabled={ isDisabled }
+            onClick={ handleClick }>
+            { pcaButtonText }
           </Button>
         </StyledWrapper>
       </div>
-    );
+      );
   }
 }
 export default view(PCAButton);

@@ -1,10 +1,10 @@
 import React from "react";
 import { view } from "react-easy-state";
 import { Button, Dropdown } from "semantic-ui-react";
-import store from "../../../store";
+import state from "../../../store";
 
 const saveDropdownValueToState = (event, data) => {
-  store.setState({
+  state.setState({
     numCentroidFactors: data.value
   });
 };
@@ -54,38 +54,18 @@ const options = [
 
 class CentroidSelectDropdown extends React.Component {
   render() {
-    const isDisabled = store.getState("disabledCentroidFactorButton");
+    const isDisabled = state.getState("disabledCentroidFactorButton");
     return (
-      <div style={{ display: "flex" }}>
-        <span
-          style={{
-            textAlign: "center",
-            marginRight: 30,
-            height: 32,
-            marginTop: 4,
-            paddingTop: 7,
-            fontSize: 22
-          }}
-        >
-          Extract
-        </span>
-        <Button.Group size={"small"} color="black" basic>
-          <Dropdown
-            id="centroidSelectDropdown"
-            placeholder={"?"}
-            defaultValue={7}
-            onChange={saveDropdownValueToState}
-            openOnFocus
-            button
-            simple
-            disabled={isDisabled}
-            item
-            options={options}
-            style={{ zIndex: "999 !important", height: 34 }}
-          />
+      <div style={ { display: "flex" } }>
+        <span style={ { textAlign: "center", marginRight: 30, height: 32, marginTop: 4, paddingTop: 7, fontSize: 22 } }>
+                Extract
+              </span>
+        <Button.Group size={ "small" } color="black" basic>
+          <Dropdown id="centroidSelectDropdown" placeholder={ "?" } defaultValue={ 7 } onChange={ saveDropdownValueToState } openOnFocus button simple
+            disabled={ isDisabled } item options={ options } style={ { zIndex: "999 !important", height: 34 } } />
         </Button.Group>
       </div>
-    );
+      );
   }
 }
 export default view(CentroidSelectDropdown);

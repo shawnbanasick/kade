@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { view } from "react-easy-state";
 import { AgGridReact } from "ag-grid-react";
-import store from "../../../store";
+import state from "../../../store";
 
 class CentroidTable extends Component {
   onGridReady(params) {
@@ -11,12 +11,12 @@ class CentroidTable extends Component {
   }
 
   render() {
-    const numFacsForTableWidth = store.getState("numFacsForTableWidth");
+    const numFacsForTableWidth = state.getState("numFacsForTableWidth");
     let widthVal = 80 + 190 + 90 * numFacsForTableWidth;
     widthVal += "px";
 
-    const gridColDefsFactorTable = store.getState("gridColDefsFactorTable");
-    const gridRowDataFactorTable = store.getState("gridRowDataFactorTable");
+    const gridColDefsFactorTable = state.getState("gridColDefsFactorTable");
+    const gridRowDataFactorTable = state.getState("gridRowDataFactorTable");
     const { onGridReady } = this.onGridReady;
     return (
       <div>

@@ -1,9 +1,9 @@
 import cloneDeep from "lodash/cloneDeep";
-import store from "../../../store";
+import state from "../../../store";
 import evenRound from "../../../Utils/evenRound";
 
 const factorTableDataPrep = (numFactors, factorMatrix) => {
-  const respondentNames = store.getState("respondentNames");
+  const respondentNames = state.getState("respondentNames");
   // clone matrix
   const factorMatrix1 = cloneDeep(factorMatrix);
 
@@ -17,7 +17,7 @@ const factorTableDataPrep = (numFactors, factorMatrix) => {
       sort: "asc",
       cellStyle: {
         textAlign: "center"
-        // backgroundColor: "#eee"
+      // backgroundColor: "#eee"
       }
     },
     {
@@ -72,7 +72,7 @@ const factorTableDataPrep = (numFactors, factorMatrix) => {
 
   unrotatedFactorArray.unshift(unrotFacTableHeader);
 
-  store.setState({
+  state.setState({
     gridColDefsFactorTable,
     gridRowDataFactorTable,
     unrotatedFactorMatrixOutput: unrotatedFactorArray

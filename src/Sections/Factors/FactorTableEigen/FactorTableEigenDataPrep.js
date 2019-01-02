@@ -1,4 +1,4 @@
-import store from "../../../store";
+import state from "../../../store";
 import evenRound from "../../../Utils/evenRound";
 
 const factorTableEigenDataPrep = (numFactors, eigenValues) => {
@@ -52,7 +52,7 @@ const factorTableEigenDataPrep = (numFactors, eigenValues) => {
     gridRowDataFacTableEigen.push(tempArray);
   }
 
-  store.setState({
+  state.setState({
     gridColDefsFacTableEigen,
     gridRowDataFacTableEigen
   });

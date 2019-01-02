@@ -1,5 +1,5 @@
 import cloneDeep from "lodash/cloneDeep";
-import store from "../../../store";
+import state from "../../../store";
 import calcEigenValues from "./calcEigenValues";
 import transposeMatrix from "../../../Utils/transposeMatrix";
 import calculateFactorLoadings from "./calculateFactorLoadings";
@@ -13,9 +13,9 @@ import calculateCommunalities from "../../Rotation/varimaxLogic/2calculateCommun
 // enough for all 7 factors
 
 const centroidDispatch = numFactors => {
-  let dataArray = store.getState("correlation5Calcs");
-  const projectHistoryArray = store.getState("projectHistoryArray");
-  const numCentroidFactors = store.getState("numCentroidFactors");
+  let dataArray = state.getState("correlation5Calcs");
+  const projectHistoryArray = state.getState("projectHistoryArray");
+  const numCentroidFactors = state.getState("numCentroidFactors");
   const factorMatrix = [];
 
   for (let i = 0; i < numFactors; i += 1) {
@@ -24,7 +24,7 @@ const centroidDispatch = numFactors => {
     dataArray = tempArray[1];
   }
 
-  const numQsorts = store.getState("numQsorts");
+  const numQsorts = state.getState("numQsorts");
 
   const factorMatrix1 = cloneDeep(factorMatrix);
   const explainVarandEigens = calcEigenValues(factorMatrix1, numQsorts);
@@ -56,7 +56,7 @@ const centroidDispatch = numFactors => {
 
   projectHistoryArray.push(`Extracted ${numCentroidFactors} Centroid Factors`);
 
-  store.setState({
+  state.setState({
     factorMatrix: rotFacStateArray1, // pulled for first display on loadings table
     eigenvalues: explainVarandEigens[0],
     explainedVariance: explainVarandEigens[1],

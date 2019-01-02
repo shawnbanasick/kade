@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { Button } from "semantic-ui-react";
-import store from "../../../store";
+import state from "../../../store";
 
 const styles = {
   // marginRight: 100,
@@ -9,19 +9,12 @@ const styles = {
   backgroundColor: "#49769c !important"
 };
 
-const isActive = store.getState("activeCentroidFactorsButton");
+const isActive = state.getState("activeCentroidFactorsButton");
 
 const CentroidSelectButton = () => (
   <div>
     <StyledWrapper>
-      <Button
-        id="centroidSelectButton"
-        className="wrapper1"
-        size={"big"}
-        toggle
-        active={isActive}
-        style={styles}
-      >
+      <Button id="centroidSelectButton" className="wrapper1" size={ "big" } toggle active={ isActive } style={ styles }>
         Centroid Factors
       </Button>
     </StyledWrapper>

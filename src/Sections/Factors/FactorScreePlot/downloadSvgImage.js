@@ -1,6 +1,6 @@
 import currentDate from "../../../Utils/currentDate1";
 import currentTime from "../../../Utils/currentTime1";
-import store from "../../../store";
+import state from "../../../store";
 
 const {dialog} = require("electron").remote;
 
@@ -24,7 +24,7 @@ function saveSvg(svgEl, name) {
 
 function downloadSvgImage() {
   try {
-    const projectName = store.getState("projectName");
+    const projectName = state.getState("projectName");
     const date = currentDate();
     const time = currentTime();
     const dateTime = `${date} ${time}`;

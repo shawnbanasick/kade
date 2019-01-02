@@ -1,4 +1,4 @@
-import store from "../../../store";
+import state from "../../../store";
 // import checkIfOnline from "./checkIfOnline";
 import calculateCorrelations from "./calcCorrelations";
 // import workerCorr from "../../wrkrs/workerCorr";
@@ -17,9 +17,9 @@ export default function mainCorrCalcs(respondentNames, rawSortsArray) {
     // do the calcuations
     calculateCorrelations(rawSortsArray, respondentNames);
 
-    // $("#correlationsSpinner").children("p").remove();
+  // $("#correlationsSpinner").children("p").remove();
   }
-  store.setState({
+  state.setState({
     showCorrelationMatrix: true,
     activeStartAnalysisButton: true,
     isLoadingBeginAnalysis: false

@@ -1,7 +1,7 @@
 import React from "react";
 import { view } from "react-easy-state";
 import styled from "styled-components";
-import store from "../../../store";
+import state from "../../../store";
 import pcaDispatch from "../PcaLogic/pcaDispatch";
 
 const style = {
@@ -11,7 +11,7 @@ const style = {
 
 class PCAButton extends React.Component {
   handleClick() {
-    store.setState({
+    state.setState({
       calculatingPca: true,
       activePcaButton: true,
       disabledCentroidFactorButton: true,
@@ -25,22 +25,17 @@ class PCAButton extends React.Component {
   }
 
   render() {
-    // const isActive = store.getState("activePcaButton");
-    const isDisabled = store.getState("disabledPcaButton");
-    // const isCalculating = store.getState("calculatingPca");
-    const pcaButtonText = store.getState("pcaButtonText");
+    // const isActive = state.getState("activePcaButton");
+    const isDisabled = state.getState("disabledPcaButton");
+    // const isCalculating = state.getState("calculatingPca");
+    const pcaButtonText = state.getState("pcaButtonText");
     return (
       <div>
-        <BeginPCAButton
-          id="extractPrinCompButton"
-          disabled={isDisabled}
-          onClick={this.handleClick}
-          style={style}
-        >
-          {pcaButtonText}
+        <BeginPCAButton id="extractPrinCompButton" disabled={ isDisabled } onClick={ this.handleClick } style={ style }>
+          { pcaButtonText }
         </BeginPCAButton>
       </div>
-    );
+      );
   }
 }
 export default view(PCAButton);

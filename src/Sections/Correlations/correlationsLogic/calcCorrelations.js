@@ -1,5 +1,5 @@
 import cloneDeep from "lodash/cloneDeep";
-import store from "../../../store";
+import state from "../../../store";
 import getPqmethodCorrelation from "./getPqmethodCorrelation";
 
 export default function calculateCorrelations(rawSorts, respondentNames) {
@@ -91,7 +91,7 @@ export default function calculateCorrelations(rawSorts, respondentNames) {
   });
 
   // push data objects to STATE
-  store.setState({
+  state.setState({
     gridColDefs,
     gridRowData,
     correlationTableArray: correlationTableArrayFormatted,

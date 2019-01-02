@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { view } from "react-easy-state";
 import React, { Component } from "react";
 import { Button, Header, Modal } from "semantic-ui-react";
-import store from "../../../store";
+import state from "../../../store";
 import centroidDispatch from "../centroidLogic/centroidDispatch";
 
 class noFacSelectedModal extends Component {
@@ -15,18 +15,18 @@ class noFacSelectedModal extends Component {
   }
 
   handleOpen() {
-    const numFactors = store.getState("numCentroidFactors");
+    const numFactors = state.getState("numCentroidFactors");
     if (isNaN(numFactors)) {
       this.setState({
         modalOpen: true
       });
     } else {
-      store.setState({
+      state.setState({
         isCentroidLoading: true
       });
       setTimeout(() => {
         centroidDispatch(numFactors);
-        store.setState({
+        state.setState({
           numFacsForTableWidth: numFactors,
           showUnrotatedFactorTable: true,
           showEigenvaluesTable: true,
@@ -48,49 +48,27 @@ class noFacSelectedModal extends Component {
   }
 
   render() {
-    const isActive = store.getState("activeCentroidFactorsButton");
-    const isDisabled = store.getState("disabledCentroidFactorButton");
-    const isCentroidLoading = store.getState("isCentroidLoading");
+    const isActive = state.getState("activeCentroidFactorsButton");
+    const isDisabled = state.getState("disabledCentroidFactorButton");
+    const isCentroidLoading = state.getState("isCentroidLoading");
     return (
-      <Modal
-        trigger={
-          <StyledWrapper>
-            <Button
-              id="noFacSelectedModalButton"
-              className="wrapper1"
-              size={"small"}
-              toggle
-              active={isActive}
-              loading={isCentroidLoading}
-              disabled={isDisabled}
-              onClick={this.handleOpen}
-            >
-              Centroid Factors
-            </Button>
-          </StyledWrapper>
-        }
-        open={this.state.modalOpen}
-        className="wrapper1"
-        onClose={this.handleClose}
-        basic
-        size={"small"}
-      >
+      <Modal trigger={ <StyledWrapper>
+                   <Button id="noFacSelectedModalButton" className="wrapper1" size={ "small" } toggle active={ isActive } loading={ isCentroidLoading } disabled={ isDisabled }
+                     onClick={ this.handleOpen }>
+                     Centroid Factors
+                   </Button>
+                 </StyledWrapper> } open={ this.state.modalOpen } className="wrapper1" onClose={ this.handleClose } basic size={ "small" }>
         <Header content="Centroid Factor Extraction" />
         <Modal.Content>
           <h3>Please select the number of factors to extract first.</h3>
         </Modal.Content>
         <Modal.Actions>
-          <Button
-            id="noFacSelectedModalGotItButton"
-            color="green"
-            onClick={this.handleClose}
-            inverted
-          >
+          <Button id="noFacSelectedModalGotItButton" color="green" onClick={ this.handleClose } inverted>
             Got it
           </Button>
         </Modal.Actions>
       </Modal>
-    );
+      );
   }
 }
 
