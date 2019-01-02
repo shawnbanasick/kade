@@ -3,7 +3,7 @@ import uniq from "lodash/uniq";
 import flatten from "lodash/flatten";
 import cloneDeep from "lodash/cloneDeep";
 import difference from "lodash/difference";
-import store from "../../../store";
+import state from "../../../store";
 import evenRound from "../../../Utils/evenRound";
 import reduceDistingArray from "./3_reduceDistingArray";
 import formatDistingArrayForDownload from "./3_formatDistinguishingArrayForDownload";
@@ -24,8 +24,8 @@ const pushDistinguishingStatementsToOutput = function(
 ) {
   const chartText1 = "Dist State ";
   const chartText2 = "Consensus Statements";
-  const maxStatementLength = store.getState("maxStatementLength");
-  const userSelectedFactors = store.getState("userSelectedFactors");
+  const maxStatementLength = state.getState("maxStatementLength");
+  const userSelectedFactors = state.getState("userSelectedFactors");
 
   // property to count loop iterations for assigning significance * in disting factor output
   formatDistingArrayForDownload.calledTimes = 0;
@@ -33,8 +33,7 @@ const pushDistinguishingStatementsToOutput = function(
   // loop to set up worksheet names and push into output array
   for (let i = 0; i < sigSortsArray.length; i++) {
     let factorNumber = sigSortsArray[i]["Factor Number"];
-    const factorNumber2 =
-      factorNumber.charAt(0).toUpperCase() + factorNumber.slice(1);
+    const factorNumber2 = factorNumber.charAt(0).toUpperCase() + factorNumber.slice(1);
     const number = factorNumber2.substring(factorNumber2.length - 1);
     const factorNumber3 = factorNumber2.slice(0, -1);
     factorNumber = `${factorNumber3  } ${  number}`;
@@ -70,7 +69,10 @@ const pushDistinguishingStatementsToOutput = function(
   }
 
   // starting calcs for distinguishing factors
-  let sedComparisonValue, j, k, m;
+  let sedComparisonValue,
+    j,
+    k,
+    m;
   let consensusStatementComparisonArray05 = [];
   let consensusStatementComparisonArray01 = [];
   const distStatementDataVizArray = [];
@@ -205,10 +207,10 @@ const pushDistinguishingStatementsToOutput = function(
     outputData.push(formattedDistingStatements[1]);
   }
 
-  store.setState({
+  state.setState({
     masterDistingStatementNumbersArray01
   });
-  store.setState({
+  state.setState({
     masterDistingStatementNumbersArray05
   });
 
@@ -235,7 +237,7 @@ const pushDistinguishingStatementsToOutput = function(
 
   const consensus01 = xor(consensus05, consensusStatementComparisonArray01b);
 
-  store.setState({
+  state.setState({
     consensus05Statements: consensus05,
     consensus01Statements: consensus01
   });
@@ -278,7 +280,7 @@ const pushDistinguishingStatementsToOutput = function(
     analysisOutput,
     sigFactorNumbersArray
   );
-  store.setState({
+  state.setState({
     formattedConsensusStatements: formattedConsensusStatements[0]
   });
 
@@ -293,7 +295,7 @@ const pushDistinguishingStatementsToOutput = function(
     formattedConsensusStatements[0]
   );
 
-  store.setState({
+  state.setState({
     distStatementDataVizArray,
     outputForDataViz: outputForDataVizWithSig
   });

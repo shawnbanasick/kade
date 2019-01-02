@@ -1,4 +1,4 @@
-import store from "../../../store";
+import state from "../../../store";
 import evenRound from "../../../Utils/evenRound";
 import variance from "../../../Utils/variance";
 
@@ -15,12 +15,11 @@ const pushConsensusStatementsToOutput = function(
   const chartText3 = "Statement Number";
   const chartText4 = "Statement";
   const chartText5 = "Z-Score variance";
-  const chartText6 =
-    "Factor Q-sort Values for Statements sorted by Consensus vs. Disagreement";
+  const chartText6 = "Factor Q-sort Values for Statements sorted by Consensus vs. Disagreement";
 
-  const sigFactorNumbersArray = store.getState("sigFactorNumbersArray");
-  const userSelectedFactors = store.getState("userSelectedFactors");
-  const maxStatementLength = store.getState("maxStatementLength");
+  const sigFactorNumbersArray = state.getState("sigFactorNumbersArray");
+  const userSelectedFactors = state.getState("userSelectedFactors");
+  const maxStatementLength = state.getState("maxStatementLength");
   const spacer = ["", ""];
 
   sigFactorNumbersArray.sort();
@@ -73,9 +72,9 @@ const pushConsensusStatementsToOutput = function(
   consensusDisagreeArray.sort((a, b) => {
     if (a[locator] === b[locator]) {
       return 0;
-    } 
-      return a[locator] < b[locator] ? -1 : 1;
-    
+    }
+    return a[locator] < b[locator] ? -1 : 1;
+
   });
   consensusDisagreeArray.unshift(spacer, [chartText6], spacer, tableHeader2);
   outputData.push(consensusDisagreeArray);

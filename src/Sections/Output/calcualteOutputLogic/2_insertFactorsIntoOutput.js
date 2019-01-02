@@ -1,4 +1,4 @@
-import store from "../../../store";
+import state from "../../../store";
 
 const insertFactorsIntoOutput = function(
   sheetNames,
@@ -19,17 +19,17 @@ const insertFactorsIntoOutput = function(
   const appendText9 = "Sorts Correlations";
   const appendText10 = "Factor Scores for ";
 
-  const sheetNamesHolder1 = store.getState("sheetNamesHolder1");
-  const sheetNamesHolder2 = store.getState("sheetNamesHolder2");
-  const sheetNamesHolder3 = store.getState("sheetNamesHolder3");
+  const sheetNamesHolder1 = state.getState("sheetNamesHolder1");
+  const sheetNamesHolder2 = state.getState("sheetNamesHolder2");
+  const sheetNamesHolder3 = state.getState("sheetNamesHolder3");
 
-  const factorWeightFactorArray = store.getState("factorWeightFactorArrayHolder");
-  const miniCorrelationArray = store.getState("miniCorrelationArrayHolder");
-  const synFactorArray1 = store.getState("synFactorArray1Holder");
-  const compositeFactorMasterArray = store.getState("compositeFactorMasterArray");
-  const userSelectedFactors = store.getState("userSelectedFactors");
-  const sigSortsArray = store.getState("sigSortsArray");
-  const maxStatementLength = store.getState("maxStatementLength");
+  const factorWeightFactorArray = state.getState("factorWeightFactorArrayHolder");
+  const miniCorrelationArray = state.getState("miniCorrelationArrayHolder");
+  const synFactorArray1 = state.getState("synFactorArray1Holder");
+  const compositeFactorMasterArray = state.getState("compositeFactorMasterArray");
+  const userSelectedFactors = state.getState("userSelectedFactors");
+  const sigSortsArray = state.getState("sigSortsArray");
+  const maxStatementLength = state.getState("maxStatementLength");
   const spacer = ["", ""];
 
   for (let ii = 0, iiLen = userSelectedFactors.length; ii < iiLen; ii++) {
@@ -120,9 +120,9 @@ const insertFactorsIntoOutput = function(
     compositeFactorMasterArray[ii].sort((a, b) => {
       if (a[2] === b[2]) {
         return a[0] < b[0] ? -1 : 1;
-      } 
-        return b[2] < a[2] ? -1 : 1;
-      
+      }
+      return b[2] < a[2] ? -1 : 1;
+
     });
 
     for (

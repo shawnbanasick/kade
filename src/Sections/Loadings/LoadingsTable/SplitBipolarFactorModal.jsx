@@ -1,26 +1,26 @@
 import React, { Component } from "react";
 import { view } from "react-easy-state";
 import { Button, Header, Modal } from "semantic-ui-react";
-import store from "../../../store";
+import state from "../../../store";
 import splitBipolarFactor from "../loadingsLogic/splitBipolarFactor";
 import SplitBipolarFactorDropdownSelect from "./SplitBipolarFactorDropdownSelect";
 
 class SplitBipolarFactorButtonModal extends Component {
     handleClose() {
-        store.setState({
+        state.setState({
             showSplitFactorModal: false
         });
     }
 
     handleClick() {
-        store.setState({
+        state.setState({
             showSplitFactorModal: false
         });
         splitBipolarFactor();
     }
 
     render() {
-        const showSplitFactorModal = store.getState("showSplitFactorModal");
+        const showSplitFactorModal = state.getState("showSplitFactorModal");
         if (showSplitFactorModal) {
             return (
                 <Modal open={ showSplitFactorModal } onClose={ this.handleClose }>

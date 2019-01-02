@@ -2,7 +2,7 @@ import styled from "styled-components";
 import React, { Component } from "react";
 import { view } from "react-easy-state";
 import { Button } from "semantic-ui-react";
-import store from "../../../store";
+import state from "../../../store";
 import transposeMatrix from "../../../Utils/transposeMatrix";
 import calculateCommunalities from "../../Rotation/varimaxLogic/2calculateCommunalities";
 import calcuateSigCriterionValues from "../../Rotation/varimaxLogic/2calculateSigCriterionValues";
@@ -16,12 +16,12 @@ const buttonStyle = {
 class ProjectHistory extends Component {
   handleUndo() {
     // get counter and adjust value
-    let archiveCounter = store.getState("archiveCounter");
+    let archiveCounter = state.getState("archiveCounter");
     archiveCounter -= 1;
     const previousFacMatrixArchive = `facMatrixArc${archiveCounter}`;
 
     // remove entry from project history
-    const projectHistoryArray = store.getState("projectHistoryArray");
+    const projectHistoryArray = state.getState("projectHistoryArray");
     const typeOfUndo3 = projectHistoryArray.pop();
     const typeOfUndo2 = typeOfUndo3.split(" ");
     const typeOfUndo = typeOfUndo2[0];
@@ -31,9 +31,9 @@ class ProjectHistory extends Component {
       sessionStorage.getItem(previousFacMatrixArchive)
     );
 
-    const numFactors = store.getState("numFactorsKeptForRot");
+    const numFactors = state.getState("numFactorsKeptForRot");
     // see if there are other bipolar splits
-    let bipolarSplitCount = store.getState("bipolarSplitCount");
+    let bipolarSplitCount = state.getState("bipolarSplitCount");
 
     if (typeOfUndo === "Bipolar") {
       previousFacMatrix = JSON.parse(
@@ -59,7 +59,7 @@ class ProjectHistory extends Component {
     calcuateSigCriterionValues("noFlag");
 
     // restore previous factor matrix to current factor matrix
-    store.setState({
+    state.setState({
       factorMatrix: previousFacMatrix
     });
 
@@ -68,7 +68,7 @@ class ProjectHistory extends Component {
 
     // todo - undo name change of varimax button text on varimax undo
     if (typeOfUndo === "Varimax") {
-      store.setState({
+      state.setState({
         archiveCounter,
         projectHistoryArray,
         varimaxButtonActive: false,
@@ -103,7 +103,7 @@ class ProjectHistory extends Component {
     }
 
     if (typeOfUndo === "Selected") {
-      store.setState({
+      state.setState({
         archiveCounter,
         projectHistoryArray,
         // hide section 4
@@ -140,7 +140,7 @@ class ProjectHistory extends Component {
     }
 
     // default undo
-    store.setState({
+    state.setState({
       archiveCounter,
       bipolarSplitCount,
       projectHistoryArray,
@@ -158,36 +158,32 @@ class ProjectHistory extends Component {
       shouldDisplayFactorViz: false,
       sendDataToOutputButtonColor: "#d6dbe0"
     });
-    // normal return
+  // normal return
   }
 
   render() {
-    const projectHistoryArray = store.getState("projectHistoryArray");
+    const projectHistoryArray = state.getState("projectHistoryArray");
     const shouldDisplayUndoButton = projectHistoryArray.length > 3;
     let mapCounter = 1;
     return (
-      <div style={{ marginTop: "30px", userSelect: "none" }}>
+      <div style={ { marginTop: "30px", userSelect: "none" } }>
         <TitleDiv>Project History</TitleDiv>
         <CustomOl>
-          {projectHistoryArray.map((listValue, index) => (
-            <li key={mapCounter++}>{listValue}</li>
-          ))}
+          { projectHistoryArray.map((listValue, index) => (
+              <li key={ mapCounter++ }>
+                { listValue }
+              </li>
+            )) }
         </CustomOl>
-        {shouldDisplayUndoButton && (
+        { shouldDisplayUndoButton && (
           <StyledWrapper>
-            <Button
-              id="undoButton"
-              className="wrapper1"
-              onClick={this.handleUndo.bind(this)}
-              style={buttonStyle}
-              size="tiny"
-            >
+            <Button id="undoButton" className="wrapper1" onClick={ this.handleUndo.bind(this) } style={ buttonStyle } size="tiny">
               Undo Last Action
             </Button>
           </StyledWrapper>
-        )}
+          ) }
       </div>
-    );
+      );
   }
 }
 

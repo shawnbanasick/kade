@@ -1,4 +1,4 @@
-import store from "../../../store";
+import state from "../../../store";
 import pushProjectOverviewToOutputArray from "./2_pushProjectOverviewToOutputArray";
 import pushStatementsToOutputArray from "./2_pushStatementsToOutputArray";
 import pushSortsToOutputArray from "./2_pushSortsToOutputArray";
@@ -80,7 +80,7 @@ const outputDispatch = () => {
 
   const step18 = pushCribSheetsToOutput(...step17);
 
-  store.setState({
+  state.setState({
     sheetNames: step18[0],
     output: step18[1],
     outputData: step18[2],

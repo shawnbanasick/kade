@@ -1,4 +1,4 @@
-import store from "../../../store";
+import state from "../../../store";
 import evenRound from "../../../Utils/evenRound";
 
 const pushCumComMaxtrixToOutputArray = function(
@@ -11,7 +11,7 @@ const pushCumComMaxtrixToOutputArray = function(
   sheetNamesXlsx.push("Cumul Comm Matrix");
 
   // isolate data
-  const cumulCommMatrix9 = store.getState("unrotatedFactorMatrixOutput");
+  const cumulCommMatrix9 = state.getState("unrotatedFactorMatrixOutput");
 
   // set excel column widths
   const columns = [
@@ -47,12 +47,12 @@ const pushCumComMaxtrixToOutputArray = function(
         );
       }
     }
-    // cumulCommMatrix9[i].unshift(respondentName);
+  // cumulCommMatrix9[i].unshift(respondentName);
   }
   cumulCommMatrix9.unshift(responderHeadersRow);
 
   // add cumulative explained variance
-  const explnVarRow = store.getState("cumulEigenPerVar");
+  const explnVarRow = state.getState("cumulEigenPerVar");
   explnVarRow.splice(1, 0, "");
   cumulCommMatrix9.push(["", ""], explnVarRow);
 

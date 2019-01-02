@@ -1,4 +1,4 @@
-import store from "../../../store";
+import state from "../../../store";
 
 const pushCorrelationArray = function(
   sheetNames,
@@ -9,8 +9,8 @@ const pushCorrelationArray = function(
 ) {
   sheetNamesXlsx.push("Correlation Matrix");
 
-  const correlationMatrix = store.getState("correlationTableArray");
-  const respondentNames = store.getState("respondentNames");
+  const correlationMatrix = state.getState("correlationTableArray");
+  const respondentNames = state.getState("respondentNames");
 
   // to add respondent names to matrix
   for (let i = 0, iLen = correlationMatrix.length; i < iLen; i++) {

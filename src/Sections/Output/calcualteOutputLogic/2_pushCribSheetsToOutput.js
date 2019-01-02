@@ -1,12 +1,5 @@
-import store from "../../../store";
-import {
-  countBy,
-  cloneDeep,
-  clone,
-  flatten,
-  identity,
-  flattenDeep
-} from "lodash";
+import state from "../../../store";
+import { countBy, cloneDeep, clone, flatten, identity, flattenDeep} from "lodash";
 import checkIfDistinguishingOrConsensus from "./3_checkIfDistinguishingOrConsensus";
 
 const pushCribSheetsToOutput = function(
@@ -33,18 +26,20 @@ const pushCribSheetsToOutput = function(
   const appendText7 = "Sort Values";
   // let appendText8 = resources[language].translation["Note: "];
 
-  const statementRankingArray = store.getState("statementRankingArray");
-  const userSelectedFactors = store.getState("userSelectedFactors");
+  const statementRankingArray = state.getState("statementRankingArray");
+  const userSelectedFactors = state.getState("userSelectedFactors");
   let factorInformation,
     lowestRankStatements,
     cribArray = [];
   let cribArray2 = [];
   let highestRankStatements;
-  let maxRankValue, minRankValue, compositeSortValue;
+  let maxRankValue,
+    minRankValue,
+    compositeSortValue;
 
   // determine the number of statements in the extreme columns
-  const sortTriangleShape = store.getState("qSortPattern");
-  const synFactorArray1Holder = store.getState("synFactorArray1Holder");
+  const sortTriangleShape = state.getState("qSortPattern");
+  const synFactorArray1Holder = state.getState("synFactorArray1Holder");
 
   const arrayMax = +Math.max(...sortTriangleShape);
   const arrayMin = +Math.min(...sortTriangleShape);
@@ -91,9 +86,9 @@ const pushCribSheetsToOutput = function(
     factorInformation.sort((a, b) => {
       if (b[appendText5] === a[appendText5]) {
         return a[appendText3] - b[appendText3];
-      } 
-        return b[appendText5] - a[appendText5];
-      
+      }
+      return b[appendText5] - a[appendText5];
+
     });
 
     // push highest to cribArray

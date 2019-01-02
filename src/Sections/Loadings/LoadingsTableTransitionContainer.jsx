@@ -1,12 +1,12 @@
 import React, { Component } from "react";
 import styled from "styled-components";
 import { view } from "react-easy-state";
-import store from "../../store";
+import state from "../../store";
 import LoadingsTable from "./LoadingsTable/LoadingsTable";
 
 class LoadingsTableTransitionContainer extends Component {
   render() {
-    const showLoadingsTable = store.getState("showLoadingsTable");
+    const showLoadingsTable = state.getState("showLoadingsTable");
     if (showLoadingsTable) {
       return (
         <div>

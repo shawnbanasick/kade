@@ -1,4 +1,4 @@
-import store from "../../../store";
+import state from "../../../store";
 import evenRound from "../../../Utils/evenRound";
 
 const pushFactorCharacteristicsToOutput = function(
@@ -16,8 +16,8 @@ const pushFactorCharacteristicsToOutput = function(
   const chartText4 = "Avg. Rel. Coef.";
   const chartText5 = "Composite Reliability";
   const chartText6 = "S.E. of Factor Z-scores";
-  const userSelectedFactors = store.getState("userSelectedFactors");
-  const sigSortsArray = store.getState("sigSortsArray");
+  const userSelectedFactors = state.getState("userSelectedFactors");
+  const sigSortsArray = state.getState("sigSortsArray");
   const spacer = ["", ""];
 
   sheetNamesXlsx.push(chartText1);
@@ -59,7 +59,8 @@ const pushFactorCharacteristicsToOutput = function(
 
   // line 4 - Composite Reliability
   const line4Array = [chartText5];
-  let nSorts, compositeRel;
+  let nSorts,
+    compositeRel;
   const composRelArray = [];
   for (let m = 0; m < sigSortsArray.length; m++) {
     nSorts = sigSortsArray[m].SigSorts.length;
@@ -82,7 +83,7 @@ const pushFactorCharacteristicsToOutput = function(
 
   outputData.push(factorCharacteristicsSheetArray);
 
-  store.setState({
+  state.setState({
     factorCharacteristicsArray: factorCharacteristicsSheetArray
   });
 
