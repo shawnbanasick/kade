@@ -14,94 +14,94 @@ import ErrorNotification from "./ErrorNotification";
 
 
 function notify() {
-    toast.success("Success - Data Loaded");
-    state.setState({
-        notifyDataUploadSuccess: false
-    });
+  toast.success("File Loaded");
+  state.setState({
+    notifyDataUploadSuccess: false
+  });
 }
 
 const panes = [
-    {
-        menuItem: "CSV",
-        render: () => (
-            <Tab.Pane>
-              <CsvPanel notify={ notify } />
-            </Tab.Pane>
-        )
-    },
-    {
-        menuItem: "Excel",
-        render: () => (
-            <Tab.Pane>
-              <ExcelPanel />
-            </Tab.Pane>
-        )
-    },
-    {
-        menuItem: "KADE",
-        render: () => (
-            <Tab.Pane>
-              <KandedPanel />
-            </Tab.Pane>
-        )
-    },
-    {
-        menuItem: "JSON",
-        render: () => (
-            <Tab.Pane>
-              <JsonPanel />
-            </Tab.Pane>
-        )
-    },
-    {
-        menuItem: "PQMethod",
-        render: () => (
-            <Tab.Pane>
-              <PQMethodPanel />
-            </Tab.Pane>
-        )
-    },
-    {
-        menuItem: "Demo Data",
-        render: () => (
-            <Tab.Pane>
-              <DemoDataPanel />
-            </Tab.Pane>
-        )
-    }
+  {
+    menuItem: "CSV",
+    render: () => (
+      <Tab.Pane>
+        <CsvPanel notify={ notify } />
+      </Tab.Pane>
+    )
+  },
+  {
+    menuItem: "Excel",
+    render: () => (
+      <Tab.Pane>
+        <ExcelPanel />
+      </Tab.Pane>
+    )
+  },
+  {
+    menuItem: "KADE",
+    render: () => (
+      <Tab.Pane>
+        <KandedPanel />
+      </Tab.Pane>
+    )
+  },
+  {
+    menuItem: "JSON",
+    render: () => (
+      <Tab.Pane>
+        <JsonPanel />
+      </Tab.Pane>
+    )
+  },
+  {
+    menuItem: "PQMethod",
+    render: () => (
+      <Tab.Pane>
+        <PQMethodPanel />
+      </Tab.Pane>
+    )
+  },
+  {
+    menuItem: "Demo Data",
+    render: () => (
+      <Tab.Pane>
+        <DemoDataPanel />
+      </Tab.Pane>
+    )
+  }
 ];
 
 const localStore = store({
-    activeIndex: 0
+  activeIndex: 0
 });
 
 class Input extends Component {
-    constructor() {
-        super();
+  constructor() {
+    super();
 
-        this.handleTabChange = this.handleTabChange.bind(this);
-    }
+    this.handleTabChange = this.handleTabChange.bind(this);
+  }
 
-    handleTabChange(e, {activeIndex}) {
-        localStore.activeIndex = activeIndex;
-    }
+  handleTabChange(e, {activeIndex}) {
+    localStore.activeIndex = activeIndex;
+  }
 
-    render() {
-        const {activeIndex} = localStore;
-        const showNotification = state.getState("notifyDataUploadSuccess");
-        if (showNotification) {
-            notify();
-        }
-        return (
-            <React.Fragment>
-              <ToastContainer transition={ Zoom } />
-              <MainContent>
-                <Tab panes={ panes } activeIndex={ activeIndex } onTabChange={ this.handleTabChange } />
-                <ErrorNotification />
-              </MainContent>
-            </React.Fragment>
-            );
+  render() {
+    const {activeIndex} = localStore;
+    const showNotification = state.getState("notifyDataUploadSuccess");
+    if (showNotification) {
+      notify();
     }
+    return (
+      <React.Fragment>
+        <ToastContainer transition={ Zoom } />
+        <MainContent>
+          <Tab panes={ panes } activeIndex={ activeIndex } onTabChange={ this.handleTabChange } />
+          <ErrorNotification />
+        </MainContent>
+      </React.Fragment>
+      );
+  }
 }
 
 export default view(Input);
