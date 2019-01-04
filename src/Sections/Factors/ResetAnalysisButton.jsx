@@ -43,6 +43,9 @@ function resetAnalysis() {
     // pcaButtonText: "Principal Components",
     // calculatingPca: false
 
+    // reset centroid factors dropdown
+    numCentroidFactors: 7,
+
     // factor select re-enable
     isFacSelectDisabled: false,
 
@@ -100,55 +103,28 @@ class ResetAnalysisButton extends Component {
     };
 
     return (
-      <Modal
-        trigger={
-          <StyledWrapper>
-            <Button
-              id="resetAnalysisButton"
-              size={"small"}
-              className="wrapper1"
-              style={style}
-              onClick={handleOpen}
-            >
-              Reset Analysis
-            </Button>
-          </StyledWrapper>
-        }
-        open={localStore.modalOpen}
-        onClose={handleClose}
-        basic
-        size="small"
-      >
+      <Modal trigger={ <StyledWrapper>
+                   <Button id="resetAnalysisButton" size={ "small" } className="wrapper1" style={ style } onClick={ handleOpen }>
+                     Reset Analysis
+                   </Button>
+                 </StyledWrapper> } open={ localStore.modalOpen } onClose={ handleClose } basic size="small">
         <Header content="Reset Analysis" />
         <Modal.Content>
           <h2>This will remove the current analysis and cannot be reversed.</h2>
           <h2> Are you sure you want to reset?</h2>
         </Modal.Content>
         <Modal.Actions>
-          <div style={{ display: "flex" }}>
-            <Button
-              size={"big"}
-              style={{ alignSelf: "flexStart" }}
-              color="green"
-              onClick={handleClose}
-              inverted
-            >
+          <div style={ { display: "flex" } }>
+            <Button size={ "big" } style={ { alignSelf: "flexStart" } } color="green" onClick={ handleClose } inverted>
               No, Go back.
             </Button>
-            <Button
-              id="resetAnalysisModalGotItButton"
-              size={"big"}
-              style={{ alignSelf: "flexEnd", marginLeft: 220 }}
-              color="red"
-              onClick={resetAnalysis}
-              inverted
-            >
+            <Button id="resetAnalysisModalGotItButton" size={ "big" } style={ { alignSelf: "flexEnd", marginLeft: 220 } } color="red" onClick={ resetAnalysis } inverted>
               Yes, reset the analysis.
             </Button>
           </div>
         </Modal.Actions>
       </Modal>
-    );
+      );
   }
 }
 
@@ -172,3 +148,4 @@ const StyledWrapper = styled.div`
     }
   }
 `;
+

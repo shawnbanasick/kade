@@ -1,12 +1,15 @@
 import React from "react";
-import { view } from "react-easy-state";
+import { view, store } from "react-easy-state";
 import { Button, Dropdown } from "semantic-ui-react";
 import state from "../../../store";
 
+const localStore = store({
+  value: 7
+});
+
 const saveDropdownValueToState = (event, data) => {
-  state.setState({
-    numCentroidFactors: data.value
-  });
+  state.setState({ numCentroidFactors: data.value });
+  localStore.value = data.value;
 };
 
 const options = [
@@ -55,13 +58,15 @@ const options = [
 class CentroidSelectDropdown extends React.Component {
   render() {
     const isDisabled = state.getState("disabledCentroidFactorButton");
+    const numCentroidFactors = state.getState("numCentroidFactors");
+    localStore.value = numCentroidFactors;
     return (
       <div style={ { display: "flex" } }>
         <span style={ { textAlign: "center", marginRight: 30, height: 32, marginTop: 4, paddingTop: 7, fontSize: 22 } }>
                 Extract
               </span>
         <Button.Group size={ "small" } color="black" basic>
-          <Dropdown id="centroidSelectDropdown" placeholder={ "?" } defaultValue={ 7 } onChange={ saveDropdownValueToState } openOnFocus button simple
+          <Dropdown id="centroidSelectDropdown" placeholder={ "?" } defaultValue={ localStore.value } onChange={ saveDropdownValueToState } openOnFocus button simple
             disabled={ isDisabled } item options={ options } style={ { zIndex: "999 !important", height: 34 } } />
         </Button.Group>
       </div>
