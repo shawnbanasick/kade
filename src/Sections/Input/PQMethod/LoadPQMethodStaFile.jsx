@@ -37,7 +37,8 @@ const handleClick = () => {
                     state.setState({
                         notifyDataUploadSuccess: true,
                         areStatementsLoaded: true,
-                        isInputButtonGreen: state.getState("areQsortsLoaded")
+                        isInputButtonGreen: state.getState("areQsortsLoaded"),
+                        loadPqmethodTextButtonColor: "rgba(144,	238,	144, .6)"
                     });
                 });
             }
@@ -47,6 +48,9 @@ const handleClick = () => {
 
 class LoadTxtStatementFile extends Component {
     render() {
+        const loadPqmethodTextButtonColor = state.getState("loadPqmethodTextButtonColor");
+        localStore.buttonColor = loadPqmethodTextButtonColor;
+
         return (
             <LoadTxtButton buttonColor={ localStore.buttonColor } onClick={ () => handleClick() }>
               <p>Load STA File</p>

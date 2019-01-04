@@ -4,7 +4,7 @@ import styled from "styled-components";
 import state from "../../../store";
 import parseExcelType1 from "./parseExcelType1";
 
-const { dialog } = require("electron").remote;
+const {dialog} = require("electron").remote;
 
 const localStore = store({
   buttonColor: "#d6dbe0"
@@ -28,7 +28,8 @@ const handleClick = () => {
         localStore.buttonColor = "rgba(144,	238,	144, .6)";
         state.setState({
           notifyDataUploadSuccess: true,
-          isInputButtonGreen: true
+          isInputButtonGreen: true,
+          loadExcelT1ButtonColor: "rgba(144,	238,	144, .6)"
         });
       }
     }
@@ -37,11 +38,13 @@ const handleClick = () => {
 
 class LoadTxtStatementFile extends Component {
   render() {
+    const loadExcelT1ButtonColor = state.getState("loadExcelT1ButtonColor");
+    localStore.buttonColor = loadExcelT1ButtonColor;
     return (
-      <LoadTxtButton buttonColor={localStore.buttonColor} onClick={handleClick}>
+      <LoadTxtButton buttonColor={ localStore.buttonColor } onClick={ handleClick }>
         <p>Load Type 1 Excel File</p>
       </LoadTxtButton>
-    );
+      );
   }
 }
 

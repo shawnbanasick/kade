@@ -5,7 +5,7 @@ import { ToastContainer, toast, Slide } from "react-toastify";
 import state from "../../../store";
 import convertJSONToData from "./convertJSONToData";
 
-const { dialog } = require("electron").remote;
+const {dialog} = require("electron").remote;
 const fs = require("fs");
 
 const localStore = store({
@@ -52,13 +52,12 @@ const handleClick = () => {
               showJsonParticipantIdDropdown: true,
               csvData,
               jsonObj: results,
-              dataOrigin: "json"
+              dataOrigin: "json",
+              areQsortsLoaded: true,
+              isInputButtonGreen: state.getState("areStatementsLoaded"),
+              loadJsonQsortsButtonColor: "rgba(144,	238,	144, .6)"
             });
             localStore.buttonColor = "rgba(144,	238,	144, .6)";
-            state.setState({
-              areQsortsLoaded: true,
-              isInputButtonGreen: state.getState("areStatementsLoaded")
-            });
           });
           notifyWarning();
         }
@@ -74,17 +73,16 @@ const handleClick = () => {
 
 class LoadTxtStatementFile extends Component {
   render() {
+    const loadJsonQsortsButtonColor = state.getState("loadJsonQsortsButtonColor");
+    localStore.buttonColor = loadJsonQsortsButtonColor;
     return (
       <React.Fragment>
-        <LoadTxtButton
-          buttonColor={localStore.buttonColor}
-          onClick={() => handleClick()}
-        >
+        <LoadTxtButton buttonColor={ localStore.buttonColor } onClick={ () => handleClick() }>
           <p>Load JSON File</p>
         </LoadTxtButton>
-        <ToastContainer transition={Slide} />
+        <ToastContainer transition={ Slide } />
       </React.Fragment>
-    );
+      );
   }
 }
 

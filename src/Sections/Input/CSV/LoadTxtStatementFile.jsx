@@ -3,7 +3,7 @@ import React, { Component } from "react";
 import { view, store } from "react-easy-state";
 import state from "../../../store";
 
-const { dialog } = require("electron").remote;
+const {dialog} = require("electron").remote;
 const fs = require("fs");
 
 const localStore = store({
@@ -35,7 +35,8 @@ const handleClick = () => {
             statementsLoaded: true,
             notifyDataUploadSuccess: true,
             areStatementsLoaded: true,
-            isInputButtonGreen: areQsortsLoaded
+            isInputButtonGreen: areQsortsLoaded,
+            loadCsvTextButtonColor: "rgba(144,	238,	144, .6)"
           });
           localStore.buttonColor = "rgba(144,	238,	144, .6)";
         });
@@ -46,11 +47,13 @@ const handleClick = () => {
 
 class LoadTxtStatementFile extends Component {
   render() {
+    const loadCsvTextButtonColor = state.getState("loadCsvTextButtonColor");
+    localStore.buttonColor = loadCsvTextButtonColor;
     return (
-      <LoadTxtButton buttonColor={localStore.buttonColor} onClick={handleClick}>
+      <LoadTxtButton buttonColor={ localStore.buttonColor } onClick={ handleClick }>
         <p>Load TXT File</p>
       </LoadTxtButton>
-    );
+      );
   }
 }
 
@@ -84,3 +87,4 @@ const LoadTxtButton = styled.button`
     margin-left: 3px;
   }
 `;
+

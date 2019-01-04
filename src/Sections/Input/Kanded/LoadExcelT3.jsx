@@ -4,48 +4,49 @@ import { view, store } from "react-easy-state";
 import state from "../../../store";
 import parseExcelType3 from "./KandedLogic/parseExcelType3.js";
 
-const { dialog } = require("electron").remote;
+const {dialog} = require("electron").remote;
 
 const localStore = store({
-  buttonColor: "#d6dbe0"
+    buttonColor: "#d6dbe0"
 });
 
 const handleClick = () => {
-  dialog.showOpenDialog(
-    {
-      properties: ["openFile"],
-      filters: [
+    dialog.showOpenDialog(
         {
-          name: "Excel",
-          extensions: ["xls", "XLS", "xlsx", "XLSX"]
+            properties: ["openFile"],
+            filters: [
+                {
+                    name: "Excel",
+                    extensions: ["xls", "XLS", "xlsx", "XLSX"]
+                }
+            ]
+        },
+        files => {
+            if (files !== undefined) {
+                const excelFile = files[0];
+                parseExcelType3(excelFile);
+                localStore.buttonColor = "rgba(144,	238,	144, .6)";
+                state.setState({
+                    notifyDataUploadSuccess: true,
+                    isInputButtonGreen: true,
+                    loadExcelT3ButtonColor: "rgba(144,	238,	144, .6)"
+                });
+            }
         }
-      ]
-    },
-    files => {
-      if (files !== undefined) {
-        const excelFile = files[0];
-        parseExcelType3(excelFile);
-        localStore.buttonColor = "rgba(144,	238,	144, .6)";
-        state.setState({
-          notifyDataUploadSuccess: true,
-          isInputButtonGreen: true
-        });
-      }
-    }
-  );
+    );
 };
 
 class LoadTxtStatementFile extends Component {
-  render() {
-    return (
-      <LoadTxtButton
-        buttonColor={localStore.buttonColor}
-        onClick={() => handleClick()}
-      >
-        <p>Load KADE Excel File</p>
-      </LoadTxtButton>
-    );
-  }
+    render() {
+        const loadExcelT3ButtonColor = state.getState("loadExcelT3ButtonColor");
+        localStore.buttonColor = loadExcelT3ButtonColor;
+
+        return (
+            <LoadTxtButton buttonColor={ localStore.buttonColor } onClick={ () => handleClick() }>
+              <p>Load KADE Excel File</p>
+            </LoadTxtButton>
+            );
+    }
 }
 
 export default view(LoadTxtStatementFile);

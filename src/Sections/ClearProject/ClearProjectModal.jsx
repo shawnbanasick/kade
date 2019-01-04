@@ -6,55 +6,55 @@ import state from "../../store";
 import initialState from "../../initialState";
 
 const localStore = store({
-  modalOpen: false
+    modalOpen: false
 });
 
 const handleOpen = () => {
-  localStore.modalOpen = true;
+    localStore.modalOpen = true;
 };
 
 const handleClose = () => {
-  localStore.modalOpen = false;
+    localStore.modalOpen = false;
 };
 
 const clearAnalysis = () => {
-  const initialStateValues = initialState();
-  state.setState(initialStateValues);
-  localStore.modalOpen = false;
+    const initialStateValues = initialState();
+    state.setState(initialStateValues);
+    localStore.modalOpen = false;
 };
 
 class ClearProjectModal extends Component {
-  render() {
-    return (
-      <Modal dimmer={ "blurring" } trigger={ <BeginAnalysisButton onClick={ handleOpen } size="large">
+    render() {
+        return (
+            <Modal dimmer={ "blurring" } trigger={ <ClearProjectButton onClick={ handleOpen } size="large">
                                          Clear Project
-                                       </BeginAnalysisButton> } open={ localStore.modalOpen } className="wrapper1" onClose={ this.handleClose } basic size={ "small" }>
-        <Header content="Clear Project" />
-        <Modal.Content>
-          <h2>
-                        This will remove all data and analysis, and cannot be reversed.
-                      </h2>
-          <h2> Are you sure you want to clear the current project?</h2>
-        </Modal.Content>
-        <Modal.Actions>
-          <div style={ { display: "flex" } }>
-            <Button size={ "big" } style={ { alignSelf: "flexStart" } } color="green" onClick={ handleClose } inverted>
-              No, Go back.
-            </Button>
-            <Button id="resetAnalysisModalGotItButton" size={ "big" } style={ { alignSelf: "flexEnd", marginLeft: 220 } } color="red" onClick={ clearAnalysis } inverted>
-              Yes, delete the
-              <br /> data and analysis.
-            </Button>
-          </div>
-        </Modal.Actions>
-      </Modal>
-      );
-  }
+                                       </ClearProjectButton> } open={ localStore.modalOpen } className="wrapper1" onClose={ this.handleClose } basic size={ "small" }>
+              <Header content="Clear Project" />
+              <Modal.Content>
+                <h2>
+                                          This will remove all data and analysis, and cannot be reversed.
+                                        </h2>
+                <h2> Are you sure you want to clear the current project?</h2>
+              </Modal.Content>
+              <Modal.Actions>
+                <div style={ { display: "flex" } }>
+                  <Button size={ "big" } style={ { alignSelf: "flexStart" } } color="green" onClick={ handleClose } inverted>
+                    No, Go back.
+                  </Button>
+                  <Button id="resetAnalysisModalGotItButton" size={ "big" } style={ { alignSelf: "flexEnd", marginLeft: 220 } } color="red" onClick={ clearAnalysis } inverted>
+                    Yes, delete the
+                    <br /> data and analysis.
+                  </Button>
+                </div>
+              </Modal.Actions>
+            </Modal>
+            );
+    }
 }
 
 export default view(ClearProjectModal);
 
-const BeginAnalysisButton = styled.button`
+const ClearProjectButton = styled.button`
   display: grid;
   align-items: center;
   justify-items: center;

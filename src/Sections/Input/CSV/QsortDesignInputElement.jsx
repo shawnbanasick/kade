@@ -7,12 +7,12 @@ import convertQsortObjectToArray from "./convertQsortObjectToArray";
 
 const localStore = store({
   qSortPatternObject: {},
-  "activeValue-6": "",
-  "activeValue-5": "",
-  "activeValue-4": "",
-  "activeValue-3": "",
-  "activeValue-2": "",
-  "activeValue-1": "",
+  "activeValueM6": "",
+  "activeValueM5": "",
+  "activeValueM4": "",
+  "activeValueM3": "",
+  "activeValueM2": "",
+  "activeValueM1": "",
   activeValue0: "",
   activeValue1: "",
   activeValue2: "",
@@ -32,13 +32,33 @@ const localStore = store({
 });
 
 const calcQsortDesign = event => {
+  console.log(`event.target.name ${  JSON.stringify(event.target.name)}`);
+  console.log(`event.target.value ${  JSON.stringify(event.target.value)}`);
+
+  let columnName = event.target.name;
+  // 
   localStore[`activeValue${event.target.name}`] = event.target.value;
+  console.log(JSON.stringify(localStore[`activeValue${event.target.name}`]));
+
+  // to get current values from local state
   const qSortPatternObject = localStore.qSortPatternObject;
-  qSortPatternObject[event.target.name] = event.target.value;
+  // if negative, substitute - for M
+  if (columnName.charAt(0) === 'M') {
+    columnName = +columnName.replace('M', "-");
+  }
+  console.log(`qsortpatternobject ${  JSON.stringify(qSortPatternObject)}`);
+
+  // set new key - value
+  qSortPatternObject[columnName] = event.target.value;
+  // send back to local state
   localStore.qSortPatternObject = qSortPatternObject;
+
+  // process array for completeness
   const qSortPattern = convertQsortObjectToArray(qSortPatternObject);
   const enteredStatements = qSortPattern.length;
   const difference = localStore.statementsLength - enteredStatements;
+  const fullColumnName = `activeValue${event.target.name}`;
+  const targetValue = event.target.value;
 
   if (difference === 0) {
     localStore.inputTitle = "All Statements Allocated";
@@ -52,7 +72,13 @@ const calcQsortDesign = event => {
     localStore.inputTitle = `Over-Allocated: ${-difference}`;
     localStore.inputColor = "lightpink";
   }
-  state.setState({ qSortPattern });
+  const tempObj = {};
+  tempObj[fullColumnName] = targetValue;
+  tempObj.qSortPattern = qSortPattern;
+  tempObj.qSortPatternObject = qSortPatternObject;
+  console.log(`temp obj ${  JSON.stringify(tempObj)}`);
+
+  state.setState(tempObj);
 };
 
 class QsortDesignInputElement extends React.Component {
@@ -60,141 +86,72 @@ class QsortDesignInputElement extends React.Component {
     const statementsLength = state.getState("statements").length;
     localStore.statementsLength = statementsLength;
     const showForcedInput = state.getState("showForcedInput");
+
+    const {qSortPatternObject, activeValueM6, activeValueM5, activeValueM4, activeValueM3, activeValueM2} = state;
+    console.log(`-6 ${  JSON.stringify(activeValueM6)}`);
+
+    const {activeValueM1, activeValue0, activeValue1, activeValue2, activeValue3, activeValue4, activeValue5} = state;
+    const {activeValue6, activeValue7, activeValue8, activeValue9, activeValue10, activeValue11, activeValue12, activeValue13} = state;
+
+    localStore.qSortPatternObject = qSortPatternObject;
+    localStore.activeValueM6 = activeValueM6;
+    localStore.activeValueM5 = activeValueM5;
+    localStore.activeValueM4 = activeValueM4;
+    localStore.activeValueM3 = activeValueM3;
+    localStore.activeValueM2 = activeValueM2;
+    localStore.activeValueM1 = activeValueM1;
+    localStore.activeValue0 = activeValue0;
+    localStore.activeValue1 = activeValue1;
+    localStore.activeValue2 = activeValue2;
+    localStore.activeValue3 = activeValue3;
+    localStore.activeValue4 = activeValue4;
+    localStore.activeValue5 = activeValue5;
+    localStore.activeValue6 = activeValue6;
+    localStore.activeValue7 = activeValue7;
+    localStore.activeValue8 = activeValue8;
+    localStore.activeValue9 = activeValue9;
+    localStore.activeValue10 = activeValue10;
+    localStore.activeValue11 = activeValue11;
+    localStore.activeValue12 = activeValue12;
+    localStore.activeValue13 = activeValue13;
+
     if (showForcedInput) {
       return (
         <DesignDiv>
           <TitleDiv>
-            <TextDiv inputColor={localStore.inputColor}>Q sort Design:</TextDiv>
-            {statementsLength ? (
-              <TextDiv2>{localStore.inputTitle}</TextDiv2>
-            ) : (
+            <TextDiv inputColor={ localStore.inputColor }>Q sort Design:</TextDiv>
+            { statementsLength ? (
+              <TextDiv2>
+                { localStore.inputTitle }
+              </TextDiv2>
+              ) : (
               <TextDiv2>No Statements Loaded</TextDiv2>
-            )}
+              ) }
           </TitleDiv>
           <InputRow>
-            <InputDiv
-              label={"-6"}
-              name={-6}
-              value={localStore["activeValue-6"]}
-              onChangeCallback={calcQsortDesign}
-            />
-            <InputDiv
-              label={"-5"}
-              name={-5}
-              value={localStore["activeValue-5"]}
-              onChangeCallback={calcQsortDesign}
-            />
-            <InputDiv
-              label={"-4"}
-              name={-4}
-              onChangeCallback={calcQsortDesign}
-              value={localStore["activeValue-4"]}
-            />
-            <InputDiv
-              label={"-3"}
-              name={-3}
-              onChangeCallback={calcQsortDesign}
-              value={localStore["activeValue-3"]}
-            />
-            <InputDiv
-              label={"-2"}
-              name={-2}
-              onChangeCallback={calcQsortDesign}
-              value={localStore["activeValue-2"]}
-            />
-            <InputDiv
-              label={"-1"}
-              name={-1}
-              onChangeCallback={calcQsortDesign}
-              value={localStore["activeValue-1"]}
-            />
-            <InputDiv
-              label={"0"}
-              name={0}
-              onChangeCallback={calcQsortDesign}
-              value={localStore.activeValue0}
-            />
-            <InputDiv
-              label={"1"}
-              name={1}
-              onChangeCallback={calcQsortDesign}
-              value={localStore.activeValue1}
-            />
-            <InputDiv
-              label={"2"}
-              name={2}
-              onChangeCallback={calcQsortDesign}
-              value={localStore.activeValue2}
-            />
-            <InputDiv
-              label={"3"}
-              name={3}
-              onChangeCallback={calcQsortDesign}
-              value={localStore.activeValue3}
-            />
-            <InputDiv
-              label={"4"}
-              name={4}
-              onChangeCallback={calcQsortDesign}
-              value={localStore.activeValue4}
-            />
-            <InputDiv
-              label={"5"}
-              name={5}
-              onChangeCallback={calcQsortDesign}
-              value={localStore.activeValue5}
-            />
-            <InputDiv
-              label={"6"}
-              name={6}
-              onChangeCallback={calcQsortDesign}
-              value={localStore.activeValue6}
-            />
-            <InputDiv
-              label={"7"}
-              name={7}
-              onChangeCallback={calcQsortDesign}
-              value={localStore.activeValue7}
-            />
-            <InputDiv
-              label={"8"}
-              name={8}
-              onChangeCallback={calcQsortDesign}
-              value={localStore.activeValue8}
-            />
-            <InputDiv
-              label={"9"}
-              name={9}
-              onChangeCallback={calcQsortDesign}
-              value={localStore.activeValue9}
-            />
-            <InputDiv
-              label={"10"}
-              name={10}
-              onChangeCallback={calcQsortDesign}
-              value={localStore.activeValue10}
-            />
-            <InputDiv
-              label={"11"}
-              name={11}
-              onChangeCallback={calcQsortDesign}
-              value={localStore.activeValue11}
-            />
-            <InputDiv
-              label={"12"}
-              name={12}
-              onChangeCallback={calcQsortDesign}
-              value={localStore.activeValue12}
-            />
-            <InputDiv
-              label={"13"}
-              name={13}
-              onChangeCallback={calcQsortDesign}
-              value={localStore.activeValue13}
-            />
+            <InputDiv label={ "-6" } name={ "M6" } onChangeCallback={ calcQsortDesign } value={ localStore.activeValueM6 } />
+            <InputDiv label={ "-5" } name={ "M5" } onChangeCallback={ calcQsortDesign } value={ localStore.activeValueM5 } />
+            <InputDiv label={ "-4" } name={ "M4" } onChangeCallback={ calcQsortDesign } value={ localStore.activeValueM4 } />
+            <InputDiv label={ "-3" } name={ "M3" } onChangeCallback={ calcQsortDesign } value={ localStore.activeValueM3 } />
+            <InputDiv label={ "-2" } name={ "M2" } onChangeCallback={ calcQsortDesign } value={ localStore.activeValueM2 } />
+            <InputDiv label={ "-1" } name={ "M1" } onChangeCallback={ calcQsortDesign } value={ localStore.activeValueM1 } />
+            <InputDiv label={ "0" } name={ 0 } onChangeCallback={ calcQsortDesign } value={ localStore.activeValue0 } />
+            <InputDiv label={ "1" } name={ 1 } onChangeCallback={ calcQsortDesign } value={ localStore.activeValue1 } />
+            <InputDiv label={ "2" } name={ 2 } onChangeCallback={ calcQsortDesign } value={ localStore.activeValue2 } />
+            <InputDiv label={ "3" } name={ 3 } onChangeCallback={ calcQsortDesign } value={ localStore.activeValue3 } />
+            <InputDiv label={ "4" } name={ 4 } onChangeCallback={ calcQsortDesign } value={ localStore.activeValue4 } />
+            <InputDiv label={ "5" } name={ 5 } onChangeCallback={ calcQsortDesign } value={ localStore.activeValue5 } />
+            <InputDiv label={ "6" } name={ 6 } onChangeCallback={ calcQsortDesign } value={ localStore.activeValue6 } />
+            <InputDiv label={ "7" } name={ 7 } onChangeCallback={ calcQsortDesign } value={ localStore.activeValue7 } />
+            <InputDiv label={ "8" } name={ 8 } onChangeCallback={ calcQsortDesign } value={ localStore.activeValue8 } />
+            <InputDiv label={ "9" } name={ 9 } onChangeCallback={ calcQsortDesign } value={ localStore.activeValue9 } />
+            <InputDiv label={ "10" } name={ 10 } onChangeCallback={ calcQsortDesign } value={ localStore.activeValue10 } />
+            <InputDiv label={ "11" } name={ 11 } onChangeCallback={ calcQsortDesign } value={ localStore.activeValue11 } />
+            <InputDiv label={ "12" } name={ 12 } onChangeCallback={ calcQsortDesign } value={ localStore.activeValue12 } />
+            <InputDiv label={ "13" } name={ 13 } onChangeCallback={ calcQsortDesign } value={ localStore.activeValue13 } />
           </InputRow>
         </DesignDiv>
-      );
+        );
     }
     return <div />;
   }
@@ -235,3 +192,4 @@ const TitleDiv = styled.div`
   display: flex;
   width: 850px;
 `;
+

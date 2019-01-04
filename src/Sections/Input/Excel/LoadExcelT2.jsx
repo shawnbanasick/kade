@@ -4,45 +4,50 @@ import styled from "styled-components";
 import state from "../../../store";
 import parseExcelType2 from "./parseExcelType2";
 
-const { dialog } = require("electron").remote;
+const {dialog} = require("electron").remote;
 
 const localStore = store({
-  buttonColor: "#d6dbe0"
+    buttonColor: "#d6dbe0"
 });
 
 const handleClick = () => {
-  dialog.showOpenDialog(
-    {
-      properties: ["openFile"],
-      filters: [
+    dialog.showOpenDialog(
         {
-          name: "Excel",
-          extensions: ["xls", "XLS", "xlsx", "XLSX"]
+            properties: ["openFile"],
+            filters: [
+                {
+                    name: "Excel",
+                    extensions: ["xls", "XLS", "xlsx", "XLSX"]
+                }
+            ]
+        },
+        files => {
+            if (files !== undefined) {
+                const excelFile = files[0];
+                parseExcelType2(excelFile);
+                localStore.buttonColor = "rgba(144,	238,	144, .6)";
+                state.setState({
+                    notifyDataUploadSuccess: true,
+                    isInputButtonGreen: true,
+                    loadExcelT2ButtonColor: "rgba(144,	238,	144, .6)"
+
+                });
+            }
         }
-      ]
-    },
-    files => {
-      if (files !== undefined) {
-        const excelFile = files[0];
-        parseExcelType2(excelFile);
-        localStore.buttonColor = "rgba(144,	238,	144, .6)";
-        state.setState({
-          notifyDataUploadSuccess: true,
-          isInputButtonGreen: true
-        });
-      }
-    }
-  );
+    );
 };
 
 class LoadTxtStatementFile extends Component {
-  render() {
-    return (
-      <LoadTxtButton buttonColor={localStore.buttonColor} onClick={handleClick}>
-        <p>Load Type 2 Excel File</p>
-      </LoadTxtButton>
-    );
-  }
+    render() {
+        const loadExcelT2ButtonColor = state.getState("loadExcelT2ButtonColor");
+        localStore.buttonColor = loadExcelT2ButtonColor;
+
+        return (
+            <LoadTxtButton buttonColor={ localStore.buttonColor } onClick={ handleClick }>
+              <p>Load Type 2 Excel File</p>
+            </LoadTxtButton>
+            );
+    }
 }
 
 export default view(LoadTxtStatementFile);
