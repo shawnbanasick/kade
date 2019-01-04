@@ -23,7 +23,7 @@ class SplitBipolarFactorButtonModal extends Component {
         const showSplitFactorModal = state.getState("showSplitFactorModal");
         if (showSplitFactorModal) {
             return (
-                <Modal open={ showSplitFactorModal } onClose={ this.handleClose }>
+                <Modal dimmer={ "blurring" } open={ showSplitFactorModal } onClose={ this.handleClose }>
                   <Header content="Factor Loadings Table" />
                   <Modal.Content>
                     <SplitBipolarFactorDropdownSelect />

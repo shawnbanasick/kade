@@ -39,7 +39,9 @@ const handleOpen = () => {
     const factorMatrix = state.getState("factorMatrix");
     archiveCounter += 1;
     const archiveName = `facMatrixArc${archiveCounter}`;
-    state.setState({ archiveCounter });
+    state.setState({
+      archiveCounter
+    });
     sessionStorage.setItem(archiveName, JSON.stringify(factorMatrix));
   }
 };
@@ -50,52 +52,31 @@ const handleClose = () => {
 
 class FactorSelectButtonModal extends Component {
   render() {
-    const { active } = localStore.modalOpen;
+    const {active} = localStore.modalOpen;
     const isFacSelectDisabled = state.getState("isFacSelectDisabled");
     const isLoadingFactorsKept = state.getState("isLoadingFactorsKept");
     return (
       <FactorSelectModalDiv>
-        <Modal
-          trigger={
-            <StyledWrapper>
-              <Button
-                id="factorsKeptSubmitButton"
-                className="wrapper1"
-                size={"medium"}
-                toggle
-                active={active}
-                disabled={isFacSelectDisabled}
-                loading={isLoadingFactorsKept}
-                onClick={handleOpen}
-              >
-                Submit
-              </Button>
-            </StyledWrapper>
-          }
-          open={localStore.modalOpen}
-          onClose={handleClose}
-          basic
-          size="small"
-        >
+        <Modal dimmer={ "blurring" } trigger={ <StyledWrapper>
+                                                 <Button id="factorsKeptSubmitButton" className="wrapper1" size={ "medium" } toggle active={ active } disabled={ isFacSelectDisabled } loading={ isLoadingFactorsKept }
+                                                   onClick={ handleOpen }>
+                                                   Submit
+                                                 </Button>
+                                               </StyledWrapper> } open={ localStore.modalOpen } onClose={ handleClose } basic size="small">
           <Header content="Factor Rotation" />
           <Modal.Content>
-            <span style={{ fontSize: 30 }}>
-              Please select the number of factors to keep for rotation.
-            </span>
+            <span style={ { fontSize: 30 } }>
+                    Please select the number of factors to keep for rotation.
+                  </span>
           </Modal.Content>
           <Modal.Actions>
-            <Button
-              id="FactorSelectModalGotItButton"
-              color="green"
-              onClick={handleClose}
-              inverted
-            >
+            <Button id="FactorSelectModalGotItButton" color="green" onClick={ handleClose } inverted>
               Got it
             </Button>
           </Modal.Actions>
         </Modal>
       </FactorSelectModalDiv>
-    );
+      );
   }
 }
 

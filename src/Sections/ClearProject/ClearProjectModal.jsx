@@ -23,57 +23,36 @@ const clearAnalysis = () => {
   localStore.modalOpen = false;
 };
 
-class noFacSelectedModal extends Component {
+class ClearProjectModal extends Component {
   render() {
     return (
-      <Modal
-        trigger={
-          <BeginAnalysisButton onClick={handleOpen} size="large">
-            Clear Project
-          </BeginAnalysisButton>
-        }
-        open={localStore.modalOpen}
-        className="wrapper1"
-        onClose={this.handleClose}
-        basic
-        size={"small"}
-      >
+      <Modal dimmer={ "blurring" } trigger={ <BeginAnalysisButton onClick={ handleOpen } size="large">
+                                         Clear Project
+                                       </BeginAnalysisButton> } open={ localStore.modalOpen } className="wrapper1" onClose={ this.handleClose } basic size={ "small" }>
         <Header content="Clear Project" />
         <Modal.Content>
           <h2>
-            This will remove all data and analysis, and cannot be reversed.
-          </h2>
+                        This will remove all data and analysis, and cannot be reversed.
+                      </h2>
           <h2> Are you sure you want to clear the current project?</h2>
         </Modal.Content>
         <Modal.Actions>
-          <div style={{ display: "flex" }}>
-            <Button
-              size={"big"}
-              style={{ alignSelf: "flexStart" }}
-              color="green"
-              onClick={handleClose}
-              inverted
-            >
+          <div style={ { display: "flex" } }>
+            <Button size={ "big" } style={ { alignSelf: "flexStart" } } color="green" onClick={ handleClose } inverted>
               No, Go back.
             </Button>
-            <Button
-              id="resetAnalysisModalGotItButton"
-              size={"big"}
-              style={{ alignSelf: "flexEnd", marginLeft: 220 }}
-              color="red"
-              onClick={clearAnalysis}
-              inverted
-            >
-              Yes, delete the <br /> data and analysis.
+            <Button id="resetAnalysisModalGotItButton" size={ "big" } style={ { alignSelf: "flexEnd", marginLeft: 220 } } color="red" onClick={ clearAnalysis } inverted>
+              Yes, delete the
+              <br /> data and analysis.
             </Button>
           </div>
         </Modal.Actions>
       </Modal>
-    );
+      );
   }
 }
 
-export default view(noFacSelectedModal);
+export default view(ClearProjectModal);
 
 const BeginAnalysisButton = styled.button`
   display: grid;

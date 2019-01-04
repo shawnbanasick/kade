@@ -6,66 +6,45 @@ import downloadExcelDispatch from "../downloadExcelLogic/1_downloadExcelDispatch
 import state from "../../../store";
 
 const localStore = store({
-  modalOpen: false
+    modalOpen: false
 });
 
 const handleOpen = () => {
-  const userSelectedFactors = state.getState("userSelectedFactors");
-  if (userSelectedFactors.length === 0) {
-    localStore.modalOpen = true;
-  } else {
-    downloadExcelDispatch();
-  }
+    const userSelectedFactors = state.getState("userSelectedFactors");
+    if (userSelectedFactors.length === 0) {
+        localStore.modalOpen = true;
+    } else {
+        downloadExcelDispatch();
+    }
 };
 
 const handleClose = () => {
-  localStore.modalOpen = false;
+    localStore.modalOpen = false;
 };
 
 class DownloadResultsAsExcel extends React.Component {
-  render() {
-    const { active } = localStore;
-    return (
-      <Modal
-        trigger={
-          <StyledWrapper>
-            <Button
-              id="downloadResultsAsExcelButton"
-              className="wrapper1"
-              size={"large"}
-              toggle
-              active={active}
-              onClick={handleOpen}
-            >
-              Excel File
-            </Button>
-          </StyledWrapper>
-        }
-        open={localStore.modalOpen}
-        onClose={handleClose}
-        basic
-        size="small"
-      >
-        <Header content="Analysis Output" />
-        <Modal.Content>
-          <span style={{ fontSize: 30 }}>
-            Select the factors to output first.
-          </span>
-        </Modal.Content>
-        <Modal.Actions>
-          <Button
-            id="downloadResultsAsExcelModalGotItButton"
-            size={"huge"}
-            color="green"
-            onClick={handleClose}
-            inverted
-          >
-            Got it
-          </Button>
-        </Modal.Actions>
-      </Modal>
-    );
-  }
+    render() {
+        const {active} = localStore;
+        return (
+            <Modal dimmer={ "blurring" } trigger={ <StyledWrapper>
+                                         <Button id="downloadResultsAsExcelButton" className="wrapper1" size={ "large" } toggle active={ active } onClick={ handleOpen }>
+                                           Excel File
+                                         </Button>
+                                       </StyledWrapper> } open={ localStore.modalOpen } onClose={ handleClose } basic size="small">
+              <Header content="Analysis Output" />
+              <Modal.Content>
+                <span style={ { fontSize: 30 } }>
+                              Select the factors to output first.
+                            </span>
+              </Modal.Content>
+              <Modal.Actions>
+                <Button id="downloadResultsAsExcelModalGotItButton" size={ "huge" } color="green" onClick={ handleClose } inverted>
+                  Got it
+                </Button>
+              </Modal.Actions>
+            </Modal>
+            );
+    }
 }
 
 export default view(DownloadResultsAsExcel);
