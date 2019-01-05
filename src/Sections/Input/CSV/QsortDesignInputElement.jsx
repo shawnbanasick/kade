@@ -32,28 +32,23 @@ const localStore = store({
 });
 
 const calcQsortDesign = event => {
-  console.log(`event.target.name ${  JSON.stringify(event.target.name)}`);
-  console.log(`event.target.value ${  JSON.stringify(event.target.value)}`);
-
   let columnName = event.target.name;
-  // 
+  // set local state for display
   localStore[`activeValue${event.target.name}`] = event.target.value;
-  console.log(JSON.stringify(localStore[`activeValue${event.target.name}`]));
 
-  // to get current values from local state
+  // to get local state of all current values 
   const qSortPatternObject = localStore.qSortPatternObject;
   // if negative, substitute - for M
   if (columnName.charAt(0) === 'M') {
     columnName = +columnName.replace('M', "-");
   }
-  console.log(`qsortpatternobject ${  JSON.stringify(qSortPatternObject)}`);
 
   // set new key - value
   qSortPatternObject[columnName] = event.target.value;
-  // send back to local state
+  // send all current values back to local state
   localStore.qSortPatternObject = qSortPatternObject;
 
-  // process array for completeness
+  // process array for completeness and UI feedback
   const qSortPattern = convertQsortObjectToArray(qSortPatternObject);
   const enteredStatements = qSortPattern.length;
   const difference = localStore.statementsLength - enteredStatements;
@@ -76,8 +71,6 @@ const calcQsortDesign = event => {
   tempObj[fullColumnName] = targetValue;
   tempObj.qSortPattern = qSortPattern;
   tempObj.qSortPatternObject = qSortPatternObject;
-  console.log(`temp obj ${  JSON.stringify(tempObj)}`);
-
   state.setState(tempObj);
 };
 
@@ -88,8 +81,6 @@ class QsortDesignInputElement extends React.Component {
     const showForcedInput = state.getState("showForcedInput");
 
     const {qSortPatternObject, activeValueM6, activeValueM5, activeValueM4, activeValueM3, activeValueM2} = state;
-    console.log(`-6 ${  JSON.stringify(activeValueM6)}`);
-
     const {activeValueM1, activeValue0, activeValue1, activeValue2, activeValue3, activeValue4, activeValue5} = state;
     const {activeValue6, activeValue7, activeValue8, activeValue9, activeValue10, activeValue11, activeValue12, activeValue13} = state;
 

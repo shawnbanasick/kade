@@ -92,12 +92,12 @@ class ScatterPlotAndTableTransitionContainer extends React.Component {
                 style={{
                   marginLeft: 5,
                   marginRight: 5,
-                  marginBottom: 5,
+                  marginBottom: 10,
                   marginTop: "auto",
-                  fontSize: ".9em"
+                  fontSize: "1.9em"
                 }}
               >
-                {" - "}
+                {" -- "}
               </span>
               <div style={{ marginTop: "auto" }}>
                 <ClockwiseButtons baselineData={this.props.baselineData} />
