@@ -78,6 +78,7 @@ const createWindow = async () => {
     require("electron").shell.openExternal(url);
   });
 
+
   const template = [
     {
       label: "Edit",
@@ -102,9 +103,6 @@ const createWindow = async () => {
     {
       label: "View",
       submenu: [
-        {
-          role: "reload"
-        },
         {
           role: "forcereload"
         },
@@ -147,8 +145,7 @@ const createWindow = async () => {
       submenu: [
         {
           label: "User Guide",
-          accelerator:
-            process.platform === "darwin" ? "Alt+Cmd+U" : "Ctrl+Shift+U",
+          accelerator: process.platform === "darwin" ? "Alt+Cmd+U" : "Ctrl+Shift+U",
           click() {
             require("electron").shell.openExternal(
               "https://github.com/shawnbanasick/kade/wiki"
@@ -279,5 +276,8 @@ app.on("before-quit", e => {
     }
   });
 });
+
+
+
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and import them here.

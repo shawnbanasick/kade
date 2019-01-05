@@ -22,7 +22,7 @@ class ErrorBoundary extends Component {
               <ErrorText>
                 Please contact the developer.
                 <br/> ken.q.tools@gmail.com
-                <br/>In the top menu, click "View", "Reload" to restart the application.
+                <br/>In the top menu, click "View", "Force Reload" to restart the application.
               </ErrorText>
               { !this.state.showError && (
                 <button onClick={ () => this.setState({
