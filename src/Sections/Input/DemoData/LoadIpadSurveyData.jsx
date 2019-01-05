@@ -6,14 +6,14 @@ import uploadIpadSurveyData from "./uploadIpadSurveyData";
 import revertLoadButtonsColors from "./revertLoadButtonsColors";
 
 const localStore = store({
-  buttonColor: "#d6dbe0"
+  isLoadIpadSurveyButtonGreen: false,
 });
 
 const handleClick = () => {
   uploadIpadSurveyData();
   revertLoadButtonsColors();
   state.setState({
-    loadIpadSurveyButtonColor: "rgba(144,	238, 144, .6)",
+    isLoadIpadSurveyButtonGreen: true,
     notifyDataUploadSuccess: true,
     isInputButtonGreen: true
   });
@@ -21,22 +21,17 @@ const handleClick = () => {
 
 class IpadSurveyButton1 extends React.Component {
   render() {
-    const loadIpadSurveyButtonColor = state.getState(
-      "loadIpadSurveyButtonColor"
+    const isLoadIpadSurveyButtonGreen = state.getState(
+      "isLoadIpadSurveyButtonGreen"
     );
-    localStore.buttonColor = loadIpadSurveyButtonColor;
+    localStore.isLoadIpadSurveyButtonGreen = isLoadIpadSurveyButtonGreen;
     return (
       <div>
-        <LoadTxtButton
-          id="ipadSurveyButton"
-          floated="right"
-          onClick={handleClick}
-          buttonColor={localStore.buttonColor}
-        >
+        <LoadTxtButton id="ipadSurveyButton" floated="right" onClick={ handleClick } isActive={ localStore.isLoadIpadSurveyButtonGreen }>
           Load iPad Survey
         </LoadTxtButton>
       </div>
-    );
+      );
   }
 }
 
@@ -46,7 +41,7 @@ const LoadTxtButton = styled.button`
   display: grid;
   align-items: center;
   justify-items: center;
-  background-color: ${props => props.buttonColor};
+  background-color: ${props => props.isActive ? "rgba(144,	238, 144, .6)" : "#d6dbe0"};
   height: 60px;
   width: 240px;
   border: 1px solid black;
@@ -62,13 +57,11 @@ const LoadTxtButton = styled.button`
   user-select: none;
 
   &:hover {
-    background-color: ${props => props.buttonColor};
-    font-weight: 900;
+    background-color: ${props => props.isActive ? "#009a00" : "#abafb3" };
   }
 
   &:active {
     box-shadow: 0 0 1px 0 black inset;
-    margin-left: 3px;
     background-color: rgba(144, 238, 144, 0.6);
   }
 `;

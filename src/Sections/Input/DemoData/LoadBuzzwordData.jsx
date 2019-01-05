@@ -6,14 +6,14 @@ import uploadBuzzwordData from "./uploadBuzzwordData";
 import revertLoadButtonsColors from "./revertLoadButtonsColors";
 
 const localStore = store({
-  buttonColor: "#d6dbe0"
+  isLoadBuzzwordsButtonGreen: false
 });
 
 const handleClick = () => {
   uploadBuzzwordData();
   revertLoadButtonsColors();
   state.setState({
-    loadBuzzwordsButtonColor: "rgba(144,	238, 144, .6)",
+    isLoadBuzzwordsButtonGreen: true,
     notifyDataUploadSuccess: true,
     isInputButtonGreen: true
   });
@@ -21,20 +21,15 @@ const handleClick = () => {
 
 class BuzzwordButton1 extends React.Component {
   render() {
-    const loadBuzzwordsButtonColor = state.getState("loadBuzzwordsButtonColor");
-    localStore.buttonColor = loadBuzzwordsButtonColor;
+    const isLoadBuzzwordsButtonGreen = state.getState("isLoadBuzzwordsButtonGreen");
+    localStore.isLoadBuzzwordsButtonGreen = isLoadBuzzwordsButtonGreen;
     return (
       <div>
-        <LoadTxtButton
-          id="buzzwordButton"
-          floated="right"
-          onClick={handleClick}
-          buttonColor={localStore.buttonColor}
-        >
+        <LoadTxtButton id="buzzwordButton" floated="right" onClick={ handleClick } isActive={ localStore.isLoadBuzzwordsButtonGreen }>
           Load Buzzwords
         </LoadTxtButton>
       </div>
-    );
+      );
   }
 }
 
@@ -44,7 +39,7 @@ const LoadTxtButton = styled.button`
   display: grid;
   align-items: center;
   justify-items: center;
-  background-color: ${props => props.buttonColor};
+  background-color: ${props => props.isActive ? "rgba(144,	238, 144, .6)" : "#d6dbe0"};
   height: 60px;
   width: 240px;
   border: 1px solid black;
@@ -60,14 +55,11 @@ const LoadTxtButton = styled.button`
   user-select: none;
 
   &:hover {
-    background-color: ${props => props.buttonColor};
-    /* background-color: #abafb3; */
-    font-weight: 900;
+    background-color: ${props => props.isActive ? "#009a00" : "#abafb3" };
   }
 
   &:active {
     box-shadow: 0 0 1px 0 black inset;
-    margin-left: 3px;
     background-color: rgba(144, 238, 144, 0.6);
   }
 `;

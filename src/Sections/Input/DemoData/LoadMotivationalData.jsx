@@ -6,38 +6,33 @@ import uploadMotivationalData from "./uploadMotivationalData";
 import revertLoadButtonsColors from "./revertLoadButtonsColors";
 
 const localStore = store({
-  buttonColor: "#d6dbe0"
+    isLoadMotivationalButtonGreen: false,
 });
 
 const handleClick = () => {
-  uploadMotivationalData();
-  revertLoadButtonsColors();
-  state.setState({
-    loadMotivationalButtonColor: "rgba(144,	238, 144, .6)",
-    notifyDataUploadSuccess: true,
-    isInputButtonGreen: true
-  });
+    uploadMotivationalData();
+    revertLoadButtonsColors();
+    state.setState({
+        isLoadMotivationalButtonGreen: true,
+        notifyDataUploadSuccess: true,
+        isInputButtonGreen: true
+    });
 };
 
 class MotivationalButton1 extends React.Component {
-  render() {
-    const loadMotivationalButtonColor = state.getState(
-      "loadMotivationalButtonColor"
-    );
-    localStore.buttonColor = loadMotivationalButtonColor;
-    return (
-      <div>
-        <LoadTxtButton
-          id="motivationalButton"
-          floated="right"
-          onClick={handleClick}
-          buttonColor={localStore.buttonColor}
-        >
-          Load Motivational
-        </LoadTxtButton>
-      </div>
-    );
-  }
+    render() {
+        const isLoadMotivationalButtonGreen = state.getState(
+            "isLoadMotivationalButtonGreen"
+        );
+        localStore.isLoadMotivationalButtonGreen = isLoadMotivationalButtonGreen;
+        return (
+            <div>
+              <LoadTxtButton id="motivationalButton" floated="right" onClick={ handleClick } isActive={ localStore.isLoadMotivationalButtonGreen }>
+                Load Motivational
+              </LoadTxtButton>
+            </div>
+            );
+    }
 }
 
 export default view(MotivationalButton1);
@@ -46,7 +41,7 @@ const LoadTxtButton = styled.button`
   display: grid;
   align-items: center;
   justify-items: center;
-  background-color: ${props => props.buttonColor};
+  background-color: ${props => props.isActive ? "rgba(144,	238, 144, .6)" : "#d6dbe0"};
   height: 60px;
   width: 240px;
   border: 1px solid black;
@@ -62,14 +57,11 @@ const LoadTxtButton = styled.button`
   outline: none;
 
   &:hover {
-    background-color: ${props => props.buttonColor};
-    /* background-color: #abafb3; */
-    font-weight: 900;
+    background-color: ${props => props.isActive ? "#009a00" : "#abafb3" };
   }
 
   &:active {
     box-shadow: 0 0 1px 0 black inset;
-    margin-left: 3px;
     background-color: rgba(144, 238, 144, 0.6);
   }
 `;

@@ -6,35 +6,32 @@ import uploadLipsetData from "./uploadLipsetData";
 import revertLoadButtonsColors from "./revertLoadButtonsColors";
 
 const localStore = store({
-  buttonColor: "#d6dbe0"
+  isLoadLipsetButtonGreen: false
 });
 
 const handleClick = () => {
   uploadLipsetData();
   revertLoadButtonsColors();
   state.setState({
-    loadLipsetButtonColor: "rgba(144,	238, 144, .6)",
+    isLoadLipsetButtonGreen: true,
     notifyDataUploadSuccess: true,
     isInputButtonGreen: true
   });
 };
 
+// "rgba(144,	238, 144, .6)"
+
 class LipsetButton1 extends React.Component {
   render() {
-    const loadLipsetButtonColor = state.getState("loadLipsetButtonColor");
-    localStore.buttonColor = loadLipsetButtonColor;
+    const isLoadLipsetButtonGreen = state.getState("isLoadLipsetButtonGreen");
+    localStore.isLoadLipsetButtonGreen = isLoadLipsetButtonGreen;
     return (
       <div>
-        <LoadTxtButton
-          id="lipsetButton"
-          floated="right"
-          onClick={handleClick}
-          buttonColor={localStore.buttonColor}
-        >
+        <LoadTxtButton id="lipsetButton" floated="right" onClick={ handleClick } isActive={ localStore.isLoadLipsetButtonGreen }>
           Load Lipset
         </LoadTxtButton>
       </div>
-    );
+      );
   }
 }
 
@@ -44,7 +41,7 @@ const LoadTxtButton = styled.button`
   display: grid;
   align-items: center;
   justify-items: center;
-  background-color: ${props => props.buttonColor};
+  background-color: ${props => props.isActive ? "rgba(144,	238, 144, .6)" : "#d6dbe0"};
   height: 60px;
   width: 240px;
   text-align: center;
@@ -60,13 +57,12 @@ const LoadTxtButton = styled.button`
   user-select: none;
 
   &:hover {
-    background-color: ${props => props.buttonColor};
-    font-weight: 900;
+    background-color: ${props => props.isActive ? "#009a00" : "#abafb3" };
   }
 
   &:active {
     box-shadow: 0 0 1px 0 black inset;
-    margin-left: 3px;
     background-color: rgba(144, 238, 144, 0.6);
   }
 `;
+
