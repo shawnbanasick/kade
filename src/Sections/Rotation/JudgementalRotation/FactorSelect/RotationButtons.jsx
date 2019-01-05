@@ -12,7 +12,6 @@ const localStore = store({
 })
 
 const getRotationDegreeFromUI = (event) => {
-  const name = event.target.name;
   const value = event.target.value;
   // clean input
   if (isNaN(value)) {
@@ -23,7 +22,7 @@ const getRotationDegreeFromUI = (event) => {
     return;
   }
   localStore.rotationDegreeInput = +value;
-  localStore.buttonColor = "rgba(144, 238, 144, 0.6)";
+  localStore.buttonColor = "lightgreen";
   localStore.pressed = true;
 
   // clear all button highlighting
@@ -37,59 +36,61 @@ const getRotationDegreeFromUI = (event) => {
   });
 }
 
-class RotationButtons extends React.Component {
-  handleOnclick(event) {
-    const buttonId = event.target.id;
+const handleOnclick = (event) => {
+  const buttonId = event.target.id;
 
-    // clear all button highlighting
+  // clear all button highlighting
+  state.setState({
+    highlightDegreeButton1: false,
+    highlightDegreeButton2: false,
+    highlightDegreeButton3: false,
+    highlightDegreeButton4: false,
+    highlightDegreeButton5: false
+  });
+
+  if (buttonId === "Button1Degree") {
+    localStore.rotationDegreeInput = "";
+    localStore.buttonColor = "#d6dbe0";
+    localStore.pressed = false;
     state.setState({
-      highlightDegreeButton1: false,
-      highlightDegreeButton2: false,
-      highlightDegreeButton3: false,
-      highlightDegreeButton4: false,
-      highlightDegreeButton5: false
+      highlightDegreeButton1: true,
+      rotateByDegrees: 1
     });
-
-    if (buttonId === "Button1Degree") {
-      localStore.rotationDegreeInput = "";
-      localStore.buttonColor = "#d6dbe0";
-      localStore.pressed = false;
-      state.setState({
-        highlightDegreeButton1: true,
-        rotateByDegrees: 1
-      });
-    }
-
-    if (buttonId === "Button5Degrees") {
-      localStore.rotationDegreeInput = "";
-      localStore.buttonColor = "#d6dbe0";
-      localStore.pressed = false;
-      state.setState({
-        highlightDegreeButton3: true,
-        rotateByDegrees: 5
-      });
-    }
-
-    if (buttonId === "Button10Degrees") {
-      localStore.buttonColor = "#d6dbe0";
-      localStore.rotationDegreeInput = "";
-      localStore.pressed = false;
-      state.setState({
-        highlightDegreeButton4: true,
-        rotateByDegrees: 10
-      });
-    }
-
-    if (buttonId === "Button90Degrees") {
-      localStore.buttonColor = "#d6dbe0";
-      localStore.rotationDegreeInput = "";
-      localStore.pressed = false;
-      state.setState({
-        highlightDegreeButton5: true,
-        rotateByDegrees: 90
-      });
-    }
   }
+
+  if (buttonId === "Button5Degrees") {
+    localStore.rotationDegreeInput = "";
+    localStore.buttonColor = "#d6dbe0";
+    localStore.pressed = false;
+    state.setState({
+      highlightDegreeButton3: true,
+      rotateByDegrees: 5
+    });
+  }
+
+  if (buttonId === "Button10Degrees") {
+    localStore.buttonColor = "#d6dbe0";
+    localStore.rotationDegreeInput = "";
+    localStore.pressed = false;
+    state.setState({
+      highlightDegreeButton4: true,
+      rotateByDegrees: 10
+    });
+  }
+
+  if (buttonId === "Button90Degrees") {
+    localStore.buttonColor = "#d6dbe0";
+    localStore.rotationDegreeInput = "";
+    localStore.pressed = false;
+    state.setState({
+      highlightDegreeButton5: true,
+      rotateByDegrees: 90
+    });
+  }
+}
+
+class RotationButtons extends React.Component {
+
 
   render() {
     const shouldDisplayDegreeButtonButtons = state.getState(
@@ -99,19 +100,20 @@ class RotationButtons extends React.Component {
     if (shouldDisplayDegreeButtonButtons) {
       return (
         <StyledWrapper>
-          <Button id={ "Button1Degree" } className="wrapper1" toggle active={ state.getState("highlightDegreeButton1") } onClick={ this.handleOnclick.bind(this) } key={ "f1" }>
+          <Button id={ "Button1Degree" } className="wrapper1" toggle active={ state.getState("highlightDegreeButton1") } onClick={ handleOnclick } key={ "f1" }>
             { `${1  }\u00B0` }
           </Button>
-          <Button id={ "Button5Degrees" } className="wrapper1" toggle active={ state.getState("highlightDegreeButton3") } onClick={ this.handleOnclick.bind(this) } key={ "f3" }>
+          <Button id={ "Button5Degrees" } className="wrapper1" toggle active={ state.getState("highlightDegreeButton3") } onClick={ handleOnclick } key={ "f3" }>
             { `${5  }\u00B0` }
           </Button>
-          <Button id={ "Button10Degrees" } className="wrapper1" toggle active={ state.getState("highlightDegreeButton4") } onClick={ this.handleOnclick.bind(this) } key={ "f4" }>
+          <Button id={ "Button10Degrees" } className="wrapper1" toggle active={ state.getState("highlightDegreeButton4") } onClick={ handleOnclick } key={ "f4" }>
             { `${10  }\u00B0` }
           </Button>
-          <Button id={ "Button90Degrees" } className="wrapper1" toggle active={ state.getState("highlightDegreeButton5") } onClick={ this.handleOnclick.bind(this) } key={ "f5" }>
+          <Button id={ "Button90Degrees" } className="wrapper1" toggle active={ state.getState("highlightDegreeButton5") } onClick={ handleOnclick } key={ "f5" }>
             { `${90  }\u00B0` }
           </Button>
-          <RotationDegreeInput name="rotationDegrees" value={ localStore.rotationDegreeInput } pressed={localStore.pressed} buttonColor={ localStore.buttonColor } onChangeCallback={ getRotationDegreeFromUI } />
+          <RotationDegreeInput name="rotationDegrees" value={ localStore.rotationDegreeInput } pressed={ localStore.pressed } buttonColor={ localStore.buttonColor } onChangeCallback={ getRotationDegreeFromUI }
+          />
         </StyledWrapper>
         );
     }
