@@ -20,9 +20,9 @@ class DownloadCsvModal extends Component {
   render() {
     return (
       <GridContainerDiv>
-        <Button onClick={handleClick}>Download JSON data as CSV</Button>
+        <Button onClick={ handleClick }>Download JSON data as CSV</Button>
       </GridContainerDiv>
-    );
+      );
   }
 }
 export default DownloadCsvModal;
@@ -34,6 +34,16 @@ const Button = styled.button`
   border-radius: 5px;
   font-size: 18px;
   font-family: Helvetica, sans-serif;
+
+  &:hover {
+    background-color: ${props => props.buttonColor};
+    font-weight: 900;
+  }
+
+  &:active {
+    box-shadow: 0 0 1px 0 black inset;
+    margin-left: 3px;
+  }
 `;
 
 const GridContainerDiv = styled.div`

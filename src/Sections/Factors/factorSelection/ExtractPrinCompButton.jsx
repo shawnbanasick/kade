@@ -31,10 +31,10 @@ class PCAButton extends React.Component {
     return (
       <div>
         <StyledWrapper>
-          <Button id="extractPrinCompButton" className="wrapper1" size={ "small" } toggle active={ isActive } loading={ isCalculating } disabled={ isDisabled }
+          <StyledButton1 id="extractPrinCompButton" className="wrapper1" size={ "small" } toggle active={ isActive } loading={ isCalculating } disabled={ isDisabled }
             onClick={ handleClick }>
             { pcaButtonText }
-          </Button>
+          </StyledButton1>
         </StyledWrapper>
       </div>
       );
@@ -57,5 +57,33 @@ const StyledWrapper = styled.div`
       /* margin-left: 3px; */
       /* margin-top: 3px; */
     }
+  }
+`;
+
+const StyledButton1 = styled.button`
+  display: grid;
+  align-items: center;
+  justify-items: center;
+  background-color: #d6dbe0;
+  height: 40px;
+  width: 200px;
+  border: 1px solid black;
+  text-align: center;
+  font-size: 16px;
+  font-family: Helvetica, sans-serif;
+  font-weight: normal;
+  border-radius: 4px;
+  margin-right: 3px;
+  margin-bottom: 3px;
+  box-shadow: 0 2px 2px 0 black;
+  outline: none;
+
+  &:hover {
+    font-weight: 900;
+  }
+
+  &:active {
+    box-shadow: 0 0 1px 0 black inset;
+    margin-left: 3px;
   }
 `;

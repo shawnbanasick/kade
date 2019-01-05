@@ -165,13 +165,13 @@ class FactorSelectionForOutputButtons extends React.Component {
           >
             Clear
           </Button>
-          <Button
+          <StyledButton1
             id="startOutput"
             className="wrapper1"
             onClick={this.handleSubmit}
           >
             Submit
-          </Button>
+          </StyledButton1>
         </StyledWrapper>
       </Transition>
     );
@@ -193,5 +193,29 @@ const StyledWrapper = styled.div`
     &:active {
       box-shadow: 0 0 1px 0 black inset;
     }
+  }
+`;
+
+
+const StyledButton1 = styled.button`
+  background-color: #d6dbe0;
+  height: 38px;
+  width: 70px;
+  border: 1px solid black;
+  text-align: center;
+  font-size: 16px;
+  font-family: Helvetica, sans-serif;
+  font-weight: normal;
+  border-radius: 4px;
+  margin-right: 3px;
+  box-shadow: 0 2px 2px 0 black;
+  outline: none;
+
+  &:hover {
+    font-weight: 900;
+  }
+
+  &:active {
+    box-shadow: 0 0 1px 0 black inset;
   }
 `;

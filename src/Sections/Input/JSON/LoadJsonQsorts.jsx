@@ -9,81 +9,81 @@ const {dialog} = require("electron").remote;
 const fs = require("fs");
 
 const localStore = store({
-  buttonColor: "#d6dbe0"
+    buttonColor: "#d6dbe0"
 });
 
 function notifyWarning() {
-  toast.warn("Select Participant Id to complete JSON import", {
-    autoClose: false
-  });
+    toast.warn("Select Participant Id to complete JSON import", {
+        autoClose: false
+    });
 }
 
 const handleClick = () => {
-  try {
-    dialog.showOpenDialog(
-      {
-        properties: ["openFile"],
-        filters: [
-          {
-            name: "JSON",
-            extensions: ["json", "JSON"]
-          }
-        ]
-      },
-      files => {
-        if (files !== undefined) {
-          const fileName = files[0];
-          fs.readFile(fileName, "utf8", (err, data) => {
-            const results = JSON.parse(data);
+    try {
+        dialog.showOpenDialog(
+            {
+                properties: ["openFile"],
+                filters: [
+                    {
+                        name: "JSON",
+                        extensions: ["json", "JSON"]
+                    }
+                ]
+            },
+            files => {
+                if (files !== undefined) {
+                    const fileName = files[0];
+                    fs.readFile(fileName, "utf8", (err, data) => {
+                        const results = JSON.parse(data);
 
-            // convert from JSON to array
-            const resultsArray = [];
-            const resultsKeys = Object.keys(results);
-            for (let k = 0; k < resultsKeys.length; k += 1) {
-              resultsArray.push(results[resultsKeys[k]]);
+                        // convert from JSON to array
+                        const resultsArray = [];
+                        const resultsKeys = Object.keys(results);
+                        for (let k = 0; k < resultsKeys.length; k += 1) {
+                            resultsArray.push(results[resultsKeys[k]]);
+                        }
+
+                        // todo - this is the source of the extra brackets
+                        const csvData = convertJSONToData(results);
+                        const columnHeaders = csvData[0][0];
+
+                        state.setState({
+                            jsonParticipantId: columnHeaders,
+                            showJsonParticipantIdDropdown: true,
+                            csvData,
+                            jsonObj: results,
+                            dataOrigin: "json",
+                            areQsortsLoaded: true,
+                            isInputButtonGreen: state.getState("areStatementsLoaded"),
+                            loadJsonQsortsButtonColor: "rgba(144,	238,	144, .6)"
+                        });
+                        localStore.buttonColor = "rgba(144,	238,	144, .6)";
+                    });
+                    notifyWarning();
+                }
             }
-
-            // todo - this is the source of the extra brackets
-            const csvData = convertJSONToData(results);
-            const columnHeaders = csvData[0][0];
-
-            state.setState({
-              jsonParticipantId: columnHeaders,
-              showJsonParticipantIdDropdown: true,
-              csvData,
-              jsonObj: results,
-              dataOrigin: "json",
-              areQsortsLoaded: true,
-              isInputButtonGreen: state.getState("areStatementsLoaded"),
-              loadJsonQsortsButtonColor: "rgba(144,	238,	144, .6)"
-            });
-            localStore.buttonColor = "rgba(144,	238,	144, .6)";
-          });
-          notifyWarning();
-        }
-      }
-    );
-  } catch (error) {
-    state.setState({
-      csvErrorMessage1: error.message,
-      showCsvErrorModal: true
-    });
-  }
+        );
+    } catch (error) {
+        state.setState({
+            csvErrorMessage1: error.message,
+            showCsvErrorModal: true
+        });
+    }
 };
 
 class LoadTxtStatementFile extends Component {
-  render() {
-    const loadJsonQsortsButtonColor = state.getState("loadJsonQsortsButtonColor");
-    localStore.buttonColor = loadJsonQsortsButtonColor;
-    return (
-      <React.Fragment>
-        <LoadTxtButton buttonColor={ localStore.buttonColor } onClick={ () => handleClick() }>
-          <p>Load JSON File</p>
-        </LoadTxtButton>
-        <ToastContainer transition={ Slide } />
-      </React.Fragment>
-      );
-  }
+    render() {
+        const loadJsonQsortsButtonColor = state.getState("loadJsonQsortsButtonColor");
+        localStore.buttonColor = loadJsonQsortsButtonColor;
+        return (
+            <React.Fragment>
+              <LoadTxtButton buttonColor={ localStore.buttonColor } onClick={ () => handleClick() }>
+                <p>Load JSON File</p>
+              </LoadTxtButton>
+              <ToastContainer transition={ Slide } />
+            </React.Fragment>
+            );
+    }
 }
 
 export default view(LoadTxtStatementFile);
@@ -106,7 +106,7 @@ const LoadTxtButton = styled.button`
   box-shadow: 0 2px 2px 0 black;
 
   &:hover {
-    background-color: #abafb3;
+    /* background-color: #abafb3; */
     font-weight: 900;
   }
 

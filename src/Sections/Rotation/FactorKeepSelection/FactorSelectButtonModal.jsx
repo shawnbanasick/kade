@@ -58,10 +58,10 @@ class FactorSelectButtonModal extends Component {
     return (
       <FactorSelectModalDiv>
         <Modal dimmer={ "blurring" } trigger={ <StyledWrapper>
-                                                 <Button id="factorsKeptSubmitButton" className="wrapper1" size={ "medium" } toggle active={ active } disabled={ isFacSelectDisabled } loading={ isLoadingFactorsKept }
+                                                 <StyledButton1 id="factorsKeptSubmitButton" className="wrapper1" size={ "medium" } toggle active={ active } disabled={ isFacSelectDisabled } loading={ isLoadingFactorsKept }
                                                    onClick={ handleOpen }>
                                                    Submit
-                                                 </Button>
+                                                 </StyledButton1>
                                                </StyledWrapper> } open={ localStore.modalOpen } onClose={ handleClose } basic size="small">
           <Header content="Factor Rotation" />
           <Modal.Content>
@@ -102,5 +102,34 @@ const StyledWrapper = styled.div`
       margin-left: 3px;
       /* margin-top: 3px; */
     }
+  }
+`;
+
+
+const StyledButton1 = styled.button`
+  display: grid;
+  align-items: center;
+  justify-items: center;
+  background-color: #d6dbe0;
+  height: 40px;
+  width: 70px;
+  border: 1px solid black;
+  text-align: center;
+  font-size: 16px;
+  font-family: Helvetica, sans-serif;
+  font-weight: normal;
+  border-radius: 4px;
+  margin-right: 3px;
+  margin-bottom: 3px;
+  box-shadow: 0 2px 2px 0 black;
+  outline: none;
+
+  &:hover {
+    font-weight: 900;
+  }
+
+  &:active {
+    box-shadow: 0 0 1px 0 black inset;
+    margin-left: 3px;
   }
 `;

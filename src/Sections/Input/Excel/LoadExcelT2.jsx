@@ -70,7 +70,7 @@ const LoadTxtButton = styled.button`
   box-shadow: 0 2px 2px 0 black;
 
   &:hover {
-    background-color: #abafb3;
+    /* background-color: #abafb3; */
     font-weight: 900;
   }
 

@@ -7,45 +7,45 @@ import parseExcelType1 from "./parseExcelType1";
 const {dialog} = require("electron").remote;
 
 const localStore = store({
-  buttonColor: "#d6dbe0"
+    buttonColor: "#d6dbe0"
 });
 
 const handleClick = () => {
-  dialog.showOpenDialog(
-    {
-      properties: ["openFile"],
-      filters: [
+    dialog.showOpenDialog(
         {
-          name: "Excel",
-          extensions: ["xls", "XLS", "xlsx", "XLSX"]
+            properties: ["openFile"],
+            filters: [
+                {
+                    name: "Excel",
+                    extensions: ["xls", "XLS", "xlsx", "XLSX"]
+                }
+            ]
+        },
+        files => {
+            if (files !== undefined) {
+                const excelFile = files[0];
+                parseExcelType1(excelFile);
+                localStore.buttonColor = "rgba(144,	238,	144, .6)";
+                state.setState({
+                    notifyDataUploadSuccess: true,
+                    isInputButtonGreen: true,
+                    loadExcelT1ButtonColor: "rgba(144,	238,	144, .6)"
+                });
+            }
         }
-      ]
-    },
-    files => {
-      if (files !== undefined) {
-        const excelFile = files[0];
-        parseExcelType1(excelFile);
-        localStore.buttonColor = "rgba(144,	238,	144, .6)";
-        state.setState({
-          notifyDataUploadSuccess: true,
-          isInputButtonGreen: true,
-          loadExcelT1ButtonColor: "rgba(144,	238,	144, .6)"
-        });
-      }
-    }
-  );
+    );
 };
 
 class LoadTxtStatementFile extends Component {
-  render() {
-    const loadExcelT1ButtonColor = state.getState("loadExcelT1ButtonColor");
-    localStore.buttonColor = loadExcelT1ButtonColor;
-    return (
-      <LoadTxtButton buttonColor={ localStore.buttonColor } onClick={ handleClick }>
-        <p>Load Type 1 Excel File</p>
-      </LoadTxtButton>
-      );
-  }
+    render() {
+        const loadExcelT1ButtonColor = state.getState("loadExcelT1ButtonColor");
+        localStore.buttonColor = loadExcelT1ButtonColor;
+        return (
+            <LoadTxtButton buttonColor={ localStore.buttonColor } onClick={ handleClick }>
+              <p>Load Type 1 Excel File</p>
+            </LoadTxtButton>
+            );
+    }
 }
 
 export default view(LoadTxtStatementFile);
@@ -68,7 +68,7 @@ const LoadTxtButton = styled.button`
   box-shadow: 0 2px 2px 0 black;
 
   &:hover {
-    background-color: #abafb3;
+    /* background-color: #abafb3; */
     font-weight: 900;
   }
 

@@ -66,7 +66,6 @@ class ProjectHistory extends Component {
     // re-draw loadings table
     loadingsTableDataPrep(numFactors);
 
-    // todo - undo name change of varimax button text on varimax undo
     if (typeOfUndo === "Varimax") {
       state.setState({
         archiveCounter,
