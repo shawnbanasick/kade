@@ -13,19 +13,19 @@ const downloadSvgImage = imageId => {
   const projectName = state.getState("projectName");
   const date = currentDate();
   const time = currentTime();
-  const dateTime = `${date}__${time}`;
-  const cleanFactorName = `${imageId}__`;
+  const dateTime = `${date}_${time}`;
+  const cleanFactorName = `${imageId}`;
   let config;
   const customName = factorVizOptions.customDownloadFileNames;
   const customNameLocation = factorVizOptions.customFileNameLocation;
   if (shouldAddName === true) {
     if (customNameLocation === "prepend") {
       config = {
-        filename: `${customName}__${projectName}_${cleanFactorName}__${dateTime}`
+        filename: `${customName}_${projectName}_${cleanFactorName}_${dateTime}`
       };
     } else if (customNameLocation === "append") {
       config = {
-        filename: `${projectName}_${cleanFactorName}__${dateTime}__${customName}`
+        filename: `${projectName}_${cleanFactorName}_${dateTime}_${customName}`
       };
     } else if (customNameLocation === "replace") {
       config = {
@@ -33,12 +33,12 @@ const downloadSvgImage = imageId => {
       };
     } else {
       config = {
-        filename: `${projectName}_${cleanFactorName}__${dateTime}`
+        filename: `${projectName}_${cleanFactorName}_${dateTime}`
       };
     }
   } else {
     config = {
-      filename: `${projectName}_${cleanFactorName}__${dateTime}`
+      filename: `${projectName}_${cleanFactorName}_${dateTime}`
     };
   }
 
