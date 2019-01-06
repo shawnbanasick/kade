@@ -52,13 +52,12 @@ class noFacSelectedModal extends Component {
         const isDisabled = state.getState("disabledCentroidFactorButton");
         const isCentroidLoading = state.getState("isCentroidLoading");
         return (
-            <Modal dimmer={ "blurring" } trigger={ 
-                <StyledWrapper>
-                    <Button id="noFacSelectedModalButton" className="wrapper1" size={ "large" } toggle active={ isActive } loading={ isCentroidLoading } disabled={ isDisabled }
-                    onClick={ this.handleOpen }>
-                    Centroid Factors
-                    </Button>
-                </StyledWrapper> } open={ this.state.modalOpen } className="wrapper1" onClose={ this.handleClose } basic size={ "small" }>
+            <Modal dimmer={ "blurring" } trigger={ <StyledWrapper>
+                                         <Button id="noFacSelectedModalButton" className="wrapper1" size={ "large" } toggle active={ isActive } loading={ isCentroidLoading } disabled={ isDisabled }
+                                           onClick={ this.handleOpen }>
+                                           Centroid Factors
+                                         </Button>
+                                       </StyledWrapper> } open={ this.state.modalOpen } className="wrapper1" onClose={ this.handleClose } basic size={ "small" }>
               <Header content="Centroid Factor Extraction" />
               <Modal.Content>
                 <h3>Please select the number of factors to extract first.</h3>
@@ -91,35 +90,5 @@ const StyledWrapper = styled.div`
       box-shadow: 0 1px 1px 0 black;
       transform: translateY(1px);
     }
-  }
-`;
-
-
-const StyledButton1 = styled.button`
-  display: grid;
-  align-self: "flexStart",
-  align-items: center;
-  justify-items: center;
-  background-color: #d6dbe0;
-  height: 40px;
-  width: 170px;
-  border: 1px solid black;
-  text-align: center;
-  font-size: 16px;
-  font-family: Helvetica, sans-serif;
-  font-weight: normal;
-  border-radius: 4px;
-  margin-right: 3px;
-  margin-bottom: 3px;
-  box-shadow: 0 2px 2px 0 black;
-  outline: none;
-
-  &:hover {
-    font-weight: 900;
-  }
-
-  &:active {
-    box-shadow: 0 0 1px 0 black inset;
-    margin-left: 3px;
   }
 `;
