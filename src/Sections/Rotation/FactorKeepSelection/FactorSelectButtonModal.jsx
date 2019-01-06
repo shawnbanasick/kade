@@ -6,6 +6,7 @@ import loadingsTableDataPrep from "../../Loadings/LoadingsTable/loadingsTableDat
 import state from "../../../store";
 
 const localStore = store({
+  isActive: false,
   modalOpen: false
 });
 
@@ -14,6 +15,7 @@ const handleOpen = () => {
   if (isNaN(numFactorsKept)) {
     localStore.modalOpen = true;
   } else {
+    localStore.isActive = true;
     const projectHistoryText = `Selected ${numFactorsKept} factors for rotation`;
     const projectHistoryArray = state.getState("projectHistoryArray");
     // a shortcut to remove history when selecting a second time
@@ -34,6 +36,8 @@ const handleOpen = () => {
       projectHistoryArray
     });
 
+    // localStore.isActive = true;
+
     // archive values for undo function (ProjectHistory component)
     let archiveCounter = state.getState("archiveCounter");
     const factorMatrix = state.getState("factorMatrix");
@@ -52,16 +56,17 @@ const handleClose = () => {
 
 class FactorSelectButtonModal extends Component {
   render() {
-    const {active} = localStore.modalOpen;
     const isFacSelectDisabled = state.getState("isFacSelectDisabled");
+    localStore.isActive = isFacSelectDisabled;
     const isLoadingFactorsKept = state.getState("isLoadingFactorsKept");
+    const isActive = localStore.isActive;
     return (
       <FactorSelectModalDiv>
         <Modal dimmer={ "blurring" } trigger={ <StyledWrapper>
-                                                 <StyledButton1 id="factorsKeptSubmitButton" className="wrapper1" size={ "medium" } toggle active={ active } disabled={ isFacSelectDisabled } loading={ isLoadingFactorsKept }
+                                                 <Button id="factorsKeptSubmitButton" className="wrapper1" size={ "medium" } toggle active={ isActive } disabled={ isFacSelectDisabled } loading={ isLoadingFactorsKept }
                                                    onClick={ handleOpen }>
                                                    Submit
-                                                 </StyledButton1>
+                                                 </Button>
                                                </StyledWrapper> } open={ localStore.modalOpen } onClose={ handleClose } basic size="small">
           <Header content="Factor Rotation" />
           <Modal.Content>
@@ -125,7 +130,7 @@ const StyledButton1 = styled.button`
   outline: none;
 
   &:hover {
-    font-weight: 900;
+    background-color: #abafb3;
   }
 
   &:active {

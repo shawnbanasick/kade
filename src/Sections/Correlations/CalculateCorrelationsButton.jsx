@@ -6,7 +6,7 @@ import mainCorrCalcs from "./correlationsLogic/mainCorrCalcs";
 import ErrorNotification from "../Input/ErrorNotification";
 
 const localStore = store({
-  buttonColor: "#d6dbe0"
+  isCorrelationsButtonGreen: true
 });
 
 const handleClick = () => {
@@ -33,15 +33,12 @@ class CalculateCorrelationsButton extends Component {
   render() {
     return (
       <React.Fragment>
-        <BeginAnalysisButton
-          buttonColor={localStore.buttonColor}
-          onClick={() => handleClick()}
-        >
+        <BeginAnalysisButton isActive={ localStore.buttonColor } onClick={ () => handleClick() }>
           <p>Calculate Correlations</p>
         </BeginAnalysisButton>
         <ErrorNotification />
       </React.Fragment>
-    );
+      );
   }
 }
 
@@ -52,7 +49,7 @@ const BeginAnalysisButton = styled.button`
   display: grid;
   align-items: center;
   justify-items: center;
-  background-color: ${props => props.buttonColor};
+  background-color: #d6dbe0;
   height: 40px;
   width: 200px;
   border: 1px solid black;
@@ -67,7 +64,8 @@ const BeginAnalysisButton = styled.button`
   outline: none;
 
   &:hover {
-    font-weight: bold;
+    background-color: #abafb3;
+    /* font-weight: bold; */
   }
 
   &:active {

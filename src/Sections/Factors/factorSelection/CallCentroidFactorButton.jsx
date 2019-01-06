@@ -43,13 +43,10 @@ class CallCentroidFactorButton extends Component {
   render() {
     const showCentroidSpinner = state.getState("showCentroidSpinner");
     return (
-      <BeginCentroidButton
-        buttonColor={localStore.buttonColor}
-        onClick={() => handleClick()}
-      >
-        {showCentroidSpinner ? <Spinner /> : <p>Centroid Factors</p>}
+      <BeginCentroidButton buttonColor={ localStore.buttonColor } onClick={ () => handleClick() }>
+        { showCentroidSpinner ? <Spinner /> : <p>Centroid Factors</p> }
       </BeginCentroidButton>
-    );
+      );
   }
 }
 

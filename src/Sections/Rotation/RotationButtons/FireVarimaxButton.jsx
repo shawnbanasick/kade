@@ -52,7 +52,7 @@ class RotationButtonGroup extends Component {
             <Button
               id="pcaRotationButton"
               className="wrapper1"
-              size={"small"}
+              size={"large"}
               toggle
               active={varimaxButtonActive}
               loading={isCalculatingVarimax}

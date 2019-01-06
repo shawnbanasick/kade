@@ -52,12 +52,13 @@ class noFacSelectedModal extends Component {
         const isDisabled = state.getState("disabledCentroidFactorButton");
         const isCentroidLoading = state.getState("isCentroidLoading");
         return (
-            <Modal dimmer={ "blurring" } trigger={ <StyledWrapper>
-                                         <StyledButton1 id="noFacSelectedModalButton" className="wrapper1" size={ "small" } toggle active={ isActive } loading={ isCentroidLoading } disabled={ isDisabled }
-                                           onClick={ this.handleOpen }>
-                                           Centroid Factors
-                                         </StyledButton1>
-                                       </StyledWrapper> } open={ this.state.modalOpen } className="wrapper1" onClose={ this.handleClose } basic size={ "small" }>
+            <Modal dimmer={ "blurring" } trigger={ 
+                <StyledWrapper>
+                    <Button id="noFacSelectedModalButton" className="wrapper1" size={ "large" } toggle active={ isActive } loading={ isCentroidLoading } disabled={ isDisabled }
+                    onClick={ this.handleOpen }>
+                    Centroid Factors
+                    </Button>
+                </StyledWrapper> } open={ this.state.modalOpen } className="wrapper1" onClose={ this.handleClose } basic size={ "small" }>
               <Header content="Centroid Factor Extraction" />
               <Modal.Content>
                 <h3>Please select the number of factors to extract first.</h3>

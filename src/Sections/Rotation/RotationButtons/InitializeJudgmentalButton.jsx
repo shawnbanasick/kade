@@ -48,7 +48,7 @@ class RotationButtonGroup extends Component {
               <Button
                 id="judgementalRotationButton"
                 className="wrapper1"
-                size={"small"}
+                size={"large"}
                 toggle
                 active={judgeButtonActive}
                 disabled={isDisabled}

@@ -139,13 +139,11 @@ const StyledWrapper = styled.div`
     &:hover {
       border: 1px solid black;
       box-shadow: 0 2px 2px 0 black;
-      font-weight: bold;
     }
 
     &:active {
       box-shadow: 0 0 1px 0 black inset;
       margin-left: 103px;
-      /* margin-top: 3px; */
     }
   }
 `;
@@ -170,7 +168,7 @@ const StyledButton1 = styled.button`
   outline: none;
 
   &:hover {
-    font-weight: 900;
+    background-color: #abafb3;
   }
 
   &:active {
