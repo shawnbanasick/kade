@@ -131,7 +131,7 @@ const DownloadButton = styled.button`
   user-select: none;
 
   &:hover {
-    font-weight: bold
+    background-color: #abafb3;
   }
 
   &:active {

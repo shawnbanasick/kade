@@ -4,14 +4,14 @@ import downloadSvgImage from "./downloadSvgImage";
 import downloadPngImage from "./downloadPngImage";
 
 const DownloadSvgButtons = () => (
-  <div style={ { display: "flex", height: 100, marginTop: 30 } }>
-    <DownloadButton id="downloadSvgButtonScree" size={ "big" } style={ { marginRight: 5 } } onClick={ downloadSvgImage }>
-      Download SVG
-    </DownloadButton>
-    <DownloadButton id="downloadPngButtonScree" size={ "big" } style={ { marginRight: 5 } } onClick={ downloadPngImage }>
-      Download PNG
-    </DownloadButton>
-  </div>
+    <div style={ { display: "flex", height: 100, marginTop: 30 } }>
+      <DownloadButton id="downloadSvgButtonScree" size={ "big" } style={ { marginRight: 5 } } onClick={ downloadSvgImage }>
+        Download SVG
+      </DownloadButton>
+      <DownloadButton id="downloadPngButtonScree" size={ "big" } style={ { marginRight: 5 } } onClick={ downloadPngImage }>
+        Download PNG
+      </DownloadButton>
+    </div>
 );
 
 export default DownloadSvgButtons;
@@ -35,7 +35,7 @@ const DownloadButton = styled.button`
   user-select: none;
 
   &:hover {
-    font-weight: bold
+    background-color: #abafb3;
   }
 
   &:active {

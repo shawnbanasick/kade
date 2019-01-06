@@ -45,8 +45,8 @@ class ClearProjectModal extends Component {
           <Header content="Clear Project" />
           <Modal.Content>
             <h2>
-                                                      This will remove all data and analysis, and cannot be reversed.
-                                                    </h2>
+                                                            This will remove all data and analysis, and cannot be reversed.
+                                                          </h2>
             <h2> Are you sure you want to clear the current project?</h2>
           </Modal.Content>
           <Modal.Actions>
@@ -86,7 +86,7 @@ const ClearProjectButton = styled.button`
   outline: none;
 
   &:hover {
-    font-weight: bold;
+    background-color: #abafb3;
   }
 
   &:active {

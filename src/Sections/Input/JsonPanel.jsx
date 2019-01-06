@@ -21,7 +21,7 @@ class JsonPanel extends Component {
     const windowHeight = window.innerHeight - 100;
     return (
       <DataWindow height={ windowHeight }>
-        <Header>Load both a statements TXT file and Q sorts CSV file.</Header>
+        <Header>Load both a statements TXT file and Q sorts JSON file.</Header>
         <CardHolder id="JsonCardHolder">
           <LoadJsonStatementsCard />
           <JsonQsortsCard />

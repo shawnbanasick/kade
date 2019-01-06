@@ -2,13 +2,14 @@ import React, { Component } from "react";
 import { view } from "react-easy-state";
 import styled, { keyframes } from "styled-components";
 
-function handleClick() {}
+function handleClick() {
+}
 
 class Start extends Component {
   render() {
     return (
       <MainContent>
-        {/* <LanguageSelection>{`${width} x ${height}`}</LanguageSelection> */}
+        { /* <LanguageSelection>{`${width} x ${height}`}</LanguageSelection> */ }
         <TitleDiv>KADE</TitleDiv>
         <SubTitleDiv>
           <HighlightLetter>K</HighlightLetter>
@@ -23,46 +24,30 @@ class Start extends Component {
         <SubTitleDiv2>version 1.0.0</SubTitleDiv2>
         <WebLinkRow>
           <h1>web links:</h1>
-          <hr style={{ width: "700px" }} />
+          <hr style={ { width: "700px" } } />
         </WebLinkRow>
-        <WebLinkDiv1 onClick={handleClick}>
-          <StyledAnchor
-            target="_blank"
-            rel="noopener noreferrer"
-            href="https://github.com/shawnbanasick/kade"
-          >
+        <WebLinkDiv1 onClick={ handleClick }>
+          <StyledAnchor target="_blank" rel="noopener noreferrer" href="https://github.com/shawnbanasick/kade">
             KADE Main Page and Change Log
           </StyledAnchor>
         </WebLinkDiv1>
         <WebLinkDiv2>
-          <StyledAnchor
-            target="_blank"
-            rel="noopener noreferrer"
-            href="https://github.com/shawnbanasick/kade/wiki"
-          >
+          <StyledAnchor target="_blank" rel="noopener noreferrer" href="https://github.com/shawnbanasick/kade/wiki">
             KADE Reference Guide and User Manual
           </StyledAnchor>
         </WebLinkDiv2>
         <WebLinkDiv3>
-          <StyledAnchor
-            target="_blank"
-            rel="noopener noreferrer"
-            href="https://shawnBanasick.github.io/ken-q-analysis/index.html"
-          >
+          <StyledAnchor target="_blank" rel="noopener noreferrer" href="https://shawnBanasick.github.io/ken-q-analysis/index.html">
             Ken-Q Analysis Web Application
           </StyledAnchor>
         </WebLinkDiv3>
         <WebLinkDiv4>
-          <StyledAnchor
-            target="_blank"
-            rel="noopener noreferrer"
-            href="https://shawnbanasick.github.io/ken-q-data/index.html"
-          >
+          <StyledAnchor target="_blank" rel="noopener noreferrer" href="https://shawnbanasick.github.io/ken-q-data/index.html">
             Ken-Q Data
           </StyledAnchor>
         </WebLinkDiv4>
       </MainContent>
-    );
+      );
   }
 }
 
@@ -176,7 +161,7 @@ const WebLinkDiv1 = styled.div`
   line-height: 1.2;
 
   &:hover {
-    font-weight: bold;
+    background-color: #abafb3;
   }
 
   &:active {
@@ -206,7 +191,7 @@ const WebLinkDiv2 = styled.div`
   line-height: 1.2;
 
   &:hover {
-    font-weight: bold;
+    background-color: #abafb3;
   }
 
   &:active {
@@ -236,7 +221,7 @@ const WebLinkDiv3 = styled.div`
   line-height: 1.2;
 
   &:hover {
-    font-weight: bold;
+    background-color: #abafb3;
   }
 
   &:active {
@@ -266,7 +251,7 @@ const WebLinkDiv4 = styled.div`
   line-height: 1.2;
 
   &:hover {
-    font-weight: bold;
+    background-color: #abafb3;
   }
 
   &:active {
