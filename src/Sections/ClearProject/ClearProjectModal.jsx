@@ -45,7 +45,8 @@ class ClearProjectModal extends Component {
           <Header content="Clear Project" />
           <Modal.Content>
             <h2>
-                                                            This will remove all data and analysis, and cannot be reversed.
+                                                            Clearing the project will remove all data and analysis. <br/>
+                                                            This action cannot be reversed.
                                                           </h2>
             <h2> Are you sure you want to clear the current project?</h2>
           </Modal.Content>

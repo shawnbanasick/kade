@@ -9,7 +9,9 @@ class ClearProject extends Component {
     return (
       <MainContent>
         <h1>Clear Project</h1>
-        <h2>Click this button to begin a new project. This will clear all data and analysis from the current project. The action cannot be reversed.</h2>
+        <h2>Click this button to begin a new project. <br/><br/>
+            This will clear all current data and analysis from the current project. <br/><br/>
+            This action cannot be reversed.</h2><br/><br/>
         <ClearProjectModal />
       </MainContent>
       );
