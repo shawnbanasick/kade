@@ -7,12 +7,13 @@ import sortsDisplayText from "../logic/sortsDisplayText";
 import shiftRawSortsPositive from "../logic/shiftRawSortsPositive";
 import calcMultiplierArrayT2 from "../Excel/excelLogic/calcMultiplierArrayT2";
 import checkUniqueParticipantNames from "../logic/checkUniqueParticipantName";
+import revertLoadButtonsColors from '../DemoData/revertLoadButtonsColors';
 
 const {dialog} = require("electron").remote;
 const fs = require("fs");
 
 const localStore = store({
-    buttonColor: "#d6dbe0"
+    isLoadCsvQsortsButtonGreen: false,
 });
 
 const handleClick = () => {
@@ -103,7 +104,7 @@ const handleClick = () => {
                             const participantNames = checkUniqueParticipantNames(
                                 respondentNames
                             );
-
+                            revertLoadButtonsColors("csv");
                             state.setState({
                                 numQsorts: numberSorts,
                                 qSortPattern: qSortPatternArray,
@@ -117,9 +118,9 @@ const handleClick = () => {
                                 notifyDataUploadSuccess: true,
                                 areQsortsLoaded: true,
                                 isInputButtonGreen: state.getState("areStatementsLoaded"),
-                                loadCsvQsortsButtonColor: "rgba(144,	238,	144, .6)"
+                                isLoadCsvQsortsButtonGreen: true,
                             });
-                            localStore.buttonColor = "rgba(144,	238,	144, .6)";
+                            localStore.isLoadCsvQsortsButtonGreen = true;
                         });
                     }
                 } catch (error) {
@@ -138,10 +139,10 @@ const handleClick = () => {
 
 class LoadTxtStatementFile extends Component {
     render() {
-        const loadCsvQsortsButtonColor = state.getState("loadCsvQsortsButtonColor");
-        localStore.buttonColor = loadCsvQsortsButtonColor;
+        const isLoadCsvQsortsButtonGreen = state.getState("isLoadCsvQsortsButtonGreen");
+        localStore.isLoadCsvQsortsButtonGreen = isLoadCsvQsortsButtonGreen;
         return (
-            <LoadTxtButton buttonColor={ localStore.buttonColor } onClick={ handleClick }>
+            <LoadTxtButton isActive={ localStore.isLoadCsvQsortsButtonGreen } onClick={ handleClick }>
               <p>Load CSV File</p>
             </LoadTxtButton>
             );
@@ -154,7 +155,7 @@ const LoadTxtButton = styled.button`
   display: grid;
   align-items: center;
   justify-items: center;
-  background-color: ${props => props.buttonColor};
+  background-color: ${props => props.isActive ? "rgba(144,	238, 144, .6)" : "#d6dbe0"};
   height: 60px;
   width: 240px;
   border: 1px solid black;
@@ -169,8 +170,7 @@ const LoadTxtButton = styled.button`
   outline: none;
 
   &:hover {
-    background-color: ${props => props.buttonColor};
-    font-weight: 900;
+    background-color: ${props => props.isActive ? "#009a00" : "#abafb3" };
   }
 
   &:active {

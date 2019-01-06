@@ -1,15 +1,14 @@
-import { view, store } from "react-easy-state";
-import React, { Component } from "react";
 import styled from "styled-components";
+import React, { Component } from "react";
+import { view, store } from "react-easy-state";
 import state from "../../../store";
 import revertLoadButtonsColors from '../DemoData/revertLoadButtonsColors';
-
 
 const {dialog} = require("electron").remote;
 const fs = require("fs");
 
 const localStore = store({
-    isLoadPqmethodTextButtonButtonGreen: false,
+    isLoadJsonTextButtonGreen: false,
 });
 
 const handleClick = () => {
@@ -18,8 +17,8 @@ const handleClick = () => {
             properties: ["openFile"],
             filters: [
                 {
-                    name: "STA",
-                    extensions: ["sta", "STA"]
+                    name: "Text",
+                    extensions: ["txt", "TXT"]
                 }
             ]
         },
@@ -31,18 +30,17 @@ const handleClick = () => {
                     const lines = data.split(/[\r\n]+/g);
                     // remove empty strings
                     const lines2 = lines.filter(e => e === 0 || e);
+                    const areQsortsLoaded = state.getState("areQsortsLoaded");
+                    revertLoadButtonsColors("json");
                     state.setState({
                         statements: lines2,
-                        statementsLoaded: true
-                    });
-                    localStore.isLoadPqmethodTextButtonButtonGreen = true;
-                    revertLoadButtonsColors("pqmethod");
-                    state.setState({
+                        statementsLoaded: true,
                         notifyDataUploadSuccess: true,
                         areStatementsLoaded: true,
-                        isLoadPqmethodTextButtonButtonGreen: true,
-                        isInputButtonGreen: state.getState("areQsortsLoaded"),
+                        isLoadJsonTextButtonGreen: true,
+                        isInputButtonGreen: areQsortsLoaded,
                     });
+                    localStore.isLoadCsvTextButtonGreen = true;
                 });
             }
         }
@@ -51,12 +49,11 @@ const handleClick = () => {
 
 class LoadTxtStatementFile extends Component {
     render() {
-        const isLoadPqmethodTextButtonButtonGreen = state.getState("isLoadPqmethodTextButtonButtonGreen");
-        localStore.isLoadPqmethodTextButtonButtonGreen = isLoadPqmethodTextButtonButtonGreen;
-
+        const isLoadJsonTextButtonGreen = state.getState("isLoadJsonTextButtonGreen");
+        localStore.isLoadJsonTextButtonGreen = isLoadJsonTextButtonGreen;
         return (
-            <LoadTxtButton isActive={ localStore.isLoadPqmethodTextButtonButtonGreen } onClick={ () => handleClick() }>
-              <p>Load STA File</p>
+            <LoadTxtButton isActive={ localStore.isLoadJsonTextButtonGreen } onClick={ handleClick }>
+              <p>Load TXT File</p>
             </LoadTxtButton>
             );
     }
@@ -89,6 +86,6 @@ const LoadTxtButton = styled.button`
   &:active {
     box-shadow: 0 0 1px 0 black inset;
     margin-left: 3px;
-    /* margin-top: 3px; */
   }
 `;
+

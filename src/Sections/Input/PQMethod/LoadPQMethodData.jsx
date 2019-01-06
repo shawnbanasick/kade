@@ -6,12 +6,14 @@ import state from "../../../store";
 import parsePQMethodFile from "../logic/parsePQMethodFile";
 import sortsDisplayText from "../logic/sortsDisplayText";
 import checkUniqueParticipantName from "../logic/checkUniqueParticipantName";
+import revertLoadButtonsColors from '../DemoData/revertLoadButtonsColors';
+
 
 const {dialog} = require("electron").remote;
 const fs = require("fs");
 
 const localStore = store({
-    buttonColor: "#d6dbe0"
+    isLoadPqmethodQsortsButtonGreen: false,
 });
 
 const handleClick = () => {
@@ -56,12 +58,13 @@ const handleClick = () => {
                             dataOrigin: "pqmethod"
                         });
 
-                        localStore.buttonColor = "rgba(144,	238,	144, .6)";
+                        localStore.isLoadPqmethodQsortsButtonGreen = true;
+                        revertLoadButtonsColors("pqmethod");
                         state.setState({
                             notifyDataUploadSuccess: true,
                             areQsortsLoaded: true,
                             isInputButtonGreen: state.getState("areStatementsLoaded"),
-                            loadPqmethodQsortsButtonColor: "rgba(144,	238,	144, .6)"
+                            isLoadPqmethodQsortsButtonGreen: true
                         });
                     });
                 }
@@ -77,10 +80,10 @@ const handleClick = () => {
 
 class LoadTxtStatementFile extends Component {
     render() {
-        const loadPqmethodQsortsButtonColor = state.getState("loadPqmethodQsortsButtonColor");
-        localStore.buttonColor = loadPqmethodQsortsButtonColor;
+        const isLoadPqmethodQsortsButtonGreen = state.getState("isLoadPqmethodQsortsButtonGreen");
+        localStore.isLoadPqmethodQsortsButtonGreen = isLoadPqmethodQsortsButtonGreen;
         return (
-            <LoadTxtButton buttonColor={ localStore.buttonColor } onClick={ () => handleClick() }>
+            <LoadTxtButton isActive={ localStore.isLoadPqmethodQsortsButtonGreen } onClick={ () => handleClick() }>
               <p>Load DAT File</p>
             </LoadTxtButton>
             );
@@ -93,7 +96,7 @@ const LoadTxtButton = styled.button`
   display: grid;
   align-items: center;
   justify-items: center;
-  background-color: ${props => props.buttonColor};
+  background-color: ${props => props.isActive ? "rgba(144,	238, 144, .6)" : "#d6dbe0"};
   height: 60px;
   width: 240px;
   border: 1px solid black;
@@ -105,10 +108,10 @@ const LoadTxtButton = styled.button`
   margin-right: 3px;
   margin-bottom: 3px;
   box-shadow: 0 2px 2px 0 black;
+  outline: none;
 
   &:hover {
-    /* background-color: #abafb3; */
-    font-weight: 900;
+    background-color: ${props => props.isActive ? "#009a00" : "#abafb3" };
   }
 
   &:active {

@@ -5,7 +5,7 @@ import state from "../../store";
 import Dropdown from "./JSON/DropdownJSON";
 import JsonQsortsCard from "./JSON/JsonQsortsCard";
 import displayJsonData from "./JSON/displayJsonData";
-import CsvStatementCard from "./CSV/CsvStatementCard";
+import LoadJsonStatementsCard from './JSON/LoadJsonStatementsCard';
 import ProjectNameInput from "./CSV/ProjectNameInput";
 import DownloadCsvModal from "./JSON/DownloadCsvModal";
 import ForcedUnforcedRadio from "./CSV/ForcedUnforcedRadio";
@@ -20,24 +20,20 @@ class JsonPanel extends Component {
     const options = state.getState("jsonParticipantId") || [];
     const windowHeight = window.innerHeight - 100;
     return (
-      <DataWindow height={windowHeight}>
+      <DataWindow height={ windowHeight }>
         <Header>Load both a statements TXT file and Q sorts CSV file.</Header>
         <CardHolder id="JsonCardHolder">
-          <CsvStatementCard />
+          <LoadJsonStatementsCard />
           <JsonQsortsCard />
           <ProjectNameInput />
-          <Dropdown
-            options={options}
-            class="ui fluid selection dropdown"
-            onChangeMessageUpTree={handleMessage}
-          />
+          <Dropdown options={ options } class="ui fluid selection dropdown" onChangeMessageUpTree={ handleMessage } />
           <ForcedUnforcedRadio />
           <div />
-          <QsortDesignInputElement style={{ gridRowStart: 4 }} />
+          <QsortDesignInputElement style={ { gridRowStart: 4 } } />
           <DownloadCsvModal />
         </CardHolder>
       </DataWindow>
-    );
+      );
   }
 }
 

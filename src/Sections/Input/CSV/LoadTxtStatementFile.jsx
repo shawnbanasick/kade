@@ -2,59 +2,61 @@ import styled from "styled-components";
 import React, { Component } from "react";
 import { view, store } from "react-easy-state";
 import state from "../../../store";
+import revertLoadButtonsColors from '../DemoData/revertLoadButtonsColors';
 
 const {dialog} = require("electron").remote;
 const fs = require("fs");
 
 const localStore = store({
-  buttonColor: "#d6dbe0"
+    isLoadCsvTextButtonGreen: false,
 });
 
 const handleClick = () => {
-  dialog.showOpenDialog(
-    {
-      properties: ["openFile"],
-      filters: [
+    dialog.showOpenDialog(
         {
-          name: "Text",
-          extensions: ["txt", "TXT"]
+            properties: ["openFile"],
+            filters: [
+                {
+                    name: "Text",
+                    extensions: ["txt", "TXT"]
+                }
+            ]
+        },
+        files => {
+            if (files !== undefined) {
+                const fileName = files[0];
+                fs.readFile(fileName, "utf-8", (err, data) => {
+                    // split into lines
+                    const lines = data.split(/[\r\n]+/g);
+                    // remove empty strings
+                    const lines2 = lines.filter(e => e === 0 || e);
+                    const areQsortsLoaded = state.getState("areQsortsLoaded");
+                    revertLoadButtonsColors("csv");
+                    state.setState({
+                        statements: lines2,
+                        statementsLoaded: true,
+                        notifyDataUploadSuccess: true,
+                        areStatementsLoaded: true,
+                        isLoadCsvTextButtonGreen: true,
+                        isInputButtonGreen: areQsortsLoaded,
+                    });
+                    localStore.isLoadCsvTextButtonGreen = true;
+                });
+            }
         }
-      ]
-    },
-    files => {
-      if (files !== undefined) {
-        const fileName = files[0];
-        fs.readFile(fileName, "utf-8", (err, data) => {
-          // split into lines
-          const lines = data.split(/[\r\n]+/g);
-          // remove empty strings
-          const lines2 = lines.filter(e => e === 0 || e);
-          const areQsortsLoaded = state.getState("areQsortsLoaded");
-          state.setState({
-            statements: lines2,
-            statementsLoaded: true,
-            notifyDataUploadSuccess: true,
-            areStatementsLoaded: true,
-            isInputButtonGreen: areQsortsLoaded,
-            loadCsvTextButtonColor: "rgba(144,	238,	144, .6)"
-          });
-          localStore.buttonColor = "rgba(144,	238,	144, .6)";
-        });
-      }
-    }
-  );
+    );
 };
 
 class LoadTxtStatementFile extends Component {
-  render() {
-    const loadCsvTextButtonColor = state.getState("loadCsvTextButtonColor");
-    localStore.buttonColor = loadCsvTextButtonColor;
-    return (
-      <LoadTxtButton buttonColor={ localStore.buttonColor } onClick={ handleClick }>
-        <p>Load TXT File</p>
-      </LoadTxtButton>
-      );
-  }
+    render() {
+        const isLoadCsvTextButtonGreen = state.getState("isLoadCsvTextButtonGreen");
+        localStore.isLoadCsvTextButtonGreen = isLoadCsvTextButtonGreen;
+        return (
+            <LoadTxtButton isActive={ localStore.isLoadCsvTextButtonGreen } onClick={ handleClick }>
+              <p>Load TXT File</p>
+            </LoadTxtButton>
+            );
+    }
 }
 
 export default view(LoadTxtStatementFile);
@@ -63,7 +65,7 @@ const LoadTxtButton = styled.button`
   display: grid;
   align-items: center;
   justify-items: center;
-  background-color: ${props => props.buttonColor};
+  background-color: ${props => props.isActive ? "rgba(144,	238, 144, .6)" : "#d6dbe0"};
   height: 60px;
   width: 240px;
   border: 1px solid black;
@@ -78,8 +80,7 @@ const LoadTxtButton = styled.button`
   outline: none;
 
   &:hover {
-    background-color: ${props => props.buttonColor};
-    font-weight: 900;
+    background-color: ${props => props.isActive ? "#009a00" : "#abafb3" };
   }
 
   &:active {

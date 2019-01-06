@@ -36,8 +36,7 @@ const Button = styled.button`
   font-family: Helvetica, sans-serif;
 
   &:hover {
-    background-color: ${props => props.buttonColor};
-    font-weight: 900;
+    background-color: #abafb3;
   }
 
   &:active {
