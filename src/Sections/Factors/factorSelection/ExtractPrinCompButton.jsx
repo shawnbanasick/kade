@@ -31,7 +31,7 @@ class PCAButton extends React.Component {
     return (
       <div>
         <StyledWrapper>
-          <Button id="extractPrinCompButton" className="wrapper1" size={ "large" } toggle active={ isActive } loading={ isCalculating } disabled={ isDisabled }
+          <Button id="extractPrinCompButton" className="wrapper1" size={ "large" } compact toggle active={ isActive } loading={ isCalculating } disabled={ isDisabled }
             onClick={ handleClick }>
             { pcaButtonText }
           </Button>

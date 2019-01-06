@@ -9,15 +9,16 @@ class ExcelPanel extends Component {
   render() {
     const windowHeight = window.innerHeight - 100;
     return (
-      <DataWindow height={windowHeight}>
+      <DataWindow height={ windowHeight }>
         <Header>Load a Type 1 or Type 2 Excel file.</Header>
         <CardHolder>
           <ExcelT1Card />
           <ExcelT2Card />
+          <div/>
           <ForcedUnforcedRadio />
         </CardHolder>
       </DataWindow>
-    );
+      );
   }
 }
 

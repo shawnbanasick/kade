@@ -62,13 +62,13 @@ class CentroidSelectDropdown extends React.Component {
     localStore.value = numCentroidFactors;
     return (
       <div style={ { display: "flex" } }>
-        <span style={ { textAlign: "center", marginRight: 10, height: 38, marginTop: 6, paddingTop: 7, fontSize: 22 } }>
+        <div style={ { textAlign: "center", marginRight: 10, height: 40, marginTop: 5, paddingTop: 6, fontSize: 22  } }>
                 Extract
-              </span>
-        <Button.Group  style={{display:"flex", alignItems: "center"}} color="black" basic>
+              </div>
+        <div  style={{display:"flex", alignItems: "center"}} color="black" basic>
           <Dropdown id="centroidSelectDropdown" placeholder={ "?" } defaultValue={ localStore.value } onChange={ saveDropdownValueToState } openOnFocus button simple
-            disabled={ isDisabled } size={"small"} item options={ options } style={ { zIndex: "999 !important", fontSize: 16, paddingBottom: 10, height: 42 } } />
-        </Button.Group>
+            disabled={ isDisabled } size={"small"} item options={ options } style={ { border: "1px solid black", fontSize: 14, paddingBottom: 7, marginBottom: 5, height: 36 } } />
+        </div>
       </div>
       );
   }

@@ -53,7 +53,7 @@ class noFacSelectedModal extends Component {
         const isCentroidLoading = state.getState("isCentroidLoading");
         return (
             <Modal dimmer={ "blurring" } trigger={ <StyledWrapper>
-                                         <Button id="noFacSelectedModalButton" className="wrapper1" size={ "large" } toggle active={ isActive } loading={ isCentroidLoading } disabled={ isDisabled }
+                                         <Button id="noFacSelectedModalButton" className="wrapper1" size={ "large" } compact toggle active={ isActive } loading={ isCentroidLoading } disabled={ isDisabled }
                                            onClick={ this.handleOpen }>
                                            Centroid Factors
                                          </Button>
