@@ -16,9 +16,13 @@ class HelpSection extends Component {
     return (
       <MainContent>
         <h1>Help</h1>
-        <h2 style={{ width: 800 }}>Help Section Here</h2>
+        <h2 style={ { width: 800 } }>Help Section Here</h2>
+        <br/>
+        <br/>
+        <br/>
+        <img src={ "./../../assets/help/test1.gif" } alt={ "test1" } />
       </MainContent>
-    );
+      );
   }
 }
 
