@@ -3,7 +3,6 @@ Download Links: &nbsp; [macOS](https://github.com/shawnbanasick/kade/releases/do
 [Windows-installer](https://github.com/shawnbanasick/kade/releases/download/v0.0.1-beta/KADE.Setup.0.0.1.exe) &nbsp;||&nbsp;
 [Windows-portable](https://github.com/shawnbanasick/kade/releases/download/v0.0.1-beta/KADE.0.0.1.exe) &nbsp;||&nbsp;
 [Linux](https://github.com/shawnbanasick/kade/releases/download/v0.0.1-beta/kade-0.0.1-x86_64.AppImage)
-
 (See below for installation instructions.)
 
 
