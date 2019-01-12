@@ -57,3 +57,8 @@ The application is packaged as an "AppImage". To run it you may need to change i
 3. Select "Permissions". (Example image from debian-based "MX Linux")
 <img src="https://github.com/shawnbanasick/kade/blob/master/gifs/linuxPermissions.png" width="350" />
 &nbsp;&nbsp;&nbsp;4. Change permissions to executable. (Check "Allow this file to run as a program")
+
+
+## Open Source Alternatives To KADE:
+* [PQMethod](http://schmolck.org/qmethod/)
+* [R language Qmethod package](https://cran.r-project.org/package=qmethod)
