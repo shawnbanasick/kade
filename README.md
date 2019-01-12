@@ -7,7 +7,7 @@ Download Links: &nbsp; [macOS](https://github.com/shawnbanasick/kade/releases/do
 (See below for installation instructions.)
 
 
-#### KADE is an open source desktop application for the analysis of Q methodology data.
+#### KenQ Analysis Desktop Edition (KADE) is an open-source desktop application for the analysis of Q methodology data. It runs on macOS, Windows, and Linux. The user interface is similar to the online version of KenQ Analysis, so it may feel familiar. 
 
 
 
