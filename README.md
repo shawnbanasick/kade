@@ -12,7 +12,6 @@ KenQ Analysis Desktop Edition (KADE) is an open-source application for the analy
 
 <br/>
 <br/>
-<br/>
 
 ## Installation Instructions - Microsoft Windows
 ### I haven't paid my developer fees to Microsoft, so the application will give you a warning on first start-up.
@@ -24,8 +23,6 @@ KenQ Analysis Desktop Edition (KADE) is an open-source application for the analy
 
 <br/>
 <br/>
-<br/>
-
 
 ## Installation Instructions - Apple macOS
 ### I haven't paid my developer fees to Apple, so the application may give you a warning on first start-up.
@@ -47,8 +44,6 @@ KenQ Analysis Desktop Edition (KADE) is an open-source application for the analy
 
 <br/>
 <br/>
-<br/>
-
 
 ## Installation Instructions - Linux
 The application is packaged as an "AppImage" so it can be installed on most of the major distributions. On some distrobutions it will offer to install the software. On other distributions, you may need to change the file permissions of the downloaded file.
