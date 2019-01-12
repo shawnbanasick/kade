@@ -53,6 +53,8 @@ The application is packaged as an "AppImage" so it can be installed on most of t
 <img src="https://github.com/shawnbanasick/kade/blob/master/gifs/linuxPermissions.png" width="350" />
 &nbsp;&nbsp;&nbsp;4. Change permissions to executable. (Check "Allow this file to run as a program")
 
+<br/>
+<br/>
 
 ## Open Source Alternatives To KADE:
 * [PQMethod](http://schmolck.org/qmethod/)
