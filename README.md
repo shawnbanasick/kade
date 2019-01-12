@@ -10,6 +10,9 @@ Download Links: &nbsp; [macOS](https://github.com/shawnbanasick/kade/releases/do
 KenQ Analysis Desktop Edition (KADE) is an open-source application for the analysis of Q methodology data. It runs on macOS, Windows, and Linux. The user interface is similar to the online version of KenQ Analysis, so it may feel familiar. 
 
 
+<br/>
+<br/>
+<br/>
 
 ## Installation Instructions - Windows
 ### I haven't paid my developer fees to Microsoft, so the application will give you a warning on first start-up.
@@ -19,7 +22,9 @@ KenQ Analysis Desktop Edition (KADE) is an open-source application for the analy
 3. Click "Run Anyway"
 <img src="https://github.com/shawnbanasick/kade/blob/master/gifs/winOpen.PNG" width="350">
 
-
+<br/>
+<br/>
+<br/>
 
 
 ## Installation Instructions - Apple macOS
@@ -40,5 +45,15 @@ KenQ Analysis Desktop Edition (KADE) is an open-source application for the analy
 6. Click the "Open" button.
 <img src="https://github.com/shawnbanasick/kade/blob/master/gifs/openButtonMac.png" width="350" />
 
+<br/>
+<br/>
+<br/>
 
 
+## Installation Instructions - Apple macOS
+The application is packaged as an "AppImage". To run it you may need to change its file permissions.
+1. Right click on the downloaded file.
+2. Select "Properties".
+3. Select "Permissions". (Example image from debian-based "MX Linux")
+<img src="https://github.com/shawnbanasick/kade/blob/master/gifs/linuxPermissions.png" width="350" />
+4. Change permissions to executable. (Check "Allow this file to run as a program")
