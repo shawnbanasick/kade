@@ -19,7 +19,7 @@ KenQ Analysis Desktop Edition (KADE) is an open-source application for the analy
 1. Double click the downloaded file.
 2. In the Windows warning box, click "More info".
 <img src="https://github.com/shawnbanasick/kade/blob/master/gifs/winWarn.PNG" width="350" />
-3. Click "Run Anyway"
+&nbsp;&nbsp;&nbsp;3. Click "Run Anyway"
 <img src="https://github.com/shawnbanasick/kade/blob/master/gifs/winOpen.PNG" width="350">
 
 <br/>
@@ -38,11 +38,11 @@ KenQ Analysis Desktop Edition (KADE) is an open-source application for the analy
 1. Double click the downloaded file.
 2. Click and drag the Kade.app icon into the applications folder.
 <img src="https://github.com/shawnbanasick/kade/blob/master/gifs/iconDrag.png" width="350" />
-3. Using Finder, navigate to your Applications folder.<br/>
-4. RIGHT click on the Kade.app in Finder.<br/>
-5. Select "Open" in the list that appears.
+&nbsp;&nbsp;&nbsp;3. Using Finder, navigate to your Applications folder.<br/>
+&nbsp;&nbsp;&nbsp;4. RIGHT click on the Kade.app in Finder.<br/>
+&nbsp;&nbsp;&nbsp;5. Select "Open" in the list that appears.
 <img src="https://github.com/shawnbanasick/kade/blob/master/gifs/openSelect.png" width="350" />
-6. Click the "Open" button.
+&nbsp;&nbsp;&nbsp;6. Click the "Open" button.
 <img src="https://github.com/shawnbanasick/kade/blob/master/gifs/openButtonMac.png" width="350" />
 
 <br/>
@@ -56,4 +56,4 @@ The application is packaged as an "AppImage". To run it you may need to change i
 2. Select "Properties".
 3. Select "Permissions". (Example image from debian-based "MX Linux")
 <img src="https://github.com/shawnbanasick/kade/blob/master/gifs/linuxPermissions.png" width="350" />
-4. Change permissions to executable. (Check "Allow this file to run as a program")
+&nbsp;&nbsp;&nbsp;4. Change permissions to executable. (Check "Allow this file to run as a program")
