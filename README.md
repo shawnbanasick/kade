@@ -34,7 +34,7 @@ KenQ Analysis Desktop Edition (KADE) is an open-source application for the analy
 2. Click and drag the Kade.app icon into the applications folder.
 <img src="https://github.com/shawnbanasick/kade/blob/master/gifs/iconDrag.png" width="350" />
 3. Using Finder, navigate to your Applications folder.<br/>
-4. RIGHT click on the Kade.app in Finder.
+4. RIGHT click on the Kade.app in Finder.<br/>
 5. Select "Open" in the list that appears.
 <img src="https://github.com/shawnbanasick/kade/blob/master/gifs/openSelect.png" width="350" />
 6. Click the "Open" button.
