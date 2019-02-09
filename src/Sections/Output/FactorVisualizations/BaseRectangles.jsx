@@ -7,7 +7,7 @@ const styles = {
   stroke: "black",
   strokeWidth: 0.5,
   zindex: 99,
-  backgroundColor: "#FFFF"
+  // backgroundColor: "#FFFF"
 };
 
 const widthValue = props => {

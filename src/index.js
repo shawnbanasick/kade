@@ -53,7 +53,7 @@ const createWindow = async () => {
   // });
 
   const windowOptions = {
-    width: 1100, // 980,  1366
+    width: 1170, // 980,  1366  (old - 1100)
     height: 750, // 750,  768
     titleBarStyle: "hidden",
     backgroundColor: "#FFFF"
