@@ -34,6 +34,7 @@ const handleClick = () => {
                     revertLoadButtonsColors("json");
                     state.setState({
                         statements: lines2,
+                        numStatements: lines2.length,
                         statementsLoaded: true,
                         notifyDataUploadSuccess: true,
                         areStatementsLoaded: true,

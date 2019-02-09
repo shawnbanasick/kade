@@ -47,3 +47,4 @@ const calculateCommunalities = function(currentFactorData) {
 };
 
 export default calculateCommunalities;
+

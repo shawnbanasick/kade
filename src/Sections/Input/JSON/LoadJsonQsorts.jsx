@@ -47,6 +47,7 @@ const handleClick = () => {
 
                         // todo - this is the source of the extra brackets
                         const csvData = convertJSONToData(results);
+                        console.log("csv data", JSON.stringify(csvData));
                         const columnHeaders = csvData[0][0];
                         revertLoadButtonsColors("json");
                         state.setState({
@@ -117,3 +118,4 @@ const LoadTxtButton = styled.button`
     margin-left: 3px;
   }
 `;
+
