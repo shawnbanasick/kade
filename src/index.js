@@ -28,6 +28,9 @@ import * as url from "url";
 //   return r;
 // };
 
+// for window exit check
+app.showExitPrompt = true;
+
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow;
@@ -238,7 +241,28 @@ const createWindow = async () => {
     // when you should delete the corresponding element.
     mainWindow = null;
   });
+
+
+  mainWindow.on('close', (e) => {
+    if (app.showExitPrompt) {
+        e.preventDefault() // Prevents the window from closing 
+        dialog.showMessageBox({
+            type: 'question',
+            buttons: ['Yes', 'No'],
+            title: 'Confirm',
+            message: 'Are you sure you want to quit?'
+        }, function (response) {
+            if (response === 0) { // Runs the following if 'Yes' is clicked
+                app.showExitPrompt = false
+            mainWindow.close()
+        }
+    })
+    }
+  });  
 };
+
+
+
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
@@ -262,21 +286,21 @@ app.on("activate", () => {
   }
 });
 
-app.on("before-quit", e => {
-  const options = {
-    type: "question",
-    buttons: ["Yes", "No"],
-    defaultId: 1,
-    title: "Confirm",
-    message: "Are you sure you want to quit?"
-  };
+// app.on("before-quit", e => {
+//   const options = {
+//     type: "question",
+//     buttons: ["Yes", "No"],
+//     defaultId: 1,
+//     title: "Confirm",
+//     message: "Are you sure you want to quit?"
+//   };
 
-  dialog.showMessageBox(null, options, response => {
-    if (response === 1) {
-      e.preventDefault();
-    }
-  });
-});
+//   dialog.showMessageBox(null, options, response => {
+//     if (response === 1) {
+//       e.preventDefault();
+//     }
+//   });
+// });
 
 
 

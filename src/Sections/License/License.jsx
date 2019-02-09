@@ -48,6 +48,8 @@ class License extends Component {
               <li>Blob.js - Copyright (C) 2014 by Eli Grey</li>
               <li>SheetJS js-xlsx (Apache-2.0 license)</li>
             </ul>
+            <span>Principal components based on Python version by Thomas Metcalf (GNU GPL license)</span>
+            <br/>
             <span>Varimax rotation based on PQMethod (GNU GPL license)</span>
           </div>
         </div>

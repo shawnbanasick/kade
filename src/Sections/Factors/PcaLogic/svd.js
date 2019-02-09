@@ -1,3 +1,4 @@
+// modified from https://gist.github.com/Bondifrench/3a9bd7bca09159a7d2cd355d8602d524
 
   function zeros(i){
       const array = [];
@@ -11,7 +12,30 @@
     }
  
     // translated from http://stitchpanorama.sourceforge.net/Python/svd.py
-   const svd = (A) => {
+    /*
+
+    Almost exact translation of the ALGOL SVD algorithm published in
+    # Numer. Math. 14, 403-420 (1970) by G. H. Golub and C. Reinsch
+    #
+    # Copyright (c) 2005 by Thomas R. Metcalf, helicity314-stitch <at> yahoo <dot> com
+    #
+    # This program is free software; you can redistribute it and/or modify
+    # it under the terms of the GNU General Public License as published by
+    # the Free Software Foundation; either version 2 of the License, or
+    # (at your option) any later version.
+    #
+    # This program is distributed in the hope that it will be useful,
+    # but WITHOUT ANY WARRANTY; without even the implied warranty of
+    # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    # GNU General Public License for more details.
+    #
+    # You should have received a copy of the GNU General Public License
+    # along with this program; if not, write to the Free Software
+    # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+
+    */
+
+    const svd = (A) => {
         let temp;
         // Compute the thin SVD from G. H. Golub and C. Reinsch, Numer. Math. 14, 403-420 (1970)
         let prec = (2 ** -52); // assumes double prec
