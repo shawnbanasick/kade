@@ -40,13 +40,18 @@
     ]
   },
   "keywords": [],
-  "author": "Shawn Banasick",
+  "author": {
+    "name": "Shawn Banasick", 
+    "email": "ken.q.tools@gmail.com"
+  },
   "license": "MIT",
   "build": {
     "appId": "com.kade.app",
+    "directories": {"buildResources": "build/icons"},
     "linux": {
       "target": [
-        "AppImage"
+        "AppImage",
+        "deb"
       ],
       "icon": "build/icons"
     },

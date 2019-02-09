@@ -52,14 +52,15 @@ const createWindow = async () => {
   const windowOptions = {
     width: 1100, // 980,  1366
     height: 750, // 750,  768
-    titleBarStyle: "hidden"
+    titleBarStyle: "hidden",
+    backgroundColor: "#FFFF"
   };
 
   // todo - check linux icon settings - icon:path
   mainWindow = Splashscreen.initSplashScreen({
     windowOpts: windowOptions,
     // icon: path.join(`${__dirname}./assets/icons/png/512x512.png`),
-    icon: path.join(__dirname, "./assets/icons/png/", "512x512.png"),
+    icon: path.join(__dirname, "./assets/icons/png/512x512.png"),
     templateUrl: path.join(__dirname, "./assets/splash/", "splashScreen3.svg"),
     delay: 0, // force show immediately since example will load fast
     minVisible: 1500, // show for 1.5s so example is obvious

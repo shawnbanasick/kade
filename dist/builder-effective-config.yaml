@@ -1,10 +1,11 @@
 directories:
   output: dist
-  buildResources: build
+  buildResources: build/icons
 appId: com.kade.app
 linux:
   target:
     - AppImage
+    - deb
   icon: build/icons
 win:
   target:

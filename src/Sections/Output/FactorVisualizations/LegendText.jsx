@@ -88,63 +88,63 @@ class LegendText extends React.Component {
       fontSize: 26,
       fontWeight: "bold",
       textAnchor: "middle",
-      fontFamily: "Verdana, sans-serif"
+      fontFamily: "Arial, sans-serif"
     };
 
     const astrick05Style = {
       x: xLocation - additionalXLocationValue + 12,
       y: yLocation + 65,
       fontSize: 16,
-      fontFamily: "Verdana, sans-serif"
+      fontFamily: "Arial, sans-serif"
     };
 
     const astrick01Style = {
       x: xLocation - additionalXLocationValue,
       y: yLocation + 95,
       fontSize: 16,
-      fontFamily: "Verdana, sans-serif"
+      fontFamily: "Arial, sans-serif"
     };
 
     const sigSymbolTextStyle1 = {
       x: xLocation - additionalXLocationValue + 30,
       y: yLocation + 65,
       fontSize: 16,
-      fontFamily: "Verdana, sans-serif"
+      fontFamily: "Arial, sans-serif"
     };
 
     const sigSymbolTextStyle2 = {
       x: xLocation - additionalXLocationValue + 30,
       y: yLocation + 95,
       fontSize: 16,
-      fontFamily: "Verdana, sans-serif"
+      fontFamily: "Arial, sans-serif"
     };
 
     const zScoreTextHigherStyle3 = {
       x: xLocation - additionalXLocationValue + 30,
       y: yLocation + 125,
       fontSize: 16,
-      fontFamily: "Verdana, sans-serif"
+      fontFamily: "Arial, sans-serif"
     };
 
     const arrowLeftStyle4 = {
       x: xLocation - additionalXLocationValue + 9,
       y: yLocation + 155,
       fontSize: 16,
-      fontFamily: "Verdana, sans-serif"
+      fontFamily: "Arial, sans-serif"
     };
 
     const zScoreTextLowerStyle5 = {
       x: xLocation - additionalXLocationValue + 30,
       y: yLocation + 155,
       fontSize: 16,
-      fontFamily: "Verdana, sans-serif"
+      fontFamily: "Arial, sans-serif"
     };
 
     const arrowRightStyle6 = {
       x: xLocation - additionalXLocationValue + 9,
       y: yLocation + 125,
       fontSize: 16,
-      fontFamily: "Verdana, sans-serif"
+      fontFamily: "Arial, sans-serif"
     };
 
     const consensusRectStyles = {
@@ -181,7 +181,7 @@ class LegendText extends React.Component {
       x: xLocation - additionalXLocationValue + 30,
       y: yLocation + 14 + consensusYLocation,
       fontSize: 16,
-      fontFamily: "Verdana, sans-serif"
+      fontFamily: "Arial, sans-serif"
     };
 
     if (showDistinguishingAs === "symbol") {

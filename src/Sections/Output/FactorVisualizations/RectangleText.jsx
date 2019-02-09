@@ -4,7 +4,7 @@ import state from "../../../store";
 const styles = {
   stroke: "black",
   zindex: 99,
-  fontFamily: "Verdana, sans-serif"
+  fontFamily: "Arial, sans-serif"
 };
 
 const widthValue = props => {
