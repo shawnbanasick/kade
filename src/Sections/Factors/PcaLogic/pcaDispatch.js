@@ -33,11 +33,6 @@ const pcaDispatch = () => {
   const eigenValuesAsPercents = getEigenCumulPercentArray[0];
   const eigenValuesCumulPercentArray = getEigenCumulPercentArray[1];
 
-    console.log(numberOfSorts);
-    console.log(numberofPrincipalComps);
-    console.log(eigenValuesSorted);
-    console.log(svd);
-
   const doEigenVecsCalcs = calcEigenVectors(
     numberOfSorts,
     numberofPrincipalComps,
