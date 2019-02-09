@@ -3,8 +3,8 @@ import state from "../../../store";
 // import { view } from "react-easy-state";
 
 const styles = {
-  // fill: "white",
-  stroke: "black",
+  fill: "black",
+  stroke: "none",
   fontWeight: "bold",
 
   // strokeWidth: 1,
@@ -23,23 +23,25 @@ const widthValue = props => {
 const titleHeight = state.getState("titleHeight");
 
 const renderBaseRectangles = props => (coords, index) => {
-    const textProps = {
-      x: index * widthValue(props) + widthValue(props) / 2,
-      y: 20 + titleHeight,
-      // width: widthValue(),
-      // height: heightValue(),
-      key: props.positionData.uniques[index],
-      text: props.positionData.uniques[index],
-      textAnchor: "middle"
-    };
-    return (
-      <text fontFamily="arial" {...styles} {...textProps}>
-        {textProps.text}
-      </text>
-    );
+  const textProps = {
+    x: index * widthValue(props) + widthValue(props) / 2,
+    y: 20 + titleHeight,
+    // width: widthValue(),
+    // height: heightValue(),
+    key: props.positionData.uniques[index],
+    text: props.positionData.uniques[index],
+    textAnchor: "middle"
   };
+  return (
+    <text fontFamily="arial" {...styles} {...textProps}>
+      { textProps.text }
+    </text>
+    );
+};
 
-export default props => <g>{props.positionData.uniques.map(renderBaseRectangles(props))}</g>;
+export default props => <g>
+                          { props.positionData.uniques.map(renderBaseRectangles(props)) }
+                        </g>;
 
 /*
   indexGroup

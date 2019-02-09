@@ -10,29 +10,27 @@ const styles = {
     margin: "0 auto",
     textAlign: "center",
     width: "auto",
-    height: "auto"
+    height: "auto",
   },
   svg: {
     position: "relative"
   },
   XYAxis: {
-    marginBottom: 40
+    marginBottom: 20
   }
 };
 
 // Returns a function that "scales" X coordinates from the data to fit the chart
-const xScale = props =>
-  d3
-    .scaleLinear()
-    .domain([-1, 1])
-    .range([props.padding, props.width - props.padding]);
+const xScale = props => d3
+  .scaleLinear()
+  .domain([-1, 1])
+  .range([props.padding, props.width - props.padding]);
 
 // Returns a function that "scales" Y coordinates from the data to fit the chart
-const yScale = props =>
-  d3
-    .scaleLinear()
-    .domain([-1, 1])
-    .range([props.height - props.padding, props.padding]);
+const yScale = props => d3
+  .scaleLinear()
+  .domain([-1, 1])
+  .range([props.height - props.padding, props.padding]);
 
 const ScatterPlot = props => {
   const scales = {
@@ -41,13 +39,8 @@ const ScatterPlot = props => {
   };
 
   return (
-    <div style={styles.container}>
-      <svg
-        id="screePlot"
-        style={styles.svg}
-        width={props.width}
-        height={props.height}
-      >
+    <div style={ styles.container }>
+      <svg id="screePlot" style={ styles.svg } width={ props.width } height={ props.height + 20 }>
         <XYAxis {...props} {...scales} {...styles.XYAxis} />
         <AxisTextLabels {...props} />
         <g>
@@ -56,7 +49,7 @@ const ScatterPlot = props => {
         </g>
       </svg>
     </div>
-  );
+    );
 };
 
 export default ScatterPlot;

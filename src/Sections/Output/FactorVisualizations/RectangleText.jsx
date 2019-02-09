@@ -2,9 +2,10 @@ import React from "react";
 import state from "../../../store";
 
 const styles = {
-  stroke: "black",
+  stroke: "none",
   zindex: 99,
-  fontFamily: "Arial, sans-serif"
+  fontFamily: "Arial, sans-serif",
+  fill: "black",
 };
 
 const widthValue = props => {
@@ -76,8 +77,8 @@ function statementList(texts, xCoord, factorVizOptions) {
   // map out locations for multi-line text
   let mapcounter = 1;
   const textItems = texts.map(text => (
-    <tspan key={mapcounter++} dy={dyValue} x={xCoord} textAnchor={"middle"}>
-      {text}
+    <tspan key={ mapcounter++ } dy={ dyValue } x={ xCoord } textAnchor={ "middle" }>
+      { text }
     </tspan>
   ));
   return textItems;
@@ -102,8 +103,7 @@ const renderRectangleText = props => {
       maxLineLength = props.factorVizOptions.willAdjustStatementWidthBy;
     }
     // check if sentences or statement numbers only
-    const willDisplayOnlyStateNums =
-      props.factorVizOptions.willDisplayOnlyStateNums;
+    const willDisplayOnlyStateNums = props.factorVizOptions.willDisplayOnlyStateNums;
     const willPrependStateNums = props.factorVizOptions.willPrependStateNums;
 
     if (willDisplayOnlyStateNums === true) {
@@ -126,16 +126,13 @@ const renderRectangleText = props => {
       );
     }
 
-    const xCoord =
-      props.positionData.xPosLoop[index] * widthValue(props) +
+    const xCoord = props.positionData.xPosLoop[index] * widthValue(props) +
       widthValue(props) / 2;
     // set up statement object
     const textProps = {
-      x:
-        props.positionData.xPosLoop[index] * widthValue(props) +
+      x: props.positionData.xPosLoop[index] * widthValue(props) +
         widthValue(props) / 2, // (index * widthValue()) + (widthValue() / 2),
-      y:
-        props.positionData.yPosLoop[index] * heightValue(props) +
+      y: props.positionData.yPosLoop[index] * heightValue(props) +
         20 +
         topMarginValue(props) +
         titleHeight,
@@ -146,10 +143,12 @@ const renderRectangleText = props => {
     };
     return (
       <text {...styles} {...textProps}>
-        {textProps.text}
+        { textProps.text }
       </text>
-    );
+      );
   };
 };
 
-export default props => <g>{props.data.map(renderRectangleText(props))}</g>;
+export default props => <g>
+                          { props.data.map(renderRectangleText(props)) }
+                        </g>;

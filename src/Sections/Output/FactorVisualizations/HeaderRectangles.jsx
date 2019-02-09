@@ -23,14 +23,16 @@ const widthValue = props => {
 };
 
 const renderBaseRectangles = props => (coords, index) => {
-    const rectangleProps = {
-      x: index * widthValue(props),
-      y: 0 + titleHeight,
-      width: widthValue(props),
-      height: heightValue(),
-      key: props.positionData.numRectsArray[index]
-    };
-    return <rect {...styles} {...rectangleProps} />;
+  const rectangleProps = {
+    x: index * widthValue(props),
+    y: 0 + titleHeight,
+    width: widthValue(props),
+    height: heightValue(),
+    key: props.positionData.numRectsArray[index]
   };
+  return <rect {...styles} {...rectangleProps} />;
+};
 
-export default props => <g>{props.positionData.uniques.map(renderBaseRectangles(props))}</g>;
+export default props => <g>
+                          { props.positionData.uniques.map(renderBaseRectangles(props)) }
+                        </g>;

@@ -22,16 +22,15 @@ const heightValue = props => {
 
 const styles = {
   fontSize: 12,
-  stroke: "black",
-  zindex: 9999
+  stroke: "none",
+  zindex: 9999,
+  fill: "black"
 };
 
 const renderSigSortsIndicators = props => {
   const shouldUseUnicode = true; // props.factorVizOptions.shouldUseUnicode;
-  const willDisplayDistingCompareSymbols =
-    props.factorVizOptions.willDisplayDistingCompareSymbols;
-  const willAdjustIndicatorSizeBy =
-    props.factorVizOptions.willAdjustDistIndicatorSizeBy;
+  const willDisplayDistingCompareSymbols = props.factorVizOptions.willDisplayDistingCompareSymbols;
+  const willAdjustIndicatorSizeBy = props.factorVizOptions.willAdjustDistIndicatorSizeBy;
 
   // console.log(`props: ${  JSON.stringify(props)}`);
 
@@ -62,8 +61,7 @@ const renderSigSortsIndicators = props => {
     // todo - set user selected custom value for dy for symbols
     const sigSymbolProps = {
       x: props.positionData.xPosLoop[index] * width + 10,
-      y:
-        props.positionData.yPosLoop[index] * height +
+      y: props.positionData.yPosLoop[index] * height +
         headerHeight1 +
         22 +
         1.7 * willAdjustIndicatorSizeBy,
@@ -74,12 +72,14 @@ const renderSigSortsIndicators = props => {
     };
     return (
       <text {...styles} {...sigSymbolProps}>
-        {sigSymbolProps.text}
+        { sigSymbolProps.text }
       </text>
-    );
+      );
   };
 };
 
 export default props => (
-  <g>{props.data.map(renderSigSortsIndicators(props))}</g>
+  <g>
+    { props.data.map(renderSigSortsIndicators(props)) }
+  </g>
 );

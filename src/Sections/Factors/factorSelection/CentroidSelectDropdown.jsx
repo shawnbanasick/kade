@@ -8,7 +8,9 @@ const localStore = store({
 });
 
 const saveDropdownValueToState = (event, data) => {
-  state.setState({ numCentroidFactors: data.value });
+  state.setState({
+    numCentroidFactors: data.value
+  });
   localStore.value = data.value;
 };
 
@@ -62,12 +64,12 @@ class CentroidSelectDropdown extends React.Component {
     localStore.value = numCentroidFactors;
     return (
       <div style={ { display: "flex" } }>
-        <div style={ { textAlign: "center", marginRight: 10, height: 40, marginTop: 5, paddingTop: 6, fontSize: 22  } }>
-                Extract
-              </div>
-        <div  style={{display:"flex", alignItems: "center"}} color="black" basic>
+        <div style={ { textAlign: "center", marginRight: 10, height: 40, marginTop: 5, paddingTop: 6, fontSize: 22 } }>
+          Extract
+        </div>
+        <div style={ { display: "flex", alignItems: "center" } } color="black">
           <Dropdown id="centroidSelectDropdown" placeholder={ "?" } defaultValue={ localStore.value } onChange={ saveDropdownValueToState } openOnFocus button simple
-            disabled={ isDisabled } size={"small"} item options={ options } style={ { border: "1px solid black", fontSize: 14, paddingBottom: 7, marginBottom: 5, height: 36 } } />
+            disabled={ isDisabled } size={ "small" } item options={ options } style={ { border: "1px solid black", fontSize: 14, paddingBottom: 7, marginBottom: 5, height: 36 } } />
         </div>
       </div>
       );
