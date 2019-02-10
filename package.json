@@ -47,13 +47,18 @@
   "license": "MIT",
   "build": {
     "appId": "com.kade.app",
-    "directories": {"buildResources": "build/icons"},
     "linux": {
+      "category": "Science",
+      "icon": "icons/png",
       "target": [
-        "AppImage",
-        "deb"
-      ],
-      "icon": "build/icons"
+        { 
+          "target":"AppImage", 
+          "arch": [
+            "x64",
+            "ia32"
+          ]
+        }
+      ]      
     },
     "win": {
       "target": [

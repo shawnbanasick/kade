@@ -1,12 +1,15 @@
 directories:
   output: dist
-  buildResources: build/icons
+  buildResources: build
 appId: com.kade.app
 linux:
+  category: Science
+  icon: icons/png
   target:
-    - AppImage
-    - deb
-  icon: build/icons
+    - target: AppImage
+      arch:
+        - x64
+        - ia32
 win:
   target:
     - nsis
