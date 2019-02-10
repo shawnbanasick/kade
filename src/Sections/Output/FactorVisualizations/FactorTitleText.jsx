@@ -3,8 +3,8 @@ import React from "react";
 
 const styles = {
   fontSize: 28,
-  // fill: "white",
-  stroke: "black",
+  fill: "black",
+  stroke: "none",
   // width: 50,
   // strokeWidth: 1,
   zindex: 99,

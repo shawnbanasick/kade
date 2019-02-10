@@ -78,3 +78,4 @@ const MainContent = styled.div`
 const DefaultMessage = styled.div`
   font-size: 22px;
 `;
+

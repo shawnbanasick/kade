@@ -14,12 +14,11 @@ function getXCoords(props) {
 }
 
 function getYValue(props) {
-  // console.log(`props ${  JSON.stringify(props)}`);
-
   const maxColumnHeight = state.getState("maxColumnHeight");
   const defaultHeight = maxColumnHeight * 110 + 100;
 
   const shouldAdjustHeight = props.factorVizOptions.willAdjustCardHeight;
+  
   if (shouldAdjustHeight === true) {
     const cardHeight = props.factorVizOptions.willAdjustCardHeightBy;
     const yValue = maxColumnHeight * cardHeight + 100;
@@ -36,8 +35,6 @@ class LegendText extends React.Component {
   }
 
   renderLegendRectangleText(props) {
-    // console.log(`props: ${  JSON.stringify(props)}`);
-
     const displayColor = props.factorVizOptions.consensusIndicator;
     const distinguishingIndicator05 =
       props.factorVizOptions.distinguishingIndicator05;
@@ -86,7 +83,7 @@ class LegendText extends React.Component {
       x: xLocation,
       y: yLocation + 30,
       fontSize: 26,
-      fontWeight: "bold",
+      fontWeight: "normal",
       textAnchor: "middle",
       fontFamily: "Arial, sans-serif"
     };

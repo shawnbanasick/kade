@@ -53,9 +53,9 @@ let yValue = props => {
 
   const shouldAdjustHeight = props.factorVizOptions.willAdjustCardHeight;
   if (shouldAdjustHeight === true) {
-    const cardHeight = props.factorVizOptions.willAdjustCardHeightBy;
-    yValue = maxColumnHeight * cardHeight + 100;
-    return yValue;
+    const cardHeight = +props.factorVizOptions.willAdjustCardHeightBy;
+    const newYvalue = maxColumnHeight * cardHeight + 100;
+    return newYvalue;
   }
   return defaultHeight;
 };

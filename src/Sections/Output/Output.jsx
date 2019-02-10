@@ -90,14 +90,17 @@ function handleTabChange(e, { activeIndex }) {
 class Output extends Component {
   render() {
     const { activeIndex } = localStore;
-    showTableDataNotSentWarning = state.getState("showTableDataNotSentWarning");
-
+  showTableDataNotSentWarning = state.getState("showTableDataNotSentWarning");
+  const facVizContainerHeight = state.getState("facVizContainerHeight") || 600;
+  const facVizContainerWidth = state.getState("facVizContainerWidth") || 1000;
     return (
       <MainContent>
         <Tab
           panes={panes}
           activeIndex={activeIndex}
           onTabChange={handleTabChange}
+          width={facVizContainerWidth}
+          height={facVizContainerHeight}
         />
       </MainContent>
     );
@@ -129,6 +132,7 @@ const fadeOut = keyframes`
 const MainContent = styled.div`
   background-color: #d6dbe0;
   overflow: auto;
+  // overflow: scroll;
 
   background-color: #d6dbe0;
   visibility: ${props => (props.view ? "hidden" : "visible")};
@@ -138,6 +142,10 @@ const MainContent = styled.div`
   width: 100vw;
   box-sizing: border-box;
   max-height: calc(100vh - 22px);
+
+  // height: ${props => `${props.height}px`};
+  // width: ${props => `${props.width}px`};
+
 
   .tabular-menu {
     display: grid;
@@ -200,12 +208,14 @@ const DataWindow1 = styled.div`
 
 const DataWindow2 = styled.div`
   min-height: 600px;
+  max-height: calc(100vh - 22px);
   background-color: white;
   overflow: scroll;
   padding: 5px;
   padding-top: 5px;
   padding-left: 5px;
   width: calc(100vw - 122px);
+
   box-sizing: border-box;
   max-height: calc(100vh - 22px);
   overflow: auto;

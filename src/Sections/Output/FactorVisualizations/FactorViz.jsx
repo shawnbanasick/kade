@@ -1,4 +1,5 @@
 import React from "react";
+import state from "../../../store";
 import LegendText from "./LegendText";
 import SigSortsViz from "./SigSortsViz";
 import RectangleText from "./RectangleText";
@@ -30,7 +31,7 @@ const getStyles = props => {
   let containerWidth;
   if (willAdjustCardWidth === true) {
     const newWidth = props.factorVizOptions.willAdjustCardWidthBy;
-    containerWidth = 20 + newWidth * positionData.uniques.length;
+    containerWidth = 40 + newWidth * positionData.uniques.length;
   } else {
     containerWidth = 125 * positionData.uniques.length;
   }
@@ -42,6 +43,12 @@ const getStyles = props => {
     height: containerHeight,
     marginBottom: 250
   };
+  // to change output section main content height / width
+  state.setState({
+    facVizContainerHeight: containerHeight,
+    facVizContainerWidth: containerWidth
+  })
+
   return container;
 };
 
