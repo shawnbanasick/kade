@@ -5,7 +5,7 @@ import { app, BrowserWindow, Menu, dialog } from "electron";
 import { enableLiveReload } from "electron-compile";
 import * as Splashscreen from "@trodi/electron-splashscreen";
 import * as path from "path";
-import * as url from "url";
+// import * as url from "url";
 
 // npm install lru-cache first
 // const lru = require("lru-cache")({
@@ -245,20 +245,20 @@ const createWindow = async () => {
 
   mainWindow.on('close', (e) => {
     if (app.showExitPrompt) {
-        e.preventDefault() // Prevents the window from closing 
-        dialog.showMessageBox({
-            type: 'question',
-            buttons: ['Yes', 'No'],
-            title: 'Confirm',
-            message: 'Are you sure you want to quit?'
-        }, function (response) {
-            if (response === 0) { // Runs the following if 'Yes' is clicked
-                app.showExitPrompt = false
-            mainWindow.close()
+      e.preventDefault() // Prevents the window from closing 
+      dialog.showMessageBox({
+        type: 'question',
+        buttons: ['Yes', 'No'],
+        title: 'Confirm',
+        message: 'Are you sure you want to quit?'
+      }, (response) => {
+        if (response === 0) { // Runs the following if 'Yes' is clicked
+          app.showExitPrompt = false
+          mainWindow.close()
         }
-    })
+      })
     }
-  });  
+  });
 };
 
 
@@ -279,9 +279,11 @@ app.on("window-all-closed", () => {
 });
 
 app.on("activate", () => {
+  app.showExitPrompt = true;
   // On OS X it's common to re-create a window in the app when the
   // dock icon is clicked and there are no other windows open.
   if (mainWindow === null) {
+    app.showExitPrompt = true;
     createWindow();
   }
 });
