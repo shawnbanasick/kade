@@ -17,7 +17,7 @@
     "pack": "electron-builder --dir",
     "dist:macOS": "electron-builder --mac",
     "dist:windows": "electron-builder --windows",
-    "dist:linux": "electron-builder --linux"
+    "dist:linux": "DEBUG=electron-builder electron-builder --linux"
   },
   "jest": {
     "runner": "@jest-runner/electron",
@@ -47,9 +47,11 @@
   "license": "MIT",
   "build": {
     "appId": "com.kade.app",
+    "directories": {
+      "buildResources": "resources"
+    },
     "linux": {
       "category": "Science",
-      "icon": "icons/png",
       "target": [
         { 
           "target":"AppImage", 
@@ -156,7 +158,7 @@
     "babel-preset-env": "^1.7.0",
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-react": "^6.24.1",
-    "electron-builder": "^20.36.2",
+    "electron-builder": "^20.38.5",
     "electron-forge": "^5.2.2",
     "electron-installer-debian": "^0.8.1",
     "electron-installer-redhat": "^0.5.0",

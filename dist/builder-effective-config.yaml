@@ -1,10 +1,9 @@
 directories:
   output: dist
-  buildResources: build
+  buildResources: resources
 appId: com.kade.app
 linux:
   category: Science
-  icon: icons/png
   target:
     - target: AppImage
       arch:

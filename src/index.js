@@ -63,7 +63,7 @@ const createWindow = async () => {
   mainWindow = Splashscreen.initSplashScreen({
     windowOpts: windowOptions,
     // icon: path.join(`${__dirname}./assets/icons/png/512x512.png`),
-    icon: path.join(__dirname, "./assets/icons/png/512x512.png"),
+    // icon: path.join(__dirname, "./assets/icons/png/512x512.png"),
     templateUrl: path.join(__dirname, "./assets/splash/", "splashScreen3.svg"),
     delay: 0, // force show immediately since example will load fast
     minVisible: 1500, // show for 1.5s so example is obvious
