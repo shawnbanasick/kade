@@ -23,7 +23,7 @@ function parseExcelType3(excelFile) {
       worksheet = workbook.Sheets[y];
 
       // find Project information
-      if (y === "Project Overview") {
+      if (y === "Project Overview" || y === "Analysis Overview") {
         // turn off error report
         hasAnalysisOverviewWorksheet = true;
 
