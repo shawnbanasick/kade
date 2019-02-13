@@ -18,10 +18,26 @@ KenQ Analysis Desktop Edition (KADE) is an open-source application for the analy
 
 ### Feature Demostration
 
-1. Click the "1. Input" button
-2. Click the "Demo Data" tab
-3. Click the "Load Lipset" button
-4. Click the 
+1. Click the "1. Input" navigation button.
+2. Click the "Demo Data" tab.
+3. Click the "Load Lipset" button.
+4. Click the "2. Data" navigation button and confirm that the data has loaded properly.
+5. Click the "3. Correlations" navigation button.
+6. Click the "Calculate Correlations" button.
+7. Click the "4. Factors" navigation button.
+8. Click the "Centroid Factors" button or "Principal Components" button.
+9. Click the "5. Rotation" navigation button.
+10. Click the dropdown select to choose the number of factors and then click "Submit".
+11. Click the "Varimax" tab or the "Judgemental" tab.
+12. For Varimax rotation, click the "Varimax Rotation" button.
+13. For Judgmental rotation, click the "Initialize Judgmental Rotation" button. Then select two factor buttons and "Display". After rotation click the "Save Rotation" button to make the rotation permanent.
+14. Click the "6. Loadings" navigation button.
+15. Click the "Auto-Flag" button, or select participant loadings individually.
+16. Click the "Send Table Data to Output".
+17. Click the "7. Output" button, then click the "Options" tab.
+18. Select the factors to output, then click "Submit".
+19. Click the "Factor Characteristics", "Factors Table", or "Factor Visualizations" tabs to view analysis results.
+20. Click the "Options" tab, then click the "Excel File" button or "CSV File" button to download the analysis results.
 
 <br/>
 <br/>
