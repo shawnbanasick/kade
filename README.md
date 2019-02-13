@@ -15,7 +15,9 @@ KenQ Analysis Desktop Edition (KADE) is an open-source application for the analy
 
 ## Overview
 <img src="https://github.com/shawnbanasick/kade/blob/master/gifs/KADE overview.gif" width="500" />
+
 ### Feature Demostration
+
 1. Click the "1. Input" button
 2. Click the "Demo Data" tab
 3. Click the "Load Lipset" button
