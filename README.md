@@ -43,7 +43,7 @@ KenQ Analysis Desktop Edition (KADE) is an open-source application for the analy
 <br/>
 
 ## Installation Instructions - Microsoft Windows
-### I haven't paid my developer fees to Microsoft, so the application will give you a warning on first start-up.
+### I haven't paid developer fees to Microsoft, so the application will give you a warning on first start-up.
 1. Double click the downloaded file.
 2. In the Windows warning box, click "More info".
 <img src="https://github.com/shawnbanasick/kade/blob/master/gifs/winWarn.PNG" width="350" />
@@ -54,7 +54,7 @@ KenQ Analysis Desktop Edition (KADE) is an open-source application for the analy
 <br/>
 
 ## Installation Instructions - Apple macOS
-### I haven't paid my developer fees to Apple, so the application may give you a warning on first start-up.
+### I haven't paid developer fees to Apple, so the application may give you a warning on first start-up.
 
 <img src="https://github.com/shawnbanasick/kade/blob/master/gifs/macWarn.png" width="350">
 <br/>
@@ -70,6 +70,7 @@ KenQ Analysis Desktop Edition (KADE) is an open-source application for the analy
 <img src="https://github.com/shawnbanasick/kade/blob/master/gifs/openSelect.png" width="350" />
 &nbsp;&nbsp;&nbsp;6. Click the "Open" button.
 <img src="https://github.com/shawnbanasick/kade/blob/master/gifs/openButtonMac.png" width="350" />
+This process is only required the first time the application is started. After the first time, the application will start normally.
 
 <br/>
 <br/>
