@@ -14,7 +14,8 @@ KenQ Analysis Desktop Edition (KADE) is an open-source application for the analy
 <br/>
 
 ## Overview
-<img src="https://github.com/shawnbanasick/kade/blob/master/gifs/KADE overview.png" width="350" />
+<img src="https://github.com/shawnbanasick/kade/blob/master/gifs/KADE overview.gif" width="500" />
+
 
 <br/>
 <br/>
