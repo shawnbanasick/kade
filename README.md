@@ -1,6 +1,6 @@
 <img style="float: left;" src="https://github.com/shawnbanasick/kade/blob/master/gifs/heroImage3.png" height="125"/>  
 
-Download Links: &nbsp; [macOS](https://github.com/shawnbanasick/kade/releases/download/v0.0.1-beta/KADE-0.0.1.dmg) &nbsp;||&nbsp;
+<strong>Download Links:</strong> &nbsp; [macOS](https://github.com/shawnbanasick/kade/releases/download/v0.0.1-beta/KADE-0.0.1.dmg) &nbsp;||&nbsp;
 [Windows-installer](https://github.com/shawnbanasick/kade/releases/download/v0.0.1-beta/KADE.Setup.0.0.1.exe) &nbsp;||&nbsp;
 [Windows-portable](https://github.com/shawnbanasick/kade/releases/download/v0.0.1-beta/KADE.0.0.1.exe) &nbsp;||&nbsp;
 [Linux](https://github.com/shawnbanasick/kade/releases/download/v0.0.1-beta/kade-0.0.1-x86_64.AppImage)<br/>
@@ -13,10 +13,8 @@ KenQ Analysis Desktop Edition (KADE) is an open-source application for the analy
 <br/>
 <br/>
 
-## Overview
+## Start to Finish Demonstration
 <img src="https://github.com/shawnbanasick/kade/blob/master/gifs/KADE overview.gif" width="500" />
-
-### Feature Demostration
 
 1. Click the "1. Input" navigation button.
 2. Click the "Demo Data" tab.
