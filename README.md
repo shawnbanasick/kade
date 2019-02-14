@@ -1,4 +1,4 @@
-<img style="float: left;" src="https://github.com/shawnbanasick/kade/blob/master/gifs/heroImage.png" height="125"/>  
+<img style="float: left;" src="https://github.com/shawnbanasick/kade/blob/master/gifs/heroImage3.png" height="125"/>  
 
 Download Links: &nbsp; [macOS](https://github.com/shawnbanasick/kade/releases/download/v0.0.1-beta/KADE-0.0.1.dmg) &nbsp;||&nbsp;
 [Windows-installer](https://github.com/shawnbanasick/kade/releases/download/v0.0.1-beta/KADE.Setup.0.0.1.exe) &nbsp;||&nbsp;
@@ -81,8 +81,8 @@ The application is packaged as an "AppImage" so it can be installed on most of t
 2. Select "Properties".
 3. Select "Permissions". (Example image from debian-based "MX Linux")
 <img src="https://github.com/shawnbanasick/kade/blob/master/gifs/linuxPermissions.png" width="350" />
-&nbsp;&nbsp;&nbsp;4. Change permissions to executable. (Check "Allow this file to run as a program")
-
+&nbsp;&nbsp;&nbsp;4. Change permissions to executable. (Check "Allow this file to run as a program")<br/>
+<strong>Known Issue:</strong> I have not been able to get the icons to package properly in the Linux AppImage, so the ugly default window icons are used now. I am working on a fix for this issue.
 <br/>
 <br/>
 
