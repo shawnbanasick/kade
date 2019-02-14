@@ -23,20 +23,14 @@ class DisplayVisualizationsButtons extends React.Component {
     );
     if (showDownloadOutputButtons) {
       return (
-        <div style={{ display: "flex" }}>
+        <div style={ { display: "flex" } }>
           <StyledWrapper>
-            <Button
-              id="displayVisualizationsButton"
-              className="wrapper1"
-              size={"large"}
-              style={{ marginTop: 50, marginBottom: 50 }}
-              onClick={this.handleDisplayViz}
-            >
-              Display Visualizations of Composite Factors
+            <Button id="displayVisualizationsButton" className="wrapper1" size={ "large" } style={ { marginTop: 50, marginBottom: 50 } } onClick={ this.handleDisplayViz }>
+              Display Composite Factors
             </Button>
           </StyledWrapper>
         </div>
-      );
+        );
     }
     return null;
   }

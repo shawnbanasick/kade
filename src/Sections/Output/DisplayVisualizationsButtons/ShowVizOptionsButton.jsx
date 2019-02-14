@@ -23,26 +23,20 @@ class DisplayVisualizationsButtons extends React.Component {
     );
     if (showDownloadOutputButtons) {
       return (
-        <div style={{ display: "flex" }}>
+        <div style={ { display: "flex" } }>
           <StyledWrapper>
-            <Button
-              id="viewVisualizationsDisplayOptions"
-              className="wrapper1"
-              size={"large"}
-              style={{ marginTop: 50, marginLeft: 30, marginBottom: 50 }}
-              onClick={this.handleOpenVizOptions}
-            >
-              Display Visualization Display Options
+            <Button id="viewVisualizationsDisplayOptions" className="wrapper1" size={ "large" } style={ { marginTop: 50, marginLeft: 30, marginBottom: 50 } } onClick={ this.handleOpenVizOptions }>
+              View Display Options
             </Button>
           </StyledWrapper>
         </div>
-      );
+        );
     }
     return (
-      <h2 style={{ marginTop: 50, marginLeft: 50 }}>
-        Select factors to output in the Options tab
-      </h2>
-    );
+      <h2 style={ { marginTop: 50, marginLeft: 50 } }>
+              Select factors to output in the Options tab
+            </h2>
+      );
   }
 }
 
