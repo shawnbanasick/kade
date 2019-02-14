@@ -11,16 +11,18 @@ class Start extends Component {
       <MainContent>
         { /* <LanguageSelection>{`${width} x ${height}`}</LanguageSelection> */ }
         <TitleDiv>KADE</TitleDiv>
-        <SubTitleDiv>
-          <HighlightLetter>K</HighlightLetter>
-          en-Q
-          <HighlightLetter> A</HighlightLetter>
-          nalysis
-          <HighlightLetter> D</HighlightLetter>
-          esktop
-          <HighlightLetter> E</HighlightLetter>
-          dition
-        </SubTitleDiv>
+        <SutTitleDivContainer>
+          <SubTitleDiv>
+            <HighlightLetter>K</HighlightLetter>
+            en-Q
+            <HighlightLetter> A</HighlightLetter>
+            nalysis
+            <HighlightLetter> D</HighlightLetter>
+            esktop
+            <HighlightLetter> E</HighlightLetter>
+            dition
+          </SubTitleDiv>
+        </SutTitleDivContainer>
         <SubTitleDiv2>version 1.0.0</SubTitleDiv2>
         <WebLinkRow>
           <h1>web links:</h1>
@@ -28,12 +30,13 @@ class Start extends Component {
         </WebLinkRow>
         <WebLinkDiv1 onClick={ handleClick }>
           <StyledAnchor target="_blank" rel="noopener noreferrer" href="https://github.com/shawnbanasick/kade">
-            KADE Main Page and Change Log
+            KADE
+            <br/>Home Page
           </StyledAnchor>
         </WebLinkDiv1>
         <WebLinkDiv2>
           <StyledAnchor target="_blank" rel="noopener noreferrer" href="https://github.com/shawnbanasick/kade/wiki">
-            KADE Reference Guide and User Manual
+            KADE User Manual
           </StyledAnchor>
         </WebLinkDiv2>
         <WebLinkDiv3>
@@ -118,26 +121,40 @@ const TitleDiv = styled.div`
   font-size: 80px;
   font-weight: bold;
   user-select: none;
+  padding-left: 30px;
+`;
+
+const SutTitleDivContainer = styled.div`
+  display: flex;
+  grid-area: subtitleRow;
+  align-items: center;
+  height: 66px;
+  width: 700px;
+  background-color: rgba(144,	238, 144, .6);
+  margin: 25px;
+  padding-top: 8px;
+  padding-left: 25px;
 `;
 
 const SubTitleDiv = styled.p`
-  display: flex;
-  grid-area: subtitleRow;
   font-style: italic;
   font-size: 40px;
   font-weight: normal;
 `;
 
 const SubTitleDiv2 = styled.p`
+  margin-top: 65px;
   display: flex;
   grid-area: subtitleRow2;
   font-style: italic;
   font-size: 30px;
   font-weight: normal;
+  padding: 3px;
 `;
 
+// color: #b22222;
 const HighlightLetter = styled.span`
-  color: #b22222;
+  font-size: 60px;
   font-weight: bold;
 `;
 
