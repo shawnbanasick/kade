@@ -87,8 +87,8 @@ const StyledAnchor = styled.a`
 // 240px 240px 240px 240px;
 const MainContent = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
-  grid-template-rows: 20px 155px 50px 30px 115px 120px 180px 20px;
+  grid-template-columns: 260px 260px 260px 260px;
+  grid-template-rows: 20px 155px 50px 30px 175px 50px 240px 0px;
   grid-template-areas:
     "row1 row1 row1 row1"
     "titleRow titleRow titleRow titleRow"
@@ -279,5 +279,6 @@ const WebLinkDiv4 = styled.div`
 `;
 
 const WebLinkRow = styled.div`
+  align-items: flex-end;
   grid-area: weblinkRow;
 `;
