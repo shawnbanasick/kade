@@ -1,32 +1,121 @@
+import { Tab } from "semantic-ui-react";
 import React, { Component } from "react";
-import { view } from "react-easy-state";
+import { view, store } from "react-easy-state";
 import styled, { keyframes } from "styled-components";
-// import initialState from '../../initialState';
-// import state from '../../store';
-// import { Button } from 'semantic-ui-react';
+// import state from "../../store";
+import InputHelpText from './InputHelpText';
+import InputHelpTextCSV from './InputHelpTextCSV';
+import InputHelpTextExcel1 from './InputHelpTextExcel1';
+import InputHelpTextExcel2 from './InputHelpTextExcel2';
+import InputHelpTextExcel3 from './InputHelpTextExcel3';
+import InputHelpTextJson from './InputHelpTextJson';
+import InputHelpTextPqmethod from './InputHelpTextPqmethod';
+import CorrelationsHelpText from './CorrelationsHelpText';
+import FactorsHelpText from './FactorsHelpText';
+import RotationHelpText from './RotationHelpText';
+import LoadingsHelpText from './LoadingsHelpText';
+import OutputHelpText from './OutputHelpText';
 
-// function handleClick() {
-//     console.log(JSON.stringify("clicked"));
-//     const initialStateValues = initialState();
-//     state.setState(initialStateValues);
-// }
 
-class HelpSection extends Component {
+// factorScoreRanksArray
+
+const panes = [
+  {
+    menuItem: "Help-Home",
+    render: () => (
+      <Tab.Pane>
+        <DataWindow2 />
+      </Tab.Pane>
+    )
+  },
+  {
+    menuItem: "Help-Input",
+    render: () => (
+      <Tab.Pane>
+        <DataWindow2>
+          <InputHelpText />
+          <InputHelpTextCSV />
+          <InputHelpTextExcel1 />
+          <InputHelpTextExcel2 />
+          <InputHelpTextExcel3 />
+          <InputHelpTextJson />
+          <InputHelpTextPqmethod />
+        </DataWindow2>
+      </Tab.Pane>
+    )
+  },
+  {
+    menuItem: "Help-Correlations",
+    render: () => (
+      <Tab.Pane>
+        <DataWindow2>
+          <CorrelationsHelpText />
+        </DataWindow2>
+      </Tab.Pane>
+    )
+  },
+  {
+    menuItem: "Help-Factors",
+    render: () => (
+      <Tab.Pane>
+        <DataWindow2>
+          <FactorsHelpText />
+        </DataWindow2>
+      </Tab.Pane>
+    )
+  },
+  {
+    menuItem: "Help-Rotation",
+    render: () => (
+      <Tab.Pane>
+        <DataWindow2>
+          <RotationHelpText />
+        </DataWindow2>
+      </Tab.Pane>
+    )
+  },
+  {
+    menuItem: "Help-Loadings",
+    render: () => (
+      <Tab.Pane>
+        <DataWindow2>
+          <LoadingsHelpText />
+        </DataWindow2>
+      </Tab.Pane>
+    )
+  },
+  {
+    menuItem: "Help-Output",
+    render: () => (
+      <Tab.Pane>
+        <DataWindow2>
+          <OutputHelpText />
+        </DataWindow2>
+      </Tab.Pane>
+    )
+  }
+];
+
+const localStore = store({
+  activeIndex: 0
+});
+
+function handleTabChange(e, {activeIndex}) {
+  localStore.activeIndex = activeIndex;
+}
+
+class Output extends Component {
   render() {
+    const {activeIndex} = localStore;
     return (
       <MainContent>
-        <h1>Help</h1>
-        <h2 style={ { width: 800 } }>Help Section Here</h2>
-        <br/>
-        <br/>
-        <br/>
-        <img src={ "./../../assets/help/test1.gif" } alt={ "test1" } />
+        <Tab panes={ panes } activeIndex={ activeIndex } onTabChange={ handleTabChange } />
       </MainContent>
       );
   }
 }
 
-export default view(HelpSection);
+export default view(Output);
 
 const fadeIn = keyframes`
   from {
@@ -48,68 +137,99 @@ const fadeOut = keyframes`
   }
 `;
 
-// const StyledAnchor = styled.a`
-//   color: black;
-
-//   &:hover {
-//     color: black;
-//   }
-// `;
-
-// 240px 240px 240px 240px;
 const MainContent = styled.div`
-  display: grid;
-  grid-template-columns: 1fr;
-  grid-template-rows: 220px 1fr;
-  /* grid-template-areas:
-    "row1 row1 row1 row1"
-    "titleRow titleRow titleRow titleRow"
-    "subtitleRow subtitleRow subtitleRow subtitleRow"
-    "subtitleRow2 subtitleRow2 subtitleRow2 subtitleRow2"
-    "weblinkRow weblinkRow weblinkRow weblinkRow"
-    "linkboxRow1 linkboxRow1 linkboxRow2 linkboxRow2"
-    "linkboxRow3 linkboxRow3 linkboxRow4 linkboxRow4"; */
-  justify-items: center;
-  align-items: center;
-  background-color: white;
+  background-color: #d6dbe0;
+  overflow: auto;
+  overflow: scroll;
+
+  background-color: #d6dbe0;
   visibility: ${props => (props.view ? "hidden" : "visible")};
   animation: ${props => (props.view ? fadeOut : fadeIn)} 0.5s linear;
   transition: visibility 0.5s linear;
 
-  font-family: Helvetica, sans-serif;
-  font-size: 18px;
+  width: 100vw;
+  box-sizing: border-box;
+  height: 100vh;
 
-  width: calc(100vw - 125px);
+  
+  .tabular-menu {
+    display: grid;
+    grid-template-columns: 100px 100px 140px 110px 150px 170px;
+    background-color: #d6dbe0;
+    padding-left: 20px !important;
+    height: 45px;
+    align-items: end;
+    list-style: none;
+    font-family: Helvetica;
+    padding: 0;
+    margin: 0;
+    font-size: 25px;
+  }
+
+  .tabular-menu-item {
+    display: grid;
+    align-items: center;
+    justify-items: center;
+    margin-right: 20px;
+    background-color: #d6dbe0;
+    height: 80%;
+    border-top: 5px solid #d6dbe0;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+  }
+
+  .tabular-menu-item a {
+    cursor: pointer;
+    color: black;
+  }
+
+  .tabs-menu-item:not(.is-active):hover {
+    color: #3498db;
+    background-color: white;
+  }
+
+  .tabular-menu-item.is-active {
+    color: #3498db;
+    background-color: white;
+    border-top: 5px solid #0080ff;
+    transition: all 0.25s linear;
+  }
+
+  .tabular-panel {
+    padding: 10px 50px;
+    background-color: white;
+    padding-left: 20px !important;
+  }
+`;
+
+const DataWindow1 = styled.div`
+  background-color: white;
+  max-width: 1197;
+  height: auto;
+`;
+
+const DataWindow2 = styled.div`
+  min-height: 600px;
+  max-height: calc(100vh - 22px);
+  background-color: white;
+  overflow: scroll;
+  padding: 5px;
+  padding-top: 5px;
+  padding-left: 5px;
+  width: calc(100vw - 122px);
+
   box-sizing: border-box;
   max-height: calc(100vh - 22px);
   overflow: auto;
+  user-select: none;
 `;
 
-// const BeginAnalysisButton = styled.button`
-//   display: grid;
-//   align-items: center;
-//   justify-items: center;
-//   background-color: ${props => props.buttonColor};
-//   height: 40px;
-//   width: 200px;
-//   border: 1px solid black;
-//   text-align: center;
-//   font-size: 16px;
-//   font-family: Helvetica, sans-serif;
-//   font-weight: normal;
-//   border-radius: 4px;
-//   margin-right: 3px;
-//   margin-bottom: 3px;
-//   box-shadow: 0 2px 2px 0 black;
-//   outline: none;
+const NoDataMessage = styled.div`
+  font-size: 25px;
+  margin-left: 50px;
+  margin-top: 100px;
+`;
 
-//   &:hover {
-//     font-weight: bold
-//   }
-
-//   &:active {
-//     box-shadow: 0 1px 1px 0 black;
-//     margin-left: 3px;
-//     transform: translateY(1px);
-//   }
-// `;
+const ButtonContainer1 = styled.div`
+  display: flex;
+`;
