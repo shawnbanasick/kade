@@ -75,6 +75,7 @@ const fadeOut = keyframes`
 `;
 
 const MainContent = styled.div`
+  user-select: all;
   background-color: white;
   padding: 50px;
   overflow: auto;

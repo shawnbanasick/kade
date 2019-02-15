@@ -1,12 +1,14 @@
 import React, { Component } from "react";
 import { view } from "react-easy-state";
 import styled, { keyframes } from "styled-components";
+import ExcelType1Image from './helpImages/ExcelType1Image';
 
 class HelpSection extends Component {
   render() {
     return (
       <MainContent>
-        <h2 id="exceltype1inputfaq">Excel Type 1 Input FAQ:</h2>
+        <hr />
+        <h1 id="exceltype1inputfaq">Excel Type 1 Input FAQ:</h1>
         <ul>
           <li>
             <p><strong>Can I use unforced sorts in a type 1 file ?</strong>
@@ -22,6 +24,7 @@ class HelpSection extends Component {
           </li>
         </ul>
         <br/>
+        <ExcelType1Image />
         <h2 id="filesetup">File Setup</h2>
         <h3 id="step1downloadthesamplefile">Step 1 - Download the Sample File</h3>
         <p>You have to download the file to your computer before you can begin adding your data.
@@ -62,5 +65,6 @@ const fadeOut = keyframes`
 const MainContent = styled.div`
   background-color: white;
   padding: 50px;
+  user-select: all;
   overflow: auto;
 `;

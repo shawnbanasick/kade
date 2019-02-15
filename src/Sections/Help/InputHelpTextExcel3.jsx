@@ -6,7 +6,8 @@ class HelpSection extends Component {
     render() {
         return (
             <MainContent>
-              <h2 id="kadefileandkenqanalysisfileimportfaq">KADE File and Ken-Q Analysis File Import FAQ</h2>
+                <hr />
+              <h1 id="kadefileandkenqanalysisfileimportfaq">KADE File and Ken-Q Analysis File Import FAQ</h2>
               <p><strong>Can I continue a previous KADE session using Type 3 data?</strong>
                 <br /> No, The Excel Type 3 format is for re-loading data used during a previous KADE session. It does not allow the continuation of a previous analysis. It only loads
                 the original statements and Q-sort data.</p>
@@ -26,6 +27,7 @@ export default view(HelpSection);
 
 const MainContent = styled.div`
   background-color: white;
+  user-select: all;
   padding: 50px;
   overflow: auto;
 `;

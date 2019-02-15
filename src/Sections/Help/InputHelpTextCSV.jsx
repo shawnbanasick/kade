@@ -1,12 +1,14 @@
 import React, { Component } from "react";
 import { view } from "react-easy-state";
 import styled, { keyframes } from "styled-components";
+import CsvInputImage from './helpImages/CsvInputImage';
 
 class HelpSection extends Component {
   render() {
     return (
       <MainContent>
-        <h3 id="csvfaq">CSV FAQ:</h3>
+        <hr />
+        <h1 id="csvfaq">CSV FAQ:</h1>
         <ul>
           <li>
             <p><strong>What is CSV?</strong> -CSV is a flat file of comma separated values. </p>
@@ -22,7 +24,8 @@ class HelpSection extends Component {
         <p>For the <strong>Q sorts file</strong>, use a spreadsheet program like Microsoft Excel, Google Sheets, or <a href="https://www.libreoffice.org/"><strong>Libre Office</strong></a>    to setup the file. In the file, the data should be organized by statement number. A header row showing the statement numbers is required at the top of the file.
           Participant names or identifiers should be listed in the first column. Q-sort data should start in the second column. Do not leave any empty rows between participant
           q-sort data. Save the file as a *.csv file type. </p>
-        <h1 id="csvimportprocess">CSV Import Process</h1>
+        <h2 id="csvimportprocess">CSV Import Process</h2>
+        <CsvInputImage />
         <ol>
           <li>
             <p>Click on the <strong>"Load TXT File"</strong> button and select your statements text file.</p>
@@ -55,5 +58,6 @@ export default view(HelpSection);
 const MainContent = styled.div`
   background-color: white;
   padding: 50px;
+  user-select: all;
   overflow: auto;
 `;

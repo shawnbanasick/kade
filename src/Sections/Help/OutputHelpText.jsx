@@ -277,6 +277,7 @@ class HelpSection extends Component {
 export default view(HelpSection);
 
 const MainContent = styled.div`
+  user-select: all;
   background-color: white;
   padding: 50px;
   overflow: auto;

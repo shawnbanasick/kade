@@ -150,6 +150,8 @@ const MainContent = styled.div`
   width: 100vw;
   box-sizing: border-box;
   height: 100vh;
+  user-select: all;
+
 
   
   .tabular-menu {

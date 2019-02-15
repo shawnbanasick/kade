@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { view } from "react-easy-state";
 import styled from "styled-components";
+import FactorImage from './helpImages/FactorsImage';
 
 class HelpSection extends Component {
     render() {
@@ -19,6 +20,7 @@ class HelpSection extends Component {
                 <li>For Centroid Factors, click the factor select dropdown and select the number of factors, then click the <strong>"Centroid Factors"</strong> button. </li>
                 <li>For Principal Components, click the <strong>"Principal Components"</strong> button. </li>
               </ul>
+              <FactorImage />
             </MainContent>
             );
     }
@@ -30,5 +32,6 @@ export default view(HelpSection);
 const MainContent = styled.div`
   background-color: white;
   padding: 50px;
+  user-select: all;
   overflow: auto;
 `;
