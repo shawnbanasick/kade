@@ -31,5 +31,4 @@ const MainContent = styled.div`
   background-color: white;
   user-select: all;
   padding: 50px;
-  overflow: auto;
 `;

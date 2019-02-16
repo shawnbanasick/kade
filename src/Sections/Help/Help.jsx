@@ -32,15 +32,17 @@ const panes = [
     menuItem: "Help-Input",
     render: () => (
       <Tab.Pane>
-        <DataWindow2>
-          <InputHelpText />
-          <InputHelpTextCSV />
-          <InputHelpTextExcel1 />
-          <InputHelpTextExcel2 />
-          <InputHelpTextExcel3 />
-          <InputHelpTextJson />
-          <InputHelpTextPqmethod />
-        </DataWindow2>
+        <ScrollContainer>
+          <DataWindow2>
+            <InputHelpText />
+            <InputHelpTextCSV />
+            <InputHelpTextExcel1 />
+            <InputHelpTextExcel2 />
+            <InputHelpTextExcel3 />
+            <InputHelpTextJson />
+            <InputHelpTextPqmethod />
+          </DataWindow2>
+        </ScrollContainer>
       </Tab.Pane>
     )
   },
@@ -109,7 +111,7 @@ class Output extends Component {
     const {activeIndex} = localStore;
     return (
       <MainContent>
-        <Tab panes={ panes } activeIndex={ activeIndex } onTabChange={ handleTabChange } />
+        <Tab style={{"overflowY": "scroll"}} panes={ panes } activeIndex={ activeIndex } onTabChange={ handleTabChange } />
       </MainContent>
       );
   }
@@ -137,6 +139,8 @@ const fadeOut = keyframes`
   }
 `;
 
+// height: calc(100vh - 22px);
+// overflow-y: auto;
 const MainContent = styled.div`
   background-color: #d6dbe0;
   background-color: #d6dbe0;
@@ -145,11 +149,32 @@ const MainContent = styled.div`
   transition: visibility 0.5s linear;
   width: 100vw;
   box-sizing: border-box;
-  height: 100vh;
   user-select: all;
-  max-height: calc(100vh - 22px);
-  overflow-y: auto;
+  overflow: scroll;
   
+  /* width */
+::-webkit-scrollbar {
+  width: 20px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px grey; 
+  border-radius: 10px;
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: red; 
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #b30000; 
+}
+
+
   .tabular-menu {
     display: grid;
     grid-template-columns: 100px 100px 140px 110px 150px 170px;
@@ -206,18 +231,16 @@ const DataWindow1 = styled.div`
   height: auto;
 `;
 
+// min-height: 600px;
+// max-height: calc(100vh - 22px);
 const DataWindow2 = styled.div`
-  min-height: 600px;
-  max-height: calc(100vh - 22px);
   background-color: white;
-  overflow: scroll;
   padding: 5px;
   padding-top: 5px;
   padding-left: 5px;
-  width: calc(100vw - 122px);
-
+  width: calc(100vw - 150px);
   box-sizing: border-box;
-  height: calc(100vh - 22px);
+  border: 2px solid red;
 `;
 
 const NoDataMessage = styled.div`
@@ -228,4 +251,12 @@ const NoDataMessage = styled.div`
 
 const ButtonContainer1 = styled.div`
   display: flex;
+`;
+
+// border: 2px solid blue;
+
+const ScrollContainer = styled.div`
+  overflow-y: scroll;
+  height: 100vh;
+
 `;

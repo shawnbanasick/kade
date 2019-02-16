@@ -52,5 +52,4 @@ const MainContent = styled.div`
   background-color: white;
   padding: 50px;
   user-select: all;
-  overflow: auto;
 `;
