@@ -26,7 +26,7 @@ class CsvPanel extends Component {
 export default view(CsvPanel);
 
 const DataWindow = styled.div`
-  height: ${props => (`${props.height}px`)};    
+  height: calc(100vh - 28px);
   padding-top: 10px;
   padding-left: 10px;
   background-color: white;

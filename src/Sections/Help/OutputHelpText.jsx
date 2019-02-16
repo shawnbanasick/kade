@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { view } from "react-easy-state";
 import styled from "styled-components";
+import OutputOptionsImage from './helpImages/OutputOptionsImage';
 
 class HelpSection extends Component {
   render() {
@@ -107,6 +108,8 @@ class HelpSection extends Component {
         </ul>
 
         <hr />
+
+        <OutputOptionsImage />
 
         <p>
           Select the factors to output, then click the <strong>"Submit"</strong>{" "}

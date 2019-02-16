@@ -149,8 +149,6 @@ const fadeOut = keyframes`
   }
 `;
 
-// height: calc(100vh - 22px);
-// overflow-y: auto;
 const MainContent = styled.div`
   background-color: #d6dbe0;
   background-color: #d6dbe0;
@@ -210,39 +208,17 @@ const MainContent = styled.div`
   }
 `;
 
-// const DataWindow1 = styled.div`
-//   background-color: white;
-//   max-width: 1197;
-//   height: auto;
-// `;
-
-// min-height: 600px;
-// max-height: calc(100vh - 22px);
 const DataWindow2 = styled.div`
   background-color: white;
-  padding-top: 5px;
   padding-left: 5px;
-  width: calc(100vw - 135px);
   box-sizing: border-box;
+  width: calc(100vw - 140px);
   height: 100%;
-  overflow: scroll;
+  overflow: auto;
   min-height:100vh;
   max-height: calc(100vh-22px);
   height: calc(100vh-22px);
 `;
-
-// const NoDataMessage = styled.div`
-//   font-size: 25px;
-//   margin-left: 50px;
-//   margin-top: 100px;
-// `;
-
-// const ButtonContainer1 = styled.div`
-//   display: flex;
-// `;
-
-// border: 2px solid blue;
-  // width: calc(100vw - 150px);
 
   const ScrollContainer = styled.div`
   width: 100vw;

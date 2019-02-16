@@ -135,7 +135,7 @@ const MainContent = styled.div`
 
   width: calc(100vw - 120px);
   box-sizing: border-box;
-  height: calc(100vh - 22px);
+  height: calc(100vh + 55px);
   overflow: auto;
 
   .tabs-menu {

@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { view } from "react-easy-state";
 import styled from "styled-components";
+import LoadingsImage from './helpImages/LoadingsImage';
 
 class HelpSection extends Component {
     render() {
@@ -29,6 +30,7 @@ class HelpSection extends Component {
               <hr />
               <p>Loadings can be select individually by clicking the checkboxes, or you can use the <strong>"Auto-Flag"</strong> option. </p>
               <p>When satisfied with your factor loadings selections, click the orange <strong>"Send Table Data to Output"</strong> button, then navigate to the <strong>"7. Output"</strong>    section. </p>
+           <LoadingsImage />
             </MainContent>
             );
     }

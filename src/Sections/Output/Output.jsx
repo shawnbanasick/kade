@@ -24,6 +24,7 @@ const panes = [
     menuItem: "Options",
     render: () => (
       <Tab.Pane>
+        <ScrollContainer>
         {showTableDataNotSentWarning && (
           <NoDataMessage>
             No Data - Click the &#8220;Send Table Data to Output&#8221; button
@@ -36,6 +37,7 @@ const panes = [
           <NoLoadingsFlaggedWarningModal />
           <MultipleFactorsFlaggedWarningModal />
         </DataWindow1>
+        </ScrollContainer>
       </Tab.Pane>
     )
   },
@@ -43,9 +45,11 @@ const panes = [
     menuItem: "Factor Characteristics",
     render: () => (
       <Tab.Pane>
+        <ScrollContainer>
         <DataWindow2>
           <OutputFactorTablesTransitionContainer />
         </DataWindow2>
+        </ScrollContainer>
       </Tab.Pane>
     )
   },
@@ -53,9 +57,11 @@ const panes = [
     menuItem: "Factors Table",
     render: () => (
       <Tab.Pane>
+        <ScrollContainer>
         <DataWindow2>
           <FactorsTable />
         </DataWindow2>
+        </ScrollContainer>
       </Tab.Pane>
     )
   },
@@ -63,6 +69,7 @@ const panes = [
     menuItem: "Factor Visualizations",
     render: () => (
       <Tab.Pane>
+        <ScrollContainer>
         <DataWindow2>
           <ButtonContainer1>
             <DisplayVisualizationsButtons />
@@ -74,6 +81,7 @@ const panes = [
           <div style={{ height: 50 }} />
           <FactorVizDispatch />
         </DataWindow2>
+        </ScrollContainer>
       </Tab.Pane>
     )
   }
@@ -129,23 +137,18 @@ const fadeOut = keyframes`
   }
 `;
 
+
+  // overflow: scroll;
+ // height: ${props => `${props.height}px`};
+  // width: ${props => `${props.width}px`};
+
 const MainContent = styled.div`
   background-color: #d6dbe0;
-  overflow: auto;
-  // overflow: scroll;
-
   background-color: #d6dbe0;
   visibility: ${props => (props.view ? "hidden" : "visible")};
   animation: ${props => (props.view ? fadeOut : fadeIn)} 0.5s linear;
   transition: visibility 0.5s linear;
-
-  width: 100vw;
   box-sizing: border-box;
-  max-height: calc(100vh - 22px);
-
-  // height: ${props => `${props.height}px`};
-  // width: ${props => `${props.width}px`};
-
 
   .tabular-menu {
     display: grid;
@@ -206,20 +209,30 @@ const DataWindow1 = styled.div`
   user-select: none;
 `;
 
+// min-height: 600px;
+// max-height: calc(100vh - 22px);
+// width: calc(100vw - 122px);
+// max-height: calc(100vh - 22px);
+// overflow: auto;
+
+// max-width: calc(100vw - 135px);
+// min-width: 100vw;
+
 const DataWindow2 = styled.div`
-  min-height: 600px;
-  max-height: calc(100vh - 22px);
   background-color: white;
-  overflow: scroll;
   padding: 5px;
   padding-top: 5px;
   padding-left: 5px;
-  width: calc(100vw - 122px);
-
   box-sizing: border-box;
-  max-height: calc(100vh - 22px);
-  overflow: auto;
   user-select: none;
+
+  height: 100%;
+  width: 100%;
+  overflow: auto;
+  min-height:100vh;
+  max-height: calc(100vh-22px);
+  height: calc(100vh-22px);
+  width: calc(100vw - 135px);
 `;
 
 const NoDataMessage = styled.div`
@@ -230,4 +243,11 @@ const NoDataMessage = styled.div`
 
 const ButtonContainer1 = styled.div`
   display: flex;
+`;
+
+
+const ScrollContainer = styled.div`
+width: 100vw;
+height: 100vh;
+overflow: auto;
 `;
