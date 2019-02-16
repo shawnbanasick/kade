@@ -10,7 +10,7 @@ class License extends Component {
         <div />
         <div>
           <h1>KADE - Ken-Q Analysis Desktop Edition</h1>
-          <h2>Copyright (C) 2018 Shawn Banasick</h2>
+          <h2>Copyright (C) 2019 Shawn Banasick</h2>
           <span>
             This program is free software: you can redistribute it and/or modify
             it under the terms of the GNU General Public License as published by
@@ -36,9 +36,15 @@ class License extends Component {
           <div style={{ marginTop: 35 }}>
             <span>Built with:</span>
             <ul>
+              <li>Electron (MIT license)</li>
+              <li>Electron Forge (MIT license)</li>
+              <li>Electron Builder (MIT license)</li>
+              <li>Electron-Splashscreen (MIT license)</li>
               <li>React (MIT license) </li>
               <li>React Easy State (MIT license)</li>
               <li>React-dropzone (MIT license)</li>
+              <li>React Toastify (MIT license)</li>
+              <li>Styled Components (MIT license)</li>
               <li>Semantic-UI-React (MIT license)</li>
               <li>D3.js (BSD license)</li>
               <li>ag-Grid (MIT license)</li>

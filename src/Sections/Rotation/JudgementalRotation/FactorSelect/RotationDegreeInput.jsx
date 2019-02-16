@@ -13,8 +13,6 @@ class RotationDegreeInput extends React.Component {
     }
 
     render() {
-        console.log(`props ${  JSON.stringify(this.props)}`);
-
         return (
             <InputColumn buttonColor={ this.props.buttonColor } pressed={this.props.pressed}>
               <StyledInput type="text" name={ this.props.name } onChange={ this.saveInputValueToState } value={ this.props.value } />
@@ -47,8 +45,8 @@ const StyledInput = styled.input`
   outline: none;
 `;
 
-const StyledLabel = styled.label`
-  margin-left: 4px;
-  text-align: center;
-  padding-right: 1px;
-`;
+// const StyledLabel = styled.label`
+//   margin-left: 4px;
+//   text-align: center;
+//   padding-right: 1px;
+// `;

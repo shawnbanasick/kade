@@ -231,7 +231,7 @@ const DataWindow2 = styled.div`
   overflow: auto;
   min-height:100vh;
   max-height: calc(100vh-22px);
-  height: calc(100vh-22px);
+  height: calc(100vh - 22px);
   width: calc(100vw - 135px);
 `;
 

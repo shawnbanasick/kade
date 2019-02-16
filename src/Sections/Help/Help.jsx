@@ -2,20 +2,19 @@ import { Tab } from "semantic-ui-react";
 import React, { Component } from "react";
 import { view, store } from "react-easy-state";
 import styled, { keyframes } from "styled-components";
-// import state from "../../store";
+import HelpHome from './HelpHome';
 import InputHelpText from './InputHelpText';
+import OutputHelpText from './OutputHelpText';
+import FactorsHelpText from './FactorsHelpText';
 import InputHelpTextCSV from './InputHelpTextCSV';
+import LoadingsHelpText from './LoadingsHelpText';
+import RotationHelpText from './RotationHelpText';
+import InputHelpTextJson from './InputHelpTextJson';
 import InputHelpTextExcel1 from './InputHelpTextExcel1';
 import InputHelpTextExcel2 from './InputHelpTextExcel2';
 import InputHelpTextExcel3 from './InputHelpTextExcel3';
-import InputHelpTextJson from './InputHelpTextJson';
-import InputHelpTextPqmethod from './InputHelpTextPqmethod';
 import CorrelationsHelpText from './CorrelationsHelpText';
-import FactorsHelpText from './FactorsHelpText';
-import RotationHelpText from './RotationHelpText';
-import LoadingsHelpText from './LoadingsHelpText';
-import OutputHelpText from './OutputHelpText';
-
+import InputHelpTextPqmethod from './InputHelpTextPqmethod';
 
 // factorScoreRanksArray
 
@@ -24,7 +23,9 @@ const panes = [
     menuItem: "Help-Home",
     render: () => (
       <Tab.Pane>
-        <DataWindow2 />
+        <DataWindow2>
+          <HelpHome />
+        </DataWindow2>
       </Tab.Pane>
     )
   },

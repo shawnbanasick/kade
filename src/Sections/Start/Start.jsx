@@ -88,7 +88,7 @@ const StyledAnchor = styled.a`
 const MainContent = styled.div`
   display: grid;
   grid-template-columns: 260px 260px 260px 260px;
-  grid-template-rows: 20px 155px 50px 30px 175px 50px 240px 0px;
+  grid-template-rows: 10px 155px 50px 30px 175px 50px 230px 0px;
   grid-template-areas:
     "row1 row1 row1 row1"
     "titleRow titleRow titleRow titleRow"
