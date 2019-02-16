@@ -7,6 +7,7 @@ class HelpSection extends Component {
   render() {
     return (
       <MainContent>
+        <hr />
         <h2 id="pqmethodfileimportfaq">PQMethod File Import FAQ:</h2>
         <ul>
           <li>

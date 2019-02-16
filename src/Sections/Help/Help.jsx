@@ -139,20 +139,16 @@ const fadeOut = keyframes`
 
 const MainContent = styled.div`
   background-color: #d6dbe0;
-  overflow: auto;
-  overflow: scroll;
-
   background-color: #d6dbe0;
   visibility: ${props => (props.view ? "hidden" : "visible")};
   animation: ${props => (props.view ? fadeOut : fadeIn)} 0.5s linear;
   transition: visibility 0.5s linear;
-
   width: 100vw;
   box-sizing: border-box;
   height: 100vh;
   user-select: all;
-
-
+  max-height: calc(100vh - 22px);
+  overflow-y: auto;
   
   .tabular-menu {
     display: grid;
@@ -221,9 +217,7 @@ const DataWindow2 = styled.div`
   width: calc(100vw - 122px);
 
   box-sizing: border-box;
-  max-height: calc(100vh - 22px);
-  overflow: auto;
-  user-select: none;
+  height: calc(100vh - 22px);
 `;
 
 const NoDataMessage = styled.div`
