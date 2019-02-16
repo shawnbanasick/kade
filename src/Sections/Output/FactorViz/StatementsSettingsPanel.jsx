@@ -53,7 +53,7 @@ class StatementsSettingsPanel extends Component {
             value="willTrimStatement"
             toggle
           />
-          <OptionStatementText>max. number lines =</OptionStatementText>
+          <OptionStatementText>max. num. lines =</OptionStatementText>
           <div style={styles}>
             <UserTextInput
               name={"willTrimStatementBy"}

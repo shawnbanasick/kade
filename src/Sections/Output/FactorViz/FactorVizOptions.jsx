@@ -13,7 +13,7 @@ const styles = {
   maxWidth: 1200,
   height: 1500,
   border: "2px solid #666",
-  padding: 30
+  padding: 20
 };
 
 class FactorVizOptions extends Component {

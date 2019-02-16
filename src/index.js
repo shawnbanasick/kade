@@ -56,7 +56,7 @@ const createWindow = async () => {
     width: 1170, // 980,  1366  (old - 1100)
     height: 750, // 750,  768
     titleBarStyle: "hidden",
-    backgroundColor: "#FFFF"
+    backgroundColor: "#FFFF",
   };
 
   // todo - check linux icon settings - icon:path
