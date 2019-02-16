@@ -42,7 +42,7 @@ const panes = [
             <InputHelpTextJson />
             <InputHelpTextPqmethod />
           </DataWindow2>
-        </ScrollContainer>
+          </ScrollContainer>
       </Tab.Pane>
     )
   },
@@ -50,9 +50,11 @@ const panes = [
     menuItem: "Help-Correlations",
     render: () => (
       <Tab.Pane>
+        <ScrollContainer>
         <DataWindow2>
           <CorrelationsHelpText />
         </DataWindow2>
+        </ScrollContainer>
       </Tab.Pane>
     )
   },
@@ -60,9 +62,11 @@ const panes = [
     menuItem: "Help-Factors",
     render: () => (
       <Tab.Pane>
+        <ScrollContainer>
         <DataWindow2>
           <FactorsHelpText />
         </DataWindow2>
+        </ScrollContainer>
       </Tab.Pane>
     )
   },
@@ -70,9 +74,11 @@ const panes = [
     menuItem: "Help-Rotation",
     render: () => (
       <Tab.Pane>
+        <ScrollContainer>
         <DataWindow2>
           <RotationHelpText />
         </DataWindow2>
+        </ScrollContainer>
       </Tab.Pane>
     )
   },
@@ -80,9 +86,11 @@ const panes = [
     menuItem: "Help-Loadings",
     render: () => (
       <Tab.Pane>
+        <ScrollContainer>
         <DataWindow2>
           <LoadingsHelpText />
         </DataWindow2>
+        </ScrollContainer>
       </Tab.Pane>
     )
   },
@@ -90,9 +98,11 @@ const panes = [
     menuItem: "Help-Output",
     render: () => (
       <Tab.Pane>
+        <ScrollContainer>
         <DataWindow2>
           <OutputHelpText />
         </DataWindow2>
+        </ScrollContainer>
       </Tab.Pane>
     )
   }
@@ -111,7 +121,7 @@ class Output extends Component {
     const {activeIndex} = localStore;
     return (
       <MainContent>
-        <Tab style={{"overflowY": "scroll"}} panes={ panes } activeIndex={ activeIndex } onTabChange={ handleTabChange } />
+        <Tab style={{paddingRight: "0px !important"}} panes={ panes } activeIndex={ activeIndex } onTabChange={ handleTabChange } />
       </MainContent>
       );
   }
@@ -147,34 +157,9 @@ const MainContent = styled.div`
   visibility: ${props => (props.view ? "hidden" : "visible")};
   animation: ${props => (props.view ? fadeOut : fadeIn)} 0.5s linear;
   transition: visibility 0.5s linear;
-  width: 100vw;
   box-sizing: border-box;
   user-select: all;
-  overflow: scroll;
-  
-  /* width */
-::-webkit-scrollbar {
-  width: 20px;
-}
-
-/* Track */
-::-webkit-scrollbar-track {
-  box-shadow: inset 0 0 5px grey; 
-  border-radius: 10px;
-}
  
-/* Handle */
-::-webkit-scrollbar-thumb {
-  background: red; 
-  border-radius: 10px;
-}
-
-/* Handle on hover */
-::-webkit-scrollbar-thumb:hover {
-  background: #b30000; 
-}
-
-
   .tabular-menu {
     display: grid;
     grid-template-columns: 100px 100px 140px 110px 150px 170px;
@@ -218,45 +203,49 @@ const MainContent = styled.div`
     transition: all 0.25s linear;
   }
 
-  .tabular-panel {
+  .tabular-pane {
     padding: 10px 50px;
     background-color: white;
     padding-left: 20px !important;
   }
 `;
 
-const DataWindow1 = styled.div`
-  background-color: white;
-  max-width: 1197;
-  height: auto;
-`;
+// const DataWindow1 = styled.div`
+//   background-color: white;
+//   max-width: 1197;
+//   height: auto;
+// `;
 
 // min-height: 600px;
 // max-height: calc(100vh - 22px);
 const DataWindow2 = styled.div`
   background-color: white;
-  padding: 5px;
   padding-top: 5px;
   padding-left: 5px;
-  width: calc(100vw - 150px);
+  width: calc(100vw - 135px);
   box-sizing: border-box;
-  border: 2px solid red;
+  height: 100%;
+  overflow: scroll;
+  min-height:100vh;
+  max-height: calc(100vh-22px);
+  height: calc(100vh-22px);
 `;
 
-const NoDataMessage = styled.div`
-  font-size: 25px;
-  margin-left: 50px;
-  margin-top: 100px;
-`;
+// const NoDataMessage = styled.div`
+//   font-size: 25px;
+//   margin-left: 50px;
+//   margin-top: 100px;
+// `;
 
-const ButtonContainer1 = styled.div`
-  display: flex;
-`;
+// const ButtonContainer1 = styled.div`
+//   display: flex;
+// `;
 
 // border: 2px solid blue;
+  // width: calc(100vw - 150px);
 
-const ScrollContainer = styled.div`
-  overflow-y: scroll;
+  const ScrollContainer = styled.div`
+  width: 100vw;
   height: 100vh;
-
-`;
+  overflow: auto;
+  `;
