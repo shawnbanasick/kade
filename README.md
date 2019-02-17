@@ -86,4 +86,8 @@ The application is packaged as an "AppImage" so it can be installed on most of t
 
 ## Open Source Alternatives To KADE:
 * [PQMethod](http://schmolck.org/qmethod/)
-* [R language Qmethod package](https://cran.r-project.org/package=qmethod)
+* [Pensieve R package](https://github.com/maxheld83/pensieve)
+* [Qmethod R package](https://cran.r-project.org/package=qmethod)
+
+
+
