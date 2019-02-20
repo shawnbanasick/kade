@@ -23,6 +23,7 @@ function setInitialState() {
     numFactorsKeptForRot: undefined,
     isLoadingFactorsKept: false,
     isLoadingAutoflag: false,
+    isDataAlreadyLoaded: false,
     isLoadingBeginAnalysis: false,
     isCentroidLoading: false,
     userSelectedSigLevel: 1.96,

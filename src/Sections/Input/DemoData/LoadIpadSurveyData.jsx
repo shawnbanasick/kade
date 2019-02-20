@@ -6,17 +6,27 @@ import uploadIpadSurveyData from "./uploadIpadSurveyData";
 import revertLoadButtonsColors from "./revertLoadButtonsColors";
 
 const localStore = store({
-  isLoadIpadSurveyButtonGreen: false,
+  isLoadIpadSurveyButtonGreen: false
 });
 
 const handleClick = () => {
-  uploadIpadSurveyData();
-  revertLoadButtonsColors();
-  state.setState({
-    isLoadIpadSurveyButtonGreen: true,
-    notifyDataUploadSuccess: true,
-    isInputButtonGreen: true
-  });
+  const isDataAlreadyLoaded = state.getState("isDataAlreadyLoaded");
+  if (isDataAlreadyLoaded) {
+    state.setState({
+      showErrorMessageBar: true,
+      errorMessage: `Data are already loaded, click "Clear Project" to restart`,
+      extendedErrorMessage: `Data have already been loaded and the analysis has started. To clear this analysis and restart the application, click the "Clear Project" button near the bottom of the navigation panel.`,
+      errorStackTrace: "no stack trace available"
+    });
+  } else {
+    uploadIpadSurveyData();
+    revertLoadButtonsColors();
+    state.setState({
+      isLoadIpadSurveyButtonGreen: true,
+      notifyDataUploadSuccess: true,
+      isInputButtonGreen: true
+    });
+  }
 };
 
 class IpadSurveyButton1 extends React.Component {
@@ -27,11 +37,16 @@ class IpadSurveyButton1 extends React.Component {
     localStore.isLoadIpadSurveyButtonGreen = isLoadIpadSurveyButtonGreen;
     return (
       <div>
-        <LoadTxtButton id="ipadSurveyButton" floated="right" onClick={ handleClick } isActive={ localStore.isLoadIpadSurveyButtonGreen }>
+        <LoadTxtButton
+          id="ipadSurveyButton"
+          floated="right"
+          onClick={handleClick}
+          isActive={localStore.isLoadIpadSurveyButtonGreen}
+        >
           Load iPad Survey
         </LoadTxtButton>
       </div>
-      );
+    );
   }
 }
 
@@ -41,7 +56,8 @@ const LoadTxtButton = styled.button`
   display: grid;
   align-items: center;
   justify-items: center;
-  background-color: ${props => props.isActive ? "rgba(144,	238, 144, .6)" : "#d6dbe0"};
+  background-color: ${props =>
+    props.isActive ? "rgba(144,	238, 144, .6)" : "#d6dbe0"};
   height: 60px;
   width: 240px;
   border: 1px solid black;
@@ -57,7 +73,7 @@ const LoadTxtButton = styled.button`
   user-select: none;
 
   &:hover {
-    background-color: ${props => props.isActive ? "#009a00" : "#abafb3" };
+    background-color: ${props => (props.isActive ? "#009a00" : "#abafb3")};
   }
 
   &:active {

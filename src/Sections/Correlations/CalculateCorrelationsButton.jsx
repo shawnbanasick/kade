@@ -11,22 +11,21 @@ const localStore = store({
 
 const handleClick = () => {
   const respondentNames = state.getState("respondentNames");
-
   const mainDataObject = state.getState("mainDataObject");
   const rawSortsArray = mainDataObject.map(item => item.rawSort);
 
   try {
     mainCorrCalcs(respondentNames, rawSortsArray);
+    state.setState({
+      isCorrelationsButtonGreen: true,
+      isDataAlreadyLoaded: true
+    });
   } catch (error) {
     state.setState({
       showErrorMessageBar: true,
       errorMessage: `No data to calculate correlations -- ${  error.message}`
     });
   }
-
-  state.setState({
-    isCorrelationsButtonGreen: true
-  });
 };
 
 class CalculateCorrelationsButton extends Component {

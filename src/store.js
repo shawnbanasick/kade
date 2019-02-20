@@ -39,6 +39,7 @@ export default store({
     isLoadingFactorsKept: false,
     isLoadingAutoflag: false,
     isLoadingBeginAnalysis: false,
+    isDataAlreadyLoaded: false,
     isCentroidLoading: false,
     userSelectedSigLevel: 1.96,
     requireMajorityCommonVariance: true,
