@@ -8,7 +8,7 @@ function convertJSONToData(JsonObj) {
   const sortArray = sort0.split("|");
 
   for (let k = 0, kLen = sortArray.length; k < kLen; k += 1) {
-    const counter1 = `S ${k + 1}`;
+    const counter1 = `S${k + 1}`;
     sortHeaders.push(counter1);
   }
 
@@ -55,6 +55,7 @@ function convertJSONToData(JsonObj) {
     csvBody.push(tempArray1);
     namesAndSortsArray.push(namesAndSortsTempArray);
   }
+  console.log(JSON.stringify(csvBody, namesAndSortsArray));
   return [csvBody, namesAndSortsArray];
 }
 
