@@ -1,4 +1,4 @@
-import convertJSONToData from "../../../Input/logic/convertJSONToData";
+import convertJSONToData from "../../../Input/JSON/convertJSONToData";
 
 const parameter1 = {
   "-L36OzRI9W5xJ6i-mWBD": {
@@ -16,8 +16,7 @@ const parameter1 = {
     responseGreenState1: "no_response",
     responsePinkState1: "no_response",
     smartphone: "no_response",
-    sort:
-      "+2|-2|+0|+3|-3|+0|-1|-2|+3|+1|-1|+0|+1|+1|+1|+0|-3|-3|-1|+2|+3|-1|+1|-2|+2|-1|+0|-2|+2|+0",
+    sort: "+2|-2|+0|+3|-3|+0|-1|-2|+3|+1|-1|+0|+1|+1|+1|+0|-3|-3|-1|+2|+3|-1|+1|-2|+2|-1|+0|-2|+2|+0",
     year: "no_response"
   },
   "-L36P-jx0QSTix7vcsH9": {
@@ -35,8 +34,7 @@ const parameter1 = {
     responseGreenState1: "no_response",
     responsePinkState1: "no_response",
     smartphone: "no_response",
-    sort:
-      "+2|-2|+0|+1|-3|-3|-1|+1|+2|-2|+2|-2|+0|+0|-1|+0|-1|+1|+1|+3|+3|-1|+0|-2|+3|+1|+0|+2|-3|-1",
+    sort: "+2|-2|+0|+1|-3|-3|-1|+1|+2|-2|+2|-2|+0|+0|-1|+0|-1|+1|+1|+3|+3|-1|+0|-2|+3|+1|+0|+2|-3|-1",
     year: "no_response"
   },
   "-L36P7gn2PwAC5te3ujx": {
@@ -54,8 +52,7 @@ const parameter1 = {
     responseGreenState1: "no_response",
     responsePinkState1: "no_response",
     smartphone: "no_response",
-    sort:
-      "+2|-1|-1|+1|-2|-1|+3|-3|+2|-2|-1|-2|+0|+1|+1|+2|-3|+0|+3|+0|+3|-3|+0|-2|+2|+1|+0|+1|-1|+0",
+    sort: "+2|-1|-1|+1|-2|-1|+3|-3|+2|-2|-1|-2|+0|+1|+1|+2|-3|+0|+3|+0|+3|-3|+0|-2|+2|+1|+0|+1|-1|+0",
     year: "no_response"
   },
   "-L36P9E422lWBWO8CijQ": {
@@ -73,8 +70,7 @@ const parameter1 = {
     responseGreenState1: "no_response",
     responsePinkState1: "no_response",
     smartphone: "no_response",
-    sort:
-      "+2|-2|+2|+1|-2|-2|+0|-3|+3|-1|-2|-1|+0|+3|+3|+1|+0|-1|+1|+0|+2|+0|-1|-1|-3|+0|+2|+1|-3|+1",
+    sort: "+2|-2|+2|+1|-2|-2|+0|-3|+3|-1|-2|-1|+0|+3|+3|+1|+0|-1|+1|+0|+2|+0|-1|-1|-3|+0|+2|+1|-3|+1",
     year: "no_response"
   },
   "-L36PCY9RZcw8Gv_uwmc": {
@@ -92,8 +88,7 @@ const parameter1 = {
     responseGreenState1: "no_response",
     responsePinkState1: "no_response",
     smartphone: "no_response",
-    sort:
-      "+2|-1|-2|+2|-1|-2|+0|-2|+3|-1|+3|-3|+2|+0|+2|+1|+0|+1|-1|-1|+0|-2|+1|-3|+1|+0|+1|+0|-3|+3",
+    sort: "+2|-1|-2|+2|-1|-2|+0|-2|+3|-1|+3|-3|+2|+0|+2|+1|+0|+1|-1|-1|+0|-2|+1|-3|+1|+0|+1|+0|-3|+3",
     year: "no_response"
   },
   "-L36PVK3Z2OKvhA8L1rA": {
@@ -111,8 +106,7 @@ const parameter1 = {
     responseGreenState1: "no_response",
     responsePinkState1: "no_response",
     smartphone: "no_response",
-    sort:
-      "+3|+0|-1|+2|+1|-1|-1|-3|+2|-1|+1|-2|+0|+3|+3|+0|-3|+2|+0|-3|+0|+1|+2|-2|-2|+0|-1|+1|-2|+1",
+    sort: "+3|+0|-1|+2|+1|-1|-1|-3|+2|-1|+1|-2|+0|+3|+3|+0|-3|+2|+0|-3|+0|+1|+2|-2|-2|+0|-1|+1|-2|+1",
     year: "no_response"
   },
   "-L36Q2s-G1Oh4GzzWZUJ": {
@@ -130,8 +124,7 @@ const parameter1 = {
     responseGreenState1: "no_response",
     responsePinkState1: "no_response",
     smartphone: "no_response",
-    sort:
-      "-1|-2|+1|+1|-1|-2|+0|-3|-2|+2|-3|-3|+3|+0|+0|+0|+1|+1|+2|-2|-1|+2|+2|-1|+0|+3|+3|+1|+0|-1",
+    sort: "-1|-2|+1|+1|-1|-2|+0|-3|-2|+2|-3|-3|+3|+0|+0|+0|+1|+1|+2|-2|-1|+2|+2|-1|+0|+3|+3|+1|+0|-1",
     year: "no_response"
   },
   "-L36Q7ZgNffRwQnTt_vb": {
@@ -149,8 +142,7 @@ const parameter1 = {
     responseGreenState1: "no_response",
     responsePinkState1: "no_response",
     smartphone: "no_response",
-    sort:
-      "+3|-3|+2|+1|+0|+0|+1|-3|+0|-2|+0|-2|-1|+3|+2|-1|-2|-1|+1|-1|+0|+0|+1|-1|-3|+2|+3|+1|-2|+2",
+    sort: "+3|-3|+2|+1|+0|+0|+1|-3|+0|-2|+0|-2|-1|+3|+2|-1|-2|-1|+1|-1|+0|+0|+1|-1|-3|+2|+3|+1|-2|+2",
     year: "no_response"
   },
   "-L36Q9XUlm7hcHNDJtop": {
@@ -168,8 +160,7 @@ const parameter1 = {
     responseGreenState1: "no_response",
     responsePinkState1: "no_response",
     smartphone: "no_response",
-    sort:
-      "+0|-1|-1|-1|-2|-3|-1|+1|+3|+3|+2|-3|-2|+0|+0|+2|+1|+2|+0|+3|+2|-2|+0|-3|+1|-1|-2|+1|+0|+1",
+    sort: "+0|-1|-1|-1|-2|-3|-1|+1|+3|+3|+2|-3|-2|+0|+0|+2|+1|+2|+0|+3|+2|-2|+0|-3|+1|-1|-2|+1|+0|+1",
     year: "no_response"
   },
   "-L36QRWdHIf3dQlXJP1a": {
@@ -187,8 +178,7 @@ const parameter1 = {
     responseGreenState1: "no_response",
     responsePinkState1: "no_response",
     smartphone: "no_response",
-    sort:
-      "+2|-3|+0|-1|+1|-2|-2|+0|+2|+0|-1|-1|-2|+2|+1|+1|-2|-3|+1|-1|+3|+0|+0|+3|+0|+2|-1|+3|+1|-3",
+    sort: "+2|-3|+0|-1|+1|-2|-2|+0|+2|+0|-1|-1|-2|+2|+1|+1|-2|-3|+1|-1|+3|+0|+0|+3|+0|+2|-1|+3|+1|-3",
     year: "no_response"
   }
 };

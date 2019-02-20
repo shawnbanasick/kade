@@ -22,7 +22,7 @@
   "jest": {
     "runner": "@jest-runner/electron",
     "testEnvironment": "@jest-runner/electron/environment",
-    "verbose": true,
+    "verbose": false,
     "transform": {
       "^.+\\.js$": "babel-jest",
       "^.+\\.(css|scss|less)$": "jest-css-modules"
@@ -41,7 +41,7 @@
   },
   "keywords": [],
   "author": {
-    "name": "Shawn Banasick", 
+    "name": "Shawn Banasick",
     "email": "ken.q.tools@gmail.com"
   },
   "license": "MIT",
@@ -52,15 +52,13 @@
     },
     "linux": {
       "category": "Science",
-      "target": [
-        { 
-          "target":"AppImage", 
-          "arch": [
-            "x64",
-            "ia32"
-          ]
-        }
-      ]      
+      "target": [{
+        "target": "AppImage",
+        "arch": [
+          "x64",
+          "ia32"
+        ]
+      }]
     },
     "win": {
       "target": [
