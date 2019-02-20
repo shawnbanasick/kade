@@ -1,4 +1,4 @@
-import { splitNamesAndSorts } from "../../../Input/logic/splitNamesAndSorts";
+import splitNamesAndSorts from "../../../Input/logic/splitNamesAndSorts";
 
 const parameter1 = [
   "US1       -1 0-2 0-2 1 0-1 0-1 1 1 2 3-1-4-3-3-1-4 3 2 3 1 1 0 4 2 2-3-2-2 4",
