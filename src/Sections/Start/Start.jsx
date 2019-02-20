@@ -88,7 +88,7 @@ const StyledAnchor = styled.a`
 const MainContent = styled.div`
   display: grid;
   grid-template-columns: 260px 260px 260px 260px;
-  grid-template-rows: 10px 155px 50px 30px 175px 50px 230px 0px;
+  grid-template-rows: 10px 155px 50px 30px 155px 50px 210px 1fr;
   grid-template-areas:
     "row1 row1 row1 row1"
     "titleRow titleRow titleRow titleRow"
@@ -161,7 +161,7 @@ const HighlightLetter = styled.span`
 const WebLinkDiv1 = styled.div`
   display: flex;
   grid-area: linkboxRow1;
-  height: 120px;
+  height: 100px;
   width: 180px;
   display: grid;
   align-items: center;
@@ -191,7 +191,7 @@ const WebLinkDiv1 = styled.div`
 const WebLinkDiv2 = styled.div`
   display: flex;
   grid-area: linkboxRow2;
-  height: 120px;
+  height: 100px;
   width: 180px;
   display: grid;
   align-items: center;
@@ -221,7 +221,7 @@ const WebLinkDiv2 = styled.div`
 const WebLinkDiv3 = styled.div`
   display: flex;
   grid-area: linkboxRow3;
-  height: 120px;
+  height: 100px;
   width: 180px;
   display: grid;
   align-items: center;
@@ -251,7 +251,7 @@ const WebLinkDiv3 = styled.div`
 const WebLinkDiv4 = styled.div`
   display: flex;
   grid-area: linkboxRow4;
-  height: 120px;
+  height: 100px;
   width: 180px;
   display: grid;
   align-items: center;
