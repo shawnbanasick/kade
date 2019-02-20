@@ -3,51 +3,65 @@ import React, { Component } from "react";
 import styled from "styled-components";
 import state from "../../../store";
 import parseExcelType1 from "./parseExcelType1";
-import revertLoadButtonsColors from '../DemoData/revertLoadButtonsColors';
+import revertLoadButtonsColors from "../DemoData/revertLoadButtonsColors";
 
-const {dialog} = require("electron").remote;
+const { dialog } = require("electron").remote;
 
 const localStore = store({
-    isLoadExcelT1ButtonGreen: false,
+  isLoadExcelT1ButtonGreen: false
 });
 
 const handleClick = () => {
+  // check to see if data loaded and correlations started - true ==> throw error
+  const isDataAlreadyLoaded = state.getState("isDataAlreadyLoaded");
+  if (isDataAlreadyLoaded) {
+    state.setState({
+      showErrorMessageBar: true,
+      errorMessage: `Data are already loaded, click "Clear Project" to restart`,
+      extendedErrorMessage: `Data have already been loaded and the analysis has started. To clear this analysis and restart the application, click the "Clear Project" button near the bottom of the navigation panel.`,
+      errorStackTrace: "no stack trace available"
+    });
+  } else {
     dialog.showOpenDialog(
-        {
-            properties: ["openFile"],
-            filters: [
-                {
-                    name: "Excel",
-                    extensions: ["xls", "XLS", "xlsx", "XLSX"]
-                }
-            ]
-        },
-        files => {
-            if (files !== undefined) {
-                const excelFile = files[0];
-                parseExcelType1(excelFile);
-                revertLoadButtonsColors("excelT1");
-                state.setState({
-                    notifyDataUploadSuccess: true,
-                    isInputButtonGreen: true,
-                    isLoadExcelT1ButtonGreen: true,
-                });
-                localStore.isLoadExcelT1ButtonGreen = true;
-            }
+      {
+        properties: ["openFile"],
+        filters: [
+          {
+            name: "Excel",
+            extensions: ["xls", "XLS", "xlsx", "XLSX"]
+          }
+        ]
+      },
+      files => {
+        if (files !== undefined) {
+          const excelFile = files[0];
+          parseExcelType1(excelFile);
+          revertLoadButtonsColors("excelT1");
+          state.setState({
+            notifyDataUploadSuccess: true,
+            isInputButtonGreen: true,
+            isLoadExcelT1ButtonGreen: true
+          });
+          localStore.isLoadExcelT1ButtonGreen = true;
         }
+      }
     );
+  }
 };
 
 class LoadTxtStatementFile extends Component {
-    render() {
-        const isLoadExcelT1ButtonGreen = state.getState("isLoadExcelT1ButtonGreen");
-        localStore.isLoadExcelT1ButtonGreen = isLoadExcelT1ButtonGreen;
-        return (
-            <LoadTxtButton isActive={ localStore.isLoadExcelT1ButtonGreen } onClick={ handleClick }>
-              <p>Load Type 1 Excel File</p>
-            </LoadTxtButton>
-            );
-    }
+  render() {
+    const isLoadExcelT1ButtonGreen = state.getState("isLoadExcelT1ButtonGreen");
+    localStore.isLoadExcelT1ButtonGreen = isLoadExcelT1ButtonGreen;
+    return (
+      <LoadTxtButton
+        isActive={localStore.isLoadExcelT1ButtonGreen}
+        onClick={handleClick}
+      >
+        <p>Load Type 1 Excel File</p>
+      </LoadTxtButton>
+    );
+  }
 }
 
 export default view(LoadTxtStatementFile);
@@ -56,7 +70,8 @@ const LoadTxtButton = styled.button`
   display: grid;
   align-items: center;
   justify-items: center;
-  background-color: ${props => props.isActive ? "rgba(144,	238, 144, .6)" : "#d6dbe0"};
+  background-color: ${props =>
+    props.isActive ? "rgba(144,	238, 144, .6)" : "#d6dbe0"};
   height: 60px;
   width: 240px;
   border: 1px solid black;
@@ -71,7 +86,7 @@ const LoadTxtButton = styled.button`
   outline: none;
 
   &:hover {
-    background-color: ${props => props.isActive ? "#009a00" : "#abafb3" };
+    background-color: ${props => (props.isActive ? "#009a00" : "#abafb3")};
   }
 
   &:active {
