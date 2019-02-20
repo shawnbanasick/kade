@@ -1,4 +1,4 @@
-import { sortsTextToArray } from "../../Input/logic/sortsTextToArray";
+import sortsTextToArray from "../../Input/logic/sortsTextToArray";
 
 const originalSortSize = 33;
 const array = [
