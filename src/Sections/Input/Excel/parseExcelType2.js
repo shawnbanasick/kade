@@ -1,10 +1,10 @@
 import XLSX from "xlsx";
 import state from "../../../store";
-// import throwNoSortsInputErrorModal from '../throwNoSortsInputError';
-import throwNoSortsTabInputErrorModal from '../throwNoSortsTabInputErrorModal';
+import throwNoSortsInputErrorModal from "../throwNoSortsInputError";
+import throwNoSortsTabInputErrorModal from "../throwNoSortsTabInputErrorModal";
 import formatExcelType2ForDisplay from "./excelLogic/formatExcelType2ForDisplay";
-import throwNoStatementsInputErrorModal from '../throwNoStatementsInputErrorModal';
-import throwNoStatementsTabInputErrorModal from '../throwNoStatementsTabInputErrorModal';
+import throwNoStatementsInputErrorModal from "../throwNoStatementsInputErrorModal";
+import throwNoStatementsTabInputErrorModal from "../throwNoStatementsTabInputErrorModal";
 
 function parseExcelType2(excelFile) {
   const workbook = XLSX.readFile(excelFile, {
@@ -20,7 +20,8 @@ function parseExcelType2(excelFile) {
   let worksheet;
   let hasSortsWorksheet = "false";
   let hasStatementsWorksheet = "false";
-  const filetype = "unforced"; // EXCEL TYPE 1
+  let isNoError = true;
+  const filetype = "unforced";
 
   // iterate through every sheet and pull values
   const sheetNameList = workbook.SheetNames;
@@ -38,26 +39,36 @@ function parseExcelType2(excelFile) {
         if (filetype === "user-input") {
           for (let i = 1; i < 1000; i += 1) {
             tester3 = tester2[i].split(",");
-            console.log(JSON.stringify(tester3[0]));
             tempArray.push(tester3);
           }
         } else if (filetype === "unforced") {
+          // filter unneeded values
           tester3 = tester2.filter(Boolean);
-          // const value4 = tester3.split(",");
-          // console.log(JSON.stringify(value4[1]));
-          // console.log(JSON.stringify(value4[1].length));
-          console.log(JSON.stringify(tester3[6].length));
-          console.log(JSON.stringify(tester3[6]));
+          // convert to array
+          const checkValuesArray = tester3[6].split(",").map(Number);
+          // remove participant name
+          checkValuesArray.shift();
+          // helper
+          const add = (a, b) => Math.abs(a) + Math.abs(b);
+          // sum array, if empty (no sort), will sum to zero
+          const checkValuesArrayTotal = checkValuesArray.reduce(add);
+          if (checkValuesArrayTotal === 0) {
+            throwNoSortsInputErrorModal();
+            isNoError = false;
+          }
           tempArray.push(tester3);
         }
       } else if (y2 === "statements" || y2 === "statement") {
         hasStatementsWorksheet = "true";
         tempArray = [];
         tester4 = XLSX.utils.sheet_to_json(worksheet);
-        const testValue = Object.prototype.hasOwnProperty.call(tester4[0], 'Statements');
+        const testValue = Object.prototype.hasOwnProperty.call(
+          tester4[0],
+          "Statements"
+        );
         if (!testValue) {
           throwNoStatementsInputErrorModal();
-          return;
+          isNoError = false;
         }
         tempArray.push(tester4);
       }
@@ -66,22 +77,24 @@ function parseExcelType2(excelFile) {
 
     if (hasSortsWorksheet === "false") {
       throwNoSortsTabInputErrorModal();
-      return;
+      isNoError = false;
     }
 
     if (hasStatementsWorksheet === "false") {
       throwNoStatementsTabInputErrorModal();
-      return;
+      isNoError = false;
     }
     // push to DOM
     formatExcelType2ForDisplay(allWorksheets);
     // no errors ==> state updates
-    state.setState({
-      dataOrigin: "excel",
-      notifyDataUploadSuccess: true,
-      isInputButtonGreen: true,
-      isLoadExcelT2ButtonGreen: true
-    });
+    if (isNoError) {
+      state.setState({
+        dataOrigin: "excel",
+        notifyDataUploadSuccess: true,
+        isInputButtonGreen: true,
+        isLoadExcelT2ButtonGreen: true
+      });
+    }
   } catch (error) {
     // set unexpected error message and show modal
     state.setState({
