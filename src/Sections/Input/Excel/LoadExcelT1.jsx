@@ -5,63 +5,60 @@ import state from "../../../store";
 import parseExcelType1 from "./parseExcelType1";
 import revertLoadButtonsColors from "../DemoData/revertLoadButtonsColors";
 
-const { dialog } = require("electron").remote;
+const {dialog} = require("electron").remote;
 
 const localStore = store({
-  isLoadExcelT1ButtonGreen: false
+    isLoadExcelT1ButtonGreen: false
 });
 
 const handleClick = () => {
-  // check to see if data loaded and correlations started - true ==> throw error
-  const isDataAlreadyLoaded = state.getState("isDataAlreadyLoaded");
-  if (isDataAlreadyLoaded) {
-    state.setState({
-      showErrorMessageBar: true,
-      errorMessage: `Data are already loaded, click "Clear Project" to restart`,
-      extendedErrorMessage: `Data have already been loaded and the analysis has started. To clear this analysis and restart the application, click the "Clear Project" button near the bottom of the navigation panel.`,
-      errorStackTrace: "no stack trace available"
-    });
-  } else {
-    dialog.showOpenDialog(
-      {
-        properties: ["openFile"],
-        filters: [
-          {
-            name: "Excel",
-            extensions: ["xls", "XLS", "xlsx", "XLSX"]
-          }
-        ]
-      },
-      files => {
-        if (files !== undefined) {
-          const excelFile = files[0];
-          parseExcelType1(excelFile);
-          revertLoadButtonsColors("excelT1");
-          state.setState({
-            notifyDataUploadSuccess: true,
-            isInputButtonGreen: true,
-            isLoadExcelT1ButtonGreen: true
-          });
-          localStore.isLoadExcelT1ButtonGreen = true;
-        }
-      }
-    );
-  }
+    // check to see if data loaded and correlations started - true ==> throw error 
+    const isDataAlreadyLoaded = state.getState("isDataAlreadyLoaded");
+    if (isDataAlreadyLoaded) {
+        state.setState({
+            showErrorMessageBar: true,
+            errorMessage: `Data are already loaded, click "Clear Project" to restart`,
+            extendedErrorMessage: `Data have already been loaded and the analysis has started. To clear this analysis and restart the application, click the "Clear Project" button near the bottom of the navigation panel.`,
+            errorStackTrace: "no stack trace available"
+        });
+    } else {
+        dialog.showOpenDialog(
+            {
+                properties: ["openFile"],
+                filters: [
+                    {
+                        name: "Excel",
+                        extensions: ["xls", "XLS", "xlsx", "XLSX"]
+                    }
+                ]
+            },
+            files => {
+                if (files !== undefined) {
+                    const excelFile = files[0];
+                    parseExcelType1(excelFile);
+                    revertLoadButtonsColors("excelT1");
+                    state.setState({
+                        notifyDataUploadSuccess: true,
+                        isInputButtonGreen: true,
+                        isLoadExcelT1ButtonGreen: true
+                    });
+                    localStore.isLoadExcelT1ButtonGreen = true;
+                }
+            }
+        );
+    }
 };
 
 class LoadTxtStatementFile extends Component {
-  render() {
-    const isLoadExcelT1ButtonGreen = state.getState("isLoadExcelT1ButtonGreen");
-    localStore.isLoadExcelT1ButtonGreen = isLoadExcelT1ButtonGreen;
-    return (
-      <LoadTxtButton
-        isActive={localStore.isLoadExcelT1ButtonGreen}
-        onClick={handleClick}
-      >
-        <p>Load Type 1 Excel File</p>
-      </LoadTxtButton>
-    );
-  }
+    render() {
+        const isLoadExcelT1ButtonGreen = state.getState("isLoadExcelT1ButtonGreen");
+        localStore.isLoadExcelT1ButtonGreen = isLoadExcelT1ButtonGreen;
+        return (
+            <LoadTxtButton isActive={ localStore.isLoadExcelT1ButtonGreen } onClick={ handleClick }>
+              <p>Load Type 1 Excel File</p>
+            </LoadTxtButton>
+            );
+    }
 }
 
 export default view(LoadTxtStatementFile);

@@ -12,30 +12,42 @@ const localStore = store({
 });
 
 const handleClick = () => {
-    dialog.showOpenDialog(
-        {
-            properties: ["openFile"],
-            filters: [
-                {
-                    name: "Excel",
-                    extensions: ["xls", "XLS", "xlsx", "XLSX"]
+    // check to see if data loaded and correlations started - true ==> throw error 
+    const isDataAlreadyLoaded = state.getState("isDataAlreadyLoaded");
+    if (isDataAlreadyLoaded) {
+        state.setState({
+            showErrorMessageBar: true,
+            errorMessage: `Data are already loaded, click "Clear Project" to restart`,
+            extendedErrorMessage: `Data have already been loaded and the analysis has started. To clear this analysis and restart the application, click the "Clear Project" button near the bottom of the navigation panel.`,
+            errorStackTrace: "no stack trace available"
+        });
+    } else {
+        dialog.showOpenDialog(
+            {
+                properties: ["openFile"],
+                filters: [
+                    {
+                        name: "Excel",
+                        extensions: ["xls", "XLS", "xlsx", "XLSX"]
+                    }
+                ]
+            },
+            files => {
+                if (files !== undefined) {
+                    const excelFile = files[0];
+                    parseExcelType3(excelFile);
+                    localStore.isLoadExcelT3ButtonGreen = true;
+                    revertLoadButtonsColors("excelT3");
+                    state.setState({
+                        notifyDataUploadSuccess: true,
+                        isInputButtonGreen: true,
+                        isLoadExcelT3ButtonGreen: true,
+                    });
                 }
-            ]
-        },
-        files => {
-            if (files !== undefined) {
-                const excelFile = files[0];
-                parseExcelType3(excelFile);
-                localStore.isLoadExcelT3ButtonGreen = true;
-                revertLoadButtonsColors("excelT3");
-                state.setState({
-                    notifyDataUploadSuccess: true,
-                    isInputButtonGreen: true,
-                    isLoadExcelT3ButtonGreen: true,
-                });
             }
-        }
-    );
+        );
+
+    }
 };
 
 class LoadTxtStatementFile extends Component {
