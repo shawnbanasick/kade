@@ -4,7 +4,7 @@ function setInitialState() {
     sortsDisplayText: [],
     isForcedQsortPattern: true,
     dataOrigin: "",
-    version: "1.0.1",
+    version: "1.0.0",
     mainDataObject: {},
     gridColDefs: [],
     gridRowData: [],

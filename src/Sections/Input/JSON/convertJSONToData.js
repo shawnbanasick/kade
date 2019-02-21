@@ -55,7 +55,6 @@ function convertJSONToData(JsonObj) {
     csvBody.push(tempArray1);
     namesAndSortsArray.push(namesAndSortsTempArray);
   }
-  console.log(JSON.stringify(csvBody, namesAndSortsArray));
   return [csvBody, namesAndSortsArray];
 }
 

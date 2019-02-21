@@ -1,12 +1,14 @@
-import React, { Component } from "react";
 import { view } from "react-easy-state";
+import React, { Component } from "react";
 import styled, { keyframes } from "styled-components";
+import state from '../../store';
 
 function handleClick() {
 }
 
 class Start extends Component {
   render() {
+    const version = `version ${state.getState("version")}`;
     return (
       <MainContent>
         { /* <LanguageSelection>{`${width} x ${height}`}</LanguageSelection> */ }
@@ -23,7 +25,9 @@ class Start extends Component {
             dition
           </SubTitleDiv>
         </SutTitleDivContainer>
-        <SubTitleDiv2>version 1.0.0</SubTitleDiv2>
+        <SubTitleDiv2>
+          { version }
+        </SubTitleDiv2>
         <WebLinkRow>
           <h1>web links:</h1>
           <hr style={ { width: "700px" } } />
