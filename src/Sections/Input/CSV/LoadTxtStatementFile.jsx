@@ -12,39 +12,50 @@ const localStore = store({
 });
 
 const handleClick = () => {
-    dialog.showOpenDialog(
-        {
-            properties: ["openFile"],
-            filters: [
-                {
-                    name: "Text",
-                    extensions: ["txt", "TXT"]
-                }
-            ]
-        },
-        files => {
-            if (files !== undefined) {
-                const fileName = files[0];
-                fs.readFile(fileName, "utf-8", (err, data) => {
-                    // split into lines
-                    const lines = data.split(/[\r\n]+/g);
-                    // remove empty strings
-                    const lines2 = lines.filter(e => e === 0 || e);
-                    const areQsortsLoaded = state.getState("areQsortsLoaded");
-                    revertLoadButtonsColors("csv");
-                    state.setState({
-                        statements: lines2,
-                        statementsLoaded: true,
-                        notifyDataUploadSuccess: true,
-                        areStatementsLoaded: true,
-                        isLoadCsvTextButtonGreen: true,
-                        isInputButtonGreen: areQsortsLoaded,
+    // check to see if data loaded and correlations started - true ==> throw error 
+    const isDataAlreadyLoaded = state.getState("isDataAlreadyLoaded");
+    if (isDataAlreadyLoaded) {
+        state.setState({
+            showErrorMessageBar: true,
+            errorMessage: `Data are already loaded, click "Clear Project" to restart`,
+            extendedErrorMessage: `Data have already been loaded and the analysis has started. To clear this analysis and restart the application, click the "Clear Project" button near the bottom of the navigation panel.`,
+            errorStackTrace: "no stack trace available"
+        });
+    } else {
+        dialog.showOpenDialog(
+            {
+                properties: ["openFile"],
+                filters: [
+                    {
+                        name: "Text",
+                        extensions: ["txt", "TXT"]
+                    }
+                ]
+            },
+            files => {
+                if (files !== undefined) {
+                    const fileName = files[0];
+                    fs.readFile(fileName, "utf-8", (err, data) => {
+                        // split into lines
+                        const lines = data.split(/[\r\n]+/g);
+                        // remove empty strings
+                        const lines2 = lines.filter(e => e === 0 || e);
+                        const areQsortsLoaded = state.getState("areQsortsLoaded");
+                        revertLoadButtonsColors("csv");
+                        state.setState({
+                            statements: lines2,
+                            statementsLoaded: true,
+                            notifyDataUploadSuccess: true,
+                            areStatementsLoaded: true,
+                            isLoadCsvTextButtonGreen: true,
+                            isInputButtonGreen: areQsortsLoaded,
+                        });
+                        localStore.isLoadCsvTextButtonGreen = true;
                     });
-                    localStore.isLoadCsvTextButtonGreen = true;
-                });
+                }
             }
-        }
-    );
+        );
+    }
 };
 
 class LoadTxtStatementFile extends Component {
