@@ -91,9 +91,12 @@ function parseExcelType2(excelFile) {
       state.setState({
         dataOrigin: "excel",
         notifyDataUploadSuccess: true,
-        isInputButtonGreen: true,
-        isLoadExcelT2ButtonGreen: true
+        isInputButtonGreen: true
       });
+      // button won't green without timeout
+      setTimeout(() => {
+        state.setState({ isLoadExcelT2ButtonGreen: true });
+      }, 100);
     }
   } catch (error) {
     // set unexpected error message and show modal

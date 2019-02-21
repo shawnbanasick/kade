@@ -1,6 +1,10 @@
 import XLSX from "xlsx";
 import state from "../../../store";
 import formatExcelType1ForDisplay from "./excelLogic/formatExcelType1ForDisplay";
+import throwNoSortsInputErrorModal from "../throwNoSortsInputError";
+import throwNoSortsTabInputErrorModal from "../throwNoSortsTabInputErrorModal";
+import throwNoStatementsInputErrorModal from "../throwNoStatementsInputErrorModal";
+import throwNoStatementsTabInputErrorModal from "../throwNoStatementsTabInputErrorModal";
 
 function parseExcelType1(excelFile) {
   const workbook = XLSX.readFile(excelFile, {
@@ -16,6 +20,7 @@ function parseExcelType1(excelFile) {
   let worksheet;
   let hasSortsWorksheet = false;
   let hasStatementsWorksheet = false;
+  let isNoError = true;
   const filetype = "user-input"; // EXCEL TYPE 1
 
   // iterate through every sheet and pull values
@@ -37,32 +42,64 @@ function parseExcelType1(excelFile) {
             tester3 = tester2[i].split(",");
             tempArray.push(tester3);
           }
+          const checkValuesArray = tempArray[30];
+          // remove sort value
+          checkValuesArray.shift();
+          // helper
+          const add = (a, b) => +a + +b;
+          // sum array, if empty (no sort), will sum to zero
+          const checkValuesArrayTotal = checkValuesArray.reduce(add);
+          if (checkValuesArrayTotal === 0) {
+            throwNoSortsInputErrorModal();
+            isNoError = false;
+          }
         } else if (filetype === "unforced") {
           tester3 = tester2.filter(Boolean);
+          // convert to array
+          // const checkValuesArray = tester3[6].split(",").map(Number);
+
           tempArray.push(tester3);
         }
       } else if (y2 === "statements" || y2 === "statement") {
         hasStatementsWorksheet = true;
         tempArray = [];
         tester4 = XLSX.utils.sheet_to_json(worksheet);
+        const testValue = Object.prototype.hasOwnProperty.call(
+          tester4[0],
+          "Statements"
+        );
+        if (!testValue) {
+          throwNoStatementsInputErrorModal();
+          isNoError = false;
+        }
         tempArray.push(tester4);
       }
       allWorksheets.push(tempArray);
     }); // end iteration of for each
 
     if (hasSortsWorksheet === false) {
-      throw new Error("Can't find the 'sorts' worksheet!");
+      throwNoSortsTabInputErrorModal();
+      isNoError = false;
     }
     if (hasStatementsWorksheet === false) {
-      throw new Error("Can't find the 'statements' worksheet!");
+      throwNoStatementsTabInputErrorModal();
+      isNoError = false;
     }
 
     formatExcelType1ForDisplay(allWorksheets);
-    state.setState({
-      dataOrigin: "excel"
-    });
+    if (isNoError) {
+      state.setState({
+        dataOrigin: "excel",
+        notifyDataUploadSuccess: true,
+        isInputButtonGreen: true
+      });
+      // button won't green without timeout
+      setTimeout(() => {
+        state.setState({ isLoadExcelT1ButtonGreen: true });
+      }, 100);
+    }
 
-  // manage error messages
+    // manage error messages
   } catch (error) {
     // set error message
     state.setState({
