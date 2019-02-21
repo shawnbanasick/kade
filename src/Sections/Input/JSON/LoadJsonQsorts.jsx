@@ -21,55 +21,66 @@ function notifyWarning() {
 }
 
 const handleClick = () => {
-    try {
-        dialog.showOpenDialog(
-            {
-                properties: ["openFile"],
-                filters: [
-                    {
-                        name: "JSON",
-                        extensions: ["json", "JSON"]
-                    }
-                ]
-            },
-            files => {
-                if (files !== undefined) {
-                    const fileName = files[0];
-                    fs.readFile(fileName, "utf8", (err, data) => {
-                        const results = JSON.parse(data);
-
-                        // convert from JSON to array
-                        const resultsArray = [];
-                        const resultsKeys = Object.keys(results);
-                        for (let k = 0; k < resultsKeys.length; k += 1) {
-                            resultsArray.push(results[resultsKeys[k]]);
-                        }
-
-                        // todo - this is the source of the extra brackets
-                        const csvData = convertJSONToData(results);
-                        const columnHeaders = csvData[0][0];
-                        revertLoadButtonsColors("json");
-                        state.setState({
-                            jsonParticipantId: columnHeaders,
-                            showJsonParticipantIdDropdown: true,
-                            csvData,
-                            jsonObj: results,
-                            dataOrigin: "json",
-                            areQsortsLoaded: true,
-                            // isLoadJsonQsortsButtonGreen: true,
-                            isInputButtonGreen: state.getState("areStatementsLoaded"),
-                        });
-                    // localStore.isLoadJsonQsortsButtonGreen = true;
-                    });
-                    notifyWarning();
-                }
-            }
-        );
-    } catch (error) {
+    // check to see if data loaded and correlations started - true ==> throw error 
+    const isDataAlreadyLoaded = state.getState("isDataAlreadyLoaded");
+    if (isDataAlreadyLoaded) {
         state.setState({
-            csvErrorMessage1: error.message,
-            showCsvErrorModal: true
+            showErrorMessageBar: true,
+            errorMessage: `Data are already loaded, click "Clear Project" to restart`,
+            extendedErrorMessage: `Data have already been loaded and the analysis has started. To clear this analysis and restart the application, click the "Clear Project" button near the bottom of the navigation panel.`,
+            errorStackTrace: "no stack trace available"
         });
+    } else {
+        try {
+            dialog.showOpenDialog(
+                {
+                    properties: ["openFile"],
+                    filters: [
+                        {
+                            name: "JSON",
+                            extensions: ["json", "JSON"]
+                        }
+                    ]
+                },
+                files => {
+                    if (files !== undefined) {
+                        const fileName = files[0];
+                        fs.readFile(fileName, "utf8", (err, data) => {
+                            const results = JSON.parse(data);
+
+                            // convert from JSON to array
+                            const resultsArray = [];
+                            const resultsKeys = Object.keys(results);
+                            for (let k = 0; k < resultsKeys.length; k += 1) {
+                                resultsArray.push(results[resultsKeys[k]]);
+                            }
+
+                            // todo - this is the source of the extra brackets
+                            const csvData = convertJSONToData(results);
+                            const columnHeaders = csvData[0][0];
+                            revertLoadButtonsColors("json");
+                            state.setState({
+                                jsonParticipantId: columnHeaders,
+                                showJsonParticipantIdDropdown: true,
+                                csvData,
+                                jsonObj: results,
+                                dataOrigin: "json",
+                                areQsortsLoaded: true,
+                                // isLoadJsonQsortsButtonGreen: true,
+                                isInputButtonGreen: state.getState("areStatementsLoaded"),
+                            });
+                        // localStore.isLoadJsonQsortsButtonGreen = true;
+                        });
+                        notifyWarning();
+                    }
+                }
+            );
+        } catch (error) {
+            state.setState({
+                csvErrorMessage1: error.message,
+                showCsvErrorModal: true
+            });
+        }
     }
 };
 
