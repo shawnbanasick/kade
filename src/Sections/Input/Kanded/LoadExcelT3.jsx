@@ -34,15 +34,25 @@ const handleClick = () => {
             },
             files => {
                 if (files !== undefined) {
-                    const excelFile = files[0];
-                    parseExcelType3(excelFile);
-                    localStore.isLoadExcelT3ButtonGreen = true;
-                    revertLoadButtonsColors("excelT3");
-                    state.setState({
-                        notifyDataUploadSuccess: true,
-                        isInputButtonGreen: true,
-                        isLoadExcelT3ButtonGreen: true,
-                    });
+                    try {
+                        const excelFile = files[0];
+                        parseExcelType3(excelFile);
+                        localStore.isLoadExcelT3ButtonGreen = true;
+                        revertLoadButtonsColors("excelT3");
+                        state.setState({
+                            notifyDataUploadSuccess: true,
+                            isInputButtonGreen: true,
+                            isLoadExcelT3ButtonGreen: true,
+                        });
+                    } catch (error) {
+                        // catch unknown input error
+                        state.setState({
+                            showErrorMessageBar: true,
+                            errorMessage: `There was an unexpected Excel data input error`,
+                            extendedErrorMessage: `Check the format of the KADE file and try again.`,
+                            errorStackTrace: "no stack trace available"
+                        });
+                    }
                 }
             }
         );

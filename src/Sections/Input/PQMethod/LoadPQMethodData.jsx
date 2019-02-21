@@ -17,64 +17,75 @@ const localStore = store({
 });
 
 const handleClick = () => {
-    try {
-        dialog.showOpenDialog(
-            {
-                properties: ["openFile"],
-                filters: [
-                    {
-                        name: "DAT",
-                        extensions: ["dat", "DAT"]
-                    }
-                ]
-            },
-            files => {
-                if (files !== undefined) {
-                    const fileName = files[0];
-                    fs.readFile(fileName, "utf-8", (err, data2) => {
-                        const data = parsePQMethodFile(data2);
-
-                        const mainDataObject = cloneDeep(data[4][1]);
-                        const sortsDisplayTextArray = sortsDisplayText(mainDataObject);
-
-                        const participantNamesPrep = cloneDeep(data[4][0]);
-                        const participantNamesPrep2 = checkUniqueParticipantName(
-                            participantNamesPrep
-                        );
-
-                        // send data to STATE
-                        state.setState({
-                            numQsorts: data[0],
-                            projectName: data[1],
-                            projectHistoryArray: [
-                                `${data[1]} data loaded from PQMethod DAT file`
-                            ],
-                            numStatements: data[2],
-                            multiplierArray: cloneDeep(data[3]),
-                            respondentNames: participantNamesPrep2,
-                            mainDataObject,
-                            sortsDisplayText: sortsDisplayTextArray,
-                            qSortPattern: data[5],
-                            dataOrigin: "pqmethod"
-                        });
-
-                        localStore.isLoadPqmethodQsortsButtonGreen = true;
-                        revertLoadButtonsColors("pqmethod");
-                        state.setState({
-                            notifyDataUploadSuccess: true,
-                            areQsortsLoaded: true,
-                            isInputButtonGreen: state.getState("areStatementsLoaded"),
-                            isLoadPqmethodQsortsButtonGreen: true
-                        });
-                    });
-                }
-            }
-        );
-    } catch (error) {
+    // check to see if data loaded and correlations started - true ==> throw error 
+    const isDataAlreadyLoaded = state.getState("isDataAlreadyLoaded");
+    if (isDataAlreadyLoaded) {
         state.setState({
-            csvErrorMessage1: error.message,
-            showCsvErrorModal: true
+            showErrorMessageBar: true,
+            errorMessage: `Data are already loaded, click "Clear Project" to restart`,
+            extendedErrorMessage: `Data have already been loaded and the analysis has started. To clear this analysis and restart the application, click the "Clear Project" button near the bottom of the navigation panel.`,
+            errorStackTrace: "no stack trace available"
         });
+    } else {
+        try {
+            dialog.showOpenDialog(
+                {
+                    properties: ["openFile"],
+                    filters: [
+                        {
+                            name: "DAT",
+                            extensions: ["dat", "DAT"]
+                        }
+                    ]
+                },
+                files => {
+                    if (files !== undefined) {
+                        const fileName = files[0];
+                        fs.readFile(fileName, "utf-8", (err, data2) => {
+                            const data = parsePQMethodFile(data2);
+
+                            const mainDataObject = cloneDeep(data[4][1]);
+                            const sortsDisplayTextArray = sortsDisplayText(mainDataObject);
+
+                            const participantNamesPrep = cloneDeep(data[4][0]);
+                            const participantNamesPrep2 = checkUniqueParticipantName(
+                                participantNamesPrep
+                            );
+
+                            // send data to STATE
+                            state.setState({
+                                numQsorts: data[0],
+                                projectName: data[1],
+                                projectHistoryArray: [
+                                    `${data[1]} data loaded from PQMethod DAT file`
+                                ],
+                                numStatements: data[2],
+                                multiplierArray: cloneDeep(data[3]),
+                                respondentNames: participantNamesPrep2,
+                                mainDataObject,
+                                sortsDisplayText: sortsDisplayTextArray,
+                                qSortPattern: data[5],
+                                dataOrigin: "pqmethod"
+                            });
+
+                            localStore.isLoadPqmethodQsortsButtonGreen = true;
+                            revertLoadButtonsColors("pqmethod");
+                            state.setState({
+                                notifyDataUploadSuccess: true,
+                                areQsortsLoaded: true,
+                                isInputButtonGreen: state.getState("areStatementsLoaded"),
+                                isLoadPqmethodQsortsButtonGreen: true
+                            });
+                        });
+                    }
+                }
+            );
+        } catch (error) {
+            state.setState({
+                csvErrorMessage1: error.message,
+                showCsvErrorModal: true
+            });
+        }
     }
 };
 

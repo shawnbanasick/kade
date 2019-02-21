@@ -13,40 +13,51 @@ const localStore = store({
 });
 
 const handleClick = () => {
-    dialog.showOpenDialog(
-        {
-            properties: ["openFile"],
-            filters: [
-                {
-                    name: "STA",
-                    extensions: ["sta", "STA"]
+    // check to see if data loaded and correlations started - true ==> throw error 
+    const isDataAlreadyLoaded = state.getState("isDataAlreadyLoaded");
+    if (isDataAlreadyLoaded) {
+        state.setState({
+            showErrorMessageBar: true,
+            errorMessage: `Data are already loaded, click "Clear Project" to restart`,
+            extendedErrorMessage: `Data have already been loaded and the analysis has started. To clear this analysis and restart the application, click the "Clear Project" button near the bottom of the navigation panel.`,
+            errorStackTrace: "no stack trace available"
+        });
+    } else {
+        dialog.showOpenDialog(
+            {
+                properties: ["openFile"],
+                filters: [
+                    {
+                        name: "STA",
+                        extensions: ["sta", "STA"]
+                    }
+                ]
+            },
+            files => {
+                if (files !== undefined) {
+                    const fileName = files[0];
+                    fs.readFile(fileName, "utf-8", (err, data) => {
+                        // split into lines
+                        const lines = data.split(/[\r\n]+/g);
+                        // remove empty strings
+                        const lines2 = lines.filter(e => e === 0 || e);
+                        state.setState({
+                            statements: lines2,
+                            statementsLoaded: true
+                        });
+                        localStore.isLoadPqmethodTextButtonButtonGreen = true;
+                        revertLoadButtonsColors("pqmethod");
+                        state.setState({
+                            notifyDataUploadSuccess: true,
+                            areStatementsLoaded: true,
+                            isLoadPqmethodTextButtonButtonGreen: true,
+                            isInputButtonGreen: state.getState("areQsortsLoaded"),
+                        });
+                    });
                 }
-            ]
-        },
-        files => {
-            if (files !== undefined) {
-                const fileName = files[0];
-                fs.readFile(fileName, "utf-8", (err, data) => {
-                    // split into lines
-                    const lines = data.split(/[\r\n]+/g);
-                    // remove empty strings
-                    const lines2 = lines.filter(e => e === 0 || e);
-                    state.setState({
-                        statements: lines2,
-                        statementsLoaded: true
-                    });
-                    localStore.isLoadPqmethodTextButtonButtonGreen = true;
-                    revertLoadButtonsColors("pqmethod");
-                    state.setState({
-                        notifyDataUploadSuccess: true,
-                        areStatementsLoaded: true,
-                        isLoadPqmethodTextButtonButtonGreen: true,
-                        isInputButtonGreen: state.getState("areQsortsLoaded"),
-                    });
-                });
             }
-        }
-    );
+        );
+    }
 };
 
 class LoadTxtStatementFile extends Component {

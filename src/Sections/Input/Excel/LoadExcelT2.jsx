@@ -38,11 +38,8 @@ const handleClick = () => {
                     parseExcelType2(excelFile);
                     revertLoadButtonsColors("excelT2");
                     state.setState({
-                        notifyDataUploadSuccess: true,
-                        isInputButtonGreen: true,
-                        isLoadExcelT2ButtonGreen: true,
                     });
-                    localStore.isLoadExcelT2ButtonGreen = true;
+                    localStore.isLoadExcelT2ButtonGreen = state.getState("isLoadExcelT2ButtonGreen");
                 }
             }
         );
