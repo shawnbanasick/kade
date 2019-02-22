@@ -6,56 +6,53 @@ import parseExcelType2 from "./parseExcelType2";
 import revertLoadButtonsColors from "../DemoData/revertLoadButtonsColors";
 import throwDataAlreadyLoadedInputErrorModal from "../throwDataAlreadyLoadedInputErrorModal";
 
-const { dialog } = require("electron").remote;
+const {dialog} = require("electron").remote;
 
 const localStore = store({
-  isLoadExcelT2ButtonGreen: false
+    isLoadExcelT2ButtonGreen: false
 });
 
 const handleClick = () => {
-  // check to see if data loaded and correlations started - true ==> throw error
-  const isDataAlreadyLoaded = state.getState("isDataAlreadyLoaded");
-  if (isDataAlreadyLoaded) {
-    throwDataAlreadyLoadedInputErrorModal();
-  } else {
-    dialog.showOpenDialog(
-      {
-        properties: ["openFile"],
-        filters: [
-          {
-            name: "Excel",
-            extensions: ["xls", "XLS", "xlsx", "XLSX"]
-          }
-        ]
-      },
-      files => {
-        if (files !== undefined) {
-          const excelFile = files[0];
-          parseExcelType2(excelFile);
-          revertLoadButtonsColors("excelT2");
-          localStore.isLoadExcelT2ButtonGreen = state.getState(
-            "isLoadExcelT2ButtonGreen"
-          );
-        }
-      }
-    );
-  }
+    // check to see if data loaded and correlations started - true ==> throw error
+    const isDataAlreadyLoaded = state.getState("isDataAlreadyLoaded");
+    if (isDataAlreadyLoaded) {
+        throwDataAlreadyLoadedInputErrorModal();
+    } else {
+        dialog.showOpenDialog(
+            {
+                properties: ["openFile"],
+                filters: [
+                    {
+                        name: "Excel",
+                        extensions: ["xls", "XLS", "xlsx", "XLSX"]
+                    }
+                ]
+            },
+            files => {
+                if (files !== undefined) {
+                    const excelFile = files[0];
+                    parseExcelType2(excelFile);
+                    revertLoadButtonsColors("excelT2");
+                    localStore.isLoadExcelT2ButtonGreen = state.getState(
+                        "isLoadExcelT2ButtonGreen"
+                    );
+                }
+            }
+        );
+    }
 };
 
 class LoadTxtStatementFile extends Component {
-  render() {
-    const isLoadExcelT2ButtonGreen = state.getState("isLoadExcelT2ButtonGreen");
-    localStore.isLoadExcelT2ButtonGreen = isLoadExcelT2ButtonGreen;
+    render() {
+        const isLoadExcelT2ButtonGreen = state.getState("isLoadExcelT2ButtonGreen");
+        localStore.isLoadExcelT2ButtonGreen = isLoadExcelT2ButtonGreen;
 
-    return (
-      <LoadTxtButton
-        isActive={localStore.isLoadExcelT2ButtonGreen}
-        onClick={handleClick}
-      >
-        <p>Load Type 2 Excel File</p>
-      </LoadTxtButton>
-    );
-  }
+        return (
+            <LoadTxtButton isActive={ localStore.isLoadExcelT2ButtonGreen } onClick={ handleClick }>
+              <p>Load Type 2 Excel File</p>
+            </LoadTxtButton>
+            );
+    }
 }
 
 export default view(LoadTxtStatementFile);
