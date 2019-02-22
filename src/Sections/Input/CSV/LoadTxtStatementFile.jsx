@@ -3,9 +3,10 @@ import React, { Component } from "react";
 import { view, store } from "react-easy-state";
 import state from "../../../store";
 import revertLoadButtonsColors from "../DemoData/revertLoadButtonsColors";
+import throwNoStatementsInputErrorModal from '../throwNoStatementsInputErrorModal.js';
 import throwDataAlreadyLoadedInputErrorModal from "../throwDataAlreadyLoadedInputErrorModal";
 
-const { dialog } = require("electron").remote;
+const {dialog} = require("electron").remote;
 const fs = require("fs");
 
 const localStore = store({
@@ -36,17 +37,23 @@ const handleClick = () => {
             const lines = data.split(/[\r\n]+/g);
             // remove empty strings
             const lines2 = lines.filter(e => e === 0 || e);
+            console.log(lines2);
+            console.log(lines2.length);
             const areQsortsLoaded = state.getState("areQsortsLoaded");
-            revertLoadButtonsColors("csv");
-            state.setState({
-              statements: lines2,
-              statementsLoaded: true,
-              notifyDataUploadSuccess: true,
-              areStatementsLoaded: true,
-              isLoadCsvTextButtonGreen: true,
-              isInputButtonGreen: areQsortsLoaded
-            });
-            localStore.isLoadCsvTextButtonGreen = true;
+            if (lines2.length === 0) {
+              throwNoStatementsInputErrorModal();
+            } else {
+              revertLoadButtonsColors("csv");
+              state.setState({
+                statements: lines2,
+                statementsLoaded: true,
+                notifyDataUploadSuccess: true,
+                areStatementsLoaded: true,
+                isLoadCsvTextButtonGreen: true,
+                isInputButtonGreen: areQsortsLoaded
+              });
+              localStore.isLoadCsvTextButtonGreen = true;
+            }
           });
         }
       }
@@ -59,13 +66,10 @@ class LoadTxtStatementFile extends Component {
     const isLoadCsvTextButtonGreen = state.getState("isLoadCsvTextButtonGreen");
     localStore.isLoadCsvTextButtonGreen = isLoadCsvTextButtonGreen;
     return (
-      <LoadTxtButton
-        isActive={localStore.isLoadCsvTextButtonGreen}
-        onClick={handleClick}
-      >
+      <LoadTxtButton isActive={ localStore.isLoadCsvTextButtonGreen } onClick={ handleClick }>
         <p>Load TXT File</p>
       </LoadTxtButton>
-    );
+      );
   }
 }
 
