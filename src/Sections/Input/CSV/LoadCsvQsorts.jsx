@@ -4,7 +4,6 @@ import React, { Component } from "react";
 import { view, store } from "react-easy-state";
 import state from "../../../store";
 import sortsDisplayText from "../logic/sortsDisplayText";
-import throwNoSortsInputError from "../throwNoSortsInputError";
 import shiftRawSortsPositive from "../logic/shiftRawSortsPositive";
 import revertLoadButtonsColors from "../DemoData/revertLoadButtonsColors";
 import calcMultiplierArrayT2 from "../Excel/excelLogic/calcMultiplierArrayT2";
@@ -66,12 +65,6 @@ const handleClick = () => {
                   }
                 }
 
-                // check for empty file
-                if (lines2.length === 0) {
-                  throwNoSortsInputError();
-                  hasInputError = true;
-                }
-
                 // todo - check if other data import methods check to see if min value is above zero
                 // before doing positive shift for raw sorts
                 let minValue;
@@ -83,16 +76,20 @@ const handleClick = () => {
                   const tempObj = {};
                   // get name
                   const name = lines2[j].shift();
-                  // slice off name
-                  lines2[j] = lines2[j].slice(1, -1);
+
+                  // set property name
                   tempObj.name = name;
+                  // add to names array
                   respondentNames.push(name);
+                  // convert to numbers format
                   const asNumbers = lines2[j].map(Number);
+                  // grab min value to use with shift positive
                   if (j === 0) {
                     minValue = Math.min(...asNumbers);
                   }
-                  // grab last for for qSortPattern
-                  qSortPatternArray = asNumbers;
+
+                  // grab last for for copy to qSortPattern
+                  qSortPatternArray = asNumbers.slice();
 
                   if (minValue < 1) {
                     arrayShiftedPositive = shiftRawSortsPositive(
