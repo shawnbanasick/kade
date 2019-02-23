@@ -2,6 +2,7 @@ import styled from "styled-components";
 import React, { Component } from "react";
 import { view, store } from "react-easy-state";
 import state from "../../../store";
+import throwDataAlreadyLoadedInputErrorModal from "../throwDataAlreadyLoadedInputErrorModal";
 
 const localStore = store({ value: "forced" });
 
@@ -9,34 +10,39 @@ const handleChange = e => {
   const value = e.target.value;
 
   localStore.value = value;
+  const isDataAlreadyLoaded = state.getState("isDataAlreadyLoaded");
 
-  // if "UNFORCED" is selected
-  const hasQsortPattern = state.getState("qSortPattern");
-  const dataOrigin = state.getState("dataOrigin");
-  if (value === "unforced") {
-    state.setState({
-      showForcedInput: true,
-      isForcedQsortPattern: false,
-      requireQsortPatternInput: true
-    });
-    if (dataOrigin === "csv" || dataOrigin === "json") {
-      state.setState({
-        oldQsortPattern: hasQsortPattern,
-        qSortPattern: []
-      });
-    }
+  if (isDataAlreadyLoaded) {
+    throwDataAlreadyLoadedInputErrorModal();
   } else {
-    // if FORCED is selected
-    const oldQsortPattern = state.getState("oldQsortPattern");
-    state.setState({
-      showForcedInput: false,
-      isForcedQsortPattern: true,
-      requireQsortPatternInput: false
-    });
-    if (dataOrigin === "csv" || dataOrigin === "json") {
+    // if "UNFORCED" is selected
+    const hasQsortPattern = state.getState("qSortPattern");
+    const dataOrigin = state.getState("dataOrigin");
+    if (value === "unforced") {
       state.setState({
-        qSortPattern: oldQsortPattern
+        showForcedInput: true,
+        isForcedQsortPattern: false,
+        requireQsortPatternInput: true
       });
+      if (dataOrigin === "csv" || dataOrigin === "json") {
+        state.setState({
+          oldQsortPattern: hasQsortPattern,
+          qSortPattern: []
+        });
+      }
+    } else {
+      // if FORCED is selected
+      const oldQsortPattern = state.getState("oldQsortPattern");
+      state.setState({
+        showForcedInput: false,
+        isForcedQsortPattern: true,
+        requireQsortPatternInput: false
+      });
+      if (dataOrigin === "csv" || dataOrigin === "json") {
+        state.setState({
+          qSortPattern: oldQsortPattern
+        });
+      }
     }
   }
 };
