@@ -4,99 +4,115 @@ import { view, store } from "react-easy-state";
 import { ToastContainer, toast, Slide } from "react-toastify";
 import state from "../../../store";
 import convertJSONToData from "./convertJSONToData";
-import revertLoadButtonsColors from '../DemoData/revertLoadButtonsColors';
+import revertLoadButtonsColors from "../DemoData/revertLoadButtonsColors";
+import throwDataAlreadyLoadedInputErrorModal from "../throwDataAlreadyLoadedInputErrorModal";
+import throwNoSortsInputErrorModal from "../throwNoSortsInputError";
 
-
-const {dialog} = require("electron").remote;
+const { dialog } = require("electron").remote;
 const fs = require("fs");
 
 const localStore = store({
-    isLoadJsonQsortsButtonGreen: false,
+  isLoadJsonQsortsButtonGreen: false
 });
 
 function notifyWarning() {
-    toast.warn("Select Participant Id to complete JSON import", {
-        autoClose: false
-    });
+  toast.warn("Select Participant Id to complete JSON import", {
+    autoClose: false
+  });
 }
 
+let isNoError = true;
+
 const handleClick = () => {
-    // check to see if data loaded and correlations started - true ==> throw error 
-    const isDataAlreadyLoaded = state.getState("isDataAlreadyLoaded");
-    if (isDataAlreadyLoaded) {
-        state.setState({
-            showErrorMessageBar: true,
-            errorMessage: `Data are already loaded, click "Clear Project" to restart`,
-            extendedErrorMessage: `Data have already been loaded and the analysis has started. To clear this analysis and restart the application, click the "Clear Project" button near the bottom of the navigation panel.`,
-            errorStackTrace: "no stack trace available"
-        });
-    } else {
-        try {
-            dialog.showOpenDialog(
-                {
-                    properties: ["openFile"],
-                    filters: [
-                        {
-                            name: "JSON",
-                            extensions: ["json", "JSON"]
-                        }
-                    ]
-                },
-                files => {
-                    if (files !== undefined) {
-                        const fileName = files[0];
-                        fs.readFile(fileName, "utf8", (err, data) => {
-                            const results = JSON.parse(data);
+  // check to see if data loaded and correlations started - true ==> throw error
+  const isDataAlreadyLoaded = state.getState("isDataAlreadyLoaded");
+  if (isDataAlreadyLoaded) {
+    throwDataAlreadyLoadedInputErrorModal();
+  } else {
+    try {
+      dialog.showOpenDialog(
+        {
+          properties: ["openFile"],
+          filters: [
+            {
+              name: "JSON",
+              extensions: ["json", "JSON"]
+            }
+          ]
+        },
+        files => {
+          if (files !== undefined) {
+            console.log("called");
+            const fileName = files[0];
+            fs.readFile(fileName, "utf8", (err, data) => {
+              const results = JSON.parse(data);
 
-                            // convert from JSON to array
-                            const resultsArray = [];
-                            const resultsKeys = Object.keys(results);
-                            for (let k = 0; k < resultsKeys.length; k += 1) {
-                                resultsArray.push(results[resultsKeys[k]]);
-                            }
+              // convert from JSON to array
+              const resultsArray = [];
+              const resultsKeys = Object.keys(results);
+              for (let k = 0; k < resultsKeys.length; k += 1) {
+                resultsArray.push(results[resultsKeys[k]]);
+              }
 
-                            // todo - this is the source of the extra brackets
-                            const csvData = convertJSONToData(results);
-                            const columnHeaders = csvData[0][0];
-                            revertLoadButtonsColors("json");
-                            state.setState({
-                                jsonParticipantId: columnHeaders,
-                                showJsonParticipantIdDropdown: true,
-                                csvData,
-                                jsonObj: results,
-                                dataOrigin: "json",
-                                areQsortsLoaded: true,
-                                // isLoadJsonQsortsButtonGreen: true,
-                                isInputButtonGreen: state.getState("areStatementsLoaded"),
-                            });
-                        // localStore.isLoadJsonQsortsButtonGreen = true;
-                        });
-                        notifyWarning();
-                    }
-                }
-            );
-        } catch (error) {
-            state.setState({
-                csvErrorMessage1: error.message,
-                showCsvErrorModal: true
+              const testValue = Object.prototype.hasOwnProperty.call(
+                resultsArray[0],
+                "sort"
+              );
+              if (!testValue) {
+                throwNoSortsInputErrorModal(
+                  `Can't find the key named "sort" in JSON object`
+                );
+                isNoError = false;
+              }
+
+              if (isNoError === true) {
+                // todo - this is the source of the extra brackets
+                const csvData = convertJSONToData(results);
+                const columnHeaders = csvData[0][0];
+
+                revertLoadButtonsColors("json");
+                state.setState({
+                  jsonParticipantId: columnHeaders,
+                  showJsonParticipantIdDropdown: true,
+                  csvData,
+                  jsonObj: results,
+                  dataOrigin: "json",
+                  areQsortsLoaded: true,
+                  isInputButtonGreen: state.getState("areStatementsLoaded")
+                });
+                notifyWarning();
+              }
             });
+          }
         }
+      );
+    } catch (error) {
+      state.setState({
+        csvErrorMessage1: error.message,
+        showCsvErrorModal: true
+      });
     }
+  }
 };
 
 class LoadTxtStatementFile extends Component {
-    render() {
-        const isLoadJsonQsortsButtonGreen = state.getState("isLoadJsonQsortsButtonGreen");
-        localStore.isLoadJsonQsortsButtonGreen = isLoadJsonQsortsButtonGreen;
-        return (
-            <React.Fragment>
-              <LoadTxtButton isActive={ localStore.isLoadJsonQsortsButtonGreen } onClick={ () => handleClick() }>
-                <p>Load JSON File</p>
-              </LoadTxtButton>
-              <ToastContainer transition={ Slide } />
-            </React.Fragment>
-            );
-    }
+  render() {
+    const isLoadJsonQsortsButtonGreen = state.getState(
+      "isLoadJsonQsortsButtonGreen"
+    );
+    localStore.isLoadJsonQsortsButtonGreen = isLoadJsonQsortsButtonGreen;
+    return (
+      <React.Fragment>
+        <LoadTxtButton
+          isActive={localStore.isLoadJsonQsortsButtonGreen}
+          onClick={() => handleClick()}
+        >
+          <p>Load JSON File</p>
+        </LoadTxtButton>
+        <ToastContainer transition={Slide} />
+      </React.Fragment>
+    );
+  }
 }
 
 export default view(LoadTxtStatementFile);
@@ -105,7 +121,8 @@ const LoadTxtButton = styled.button`
   display: grid;
   align-items: center;
   justify-items: center;
-  background-color: ${props => props.isActive ? "rgba(144,	238, 144, .6)" : "#d6dbe0"};
+  background-color: ${props =>
+    props.isActive ? "rgba(144,	238, 144, .6)" : "#d6dbe0"};
   height: 60px;
   width: 240px;
   border: 1px solid black;
@@ -120,7 +137,7 @@ const LoadTxtButton = styled.button`
   outline: none;
 
   &:hover {
-    background-color: ${props => props.isActive ? "#009a00" : "#abafb3" };
+    background-color: ${props => (props.isActive ? "#009a00" : "#abafb3")};
   }
 
   &:active {
@@ -128,4 +145,3 @@ const LoadTxtButton = styled.button`
     margin-left: 3px;
   }
 `;
-

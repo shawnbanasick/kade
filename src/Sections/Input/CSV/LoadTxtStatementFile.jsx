@@ -31,6 +31,7 @@ const handleClick = () => {
       },
       files => {
         if (files !== undefined) {
+          console.log("called");
           const fileName = files[0];
           fs.readFile(fileName, "utf-8", (err, data) => {
             // split into lines
