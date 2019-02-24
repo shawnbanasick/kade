@@ -36,6 +36,8 @@ export default store({
   gridRowDataLoadingsTable: [],
   fSigCriterionResults: [],
   numFactorsKeptForRot: undefined,
+  unforcedConfirmButtonColor: "orange",
+  hasUnforcedBeenConfirmed: false,
   isLoadingFactorsKept: false,
   isLoadingAutoflag: false,
   isLoadingBeginAnalysis: false,
@@ -201,3 +203,7 @@ export default store({
   qSortPatternObject: {},
   factorVizOptionsHolder: {}
 });
+
+/*
+"rgba(144,	238, 144, .6)" : "#d6dbe0"};
+*/

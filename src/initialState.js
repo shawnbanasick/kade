@@ -27,6 +27,8 @@ function setInitialState() {
     isLoadingBeginAnalysis: false,
     isCentroidLoading: false,
     userSelectedSigLevel: 1.96,
+    unforcedConfirmButtonColor: "orange",
+    hasUnforcedBeenConfirmed: false,
     requireMajorityCommonVariance: true,
     rowClassRulesLoadingsTable: {},
     highlighting: "grays",
@@ -160,7 +162,7 @@ function setInitialState() {
       distinguishingIndicator05: "#ededed",
       distinguishingIndicator01: "#bdbdbd",
       customFactorNames: [],
-      customFileNameLocation: "append",
+      customFileNameLocation: "append"
     },
     qSortPattern: [],
     activeValueM6: "",
