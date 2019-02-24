@@ -24,7 +24,8 @@ const handleClick = () => {
     state.setState({
       isLoadLipsetButtonGreen: true,
       notifyDataUploadSuccess: true,
-      isInputButtonGreen: true
+      isInputButtonGreen: true,
+      isDataButtonGreen: true
     });
   }
 };

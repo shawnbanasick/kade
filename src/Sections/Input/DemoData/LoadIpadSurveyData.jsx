@@ -24,7 +24,8 @@ const handleClick = () => {
     state.setState({
       isLoadIpadSurveyButtonGreen: true,
       notifyDataUploadSuccess: true,
-      isInputButtonGreen: true
+      isInputButtonGreen: true,
+      isDataButtonGreen: true
     });
   }
 };

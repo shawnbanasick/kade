@@ -24,7 +24,8 @@ const handleClick = () => {
     state.setState({
       isLoadMotivationalButtonGreen: true,
       notifyDataUploadSuccess: true,
-      isInputButtonGreen: true
+      isInputButtonGreen: true,
+      isDataButtonGreen: true
     });
   }
 };

@@ -91,7 +91,8 @@ function parseExcelType1(excelFile) {
       state.setState({
         dataOrigin: "excel",
         notifyDataUploadSuccess: true,
-        isInputButtonGreen: true
+        isInputButtonGreen: true,
+        isDataButtonGreen: true
       });
       // button won't green without timeout
       setTimeout(() => {

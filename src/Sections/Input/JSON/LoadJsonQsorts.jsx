@@ -78,7 +78,8 @@ const handleClick = () => {
                   jsonObj: results,
                   dataOrigin: "json",
                   areQsortsLoaded: true,
-                  isInputButtonGreen: state.getState("areStatementsLoaded")
+                  isInputButtonGreen: state.getState("areStatementsLoaded"),
+                  isDataButtonGreen: state.getState("areStatementsLoaded")
                 });
                 notifyWarning();
               }

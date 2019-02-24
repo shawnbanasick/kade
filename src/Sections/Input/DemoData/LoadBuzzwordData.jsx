@@ -24,7 +24,8 @@ const handleClick = () => {
     state.setState({
       isLoadBuzzwordsButtonGreen: true,
       notifyDataUploadSuccess: true,
-      isInputButtonGreen: true
+      isInputButtonGreen: true,
+      isDataButtonGreen: true
     });
   }
 };

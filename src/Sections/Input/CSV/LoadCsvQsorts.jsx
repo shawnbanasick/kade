@@ -43,19 +43,33 @@ const handleClick = () => {
               fs.readFile(fileName, "utf-8", (error, data) => {
                 // parse file
                 const parsedFile = Papa.parse(data);
-                const lines2 = parsedFile.data;
+                const lines3 = parsedFile.data;
                 let qSortPatternArray;
 
                 // remove the first (header) line
-                lines2.shift();
+                lines3.shift();
 
                 // parsing first line of PQMethod file to set qav variables
-                const numberSorts = lines2.length;
-                if (lines2.length < 2) {
+                if (lines3.length < 2) {
                   throw new Error("Can't find any Q sorts in the file!");
                 }
 
-                // remove empty "" strings from array
+                // filter out null arrays and calc max, min
+                const lines2 = [];
+                let maxArrayValue;
+                let minArrayValue;
+                for (let z = 0; z < lines3.length; z += 1) {
+                  const testValue = lines3[z][0];
+                  if (testValue) {
+                    lines2.push(lines3[z]);
+                    maxArrayValue = Math.max(...lines3[z]);
+                    minArrayValue = Math.min(...lines3[z]);
+                  }
+                }
+                // set default dataset value
+                const numberSorts = lines2.length;
+
+                // calc to remove empty "" strings from array below
                 let maxLength = lines2[0].length;
                 for (let i = 0; i < lines2[0].length - 1; i += 1) {
                   const value1 = lines2[0][i];
@@ -64,7 +78,6 @@ const handleClick = () => {
                     break;
                   }
                 }
-
                 // todo - check if other data import methods check to see if min value is above zero
                 // before doing positive shift for raw sorts
                 let minValue;
@@ -77,6 +90,10 @@ const handleClick = () => {
                   // get name
                   const name = lines2[j].shift();
 
+                  // end loop if no data
+                  if (!name) {
+                    break;
+                  }
                   // set property name
                   tempObj.name = name;
                   // add to names array
@@ -132,6 +149,7 @@ const handleClick = () => {
                     notifyDataUploadSuccess: true,
                     areQsortsLoaded: true,
                     isInputButtonGreen: state.getState("areStatementsLoaded"),
+                    isDataButtonGreen: state.getState("areStatementsLoaded"),
                     isLoadCsvQsortsButtonGreen: true
                   });
                   localStore.isLoadCsvQsortsButtonGreen = true;
@@ -144,7 +162,6 @@ const handleClick = () => {
         }
       );
     } catch (error) {
-      // console.log(JSON.stringify("catch called"));
       state.setState({
         errorMessage: error.message,
         showErrorMessageBar: true

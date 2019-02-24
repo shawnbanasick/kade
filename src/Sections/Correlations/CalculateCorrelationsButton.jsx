@@ -23,7 +23,7 @@ const handleClick = () => {
   } catch (error) {
     state.setState({
       showErrorMessageBar: true,
-      errorMessage: `No data to calculate correlations -- ${  error.message}`
+      errorMessage: `No data to calculate correlations -- ${error.message}`
     });
   }
 };
@@ -32,12 +32,15 @@ class CalculateCorrelationsButton extends Component {
   render() {
     return (
       <React.Fragment>
-        <BeginAnalysisButton isActive={ localStore.buttonColor } onClick={ () => handleClick() }>
+        <BeginAnalysisButton
+          isActive={localStore.buttonColor}
+          onClick={() => handleClick()}
+        >
           <p>Calculate Correlations</p>
         </BeginAnalysisButton>
         <ErrorNotification />
       </React.Fragment>
-      );
+    );
   }
 }
 

@@ -48,7 +48,8 @@ const handleClick = () => {
                 notifyDataUploadSuccess: true,
                 areStatementsLoaded: true,
                 isLoadJsonTextButtonGreen: true,
-                isInputButtonGreen: areQsortsLoaded
+                isInputButtonGreen: areQsortsLoaded,
+                isDataButtonGreen: areQsortsLoaded
               });
               localStore.isLoadCsvTextButtonGreen = true;
             } else {
