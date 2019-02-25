@@ -15,6 +15,7 @@ const localStore = store({
 
 const handleClick = () => {
   // check to see if data loaded and correlations started - true ==> throw error
+
   const isDataAlreadyLoaded = state.getState("isDataAlreadyLoaded");
   if (isDataAlreadyLoaded) {
     throwDataAlreadyLoadedInputErrorModal();
@@ -37,6 +38,7 @@ const handleClick = () => {
             const lines = data.split(/[\r\n]+/g);
             // remove empty strings
             const lines2 = lines.filter(e => e === 0 || e);
+            const statementsLength = lines2.length;
             const areQsortsLoaded = state.getState("areQsortsLoaded");
             if (lines2.length === 0) {
               throwNoStatementsInputErrorModal();
@@ -44,6 +46,7 @@ const handleClick = () => {
               revertLoadButtonsColors("csv");
               state.setState({
                 statements: lines2,
+                numStatements: statementsLength,
                 statementsLoaded: true,
                 notifyDataUploadSuccess: true,
                 areStatementsLoaded: true,

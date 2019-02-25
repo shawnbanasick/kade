@@ -7,6 +7,8 @@ export default function mainCorrCalcs(respondentNames, rawSortsArray) {
         // do data error checks
 
         const isForcedQsortPattern = state.getState("isForcedQsortPattern");
+        const totalStatements = state.getState("numStatements");
+
 
         // set up comparison array
         const qSortPattern = state.getState("qSortPattern");
@@ -21,6 +23,13 @@ export default function mainCorrCalcs(respondentNames, rawSortsArray) {
         let errorMessage;
         let explanation;
         let isError = false;
+
+        if (totalStatements !== qSortPattern.length) {
+            errorMessage = `The number of statements does not match the number of sorts.`;
+            explanation = `Check the number of statements and the Q Sort Design data.`;
+            inputDataErrorMessage(errorMessage, explanation);
+            isError = true;
+        }
 
         if (isForcedQsortPattern) {
             for (let i = 0, iLen = rawSortsArray.length; i < iLen; i += 1) {
@@ -44,6 +53,7 @@ export default function mainCorrCalcs(respondentNames, rawSortsArray) {
                 }
             }
         }
+
 
         // loop to check for NaN
         // var res = array.every(function(element) {return typeof element === 'number';});

@@ -115,16 +115,12 @@ class CsvQsortsDropzone extends Component {
   render() {
     return (
       <Section>
-        <Dropzone
-          onDrop={handleDrop}
-          multiple={false}
-          onDropRejected={handleDropRejected}
-        >
+        <Dropzone onDrop={ handleDrop } multiple={ false } onDropRejected={ handleDropRejected }>
           Drag a file here or
           <br /> click to load.
         </Dropzone>
       </Section>
-    );
+      );
   }
 }
 

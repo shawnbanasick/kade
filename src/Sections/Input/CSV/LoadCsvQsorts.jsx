@@ -10,10 +10,10 @@ import calcMultiplierArrayT2 from "../Excel/excelLogic/calcMultiplierArrayT2";
 import checkUniqueParticipantNames from "../logic/checkUniqueParticipantName";
 import throwDataAlreadyLoadedInputErrorModal from "../throwDataAlreadyLoadedInputErrorModal";
 
-const { dialog } = require("electron").remote;
+const {dialog} = require("electron").remote;
 const fs = require("fs");
 
-let hasInputError = false;
+const hasInputError = false;
 
 const localStore = store({
   isLoadCsvQsortsButtonGreen: false
@@ -139,7 +139,7 @@ const handleClick = () => {
                   state.setState({
                     numQsorts: numberSorts,
                     qSortPattern: qSortPatternArray,
-                    numStatements: lines2[0].length,
+                    // numStatements: lines2[0].length,
                     respondentNames: participantNames,
                     mainDataObject,
                     sortsDisplayText: sortsDisplayTextArray,
@@ -177,13 +177,10 @@ class LoadTxtStatementFile extends Component {
     );
     localStore.isLoadCsvQsortsButtonGreen = isLoadCsvQsortsButtonGreen;
     return (
-      <LoadTxtButton
-        isActive={localStore.isLoadCsvQsortsButtonGreen}
-        onClick={handleClick}
-      >
+      <LoadTxtButton isActive={ localStore.isLoadCsvQsortsButtonGreen } onClick={ handleClick }>
         <p>Load CSV File</p>
       </LoadTxtButton>
-    );
+      );
   }
 }
 
