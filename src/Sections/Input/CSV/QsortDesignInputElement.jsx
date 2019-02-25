@@ -110,7 +110,7 @@ class QsortDesignInputElement extends React.Component {
       return (
         <DesignDiv>
           <TitleDiv>
-            <TextDiv inputColor={ localStore.inputColor }>Q sort Design:</TextDiv>
+            <TextDiv inputColor={ localStore.inputColor }>Q Sort Design:</TextDiv>
             { statementsLength ? (
               <TextDiv2>
                 { localStore.inputTitle }

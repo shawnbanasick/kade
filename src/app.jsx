@@ -18,10 +18,6 @@ import ClearProject from "./Sections/ClearProject/ClearProject";
 import ProjectHistory from "./Sections/ProjectHistory/ProjectHistory";
 
 window.onerror = function(errorMsg, url, lineNumber, error) {
-  // console.log(`errorMsg: ${JSON.stringify(errorMsg)}`);
-  // console.log(`url: ${JSON.stringify(url)}`);
-  // console.log(`lineNumber: ${JSON.stringify(lineNumber)}`);
-  // console.log(`trace: ${JSON.stringify(error.stack)}`);
 
   state.setState({
     errorMessage: "An unexpected error occurred.",
@@ -29,6 +25,31 @@ window.onerror = function(errorMsg, url, lineNumber, error) {
     showErrorMessageBar: true
   });
 };
+
+function indicateDataButtonColor(isForcedQsortPattern, isDataButtonGreen, hasUnforcedBeenConfirmed) {
+  if (isForcedQsortPattern && isDataButtonGreen) {
+    // is forced and data loaded
+    return "lightgreen";
+  }
+  if (isForcedQsortPattern && !isDataButtonGreen) {
+    // is forced and data not loaded
+    return "#d6dbe0";
+  }
+  if (!isForcedQsortPattern && isDataButtonGreen && hasUnforcedBeenConfirmed) {
+    // if unforced and data loaded and confirmed
+    return "lightgreen";
+  }
+  if (!isForcedQsortPattern && isDataButtonGreen && !hasUnforcedBeenConfirmed) {
+    // if unforced and data loaded but not confirmed
+    return "orange";
+  }
+  if (!isForcedQsortPattern && !isDataButtonGreen && !hasUnforcedBeenConfirmed) {
+    // if unforced and data loaded and confirmed
+    return "#d6dbe0";
+  }
+  // default
+  return "#d6dbe0";
+}
 
 class App extends React.Component {
   constructor(props) {
@@ -62,10 +83,11 @@ class App extends React.Component {
   }
 
   render() {
+
+    const {viewStart, viewInput, viewData, viewClearProject, viewCorrelations, viewFactors, viewRotation, viewLoadings, viewOutput, viewProjectHistory, viewHelp, viewAttribution, viewLicense} = this.localState;
+    const {isForcedQsortPattern, isDataButtonGreen, hasUnforcedBeenConfirmed} = state;
+
     const inputButtonColor = state.getState("isInputButtonGreen")
-      ? "lightgreen"
-      : "#d6dbe0";
-    const dataButtonColor = state.getState("isDataButtonGreen")
       ? "lightgreen"
       : "#d6dbe0";
     const correlationsButtonColor = state.getState("isCorrelationsButtonGreen")
@@ -84,142 +106,81 @@ class App extends React.Component {
       ? "lightgreen"
       : "#d6dbe0";
 
-    const {
-      viewStart,
-      viewInput,
-      viewData,
-      viewClearProject,
-      viewCorrelations,
-      viewFactors,
-      viewRotation,
-      viewLoadings,
-      viewOutput,
-      viewProjectHistory,
-      viewHelp,
-      viewAttribution,
-      viewLicense
-    } = this.localState;
     let showTopBar = false;
     if (process.platform === "darwin") {
       showTopBar = true;
     }
 
     return (
-      <AppWrap active={showTopBar}>
-        {showTopBar ? <Header>KADE</Header> : null}
+      <AppWrap active={ showTopBar }>
+        { showTopBar ? <Header>KADE</Header> : null }
         <ErrorBoundary>
           <Split>
             <FilesWindow>
-              <StartButton
-                active={viewStart}
-                onClick={() => this.handleClick("viewStart")}
-              >
+              <StartButton active={ viewStart } onClick={ () => this.handleClick("viewStart") }>
                 <p className="title">Start</p>
               </StartButton>
-              <FileButton
-                buttonColor={inputButtonColor}
-                active={viewInput}
-                onClick={() => this.handleClick("viewInput")}
-              >
+              <FileButton buttonColor={ inputButtonColor } active={ viewInput } onClick={ () => this.handleClick("viewInput") }>
                 <p className="title">1. Input</p>
               </FileButton>
-              <FileButton
-                buttonColor={dataButtonColor}
-                active={viewData}
-                onClick={() => this.handleClick("viewData")}
-              >
+              <FileButton buttonColor={ indicateDataButtonColor(isForcedQsortPattern, isDataButtonGreen, hasUnforcedBeenConfirmed) } active={ viewData } onClick={ () => this.handleClick("viewData") }>
                 <p className="title">2. Data</p>
               </FileButton>
-              <FileButton
-                buttonColor={correlationsButtonColor}
-                active={viewCorrelations}
-                onClick={() => this.handleClick("viewCorrelations")}
-              >
+              <FileButton buttonColor={ correlationsButtonColor } active={ viewCorrelations } onClick={ () => this.handleClick("viewCorrelations") }>
                 <p className="title">3. Correlations</p>
               </FileButton>
-              <FileButton
-                buttonColor={factorsButtonColor}
-                active={viewFactors}
-                onClick={() => this.handleClick("viewFactors")}
-              >
+              <FileButton buttonColor={ factorsButtonColor } active={ viewFactors } onClick={ () => this.handleClick("viewFactors") }>
                 <p className="title">4. Factors</p>
               </FileButton>
-              <FileButton
-                buttonColor={rotationButtonColor}
-                active={viewRotation}
-                onClick={() => this.handleClick("viewRotation")}
-              >
+              <FileButton buttonColor={ rotationButtonColor } active={ viewRotation } onClick={ () => this.handleClick("viewRotation") }>
                 <p className="title">5. Rotation</p>
               </FileButton>
-              <FileButton
-                buttonColor={loadingsButtonColor}
-                active={viewLoadings}
-                onClick={() => this.handleClick("viewLoadings")}
-              >
+              <FileButton buttonColor={ loadingsButtonColor } active={ viewLoadings } onClick={ () => this.handleClick("viewLoadings") }>
                 <p className="title">6. Loadings</p>
               </FileButton>
-              <FileButton
-                buttonColor={outputButtonColor}
-                active={viewOutput}
-                onClick={() => this.handleClick("viewOutput")}
-              >
+              <FileButton buttonColor={ outputButtonColor } active={ viewOutput } onClick={ () => this.handleClick("viewOutput") }>
                 <p className="title">7. Output</p>
               </FileButton>
-              <FileButton
-                active={viewProjectHistory}
-                onClick={() => this.handleClick("viewProjectHistory")}
-              >
+              <FileButton active={ viewProjectHistory } onClick={ () => this.handleClick("viewProjectHistory") }>
                 <p className="title">Project History</p>
               </FileButton>
               <SpacerButton>
                 <p className="title" />
               </SpacerButton>
-              <FileButton
-                active={viewClearProject}
-                onClick={() => this.handleClick("viewClearProject")}
-              >
+              <FileButton active={ viewClearProject } onClick={ () => this.handleClick("viewClearProject") }>
                 <p className="title">Clear Project</p>
               </FileButton>
-              <FileButton
-                active={viewHelp}
-                onClick={() => this.handleClick("viewHelp")}
-              >
+              <FileButton active={ viewHelp } onClick={ () => this.handleClick("viewHelp") }>
                 <p className="title">Help</p>
               </FileButton>
-              <FileButton
-                active={viewLicense}
-                onClick={() => this.handleClick("viewLicense")}
-              >
+              <FileButton active={ viewLicense } onClick={ () => this.handleClick("viewLicense") }>
                 <p className="title">
                   Attribution /
                   <br /> License
                 </p>
               </FileButton>
-              {/* <FileButton active={ viewAttribution } onClick={ () => this.handleClick("viewAttribution") }>
-                                                                                                                                                                                                                                                                                                      <p className="title">Attribution</p>
-                                                                                                                                                                                                                                                                                                    </FileButton> */}
             </FilesWindow>
             <ActionWindow>
-              {viewStart && <Start view={viewStart} />}
-              {viewInput && <Input view={viewInput} />}
-              {viewData && <Data view={viewData} />}
-              {viewCorrelations && <Correlations view={viewCorrelations} />}
-              {viewClearProject && <ClearProject view={viewClearProject} />}
-              {viewFactors && <Factors view={viewFactors} />}
-              {viewRotation && <Rotation view={viewRotation} />}
-              {viewLoadings && <Loadings view={viewLoadings} />}
-              {viewOutput && <Output view={viewOutput} />}
-              {viewProjectHistory && (
-                <ProjectHistory view={viewProjectHistory} />
-              )}
-              {viewHelp && <Help view={viewHelp} />}
-              {viewAttribution && <Attribution view={viewAttribution} />}
-              {viewLicense && <License view={viewLicense} />}
+              { viewStart && <Start view={ viewStart } /> }
+              { viewInput && <Input view={ viewInput } /> }
+              { viewData && <Data view={ viewData } /> }
+              { viewCorrelations && <Correlations view={ viewCorrelations } /> }
+              { viewClearProject && <ClearProject view={ viewClearProject } /> }
+              { viewFactors && <Factors view={ viewFactors } /> }
+              { viewRotation && <Rotation view={ viewRotation } /> }
+              { viewLoadings && <Loadings view={ viewLoadings } /> }
+              { viewOutput && <Output view={ viewOutput } /> }
+              { viewProjectHistory && (
+                <ProjectHistory view={ viewProjectHistory } />
+                ) }
+              { viewHelp && <Help view={ viewHelp } /> }
+              { viewAttribution && <Attribution view={ viewAttribution } /> }
+              { viewLicense && <License view={ viewLicense } /> }
             </ActionWindow>
           </Split>
         </ErrorBoundary>
       </AppWrap>
-    );
+      );
   }
 }
 

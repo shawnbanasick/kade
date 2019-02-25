@@ -6,41 +6,36 @@ import mainCorrCalcs from "./correlationsLogic/mainCorrCalcs";
 import ErrorNotification from "../Input/ErrorNotification";
 
 const localStore = store({
-  isCorrelationsButtonGreen: true
+  isCorrelationsButtonGreen: false
 });
 
 const handleClick = () => {
   const respondentNames = state.getState("respondentNames");
-  const mainDataObject = state.getState("mainDataObject");
-  const rawSortsArray = mainDataObject.map(item => item.rawSort);
 
-  try {
+  if (respondentNames) {
+    const mainDataObject = state.getState("mainDataObject");
+    const rawSortsArray = mainDataObject.map(item => item.rawSort);
     mainCorrCalcs(respondentNames, rawSortsArray);
-    state.setState({
-      isCorrelationsButtonGreen: true,
-      isDataAlreadyLoaded: true
-    });
-  } catch (error) {
+  } else {
     state.setState({
       showErrorMessageBar: true,
-      errorMessage: `No data to calculate correlations -- ${error.message}`
+      errorMessage: `No data to calculate correlations.`
     });
   }
 };
 
 class CalculateCorrelationsButton extends Component {
   render() {
+    const {isCorrelationsButtonGreen} = state;
+    localStore.isCorrelationsButtonGreen = isCorrelationsButtonGreen;
     return (
       <React.Fragment>
-        <BeginAnalysisButton
-          isActive={localStore.buttonColor}
-          onClick={() => handleClick()}
-        >
+        <BeginAnalysisButton isActive={ localStore.buttonColor } onClick={ () => handleClick() }>
           <p>Calculate Correlations</p>
         </BeginAnalysisButton>
         <ErrorNotification />
       </React.Fragment>
-    );
+      );
   }
 }
 

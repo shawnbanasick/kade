@@ -6,7 +6,7 @@ import revertLoadButtonsColors from "../DemoData/revertLoadButtonsColors";
 import throwNoStatementsInputErrorModal from "../throwNoStatementsInputErrorModal.js";
 import throwDataAlreadyLoadedInputErrorModal from "../throwDataAlreadyLoadedInputErrorModal";
 
-const { dialog } = require("electron").remote;
+const {dialog} = require("electron").remote;
 const fs = require("fs");
 
 const localStore = store({
@@ -31,7 +31,6 @@ const handleClick = () => {
       },
       files => {
         if (files !== undefined) {
-          console.log("called");
           const fileName = files[0];
           fs.readFile(fileName, "utf-8", (err, data) => {
             // split into lines
@@ -66,13 +65,10 @@ class LoadTxtStatementFile extends Component {
     const isLoadCsvTextButtonGreen = state.getState("isLoadCsvTextButtonGreen");
     localStore.isLoadCsvTextButtonGreen = isLoadCsvTextButtonGreen;
     return (
-      <LoadTxtButton
-        isActive={localStore.isLoadCsvTextButtonGreen}
-        onClick={handleClick}
-      >
+      <LoadTxtButton isActive={ localStore.isLoadCsvTextButtonGreen } onClick={ handleClick }>
         <p>Load TXT File</p>
       </LoadTxtButton>
-    );
+      );
   }
 }
 
