@@ -4,7 +4,9 @@ import { view, store } from "react-easy-state";
 import state from "../../../store";
 import throwDataAlreadyLoadedInputErrorModal from "../throwDataAlreadyLoadedInputErrorModal";
 
-const localStore = store({ value: "forced" });
+const localStore = store({
+  value: "forced"
+});
 
 const handleChange = e => {
   const value = e.target.value;
@@ -22,7 +24,8 @@ const handleChange = e => {
       state.setState({
         showForcedInput: true,
         isForcedQsortPattern: false,
-        requireQsortPatternInput: true
+        requireQsortPatternInput: true,
+        unforcedRadioButtonState: "unforced"
       });
       if (dataOrigin === "csv" || dataOrigin === "json") {
         state.setState({
@@ -36,7 +39,8 @@ const handleChange = e => {
       state.setState({
         showForcedInput: false,
         isForcedQsortPattern: true,
-        requireQsortPatternInput: false
+        requireQsortPatternInput: false,
+        unforcedRadioButtonState: "forced"
       });
       if (dataOrigin === "csv" || dataOrigin === "json") {
         state.setState({
@@ -49,29 +53,17 @@ const handleChange = e => {
 
 class RadioExampleRadioGroup extends Component {
   render() {
+    const unforcedRadioButtonState = state.getState("unforcedRadioButtonState");
+    localStore.value = unforcedRadioButtonState;
     return (
       <RadioDiv>
         <div>Q-Sorts are:</div>
-        <StyledInput
-          type="radio"
-          name="radioGroup"
-          id="forcedButton"
-          value="forced"
-          checked={localStore.value === "forced"}
-          onChange={e => handleChange(e)}
-        />
+        <StyledInput type="radio" name="radioGroup" id="forcedButton" value="forced" checked={ localStore.value === "forced" } onChange={ e => handleChange(e) } />
         <Label htmlFor="forcedButton">Forced</Label>
-        <StyledInput
-          type="radio"
-          id="unforcedButton"
-          name="radioGroup"
-          value="unforced"
-          checked={localStore.value === "unforced"}
-          onChange={e => handleChange(e)}
-        />
+        <StyledInput type="radio" id="unforcedButton" name="radioGroup" value="unforced" checked={ localStore.value === "unforced" } onChange={ e => handleChange(e) } />
         <Label htmlFor="unforcedButton">Unforced</Label>
       </RadioDiv>
-    );
+      );
   }
 }
 

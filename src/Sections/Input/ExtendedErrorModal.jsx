@@ -31,7 +31,7 @@ class ExtendedErrorModal extends Component {
           <h4>{ extendedErrorMessage }</h4>
           <StacktraceDiv>
             <h3>Stacktrace:</h3>
-            <h4>{ errorStackTrace }</h4>
+            <pre>{ errorStackTrace }</pre>
           </StacktraceDiv>
         </Modal.Content>
         <Modal.Actions>

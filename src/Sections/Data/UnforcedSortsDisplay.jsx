@@ -8,11 +8,13 @@ class UnforcedSortsDisplay extends Component {
   render() {
     return (
       <Container>
-        <p style={{ marginRight: 15 }}>Participants with Unforced Sorts:</p>
-        <p style={{ marginRight: 15 }}>{this.props.data}</p>
-        <Button buttonColor={"orange"}>Confirm Unforced</Button>
+        <p style={ { marginRight: 15 } }>Participants with Unforced Sorts:</p>
+        <p style={ { marginRight: 15 } }>
+          { this.props.data }
+        </p>
+        <Button buttonColor={ "orange" } number={ this.props.number } />
       </Container>
-    );
+      );
   }
 }
 

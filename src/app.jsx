@@ -17,14 +17,19 @@ import Correlations from "./Sections/Correlations/Correlations";
 import ClearProject from "./Sections/ClearProject/ClearProject";
 import ProjectHistory from "./Sections/ProjectHistory/ProjectHistory";
 
-window.onerror = function(errorMsg, url, lineNumber, error) {
+window.onerror = function(errorMsg, url, lineNumber, column, error) {
+
+  console.log(`stack ${  JSON.stringify(error.stack)}`);
 
   state.setState({
     errorMessage: "An unexpected error occurred.",
     extendedErrorMessage: errorMsg,
+    errorStackTrace: error.stack,
     showErrorMessageBar: true
   });
+  return false;
 };
+
 
 function indicateDataButtonColor(isForcedQsortPattern, isDataButtonGreen, hasUnforcedBeenConfirmed) {
   if (isForcedQsortPattern && isDataButtonGreen) {

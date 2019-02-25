@@ -20,6 +20,7 @@ function setInitialState() {
     gridColDefsLoadingsTable: [],
     gridRowDataLoadingsTable: [],
     fSigCriterionResults: [],
+    unforcedRadioButtonState: "forced",
     numFactorsKeptForRot: undefined,
     isLoadingFactorsKept: false,
     isLoadingAutoflag: false,

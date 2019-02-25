@@ -9,22 +9,26 @@ import ErrorNotification from "../Input/ErrorNotification";
 class Correlations extends Component {
   render() {
     const showCorrelationMatrix = state.getState("showCorrelationMatrix");
-
+    const isDataButtonGreen = state.getState("isDataButtonGreen");
     return (
       <MainContent>
         <Container1>
-          <CalculateCorrelationsButton />
+          { isDataButtonGreen ? (
+            <CalculateCorrelationsButton />
+            ) : (
+            <DefaultMessage>No data loaded.</DefaultMessage>
+            ) }
         </Container1>
         <Container2>
-          {showCorrelationMatrix ? (
+          { showCorrelationMatrix ? (
             <CorrelationTable />
-          ) : (
+            ) : (
             <DefaultMessage>No correlations calculated.</DefaultMessage>
-          )}
+            ) }
         </Container2>
         <ErrorNotification />
       </MainContent>
-    );
+      );
   }
 }
 
