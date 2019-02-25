@@ -2,7 +2,7 @@ import state from "../../store";
 
 export default function throwNoStatementsInputErrorModal(message) {
   let errorMessage;
-  if (message.length > 0) {
+  if (message) {
     errorMessage = message;
   } else {
     errorMessage = `Can't find any statements on the "statements" tab in the Excel File`;
