@@ -5,6 +5,7 @@ import throwNoSortsTabInputErrorModal from "../throwNoSortsTabInputErrorModal";
 import formatExcelType2ForDisplay from "./excelLogic/formatExcelType2ForDisplay";
 import throwNoStatementsInputErrorModal from "../throwNoStatementsInputErrorModal";
 import throwNoStatementsTabInputErrorModal from "../throwNoStatementsTabInputErrorModal";
+import throwNoSortDesignPatternErrorModal from "../throwNoSortDesignPatternErrorModal";
 
 function parseExcelType2(excelFile) {
   const workbook = XLSX.readFile(excelFile, {
@@ -37,10 +38,10 @@ function parseExcelType2(excelFile) {
         tester2 = tester.split(/\n/);
 
         if (filetype === "user-input") {
-          for (let i = 1; i < 1000; i += 1) {
-            tester3 = tester2[i].split(",");
-            tempArray.push(tester3);
-          }
+          // for (let i = 1; i < 1000; i += 1) {
+          //   tester3 = tester2[i].split(",");
+          //   tempArray.push(tester3);
+          // }
         } else if (filetype === "unforced") {
           // filter unneeded values
           tester3 = tester2.filter(Boolean);
@@ -75,6 +76,14 @@ function parseExcelType2(excelFile) {
       allWorksheets.push(tempArray);
     }); // end iteration of for each
 
+    // do final checks and push to DOM
+    const finalErrorCheck = formatExcelType2ForDisplay(allWorksheets);
+
+    if (finalErrorCheck[0]) {
+      throwNoSortDesignPatternErrorModal();
+      isNoError = false;
+    }
+
     if (hasSortsWorksheet === "false") {
       throwNoSortsTabInputErrorModal();
       isNoError = false;
@@ -84,8 +93,6 @@ function parseExcelType2(excelFile) {
       throwNoStatementsTabInputErrorModal();
       isNoError = false;
     }
-    // push to DOM
-    formatExcelType2ForDisplay(allWorksheets);
     // no errors ==> state updates
     if (isNoError) {
       state.setState({

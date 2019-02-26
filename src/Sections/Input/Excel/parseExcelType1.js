@@ -47,7 +47,7 @@ function parseExcelType1(excelFile) {
         tester = XLSX.utils.sheet_to_csv(worksheet);
         tester2 = tester.split(/\n/);
 
-        // max participants 500 artificial limit
+        // max statement number 500 artificial limit
         for (let i = 1; i < tester2.length; i += 1) {
           tester3 = tester2[i].split(",");
           tempArray.push(tester3);
@@ -118,6 +118,7 @@ function parseExcelType1(excelFile) {
       isNoError = false;
     }
 
+    // num statements doesnt match number sort values in Q sort pattern
     if (finalErrorCheck[5]) {
       numStatementsMatchErrorModal();
       isNoError = false;
@@ -130,7 +131,7 @@ function parseExcelType1(excelFile) {
         isInputButtonGreen: true,
         isDataButtonGreen: true
       });
-      // button won't green without timeout
+      // button won't go green without timeout
       setTimeout(() => {
         state.setState({
           isLoadExcelT1ButtonGreen: true

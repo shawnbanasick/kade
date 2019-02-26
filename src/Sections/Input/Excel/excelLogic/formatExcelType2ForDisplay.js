@@ -7,6 +7,7 @@ import grabRespondentNamesAndSorts from "./grabRespondentNamesAndSorts";
 import checkUniqueParticipantNames from "../../logic/checkUniqueParticipantName";
 
 export default function formatype2ForDisplay(data) {
+  let noSortPatternError = false;
   try {
     // store #1
     const projectName1 = data[0][0][1];
@@ -41,14 +42,28 @@ export default function formatype2ForDisplay(data) {
     // calculate sort design array
     const calcSortTriangleT2 = calcSortTriangleShapeT2(data[0][0][3]);
     const copyTriangleShape = calcSortTriangleT2[0];
+    console.log(
+      "TCL: exportdefaultfunctionformatype2ForDisplay -> copyTriangleShape",
+      copyTriangleShape
+    );
     if (copyTriangleShape.length < 3) {
-      throw new Error("Can't find sort pattern on 'sorts' worksheet!");
+      noSortPatternError = true;
+
+      // throw new Error("Can't find sort pattern on 'sorts' worksheet!");
     }
     // let testSortTriangleShapeArray = calcSortTriangleT2[1];
     const sortTriangleShape = calcSortTriangleT2[2];
+    console.log(
+      "TCL: exportdefaultfunctionformatype2ForDisplay -> sortTriangleShape",
+      sortTriangleShape
+    );
 
     // store #5 - set Q-sort size (number of statements)
     const originalSortSize = sortTriangleShape.length; // number of statements
+    console.log(
+      "TCL: exportdefaultfunctionformatype2ForDisplay -> originalSortSize",
+      originalSortSize
+    );
 
     // store #6  -  statement number array
     const statementNumArray = [];
@@ -93,4 +108,5 @@ export default function formatype2ForDisplay(data) {
       showExcelErrorModal: true
     });
   }
+  return [noSortPatternError];
 }
