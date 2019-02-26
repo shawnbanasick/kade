@@ -61,18 +61,20 @@ export default function getRespondentSortsExcelT1(
     if (respondentDataCheck !== testValue) {
       excelType1NonsymmetricArray.push(respondentNames[q]);
       hasDuplicateStatementNumbers = true;
+
+      const excelType1NonsymmetricArrayText = excelType1NonsymmetricArray.join(", ");
+      const errorMessage = `${excelType1NonsymmetricArrayText} has a Q sort with statement number problems`;
+
+      state.setState({
+        errorMessage
+      });
+
     }
 
     // todo - check if this is needed?
     statementNumArray.push(tempArray33);
   }
 
-  const excelType1NonsymmetricArrayText = excelType1NonsymmetricArray.join(", ");
-  const errorMessage = `${excelType1NonsymmetricArrayText} has a Q sort with statement number problems`;
-
-  state.setState({
-    errorMessage
-  });
 
   // let returnedValue = [respondentDataSorts3, statementNumArray];
   return [respondentDataSorts3, statementNumArray, outOfRangeError, hasDuplicateStatementNumbers];
