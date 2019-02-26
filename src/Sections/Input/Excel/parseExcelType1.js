@@ -1,14 +1,15 @@
 import XLSX from "xlsx";
 import state from "../../../store";
 import throwNoSortsInputErrorModal from "../throwNoSortsInputError";
+import numStatementsMatchErrorModal from "../numStatementsMatchErrorModal";
 import throwNoSortsTabInputErrorModal from "../throwNoSortsTabInputErrorModal";
 import formatExcelType1ForDisplay from "./excelLogic/formatExcelType1ForDisplay";
+import headersDontMatchSortsErrorModal from "../headersDontMatchSortsErrorModal";
 import throwNoStatementsInputErrorModal from "../throwNoStatementsInputErrorModal";
 import throwExcelT1RangeErrorModal from "./excelLogic/throwExcelT1RangeErrorModal";
 import throwNoSortDesignPatternErrorModal from "../throwNoSortDesignPatternErrorModal";
 import throwNoStatementsTabInputErrorModal from "../throwNoStatementsTabInputErrorModal";
 import hasDuplicateStatementNumbersErrorModal from "../hasDuplicateStatementNumbersErrorModal";
-import headersDontMatchSortsErrorModal from "../headersDontMatchSortsErrorModal";
 
 function parseExcelType1(excelFile) {
   const workbook = XLSX.readFile(excelFile, {
@@ -29,12 +30,10 @@ function parseExcelType1(excelFile) {
 
   // iterate through every sheet and pull values
   const sheetNameList = workbook.SheetNames;
-  console.log("TCL: sheetNameList", JSON.stringify(sheetNameList));
 
   try {
     sheetNameList.forEach(y => {
       const y2 = y.toLowerCase();
-      console.log("TCL: y2", y2);
       worksheet = workbook.Sheets[y];
       /* iterate through sheets */
       if (y2 === "guide") {
@@ -46,9 +45,7 @@ function parseExcelType1(excelFile) {
         console.log(`1. Q sorts worksheet found`);
         hasSortsWorksheet = true;
         tester = XLSX.utils.sheet_to_csv(worksheet);
-        console.log("TCL: tester", JSON.stringify(tester));
         tester2 = tester.split(/\n/);
-        // console.log('TCL: tester2', JSON.stringify(tester2));
 
         // max participants 500 artificial limit
         for (let i = 1; i < tester2.length; i += 1) {
@@ -60,7 +57,6 @@ function parseExcelType1(excelFile) {
             break;
           }
         }
-        console.log("TCL: tempArray", tempArray);
       }
 
       if (y2 === "statements" || y2 === "statement") {
@@ -119,6 +115,11 @@ function parseExcelType1(excelFile) {
     // no header match error
     if (finalErrorCheck[4]) {
       headersDontMatchSortsErrorModal();
+      isNoError = false;
+    }
+
+    if (finalErrorCheck[5]) {
+      numStatementsMatchErrorModal();
       isNoError = false;
     }
 

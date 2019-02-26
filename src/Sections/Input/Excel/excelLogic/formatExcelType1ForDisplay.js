@@ -14,6 +14,7 @@ export default function formatExcelType1ForDisplay(data) {
   let noSortPatternError = false;
   let hasDuplicateStatementNumbers = false;
   let noHeaderMatchError = false;
+  let numStatementsMatchError = false;
 
   // for sample download worksheet - sometimes adds empty array to start
   if (data[0].length === 0) {
@@ -54,15 +55,7 @@ export default function formatExcelType1ForDisplay(data) {
 
     // QAV #4
     const namesData = sortData.shift();
-    console.log(
-      "TCL: exportdefaultfunctionformatExcelType1ForDisplay -> sortData",
-      sortData
-    );
     const respondentNames = getRespondentNamesExcelT1(namesData);
-    console.log(
-      "TCL: exportdefaultfunctionformatExcelType1ForDisplay -> respondentNames",
-      respondentNames
-    );
 
     // test for too many headers
     if (sortData[0].length !== respondentNames.length) {
@@ -86,6 +79,11 @@ export default function formatExcelType1ForDisplay(data) {
     // QAV #7   project statements
     const statementData1 = data[1];
     const statements = getStatementsExcelT1(statementData1);
+
+    // catch too many / too few statements
+    if (statements.length !== numStatements) {
+      numStatementsMatchError = true;
+    }
 
     const sortsDisplayText = respondentNames.map(
       (item, i) => `${item} : ${respondentSorts[i]}`
@@ -125,6 +123,7 @@ export default function formatExcelType1ForDisplay(data) {
     noSortsError,
     noSortPatternError,
     hasDuplicateStatementNumbers,
-    noHeaderMatchError
+    noHeaderMatchError,
+    numStatementsMatchError
   ];
 }
