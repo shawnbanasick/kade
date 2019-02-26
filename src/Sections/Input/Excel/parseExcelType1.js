@@ -42,7 +42,7 @@ function parseExcelType1(excelFile) {
             tester3 = tester2[i].split(",");
             tempArray.push(tester3);
           }
-          const checkValuesArray = tempArray[30];
+          const checkValuesArray = tempArray[0].slice();
           // remove sort value
           checkValuesArray.shift();
           // helper

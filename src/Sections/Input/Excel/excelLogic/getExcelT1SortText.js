@@ -29,5 +29,9 @@ export default function getExcelT1SortText(inputData1, numStatements) {
     }
     sortData.push(tempArray1);
   }
+  console.log(
+    "TCL: exportdefaultfunctiongetExcelT1SortText -> sortData",
+    sortData
+  );
   return sortData;
 }

@@ -1,8 +1,8 @@
 import state from "../../store";
 
-export default function throwNoStatementsInputErrorModal(message) {
+export default function throwNoSortsInputErrorModal(message) {
   let errorMessage;
-  if (message.length > 0) {
+  if (message) {
     errorMessage = message;
   } else {
     errorMessage = `Can't find any sorts on the "sorts" tab in the Excel File`;

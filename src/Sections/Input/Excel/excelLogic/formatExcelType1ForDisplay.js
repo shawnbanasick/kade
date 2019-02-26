@@ -10,7 +10,7 @@ import createMultiplierArrayAndTriangleShape from "./createMultiplierArrayAndTri
 export default function formatExcelType1ForDisplay(data) {
   // console.log(JSON.stringify("called"));
   try {
-    // console.log(`data: ${JSON.stringify(data)}`);
+    console.log(`data: ${JSON.stringify(data)}`);
 
     // QAV #1  Project Name
     const projectName = data[0][0][1];
@@ -39,6 +39,10 @@ export default function formatExcelType1ForDisplay(data) {
 
     // creates array of objects with sort value and statement number
     const sortData = getExcelT1SortText(inputData1, numStatements);
+    console.log(
+      "TCL: exportdefaultfunctionformatExcelType1ForDisplay -> sortData",
+      JSON.stringify(sortData)
+    );
     if (sortData[1].length === 0 && sortData[2].length === 0) {
       throw new Error("Can't find any Q-sorts on the 'sorts' worksheet!");
     }

@@ -1,5 +1,6 @@
 import sortBy from "lodash/sortBy";
 import state from "../../../../store";
+import throwExcelT1RangeErrorModal from "./throwExcelT1RangeErrorModal";
 
 export default function getRespondentSortsExcelT1(
   sortData,
@@ -16,7 +17,8 @@ export default function getRespondentSortsExcelT1(
 
   // transpose data
   // todo - check to see if util transposer will work for this
-  const sortDataTransposed = sortData[0].map((col, i) => sortData.map(row => row[i])
+  const sortDataTransposed = sortData[0].map((col, i) =>
+    sortData.map(row => row[i])
   );
 
   const data2 = [];
@@ -28,6 +30,8 @@ export default function getRespondentSortsExcelT1(
   let temp2a;
   const respondentDataSorts3 = [];
 
+  console.log("TCL: data2", JSON.stringify(data2));
+
   for (let q = 0; q < data2.length; q += 1) {
     const temp11 = data2[q];
     const tempArray3 = [];
@@ -35,6 +39,18 @@ export default function getRespondentSortsExcelT1(
     for (let r = 0; r < temp11.length; r += 1) {
       temp2 = temp11[r].sortValue;
       temp2a = temp11[r].statementNum;
+
+      // insert check here
+      if (temp2a < 1 || temp2a > numStatements) {
+        console.log(q, r, "problem", temp2a);
+        throwExcelT1RangeErrorModal(
+          `Participant ${
+            respondentNames[q]
+          } has an out-of-range statement number`
+        );
+        break;
+      }
+
       tempArray3.push(temp2);
       tempArray33.push(temp2a);
     }
