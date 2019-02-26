@@ -4,10 +4,11 @@ import throwNoSortsInputErrorModal from "../throwNoSortsInputError";
 import throwNoSortsTabInputErrorModal from "../throwNoSortsTabInputErrorModal";
 import formatExcelType1ForDisplay from "./excelLogic/formatExcelType1ForDisplay";
 import throwNoStatementsInputErrorModal from "../throwNoStatementsInputErrorModal";
-import throwExcelT1RangeErrorModal from './excelLogic/throwExcelT1RangeErrorModal';
-import throwNoSortDesignPatternErrorModal from '../throwNoSortDesignPatternErrorModal';
+import throwExcelT1RangeErrorModal from "./excelLogic/throwExcelT1RangeErrorModal";
+import throwNoSortDesignPatternErrorModal from "../throwNoSortDesignPatternErrorModal";
 import throwNoStatementsTabInputErrorModal from "../throwNoStatementsTabInputErrorModal";
-import hasDuplicateStatementNumbersErrorModal from '../hasDuplicateStatementNumbersErrorModal';
+import hasDuplicateStatementNumbersErrorModal from "../hasDuplicateStatementNumbersErrorModal";
+import headersDontMatchSortsErrorModal from "../headersDontMatchSortsErrorModal";
 
 function parseExcelType1(excelFile) {
   const workbook = XLSX.readFile(excelFile, {
@@ -28,12 +29,12 @@ function parseExcelType1(excelFile) {
 
   // iterate through every sheet and pull values
   const sheetNameList = workbook.SheetNames;
-  console.log('TCL: sheetNameList', JSON.stringify(sheetNameList));
+  console.log("TCL: sheetNameList", JSON.stringify(sheetNameList));
 
   try {
     sheetNameList.forEach(y => {
       const y2 = y.toLowerCase();
-      console.log('TCL: y2', y2)
+      console.log("TCL: y2", y2);
       worksheet = workbook.Sheets[y];
       /* iterate through sheets */
       if (y2 === "guide") {
@@ -45,18 +46,21 @@ function parseExcelType1(excelFile) {
         console.log(`1. Q sorts worksheet found`);
         hasSortsWorksheet = true;
         tester = XLSX.utils.sheet_to_csv(worksheet);
-        console.log('TCL: tester', JSON.stringify(tester));
+        console.log("TCL: tester", JSON.stringify(tester));
         tester2 = tester.split(/\n/);
         // console.log('TCL: tester2', JSON.stringify(tester2));
 
-        // if (filetype === "user-input") {
-        // max participants 200 artificial limit
+        // max participants 500 artificial limit
         for (let i = 1; i < tester2.length; i += 1) {
           tester3 = tester2[i].split(",");
           tempArray.push(tester3);
-        }
-        console.log('TCL: tempArray', tempArray)
 
+          // emergency break
+          if (i > 500) {
+            break;
+          }
+        }
+        console.log("TCL: tempArray", tempArray);
       }
 
       if (y2 === "statements" || y2 === "statement") {
@@ -112,6 +116,12 @@ function parseExcelType1(excelFile) {
       isNoError = false;
     }
 
+    // no header match error
+    if (finalErrorCheck[4]) {
+      headersDontMatchSortsErrorModal();
+      isNoError = false;
+    }
+
     if (isNoError && finalErrorCheck !== true) {
       state.setState({
         dataOrigin: "excel",
@@ -127,7 +137,7 @@ function parseExcelType1(excelFile) {
       }, 100);
     }
 
-  // manage error messages
+    // manage error messages
   } catch (error) {
     // set error message
     state.setState({
