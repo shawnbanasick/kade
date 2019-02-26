@@ -1,6 +1,7 @@
 import XLSX from "xlsx";
 import state from "../../../store";
 import throwNoSortsInputErrorModal from "../throwNoSortsInputError";
+import numStatementsMatchErrorModal from "../numStatementsMatchErrorModal";
 import throwNoSortsTabInputErrorModal from "../throwNoSortsTabInputErrorModal";
 import formatExcelType2ForDisplay from "./excelLogic/formatExcelType2ForDisplay";
 import throwNoStatementsInputErrorModal from "../throwNoStatementsInputErrorModal";
@@ -19,10 +20,9 @@ function parseExcelType2(excelFile) {
   let tempArray = [];
   const allWorksheets = [];
   let worksheet;
-  let hasSortsWorksheet = "false";
-  let hasStatementsWorksheet = "false";
+  let hasSortsWorksheet = false;
+  let hasStatementsWorksheet = false;
   let isNoError = true;
-  const filetype = "unforced";
 
   // iterate through every sheet and pull values
   const sheetNameList = workbook.SheetNames;
@@ -33,34 +33,27 @@ function parseExcelType2(excelFile) {
       /* iterate through sheets */
       worksheet = workbook.Sheets[y];
       if (y2 === "sorts" || y2 === "qsorts" || y2 === "q-sorts") {
-        hasSortsWorksheet = "true";
+        hasSortsWorksheet = true;
         tester = XLSX.utils.sheet_to_csv(worksheet);
         tester2 = tester.split(/\n/);
 
-        if (filetype === "user-input") {
-          // for (let i = 1; i < 1000; i += 1) {
-          //   tester3 = tester2[i].split(",");
-          //   tempArray.push(tester3);
-          // }
-        } else if (filetype === "unforced") {
-          // filter unneeded values
-          tester3 = tester2.filter(Boolean);
-          // convert to array
-          const checkValuesArray = tester3[6].split(",").map(Number);
-          // remove participant name
-          checkValuesArray.shift();
-          // helper
-          const add = (a, b) => Math.abs(a) + Math.abs(b);
-          // sum array, if empty (no sort), will sum to zero
-          const checkValuesArrayTotal = checkValuesArray.reduce(add);
-          if (checkValuesArrayTotal === 0) {
-            throwNoSortsInputErrorModal();
-            isNoError = false;
-          }
-          tempArray.push(tester3);
+        // filter unneeded values
+        tester3 = tester2.filter(Boolean);
+        // convert to array
+        const checkValuesArray = tester3[6].split(",").map(Number);
+        // remove participant name
+        checkValuesArray.shift();
+        // helper
+        const add = (a, b) => Math.abs(a) + Math.abs(b);
+        // sum array, if empty (no sort), will sum to zero
+        const checkValuesArrayTotal = checkValuesArray.reduce(add);
+        if (checkValuesArrayTotal === 0) {
+          throwNoSortsInputErrorModal();
+          isNoError = false;
         }
+        tempArray.push(tester3);
       } else if (y2 === "statements" || y2 === "statement") {
-        hasStatementsWorksheet = "true";
+        hasStatementsWorksheet = true;
         tempArray = [];
         tester4 = XLSX.utils.sheet_to_json(worksheet);
         const testValue = Object.prototype.hasOwnProperty.call(
@@ -79,17 +72,24 @@ function parseExcelType2(excelFile) {
     // do final checks and push to DOM
     const finalErrorCheck = formatExcelType2ForDisplay(allWorksheets);
 
+    // no sort design
     if (finalErrorCheck[0]) {
       throwNoSortDesignPatternErrorModal();
       isNoError = false;
     }
 
-    if (hasSortsWorksheet === "false") {
+    // statement number doesnt match
+    if (finalErrorCheck[1]) {
+      numStatementsMatchErrorModal();
+      isNoError = false;
+    }
+
+    if (hasSortsWorksheet === false) {
       throwNoSortsTabInputErrorModal();
       isNoError = false;
     }
 
-    if (hasStatementsWorksheet === "false") {
+    if (hasStatementsWorksheet === false) {
       throwNoStatementsTabInputErrorModal();
       isNoError = false;
     }
