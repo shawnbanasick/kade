@@ -4,7 +4,9 @@ import formatExcelType1ForDisplay from "./excelLogic/formatExcelType1ForDisplay"
 import throwNoSortsInputErrorModal from "../throwNoSortsInputError";
 import throwNoSortsTabInputErrorModal from "../throwNoSortsTabInputErrorModal";
 import throwNoStatementsInputErrorModal from "../throwNoStatementsInputErrorModal";
+import throwExcelT1RangeErrorModal from './excelLogic/throwExcelT1RangeErrorModal';
 import throwNoStatementsTabInputErrorModal from "../throwNoStatementsTabInputErrorModal";
+
 
 function parseExcelType1(excelFile) {
   const workbook = XLSX.readFile(excelFile, {
@@ -86,8 +88,16 @@ function parseExcelType1(excelFile) {
       isNoError = false;
     }
 
-    formatExcelType1ForDisplay(allWorksheets);
-    if (isNoError) {
+    const finalErrorCheck = formatExcelType1ForDisplay(allWorksheets);
+
+    if (finalErrorCheck) {
+      throwExcelT1RangeErrorModal();
+      isNoError = false;
+    }
+
+    console.log('TCL: isNoError', isNoError)
+
+    if (isNoError && finalErrorCheck !== true) {
       state.setState({
         dataOrigin: "excel",
         notifyDataUploadSuccess: true,
@@ -96,11 +106,13 @@ function parseExcelType1(excelFile) {
       });
       // button won't green without timeout
       setTimeout(() => {
-        state.setState({ isLoadExcelT1ButtonGreen: true });
+        state.setState({
+          isLoadExcelT1ButtonGreen: true
+        });
       }, 100);
     }
 
-    // manage error messages
+  // manage error messages
   } catch (error) {
     // set error message
     state.setState({
