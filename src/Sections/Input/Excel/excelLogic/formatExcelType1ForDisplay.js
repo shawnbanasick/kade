@@ -10,15 +10,14 @@ import createMultiplierArrayAndTriangleShape from "./createMultiplierArrayAndTri
 
 export default function formatExcelType1ForDisplay(data) {
     // console.log(JSON.stringify("called"));
-    let hasExcelT1Error = false;
-    try {
-        console.log(`data: ${JSON.stringify(data)}`);
+    let outOfRangeError = false;
+    let noSortsError = false;
+    let noSortPatternError = false;
 
+    try {
 
         // QAV #1  Project Name
         const projectName = data[0][0][1];
-
-        // console.log(`pro name: ${JSON.stringify(projectName)}`);
 
         // // QAV #2  -  todo - fix loop function
         const inputData1 = data[0];
@@ -30,9 +29,10 @@ export default function formatExcelType1ForDisplay(data) {
             Math.min(...multiplierArray) === 0 &&
             Math.max(...multiplierArray) === 0
         ) {
-            throw new Error(
-                "Can't find the number of sorts for each column on the 'sorts' worksheet!"
-            );
+            noSortPatternError = true;
+        // throw new Error(
+        //     "Can't find the number of sorts for each column on the 'sorts' worksheet!"
+        // );
         }
 
         const sortTriangleShape = createMultiplierAndQShapeData[1];
@@ -42,12 +42,9 @@ export default function formatExcelType1ForDisplay(data) {
 
         // creates array of objects with sort value and statement number
         const sortData = getExcelT1SortText(inputData1, numStatements);
-        console.log(
-            "TCL: exportdefaultfunctionformatExcelType1ForDisplay -> sortData",
-            JSON.stringify(sortData)
-        );
         if (sortData[1].length === 0 && sortData[2].length === 0) {
-            throw new Error("Can't find any Q-sorts on the 'sorts' worksheet!");
+            noSortsError = true;
+        //  throw new Error("Can't find any Q-sorts on the 'sorts' worksheet!");
         }
 
         // QAV #4
@@ -65,16 +62,16 @@ export default function formatExcelType1ForDisplay(data) {
         );
         const respondentSorts = respondentDataSortsPrep[0];
         const statementNumArray = respondentDataSortsPrep[1];
-        hasExcelT1Error = respondentDataSortsPrep[2];
+        outOfRangeError = respondentDataSortsPrep[2];
 
         // QAV #7   project statements
         const statementData1 = data[1];
         const statements = getStatementsExcelT1(statementData1);
-        if (statements.length === 0) {
-            throw new Error(
-                "Can't find any statements on the 'statements' worksheet!"
-            );
-        }
+        // if (statements.length === 0) {
+        //     throw new Error(
+        //         "Can't find any statements on the 'statements' worksheet!"
+        //     );
+        // }
 
         const sortsDisplayText = respondentNames.map(
             (item, i) => `${item} : ${respondentSorts[i]}`
@@ -109,5 +106,5 @@ export default function formatExcelType1ForDisplay(data) {
             showExcelErrorModal: true
         });
     }
-    return hasExcelT1Error;
+    return [outOfRangeError, noSortsError, noSortPatternError];
 }

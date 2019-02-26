@@ -1,12 +1,12 @@
 import XLSX from "xlsx";
 import state from "../../../store";
-import formatExcelType1ForDisplay from "./excelLogic/formatExcelType1ForDisplay";
 import throwNoSortsInputErrorModal from "../throwNoSortsInputError";
 import throwNoSortsTabInputErrorModal from "../throwNoSortsTabInputErrorModal";
+import formatExcelType1ForDisplay from "./excelLogic/formatExcelType1ForDisplay";
 import throwNoStatementsInputErrorModal from "../throwNoStatementsInputErrorModal";
 import throwExcelT1RangeErrorModal from './excelLogic/throwExcelT1RangeErrorModal';
+import throwNoSortDesignPatternErrorModal from '../throwNoSortDesignPatternErrorModal';
 import throwNoStatementsTabInputErrorModal from "../throwNoStatementsTabInputErrorModal";
-
 
 function parseExcelType1(excelFile) {
   const workbook = XLSX.readFile(excelFile, {
@@ -44,17 +44,20 @@ function parseExcelType1(excelFile) {
             tester3 = tester2[i].split(",");
             tempArray.push(tester3);
           }
-          const checkValuesArray = tempArray[0].slice();
-          // remove sort value
-          checkValuesArray.shift();
-          // helper
-          const add = (a, b) => +a + +b;
-          // sum array, if empty (no sort), will sum to zero
-          const checkValuesArrayTotal = checkValuesArray.reduce(add);
-          if (checkValuesArrayTotal === 0) {
-            throwNoSortsInputErrorModal();
-            isNoError = false;
-          }
+
+          // const checkValuesArray = tempArray[0].slice();
+          // // remove sort value
+          // checkValuesArray.shift();
+          // // helper
+          // const add = (a, b) => +a + +b;
+          // // sum array, if empty (no sort), will sum to zero
+          // const checkValuesArrayTotal = checkValuesArray.reduce(add);
+          // if (checkValuesArrayTotal === 0) {
+          //   console.log(JSON.stringify("called"));
+
+        //   throwNoSortsInputErrorModal();
+        //   isNoError = false;
+        // }
         } else if (filetype === "unforced") {
           tester3 = tester2.filter(Boolean);
           // convert to array
@@ -90,12 +93,21 @@ function parseExcelType1(excelFile) {
 
     const finalErrorCheck = formatExcelType1ForDisplay(allWorksheets);
 
-    if (finalErrorCheck) {
+    if (finalErrorCheck[0]) {
       throwExcelT1RangeErrorModal();
       isNoError = false;
     }
 
-    console.log('TCL: isNoError', isNoError)
+    if (finalErrorCheck[1]) {
+      throwNoSortsInputErrorModal();
+      isNoError = false;
+    }
+
+    if (finalErrorCheck[2]) {
+      throwNoSortDesignPatternErrorModal();
+      isNoError = false;
+    }
+
 
     if (isNoError && finalErrorCheck !== true) {
       state.setState({

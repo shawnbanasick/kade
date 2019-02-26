@@ -1,6 +1,6 @@
 import sortBy from "lodash/sortBy";
 import state from "../../../../store";
-import throwExcelT1RangeErrorModal from "./throwExcelT1RangeErrorModal";
+// import throwExcelT1RangeErrorModal from "./throwExcelT1RangeErrorModal";
 
 
 export default function getRespondentSortsExcelT1(
@@ -8,7 +8,8 @@ export default function getRespondentSortsExcelT1(
     respondentNames,
     numStatements
 ) {
-    let hasExcelT1Error = false;
+    // let hasExcelT1Error = false;
+    let outOfRangeError = false;
 
     // generate the original load value for statement number array
     const statementNumArray = [];
@@ -32,9 +33,6 @@ export default function getRespondentSortsExcelT1(
     let temp2a;
     const respondentDataSorts3 = [];
 
-
-    console.log("TCL: data2", JSON.stringify(data2));
-
     for (let q = 0; q < data2.length; q += 1) {
         const temp11 = data2[q];
         const tempArray3 = [];
@@ -45,12 +43,11 @@ export default function getRespondentSortsExcelT1(
 
             // insert check here
             if (temp2a < 1 || temp2a > numStatements) {
-                console.log(q, r, "problem", temp2a);
                 const message = `Participant ${respondentNames[q]} has an out-of-range statement number`;
                 state.setState({
                     errorMessage: message
                 })
-                hasExcelT1Error = true;
+                outOfRangeError = true;
             }
 
             tempArray3.push(temp2);
@@ -75,5 +72,5 @@ export default function getRespondentSortsExcelT1(
     });
 
     // let returnedValue = [respondentDataSorts3, statementNumArray];
-    return [respondentDataSorts3, statementNumArray, hasExcelT1Error];
+    return [respondentDataSorts3, statementNumArray, outOfRangeError];
 }
