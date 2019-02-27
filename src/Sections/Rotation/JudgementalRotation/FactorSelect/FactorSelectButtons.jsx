@@ -65,6 +65,7 @@ class FactorSelectButtons extends React.Component {
           // add id to ab factors array
           const idValue = factor.substr(factor.length - 1);
           abFactors.push(parseInt(idValue, 10));
+          abFactors.sort((a, b) => a - b);
 
           // set new variables - highlighting, abFactors, and userSelectedFactors - to state
           const factor2 = factor.replace(" ", "");
@@ -142,136 +143,136 @@ class FactorSelectButtons extends React.Component {
     if (shouldDisplayRotFactorButtons) {
       return (
         <React.Fragment>
-        <StyledWrapper>
-          {show1 && (
-            <Button
-              id={"factor 1"}
-              toggle
-              className="wrapper1"
-              active={state.getState("highlightRotfactor1")}
-              onClick={e => this.handleClick(e, baselineData)}
-              key={"f1"}
-            >
-              1
-            </Button>
-          )}
-          </StyledWrapper>
           <StyledWrapper>
-          {show2 && (
-            <Button
-              id={"factor 2"}
-              toggle
-              className="wrapper1"
-              active={state.getState("highlightRotfactor2")}
-              onClick={e => this.handleClick(e, baselineData)}
-              key={"f2"}
-            >
-              2
-            </Button>
-          )}
-          </StyledWrapper>
-          <StyledWrapper>
-          {show3 && (
-            <Button
-              id={"factor 3"}
-              toggle
-              className="wrapper1"
-              active={state.getState("highlightRotfactor3")}
-              onClick={e => this.handleClick(e, baselineData)}
-              key={"f3"}
-            >
-              3
-            </Button>
-          )}
-          {show4 && (
-            <Button
-              id={"factor 4"}
-              toggle
-              className="wrapper1"
-              active={state.getState("highlightRotfactor4")}
-              onClick={e => this.handleClick(e, baselineData)}
-              key={"f4"}
-            >
-              4
-            </Button>
-          )}
-          {show5 && (
-            <Button
-              id={"factor 5"}
-              toggle
-              className="wrapper1"
-              active={state.getState("highlightRotfactor5")}
-              onClick={e => this.handleClick(e, baselineData)}
-              key={"f5"}
-            >
-              5
-            </Button>
-          )}
-          {show6 && (
-            <Button
-              id={"factor 6"}
-              toggle
-              className="wrapper1"
-              active={state.getState("highlightRotfactor6")}
-              onClick={e => this.handleClick(e, baselineData)}
-              key={"f6"}
-            >
-              6
-            </Button>
-          )}
-          {show7 && (
-            <Button
-              id={"factor 7"}
-              toggle
-              className="wrapper1"
-              active={state.getState("highlightRotfactor7")}
-              onClick={e => this.handleClick(e, baselineData)}
-              key={"f7"}
-            >
-              7
-            </Button>
-          )}
-          {show8 && (
-            <Button
-              id={"factor 8"}
-              className="wrapper1"
-              toggle
-              active={state.getState("highlightRotfactor8")}
-              onClick={e => this.handleClick(e, baselineData)} // e => this.handleClick(e, baselineData)
-              key={"f8"}
-            >
-              8
-            </Button>
-          )}
-          <Button
-            className="wrapper1"
-            id="clearAllRotFacs"
-            onClick={this.handleClick}
-          >
-            Clear
-          </Button>
-          <Button
-            className="wrapper1"
-            id="startRotationDisplay"
-            onClick={this.handleSubmit}
-          >
-            Display
-          </Button>
-          {showRotFactorSelectWarning && (
-            <div style={{ width: 160, backgroundColor: "red" }}>
-              <span
-                style={{
-                  color: "white",
-                  marginRight: 5,
-                  marginLeft: 5,
-                  marginTop: 10
-                }}
+            {show1 && (
+              <Button
+                id={"factor 1"}
+                toggle
+                className="wrapper1"
+                active={state.getState("highlightRotfactor1")}
+                onClick={e => this.handleClick(e, baselineData)}
+                key={"f1"}
               >
-                Select 2 factor
-              </span>
-            </div>
-          )}
-        </StyledWrapper>
+                1
+              </Button>
+            )}
+          </StyledWrapper>
+          <StyledWrapper>
+            {show2 && (
+              <Button
+                id={"factor 2"}
+                toggle
+                className="wrapper1"
+                active={state.getState("highlightRotfactor2")}
+                onClick={e => this.handleClick(e, baselineData)}
+                key={"f2"}
+              >
+                2
+              </Button>
+            )}
+          </StyledWrapper>
+          <StyledWrapper>
+            {show3 && (
+              <Button
+                id={"factor 3"}
+                toggle
+                className="wrapper1"
+                active={state.getState("highlightRotfactor3")}
+                onClick={e => this.handleClick(e, baselineData)}
+                key={"f3"}
+              >
+                3
+              </Button>
+            )}
+            {show4 && (
+              <Button
+                id={"factor 4"}
+                toggle
+                className="wrapper1"
+                active={state.getState("highlightRotfactor4")}
+                onClick={e => this.handleClick(e, baselineData)}
+                key={"f4"}
+              >
+                4
+              </Button>
+            )}
+            {show5 && (
+              <Button
+                id={"factor 5"}
+                toggle
+                className="wrapper1"
+                active={state.getState("highlightRotfactor5")}
+                onClick={e => this.handleClick(e, baselineData)}
+                key={"f5"}
+              >
+                5
+              </Button>
+            )}
+            {show6 && (
+              <Button
+                id={"factor 6"}
+                toggle
+                className="wrapper1"
+                active={state.getState("highlightRotfactor6")}
+                onClick={e => this.handleClick(e, baselineData)}
+                key={"f6"}
+              >
+                6
+              </Button>
+            )}
+            {show7 && (
+              <Button
+                id={"factor 7"}
+                toggle
+                className="wrapper1"
+                active={state.getState("highlightRotfactor7")}
+                onClick={e => this.handleClick(e, baselineData)}
+                key={"f7"}
+              >
+                7
+              </Button>
+            )}
+            {show8 && (
+              <Button
+                id={"factor 8"}
+                className="wrapper1"
+                toggle
+                active={state.getState("highlightRotfactor8")}
+                onClick={e => this.handleClick(e, baselineData)} // e => this.handleClick(e, baselineData)
+                key={"f8"}
+              >
+                8
+              </Button>
+            )}
+            <Button
+              className="wrapper1"
+              id="clearAllRotFacs"
+              onClick={this.handleClick}
+            >
+              Clear
+            </Button>
+            <Button
+              className="wrapper1"
+              id="startRotationDisplay"
+              onClick={this.handleSubmit}
+            >
+              Display
+            </Button>
+            {showRotFactorSelectWarning && (
+              <div style={{ width: 160, backgroundColor: "red" }}>
+                <span
+                  style={{
+                    color: "white",
+                    marginRight: 5,
+                    marginLeft: 5,
+                    marginTop: 10
+                  }}
+                >
+                  Select 2 factor
+                </span>
+              </div>
+            )}
+          </StyledWrapper>
         </React.Fragment>
       );
     }

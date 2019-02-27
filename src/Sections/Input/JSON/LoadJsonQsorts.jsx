@@ -42,7 +42,6 @@ const handleClick = () => {
         },
         files => {
           if (files !== undefined) {
-            console.log("called");
             const fileName = files[0];
             fs.readFile(fileName, "utf8", (err, data) => {
               const results = JSON.parse(data);
