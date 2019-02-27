@@ -3,6 +3,7 @@ import React, { Component } from "react";
 import styled from "styled-components";
 import state from "../../../store";
 import revertLoadButtonsColors from "../DemoData/revertLoadButtonsColors";
+import numStatementsMatchErrorModal from "../numStatementsMatchErrorModal";
 
 const { dialog } = require("electron").remote;
 const fs = require("fs");
@@ -22,6 +23,7 @@ const handleClick = () => {
       errorStackTrace: "no stack trace available"
     });
   } else {
+    let isNoError = true;
     dialog.showOpenDialog(
       {
         properties: ["openFile"],
@@ -40,19 +42,31 @@ const handleClick = () => {
             const lines = data.split(/[\r\n]+/g);
             // remove empty strings
             const lines2 = lines.filter(e => e === 0 || e);
-            state.setState({
-              statements: lines2,
-              statementsLoaded: true
-            });
-            localStore.isLoadPqmethodTextButtonButtonGreen = true;
-            revertLoadButtonsColors("pqmethod");
-            state.setState({
-              notifyDataUploadSuccess: true,
-              areStatementsLoaded: true,
-              isLoadPqmethodTextButtonButtonGreen: true,
-              isInputButtonGreen: state.getState("areQsortsLoaded"),
-              isDataButtonGreen: state.getState("areQsortsLoaded")
-            });
+
+            const areQsortsLoaded = state.getState("areQsortsLoaded");
+            if (areQsortsLoaded) {
+              const qSortPattern = state.getState("qSortPattern");
+              if (qSortPattern.length !== lines2.length) {
+                isNoError = false;
+                numStatementsMatchErrorModal();
+              }
+            }
+
+            if (isNoError) {
+              state.setState({
+                statements: lines2,
+                statementsLoaded: true
+              });
+              localStore.isLoadPqmethodTextButtonButtonGreen = true;
+              revertLoadButtonsColors("pqmethod");
+              state.setState({
+                notifyDataUploadSuccess: true,
+                areStatementsLoaded: true,
+                isLoadPqmethodTextButtonButtonGreen: true,
+                isInputButtonGreen: state.getState("areQsortsLoaded"),
+                isDataButtonGreen: state.getState("areQsortsLoaded")
+              });
+            }
           });
         }
       }

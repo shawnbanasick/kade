@@ -7,6 +7,7 @@ import parsePQMethodFile from "../logic/parsePQMethodFile";
 import sortsDisplayText from "../logic/sortsDisplayText";
 import checkUniqueParticipantName from "../logic/checkUniqueParticipantName";
 import revertLoadButtonsColors from "../DemoData/revertLoadButtonsColors";
+import numStatementsMatchErrorModal from "../numStatementsMatchErrorModal";
 
 const { dialog } = require("electron").remote;
 const fs = require("fs");
@@ -26,6 +27,7 @@ const handleClick = () => {
       errorStackTrace: "no stack trace available"
     });
   } else {
+    let isNoError = true;
     try {
       dialog.showOpenDialog(
         {
@@ -51,31 +53,43 @@ const handleClick = () => {
                 participantNamesPrep
               );
 
-              // send data to STATE
-              state.setState({
-                numQsorts: data[0],
-                projectName: data[1],
-                projectHistoryArray: [
-                  `${data[1]} data loaded from PQMethod DAT file`
-                ],
-                numStatements: data[2],
-                multiplierArray: cloneDeep(data[3]),
-                respondentNames: participantNamesPrep2,
-                mainDataObject,
-                sortsDisplayText: sortsDisplayTextArray,
-                qSortPattern: data[5],
-                dataOrigin: "pqmethod"
-              });
+              // error check number of statements
+              const statementsLoaded = state.getState("statementsLoaded");
+              if (statementsLoaded) {
+                const statements = state.getState("statements");
+                if (data[5].length !== statements.length) {
+                  isNoError = false;
+                  numStatementsMatchErrorModal();
+                }
+              }
 
-              localStore.isLoadPqmethodQsortsButtonGreen = true;
-              revertLoadButtonsColors("pqmethod");
-              state.setState({
-                notifyDataUploadSuccess: true,
-                areQsortsLoaded: true,
-                isInputButtonGreen: state.getState("areStatementsLoaded"),
-                isDataButtonGreen: state.getState("areStatementsLoaded"),
-                isLoadPqmethodQsortsButtonGreen: true
-              });
+              if (isNoError) {
+                // send data to STATE
+                state.setState({
+                  numQsorts: data[0],
+                  projectName: data[1],
+                  projectHistoryArray: [
+                    `${data[1]} data loaded from PQMethod DAT file`
+                  ],
+                  numStatements: data[2],
+                  multiplierArray: cloneDeep(data[3]),
+                  respondentNames: participantNamesPrep2,
+                  mainDataObject,
+                  sortsDisplayText: sortsDisplayTextArray,
+                  qSortPattern: data[5],
+                  dataOrigin: "pqmethod"
+                });
+
+                localStore.isLoadPqmethodQsortsButtonGreen = true;
+                revertLoadButtonsColors("pqmethod");
+                state.setState({
+                  notifyDataUploadSuccess: true,
+                  areQsortsLoaded: true,
+                  isInputButtonGreen: state.getState("areStatementsLoaded"),
+                  isDataButtonGreen: state.getState("areStatementsLoaded"),
+                  isLoadPqmethodQsortsButtonGreen: true
+                });
+              }
             });
           }
         }
