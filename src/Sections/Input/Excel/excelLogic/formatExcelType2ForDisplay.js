@@ -6,14 +6,14 @@ import calcSortTriangleShapeT2 from "./calcSortTriangleShapeT2";
 import grabRespondentNamesAndSorts from "./grabRespondentNamesAndSorts";
 import checkUniqueParticipantNames from "../../logic/checkUniqueParticipantName";
 
-export default function formatype2ForDisplay(data) {
+
+export default function formatype2ForDisplay(rawStatementsData, rawSortsData) {
   let noSortPatternError = false;
   let numStatementsMatchError = false;
 
   try {
     // store #1
-    const projectName1 = data[0][0][1];
-
+    const projectName1 = rawSortsData[0][1];
     const projectName = projectName1.toString().replace(/,/g, "");
 
     // store #2 project history array
@@ -22,18 +22,14 @@ export default function formatype2ForDisplay(data) {
     ];
 
     // store #3
-    const statementsDataT2 = data[1][0];
-    const currentStatements = grabProjectStatements(statementsDataT2);
-    console.log(
-      "TCL: exportdefaultfunctionformatype2ForDisplay -> currentStatements",
-      currentStatements.length
-    );
+    // const statementsDataT2 = rawStatementsData;
+    const currentStatements = grabProjectStatements(rawStatementsData[0]);
     if (currentStatements.length === 0) {
       // throw new Error("Can't find any statements on 'statements' worksheet!");
     }
 
     // grab respondent names and sorts
-    const sortsDataT2 = data[0][0];
+    const sortsDataT2 = rawSortsData[0];
     const calcSorts = grabRespondentNamesAndSorts(sortsDataT2);
     const respondentNames = calcSorts[0];
     const sortsDisplayText = calcSorts[1];
@@ -46,17 +42,13 @@ export default function formatype2ForDisplay(data) {
     const totalNumberSorts = respondentNames.length;
 
     // calculate sort design array
-    const calcSortTriangleT2 = calcSortTriangleShapeT2(data[0][0][3]);
+    const calcSortTriangleT2 = calcSortTriangleShapeT2(rawSortsData[0][3]);
     const copyTriangleShape = calcSortTriangleT2[0];
     if (copyTriangleShape.length < 3) {
       noSortPatternError = true;
     }
     // let testSortTriangleShapeArray = calcSortTriangleT2[1];
     const sortTriangleShape = calcSortTriangleT2[2];
-    console.log(
-      "TCL: exportdefaultfunctionformatype2ForDisplay -> sortTriangleShape",
-      sortTriangleShape.length
-    );
 
     // statement number match
     if (currentStatements.length !== sortTriangleShape.length) {
