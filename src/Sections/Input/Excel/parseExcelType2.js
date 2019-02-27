@@ -20,7 +20,6 @@ function parseExcelType2(excelFile) {
     const rawSortsData = [];
     const rawStatementsData = [];
     // let tempArray = [];
-    const allWorksheets = [];
     let worksheet;
     let hasSortsWorksheet = false;
     let hasStatementsWorksheet = false;
@@ -69,10 +68,6 @@ function parseExcelType2(excelFile) {
                 rawStatementsData.push(tester4);
             }
         }); // end iteration of for each
-
-        allWorksheets.push(rawSortsData);
-        allWorksheets.push(rawStatementsData);
-
 
         // do final checks and push to DOM
         const finalErrorCheck = formatExcelType2ForDisplay(rawStatementsData, rawSortsData);

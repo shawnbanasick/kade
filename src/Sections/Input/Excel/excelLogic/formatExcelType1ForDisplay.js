@@ -7,7 +7,8 @@ import createMainDataObject from "./createMainDataObject";
 import checkUniqueParticipantNames from "../../logic/checkUniqueParticipantName";
 import createMultiplierArrayAndTriangleShape from "./createMultiplierArrayAndTriangleShape";
 
-export default function formatExcelType1ForDisplay(data) {
+
+export default function formatExcelType1ForDisplay(rawStatementsData, rawSortsData) {
   // console.log(JSON.stringify("called"));
   let outOfRangeError = false;
   let noSortsError = false;
@@ -16,19 +17,14 @@ export default function formatExcelType1ForDisplay(data) {
   let noHeaderMatchError = false;
   let numStatementsMatchError = false;
 
-  // for sample download worksheet - sometimes adds empty array to start
-  if (data[0].length === 0) {
-    data.shift();
-  }
-
   try {
     console.log(`3. formatExcelType1ForDisplay called`);
 
     // QAV #1  Project Name
-    const projectName = data[0][0][1];
+    const projectName = rawSortsData[1];
 
     // // QAV #2  -  todo - fix loop function
-    const inputData1 = data[0];
+    const inputData1 = rawSortsData.slice();
     const createMultiplierAndQShapeData = createMultiplierArrayAndTriangleShape(
       inputData1
     );
@@ -47,7 +43,8 @@ export default function formatExcelType1ForDisplay(data) {
     const numStatements = sortTriangleShape.length; // number of statements
 
     // creates array of objects with sort value and statement number
-    const sortData = getExcelT1SortText(inputData1, numStatements);
+    const inputData2 = rawSortsData.slice();
+    const sortData = getExcelT1SortText(inputData2, numStatements);
 
     if (sortData[1].length === 0 && sortData[2].length === 0) {
       noSortsError = true;
@@ -56,6 +53,7 @@ export default function formatExcelType1ForDisplay(data) {
     // QAV #4
     const namesData = sortData.shift();
     const respondentNames = getRespondentNamesExcelT1(namesData);
+
 
     // test for too many headers
     if (sortData[0].length !== respondentNames.length) {
@@ -77,7 +75,7 @@ export default function formatExcelType1ForDisplay(data) {
     hasDuplicateStatementNumbers = respondentDataSortsPrep[3];
 
     // QAV #7   project statements
-    const statementData1 = data[1];
+    const statementData1 = rawStatementsData;
     const statements = getStatementsExcelT1(statementData1);
 
     // catch too many / too few statements

@@ -11,6 +11,7 @@ import throwNoSortDesignPatternErrorModal from "../throwNoSortDesignPatternError
 import throwNoStatementsTabInputErrorModal from "../throwNoStatementsTabInputErrorModal";
 import hasDuplicateStatementNumbersErrorModal from "../hasDuplicateStatementNumbersErrorModal";
 
+
 function parseExcelType1(excelFile) {
   const workbook = XLSX.readFile(excelFile, {
     type: "binary"
@@ -20,8 +21,8 @@ function parseExcelType1(excelFile) {
   let tester2;
   let tester3;
   let tester4;
-  const allWorksheets = [];
-  let tempArray = [];
+  const rawSortsData = [];
+  const rawStatementsData = [];
   let worksheet;
   let hasSortsWorksheet = false;
   let hasStatementsWorksheet = false;
@@ -41,7 +42,6 @@ function parseExcelType1(excelFile) {
       }
 
       if (y2 === "sorts" || y2 === "qsorts" || y2 === "q-sorts") {
-        tempArray = [];
         console.log(`1. Q sorts worksheet found`);
         hasSortsWorksheet = true;
         tester = XLSX.utils.sheet_to_csv(worksheet);
@@ -50,7 +50,7 @@ function parseExcelType1(excelFile) {
         // max statement number 500 artificial limit
         for (let i = 1; i < tester2.length; i += 1) {
           tester3 = tester2[i].split(",");
-          tempArray.push(tester3);
+          rawSortsData.push(tester3);
 
           // emergency break
           if (i > 500) {
@@ -62,7 +62,6 @@ function parseExcelType1(excelFile) {
       if (y2 === "statements" || y2 === "statement") {
         console.log(`2. Statements worksheet found`);
         hasStatementsWorksheet = true;
-        tempArray = [];
         tester4 = XLSX.utils.sheet_to_json(worksheet);
         const testValue = Object.prototype.hasOwnProperty.call(
           tester4[0],
@@ -72,9 +71,8 @@ function parseExcelType1(excelFile) {
           throwNoStatementsInputErrorModal();
           isNoError = false;
         }
-        tempArray.push(tester4);
+        rawStatementsData.push(tester4);
       }
-      allWorksheets.push(tempArray);
     }); // end iteration of for each
 
     if (hasSortsWorksheet === false) {
@@ -86,7 +84,7 @@ function parseExcelType1(excelFile) {
       isNoError = false;
     }
 
-    const finalErrorCheck = formatExcelType1ForDisplay(allWorksheets);
+    const finalErrorCheck = formatExcelType1ForDisplay(rawStatementsData, rawSortsData);
 
     // out of range values
     if (finalErrorCheck[0]) {
@@ -139,7 +137,7 @@ function parseExcelType1(excelFile) {
       }, 100);
     }
 
-    // manage error messages
+  // manage error messages
   } catch (error) {
     // set error message
     state.setState({

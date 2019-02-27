@@ -24,9 +24,6 @@ export default function formatype2ForDisplay(rawStatementsData, rawSortsData) {
     // store #3
     // const statementsDataT2 = rawStatementsData;
     const currentStatements = grabProjectStatements(rawStatementsData[0]);
-    if (currentStatements.length === 0) {
-      // throw new Error("Can't find any statements on 'statements' worksheet!");
-    }
 
     // grab respondent names and sorts
     const sortsDataT2 = rawSortsData[0];
@@ -34,9 +31,6 @@ export default function formatype2ForDisplay(rawStatementsData, rawSortsData) {
     const respondentNames = calcSorts[0];
     const sortsDisplayText = calcSorts[1];
     const symmetryCheckArray = calcSorts[2];
-    if (symmetryCheckArray.length === 0) {
-      // throw new Error("Can't find any Q-sorts on the 'sorts' worksheet!");
-    }
 
     // store #4
     const totalNumberSorts = respondentNames.length;
@@ -94,8 +88,8 @@ export default function formatype2ForDisplay(rawStatementsData, rawSortsData) {
       respondentNames: participantNames
     });
   } catch (error) {
-    // console.log(error.message);
-    // console.log(error.stack);
+    console.log(error.message);
+    console.log(error.stack);
     state.setState({
       excelErrorMessage1: error.message,
       showExcelErrorModal: true
