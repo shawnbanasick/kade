@@ -16,7 +16,7 @@
     "lint": "eslint --cache --color --ext .jsx,.js src",
     "pack": "electron-builder --dir",
     "dist:macOS": "electron-builder --mac",
-    "dist:windows": "electron-builder --windows",
+    "dist:windows": "electron-builder --windows --x64 --ia32",
     "dist:linux": "DEBUG=electron-builder electron-builder --linux"
   },
   "jest": {
@@ -52,15 +52,13 @@
     },
     "linux": {
       "category": "Science",
-      "target": [
-        {
-          "target": "AppImage",
-          "arch": [
-            "x64",
-            "ia32"
-          ]
-        }
-      ]
+      "target": [{
+        "target": "AppImage",
+        "arch": [
+          "x64",
+          "ia32"
+        ]
+      }]
     },
     "win": {
       "target": [
