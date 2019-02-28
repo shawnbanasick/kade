@@ -3,7 +3,7 @@ import { view, store } from "react-easy-state";
 import styled from "styled-components";
 import state from "../../store";
 
-const statements = state.statements;
+const statements = state.getState("statements");
 const localStore = store({ statements });
 
 class StatementsInState extends Component {

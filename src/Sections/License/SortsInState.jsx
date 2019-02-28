@@ -3,7 +3,7 @@ import { view, store } from "react-easy-state";
 import styled from "styled-components";
 import state from "../../store";
 
-const sorts = state.sortsDisplayText;
+const sorts = state.getState("sortsDisplayText");
 const localStore = store({ sorts });
 
 class StatementsInState extends Component {
