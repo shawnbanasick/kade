@@ -14,6 +14,7 @@ export default function formatype2ForDisplay(rawStatementsData, rawSortsData) {
   try {
     // store #1
     const projectName1 = rawSortsData[0][1];
+    console.log('TCL: exportdefaultfunctionformatype2ForDisplay -> rawSortsData', rawSortsData)
     const projectName = projectName1.toString().replace(/,/g, "");
 
     // store #2 project history array

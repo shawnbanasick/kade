@@ -21,7 +21,7 @@ export default function formatExcelType1ForDisplay(rawStatementsData, rawSortsDa
     console.log(`3. formatExcelType1ForDisplay called`);
 
     // QAV #1  Project Name
-    const projectName = rawSortsData[1];
+    const projectName = rawSortsData[0][1];
 
     // // QAV #2  -  todo - fix loop function
     const inputData1 = rawSortsData.slice();
