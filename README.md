@@ -79,7 +79,7 @@ This process is only required the first time the application is started. After t
 The application is packaged as an "AppImage" so it can be installed on most of the major distributions (Ubuntu, Mint, MXLinux, Debian, openSUSE, RHEL, CentOS, Fedora, etc.) On some distributions it will offer to install the software. 
 <br/>
 
-### After downloading, you will need to change the file permissions of the downloaded file.
+#### After downloading, you will need to change the file permissions of the downloaded file.
 1. Right click on the downloaded file.
 2. Select "Properties".
 3. Select "Permissions". (Example image from debian-based "MXLinux")
