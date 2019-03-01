@@ -1,12 +1,15 @@
 <img style="float: left;" src="https://github.com/shawnbanasick/kade/blob/master/gifs/heroImage3.png" height="125"/>  
 
-<strong>Download Links:</strong> &nbsp; [macOS](https://github.com/shawnbanasick/kade/releases/download/v0.0.1-beta/KADE-0.0.1.dmg) &nbsp;||&nbsp;
-[Windows-installer](https://github.com/shawnbanasick/kade/releases/download/v0.0.1-beta/KADE.Setup.0.0.1.exe) &nbsp;||&nbsp;
-[Windows-portable](https://github.com/shawnbanasick/kade/releases/download/v0.0.1-beta/KADE.0.0.1.exe) &nbsp;||&nbsp;
-[Linux](https://github.com/shawnbanasick/kade/releases/download/v0.0.1-beta/kade-0.0.1-x86_64.AppImage)<br/>
+<strong>Download Links:</strong> &nbsp; 
+[macOS](https://github.com/shawnbanasick/kade/releases/download/v1.0.0/KADE-1.0.0.dmg) &nbsp;||&nbsp;
+[Windows-installer](https://github.com/shawnbanasick/kade/releases/download/v1.0.0/KADE.Setup.1.0.0.exe) &nbsp;||&nbsp;
+[Windows-portable](https://github.com/shawnbanasick/kade/releases/download/v1.0.0/KADE.1.0.0.exe) &nbsp;||&nbsp;
+[Linux 32-bit](https://github.com/shawnbanasick/kade/releases/download/v1.0.0/kade-1.0.0-i386.AppImage) &nbsp;||&nbsp;
+[Linux 64-bit](https://github.com/shawnbanasick/kade/releases/download/v1.0.0/kade-1.0.0-x86_64.AppImage)<br/>
+
 <strong>(See installation instructions below.)</strong>
 
-
+≈
 KenQ Analysis Desktop Edition (KADE) is an open-source application for the analysis of Q methodology data. It runs on macOS, Windows, and Linux. The user interface is similar to the online version of KenQ Analysis, so it may feel familiar. 
 
 
