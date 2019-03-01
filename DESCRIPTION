@@ -1,8 +1,0 @@
-Title: KADE: A Desktop Application for Q Methodology
-Version: 1.0.0
-Authors@R: c(person("Shawn", "Banasick",
-                    role = c("aut", "cre"),
-                    email = "banasick@mail.kobe-c.ac.jp",
-                    comment = c(ORCID = " "))
-
-Description: 
