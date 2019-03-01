@@ -76,10 +76,10 @@ This process is only required the first time the application is started. After t
 <br/>
 
 ## Installation Instructions - Linux
-The application is packaged as an "AppImage" so it can be installed on most of the major distributions (Ubuntu, Mint, MX Linux, Debian, openSUSE, RHEL, CentOS, Fedora, etc.) On some distributions it will offer to install the software. You will need to change the file permissions of the downloaded file.
+The application is packaged as an "AppImage" so it can be installed on most of the major distributions (Ubuntu, Mint, MXLinux, Debian, openSUSE, RHEL, CentOS, Fedora, etc.) On some distributions it will offer to install the software. You will need to change the file permissions of the downloaded file.
 1. Right click on the downloaded file.
 2. Select "Properties".
-3. Select "Permissions". (Example image from debian-based "MX Linux")
+3. Select "Permissions". (Example image from debian-based "MXLinux")
 <img src="https://github.com/shawnbanasick/kade/blob/master/gifs/linuxPermissions.png" width="350" />
 &nbsp;&nbsp;&nbsp;4. Change permissions to executable. (Check "Allow this file to run as a program")<br/>
 <strong>Known Issue:</strong> I have not been able to get the icons to package properly in the Linux AppImage, so the ugly default window icons are used now. I am working on a fix for this issue.
