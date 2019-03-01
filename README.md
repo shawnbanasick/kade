@@ -92,7 +92,7 @@ The application is packaged as an "AppImage" so it can be installed on most of t
 <br/>
 
 ## Contributions and Problems
-If you discover a problem with the software, please report it with the issue tracker - 
+If you discover a problem with the software or want to make a feature request, please describe it on the issue tracker - https://github.com/shawnbanasick/kade/issues. Contributions are welcome. Make a pull request.
 
 
 ## Open Source Alternatives To KADE:
