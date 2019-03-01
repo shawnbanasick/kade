@@ -95,10 +95,11 @@ The application is packaged as an "AppImage" so it can be installed on most of t
 If you discover a problem with the software or want to make a feature request, please describe it on the issue tracker - https://github.com/shawnbanasick/kade/issues. Contributions are welcome. Make a pull request.
 
 
+## License
+License: GPL-3
+
+
 ## Open Source Alternatives To KADE:
 * [PQMethod](http://schmolck.org/qmethod/)
 * [Pensieve R package](https://github.com/maxheld83/pensieve)
 * [Qmethod R package](https://cran.r-project.org/package=qmethod)
-
-## License
-License: GPL-3
