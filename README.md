@@ -9,7 +9,7 @@
 
 <strong>(See installation instructions below.)</strong>
 
-KenQ Analysis Desktop Edition (KADE) is an open-source application for the analysis of Q methodology data. It runs on macOS, Windows, and Linux. The user interface is similar to the online version of KenQ Analysis, so it may feel familiar. 
+KenQ Analysis Desktop Edition (KADE) is an open-source application for the analysis of Q methodology data. It runs on macOS, Windows, and Linux. It includes a variety of interactive visualization tools to explore and analyze Q methodological data. 
 
 
 <br/>
