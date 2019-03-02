@@ -10,8 +10,8 @@ class CsvPanel extends Component {
   render() {
     const windowHeight = window.innerHeight - 100;
     return (
-      <DataWindow height={ windowHeight }>
-        <Header>Choose a Demo Data file.</Header>
+      <DataWindow height={windowHeight}>
+        <Header>Choose a demo data file.</Header>
         <CardHolder>
           <LipsetCard />
           <BuzzwordCard />
@@ -19,7 +19,7 @@ class CsvPanel extends Component {
           <IpadSurveyCard />
         </CardHolder>
       </DataWindow>
-      );
+    );
   }
 }
 
