@@ -7,11 +7,11 @@ tags:
   - Q Methodology
 authors:
   - name: Shawn Banasick
-  - orcid: 0000-0003-2696-5874
-  - affiliation: "1"
+    orcid: 0000-0003-2696-5874
+    affiliation: "1"
 affiliations:
   - name: Kobe College
-  - index: 1
+    index: 1
 date: 4 March 2019
 bibliography: paper.bib
 ---
