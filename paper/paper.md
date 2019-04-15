@@ -27,21 +27,25 @@ The participant statement sort grids are analyzed using specialized software pac
 
 # The KADE application
 
-KADE is a desktop application for the analysis of Q methodology data which runs on Microsoft Windows, Apple macOS, and Linux operating systems. The goal of KADE is improve the analysis process by providing interactive visualizations that make it easer to manipulate and interpret the data gathered in a Q methodology study. For example, when researchers use centroid factor analysis the KADE judgmental rotation screen displays both a table of the factor loadings data and a scatter plot of the two factors being rotated (Figure 2).
+KADE is a desktop application for the analysis of Q methodology data which operates with full functionality on Microsoft Windows, Apple macOS, and Linux operating systems. It has a graphic user interface that makes it easy to use for students or for researchers with a background mainly in qualitative methods. Installation is not required for use; KADE is portable and can be run from a usb flash drive.
+
+KADE provides a number of features currently not available in other open source packages for Q methodology. It includes interactive visualizations that make it easer to manipulate and interpret the data gathered in a Q methodology study. For example, when researchers use centroid factor analysis the KADE judgmental rotation screen displays both a table of the factor loadings data and a scatter plot of the two factors being rotated (Figure 2).
 
 ![Fig.2 - Judgmental Rotation Screen](jossImage2.png)
 **Figure 2**: Judgmental Rotation Screen
 
-Participant loadings that are significant are automatically highlighted in the factor loadings table and the scatter plot, greatly facilitating decisions related to the rotation of the factors. Similarly, on the factor loadings screen KADE provides a table of the loadings with the participants automatically sorted according to the factor on which they have the highest loading (Figure 3).
+Participant loadings that will be auto-flagged are automatically highlighted in both the factor loadings table and the scatter plot, greatly facilitating decisions related to the rotation of the factors. Similarly, on the factor loadings screen KADE provides a table of the loadings with the participants automatically sorted according to the factor on which they have the highest loading (Figure 3).
 
 ![Fig.3 - Factor Loadings Screen](jossImage3.png)
 **Figure 3**: Factor Loadings Screen
 
 The output file from KADE provides the same data tables as the most commonly used application for Q methodology, PQMethod [@Schmolck:2014], but it also includes tables of the relative rankings of statements between factors. In addition, KADE generates visualizations of the composite factors to aid in the interpretation of the results (Figure 4). The visualizations can be exported from the application in either PNG or scalable vector graphics (SVG) format.
 
+Another unique feature of KADE is the ability to change the confidence level settings for the auto-flagging function. Depending on the nature of the project data, the standard 95% auto-flag level may select a non-optimal number of participants as representative Q sorts. By adjusting the settings researchers can easily explore multiple flagging strategies to find the most suitable set of representative Q sorts for their project.
+
 ![Fig.4 - Sample Composite Q Sort](jossImage4.png)
 **Figure 4**: Composite Q Sort Visualization Screen
 
-Future goals for the application include the addition of hierarchical factor structure tables and visualizations, which could help researchers to identify the appropriate number of factors to extract [@vanExel:2011], and the internationalization of the graphical user interface to make it easier for non-English speaking researchers to use the application.
+Planned additions the application include hierarchical factor structure tables and visualizations, which could help researchers to identify the appropriate number of factors to extract [@vanExel:2011], and the internationalization of the graphical user interface to make it easier for non-English speaking researchers to use the application.
 
 # References
