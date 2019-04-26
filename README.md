@@ -1,4 +1,5 @@
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
+[![DOI](http://joss.theoj.org/papers/10.21105/joss.01360/status.svg)](https://doi.org/10.21105/joss.01360)
 
 <img style="float: left;" src="https://github.com/shawnbanasick/kade/blob/master/gifs/heroImage3.png" height="125"/>  
 
@@ -97,6 +98,8 @@ The application is packaged as an "AppImage" so it can be installed on most of t
 ## Contributions and Problems
 If you discover a problem with the software or want to make a feature request, please describe it on the issue tracker - https://github.com/shawnbanasick/kade/issues. Contributions are welcome. Make a pull request.
 
+## Attribution
+Banasick, (2019). KADE: A desktop application for Q methodology. Journal of Open Source Software, 4(36), 1360, https://doi.org/10.21105/joss.01360 
 
 ## License
 License: GPL-3
