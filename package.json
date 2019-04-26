@@ -1,7 +1,7 @@
 {
   "name": "kade",
   "productName": "KADE",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A desktop application for Q Methodology",
   "main": "src/index.js",
   "scripts": {
