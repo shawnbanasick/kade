@@ -92,5 +92,4 @@ const MainContent = styled.div`
   box-sizing: border-box;
   height: calc(100vh - 22px);
   overflow: auto;
-  user-select: none;
 `;
