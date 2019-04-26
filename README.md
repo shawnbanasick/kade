@@ -4,11 +4,11 @@
 <img style="float: left;" src="https://github.com/shawnbanasick/kade/blob/master/gifs/heroImage3.png" height="125"/>  
 
 <strong>Download Links:</strong> &nbsp; 
-[macOS](https://github.com/shawnbanasick/kade/releases/download/v1.0.0/KADE-1.0.0.dmg) &nbsp;||&nbsp;
-[Windows-installer](https://github.com/shawnbanasick/kade/releases/download/v1.0.0/KADE.Setup.1.0.0.exe) &nbsp;||&nbsp;
-[Windows-portable](https://github.com/shawnbanasick/kade/releases/download/v1.0.0/KADE.1.0.0.exe) &nbsp;||&nbsp;
-[Linux 32-bit](https://github.com/shawnbanasick/kade/releases/download/v1.0.0/kade-1.0.0-i386.AppImage) &nbsp;||&nbsp;
-[Linux 64-bit](https://github.com/shawnbanasick/kade/releases/download/v1.0.0/kade-1.0.0-x86_64.AppImage)<br/>
+[macOS](https://github.com/shawnbanasick/kade/releases/download/v1.0.1/KADE-1.0.1.dmg) &nbsp;||&nbsp;
+[Windows-installer](https://github.com/shawnbanasick/kade/releases/download/v1.0.1/KADE.Setup.1.0.1.exe) &nbsp;||&nbsp;
+[Windows-portable](https://github.com/shawnbanasick/kade/releases/download/v1.0.1/KADE.1.0.1.exe) &nbsp;||&nbsp;
+[Linux 32-bit](https://github.com/shawnbanasick/kade/releases/download/v1.0.1/kade-1.0.1-i386.AppImage) &nbsp;||&nbsp;
+[Linux 64-bit](https://github.com/shawnbanasick/kade/releases/download/v1.0.1/kade-1.0.1-x86_64.AppImage)<br/>
 
 <strong>(See installation instructions below.)</strong>
 
