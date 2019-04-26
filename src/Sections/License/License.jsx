@@ -11,6 +11,12 @@ class License extends Component {
         <div>
           <h1>KADE (Ken-Q Analysis Desktop Edition)</h1>
           <h2>Copyright (C) 2019 Shawn Banasick</h2>
+          <h3>
+            Cite as: <br /> Banasick, (2019). KADE: A desktop application for Q
+            methodology. Journal of Open Source Software, 4(36), 1360,
+            https://doi.org/10.21105/joss.01360
+          </h3>
+          <br />
           <span>
             This program is free software: you can redistribute it and/or modify
             it under the terms of the GNU General Public License as published by

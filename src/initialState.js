@@ -69,6 +69,7 @@ function setInitialState() {
     showErrorMessageBar: false,
     showTableDataNotSentWarning: true,
     showInvertFactorModal: false,
+    autoFlagHistory: "",
     showFileSaveSuccessDialog: false,
     notifyDataUploadSuccess: false,
     notifyDataSentToOutputSuccess: false,

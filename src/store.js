@@ -45,6 +45,7 @@ export default store({
     isCentroidLoading: false,
     unforcedRadioButtonState: "forced",
     hasExcelT1Error: false,
+    autoFlagHistory: "",
     userSelectedSigLevel: 1.96,
     requireMajorityCommonVariance: true,
     rowClassRulesLoadingsTable: {},
