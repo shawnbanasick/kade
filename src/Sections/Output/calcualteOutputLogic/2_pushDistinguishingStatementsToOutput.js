@@ -22,6 +22,8 @@ const pushDistinguishingStatementsToOutput = function(
   sheetNamesXlsx,
   colSizes
 ) {
+  console.log(`sigSortArray ${  JSON.stringify(sigSortsArray)}`);
+
   const chartText1 = "Dist State ";
   const chartText2 = "Consensus Statements";
   const maxStatementLength = state.getState("maxStatementLength");
@@ -33,10 +35,11 @@ const pushDistinguishingStatementsToOutput = function(
   // loop to set up worksheet names and push into output array
   for (let i = 0; i < sigSortsArray.length; i++) {
     let factorNumber = sigSortsArray[i]["Factor Number"];
-    const factorNumber2 = factorNumber.charAt(0).toUpperCase() + factorNumber.slice(1);
+    const factorNumber2 =
+      factorNumber.charAt(0).toUpperCase() + factorNumber.slice(1);
     const number = factorNumber2.substring(factorNumber2.length - 1);
     const factorNumber3 = factorNumber2.slice(0, -1);
-    factorNumber = `${factorNumber3  } ${  number}`;
+    factorNumber = `${factorNumber3} ${number}`;
 
     sheetNamesXlsx.push(chartText1 + factorNumber);
 
@@ -69,10 +72,7 @@ const pushDistinguishingStatementsToOutput = function(
   }
 
   // starting calcs for distinguishing factors
-  let sedComparisonValue,
-    j,
-    k,
-    m;
+  let sedComparisonValue, j, k, m;
   let consensusStatementComparisonArray05 = [];
   let consensusStatementComparisonArray01 = [];
   const distStatementDataVizArray = [];

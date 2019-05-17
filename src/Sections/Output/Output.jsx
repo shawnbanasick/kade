@@ -14,6 +14,8 @@ import OutputFactorTablesTransitionContainer from "./OutputFactorTablesTransitio
 import NoLoadingsFlaggedWarningModal from "../Loadings/LoadingsTable/NoLoadingsFlaggedWarningModal";
 import DisplayVisualizationsButtons from "./DisplayVisualizationsButtons/DisplayVisualizationsButtons";
 import FactorSelectionForOutputButtons from "./FactorSelectionForOutput/FactorSelectionForOutputButtons";
+import DistStateSigLevelDrop1 from "./FactorSelectionForOutput/DistStateSigLevelDrop1";
+import DistStateSigLevelDrop2 from "./FactorSelectionForOutput/DistStateSigLevelDrop2";
 
 let showTableDataNotSentWarning;
 
@@ -25,18 +27,20 @@ const panes = [
     render: () => (
       <Tab.Pane>
         <ScrollContainer>
-        {showTableDataNotSentWarning && (
-          <NoDataMessage>
-            No Data - Click the &#8220;Send Table Data to Output&#8221; button
-            in Section 6
-          </NoDataMessage>
-        )}
-        <DataWindow1>
-          <FactorSelectionForOutputButtons />
-          <DownloadResultsButtons />
-          <NoLoadingsFlaggedWarningModal />
-          <MultipleFactorsFlaggedWarningModal />
-        </DataWindow1>
+          {showTableDataNotSentWarning && (
+            <NoDataMessage>
+              No Data - Click the &#8220;Send Table Data to Output&#8221; button
+              in Section 6
+            </NoDataMessage>
+          )}
+          <DataWindow1>
+            <DistStateSigLevelDrop1 />
+            <DistStateSigLevelDrop2 />
+            <FactorSelectionForOutputButtons />
+            <DownloadResultsButtons />
+            <NoLoadingsFlaggedWarningModal />
+            <MultipleFactorsFlaggedWarningModal />
+          </DataWindow1>
         </ScrollContainer>
       </Tab.Pane>
     )
@@ -46,9 +50,9 @@ const panes = [
     render: () => (
       <Tab.Pane>
         <ScrollContainer>
-        <DataWindow2>
-          <OutputFactorTablesTransitionContainer />
-        </DataWindow2>
+          <DataWindow2>
+            <OutputFactorTablesTransitionContainer />
+          </DataWindow2>
         </ScrollContainer>
       </Tab.Pane>
     )
@@ -58,9 +62,9 @@ const panes = [
     render: () => (
       <Tab.Pane>
         <ScrollContainer>
-        <DataWindow2>
-          <FactorsTable />
-        </DataWindow2>
+          <DataWindow2>
+            <FactorsTable />
+          </DataWindow2>
         </ScrollContainer>
       </Tab.Pane>
     )
@@ -70,17 +74,17 @@ const panes = [
     render: () => (
       <Tab.Pane>
         <ScrollContainer>
-        <DataWindow2>
-          <ButtonContainer1>
-            <DisplayVisualizationsButtons />
-            <ShowVizOptionsButton />
-          </ButtonContainer1>
-          <RefreshFactorVizButton marginTop={50} marginBottom={10} />
-          <FactorVizOptions />
-          <RefreshFactorVizButton marginTop={10} marginBottom={50} />
-          <div style={{ height: 50 }} />
-          <FactorVizDispatch />
-        </DataWindow2>
+          <DataWindow2>
+            <ButtonContainer1>
+              <DisplayVisualizationsButtons />
+              <ShowVizOptionsButton />
+            </ButtonContainer1>
+            <RefreshFactorVizButton marginTop={50} marginBottom={10} />
+            <FactorVizOptions />
+            <RefreshFactorVizButton marginTop={10} marginBottom={50} />
+            <div style={{ height: 50 }} />
+            <FactorVizDispatch />
+          </DataWindow2>
         </ScrollContainer>
       </Tab.Pane>
     )
@@ -98,9 +102,10 @@ function handleTabChange(e, { activeIndex }) {
 class Output extends Component {
   render() {
     const { activeIndex } = localStore;
-  showTableDataNotSentWarning = state.getState("showTableDataNotSentWarning");
-  const facVizContainerHeight = state.getState("facVizContainerHeight") || 600;
-  const facVizContainerWidth = state.getState("facVizContainerWidth") || 1000;
+    showTableDataNotSentWarning = state.getState("showTableDataNotSentWarning");
+    const facVizContainerHeight =
+      state.getState("facVizContainerHeight") || 600;
+    const facVizContainerWidth = state.getState("facVizContainerWidth") || 1000;
     return (
       <MainContent>
         <Tab
@@ -137,10 +142,9 @@ const fadeOut = keyframes`
   }
 `;
 
-
-  // overflow: scroll;
- // height: ${props => `${props.height}px`};
-  // width: ${props => `${props.width}px`};
+// overflow: scroll;
+// height: ${props => `${props.height}px`};
+// width: ${props => `${props.width}px`};
 
 const MainContent = styled.div`
   background-color: #d6dbe0;
@@ -202,7 +206,7 @@ const MainContent = styled.div`
 
 const DataWindow1 = styled.div`
   display: grid;
-  grid-template-rows: 100px 100px 1fr;
+  grid-template-rows: 100px 125px 100px 100px 1fr;
   min-height: 600px;
   background-color: white;
   max-width: 1197;
@@ -229,7 +233,7 @@ const DataWindow2 = styled.div`
   height: 100%;
   width: 100%;
   overflow: auto;
-  min-height:100vh;
+  min-height: 100vh;
   max-height: calc(100vh-22px);
   height: calc(100vh - 22px);
   width: calc(100vw - 135px);
@@ -245,9 +249,8 @@ const ButtonContainer1 = styled.div`
   display: flex;
 `;
 
-
 const ScrollContainer = styled.div`
-width: 100vw;
-height: 100vh;
-overflow: auto;
+  width: 100vw;
+  height: 100vh;
+  overflow: auto;
 `;

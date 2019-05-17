@@ -62,7 +62,7 @@ class FactorSelectionForOutputButtons extends React.Component {
 
       state.setState(tempObj);
 
-    // clear all
+      // clear all
     } else if (factor === "clearAllFacs") {
       const tempObj2 = {};
       for (let i = 0; i < btnId.length; i += 1) {
@@ -130,26 +130,53 @@ class FactorSelectionForOutputButtons extends React.Component {
     // if (showOutputFactorSelection) {
 
     return (
-      <Transition visible={ showOutputFactorSelection } animation="fade" duration={ 1000 }>
+      <Transition
+        visible={showOutputFactorSelection}
+        animation="fade"
+        duration={1000}
+      >
         <StyledWrapper>
-          <span style={ { marginRight: 5, fontSize: 16 } }>Select Factors:</span>
-          { btnId.map(item => (
-              <Button key={ `f${item}` } toggle className="wrapper1" active={ state.getState(`highlightfactor${item}`) } disabled={ areDisabled } onClick={ this.handleOnclick.bind(this) } id={ `factor ${item}` }>
-                { item }
-              </Button>
-            )) }
-          <Button id="selectAllFacs" className="wrapper1" disabled={ areDisabled } onClick={ this.handleOnclick }>
+          <span style={{ marginLeft: 50, marginRight: 5, fontSize: 25 }}>
+            3. Select Factors:
+          </span>
+          {btnId.map(item => (
+            <Button
+              key={`f${item}`}
+              toggle
+              className="wrapper1"
+              active={state.getState(`highlightfactor${item}`)}
+              disabled={areDisabled}
+              onClick={this.handleOnclick.bind(this)}
+              id={`factor ${item}`}
+            >
+              {item}
+            </Button>
+          ))}
+          <Button
+            id="selectAllFacs"
+            className="wrapper1"
+            disabled={areDisabled}
+            onClick={this.handleOnclick}
+          >
             All
           </Button>
-          <Button id="clearAllFacs" className="wrapper1" onClick={ this.handleOnclick }>
+          <Button
+            id="clearAllFacs"
+            className="wrapper1"
+            onClick={this.handleOnclick}
+          >
             Clear
           </Button>
-          <Button id="startOutput" className="wrapper1" onClick={ this.handleSubmit }>
+          <Button
+            id="startOutput"
+            className="wrapper1"
+            onClick={this.handleSubmit}
+          >
             Submit
           </Button>
         </StyledWrapper>
       </Transition>
-      );
+    );
   }
 }
 
@@ -170,5 +197,3 @@ const StyledWrapper = styled.div`
     }
   }
 `;
-
-

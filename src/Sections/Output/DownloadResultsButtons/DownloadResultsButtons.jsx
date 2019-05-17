@@ -45,6 +45,7 @@ const DownloadOutputButtons = styled.div`
 `;
 
 const OutputDownloadLabel = styled.div`
+  margin-left: 50px;
   font-size: 26px;
   margin-right: 5px;
 `;

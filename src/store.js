@@ -47,6 +47,8 @@ export default store({
   hasExcelT1Error: false,
   autoFlagHistory: "",
   userSelectedSigLevel: 1.96,
+  userSelectedDistStateSigLevel2: 1.96,
+  userSelectedDistStateSigLevel1: 2.575,
   requireMajorityCommonVariance: true,
   rowClassRulesLoadingsTable: {},
   highlighting: "grays",
