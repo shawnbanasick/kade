@@ -28,6 +28,8 @@ const pushDistinguishingStatementsToOutput = function(
   const chartText2 = "Consensus Statements";
   const maxStatementLength = state.getState("maxStatementLength");
   const userSelectedFactors = state.getState("userSelectedFactors");
+  const userSelectedDistStateSigLevel1 = state.getState("userSelectedDistStateSigLevel1"); // upper level
+  const userSelectedDistStateSigLevel2 = state.getState("userSelectedDistStateSigLevel2"); // lower level
 
   // property to count loop iterations for assigning significance * in disting factor output
   formatDistingArrayForDownload.calledTimes = 0;
@@ -124,7 +126,7 @@ const pushDistinguishingStatementsToOutput = function(
             Math.abs(
               analysisOutput[j][k].zScore - analysisOutput[m][k].zScore
             ) >=
-            sedComparisonValue * 1.96
+            sedComparisonValue * userSelectedDistStateSigLevel2 // 1.96
           ) {
             analysisOutput[j][k].zScore = evenRound(
               analysisOutput[j][k].zScore,
@@ -138,7 +140,7 @@ const pushDistinguishingStatementsToOutput = function(
             Math.abs(
               analysisOutput[j][k].zScore - analysisOutput[m][k].zScore
             ) >=
-            sedComparisonValue * 2.58
+            sedComparisonValue * userSelectedDistStateSigLevel1 // 2.58
           ) {
             analysisOutput[j][k].zScore = evenRound(
               analysisOutput[j][k].zScore,

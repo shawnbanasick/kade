@@ -1,3 +1,5 @@
+import state from "../../../store";
+
 const formatDistingArrayForDownload = (
   distingStatementsTransferArray01,
   distingStatementsTransferArray05,
@@ -6,8 +8,10 @@ const formatDistingArrayForDownload = (
   sigFactorNumbersArray
 ) => {
   const chartText1 = "Distinguishing Statements for ";
+  const distStateUpperValueText = state.getState("distStateUpperValueText");
+  const distStateLowerValueText = state.getState("distStateLowerValueText");
   const chartText2 =
-    "(P < .05 : Asterisk (*) Indicates Significance at P < .01)";
+    `(${  distStateLowerValueText  } : Asterisk (*) Indicates Significance at ${  distStateUpperValueText  })`;
   const chartText3 =
     "Both the Factor Q-Sort Value and the Z-Score (Z-SCR) are Shown";
   const chartText4 = "Significance";

@@ -51,12 +51,23 @@ const localStore = store({
 class SigLevelDropdown extends React.Component {
   handleChange(e, { value }) {
     localStore.value = value;
-    state.setState({
-      userSelectedDistStateSigLevel1: value
-    });
     const lookupArray = [3.906, 3.291, 2.575, 1.96, 1.645, 1.44];
+    const pValuesTextArray = [
+      "P < 0.0001",
+      "P < 0.001",
+      "P < 0.001",
+      "P < 0.01",
+      "P < 0.05",
+      "P < 0.1",
+      "P < 0.15"
+    ];
     const sliceValue = lookupArray.indexOf(value);
-    state.setState({ sliceValueDistStateSigLevelDrop1: sliceValue });
+    const distStateUpperValueText = pValuesTextArray[sliceValue];
+    state.setState({
+      userSelectedDistStateSigLevel1: value,
+      sliceValueDistStateSigLevelDrop1: sliceValue,
+      distStateUpperValueText
+    });
   }
 
   render() {

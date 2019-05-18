@@ -92,9 +92,9 @@ const downloadExcelOutputFile = (dataXlsx, sheetNamesXlsx, colSizes) => {
 
   let nameFile;
   if (shouldIncludeTimestamp === true) {
-    nameFile = `KenQ_output_${projectName}_${timeStamp}.xlsx`;
+    nameFile = `KADE_results_${projectName}_${timeStamp}.xlsx`;
   } else {
-    nameFile = `KenQ_output_${projectName}.xlsx`;
+    nameFile = `KADE_results_${projectName}.xlsx`;
   }
 
   const o = dialog.showSaveDialog({

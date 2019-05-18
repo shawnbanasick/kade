@@ -24,9 +24,9 @@ const downloadCsvOutputFile = function() {
 
   let nameFile;
   if (shouldIncludeTimestamp === true) {
-    nameFile = `KenQ_output_${  projectName  }_${  timeStamp  }.csv`;
+    nameFile = `KADE_results_${  projectName  }_${  timeStamp  }.csv`;
   } else {
-    nameFile = `KenQ_output_${  projectName  }.csv`;
+    nameFile = `KADE_results_${  projectName  }.csv`;
   }
 
   exportToCsv(nameFile, newDataArray);
