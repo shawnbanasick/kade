@@ -99,6 +99,7 @@ const pushDistinguishingStatementsToOutput = function(
       let newStatementNum;
 
       for (m = 0; m < sigSortsArray.length; m++) {
+        console.log(`factor ${  m+1}`);
         // factor m
         // check to avoid comparison with self
         if (analysisOutput[j][k].factor === analysisOutput[m][k].factor) {
@@ -200,12 +201,15 @@ const pushDistinguishingStatementsToOutput = function(
       factorNumber,
       analysisOutput,
       sigFactorNumbersArray
-    );
-
+      );
+      
+    
     distStatementDataVizArray.push(formattedDistingStatements[0]);
 
     outputData.push(formattedDistingStatements[1]);
   }
+  
+  console.log("TCL: masterDistingStatementNumbersArray05", JSON.stringify(masterDistingStatementNumbersArray05));
 
   state.setState({
     masterDistingStatementNumbersArray01

@@ -19,7 +19,7 @@ export default store({
   sortsDisplayText: [],
   isForcedQsortPattern: true,
   dataOrigin: "",
-  version: "1.0.1",
+  version: "1.1.0",
   mainDataObject: {},
   gridColDefs: [],
   gridRowData: [],
