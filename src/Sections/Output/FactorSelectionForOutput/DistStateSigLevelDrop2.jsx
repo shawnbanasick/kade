@@ -48,7 +48,6 @@ class SigLevelDropdown2 extends React.Component {
     const lookupArray = [3.291, 2.575, 1.96, 1.645, 1.44, 1.28];
     const pValuesTextArray = [
       "P < 0.001",
-      "P < 0.001",
       "P < 0.01",
       "P < 0.05",
       "P < 0.1",
@@ -61,7 +60,6 @@ class SigLevelDropdown2 extends React.Component {
       userSelectedDistStateSigLevel2: value,
       distStateLowerValueText
     });
-    console.log(distStateLowerValueText);
   }
 
   render() {

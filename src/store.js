@@ -49,6 +49,8 @@ export default store({
   userSelectedSigLevel: 1.96,
   userSelectedDistStateSigLevel2: 1.96,
   userSelectedDistStateSigLevel1: 2.575,
+  distStateLowerValueText: "P < 0.05",
+  distStateUpperValueText: "P < 0.01",
   requireMajorityCommonVariance: true,
   rowClassRulesLoadingsTable: {},
   highlighting: "grays",

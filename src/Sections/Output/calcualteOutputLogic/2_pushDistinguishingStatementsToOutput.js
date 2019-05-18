@@ -22,8 +22,6 @@ const pushDistinguishingStatementsToOutput = function(
   sheetNamesXlsx,
   colSizes
 ) {
-  console.log(`sigSortArray ${  JSON.stringify(sigSortsArray)}`);
-
   const chartText1 = "Dist State ";
   const chartText2 = "Consensus Statements";
   const maxStatementLength = state.getState("maxStatementLength");
