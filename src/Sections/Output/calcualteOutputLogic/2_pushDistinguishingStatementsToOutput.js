@@ -21,13 +21,15 @@ const pushDistinguishingStatementsToOutput = function(
   outputData,
   sheetNamesXlsx,
   colSizes
-) {
+  ) {
+    
   const chartText1 = "Dist State ";
   const chartText2 = "Consensus Statements";
   const maxStatementLength = state.getState("maxStatementLength");
   const userSelectedFactors = state.getState("userSelectedFactors");
   const userSelectedDistStateSigLevel1 = state.getState("userSelectedDistStateSigLevel1"); // upper level
   const userSelectedDistStateSigLevel2 = state.getState("userSelectedDistStateSigLevel2"); // lower level
+
 
   // property to count loop iterations for assigning significance * in disting factor output
   formatDistingArrayForDownload.calledTimes = 0;
@@ -78,7 +80,15 @@ const pushDistinguishingStatementsToOutput = function(
   const distStatementDataVizArray = [];
   const masterDistingStatementNumbersArray05 = [];
   const masterDistingStatementNumbersArray01 = [];
-
+  const distStatementsTableArray = [];
+  let array0001;
+  let array001;
+  let array01;
+  let array05;
+  let array1;
+  let array15;
+  let array2;
+  const array05Statements = [];
   // looping through all factors to determine if distinguishing!
   // todo - create if statement for case of only two sig factors-bypass processing of second c 4894
   for (j = 0; j < sigSortsArray.length; j++) {
@@ -89,6 +99,8 @@ const pushDistinguishingStatementsToOutput = function(
     const consensusStatementTransferArray05 = [];
     const consensusStatementTransferArray01 = [];
 
+   
+
     for (k = 0; k < analysisOutput[0].length; k++) {
       // looping through each statement's other factor zScores to compare
       // also grabbing the appropriate SED value for each comparison
@@ -97,9 +109,17 @@ const pushDistinguishingStatementsToOutput = function(
       let sig01 = false;
       const sig01Array = [];
       let newStatementNum;
+      const distStatementsTableTempObj = {};
+      array0001 = [];
+      array001 = [];
+      array01 = [];
+      array05 = [];
+      array1 = [];
+      array15 = [];
+      array2 = [];
 
       for (m = 0; m < sigSortsArray.length; m++) {
-        console.log(`factor ${  m+1}`);
+
         // factor m
         // check to avoid comparison with self
         if (analysisOutput[j][k].factor === analysisOutput[m][k].factor) {
@@ -121,6 +141,60 @@ const pushDistinguishingStatementsToOutput = function(
             }
           }
 
+          /* 
+          begin comparisons
+           const lookupArray = [3.906, 3.291, 2.575, 1.96, 1.645, 1.44, 1.28];
+          
+           const pValuesTextArray = [
+            "P < 0.0001",
+            "P < 0.001",
+            "P < 0.01",
+            "P < 0.05",
+            "P < 0.1",
+            "P < 0.15"
+            "P < 0.2"
+          ];
+          */
+        
+          distStatementsTableTempObj.factor = analysisOutput[j][k].factor;
+          distStatementsTableTempObj.factorNum = j +1;
+          distStatementsTableTempObj.sortValue = analysisOutput[j][k].sortValue;
+          distStatementsTableTempObj.statement = analysisOutput[j][k].statement;
+          distStatementsTableTempObj.sortStatement = analysisOutput[j][k].sortStatement;
+          
+          const testValue = Math.abs(analysisOutput[j][k].zScore - analysisOutput[m][k].zScore);
+
+            // P < 0.0001 Level
+              if (testValue >= sedComparisonValue * 3.906) {
+                array0001.push(true);
+              }
+            // P < 0.001 Level
+              if (testValue >= sedComparisonValue * 3.291) {
+                array001.push(true);
+              }
+            // P < 0.01 Level
+              if (testValue >= sedComparisonValue * 2.575) {
+                array01.push(true);
+              }
+            // P < 0.05 Level
+              if (testValue >= (sedComparisonValue * 1.96)) {
+                array05.push(true);
+              }
+            // P < 0.1 Level
+              if (testValue >= sedComparisonValue * 1.645) {
+                array1.push(true);
+              }
+            // P < 0.15 Level          
+              if (testValue >= sedComparisonValue * 1.44) {
+                array15.push(true);
+              }
+            // P < 0.2 Level          
+              if (testValue >= sedComparisonValue * 1.28) {
+                array2.push(true);
+              }
+
+
+          // User selections
           if (
             Math.abs(
               analysisOutput[j][k].zScore - analysisOutput[m][k].zScore
@@ -150,6 +224,54 @@ const pushDistinguishingStatementsToOutput = function(
           }
         }
       }
+      
+          switch (true) {
+          // P < 0.0001 Level
+            case (array0001.length === sigFactorNumbersArray.length-1): 
+                distStatementsTableTempObj.sigLevelText = "P < 0.0001";
+                distStatementsTableTempObj.sigLevelRank = 6;
+                distStatementsTableArray.push(distStatementsTableTempObj);
+              break;
+          // P < 0.001 Level
+            case (array001.length === sigFactorNumbersArray.length-1):
+                distStatementsTableTempObj.sigLevelText = "P < 0.001";
+                distStatementsTableTempObj.sigLevelRank = 5;
+                distStatementsTableArray.push(distStatementsTableTempObj);
+              break;
+          // P < 0.01 Level
+            case (array01.length === sigFactorNumbersArray.length-1): 
+                distStatementsTableTempObj.sigLevelText = "P < 0.01";
+                distStatementsTableTempObj.sigLevelRank = 4;
+                distStatementsTableArray.push(distStatementsTableTempObj);
+              break;
+          // P < 0.05 Level
+            case (array05.length === sigFactorNumbersArray.length-1): 
+                distStatementsTableTempObj.sigLevelText = "P < 0.05";
+                distStatementsTableTempObj.sigLevelRank = 3;
+                distStatementsTableArray.push(distStatementsTableTempObj);            
+              break;
+          // P < 0.1 Level
+            case (array1.length === sigFactorNumbersArray.length-1): 
+                distStatementsTableTempObj.sigLevelText = "P < 0.1";
+                distStatementsTableTempObj.sigLevelRank = 2;
+                distStatementsTableArray.push(distStatementsTableTempObj);            
+            break;
+          // P < 0.15 Level          
+            case (array15.length === sigFactorNumbersArray.length-1):
+                distStatementsTableTempObj.sigLevelText = "P < 0.15";
+                distStatementsTableTempObj.sigLevelRank = 1;
+                distStatementsTableArray.push(distStatementsTableTempObj);
+              break;
+          // P < 0.2 Level          
+            case (array2.length === sigFactorNumbersArray.length-1): 
+                distStatementsTableTempObj.sigLevelText = "P < 0.2";
+                distStatementsTableTempObj.sigLevelRank = 0;
+                distStatementsTableArray.push(distStatementsTableTempObj);
+              break;
+          // not distinguishing  
+            default:  
+          }
+
 
       newStatementNum = k + 1;
 
@@ -185,11 +307,11 @@ const pushDistinguishingStatementsToOutput = function(
 
     masterDistingStatementNumbersArray05.push(
       distingStatementsTransferArray05c
-    );
-    masterDistingStatementNumbersArray01.push(
-      distingStatementsTransferArray01b
-    );
-
+      );
+      masterDistingStatementNumbersArray01.push(
+        distingStatementsTransferArray01b
+        );
+        
     consensusStatementComparisonArray05.push(consensusStatementTransferArray05);
     consensusStatementComparisonArray01.push(consensusStatementTransferArray01);
 
@@ -207,9 +329,8 @@ const pushDistinguishingStatementsToOutput = function(
     distStatementDataVizArray.push(formattedDistingStatements[0]);
 
     outputData.push(formattedDistingStatements[1]);
-  }
-  
-  console.log("TCL: masterDistingStatementNumbersArray05", JSON.stringify(masterDistingStatementNumbersArray05));
+
+  }  // end of J loop
 
   state.setState({
     masterDistingStatementNumbersArray01
@@ -301,9 +422,10 @@ const pushDistinguishingStatementsToOutput = function(
 
   state.setState({
     distStatementDataVizArray,
-    outputForDataViz: outputForDataVizWithSig
+    outputForDataViz: outputForDataVizWithSig,
+    distStatementsTableArray
   });
-
+  
   return [sheetNames, output, outputData, sheetNamesXlsx, colSizes];
 };
 
