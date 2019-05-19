@@ -3,8 +3,9 @@ import { view } from "react-easy-state";
 import state from "../../../store";
 import styled, { keyframes } from "styled-components";
 import { Button } from "semantic-ui-react";
-import DistStateListButtons from './DistStateListButtons';
-import filterDistStateListData from './filterDistStateListData';
+import DistStateListButtons from "./DistStateListButtons";
+import filterDistStateListData from "./filterDistStateListData";
+import DistStateListSortByButtons from "./DistStateListSortByButtons";
 // import FactorViz from "./FactorViz";
 // import refreshVizOptionsState from "./refreshVizOptionsState";
 // import createFactorVizDataObjectForProps from "./createFactorVizDataObjectForProps";
@@ -34,10 +35,9 @@ const styles = {
 
 class DistinguishingStatementsList extends React.Component {
   render() {
-
-    let sortKey = state.getState("distStateListSortKey");
-    let threshold = state.getState("threshold");
-    let displayData = filterDistStateListData(threshold, sortKey);
+    const sortKey = state.getState("distStateListSortKey");
+    const threshold = state.getState("threshold");
+    const displayData = filterDistStateListData(threshold, sortKey);
     // // const factorVizOptions = state.getState("factorVizOptions");
     // const factorData = createFactorVizDataObjectForProps(factorVizOptions);
     // const shouldDisplayFactorViz = state.getState(
@@ -48,33 +48,31 @@ class DistinguishingStatementsList extends React.Component {
 
     return (
       <Container1>
-
+        <DistStateListSortByButtons />
         <DistStateListButtons />
 
-      {displayData.map((factorItem, index1) => (
-        
-        <React.Fragment key={`key${index1.toString()}`}>
-        <h2>{factorItem.factor}</h2>
-        <table>
-          <tbody>
-            <tr>
-              <th>Threshold</th>
-              <th>Q Sort Value</th>
-              <th>State. No.</th>
-              <th>Statement</th>
-            </tr>
-            {displayData[index1]["distStates"].map((item, index) => (
-              <tr key={`key${index.toString()}`}>
-                <td>{item.sigLevelText}</td>
-                <td className="num">{item.sortValue}</td>
-                <td className="num">{item.statement}</td>
-                <td>{item.sortStatement}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-
-        </React.Fragment>
+        {displayData.map((factorItem, index1) => (
+          <React.Fragment key={`key${index1.toString()}`}>
+            <h2>{factorItem.factor}</h2>
+            <table>
+              <tbody>
+                <tr>
+                  <th>Threshold</th>
+                  <th>Q Sort Value</th>
+                  <th>State. No.</th>
+                  <th>Statement</th>
+                </tr>
+                {displayData[index1].distStates.map((item, index) => (
+                  <tr key={`key${index.toString()}`}>
+                    <td>{item.sigLevelText}</td>
+                    <td className="num">{item.sortValue}</td>
+                    <td className="num">{item.statement}</td>
+                    <td>{item.sortStatement}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </React.Fragment>
         ))}
       </Container1>
     );
@@ -113,10 +111,9 @@ const Container1 = styled.div`
   }
 `;
 
-
 const StyledWrapper = styled.div`
   display: flex;
-  
+
   .wrapper1 {
     border: 1px solid black;
     box-shadow: 0 2px 2px 0 black;
