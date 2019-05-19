@@ -16,6 +16,7 @@ import DisplayVisualizationsButtons from "./DisplayVisualizationsButtons/Display
 import FactorSelectionForOutputButtons from "./FactorSelectionForOutput/FactorSelectionForOutputButtons";
 import DistStateSigLevelDrop1 from "./FactorSelectionForOutput/DistStateSigLevelDrop1";
 import DistStateSigLevelDrop2 from "./FactorSelectionForOutput/DistStateSigLevelDrop2";
+import DistinguishingStatementsList from "./DistinguishingStatementsDisplay/DistingishingStatementsList";
 
 let showTableDataNotSentWarning;
 
@@ -64,6 +65,18 @@ const panes = [
         <ScrollContainer>
           <DataWindow2>
             <FactorsTable />
+          </DataWindow2>
+        </ScrollContainer>
+      </Tab.Pane>
+    )
+  },
+  {
+    menuItem: "Distinguishing Statements",
+    render: () => (
+      <Tab.Pane>
+        <ScrollContainer>
+          <DataWindow2>
+            <DistinguishingStatementsList />
           </DataWindow2>
         </ScrollContainer>
       </Tab.Pane>
