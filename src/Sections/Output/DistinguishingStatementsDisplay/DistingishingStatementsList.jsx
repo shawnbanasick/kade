@@ -21,16 +21,18 @@ class DistinguishingStatementsList extends React.Component {
     const sortKey = state.getState("distStateListSortKey");
     const threshold = state.getState("threshold");
     const displayData = filterDistStateListData(threshold, sortKey);
+    const showFactorCorrelationsTable = state.getState("showFactorCorrelationsTable");
     // // const factorVizOptions = state.getState("factorVizOptions");
     // const factorData = createFactorVizDataObjectForProps(factorVizOptions);
     // const shouldDisplayFactorViz = state.getState(
     //   "displayFactorVisualizations"
     // );
 
-    // if (shouldDisplayFactorViz) {
+    if (showFactorCorrelationsTable) {
 
     return (
       <Container1>
+        <h2>Interactive List - Output Thresholds are Set in the Options Section</h2>
         <DistStateListSortByButtons />
         <DistStateListButtons />
 
@@ -59,8 +61,12 @@ class DistinguishingStatementsList extends React.Component {
         ))}
       </Container1>
     );
-    // }
-    // return null;
+    }
+    return (
+      <h2 style={ { marginTop: 50, marginLeft: 50 } }>
+              Select factors for output in the Options tab
+            </h2>
+      );
   }
 }
 
@@ -68,6 +74,7 @@ export default view(DistinguishingStatementsList);
 
 const Container1 = styled.div`
   padding-bottom: 150px;
+  padding-right: 20px;
 
   table,
   th,

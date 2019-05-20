@@ -34,7 +34,7 @@ class DisplayVisualizationsButtons extends React.Component {
     }
     return (
       <h2 style={ { marginTop: 50, marginLeft: 50 } }>
-              Select factors to output in the Options tab
+              Select factors for output in the Options tab
             </h2>
       );
   }

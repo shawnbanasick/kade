@@ -431,7 +431,7 @@ const pushDistinguishingStatementsToOutput = function(
   state.setState({
     distStatementDataVizArray,
     outputForDataViz: outputForDataVizWithSig,
-    distStatementsTableArray
+    distStateListData: distStatementsTableArray
   });
   
   console.log("TCL: distStatementsTableArray", JSON.stringify(distStatementsTableArray));

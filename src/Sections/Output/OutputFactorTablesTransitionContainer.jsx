@@ -43,7 +43,7 @@ class OutputFactorTablesTranstionContainer extends Component {
         );
     }
     return (
-      <h2 style={ { marginTop: 50, marginLeft: 50 } }>Select factors to output in the Options tab</h2>
+      <h2 style={ { marginTop: 50, marginLeft: 50 } }>Select factors for output in the Options tab</h2>
       );
   }
 }
