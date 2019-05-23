@@ -38,7 +38,7 @@ class DistinguishingStatementsList extends React.Component {
 
         {displayData.map((factorItem, index1) => (
           <React.Fragment key={`key${index1.toString()}`}>
-            <h2>{factorItem.factor}</h2>
+            <h2>{factorItem.userSelectedFactor}</h2>
             <table>
               <tbody>
                 <tr>

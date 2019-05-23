@@ -1,8 +1,13 @@
 import state from "../../../store";
 
+const capitalizeFirstLetter = string => string.charAt(0).toUpperCase() + string.slice(1);
+
 const filterDistStateListData = (thresholdLevel, sortKey) => {
   const distStateListData = state.getState("distStateListData");
+  const userSelectedFactors = state.getState("userSelectedFactors");
   for (let i = 0; i < distStateListData.length; i++) {
+    const userSelectedFactor = capitalizeFirstLetter(userSelectedFactors[i]);
+    distStateListData[i].userSelectedFactor = userSelectedFactor;
     distStateListData[i].distStates = distStateListData[i].distStates.filter(
       item => item.sigLevelRank >= thresholdLevel
     );
