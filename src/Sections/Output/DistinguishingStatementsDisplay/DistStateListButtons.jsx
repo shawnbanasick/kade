@@ -7,7 +7,9 @@ import state from "../../../store";
 const localStore = store({
   rotationDegreeInput: "",
   p0001Active: false,
+  p0005Active: false,
   p001Active: false,
+  p005Active: false,
   p01Active: false,
   p05Active: true,
   p1Active: false,
@@ -19,7 +21,9 @@ const localStore = store({
 
 const clearAllButtons = () => {
   localStore.p0001Active = false;
+  localStore.p0005Active = false;
   localStore.p001Active = false;
+  localStore.p005Active = false;
   localStore.p01Active = false;
   localStore.p05Active = false;
   localStore.p1Active = false;
@@ -35,50 +39,64 @@ const handleOnclick = event => {
   if (buttonId === "p0001Button") {
     clearAllButtons();
     localStore.p0001Active = true;
-    state.setState({ threshold: 6 });
-    console.log("99.99 clicked");
+    state.setState({ threshold: 8 });
+    // console.log("99.99 clicked");
+  }
+
+  if (buttonId === "p0005Button") {
+    clearAllButtons();
+    localStore.p0005Active = true;
+    state.setState({ threshold: 7 });
+    // console.log("99.99 clicked");
   }
 
   if (buttonId === "p001Button") {
     clearAllButtons();
     localStore.p001Active = true;
+    state.setState({ threshold: 6 });
+    // console.log("99.9 clicked");
+  }
+
+  if (buttonId === "p005Button") {
+    clearAllButtons();
+    localStore.p005Active = true;
     state.setState({ threshold: 5 });
-    console.log("99.9 clicked");
+    // console.log("99.9 clicked");
   }
 
   if (buttonId === "p01Button") {
     clearAllButtons();
     localStore.p01Active = true;
     state.setState({ threshold: 4 });
-    console.log("99.0 clicked");
+    // console.log("99.0 clicked");
   }
 
   if (buttonId === "p05Button") {
     clearAllButtons();
     localStore.p05Active = true;
     state.setState({ threshold: 3 });
-    console.log("95.0 clicked");
+    // console.log("95.0 clicked");
   }
 
   if (buttonId === "p1Button") {
     clearAllButtons();
     localStore.p1Active = true;
     state.setState({ threshold: 2 });
-    console.log("90.0 clicked");
+    // console.log("90.0 clicked");
   }
 
   if (buttonId === "p15Button") {
     clearAllButtons();
     localStore.p15Active = true;
     state.setState({ threshold: 1 });
-    console.log("85.0 clicked");
+    // console.log("85.0 clicked");
   }
 
   if (buttonId === "p2Button") {
     clearAllButtons();
     localStore.p2Active = true;
     state.setState({ threshold: 0 });
-    console.log("80.0 clicked");
+    // console.log("80.0 clicked");
   }
 };
 
@@ -101,14 +119,34 @@ class DistStateListButtons extends React.Component {
             0.0001
           </Button>
           <Button
+            id={"p0005Button"}
+            className="wrapper1"
+            toggle
+            active={localStore.p0005Active}
+            onClick={handleOnclick}
+            key={"f2"}
+          >
+            0.0005
+          </Button>
+          <Button
             id={"p001Button"}
             className="wrapper1"
             toggle
             active={localStore.p001Active}
             onClick={handleOnclick}
-            key={"f2"}
+            key={"f3"}
           >
             0.001
+          </Button>
+          <Button
+            id={"p005Button"}
+            className="wrapper1"
+            toggle
+            active={localStore.p005Active}
+            onClick={handleOnclick}
+            key={"f4"}
+          >
+            0.005
           </Button>
           <Button
             id={"p01Button"}
@@ -116,7 +154,7 @@ class DistStateListButtons extends React.Component {
             toggle
             active={localStore.p01Active}
             onClick={handleOnclick}
-            key={"f3"}
+            key={"f5"}
           >
             0.01
           </Button>
@@ -126,7 +164,7 @@ class DistStateListButtons extends React.Component {
             toggle
             active={localStore.p05Active}
             onClick={handleOnclick}
-            key={"f4"}
+            key={"f6"}
           >
             0.05
           </Button>
@@ -136,7 +174,7 @@ class DistStateListButtons extends React.Component {
             toggle
             active={localStore.p1Active}
             onClick={handleOnclick}
-            key={"f5"}
+            key={"f7"}
           >
             0.1
           </Button>
@@ -146,7 +184,7 @@ class DistStateListButtons extends React.Component {
             toggle
             active={localStore.p15Active}
             onClick={handleOnclick}
-            key={"f6"}
+            key={"f8"}
           >
             0.15
           </Button>
@@ -156,7 +194,7 @@ class DistStateListButtons extends React.Component {
             toggle
             active={localStore.p2Active}
             onClick={handleOnclick}
-            key={"f7"}
+            key={"f9"}
           >
             0.2
           </Button>
