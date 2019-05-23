@@ -21,7 +21,9 @@ class DistinguishingStatementsList extends React.Component {
     const sortKey = state.getState("distStateListSortKey");
     const threshold = state.getState("threshold");
     const displayData = filterDistStateListData(threshold, sortKey);
-    const showFactorCorrelationsTable = state.getState("showFactorCorrelationsTable");
+    const showFactorCorrelationsTable = state.getState(
+      "showFactorCorrelationsTable"
+    );
     // // const factorVizOptions = state.getState("factorVizOptions");
     // const factorData = createFactorVizDataObjectForProps(factorVizOptions);
     // const shouldDisplayFactorViz = state.getState(
@@ -29,44 +31,46 @@ class DistinguishingStatementsList extends React.Component {
     // );
 
     if (showFactorCorrelationsTable) {
+      return (
+        <Container1>
+          <h2>
+            Interactive List &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(Output thresholds
+            are set in the &quot;Options&quot; section)
+          </h2>
+          <DistStateListSortByButtons />
+          <DistStateListButtons />
 
-    return (
-      <Container1>
-        <h2>Interactive List - Output Thresholds are Set in the Options Section</h2>
-        <DistStateListSortByButtons />
-        <DistStateListButtons />
-
-        {displayData.map((factorItem, index1) => (
-          <React.Fragment key={`key${index1.toString()}`}>
-            <h2>{factorItem.userSelectedFactor}</h2>
-            <table>
-              <tbody>
-                <tr>
-                  <th>Threshold</th>
-                  <th>Q Sort Value</th>
-                  <th>State. No.</th>
-                  <th>Statement</th>
-                </tr>
-                {displayData[index1].distStates.map((item, index) => (
-                  <tr key={`key${index.toString()}`}>
-                    <td>{item.sigLevelText}</td>
-                    <td className="num">{item.sortValue}</td>
-                    <td className="num">{item.statement}</td>
-                    <td>{item.sortStatement}</td>
+          {displayData.map((factorItem, index1) => (
+            <React.Fragment key={`key${index1.toString()}`}>
+              <h2>{factorItem.userSelectedFactor}</h2>
+              <table>
+                <tbody>
+                  <tr>
+                    <th>Threshold</th>
+                    <th>Q Sort Value</th>
+                    <th>State. No.</th>
+                    <th>Statement</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
-          </React.Fragment>
-        ))}
-      </Container1>
-    );
+                  {displayData[index1].distStates.map((item, index) => (
+                    <tr key={`key${index.toString()}`}>
+                      <td>{item.sigLevelText}</td>
+                      <td className="num">{item.sortValue}</td>
+                      <td className="num">{item.statement}</td>
+                      <td>{item.sortStatement}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </React.Fragment>
+          ))}
+        </Container1>
+      );
     }
     return (
-      <h2 style={ { marginTop: 50, marginLeft: 50 } }>
-              Select factors for output in the Options tab
-            </h2>
-      );
+      <h2 style={{ marginTop: 50, marginLeft: 50 }}>
+        Select factors for output in the Options tab
+      </h2>
+    );
   }
 }
 
