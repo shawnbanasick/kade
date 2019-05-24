@@ -26,16 +26,19 @@ const handleClick = () => {
 
 class CalculateCorrelationsButton extends Component {
   render() {
-    const {isCorrelationsButtonGreen} = state;
+    const { isCorrelationsButtonGreen } = state;
     localStore.isCorrelationsButtonGreen = isCorrelationsButtonGreen;
     return (
       <React.Fragment>
-        <BeginAnalysisButton isActive={ localStore.buttonColor } onClick={ () => handleClick() }>
+        <BeginAnalysisButton
+          isActive={localStore.buttonColor}
+          onClick={() => handleClick()}
+        >
           <p>Calculate Correlations</p>
         </BeginAnalysisButton>
         <ErrorNotification />
       </React.Fragment>
-      );
+    );
   }
 }
 

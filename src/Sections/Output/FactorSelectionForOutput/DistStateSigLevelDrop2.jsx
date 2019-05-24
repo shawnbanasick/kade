@@ -7,9 +7,19 @@ import state from "../../../store";
 // stateOptions = [ { key: 'AL', value: 'AL', text: 'Alabama' }, ...  ]
 const sigOptions = [
   {
+    key: "99.95",
+    value: 3.481,
+    text: "p < 0.0005" // text: "99.995%"
+  },
+  {
     key: "99.9",
     value: 3.291,
     text: "p < 0.001" // text: "99.9%"
+  },
+  {
+    key: "99.5",
+    value: 2.807,
+    text: "p < 0.005" // text: "99.5%"
   },
   {
     key: "99",
@@ -45,9 +55,11 @@ const localStore = store({
 class SigLevelDropdown2 extends React.Component {
   handleChange(e, { value }) {
     localStore.value = value;
-    const lookupArray = [3.291, 2.575, 1.96, 1.645, 1.44, 1.28];
+    const lookupArray = [3.481, 3.291, 2.807, 2.575, 1.96, 1.645, 1.44, 1.28];
     const pValuesTextArray = [
+      "P < 0.0005",
       "P < 0.001",
+      "P < 0.005",
       "P < 0.01",
       "P < 0.05",
       "P < 0.1",

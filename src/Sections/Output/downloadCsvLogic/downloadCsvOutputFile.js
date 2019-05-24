@@ -18,15 +18,15 @@ const downloadCsvOutputFile = function() {
 
   newDataArray.shift();
 
-  const timeStamp = `${currentDate1()  }_${  currentTime1()}`;
+  const timeStamp = `${currentDate1()}_${currentTime1()}`;
   const projectName = state.getState("projectName");
   const shouldIncludeTimestamp = state.getState("shouldIncludeTimestamp");
 
   let nameFile;
   if (shouldIncludeTimestamp === true) {
-    nameFile = `KADE_results_${  projectName  }_${  timeStamp  }.csv`;
+    nameFile = `KADE_results_${projectName}_${timeStamp}.csv`;
   } else {
-    nameFile = `KADE_results_${  projectName  }.csv`;
+    nameFile = `KADE_results_${projectName}.csv`;
   }
 
   exportToCsv(nameFile, newDataArray);

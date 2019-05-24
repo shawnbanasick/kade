@@ -13,33 +13,38 @@ const sigOptions = [
     text: "p < 0.0001" // text: "99.99%"
   },
   {
+    key: "99.95",
+    value: 3.481,
+    text: "p < 0.0005" // text: "99.95%"
+  },
+  {
     key: "99.9",
     value: 3.291,
-    slice: 1,
     text: "p < 0.001" // text: "99.9%"
+  },
+  {
+    key: "99.5",
+    value: 2.807,
+    text: "p < 0.005" // text: "99.5%"
   },
   {
     key: "99",
     value: 2.575,
-    slice: 2,
     text: "p < 0.01" // text: "99%"
   },
   {
     key: "95",
     value: 1.96,
-    slice: 3,
     text: "p < 0.05" // text: "95%"
   },
   {
     key: "90",
     value: 1.645,
-    slice: 4,
     text: "p < 0.1" // text: "90%"
   },
   {
     key: "85",
     value: 1.44,
-    slice: 5,
     text: "p < 0.15" // text: "90%"
   }
 ];
@@ -51,10 +56,12 @@ const localStore = store({
 class SigLevelDropdown extends React.Component {
   handleChange(e, { value }) {
     localStore.value = value;
-    const lookupArray = [3.906, 3.291, 2.575, 1.96, 1.645, 1.44];
+    const lookupArray = [3.906, 3.481, 3.291, 2.807, 2.575, 1.96, 1.645, 1.44];
     const pValuesTextArray = [
       "P < 0.0001",
+      "P < 0.0005",
       "P < 0.001",
+      "P < 0.005",
       "P < 0.01",
       "P < 0.05",
       "P < 0.1",

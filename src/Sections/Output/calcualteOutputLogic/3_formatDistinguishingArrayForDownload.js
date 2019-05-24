@@ -1,5 +1,5 @@
 import state from "../../../store";
-  // todo - create if statement for case of only two sig factors-bypass processing of second
+// todo - create if statement for case of only two sig factors-bypass processing of second
 
 const formatDistingArrayForDownload = (
   distingStatementsTransferArray01,
@@ -8,15 +8,10 @@ const formatDistingArrayForDownload = (
   analysisOutput,
   sigFactorNumbersArray
 ) => {
-
- // console.log("TCL: analysisOutput[0]", JSON.stringify(analysisOutput, null, 2));
-
-
   const chartText1 = "Distinguishing Statements for ";
   const distStateUpperValueText = state.getState("distStateUpperValueText");
   const distStateLowerValueText = state.getState("distStateLowerValueText");
-  const chartText2 =
-    `(${  distStateLowerValueText  } : Asterisk (*) Indicates Significance at ${  distStateUpperValueText  })`;
+  const chartText2 = `(${distStateLowerValueText} : Asterisk (*) Indicates Significance at ${distStateUpperValueText})`;
   const chartText3 =
     "Both the Factor Q-Sort Value and the Z-Score (Z-SCR) are Shown";
   const chartText4 = "Significance";
@@ -119,30 +114,28 @@ const formatDistingArrayForDownload = (
     // cycle through statement numbers and get statement, factors q score and sort value from results object and set sig level to ""
     tempObj["No."] = kShift;
     line5Array.push(kShift);
-    
-    
+
     tempObj["Statement "] = analysisOutput[0][kShift - 1].sortStatement;
     line5Array.push(analysisOutput[0][kShift - 1].sortStatement, kShift);
-    
+
     tempObj["Num "] = kShift;
     for (let m = 0; m < outputLength; m += 1) {
       tempObj[`Q-SV-${sigFactorNumbersArray[m]}`] =
-      analysisOutput[m][kShift - 1].sortValue;
+        analysisOutput[m][kShift - 1].sortValue;
       tempObj[`Z-SCR-${sigFactorNumbersArray[m]}`] =
-      analysisOutput[m][kShift - 1].zScore;
+        analysisOutput[m][kShift - 1].zScore;
       tempObj[`SIG${sigFactorNumbersArray[m]}`] = "";
       line5Array.push(
         analysisOutput[m][kShift - 1].sortValue,
         analysisOutput[m][kShift - 1].zScore,
         ""
-        );
-      }
-      printArray2.push(tempObj);
-      distinguishingSheetArray2.push(line5Array);
+      );
     }
-    
-  
-    // cycle through statement numbers and get statement, factors q score and sort value from results object and set sig level to "*"
+    printArray2.push(tempObj);
+    distinguishingSheetArray2.push(line5Array);
+  }
+
+  // cycle through statement numbers and get statement, factors q score and sort value from results object and set sig level to "*"
   for (let p = 0; p < disting01Length; p += 1) {
     const line6Array = [];
     tempObj2 = {};
@@ -179,9 +172,7 @@ const formatDistingArrayForDownload = (
     }
     printArray2.push(tempObj2);
     distinguishingSheetArray2.push(line6Array);
-    console.log("TCL: line6Array", JSON.stringify(line6Array));
   }
-  
 
   const lookupValue =
     sigFactorNumbersArray[formatDistingArrayForDownload.calledTimes];

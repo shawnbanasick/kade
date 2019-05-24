@@ -6,46 +6,68 @@ import downloadResultsAsCsv from "../downloadCsvLogic/downloadCsvOutputFile";
 import state from "../../../store";
 
 const localStore = store({
-    modalOpen: false
+  modalOpen: false
 });
 
 const handleOpen = () => {
-    const userSelectedFactors = state.getState("userSelectedFactors");
-    if (userSelectedFactors.length === 0) {
-        // console.log("must select factors first");
-        localStore.modalOpen = true;
-    } else {
-        downloadResultsAsCsv();
-    }
+  const userSelectedFactors = state.getState("userSelectedFactors");
+  if (userSelectedFactors.length === 0) {
+    // console.log("must select factors first");
+    localStore.modalOpen = true;
+  } else {
+    downloadResultsAsCsv();
+  }
 };
 
 const handleClose = () => {
-    localStore.modalOpen = false;
+  localStore.modalOpen = false;
 };
 
 class DownloadResultsAsCsv1 extends React.Component {
-    render() {
-        const {active} = localStore;
-        return (
-            <Modal dimmer={ "blurring" } trigger={ <StyledWrapper>
-                                         <Button id="downloadResultsAsCsvButton" className="wrapper1" size={ "large" } toggle active={ active } onClick={ handleOpen }>
-                                           CSV File
-                                         </Button>
-                                       </StyledWrapper> } open={ localStore.modalOpen } onClose={ handleClose } basic size="small">
-              <Header content="Analysis Output" />
-              <Modal.Content>
-                <span style={ { fontSize: 30 } }>
-                              Select the factors to output first.
-                            </span>
-              </Modal.Content>
-              <Modal.Actions>
-                <Button id="downloadResultsAsCsvModalGotItButton" size={ "huge" } color="green" onClick={ handleClose } inverted>
-                  Got it
-                </Button>
-              </Modal.Actions>
-            </Modal>
-            );
-    }
+  render() {
+    const { active } = localStore;
+    return (
+      <Modal
+        dimmer={"blurring"}
+        trigger={
+          <StyledWrapper>
+            <Button
+              id="downloadResultsAsCsvButton"
+              className="wrapper1"
+              size={"large"}
+              toggle
+              active={active}
+              onClick={handleOpen}
+            >
+              CSV File
+            </Button>
+          </StyledWrapper>
+        }
+        open={localStore.modalOpen}
+        onClose={handleClose}
+        basic
+        size="small"
+      >
+        <Header content="Analysis Output" />
+        <Modal.Content>
+          <span style={{ fontSize: 30 }}>
+            Select the factors to output first.
+          </span>
+        </Modal.Content>
+        <Modal.Actions>
+          <Button
+            id="downloadResultsAsCsvModalGotItButton"
+            size={"huge"}
+            color="green"
+            onClick={handleClose}
+            inverted
+          >
+            Got it
+          </Button>
+        </Modal.Actions>
+      </Modal>
+    );
+  }
 }
 
 export default view(DownloadResultsAsCsv1);

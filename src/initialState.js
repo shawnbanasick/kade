@@ -71,6 +71,7 @@ function setInitialState() {
     showStandardErrorsDifferences: false,
     showFactorCharacteristicsTable: false,
     showErrorMessageBar: false,
+    showErrorMessageBarOutput: false,
     showTableDataNotSentWarning: true,
     showInvertFactorModal: false,
     autoFlagHistory: "",

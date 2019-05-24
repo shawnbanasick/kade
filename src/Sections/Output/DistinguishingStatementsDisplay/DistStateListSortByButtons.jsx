@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { view, store } from "react-easy-state";
 import { Button } from "semantic-ui-react";
 import state from "../../../store";
+import downloadDistStates from "./downloadDistStates";
 
 const localStore = store({
   thresholdButtonActive: true,
@@ -16,6 +17,10 @@ const clearAllButtons = () => {
   localStore.statementNumButtonActive = false;
 };
 
+const handleDownload = () => {
+  downloadDistStates();
+};
+
 const handleOnclick = event => {
   const buttonId = event.target.id;
 
@@ -25,21 +30,18 @@ const handleOnclick = event => {
     clearAllButtons();
     localStore.thresholdButtonActive = true;
     state.setState({ distStateListSortKey: "threshold" });
-    console.log("threshold");
   }
 
   if (buttonId === "qSortValueButton") {
     clearAllButtons();
     localStore.qSortValueButtonActive = true;
     state.setState({ distStateListSortKey: "qSortValue" });
-    console.log("qSortValue");
   }
 
   if (buttonId === "statementNumButton") {
     clearAllButtons();
     localStore.statementNumButtonActive = true;
     state.setState({ distStateListSortKey: "statementNum" });
-    console.log("statementNum");
   }
 };
 
@@ -81,6 +83,14 @@ class DistStateListSortByButtons extends React.Component {
           >
             Statement Number
           </Button>
+          <Button
+            id={"downloadButton"}
+            className="wrapper1 downloadButton"
+            onClick={handleDownload}
+            key={"f4"}
+          >
+            Download
+          </Button>
         </StyledWrapper>
       );
     }
@@ -121,6 +131,10 @@ const StyledWrapper = styled.div`
     &:active {
       box-shadow: 0 0 1px 0 black inset;
     }
+  }
+
+  .downloadButton {
+    margin-left: 215px;
   }
 `;
 

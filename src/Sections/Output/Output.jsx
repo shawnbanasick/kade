@@ -17,6 +17,7 @@ import FactorSelectionForOutputButtons from "./FactorSelectionForOutput/FactorSe
 import DistStateSigLevelDrop1 from "./FactorSelectionForOutput/DistStateSigLevelDrop1";
 import DistStateSigLevelDrop2 from "./FactorSelectionForOutput/DistStateSigLevelDrop2";
 import DistinguishingStatementsList from "./DistinguishingStatementsDisplay/DistingishingStatementsList";
+import ErrorNotification from "./ErrorNotificationOutput";
 
 let showTableDataNotSentWarning;
 
@@ -41,6 +42,7 @@ const panes = [
             <DownloadResultsButtons />
             <NoLoadingsFlaggedWarningModal />
             <MultipleFactorsFlaggedWarningModal />
+            <ErrorNotification />
           </DataWindow1>
         </ScrollContainer>
       </Tab.Pane>

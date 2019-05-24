@@ -15,7 +15,6 @@ export default store({
     return newReturnValue;
   },
 
-
   distStateListData: [],
 
   statements: [],
@@ -93,6 +92,7 @@ export default store({
   showStandardErrorsDifferences: false,
   showFactorCharacteristicsTable: false,
   showErrorMessageBar: false,
+  showErrorMessageBarOutput: false,
   showTableDataNotSentWarning: true,
   showInvertFactorModal: false,
   showFileSaveSuccessDialog: false,

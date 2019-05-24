@@ -18,6 +18,17 @@ class FactorSelectionForOutputButtons extends React.Component {
 
   handleSubmit() {
     const userSelectedFactors = state.getState("userSelectedFactors");
+    const sigLevel1 = state.getState("userSelectedDistStateSigLevel1");
+    const sigLevel2 = state.getState("userSelectedDistStateSigLevel2");
+    if (sigLevel1 < sigLevel2) {
+      state.setState({
+        showErrorMessageBarOutput: true,
+        errorMessage: "Change the dropdown"
+      });
+      console.log("blocked");
+      return;
+    }
+
     if (userSelectedFactors.length !== 0) {
       outputDispatch();
       state.setState({

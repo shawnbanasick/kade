@@ -458,11 +458,6 @@ const pushDistinguishingStatementsToOutput = function(
     distStateListData: distStatementsTableArray
   });
 
-  // console.log(
-  //   "TCL: distStatementsTableArray",
-  //   JSON.stringify(distStatementsTableArray)
-  // );
-
   return [sheetNames, output, outputData, sheetNamesXlsx, colSizes];
 };
 

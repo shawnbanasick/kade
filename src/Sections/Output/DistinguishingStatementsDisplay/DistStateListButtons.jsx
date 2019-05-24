@@ -40,70 +40,60 @@ const handleOnclick = event => {
     clearAllButtons();
     localStore.p0001Active = true;
     state.setState({ threshold: 8 });
-    // console.log("99.99 clicked");
   }
 
   if (buttonId === "p0005Button") {
     clearAllButtons();
     localStore.p0005Active = true;
     state.setState({ threshold: 7 });
-    // console.log("99.99 clicked");
   }
 
   if (buttonId === "p001Button") {
     clearAllButtons();
     localStore.p001Active = true;
     state.setState({ threshold: 6 });
-    // console.log("99.9 clicked");
   }
 
   if (buttonId === "p005Button") {
     clearAllButtons();
     localStore.p005Active = true;
     state.setState({ threshold: 5 });
-    // console.log("99.9 clicked");
   }
 
   if (buttonId === "p01Button") {
     clearAllButtons();
     localStore.p01Active = true;
     state.setState({ threshold: 4 });
-    // console.log("99.0 clicked");
   }
 
   if (buttonId === "p05Button") {
     clearAllButtons();
     localStore.p05Active = true;
     state.setState({ threshold: 3 });
-    // console.log("95.0 clicked");
   }
 
   if (buttonId === "p1Button") {
     clearAllButtons();
     localStore.p1Active = true;
     state.setState({ threshold: 2 });
-    // console.log("90.0 clicked");
   }
 
   if (buttonId === "p15Button") {
     clearAllButtons();
     localStore.p15Active = true;
     state.setState({ threshold: 1 });
-    // console.log("85.0 clicked");
   }
 
   if (buttonId === "p2Button") {
     clearAllButtons();
     localStore.p2Active = true;
     state.setState({ threshold: 0 });
-    // console.log("80.0 clicked");
   }
 };
 
 class DistStateListButtons extends React.Component {
   render() {
     const shouldDisplayDistStateListButtons = true;
-    // const rotationDegreeInputDisplay =  localStore.rotationDegreeInput
     if (shouldDisplayDistStateListButtons) {
       return (
         <StyledWrapper>
@@ -208,19 +198,21 @@ class DistStateListButtons extends React.Component {
 export default view(DistStateListButtons);
 
 /* 
-          begin comparisons
-           const lookupArray = [3.906, 3.291, 2.575, 1.96, 1.645, 1.44, 1.28];
-          
-           const pValuesTextArray = [
-            "P < 0.0001",
-            "P < 0.001",
-            "P < 0.01",
-            "P < 0.05",
-            "P < 0.1",
-            "P < 0.15"
-            "P < 0.2"
-          ];
-          */
+  begin comparisons
+    const lookupArray = [3.906, 3.481, 3.291, 2.807, 2.575, 1.96, 1.645, 1.44, 1.28];
+  
+    const pValuesTextArray = [
+    "P < 0.0001",
+    "P < 0.0005",
+    "P < 0.001",
+    "P < 0.005"
+    "P < 0.01",
+    "P < 0.05",
+    "P < 0.1",
+    "P < 0.15"
+    "P < 0.2"
+  ];
+  */
 
 const StyledWrapper = styled.div`
   display: flex;
