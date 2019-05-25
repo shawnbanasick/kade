@@ -32,6 +32,7 @@ function setInitialState() {
     userSelectedDistStateSigLevel1: 2.575,
     distStateLowerValueText: "P < 0.05",
     distStateUpperValueText: "P < 0.01",
+    notifyOutputDistStateError: false,
     unforcedConfirmButtonColor: "orange",
     hasUnforcedBeenConfirmed: false,
     requireMajorityCommonVariance: true,

@@ -2,6 +2,7 @@ import { Tab } from "semantic-ui-react";
 import React, { Component } from "react";
 import { view, store } from "react-easy-state";
 import styled, { keyframes } from "styled-components";
+import { ToastContainer, toast, Zoom } from "react-toastify";
 import state from "../../store";
 import FactorsTable from "./Factors Table/FactorsTable";
 import FactorVizOptions from "./FactorViz/FactorVizOptions";
@@ -17,9 +18,15 @@ import FactorSelectionForOutputButtons from "./FactorSelectionForOutput/FactorSe
 import DistStateSigLevelDrop1 from "./FactorSelectionForOutput/DistStateSigLevelDrop1";
 import DistStateSigLevelDrop2 from "./FactorSelectionForOutput/DistStateSigLevelDrop2";
 import DistinguishingStatementsList from "./DistinguishingStatementsDisplay/DistingishingStatementsList";
-import ErrorNotification from "./ErrorNotificationOutput";
 
 let showTableDataNotSentWarning;
+
+function notify() {
+  toast.error("Error >>> Set threshold 2");
+  state.setState({
+    notifyOutputDistStateError: false
+  });
+}
 
 // factorScoreRanksArray
 
@@ -28,6 +35,7 @@ const panes = [
     menuItem: "Options",
     render: () => (
       <Tab.Pane>
+        <ToastContainer transition={Zoom} autoClose={false} />
         <ScrollContainer>
           {showTableDataNotSentWarning && (
             <NoDataMessage>
@@ -42,7 +50,6 @@ const panes = [
             <DownloadResultsButtons />
             <NoLoadingsFlaggedWarningModal />
             <MultipleFactorsFlaggedWarningModal />
-            <ErrorNotification />
           </DataWindow1>
         </ScrollContainer>
       </Tab.Pane>
@@ -107,7 +114,8 @@ const panes = [
 ];
 
 const localStore = store({
-  activeIndex: 0
+  activeIndex: 0,
+  notifyOutputDistStateError: false
 });
 
 function handleTabChange(e, { activeIndex }) {
@@ -121,6 +129,10 @@ class Output extends Component {
     const facVizContainerHeight =
       state.getState("facVizContainerHeight") || 600;
     const facVizContainerWidth = state.getState("facVizContainerWidth") || 1000;
+    const showNotification = state.getState("notifyOutputDistStateError");
+    if (showNotification) {
+      notify();
+    }
     return (
       <MainContent>
         <Tab
@@ -221,7 +233,7 @@ const MainContent = styled.div`
 
 const DataWindow1 = styled.div`
   display: grid;
-  grid-template-rows: 100px 125px 100px 100px 1fr;
+  grid-template-rows: 100px 125px 100px 100px 1fr 70px;
   min-height: 600px;
   background-color: white;
   max-width: 1197;

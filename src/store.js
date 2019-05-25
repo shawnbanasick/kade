@@ -55,6 +55,7 @@ export default store({
   distStateUpperValueText: "P < 0.01",
   distStateListSortKey: "threshold",
   threshold: 3,
+  notifyOutputDistStateError: false,
   requireMajorityCommonVariance: true,
   rowClassRulesLoadingsTable: {},
   highlighting: "grays",

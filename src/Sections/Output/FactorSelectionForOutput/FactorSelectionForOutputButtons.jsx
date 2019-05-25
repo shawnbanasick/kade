@@ -22,8 +22,7 @@ class FactorSelectionForOutputButtons extends React.Component {
     const sigLevel2 = state.getState("userSelectedDistStateSigLevel2");
     if (sigLevel1 < sigLevel2) {
       state.setState({
-        showErrorMessageBarOutput: true,
-        errorMessage: "Change the dropdown"
+        notifyOutputDistStateError: true
       });
       console.log("blocked");
       return;

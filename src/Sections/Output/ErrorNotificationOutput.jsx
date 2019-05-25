@@ -14,9 +14,9 @@ function handleOnClick() {
 
 class ErrorNotificationOutput extends React.Component {
   render() {
-    const showErrorMessageBarOutput = state.getState(
-      "showErrorMessageBarOutput"
-    );
+    const showErrorMessageBarOutput = true; // state.getState(
+    //   "showErrorMessageBarOutput"
+    // );
     const errorMessage = state.getState("errorMessage");
     if (showErrorMessageBarOutput) {
       return (
@@ -43,7 +43,7 @@ const ErrorBar = styled.div`
   align-items: center;
   justify-items: center;
   left: 155px;
-  bottom: 0;
+  bottom: 50;
   margin-bottom: 5px;
   z-index: 9999;
   width: calc(100vw - 188px);
