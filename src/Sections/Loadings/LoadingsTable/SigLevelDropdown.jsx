@@ -11,9 +11,19 @@ const sigOptions = [
     text: "p < 0.0001" // text: "99.99%"
   },
   {
+    key: "99.95",
+    value: 3.481,
+    text: "p < 0.0005" // text: "99.95%"
+  },
+  {
     key: "99.9",
     value: 3.291,
     text: "p < 0.001" // text: "99.9%"
+  },
+  {
+    key: "99.5",
+    value: 2.807,
+    text: "p < 0.005" // text: "99.5%"
   },
   {
     key: "99",
@@ -31,6 +41,16 @@ const sigOptions = [
     text: "p < 0.1" // text: "90%"
   },
   {
+    key: "85",
+    value: 1.44,
+    text: "p < 0.15" // text: "85%"
+  },
+  {
+    key: "80",
+    value: 1.28,
+    text: "p < 0.2" // text: "80%"
+  },
+  {
     key: "Com",
     value: "majority",
     text: "Majority of Common Variance"
@@ -45,7 +65,8 @@ class SigLevelDropdown extends React.Component {
   handleChange(e, { value }) {
     localStore.value = value;
     state.setState({
-      userSelectedSigLevel: value
+      userSelectedSigLevel: value,
+      autoflagButtonColor: "orange"
     });
   }
 
@@ -54,7 +75,7 @@ class SigLevelDropdown extends React.Component {
     return (
       <Dropdown
         style={{ border: "1px solid black" }}
-        onChange={this.handleChange}
+        onChange={this.handleChange.bind(this)}
         defaultValue={value}
         openOnFocus
         button

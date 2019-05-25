@@ -6,10 +6,11 @@ import calculateSigCriterionValues from "../../Rotation/varimaxLogic/2calculateS
 
 const autoFlagFactors = () => {
   state.setState({
-    isLoadingAutoflag: true
+    isLoadingAutoflag: true,
+    autoflagButtonColor: "#dbdbe0"
   });
 
-  // should produce for Lipset calc style matrix - 9 cols by 7 rows
+  // should produce for Lipset calc style matrix - 9 cols by 7 rows 
 
   // give button time to display loading spinner
   setTimeout(() => {
@@ -17,10 +18,14 @@ const autoFlagFactors = () => {
     const userSelectedSigLevel = state.getState("userSelectedSigLevel");
     const lookupTable = {
       3.906: "p < 0.0001",
+      3.481: "p < 0.0005",
       3.291: "p < 0.001",
+      2.807: "p < 0.005",
       2.575: "p < 0.01",
       1.96: "p < 0.05",
       1.645: "p < 0.1",
+      1.44: "p < 0.15",
+      1.28: "p < 0.2",
       majority: "Majority of Common Variance"
     };
     const criticalLevelText = lookupTable[userSelectedSigLevel];

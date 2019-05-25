@@ -89,6 +89,7 @@ function setInitialState() {
     isLoadJsonQsortsButtonGreen: false,
     isLoadPqmethodTextButtonButtonGreen: false,
     isLoadPqmethodQsortsButtonGreen: false,
+    autoflagButtonColor: "#dbdbe0",  
     hasExcelT1Error: false,
     areStatementsLoaded: false,
     areQsortsLoaded: false,

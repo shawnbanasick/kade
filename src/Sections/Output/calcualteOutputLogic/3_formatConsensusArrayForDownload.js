@@ -13,7 +13,7 @@ const formatConsensusArrayForDownload = (
   const chartText2 =
     "Those That Do Not Distinguish Between ANY Pair of Factors";
   const chartText3 =
-    `All Listed Statements are Non-Significant at ${distStateThreshold1}, and Those Flagged with an * are also Non-Significant at ${distStateThreshold2})`;
+    `All Listed Statements are Non-Significant at ${distStateThreshold1 }, and Those Flagged with an * are also Non-Significant at ${distStateThreshold2  })`;
   const chartText4 = "Significance";
   const chartText5 = "Statement";
   // const chartText6 = "Num";

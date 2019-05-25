@@ -109,6 +109,7 @@ export default store({
   isLoadJsonQsortsButtonGreen: false,
   isLoadPqmethodTextButtonButtonGreen: false,
   isLoadPqmethodQsortsButtonGreen: false,
+  autoflagButtonColor: "#dbdbe0",
   areStatementsLoaded: false,
   areQsortsLoaded: false,
   isInputButtonGreen: false,
