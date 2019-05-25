@@ -24,7 +24,8 @@ let showTableDataNotSentWarning;
 function notify() {
   toast.error("Error >>> Set threshold 2", {
     className: "outputToast",
-    progressClassName: "outputToastProgress"
+    progressClassName: "outputToastProgress",
+    bodyClassName: "outputToastBody"
   });
   state.setState({
     notifyOutputDistStateError: false
@@ -240,6 +241,14 @@ const MainContent = styled.div`
 
   .outputToastProgress {
     background-color: white;
+  }
+
+  .outputToastBody {
+    color: white;
+  }
+
+  .Toastify__close-button {
+    color: white;
   }
 `;
 

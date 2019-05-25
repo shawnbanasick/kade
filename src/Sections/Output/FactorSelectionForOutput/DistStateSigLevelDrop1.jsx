@@ -102,7 +102,7 @@ class SigLevelDropdown extends React.Component {
     if (showOutputFactorSelection) {
       return (
         <DropdownRow>
-          <span>Set distinguishing statements upper threshold 1: </span>
+          <span>Set distinguishing statements threshold 1: </span>
           <Dropdown
             style={{ border: "1px solid black", height: 36 }}
             onChange={this.handleChange}
@@ -124,7 +124,6 @@ export default view(SigLevelDropdown);
 
 const DropdownRow = styled.div`
   display: flex;
-  margin-left: 50px;
   margin-top: 20px;
   align-items: baseline;
 

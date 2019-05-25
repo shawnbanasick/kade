@@ -128,7 +128,6 @@ export default view(SigLevelDropdown2);
 
 const DropdownRow = styled.div`
   display: flex;
-  margin-left: 50px;
   margin-top: 20px;
   align-items: baseline;
 

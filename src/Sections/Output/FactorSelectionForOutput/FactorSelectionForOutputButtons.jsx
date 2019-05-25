@@ -20,7 +20,7 @@ class FactorSelectionForOutputButtons extends React.Component {
     const userSelectedFactors = state.getState("userSelectedFactors");
     const sigLevel1 = state.getState("userSelectedDistStateSigLevel1");
     const sigLevel2 = state.getState("userSelectedDistStateSigLevel2");
-    if (sigLevel1 < sigLevel2) {
+    if (sigLevel1 <= sigLevel2) {
       state.setState({
         notifyOutputDistStateError: true
       });
@@ -147,9 +147,7 @@ class FactorSelectionForOutputButtons extends React.Component {
         duration={1000}
       >
         <StyledWrapper>
-          <span style={{ marginLeft: 50, marginRight: 5, fontSize: 25 }}>
-            Select Factors:
-          </span>
+          <span style={{ marginRight: 5, fontSize: 25 }}>Select Factors:</span>
           {btnId.map(item => (
             <Button
               key={`f${item}`}
