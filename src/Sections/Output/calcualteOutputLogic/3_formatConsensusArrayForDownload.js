@@ -1,14 +1,19 @@
+import state from '../../../store';
+
 const formatConsensusArrayForDownload = (
   consensus05,
   consensus01,
   analysisOutput,
   sigFactorNumbersArray
 ) => {
+  const distStateThreshold1 = state.getState("distStateUpperValueText");
+  const distStateThreshold2 = state.getState("distStateLowerValueText");
+
   const chartText1 = "Consensus Statements";
   const chartText2 =
     "Those That Do Not Distinguish Between ANY Pair of Factors";
   const chartText3 =
-    "All Listed Statements are Non-Significant at P > 0.01, and Those Flagged with an * are also Non-Significant at P > 0.05)";
+    `All Listed Statements are Non-Significant at ${distStateThreshold1}, and Those Flagged with an * are also Non-Significant at ${distStateThreshold2})`;
   const chartText4 = "Significance";
   const chartText5 = "Statement";
   // const chartText6 = "Num";

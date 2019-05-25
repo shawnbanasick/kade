@@ -22,7 +22,10 @@ import DistinguishingStatementsList from "./DistinguishingStatementsDisplay/Dist
 let showTableDataNotSentWarning;
 
 function notify() {
-  toast.error("Error >>> Set threshold 2");
+  toast.error("Error >>> Set threshold 2", {
+    className: "outputToast",
+    progressClassName: "outputToastProgress"
+  });
   state.setState({
     notifyOutputDistStateError: false
   });
@@ -35,7 +38,7 @@ const panes = [
     menuItem: "Options",
     render: () => (
       <Tab.Pane>
-        <ToastContainer transition={Zoom} autoClose={false} />
+        <ToastContainer transition={Zoom} autoClose={5000} />
         <ScrollContainer>
           {showTableDataNotSentWarning && (
             <NoDataMessage>
@@ -228,6 +231,15 @@ const MainContent = styled.div`
     padding: 10px 50px;
     background-color: white;
     padding-left: 20px !important;
+  }
+
+  .outputToast {
+    color: white;
+    font-weight: bold;
+  }
+
+  .outputToastProgress {
+    background-color: white;
   }
 `;
 

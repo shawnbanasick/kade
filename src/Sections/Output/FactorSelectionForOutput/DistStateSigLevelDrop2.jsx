@@ -54,6 +54,7 @@ const localStore = store({
 
 class SigLevelDropdown2 extends React.Component {
   handleChange(e, { value }) {
+    const btnId = state.getState("outputButtonsArray");
     localStore.value = value;
     const lookupArray = [3.481, 3.291, 2.807, 2.575, 1.96, 1.645, 1.44, 1.28];
     const pValuesTextArray = [
@@ -68,6 +69,24 @@ class SigLevelDropdown2 extends React.Component {
     ];
     const sliceValue = lookupArray.indexOf(value);
     const distStateLowerValueText = pValuesTextArray[sliceValue];
+
+    // clear the select factor buttons on change
+    const tempObj2 = {};
+    for (let i = 0; i < btnId.length; i += 1) {
+      tempObj2[`highlightfactor${btnId[i]}`] = false;
+    }
+    tempObj2.userSelectedFactors = [];
+    tempObj2.showFactorCorrelationsTable = false;
+    tempObj2.showFactorCharacteristicsTable = false;
+    tempObj2.showStandardErrorsDifferences = false;
+    tempObj2.showDownloadOutputButtons = false;
+    tempObj2.displayFactorVisualizations = false;
+    tempObj2.shouldDisplayFactorVizOptions = false;
+    tempObj2.outputFactorSelectButtonsDisabled = false;
+    // reset cache of factor viz data
+    tempObj2.outputForDataViz2 = [];
+    state.setState(tempObj2);
+
     state.setState({
       userSelectedDistStateSigLevel2: value,
       distStateLowerValueText
@@ -87,7 +106,7 @@ class SigLevelDropdown2 extends React.Component {
     if (showOutputFactorSelection) {
       return (
         <DropdownRow>
-          <span>2. Set distinguishing statements lower threshold: </span>
+          <span>Set distinguishing statements threshold 2: </span>
           <Dropdown
             style={{ border: "1px solid black", height: 36 }}
             onChange={this.handleChange}

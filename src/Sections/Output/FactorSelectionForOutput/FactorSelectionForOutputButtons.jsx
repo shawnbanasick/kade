@@ -24,10 +24,11 @@ class FactorSelectionForOutputButtons extends React.Component {
       state.setState({
         notifyOutputDistStateError: true
       });
-      console.log("blocked");
       return;
     }
-
+    // also dismiss dist state threshold error toast if present
+    // toast.dismiss();
+    // if no error calc output
     if (userSelectedFactors.length !== 0) {
       outputDispatch();
       state.setState({
@@ -147,7 +148,7 @@ class FactorSelectionForOutputButtons extends React.Component {
       >
         <StyledWrapper>
           <span style={{ marginLeft: 50, marginRight: 5, fontSize: 25 }}>
-            3. Select Factors:
+            Select Factors:
           </span>
           {btnId.map(item => (
             <Button
