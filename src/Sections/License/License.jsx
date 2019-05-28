@@ -60,7 +60,7 @@ class License extends Component {
               <li>SheetJS js-xlsx (Apache-2.0 license)</li>
             </ul>
             <span>
-              {`Principal components based on Javascript version by Dominik Dumain, adapted 
+              {`Principal components based on Javascript version by Dominik Dumaine, adapted 
               from Python version by Thomas Metcalf (GNU GPL license), derived from G.H. Golub 
               and C. Reinsch (1970) "Singular Value Decomposition and Least Squares Solutions." 
               Numerische Mathematik 14(5), pp. 403-420.`}
