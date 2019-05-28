@@ -1,6 +1,11 @@
 import state from "../../../store";
 
-const capitalizeFirstLetter = string => string.charAt(0).toUpperCase() + string.slice(1);
+const capitalizeFirstLetter = string => {
+  if (!string) {
+    return string;
+  }
+  return string.charAt(0).toUpperCase() + string.slice(1);
+};
 
 const filterDistStateListData = (thresholdLevel, sortKey) => {
   const distStateListData = state.getState("distStateListData");
