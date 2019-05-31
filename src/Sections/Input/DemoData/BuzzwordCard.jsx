@@ -7,7 +7,7 @@ const BuzzwordCard = () => (
   <Card>
     <CardMeta>Buzzwords</CardMeta>
     <CardLabel>50 Statements</CardLabel>
-    <CardSubLabel>60 Participants</CardSubLabel>
+    <CardSubLabel>50 Participants</CardSubLabel>
     <LoadBuzzwordData />
   </Card>
 );

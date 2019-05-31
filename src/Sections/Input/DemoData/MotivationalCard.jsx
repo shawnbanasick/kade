@@ -7,7 +7,7 @@ const MotivationalCard = () => (
   <Card>
     <CardMeta>Motivational</CardMeta>
     <CardLabel>80 Statements</CardLabel>
-    <CardSubLabel>120 Participants</CardSubLabel>
+    <CardSubLabel>40 Participants</CardSubLabel>
     <LoadMotivationalData />
   </Card>
 );
