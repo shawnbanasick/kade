@@ -60,6 +60,20 @@ const filterDistStateListData = (thresholdLevel, sortKey) => {
     }
   }
 
+  if (sortKey === "zScore") {
+    for (let i = 0; i < distStateListData.length; i++) {
+      distStateListData[i].distStates.sort((a, b) => {
+        if (a.zScore === b.zScore) {
+          return a.statement - b.statement;
+        } else if (a.zScore > b.zScore) {
+          return -1;
+        } else if (a.zScore < b.zScore) {
+          return 1;
+        }
+      });
+    }
+  }
+
   return distStateListData;
 };
 

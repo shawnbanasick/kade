@@ -165,6 +165,7 @@ const pushDistinguishingStatementsToOutput = function(
           distStatementsTableTempObj.factor = analysisOutput[j][k].factor;
           distStatementsTableTempObj.factorNum = j + 1;
           distStatementsTableTempObj.sortValue = analysisOutput[j][k].sortValue;
+          distStatementsTableTempObj.zScore = analysisOutput[j][k].zScore;
           distStatementsTableTempObj.statement = analysisOutput[j][k].statement;
           distStatementsTableTempObj.sortStatement =
             analysisOutput[j][k].sortStatement;

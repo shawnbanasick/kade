@@ -1,18 +1,18 @@
 import React from "react";
 import { view } from "react-easy-state";
 import state from "../../../store";
-import styled, { keyframes } from "styled-components";
-import { Button } from "semantic-ui-react";
+import styled from "styled-components";
+// import { Button } from "semantic-ui-react";
 import DistStateListButtons from "./DistStateListButtons";
 import filterDistStateListData from "./filterDistStateListData";
 import DistStateListSortByButtons from "./DistStateListSortByButtons";
 
-const styles = {
-  width: "100%",
-  height: 1200,
-  padding: 30,
-  margin: 10
-};
+// const styles = {
+//   width: "100%",
+//   height: 1200,
+//   padding: 30,
+//   margin: 10
+// };
 
 // todo - need to calculate dynamic height here for styles
 
@@ -47,6 +47,7 @@ class DistinguishingStatementsList extends React.Component {
                 <tbody>
                   <tr>
                     <th>Threshold</th>
+                    <th>Z scr.</th>
                     <th>Q Sort Value</th>
                     <th>State. No.</th>
                     <th>Statement</th>
@@ -54,9 +55,10 @@ class DistinguishingStatementsList extends React.Component {
                   {displayData[index1].distStates.map((item, index) => (
                     <tr key={`key${index.toString()}`}>
                       <td>{item.sigLevelText}</td>
+                      <td className="zScr">{item.zScore}</td>
                       <td className="num">{item.sortValue}</td>
                       <td className="num">{item.statement}</td>
-                      <td>{item.sortStatement}</td>
+                      <td className="statement">{item.sortStatement}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -100,8 +102,16 @@ const Container1 = styled.div`
     background-color: rgba(131, 202, 254, 0.6);
   }
 
+  .zScr {
+    text-align: right;
+  }
+
   .num {
     text-align: center;
+  }
+
+  .statement {
+    min-width: 600px;
   }
 `;
 

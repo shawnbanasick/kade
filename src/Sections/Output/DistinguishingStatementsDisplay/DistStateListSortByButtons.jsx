@@ -8,13 +8,15 @@ import downloadDistStates from "./downloadDistStates";
 const localStore = store({
   thresholdButtonActive: true,
   qSortValueButtonActive: false,
-  statementNumButtonActive: false
+  statementNumButtonActive: false,
+  zScoreButtonActive: false
 });
 
 const clearAllButtons = () => {
   localStore.thresholdButtonActive = false;
   localStore.qSortValueButtonActive = false;
   localStore.statementNumButtonActive = false;
+  localStore.zScoreButtonActive = false;
 };
 
 const handleDownload = () => {
@@ -42,6 +44,12 @@ const handleOnclick = event => {
     clearAllButtons();
     localStore.statementNumButtonActive = true;
     state.setState({ distStateListSortKey: "statementNum" });
+  }
+
+  if (buttonId === "zScoreButton") {
+    clearAllButtons();
+    localStore.zScoreButtonActive = true;
+    state.setState({ distStateListSortKey: "zScore" });
   }
 };
 
@@ -84,10 +92,20 @@ class DistStateListSortByButtons extends React.Component {
             Statement Number
           </Button>
           <Button
+            id={"zScoreButton"}
+            className="wrapper1"
+            toggle
+            active={localStore.zScoreButtonActive}
+            onClick={handleOnclick}
+            key={"f4"}
+          >
+            Z score
+          </Button>
+          <Button
             id={"downloadButton"}
             className="wrapper1 downloadButton"
             onClick={handleDownload}
-            key={"f4"}
+            key={"f5"}
           >
             Download
           </Button>
@@ -134,7 +152,7 @@ const StyledWrapper = styled.div`
   }
 
   .downloadButton {
-    margin-left: 215px;
+    margin-left: 120px;
   }
 `;
 
