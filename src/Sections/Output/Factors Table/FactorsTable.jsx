@@ -1,3 +1,4 @@
+import styled from "styled-components";
 import React, { Component } from "react";
 import { AgGridReact } from "ag-grid-react";
 import { view, store } from "react-easy-state";
@@ -174,7 +175,7 @@ class FactorsTable extends Component {
 
     if (showFactorsTable) {
       return (
-        <div>
+        <Container1>
           <p style={{ fontWeight: "normal", marginTop: 15, textAlign: "left" }}>
             Click the table headers to re-sort by column (low-to-high,
             high-to-low, original sort).
@@ -195,7 +196,7 @@ class FactorsTable extends Component {
               enableSorting
             />
           </div>
-        </div>
+        </Container1>
       );
     }
     return (
@@ -207,3 +208,7 @@ class FactorsTable extends Component {
 }
 
 export default view(FactorsTable);
+
+const Container1 = styled.div`
+  padding-bottom: 50px;
+`;

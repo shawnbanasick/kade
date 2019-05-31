@@ -5,6 +5,7 @@ import state from "../../store";
 import FactorCorrelationsTable from "./Factor Info/FactorCorrelationsTable";
 import FactorCharacteristicsTable from "./Factor Info/FactorCharacteristicsTable";
 import StandardErrorsDifferencesTable from "./Factor Info/StandardErrorsDifferencesTable";
+
 // import './OutputFactorTablesTransitionContainer.css';
 
 class OutputFactorTablesTranstionContainer extends Component {
@@ -15,36 +16,42 @@ class OutputFactorTablesTranstionContainer extends Component {
 
     if (showFactorCorrelationsTable) {
       return (
-        <Transition visible={ showFactorCorrelationsTable } animation="fade" duration={ 1000 }>
+        <Transition
+          visible={showFactorCorrelationsTable}
+          animation="fade"
+          duration={1000}
+        >
           <div className="section">
             <div className="outputFactorTables">
               <span className="outputFactorTablesSpan3">
-                                      Correlations between Factor Scores
-                                    </span>
+                Correlations between Factor Scores
+              </span>
               <FactorCorrelationsTable />
             </div>
             <div className="outputFactorTables">
               <span className="outputFactorTablesSpan3">
-                                      Factor Characteristics
-                                    </span>
+                Factor Characteristics
+              </span>
               <FactorCharacteristicsTable />
             </div>
             <div className="outputFactorTables">
               <span className="outputFactorTablesSpan3">
-                                      Standard Errors for Differences in Factor Z-scores
-                                    </span>
+                Standard Errors for Differences in Factor Z-scores
+              </span>
               <span className="outputFactorTablesSpan2">
-                                      (Diagonal Entries Are S.E. Within Factors)
-                                    </span>
+                (Diagonal Entries Are S.E. Within Factors)
+              </span>
               <StandardErrorsDifferencesTable />
             </div>
           </div>
         </Transition>
-        );
+      );
     }
     return (
-      <h2 style={ { marginTop: 50, marginLeft: 50 } }>Select factors for output in the Options tab</h2>
-      );
+      <h2 style={{ marginTop: 50, marginLeft: 50 }}>
+        Select factors for output in the Options tab
+      </h2>
+    );
   }
 }
 
@@ -58,7 +65,7 @@ export default view(OutputFactorTablesTranstionContainer);
 }
 
 .outputFactorTablesSpan2 {
-    text-align: left;
+    text-align: left; 
     margin-bottom: 5px;
     font-size: 16px;
     line-height: 18px;
