@@ -17,15 +17,15 @@ const autoFlagFactors = () => {
     // get data for current user selected significance level
     const userSelectedSigLevel = state.getState("userSelectedSigLevel");
     const lookupTable = {
-      3.906: "p < 0.0001",
-      3.481: "p < 0.0005",
-      3.291: "p < 0.001",
-      2.807: "p < 0.005",
-      2.575: "p < 0.01",
-      1.96: "p < 0.05",
-      1.645: "p < 0.1",
-      1.44: "p < 0.15",
-      1.28: "p < 0.2",
+      3.906: "P < 0.0001",
+      3.481: "P < 0.0005",
+      3.291: "P < 0.001",
+      2.807: "P < 0.005",
+      2.575: "P < 0.01",
+      1.96: "P < 0.05",
+      1.645: "P < 0.1",
+      1.44: "P < 0.15",
+      1.28: "P < 0.2",
       majority: "Majority of Common Variance"
     };
     const criticalLevelText = lookupTable[userSelectedSigLevel];
@@ -33,12 +33,12 @@ const autoFlagFactors = () => {
       "requireMajorityCommonVariance"
     );
     // setup Project History Array text
-    let comVarText = "and a majority of common variance was not required";
+    let comVarText = " and a majority of common variance was not required";
     if (requireMajorityCommonVariance === true) {
       comVarText = " and a majority of common variance was required";
     }
     const autoFlagHistory = [
-      `Autoflagging set to ${criticalLevelText}${comVarText}`
+      `Autoflagging: `, `${criticalLevelText}${comVarText}`
     ];
 
     const numFactorsKeptForRot = state.getState("numFactorsKeptForRot");

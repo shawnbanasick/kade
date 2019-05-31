@@ -58,13 +58,20 @@ const pushProjectHistoryToOutputArray = function() {
     settings.push(spacer, autoFlagHistory);
     dataXlsx.push(spacer, autoFlagHistory);
 
+    const distStateUpperValueText = state.getState("distStateUpperValueText");
+    const distStateLowerValueText = state.getState("distStateLowerValueText");
+    settings.push(spacer, ["Distinguishing statements threshold 1:", distStateUpperValueText]);
+    dataXlsx.push(spacer, ["Distinguishing statements threshold 1:", distStateUpperValueText]);
+    settings.push(spacer, ["Distinguishing statements threshold 2:", distStateLowerValueText]);
+    dataXlsx.push(spacer, ["Distinguishing statements threshold 2:", distStateLowerValueText]);
+
     const timeCompleted = `${currentDate1()  } at ${  currentTime1()}`;
     settings.push(spacer, ["Analysis completed on:", timeCompleted]);
     dataXlsx.push(spacer, ["Analysis completed on:", timeCompleted]);
 
     const version = state.getState("version");
-    settings.push(spacer, ["KADE Analysis Version Number: ", version]);
-    dataXlsx.push(spacer, ["KADE Analysis Version Number: ", version]);
+    settings.push(spacer, ["KADE Version Number: ", version]);
+    dataXlsx.push(spacer, ["KADE Version Number: ", version]);
 
     const colSizes = [
         [

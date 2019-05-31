@@ -75,7 +75,7 @@ function setInitialState() {
     showErrorMessageBarOutput: false,
     showTableDataNotSentWarning: true,
     showInvertFactorModal: false,
-    autoFlagHistory: `Autoflagging set to p < 0.05 and a majority of common variance was required`,
+    autoFlagHistory: [`Autoflagging:`, `P < 0.05 and a majority of common variance was required`],
     showFileSaveSuccessDialog: false,
     notifyDataUploadSuccess: false,
     notifyDataSentToOutputSuccess: false,
