@@ -47,7 +47,7 @@ export default store({
   isCentroidLoading: false,
   unforcedRadioButtonState: "forced",
   hasExcelT1Error: false,
-  autoFlagHistory: "",
+  autoFlagHistory: `Autoflagging set to p < 0.05 and a majority of common variance was required`,
   userSelectedSigLevel: 1.96,
   userSelectedDistStateSigLevel2: 1.96,
   userSelectedDistStateSigLevel1: 2.575,

@@ -54,7 +54,7 @@ const pushProjectHistoryToOutputArray = function() {
         dataXlsx.push(["", list[i]]);
     }
 
-    const autoFlagHistory = state.getState("autoFlagHistory");
+    const autoFlagHistory = state.getState("autoFlagHistory"); 
     settings.push(spacer, autoFlagHistory);
     dataXlsx.push(spacer, autoFlagHistory);
 

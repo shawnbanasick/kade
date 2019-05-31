@@ -22,7 +22,7 @@ import DistinguishingStatementsList from "./DistinguishingStatementsDisplay/Dist
 let showTableDataNotSentWarning;
 
 function notify() {
-  toast.error("Error >>> Set threshold 2", {
+  toast.error("Error >>> Reset threshold levels", {
     className: "outputToast",
     progressClassName: "outputToastProgress",
     bodyClassName: "outputToastBody"
