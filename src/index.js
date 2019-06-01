@@ -1,6 +1,8 @@
 // require('electron-react-devtools').install();
 // localStorage.debug = 'worker:*'
 
+// 
+
 import { app, Menu, dialog } from "electron";
 import { enableLiveReload } from "electron-compile";
 import * as Splashscreen from "@trodi/electron-splashscreen";

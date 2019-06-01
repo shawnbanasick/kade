@@ -93,7 +93,6 @@
       },
       "electronPackagerConfig": {
         "packageManager": "yarn",
-        "icon": "src/assets/icons/mac/icon-1024.png",
         "asar": true
       },
       "electronWinstallerConfig": {
