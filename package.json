@@ -1,8 +1,9 @@
 {
   "name": "kade",
   "productName": "KADE",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "A desktop application for Q Methodology",
+  "license": "GPLv3",
   "main": "src/index.js",
   "scripts": {
     "start": "electron-forge start",
@@ -17,7 +18,7 @@
     "pack": "electron-builder --dir",
     "dist:macOS": "electron-builder --mac",
     "dist:windows": "electron-builder --windows --x64 --ia32",
-    "dist:linux": "DEBUG=electron-builder electron-builder --linux"
+    "dist:linux": "electron-builder --linux"
   },
   "jest": {
     "runner": "@jest-runner/electron",
@@ -44,7 +45,6 @@
     "name": "Shawn Banasick",
     "email": "ken.q.tools@gmail.com"
   },
-  "license": "MIT",
   "build": {
     "appId": "com.kade.app",
     "directories": {
@@ -52,13 +52,17 @@
     },
     "linux": {
       "category": "Science",
-      "target": [{
-        "target": "AppImage",
-        "arch": [
-          "x64",
-          "ia32"
-        ]
-      }]
+      "description": "KADE is an open source Q methodology app",
+      "synopsis": "Q methodology app",
+      "target": [
+        {
+          "target": "AppImage",
+          "arch": [
+            "ia32",
+            "x64"
+          ]
+        }
+      ]
     },
     "win": {
       "target": [

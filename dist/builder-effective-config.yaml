@@ -4,11 +4,13 @@ directories:
 appId: com.kade.app
 linux:
   category: Science
+  description: KADE is an open source Q methodology app
+  synopsis: Q methodology app
   target:
     - target: AppImage
       arch:
-        - x64
         - ia32
+        - x64
 win:
   target:
     - nsis
