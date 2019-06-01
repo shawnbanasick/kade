@@ -129,6 +129,8 @@ function setInitialState() {
     newRotationVectors: [],
     rotColDefsFactorTable: [],
     rotRowDataFactorTable: [],
+    rotationActiveTabIndex: 0,
+    outputActiveTabIndex: 0,
     customFileNameLocation: "append",
     displayFactorVisualizations: false,
     shouldDisplayFactorVizOptions: false,

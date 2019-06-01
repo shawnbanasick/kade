@@ -129,6 +129,8 @@ export default store({
   activeStartAnalysisButton: false,
   activeCentroidFactorsButton: false,
   activePcaButton: false,
+  rotationActiveTabIndex: 0,
+  outputActiveTabIndex: 0,
   calculatingPca: false,
   isFacSelectDisabled: false,
   jsonParticipantId: [],

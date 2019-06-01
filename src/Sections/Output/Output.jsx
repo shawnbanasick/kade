@@ -1,6 +1,6 @@
 import { Tab } from "semantic-ui-react";
 import React, { Component } from "react";
-import { view, store } from "react-easy-state";
+import { view } from "react-easy-state";
 import styled, { keyframes } from "styled-components";
 import { ToastContainer, toast, Zoom } from "react-toastify";
 import state from "../../store";
@@ -31,8 +31,6 @@ function notify() {
     notifyOutputDistStateError: false
   });
 }
-
-// factorScoreRanksArray
 
 const panes = [
   {
@@ -117,18 +115,13 @@ const panes = [
   }
 ];
 
-const localStore = store({
-  activeIndex: 0,
-  notifyOutputDistStateError: false
-});
-
 function handleTabChange(e, { activeIndex }) {
-  localStore.activeIndex = activeIndex;
+  state.setState({ outputActiveTabIndex: activeIndex });
 }
 
 class Output extends Component {
   render() {
-    const { activeIndex } = localStore;
+    const activeIndex = state.getState("outputActiveTabIndex");
     showTableDataNotSentWarning = state.getState("showTableDataNotSentWarning");
     const facVizContainerHeight =
       state.getState("facVizContainerHeight") || 600;
@@ -172,10 +165,6 @@ const fadeOut = keyframes`
     opacity: 0;
   }
 `;
-
-// overflow: scroll;
-// height: ${props => `${props.height}px`};
-// width: ${props => `${props.width}px`};
 
 const MainContent = styled.div`
   background-color: #d6dbe0;
@@ -260,15 +249,6 @@ const DataWindow1 = styled.div`
   max-width: 1197;
   user-select: none;
 `;
-
-// min-height: 600px;
-// max-height: calc(100vh - 22px);
-// width: calc(100vw - 122px);
-// max-height: calc(100vh - 22px);
-// overflow: auto;
-
-// max-width: calc(100vw - 135px);
-// min-width: 100vw;
 
 const DataWindow2 = styled.div`
   background-color: white;

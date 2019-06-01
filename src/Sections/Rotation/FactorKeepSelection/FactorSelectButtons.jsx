@@ -1,11 +1,9 @@
 import React from "react";
-// import includes from "lodash/includes";
 import styled from "styled-components";
 import { view, store } from "react-easy-state";
-import { Button, Transition } from "semantic-ui-react";
+import { Button } from "semantic-ui-react";
 import state from "../../../store";
 import loadingsTableDataPrep from "../../Loadings/LoadingsTable/loadingsTableDataPrep";
-// import FactorSelectButtonModal from "./FactorSelectButtonModal";
 
 const localStore = store({
   rotationDegreeInput: "",
@@ -32,14 +30,12 @@ const clearAllButtons = () => {
 };
 
 class FactorSelectionForOutputButtons extends React.Component {
-  //   clearButtonHighlighting() {
-  //     const btnId = state.getState("outputButtonsArray");
-  //     const tempObj2 = {};
-  //     for (let i = 0; i < btnId.length; i += 1) {
-  //       tempObj2[`highlightfactor${btnId[i]}`] = false;
-  //     }
-  //     state.setState(tempObj2);
-  //   }
+  componentWillUnmount() {
+    const isFacSelectDisabled = state.getState("isFacSelectDisabled");
+    if (!isFacSelectDisabled) {
+      clearAllButtons();
+    }
+  }
 
   handleSubmit() {
     console.log("submitted");
@@ -59,14 +55,11 @@ class FactorSelectionForOutputButtons extends React.Component {
       loadingsTableDataPrep(numFactors);
     }, 10);
     state.setState({
-      // isLoadingFactorsKept: false,
       isFacSelectDisabled: true,
       shouldDisplayFacKept: true,
       showLoadingsTable: true,
       projectHistoryArray
     });
-
-    // localStore.isActive = true;
 
     // archive values for undo function (ProjectHistory component)
     let archiveCounter = state.getState("archiveCounter");
@@ -78,15 +71,6 @@ class FactorSelectionForOutputButtons extends React.Component {
     });
     sessionStorage.setItem(archiveName, JSON.stringify(factorMatrix));
   }
-
-  //   initializeButtonActiveState(btnId) {
-  //     // set all highlighting to false (not active)
-  //     const tempObj = {};
-  //     for (let i = 0; i < btnId.length; i += 1) {
-  //       tempObj[`highlightfactor${btnId[i]}`] = false;
-  //     }
-  //     state.setState(tempObj);
-  //   }
 
   handleOnclick(event) {
     const value = event.target.value;
@@ -147,10 +131,6 @@ class FactorSelectionForOutputButtons extends React.Component {
       btnId.length = +numCentroidFactors;
     }
 
-    // const showOutputFactorSelection = state.getState(
-    //   "showOutputFactorSelection"
-    // );
-
     const showKeepFacForRotButton = state.getState("showKeepFacForRotButton");
     if (showKeepFacForRotButton) {
       return (
@@ -173,9 +153,8 @@ class FactorSelectionForOutputButtons extends React.Component {
           </StyledWrapper>
         </React.Fragment>
       );
-    } 
-      return null;
-    
+    }
+    return null;
   }
 }
 export default view(FactorSelectionForOutputButtons);
@@ -195,15 +174,3 @@ const StyledWrapper = styled.div`
     }
   }
 `;
-
-const DropdownText = styled.div`
-  margin-right: 20px;
-  margin-top: 10px;
-  font-size: 22px;
-  display: inline-block;
-`;
-
-/*
-<Transition visible animation="fade" duration={1000}>
-</Transition>
-*/
