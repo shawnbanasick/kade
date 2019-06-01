@@ -2,12 +2,17 @@ import { Tab } from "semantic-ui-react";
 import React, { Component } from "react";
 import { view, store } from "react-easy-state";
 import styled, { keyframes } from "styled-components";
+import state from "../../store";
 
-import FactorSelectDropdown from "./FactorKeepSelection/FactorSelectDropdown";
+// import FactorSelectDropdown from "./FactorKeepSelection/FactorSelectDropdown";
 import FactorsKeptNotification from "./FactorKeepSelection/FactorsKeptNotification";
 import JudgementalRotationContainer from "./JudgementalRotation/JudgementalRotationContainer";
 import FireVarimaxButton from "./RotationButtons/FireVarimaxButton";
 import InitializeJudgementalButton from "./RotationButtons/InitializeJudgmentalButton";
+import FactorSelectButtons from "./FactorKeepSelection/FactorSelectButtons";
+import FactorSelectButtonModal from "./FactorKeepSelection/FactorSelectButtonModal";
+
+let showKeepFacForRotButton;
 
 const panes = [
   {
@@ -15,7 +20,15 @@ const panes = [
     render: () => (
       <Tab.Pane>
         <DataWindow1>
-          <FactorSelectDropdown />
+          {showKeepFacForRotButton ? (
+            <DropdownText>How many factors to keep for rotation? </DropdownText>
+          ) : (
+            <DropdownText>Extract factors first.</DropdownText>
+          )}
+          <ButtonBar>
+            <FactorSelectButtons />
+            <FactorSelectButtonModal />
+          </ButtonBar>
           <FactorsKeptNotification />
         </DataWindow1>
       </Tab.Pane>
@@ -49,18 +62,24 @@ const localStore = store({
 });
 
 class Rotation extends Component {
-  handleTabChange(e, {activeIndex}) {
+  handleTabChange(e, { activeIndex }) {
     localStore.activeIndex = activeIndex;
   }
 
   render() {
-    const {activeIndex} = localStore;
+    const { activeIndex } = localStore;
+    showKeepFacForRotButton = state.getState("showKeepFacForRotButton");
 
     return (
       <MainContent>
-        <Tab style={ { width: "100%", minHeight: "calc(100%-22px)" } } panes={ panes } activeIndex={ activeIndex } onTabChange={ this.handleTabChange } />
+        <Tab
+          style={{ width: "100%", minHeight: "calc(100%-22px)" }}
+          panes={panes}
+          activeIndex={activeIndex}
+          onTabChange={this.handleTabChange}
+        />
       </MainContent>
-      );
+    );
   }
 }
 
@@ -68,11 +87,11 @@ export default view(Rotation);
 
 const DataWindow1 = styled.div`
   display: grid;
-  grid-template-rows: 100px 100px 1fr;
+  grid-template-rows: 50px 120px 150px 1fr;
   /* min-height: 600px; */
   height: calc(100vh - 75px);
   background-color: white;
-  max-width: 1197; 
+  max-width: 1197;
   user-select: none;
 `;
 
@@ -108,6 +127,11 @@ const fadeOut = keyframes`
   to {
     opacity: 0;
   }
+`;
+
+const ButtonBar = styled.div`
+  display: flex;
+  flex-direction: row;
 `;
 
 const MainContent = styled.div`
@@ -249,4 +273,10 @@ background-color: #d6dbe0;
     /* border: 2px solid red; 
   } 
   */
+`;
+
+const DropdownText = styled.div`
+  margin-right: 20px;
+  margin-top: 10px;
+  font-size: 22px;
 `;

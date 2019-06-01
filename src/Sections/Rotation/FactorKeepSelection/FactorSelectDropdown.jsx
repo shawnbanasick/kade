@@ -104,14 +104,38 @@ function getOptions() {
 
 class FactorSelectDropdown extends React.Component {
   render() {
-    const isFacSelectDisabled = state.getState("isFacSelectDisabled");
-    const options = getOptions();
+    // const isFacSelectDisabled = state.getState("isFacSelectDisabled");
+    // const options = getOptions();
     const showKeepFacForRotButton = state.getState("showKeepFacForRotButton");
     if (showKeepFacForRotButton) {
       return (
         <ContainerDiv style={{ display: "flex" }}>
           <DropdownText>How many factors to keep for rotation? </DropdownText>
-          <Dropdown
+        </ContainerDiv>
+      );
+    }
+    return <DefaultMessage>Extract factors first.</DefaultMessage>;
+  }
+}
+export default view(FactorSelectDropdown);
+
+const ContainerDiv = styled.div`
+  display: flex;
+  border: 2px solid red;
+`;
+
+const DefaultMessage = styled.div`
+  font-size: 22px;
+`;
+
+const DropdownText = styled.div`
+  margin-right: 20px;
+  margin-top: 10px;
+  font-size: 22px;
+`;
+
+/*
+ <Dropdown
             id="factorSelectDropdown"
             placeholder={"?"}
             style={{ height: "38px", width: "72px", border: "1px solid black" }}
@@ -124,24 +148,4 @@ class FactorSelectDropdown extends React.Component {
             options={options}
           />
           <FactorSelectButtonModal />
-        </ContainerDiv>
-      );
-    }
-    return <DefaultMessage>Extract factors first.</DefaultMessage>;
-  }
-}
-export default view(FactorSelectDropdown);
-
-const ContainerDiv = styled.div`
-  display: flex;
-`;
-
-const DefaultMessage = styled.div`
-  font-size: 22px;
-`;
-
-const DropdownText = styled.div`
-  margin-right: 20px;
-  margin-top: 10px;
-  font-size: 22px;
-`;
+*/
