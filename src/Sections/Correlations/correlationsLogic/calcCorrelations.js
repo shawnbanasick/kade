@@ -1,6 +1,7 @@
 import cloneDeep from "lodash/cloneDeep";
 import state from "../../../store";
 import getPqmethodCorrelation from "./getPqmethodCorrelation";
+import { first } from "rxjs/operators";
 
 export default function calculateCorrelations(rawSorts, respondentNames) {
   // controls matrix formation - corrs calculated in "getPqmethodCorrelations"
@@ -13,11 +14,24 @@ export default function calculateCorrelations(rawSorts, respondentNames) {
 
   for (let m = 0; m < totalSorts; m += 1) {
     correlationTableArray[m] = [];
+    correlationTableArrayFormatted[m] = [];
+  }
+  
+  
+  // get max participant name length for col width
+  let colMaxWidth = 100;
+  let firstColMaxWidth = 150;
+
+  const calColMaxWidth2 = Math.max(...respondentNames.map( (el) => el.length));
+  const calColMaxWidth = (calColMaxWidth2 * 9  );
+  console.log(calColMaxWidth);
+  if (calColMaxWidth > colMaxWidth) {
+    colMaxWidth = calColMaxWidth; 
+  }
+  if (calColMaxWidth > firstColMaxWidth) {
+    firstColMaxWidth = calColMaxWidth;
   }
 
-  for (let n = 0; n < totalSorts; n += 1) {
-    correlationTableArrayFormatted[n] = [];
-  }
 
   for (let i = 0; i < totalSorts; i += 1) {
     const pullX = rawSortsCloned[i];
@@ -46,6 +60,8 @@ export default function calculateCorrelations(rawSorts, respondentNames) {
     } // end of k loop
   } //  end of i loop
 
+  console.log(colMaxWidth);
+
   // generate row data for ag-grid corr table
   const gridRowData = [];
   correlationTableArrayFormatted.forEach((element, j) => {
@@ -64,7 +80,7 @@ export default function calculateCorrelations(rawSorts, respondentNames) {
   tempObj2.headerName = "Respondent";
   tempObj2.field = "respondent";
   tempObj2.pinned = true;
-  tempObj2.width = 150;
+  tempObj2.width = firstColMaxWidth;
   tempObj2.cellStyle = {
     textAlign: "center"
   };
@@ -75,7 +91,7 @@ export default function calculateCorrelations(rawSorts, respondentNames) {
     tempObj3.field = element;
     tempObj3.pinned = false;
     tempObj3.editable = false;
-    tempObj3.width = 80;
+    tempObj3.width = colMaxWidth;
     tempObj3.cellStyle = params => {
       if (params.value < 0) {
         return {

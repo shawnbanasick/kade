@@ -3,7 +3,7 @@
   "productName": "KADE",
   "version": "1.1.0",
   "description": "A desktop application for Q Methodology",
-  "license": "GPLv3",
+  "license": "LGPL-3.0",
   "main": "src/index.js",
   "scripts": {
     "start": "electron-forge start",
