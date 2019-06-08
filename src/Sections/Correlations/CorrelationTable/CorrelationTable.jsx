@@ -3,14 +3,18 @@ import { view, store } from "react-easy-state";
 import styled from "styled-components";
 import { AgGridReact } from "ag-grid-react";
 import state from "../../../store";
-// import calculateCorrelations from "../correlationsLogic/calcCorrelations";
 
 const localStore = store({
   numQsorts: 0
 });
 
+// const widthVal = firstColMaxWidth + 10 + colMaxWidth * numQsorts;
+
 function getWidth(numQsorts) {
-  let widthVal = 152 + 100 * numQsorts;
+  const width1 = state.getState("firstColMaxWidth");
+  const width2 = state.getState("colMaxWidth");
+
+  let widthVal = width1 + 10 + width2 * numQsorts;
   let x = window.innerWidth - 40 - 152;
 
   if (x < widthVal) {
@@ -78,7 +82,10 @@ class CorrelationTable extends Component {
         </p>
         <div
           id="innerContainerCorrelations"
-          style={{ width: getWidth(numQsorts), height: getHeight(numQsorts) }}
+          style={{
+            width: getWidth(numQsorts),
+            height: getHeight(numQsorts)
+          }}
           className="ag-theme-fresh"
         >
           <AgGridReact

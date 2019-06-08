@@ -7,6 +7,9 @@ const localStore = store({
   numQsorts: 0
 });
 
+// const respondentNames = state.getState("respondentNames");
+// console.log(JSON.stringify(respondentNames));
+
 function getWidth(numStatements) {
   let widthVal = 230 + 65 * numStatements;
   let x = window.innerWidth - 40 - 152;

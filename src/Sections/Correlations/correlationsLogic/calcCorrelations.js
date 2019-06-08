@@ -1,7 +1,7 @@
 import cloneDeep from "lodash/cloneDeep";
 import state from "../../../store";
 import getPqmethodCorrelation from "./getPqmethodCorrelation";
-import { first } from "rxjs/operators";
+// import { first } from "rxjs/operators";
 
 export default function calculateCorrelations(rawSorts, respondentNames) {
   // controls matrix formation - corrs calculated in "getPqmethodCorrelations"
@@ -12,23 +12,13 @@ export default function calculateCorrelations(rawSorts, respondentNames) {
   const correlationTableArray = [];
   const correlationTableArrayFormatted = [];
 
+
+  const firstColMaxWidth = state.getState("firstColMaxWidth");
+  const colMaxWidth = state.getState("colMaxWidth");
+
   for (let m = 0; m < totalSorts; m += 1) {
     correlationTableArray[m] = [];
     correlationTableArrayFormatted[m] = [];
-  }
-  
-  
-  // get max participant name length for col width
-  let colMaxWidth = 100;
-  let firstColMaxWidth = 150;
-
-  const calColMaxWidth2 = Math.max(...respondentNames.map( (el) => el.length));
-  const calColMaxWidth = (calColMaxWidth2 * 9  );
-  if (calColMaxWidth > colMaxWidth) {
-    colMaxWidth = calColMaxWidth; 
-  }
-  if (calColMaxWidth > firstColMaxWidth) {
-    firstColMaxWidth = calColMaxWidth;
   }
   
 
@@ -110,6 +100,5 @@ export default function calculateCorrelations(rawSorts, respondentNames) {
     gridRowData,
     correlationTableArray: correlationTableArrayFormatted,
     correlation5Calcs: correlationTableArray,
-    respondentNamesMaxLength: firstColMaxWidth
   });
 }

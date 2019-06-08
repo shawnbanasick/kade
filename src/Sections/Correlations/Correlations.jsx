@@ -10,25 +10,28 @@ class Correlations extends Component {
   render() {
     const showCorrelationMatrix = state.getState("showCorrelationMatrix");
     const isDataButtonGreen = state.getState("isDataButtonGreen");
+    const firstColMaxWidth = state.getState("firstColMaxWidth");
+    const colMaxWidth = state.getState("colMaxWidth");
+
     return (
       <MainContent>
         <Container1>
-          { isDataButtonGreen ? (
+          {isDataButtonGreen ? (
             <CalculateCorrelationsButton />
-            ) : (
+          ) : (
             <DefaultMessage>No data loaded.</DefaultMessage>
-            ) }
+          )}
         </Container1>
         <Container2>
-          { showCorrelationMatrix ? (
+          {showCorrelationMatrix ? (
             <CorrelationTable />
-            ) : (
+          ) : (
             <DefaultMessage>No correlations calculated.</DefaultMessage>
-            ) }
+          )}
         </Container2>
         <ErrorNotification />
       </MainContent>
-      );
+    );
   }
 }
 

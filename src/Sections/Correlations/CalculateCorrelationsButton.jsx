@@ -4,6 +4,7 @@ import { view, store } from "react-easy-state";
 import state from "../../store";
 import mainCorrCalcs from "./correlationsLogic/mainCorrCalcs";
 import ErrorNotification from "../Input/ErrorNotification";
+import calcMaxRespondentNameLength from "./calcMaxRespondentNameLength";
 
 const localStore = store({
   isCorrelationsButtonGreen: false
@@ -13,6 +14,7 @@ const handleClick = () => {
   const respondentNames = state.getState("respondentNames");
 
   if (respondentNames) {
+    calcMaxRespondentNameLength(respondentNames);
     const mainDataObject = state.getState("mainDataObject");
     const rawSortsArray = mainDataObject.map(item => item.rawSort);
     mainCorrCalcs(respondentNames, rawSortsArray);
