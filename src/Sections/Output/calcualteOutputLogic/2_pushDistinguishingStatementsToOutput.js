@@ -147,7 +147,7 @@ const pushDistinguishingStatementsToOutput = function(
 
           /* 
           begin comparisons
-           const lookupArray = [3.906, 3.481, 3.291, 2.807, 2.575, 1.96, 1.645, 1.44, 1.28];
+           const lookupArray = [3.891, 3.481, 3.291, 2.807, 2.575, 1.96, 1.645, 1.44, 1.28];
           
            const pValuesTextArray = [
             "P < 0.0001",
@@ -175,7 +175,7 @@ const pushDistinguishingStatementsToOutput = function(
           );
 
           // P < 0.0001 Level
-          if (testValue >= sedComparisonValue * 3.906) {
+          if (testValue >= sedComparisonValue * 3.891) {
             array0001.push(true);
           }
           // P < 0.0005 Level

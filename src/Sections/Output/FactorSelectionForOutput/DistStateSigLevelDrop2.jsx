@@ -141,7 +141,7 @@ const DropdownRow = styled.div`
 'Significance Threshold'
 https://www.slideshare.net/zoubamohamed/table-values
 
-99.99 = 3.906
+99.99 = 3.891
 99.9 = 3.291
 99 = 2.575
 95 = 1.96

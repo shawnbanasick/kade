@@ -8,7 +8,7 @@ import state from "../../../store";
 const sigOptions = [
   {
     key: "99.99",
-    value: 3.906,
+    value: 3.891,
     slice: 0,
     text: "p < 0.0001" // text: "99.99%"
   },
@@ -57,7 +57,7 @@ class SigLevelDropdown extends React.Component {
   handleChange(e, { value }) {
     const btnId = state.getState("outputButtonsArray");
     localStore.value = value;
-    const lookupArray = [3.906, 3.481, 3.291, 2.807, 2.575, 1.96, 1.645, 1.44];
+    const lookupArray = [3.891, 3.481, 3.291, 2.807, 2.575, 1.96, 1.645, 1.44];
     const pValuesTextArray = [
       "P < 0.0001",
       "P < 0.0005",
@@ -137,7 +137,7 @@ const DropdownRow = styled.div`
 'Significance Threshold'
 https://www.slideshare.net/zoubamohamed/table-values
 
-99.99 = 3.906
+99.99 = 3.891
 99.9 = 3.291
 99 = 2.575
 95 = 1.96
@@ -155,7 +155,7 @@ pqmethod = loading 'significant at p<.05'
 
 .67	1.28	1.65	1.96	2.33	2.58	2.81	3.10	3.30	3.49	3.73	3.91
 
-[3.906, 3.291, 2.575, 1.96, 1.645, 1.44]
+[3.891, 3.291, 2.575, 1.96, 1.645, 1.44]
 80 = 1.28
 
 

@@ -17,7 +17,7 @@ const autoFlagFactors = () => {
     // get data for current user selected significance level
     const userSelectedSigLevel = state.getState("userSelectedSigLevel");
     const lookupTable = {
-      3.906: "P < 0.0001",
+      3.891: "P < 0.0001",
       3.481: "P < 0.0005",
       3.291: "P < 0.001",
       2.807: "P < 0.005",

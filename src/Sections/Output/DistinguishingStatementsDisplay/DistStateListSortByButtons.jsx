@@ -120,7 +120,7 @@ export default view(DistStateListSortByButtons);
 
 /* 
           begin comparisons
-           const lookupArray = [3.906, 3.291, 2.575, 1.96, 1.645, 1.44, 1.28];
+           const lookupArray = [3.891, 3.291, 2.575, 1.96, 1.645, 1.44, 1.28];
           
            const pValuesTextArray = [
             "P < 0.0001",

@@ -7,7 +7,7 @@ import state from "../../../store";
 const sigOptions = [
   {
     key: "99.99",
-    value: 3.906,
+    value: 3.891,
     text: "P < 0.0001" // text: "99.99%"
   },
   {
@@ -93,7 +93,7 @@ export default view(SigLevelDropdown);
 'Significance Threshold'
 https://www.slideshare.net/zoubamohamed/table-values
 
-99.99 = 3.906
+99.99 = 3.891
 99.9 = 3.291
 99 = 2.575
 95 = 1.96

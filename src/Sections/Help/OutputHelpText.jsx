@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { view } from "react-easy-state";
 import styled from "styled-components";
-import OutputOptionsImage from './helpImages/OutputOptionsImage';
+import OutputOptionsImage from "./helpImages/OutputOptionsImage";
 
 class HelpSection extends Component {
   render() {
@@ -283,5 +283,6 @@ const MainContent = styled.div`
   user-select: all;
   background-color: white;
   padding: 50px;
+  padding-bottom: 150px;
   overflow: auto;
 `;
