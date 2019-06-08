@@ -24,14 +24,13 @@ export default function calculateCorrelations(rawSorts, respondentNames) {
 
   const calColMaxWidth2 = Math.max(...respondentNames.map( (el) => el.length));
   const calColMaxWidth = (calColMaxWidth2 * 9  );
-  console.log(calColMaxWidth);
   if (calColMaxWidth > colMaxWidth) {
     colMaxWidth = calColMaxWidth; 
   }
   if (calColMaxWidth > firstColMaxWidth) {
     firstColMaxWidth = calColMaxWidth;
   }
-
+  
 
   for (let i = 0; i < totalSorts; i += 1) {
     const pullX = rawSortsCloned[i];
@@ -60,7 +59,6 @@ export default function calculateCorrelations(rawSorts, respondentNames) {
     } // end of k loop
   } //  end of i loop
 
-  console.log(colMaxWidth);
 
   // generate row data for ag-grid corr table
   const gridRowData = [];
@@ -111,6 +109,7 @@ export default function calculateCorrelations(rawSorts, respondentNames) {
     gridColDefs,
     gridRowData,
     correlationTableArray: correlationTableArrayFormatted,
-    correlation5Calcs: correlationTableArray
+    correlation5Calcs: correlationTableArray,
+    respondentNamesMaxLength: firstColMaxWidth
   });
 }

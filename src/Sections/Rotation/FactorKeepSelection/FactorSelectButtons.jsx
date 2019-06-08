@@ -38,8 +38,6 @@ class FactorSelectionForOutputButtons extends React.Component {
   }
 
   handleSubmit() {
-    console.log("submitted");
-
     const numFactorsKept = state.getState("numFactorsKeptForRot");
     localStore.isActive = true;
     const projectHistoryText = `Selected ${numFactorsKept} factors for rotation`;
@@ -76,7 +74,6 @@ class FactorSelectionForOutputButtons extends React.Component {
     const value = event.target.value;
     const factor = event.target.id;
     clearAllButtons();
-    console.log(value);
     localStore[`${factor}Active`] = true;
 
     const userSelectedRotFactors = [];

@@ -8,7 +8,7 @@ import sortByFactorGroup from "../loadingsLogic/sortByFactorGroup";
 const loadingsTableDataPrep = numFactors => {
   // factorMatrix should be factors as rows - in Lipset => 9 cols, 7 -8 rows
   const factorMatrix1 = state.getState("factorMatrix");
-
+  const respondentNamesMaxLength = state.getState("respondentNamesMaxLength");
   const respondentNames = state.getState("respondentNames");
 
   // get matrix autoflag booleans
@@ -18,7 +18,7 @@ const loadingsTableDataPrep = numFactors => {
   const highlighting = state.getState("highlighting");
   const factorGroupings = sortByFactorGroup([...factorMatrix1], highlighting);
 
-  // set up Table Headers
+  // set up Table Headers 
   const tempRotFacStateArray = [];
   const gridColDefsLoadingsTable = [
     {
@@ -34,7 +34,7 @@ const loadingsTableDataPrep = numFactors => {
     {
       headerName: "Participant",
       field: "respondent",
-      width: 150,
+      width: respondentNamesMaxLength,
       pinned: true,
       editable: false,
       cellStyle: {
