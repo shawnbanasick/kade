@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { AgGridReact } from "ag-grid-react";
 import { view } from "react-easy-state";
+import state from "../../../../store";
 
 class RotationTable extends Component {
   onGridReady(params) {
@@ -9,11 +10,12 @@ class RotationTable extends Component {
   }
 
   render() {
+    const colMaxWidth = state.getState("colMaxWidth");
     const rowData = this.props.rowData;
     const colDefs = this.props.colDefs;
     const maxHeight = this.props.maxHeight;
 
-    let heightVal = rowData.length * 28 + 3;
+    let heightVal = rowData.length * 28 + 13;
 
     if (heightVal > maxHeight) {
       heightVal = maxHeight;
@@ -26,7 +28,7 @@ class RotationTable extends Component {
     const containerStyle = {
       marginTop: 10,
       height: heightVal,
-      width: 515
+      width: colMaxWidth + 375
     };
 
     return (

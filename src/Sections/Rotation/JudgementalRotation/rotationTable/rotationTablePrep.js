@@ -10,6 +10,8 @@ const rotationTablePrep = (d3RotChartData, baselineData) => {
   const factorAchng = `Chg. ${minFac}`;
   const factorBchng = `Chg. ${maxFac}`;
 
+  const colMaxWidth = state.getState("colMaxWidth");
+
   const rotColDefsFactorTable = [
     {
       headerName: "N.",
@@ -26,7 +28,7 @@ const rotationTablePrep = (d3RotChartData, baselineData) => {
       field: "respondent",
       pinned: true,
       editable: false,
-      width: 130,
+      width: colMaxWidth,
       cellStyle: {
         textAlign: "center"
       }
