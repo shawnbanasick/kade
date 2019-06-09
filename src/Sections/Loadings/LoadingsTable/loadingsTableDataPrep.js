@@ -34,7 +34,7 @@ const loadingsTableDataPrep = numFactors => {
     {
       headerName: "Participant",
       field: "respondent",
-      width: respondentNamesMaxLength,
+      width: 170,
       pinned: true,
       editable: false,
       cellStyle: {
@@ -133,7 +133,7 @@ const loadingsTableDataPrep = numFactors => {
   }
 
   // to default order chart by highest factor loading
-  gridRowDataLoadingsTable.sort((a, b) => a.defaultSort - b.defaultSort);
+  gridRowDataLoadingsTable.sort((a, b) => a.defaultSort - b.defaultSort); 
 
   state.setState({
     gridColDefsLoadingsTable,

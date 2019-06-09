@@ -41,11 +41,7 @@ const filterArray = item => {
 };
 
 function getWidth(numFacsForTableWidth) {
-  const respondentNamesMaxLength = state.getState("respondentNamesMaxLength");
-  // + 10 to prevent scroll
-  let tableWidth =
-    respondentNamesMaxLength + 140 + 15 + 145 * numFacsForTableWidth;
-  // let x = window.innerWidth - 50 - 152;
+  let tableWidth = 310 + 15 + 145 * numFacsForTableWidth;
   let windowWidth = window.innerWidth - 205;
 
   if (windowWidth < tableWidth) {
