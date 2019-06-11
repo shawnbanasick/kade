@@ -1,17 +1,39 @@
 import { view } from "react-easy-state";
 import React, { Component } from "react";
 import styled, { keyframes } from "styled-components";
-import state from '../../store';
+import state from "../../store";
 
-function handleClick() {
-}
+const { net } = require("electron").remote;
+
+const array = [];
+const request = net.request(
+  "https://raw.githubusercontent.com/shawnbanasick/kade/master/version.json"
+);
+request.on("response", response => {
+  console.log(`STATUS: ${response.statusCode}`);
+  response.on("data", chunk => {
+    console.log(`BODY: ${chunk}`);
+    const value = JSON.parse(chunk);
+    array.push(value);
+  });
+  // response.on("end", () => {
+  //   string.toString();
+  //   console.log(string);
+  //   console.log("ended");
+  // });
+});
+request.end();
+
+console.log(array);
+
+function handleClick() {}
 
 class Start extends Component {
   render() {
     const version = `version ${state.getState("version")}`;
     return (
       <MainContent>
-        { /* <LanguageSelection>{`${width} x ${height}`}</LanguageSelection> */ }
+        {/* <LanguageSelection>{`${width} x ${height}`}</LanguageSelection> */}
         <TitleDiv>KADE</TitleDiv>
         <SutTitleDivContainer>
           <SubTitleDiv>
@@ -25,36 +47,51 @@ class Start extends Component {
             dition
           </SubTitleDiv>
         </SutTitleDivContainer>
-        <SubTitleDiv2>
-          { version }
-        </SubTitleDiv2>
+        <SubTitleDiv2>{version}</SubTitleDiv2>
         <WebLinkRow>
           <h1>web links:</h1>
-          <hr style={ { width: "700px" } } />
+          <hr style={{ width: "700px" }} />
         </WebLinkRow>
-        <WebLinkDiv1 onClick={ handleClick }>
-          <StyledAnchor target="_blank" rel="noopener noreferrer" href="https://github.com/shawnbanasick/kade">
+        <WebLinkDiv1 onClick={handleClick}>
+          <StyledAnchor
+            target="_blank"
+            rel="noopener noreferrer"
+            href="https://github.com/shawnbanasick/kade"
+          >
             KADE
-            <br/>Home Page
+            <br />
+            Home Page
           </StyledAnchor>
         </WebLinkDiv1>
         <WebLinkDiv2>
-          <StyledAnchor target="_blank" rel="noopener noreferrer" href="https://github.com/shawnbanasick/kade/wiki">
+          <StyledAnchor
+            target="_blank"
+            rel="noopener noreferrer"
+            href="https://github.com/shawnbanasick/kade/wiki"
+          >
             KADE User Manual
           </StyledAnchor>
         </WebLinkDiv2>
         <WebLinkDiv3>
-          <StyledAnchor target="_blank" rel="noopener noreferrer" href="https://shawnBanasick.github.io/ken-q-analysis/index.html">
+          <StyledAnchor
+            target="_blank"
+            rel="noopener noreferrer"
+            href="https://shawnBanasick.github.io/ken-q-analysis/index.html"
+          >
             Ken-Q Analysis Web Application
           </StyledAnchor>
         </WebLinkDiv3>
         <WebLinkDiv4>
-          <StyledAnchor target="_blank" rel="noopener noreferrer" href="https://shawnbanasick.github.io/ken-q-data/index.html">
+          <StyledAnchor
+            target="_blank"
+            rel="noopener noreferrer"
+            href="https://shawnbanasick.github.io/ken-q-data/index.html"
+          >
             Ken-Q Data
           </StyledAnchor>
         </WebLinkDiv4>
       </MainContent>
-      );
+    );
   }
 }
 
@@ -134,7 +171,7 @@ const SutTitleDivContainer = styled.div`
   align-items: center;
   height: 66px;
   width: 700px;
-  background-color: rgba(144,	238, 144, .6);
+  background-color: rgba(144, 238, 144, 0.6);
   margin: 25px;
   padding-top: 8px;
   padding-left: 25px;
