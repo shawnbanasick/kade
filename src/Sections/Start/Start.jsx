@@ -3,7 +3,9 @@ import React, { Component } from "react";
 import styled, { keyframes } from "styled-components";
 import state from "../../store";
 
-function handleClick() {}
+const handleClick = id => {
+  document.getElementById(id).click();
+};
 
 class Start extends Component {
   render() {
@@ -26,11 +28,12 @@ class Start extends Component {
         </SutTitleDivContainer>
         <SubTitleDiv2>{version}</SubTitleDiv2>
         <WebLinkRow>
-          <h1>web links:</h1>
+          <h1>web links</h1>
           <hr style={{ width: "700px" }} />
         </WebLinkRow>
-        <WebLinkDiv1 onClick={handleClick}>
+        <WebLinkDiv1 onClick={() => handleClick("kadeLink")}>
           <StyledAnchor
+            id="kadeLink"
             target="_blank"
             rel="noopener noreferrer"
             href="https://github.com/shawnbanasick/kade"
@@ -40,8 +43,9 @@ class Start extends Component {
             Home Page
           </StyledAnchor>
         </WebLinkDiv1>
-        <WebLinkDiv2>
+        <WebLinkDiv2 onClick={() => handleClick("kadeWikiLink")}>
           <StyledAnchor
+            id="kadeWikiLink"
             target="_blank"
             rel="noopener noreferrer"
             href="https://github.com/shawnbanasick/kade/wiki"
@@ -49,8 +53,9 @@ class Start extends Component {
             KADE User Manual
           </StyledAnchor>
         </WebLinkDiv2>
-        <WebLinkDiv3>
+        <WebLinkDiv3 onClick={() => handleClick("kenqWebLink")}>
           <StyledAnchor
+            id="kenqWebLink"
             target="_blank"
             rel="noopener noreferrer"
             href="https://shawnBanasick.github.io/ken-q-analysis/index.html"
@@ -58,8 +63,9 @@ class Start extends Component {
             Ken-Q Analysis Web Application
           </StyledAnchor>
         </WebLinkDiv3>
-        <WebLinkDiv4>
+        <WebLinkDiv4 onClick={() => handleClick("kenqDataLink")}>
           <StyledAnchor
+            id="kenqDataLink"
             target="_blank"
             rel="noopener noreferrer"
             href="https://shawnbanasick.github.io/ken-q-data/index.html"
