@@ -3,37 +3,10 @@ import React, { Component } from "react";
 import styled, { keyframes } from "styled-components";
 import state from "../../store";
 
-// import fetch from "electron-fetch";
-
-// const { net } = require("electron").remote;
-
-// const array = [];
-// const request = net.request(
-//   "https://raw.githubusercontent.com/shawnbanasick/kade/master/version.json"
-// );
-// request.on("response", response => {
-//   console.log(`STATUS: ${response.statusCode}`);
-//   response.on("data", chunk => {
-//     console.log(`BODY: ${chunk}`);
-//     const value = JSON.parse(chunk);
-//     array.push(value);
-//   });
-//   response.on("end", () => {
-//     string.toString();
-//     console.log(string);
-//     console.log("ended");
-//   });
-// });
-// request.end();
-
-// console.log(array);
-
 function handleClick() {}
 
 class Start extends Component {
   render() {
-    const releaseVersion = state.getState("releaseVersion");
-    console.log(releaseVersion);
     const version = `version ${state.getState("version")}`;
     return (
       <MainContent>

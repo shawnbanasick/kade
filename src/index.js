@@ -3,7 +3,7 @@
 
 //
 
-import { app, Menu, dialog, net } from "electron";
+import { app, Menu, dialog } from "electron";
 import { enableLiveReload } from "electron-compile";
 import * as Splashscreen from "@trodi/electron-splashscreen";
 import * as path from "path";
@@ -283,7 +283,7 @@ app.on("ready", () => {
       const temp = json.releaseVersion;
       setTimeout(() => {
         mainWindow.webContents.send("update-required", temp);
-      }, 5000);
+      }, 10000);
     });
 });
 

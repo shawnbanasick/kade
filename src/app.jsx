@@ -1,4 +1,5 @@
 import React from "react";
+import { ipcRenderer } from "electron";
 import { view, store } from "react-easy-state";
 import styled, { css } from "styled-components";
 import state from "./store";
@@ -16,10 +17,23 @@ import Attribution from "./Sections/Attribution/Attribution";
 import Correlations from "./Sections/Correlations/Correlations";
 import ClearProject from "./Sections/ClearProject/ClearProject";
 import ProjectHistory from "./Sections/ProjectHistory/ProjectHistory";
-import { ipcRenderer } from "electron";
 
-ipcRenderer.on("update-required", (event, bool) => {
-  console.log(bool);
+const handleClickUpdate = () => {
+  document.getElementById("updateButton").click();
+};
+
+ipcRenderer.on("update-required", (event, latestVersion) => {
+  const currentVersion = state.getState("version");
+  if (currentVersion !== latestVersion) {
+    console.log(`Update available (${latestVersion})`);
+    const showUpdateNotification = true;
+    state.setState({ latestVersion, showUpdateNotification });
+  } else {
+    console.log("you're up to date!");
+
+    const showUpdateNotification = true;
+    state.setState({ latestVersion, showUpdateNotification });
+  }
 });
 
 window.onerror = function(errorMsg, url, lineNumber, column, error) {
@@ -85,6 +99,7 @@ class App extends React.Component {
       viewLicense: false,
       viewHelp: false,
       viewAttribution: false,
+      viewUpdataNotification: false,
       activeWindow: "viewStart"
     });
 
@@ -112,12 +127,14 @@ class App extends React.Component {
       viewProjectHistory,
       viewHelp,
       viewAttribution,
-      viewLicense
+      viewLicense,
+      viewUpdataNotification
     } = this.localState;
     const {
       isForcedQsortPattern,
       isDataButtonGreen,
-      hasUnforcedBeenConfirmed
+      hasUnforcedBeenConfirmed,
+      showUpdateNotification
     } = state;
 
     const inputButtonColor = state.getState("isInputButtonGreen")
@@ -143,6 +160,9 @@ class App extends React.Component {
     if (process.platform === "darwin") {
       showTopBar = true;
     }
+
+    const latestVersion = state.getState("latestVersion");
+    const updateMessage = `Update available      (${latestVersion})`;
 
     return (
       <AppWrap active={showTopBar}>
@@ -239,6 +259,19 @@ class App extends React.Component {
                   <br /> License
                 </p>
               </FileButton>
+              {showUpdateNotification && (
+                <UpdateButton onClick={handleClickUpdate}>
+                  <StyledAnchor
+                    id="updateButton"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    href="https://github.com/shawnbanasick/kade"
+                    className="title"
+                  >
+                    {updateMessage}
+                  </StyledAnchor>
+                </UpdateButton>
+              )}
             </FilesWindow>
             <ActionWindow>
               {viewStart && <Start view={viewStart} />}
@@ -339,6 +372,50 @@ const FileButton = styled.button`
   &:hover {
     opacity: 1;
     border-left: solid 8px #d6dbe0;
+    background-color: white;
+  }
+
+  ${({ active }) =>
+    active &&
+    `
+    background-color: white;
+    opacity: 1;
+    border-left: solid 8px #d6dbe0;
+    `};
+
+  .title {
+    font-weight: bold;
+    font-size: 0.9rem;
+    margin: 0 0 5px;
+    color: black;
+  }
+`;
+
+const StyledAnchor = styled.a`
+  color: black;
+
+  &:hover {
+    color: black;
+  }
+`;
+
+const UpdateButton = styled.button`
+  padding: 10px;
+  padding-bottom: 8px;
+  padding-top: 15px;
+  width: 100%;
+  background: orange !important;
+  opacity: 0.6;
+  color: black;
+  border: none;
+  text-align: left;
+  border-bottom: solid 1px #302b3a;
+  transition: 0.3s ease all;
+  outline: none !important;
+  user-select: none;
+
+  &:hover {
+    opacity: 1;
     background-color: white;
   }
 
