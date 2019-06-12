@@ -3,28 +3,28 @@ import React, { Component } from "react";
 import styled, { keyframes } from "styled-components";
 import state from "../../store";
 
-const { net } = require("electron").remote;
+// const { net } = require("electron").remote;
 
-const array = [];
-const request = net.request(
-  "https://raw.githubusercontent.com/shawnbanasick/kade/master/version.json"
-);
-request.on("response", response => {
-  console.log(`STATUS: ${response.statusCode}`);
-  response.on("data", chunk => {
-    console.log(`BODY: ${chunk}`);
-    const value = JSON.parse(chunk);
-    array.push(value);
-  });
-  // response.on("end", () => {
-  //   string.toString();
-  //   console.log(string);
-  //   console.log("ended");
-  // });
-});
-request.end();
+// const array = [];
+// const request = net.request(
+//   "https://raw.githubusercontent.com/shawnbanasick/kade/master/version.json"
+// );
+// request.on("response", response => {
+//   console.log(`STATUS: ${response.statusCode}`);
+//   response.on("data", chunk => {
+//     console.log(`BODY: ${chunk}`);
+//     const value = JSON.parse(chunk);
+//     array.push(value);
+//   });
+//   response.on("end", () => {
+//     string.toString();
+//     console.log(string);
+//     console.log("ended");
+//   });
+// });
+// request.end();
 
-console.log(array);
+// console.log(array);
 
 function handleClick() {}
 

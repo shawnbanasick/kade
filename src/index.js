@@ -1,12 +1,15 @@
 // require('electron-react-devtools').install();
 // localStorage.debug = 'worker:*'
 
-// 
+//
 
-import { app, Menu, dialog } from "electron";
+import { app, Menu, dialog, net } from "electron";
 import { enableLiveReload } from "electron-compile";
 import * as Splashscreen from "@trodi/electron-splashscreen";
 import * as path from "path";
+
+// const { net } = require("electron").remote;
+
 // import * as url from "url";
 
 // npm install lru-cache first
@@ -58,7 +61,7 @@ const createWindow = async () => {
     width: 1170, // 980,  1366  (old - 1100)
     height: 750, // 750,  768
     titleBarStyle: "hidden",
-    backgroundColor: "#FFFF",
+    backgroundColor: "#FFFF"
   };
 
   // todo - check linux icon settings - icon:path
@@ -83,7 +86,6 @@ const createWindow = async () => {
     e.preventDefault();
     require("electron").shell.openExternal(url);
   });
-
 
   const template = [
     {
@@ -151,7 +153,8 @@ const createWindow = async () => {
       submenu: [
         {
           label: "User Guide",
-          accelerator: process.platform === "darwin" ? "Alt+Cmd+U" : "Ctrl+Shift+U",
+          accelerator:
+            process.platform === "darwin" ? "Alt+Cmd+U" : "Ctrl+Shift+U",
           click() {
             require("electron").shell.openExternal(
               "https://github.com/shawnbanasick/kade/wiki"
@@ -244,33 +247,58 @@ const createWindow = async () => {
     mainWindow = null;
   });
 
-
-  mainWindow.on('close', (e) => {
+  mainWindow.on("close", e => {
     if (app.showExitPrompt) {
-      e.preventDefault() // Prevents the window from closing 
-      dialog.showMessageBox({
-        type: 'question',
-        buttons: ['Yes', 'No'],
-        title: 'Confirm',
-        message: 'Are you sure you want to quit?'
-      }, (response) => {
-        if (response === 0) { // Runs the following if 'Yes' is clicked
-          app.showExitPrompt = false
-          mainWindow.close()
+      e.preventDefault(); // Prevents the window from closing
+      dialog.showMessageBox(
+        {
+          type: "question",
+          buttons: ["Yes", "No"],
+          title: "Confirm",
+          message: "Are you sure you want to quit?"
+        },
+        response => {
+          if (response === 0) {
+            // Runs the following if 'Yes' is clicked
+            app.showExitPrompt = false;
+            mainWindow.close();
+          }
         }
-      })
+      );
     }
   });
 };
 
-
-
-
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
-app.on("ready", createWindow);
+app.on("ready", () => {
+  createWindow();
 
+  let body = "";
+
+  const array = [];
+  const request = net.request(
+    "https://raw.githubusercontent.com/shawnbanasick/kade/master/version.json"
+  );
+  request.on("response", response => {
+    console.log(`STATUS: ${response.statusCode}`);
+    response.on("data", chunk => {
+      console.log(`BODY: ${chunk}`);
+      body += chunk.toString();
+      // const value = JSON.parse(chunk);
+      array.push(`${chunk}`);
+    });
+    response.on("end", () => {
+      // string.toString();
+      console.log(body);
+      console.log("ended");
+    });
+  });
+  request.end();
+
+  console.log(`aray: ${array}`);
+});
 // Quit when all windows are closed.
 app.on("window-all-closed", () => {
   // On OS X it is common for applications and their menu bar
@@ -305,8 +333,6 @@ app.on("activate", () => {
 //     }
 //   });
 // });
-
-
 
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and import them here.
