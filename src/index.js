@@ -7,8 +7,7 @@ import { app, Menu, dialog, net } from "electron";
 import { enableLiveReload } from "electron-compile";
 import * as Splashscreen from "@trodi/electron-splashscreen";
 import * as path from "path";
-
-// const { net } = require("electron").remote;
+import fetch from "electron-fetch";
 
 // import * as url from "url";
 
@@ -275,30 +274,19 @@ const createWindow = async () => {
 app.on("ready", () => {
   createWindow();
 
-  let body = "";
-
-  const array = [];
-  const request = net.request(
+  fetch(
     "https://raw.githubusercontent.com/shawnbanasick/kade/master/version.json"
-  );
-  request.on("response", response => {
-    console.log(`STATUS: ${response.statusCode}`);
-    response.on("data", chunk => {
-      console.log(`BODY: ${chunk}`);
-      body += chunk.toString();
-      // const value = JSON.parse(chunk);
-      array.push(`${chunk}`);
+  )
+    .then(res => res.json())
+    .then(json => {
+      console.log("match");
+      const temp = json.releaseVersion;
+      setTimeout(() => {
+        mainWindow.webContents.send("update-required", temp);
+      }, 5000);
     });
-    response.on("end", () => {
-      // string.toString();
-      console.log(body);
-      console.log("ended");
-    });
-  });
-  request.end();
-
-  console.log(`aray: ${array}`);
 });
+
 // Quit when all windows are closed.
 app.on("window-all-closed", () => {
   // On OS X it is common for applications and their menu bar
