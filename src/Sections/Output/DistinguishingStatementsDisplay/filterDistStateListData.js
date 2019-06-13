@@ -22,7 +22,7 @@ const filterDistStateListData = (thresholdLevel, sortKey) => {
     for (let i = 0; i < distStateListData.length; i++) {
       distStateListData[i].distStates.sort((a, b) => {
         if (a.sigLevelRank === b.sigLevelRank) {
-          return a.factorNum - b.factorNum;
+          return a.zScore - b.zScore;
         } else if (a.sigLevelRank > b.sigLevelRank) {
           return -1;
         } else if (a.sigLevelRank < b.sigLevelRank) {
