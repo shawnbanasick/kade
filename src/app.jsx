@@ -23,6 +23,7 @@ const handleClickUpdate = () => {
 };
 
 ipcRenderer.on("update-required", (event, latestVersion) => {
+  console.log(latestVersion);
   const currentVersion = state.getState("version");
   if (currentVersion === latestVersion) {
     console.log("application is up to date");

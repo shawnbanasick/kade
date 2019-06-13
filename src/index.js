@@ -284,7 +284,8 @@ app.on("ready", () => {
       setTimeout(() => {
         mainWindow.webContents.send("update-required", temp);
       }, 10000);
-    });
+    })
+    .catch(err => console.error(err));
 });
 
 // Quit when all windows are closed.
