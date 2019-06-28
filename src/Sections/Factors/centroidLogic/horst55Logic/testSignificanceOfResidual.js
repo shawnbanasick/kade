@@ -15,7 +15,7 @@ const testSignificanceOfResidual = (rMatrix, N) => {
     }
     AVRGS = (2 * S) / (N * (N - 1));
   }
-  return [D, AVRGS];
+  return [D, AVRGS, S];
 };
 export default testSignificanceOfResidual;
 

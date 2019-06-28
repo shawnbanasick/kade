@@ -19,7 +19,8 @@ const centroidDispatch = numFactors => {
   const numCentroidFactors = state.getState("numCentroidFactors");
   const factorMatrix = [];
 
-  calculateHorst55Centroids(numFactors, dataArray);
+  const STPCRT = true;
+  calculateHorst55Centroids(numFactors, dataArray, STPCRT);
 
   for (let i = 0; i < numFactors; i += 1) {
     const tempArray = calculateFactorLoadings(dataArray);
