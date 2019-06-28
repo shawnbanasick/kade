@@ -8,6 +8,7 @@ import factorTableDataPrep from "../FactorTable/factorTableDataPrep";
 import calcEigenCumulPercentArray from "../PcaLogic/calcEigenCumulPercentArray";
 import factorTableEigenDataPrep from "../FactorTableEigen/FactorTableEigenDataPrep";
 import calculateCommunalities from "../../Rotation/varimaxLogic/2calculateCommunalities";
+import calculateHorst55Centroids from "./horst55Logic/calculateHorst55Centroids";
 
 // todo - make the centroid dropdown list dynamic in case only few sorts - not
 // enough for all 7 factors
@@ -17,6 +18,8 @@ const centroidDispatch = numFactors => {
   const projectHistoryArray = state.getState("projectHistoryArray");
   const numCentroidFactors = state.getState("numCentroidFactors");
   const factorMatrix = [];
+
+  calculateHorst55Centroids(numFactors, dataArray);
 
   for (let i = 0; i < numFactors; i += 1) {
     const tempArray = calculateFactorLoadings(dataArray);
