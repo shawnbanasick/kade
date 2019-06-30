@@ -4,15 +4,26 @@
 <img style="float: left;" src="https://github.com/shawnbanasick/kade/blob/master/gifs/heroImage3.png" height="125"/>  
 
 <strong>Download Links:</strong> &nbsp; 
-[macOS](https://github.com/shawnbanasick/kade/releases/download/v1.0.1/KADE-1.0.1.dmg) &nbsp;||&nbsp;
-[Windows-installer](https://github.com/shawnbanasick/kade/releases/download/v1.0.1/KADE.Setup.1.0.1.exe) &nbsp;||&nbsp;
-[Windows-portable](https://github.com/shawnbanasick/kade/releases/download/v1.0.1/KADE.1.0.1.exe) &nbsp;||&nbsp;
-[Linux 32-bit](https://github.com/shawnbanasick/kade/releases/download/v1.0.1/kade-1.0.1-i386.AppImage) &nbsp;||&nbsp;
-[Linux 64-bit](https://github.com/shawnbanasick/kade/releases/download/v1.0.1/kade-1.0.1-x86_64.AppImage)<br/>
+[macOS](https://github.com/shawnbanasick/kade/releases/download/v1.1.0/KADE-1.1.0.dmg) &nbsp;||&nbsp;
+[Windows-installer](https://github.com/shawnbanasick/kade/releases/download/v1.1.0/KADE.Setup.1.1.0.exe) &nbsp;||&nbsp;
+[Windows-portable](https://github.com/shawnbanasick/kade/releases/download/v1.1.0/KADE.1.1.0.exe) &nbsp;||&nbsp;
+[Linux 32-bit](https://github.com/shawnbanasick/kade/releases/download/v1.1.0/kade-1.1.0-i386.AppImage) &nbsp;||&nbsp;
+[Linux 64-bit](https://github.com/shawnbanasick/kade/releases/download/v1.1.0/kade-1.1.0.AppImage)<br/>
 
 <strong>(See installation instructions below.)</strong>
 
 KenQ Analysis Desktop Edition (KADE) is a desktop application for the analysis of Q methodology data which operates with full functionality on Microsoft Windows, Apple macOS, and Linux operating systems. It has a graphic user interface that makes it easy to use for students or for researchers with a background mainly in qualitative methods. Installation is not required for use; KADE is portable and can be run from a usb flash drive. It includes a variety of interactive visualization tools to explore and analyze Q methodological data.
+
+<br/>
+
+## Change Log
+The current version is 1.1.0 (released June 30, 2019). 
+New features in this version include:
+* user-selectable distinguishing / consensus statement threshold levels 
+* interactive distinguishing statement list
+* expanded options for auto-flagging factor loadings
+* "Update available" in-app notification
+
 <br/>
 
 ## Reference Guide
