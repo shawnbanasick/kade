@@ -19,6 +19,11 @@ KenQ Analysis Desktop Edition (KADE) is a desktop application for the analysis o
 
 A reference guide and FAQs for each section are available [here.](https://github.com/shawnbanasick/kade/wiki)
 
+<br />
+
+## KADE and PQMethod
+Comparisons of KADE and PQMethod results are available [here.](https://github.com/shawnbanasick/kade/wiki/KADE-and-PQMethod)
+
 <br/>
 
 ## Start to Finish Demonstration
