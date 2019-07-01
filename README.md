@@ -111,6 +111,14 @@ The application is packaged as an "AppImage" so it can be installed on most of t
 <br/>
 <br/>
 
+## Updates
+I have not integrated automatic updating functions into the application. To update you should uninstall the old version, then download and install the new version.
+
+## Uninstallation Instructions
+* In Windows, click the "Start" button, then click "Settings", "Apps", "KADE", and select "uninstall"
+* In macOS, use Finder to go to the "applications" folder and delete the KADE application
+* In Linux, locate the AppImage file of the old version and delete it.
+
 ## Contributions and Problems
 If you discover a problem with the software or want to make a feature request, please describe it on the issue tracker - https://github.com/shawnbanasick/kade/issues. Contributions are welcome. Make a pull request.
 
