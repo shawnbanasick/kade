@@ -112,7 +112,7 @@ The application is packaged as an "AppImage" so it can be installed on most of t
 <br/>
 
 ## Updates
-I have not integrated automatic updating functions into the application. To update you should uninstall the old version, then download and install the new version.
+I have not integrated automatic updating functions into the application. To update you need to uninstall the old version, then download and install the new version.
 
 ## Uninstallation Instructions
 * In Windows, click the "Start" button, then click "Settings", "Apps", "KADE", and select "uninstall"
