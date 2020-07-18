@@ -1,0 +1,18 @@
+.outputFactorTables {
+    margin-top: 50px;
+    display: flex;
+    flex-direction: column;
+}
+
+.outputFactorTablesSpan2 {
+    text-align: left;
+    margin-bottom: 5px;
+    font-size: 16px;
+    line-height: 18px;
+}
+
+.outputFactorTablesSpan3 {
+    text-align: left;
+    font-size: 26px;
+    margin-bottom: 5px;
+}
