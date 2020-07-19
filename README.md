@@ -1,7 +1,7 @@
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 [![DOI](http://joss.theoj.org/papers/10.21105/joss.01360/status.svg)](https://doi.org/10.21105/joss.01360)
 
-<img style="float: left;" src="https://github.com/shawnbanasick/kade/blob/master/gifs/heroImage3.png" height="125"/>  
+<img style="float: left;" src="https://github.com/shawnbanasick/kade/blob/master/gifs/kade-hero-image.png" height="125"/>  
 
 <strong>Download Links:</strong> &nbsp; 
 [macOS](https://github.com/shawnbanasick/kade/releases/download/v1.1.0/KADE-1.1.0.dmg) &nbsp;||&nbsp;
