@@ -72,7 +72,7 @@ Comparisons of KADE and PQMethod results are available [here.](https://github.co
 #### I haven't certified the application with Microsoft, so it will give a warning on first start-up.
 &nbsp;&nbsp;&nbsp;1. Double click the downloaded file.
 
-&nbsp;&nbsp;&nbsp;2. In the Windows warning box, click "More info".
+&nbsp;&nbsp;&nbsp;2. In the Windows warning box, click the "More info" link in the text at the top of the warning box.
 <br/>
 <p align="center">
 <img src="https://github.com/shawnbanasick/kade/blob/master/gifs/winWarn.PNG" width="350" />
