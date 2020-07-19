@@ -110,7 +110,7 @@ Comparisons of KADE and PQMethod results are available [here.](https://github.co
 <br/>
 </p>
 
-#### In this case, to allow installation you will need to reset your security settings to the defaults:
+#### In this case, to open KADE you will need to reset your security settings to the defaults:
 &nbsp;&nbsp;&nbsp;1. Open "System Preferences"
 
 &nbsp;&nbsp;&nbsp;2. Click "Security & Privacy"
