@@ -6,11 +6,10 @@
 </p>
 
 <strong>Download Links:</strong> &nbsp; 
-[macOS](https://github.com/shawnbanasick/kade/releases/download/v1.1.0/KADE-1.1.0.dmg) &nbsp;||&nbsp;
-[Windows-installer](https://github.com/shawnbanasick/kade/releases/download/v1.1.0/KADE.Setup.1.1.0.exe) &nbsp;||&nbsp;
-[Windows-portable](https://github.com/shawnbanasick/kade/releases/download/v1.1.0/KADE.1.1.0.exe) &nbsp;||&nbsp;
-[Linux 32-bit](https://github.com/shawnbanasick/kade/releases/download/v1.1.0/KADE.1.1.0.i386.AppImage) &nbsp;||&nbsp;
-[Linux 64-bit](https://github.com/shawnbanasick/kade/releases/download/v1.1.0/KADE.1.1.0.AppImage)<br/>
+[macOS](https://github.com/shawnbanasick/kade/releases/download/v1.2.0/KADE-1.2.0.dmg) &nbsp;||&nbsp;
+[Windows-installer](https://github.com/shawnbanasick/kade/releases/download/v1.2.0/kade.Setup.1.2.0.exe) &nbsp;||&nbsp;
+[Windows-portable](https://github.com/shawnbanasick/kade/releases/download/v1.2.0/kade.1.2.0.exe) &nbsp;||&nbsp;
+[Linux](https://github.com/shawnbanasick/kade/releases/download/v1.2.0/) <br/>
 
 <strong>(See installation instructions below.)</strong>
 
