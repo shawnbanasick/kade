@@ -38,7 +38,7 @@ Comparisons of KADE and PQMethod results are available [here.](https://github.co
 <br/>
 
 ## Start to Finish Demonstration
-<img src="https://github.com/shawnbanasick/kade/blob/master/gifs/KADE overview.gif" width="500" />
+<img src="https://github.com/shawnbanasick/kade/blob/master/gifs/kade_overview_1-2-0.gif" width="500" />
 
 1. Click the "1. Input" navigation button.
 2. Click the "Demo Data" tab.
