@@ -68,34 +68,58 @@ Comparisons of KADE and PQMethod results are available [here.](https://github.co
 
 ## Installation Instructions - Microsoft Windows
 ### I haven't certified the application with Microsoft, so it will give a warning on first start-up.
-1. Double click the downloaded file.
-2. In the Windows warning box, click "More info".
+&nbsp;&nbsp;&nbsp;1. Double click the downloaded file.
+
+&nbsp;&nbsp;&nbsp;2. In the Windows warning box, click "More info".
+<br/>
 <img src="https://github.com/shawnbanasick/kade/blob/master/gifs/winWarn.PNG" width="350" />
+<br/>
 &nbsp;&nbsp;&nbsp;3. Click "Run Anyway"
+<br/>
 <img src="https://github.com/shawnbanasick/kade/blob/master/gifs/winOpen.PNG" width="350">
 
 <br/>
 <br/>
 
 ## Installation Instructions - Apple macOS
-### I haven't certified the application with Apple, so it will give you a warning on first start-up.
+### KADE can be installed following the normal process for macOS.
 
-<img src="https://github.com/shawnbanasick/kade/blob/master/gifs/macWarn.png" width="350">
-<br/>
-
-### To avoid this warning, follow these steps to install:
-
-1. Double click the downloaded file.
-2. Click and drag the Kade.app icon into the applications folder.
+<p align="center">
 <img src="https://github.com/shawnbanasick/kade/blob/master/gifs/iconDrag.png" width="350" />
-&nbsp;&nbsp;&nbsp;3. Using Finder, navigate to your Applications folder.<br/>
-&nbsp;&nbsp;&nbsp;4. RIGHT click on the Kade.app in Finder.<br/>
-&nbsp;&nbsp;&nbsp;5. Select "Open" in the list that appears.
-<img src="https://github.com/shawnbanasick/kade/blob/master/gifs/openSelect.png" width="350" />
-&nbsp;&nbsp;&nbsp;6. Click the "Open" button.
-<img src="https://github.com/shawnbanasick/kade/blob/master/gifs/openButtonMac.png" width="350" />
-This process is only required the first time the application is started. After the first time, the application will start normally.
+</p>
 
+&nbsp;&nbsp;&nbsp;1. Double click the downloaded file.
+
+&nbsp;&nbsp;&nbsp;2. Click and drag the KADE.app icon into the applications folder.
+
+
+### Version 1.2.0 is code signed and notarized by Apple, so there will be only one warning on the first startup after installation.
+<p align="center">
+<img src="https://github.com/shawnbanasick/kade/blob/master/gifs/macOS warning.png" width="350">
+<br/>
+</p>
+
+### If you have changed your default settings, you may get this warning:
+<p align="center">
+<img src="https://github.com/shawnbanasick/kade/blob/master/gifs/macos-catalina-alert-not-app-store.jpg" width="350">
+<br/>
+</p>
+
+### In this case, to allow installation you will need to reset your security settings to the defaults:
+&nbsp;&nbsp;&nbsp;1. Open "System Preferences"
+
+&nbsp;&nbsp;&nbsp;2. Click "Security & Privacy"
+
+&nbsp;&nbsp;&nbsp;3. Click "General"
+
+&nbsp;&nbsp;&nbsp;4. Click the lock in the bottom left and enter your password
+
+&nbsp;&nbsp;&nbsp;5. Under "Allow apps downloaded from:", select "App Store and identified developers"
+
+<p align="center">
+<img src="https://github.com/shawnbanasick/kade/blob/master/gifs/macos-mojave-system-preferences-security-general-require-disable-dark.jpg" width="350">
+<br/>
+</p>
 <br/>
 <br/>
 
