@@ -18,7 +18,7 @@ KenQ Analysis Desktop Edition (KADE) is a desktop application for the analysis o
 <br/>
 
 ## Change Log
-The current version is 1.1.0 (released June 30, 2019). 
+The current version is 1.2.0 (released July 19, 2020). 
 New features in this version include:
 * user-selectable distinguishing / consensus statement threshold levels 
 * interactive distinguishing statement list
