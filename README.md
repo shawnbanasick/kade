@@ -40,7 +40,9 @@ Comparisons of KADE and PQMethod results are available [here.](https://github.co
 <br/>
 
 ## Start to Finish Demonstration
+<p align="center">
 <img src="https://github.com/shawnbanasick/kade/blob/master/gifs/kade_overview_1-2-0.gif" width="500" />
+<p>
 
 1. Click the "1. Input" navigation button.
 2. Click the "Demo Data" tab.
@@ -67,22 +69,25 @@ Comparisons of KADE and PQMethod results are available [here.](https://github.co
 <br/>
 
 ## Installation Instructions - Microsoft Windows
-### I haven't certified the application with Microsoft, so it will give a warning on first start-up.
+#### I haven't certified the application with Microsoft, so it will give a warning on first start-up.
 &nbsp;&nbsp;&nbsp;1. Double click the downloaded file.
 
 &nbsp;&nbsp;&nbsp;2. In the Windows warning box, click "More info".
 <br/>
+<p align="center">
 <img src="https://github.com/shawnbanasick/kade/blob/master/gifs/winWarn.PNG" width="350" />
+</p> 
 <br/>
 &nbsp;&nbsp;&nbsp;3. Click "Run Anyway"
 <br/>
+<p align="center">
 <img src="https://github.com/shawnbanasick/kade/blob/master/gifs/winOpen.PNG" width="350">
-
+</p>
 <br/>
 <br/>
 
 ## Installation Instructions - Apple macOS
-### KADE can be installed following the normal process for macOS.
+#### KADE can be installed following the normal process for macOS.
 
 <p align="center">
 <img src="https://github.com/shawnbanasick/kade/blob/master/gifs/iconDrag.png" width="350" />
@@ -93,19 +98,19 @@ Comparisons of KADE and PQMethod results are available [here.](https://github.co
 &nbsp;&nbsp;&nbsp;2. Click and drag the KADE.app icon into the applications folder.
 
 
-### Version 1.2.0 is code signed and notarized by Apple, so there will be only one warning on the first startup after installation.
+#### Version 1.2.0 is code signed and notarized by Apple, so there will be only one warning on the first startup after installation.
 <p align="center">
 <img src="https://github.com/shawnbanasick/kade/blob/master/gifs/macOS warning.png" width="350">
 <br/>
 </p>
 
-### If you have changed your default settings, you may get this warning:
+#### If you have changed your default settings, you may get this warning:
 <p align="center">
 <img src="https://github.com/shawnbanasick/kade/blob/master/gifs/macos-catalina-alert-not-app-store.jpg" width="350">
 <br/>
 </p>
 
-### In this case, to allow installation you will need to reset your security settings to the defaults:
+#### In this case, to allow installation you will need to reset your security settings to the defaults:
 &nbsp;&nbsp;&nbsp;1. Open "System Preferences"
 
 &nbsp;&nbsp;&nbsp;2. Click "Security & Privacy"
@@ -131,7 +136,9 @@ The application is packaged as an "AppImage" so it can be installed on most of t
 1. Right click on the downloaded file.
 2. Select "Properties".
 3. Select "Permissions". (Example image from debian-based "MXLinux")
+<p align="center">
 <img src="https://github.com/shawnbanasick/kade/blob/master/gifs/linuxPermissions.png" width="350" />
+</p>
 &nbsp;&nbsp;&nbsp;4. Change permissions to executable. (Check "Allow this file to run as a program")<br/>
 <strong>Known Issue:</strong> I have not been able to get the icons to package properly in the Linux AppImage, so the ugly default window icons are used now. I am working on a fix for this issue.
 <br/>
