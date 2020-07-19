@@ -20,10 +20,14 @@ KenQ Analysis Desktop Edition (KADE) is a desktop application for the analysis o
 ## Change Log
 The current version is 1.2.0 (released July 19, 2020). 
 New features in this version include:
-* user-selectable distinguishing / consensus statement threshold levels 
-* interactive distinguishing statement list
-* expanded options for auto-flagging factor loadings
-* "Update available" in-app notification
+* Horst centroids
+* Multilingual User Interface
+* Improved error messaging
+* Notarized macOS version
+* New GUI style
+* Improved update messaging
+* Persistence for window size, location, and GUI language
+* Loadings Table data now included in the output file
 
 <br/>
 
