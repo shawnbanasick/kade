@@ -6,9 +6,9 @@
 </p>
 
 <strong>Download Links:</strong> &nbsp; 
-[macOS](https://github.com/shawnbanasick/kade/releases/download/v1.2.0/KADE-1.2.0.dmg) &nbsp;||&nbsp;
-[Windows-installer](https://github.com/shawnbanasick/kade/releases/download/v1.2.0/kade.Setup.1.2.0.exe) &nbsp;||&nbsp;
-[Windows-portable](https://github.com/shawnbanasick/kade/releases/download/v1.2.0/kade.1.2.0.exe) &nbsp;||&nbsp;
+[macOS](https://github.com/shawnbanasick/kade/releases/download/v1.2.1/KADE-1.2.1.dmg) &nbsp;||&nbsp;
+[Windows-installer](https://github.com/shawnbanasick/kade/releases/download/v1.2.1/kade.Setup.1.2.1.exe) &nbsp;||&nbsp;
+[Windows-portable](https://github.com/shawnbanasick/kade/releases/download/v1.2.1/kade.1.2.1.exe) &nbsp;||&nbsp;
 [Linux](https://github.com/shawnbanasick/kade/releases) <br/>
 
 <strong>(See installation instructions below.)</strong>
@@ -18,16 +18,18 @@ KenQ Analysis Desktop Edition (KADE) is a desktop application for the analysis o
 <br/>
 
 ## Change Log
-The current version is 1.2.0 (released July 19, 2020). 
-New features in this version include:
-* Horst centroids
-* Multilingual User Interface
-* Improved error messaging
-* Notarized macOS version
-* New GUI style
-* Improved update messaging
-* Persistence for window size, location, and GUI language
-* Loadings Table data now included in the output file
+The current version is 1.2.1 (released Feb. 21, 2021). 
+Changes in this version include:
+* Spanish translations for UI
+* Security updates
+* Electron version update 
+
+Bug Fixes:
+* Bipolar split table column size fix
+* PCA first run no output fix
+* JSON data export fix
+* Single factor output fix
+
 
 <br/>
 
