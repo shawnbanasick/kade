@@ -158,7 +158,12 @@ I have not integrated automatic updating functions into the application. To upda
 * In Linux, locate the AppImage file of the old version and delete it.
 
 ## Contributions and Problems
-If you discover a problem with the software or want to make a feature request, please describe it on the issue tracker - https://github.com/shawnbanasick/kade/issues. Contributions are welcome. Make a pull request.
+If you discover a problem with the software or want to make a feature request, please describe it on the issue tracker - https://github.com/shawnbanasick/kade/issues or email to ken.q.tools@gmail.com. Contributions are welcome. Make a pull request.
+
+## User Interface Translators Welcomed!
+If you would like to volunteer to translate the user interface (about 400 words and phrases) into another language, please contact me at ken.q.tools@gmail.com
+Thanks to <strong>Nicolás Medina Silva</strong> for the Spanish translation!
+
 
 ## Attribution
 Banasick, (2019). KADE: A desktop application for Q methodology. Journal of Open Source Software, 4(36), 1360, https://doi.org/10.21105/joss.01360 
