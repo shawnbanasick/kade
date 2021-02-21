@@ -29,7 +29,7 @@ const initializeCalcState = () => {
   calcState.maxStatementLength = 0;
   calcState.miniCorrelationArrayHolder = [];
 
-  calcState.output = [];
+  // calcState.output = [];
   calcState.outputData = [];
 
   calcState.posShiftSortArray = [];

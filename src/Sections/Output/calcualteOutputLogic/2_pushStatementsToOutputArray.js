@@ -19,7 +19,8 @@ const pushStatementsToOutputArray = function(
   // // getState
   // const statements = clone(coreState.statements);
 
-  sheetNamesXlsx.push(statementsTrans);
+  // no translation to preserve Excel Type 3 input parsing
+  sheetNamesXlsx.push("statements");
 
   const arrayOfStatements = [];
   arrayOfStatements.push(["", ""], [statementNumTrans, statementsTrans]);

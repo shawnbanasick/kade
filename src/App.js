@@ -118,7 +118,7 @@ const App = props => {
               active={viewStart}
               onClick={() => handleClick("viewStart")}
             >
-              <p className="title">KADE v1.2.0</p>
+              <p className="title">KADE v1.2.1</p>
             </StartButton>
             <FileButton
               buttonColor={inputButtonColor}

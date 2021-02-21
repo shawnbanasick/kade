@@ -15,7 +15,9 @@ const pushSortsToOutputArray = function(outputData, sheetNamesXlsx, colSizes) {
   const stddevTrans = i18n.t("St Dev");
   const standardDeviationTrans = i18n.t("Standard Deviation");
 
-  sheetNamesXlsx.push(qSortsTrans);
+  // no translation so that Excel Type 3 import continues to work
+  sheetNamesXlsx.push("Q sorts");
+
   // getState
   const mainDataObject = clone(coreState.mainDataObject);
   const respondentNames = clone(coreState.respondentNames);

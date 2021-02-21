@@ -5,6 +5,7 @@ import calculateCommunalities from "./2calculateCommunalities";
 import calcuateSigCriterionValues from "./2calculateSigCriterionValues";
 import calcStandardizedFactorMatrix from "./2calcStandardizedFactorMatrix";
 import loadingsTableDataPrep from "../../Loadings/LoadingsTable/loadingsTableDataPrep";
+import loadingState from "../../GlobalState/loadingState";
 import rotationState from "../../GlobalState/rotationState";
 import factorState from "../../GlobalState/factorState";
 import projectHistoryState from "../../GlobalState/projectHistoryState";
@@ -101,7 +102,7 @@ const varimaxDispatch = function() {
     outputState.showFactorCharacteristicsTable = false;
     outputState.showDownloadOutputButtons = false;
     outputState.displayFactorVisualizations = false;
-    outputState.sendDataToOutputButtonColor = "#d6dbe0";
+    loadingState.sendDataToOutputButtonColor = "#d6dbe0";
 
     // remember - calc commun must be a matrix in table format
     calculateCommunalities(newRotatedResults);

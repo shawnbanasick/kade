@@ -43,7 +43,7 @@ const pushFactorPowerSetDiffsToOutput = function(
     }
 
     // const factorNumber3 = factorNumber2.slice(0, -1);
-    oneFactor = `${i18n.t("Factor")} ${number}`;
+    oneFactor = `${i18n.t("Fac")} ${number}`;
 
     anotherFactor = factorPairs[k][1][0].factor;
     const factorNumber12 =
@@ -56,7 +56,7 @@ const pushFactorPowerSetDiffsToOutput = function(
     }
 
     // const factorNumber13 = factorNumber12.slice(0, -1);
-    anotherFactor = `${i18n.t("Factor")} ${number2}`;
+    anotherFactor = `${i18n.t("Fac")} ${number2}`;
 
     namesComboArrayFrag.push(oneFactor, anotherFactor);
     const temp1 = {};

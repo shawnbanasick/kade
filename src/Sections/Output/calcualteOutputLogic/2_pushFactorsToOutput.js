@@ -185,13 +185,24 @@ const pushFactorsToOutputArray = (outputData, sheetNamesXlsx, colSizes) => {
     }
 
     // const factorNumber3 = factorNumber2.slice(0, -1);
-    const factorNumber = `${i18n.t("Factor")} ${number}`;
+    const factorNumber = `${i18n.t("Fac")} ${number}`;
 
-    temp1a.sheetid = `${factorNumber} ${i18n.t("Sorts Weight")}`;
+    // get trans. - MS Excel has 30 char. limit, (prepend FAC. #)
+    let sheetName1 = i18n.t("Sorts Weight");
+    if (sheetName1.length > 23) {
+      sheetName1 = i18n.t("Sorts Weight short");
+    }
+
+    temp1a.sheetid = `${factorNumber} ${sheetName1}`;
     temp1a.header = true;
     sheetNamesHolder1.push(temp1a);
 
-    temp1b.sheetid = `${factorNumber} ${i18n.t("Sorts Corr")}`;
+    // get trans. - MS Excel has 30 char. limit, (prepend FAC. #)
+    let sheetName2 = i18n.t("Sorts Corr");
+    if (sheetName2.length > 23) {
+      sheetName2 = i18n.t("Sorts Corr short");
+    }
+    temp1b.sheetid = `${factorNumber} ${sheetName2}`;
     temp1b.header = true;
     sheetNamesHolder2.push(temp1b);
 

@@ -11,7 +11,7 @@ import outputState from "../../GlobalState/outputState";
 
 const styles = {
   width: "90%",
-  maxWidth: 900,
+  maxWidth: 920,
   height: 1100,
   border: "2px solid #666",
   padding: 20,

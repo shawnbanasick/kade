@@ -1,7 +1,7 @@
 import downloadExcelOutputFile from "./2_downloadExcelOutputFile";
 
-import calcState from '../../GlobalState/calcState';
-const clone = require('rfdc')()
+import calcState from "../../GlobalState/calcState";
+const clone = require("rfdc")();
 
 const downloadExcelDispatch = () => {
   // initialize output cascade
@@ -10,6 +10,7 @@ const downloadExcelDispatch = () => {
   const colSizes = clone(calcState.colSizes);
   const sheetNamesXlsx = clone(calcState.sheetNamesXlsx);
 
+  // console.log(JSON.stringify(sheetNamesXlsx));
 
   // needs dataXlsx, sheetNamesXlsx, colSizes from store
   downloadExcelOutputFile(dataXlsx, sheetNamesXlsx, colSizes);

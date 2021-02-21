@@ -19,8 +19,9 @@ const pushProjectOverviewToOutputArrayDispatcher = () => {
   const distStateUpperValueText = outputState.distStateUpperValueText;
   const distStateLowerValueText = outputState.distStateLowerValueText;
 
+  // no translation for "Project Overview" so that Excel Type 3 works when tab searching for parse data
+  const sheetidTrans = "Project Overview";
   // get Translations
-  const sheetidTrans = i18n.t("Project Overview");
   const projectNameTrans = `${i18n.t("Project Name")}:  `;
   const numStatementsTrans = `${i18n.t("Total Number of Statements")}:  `;
   const qSortDesignTrans = `${i18n.t("Q sort Design")}:  `;

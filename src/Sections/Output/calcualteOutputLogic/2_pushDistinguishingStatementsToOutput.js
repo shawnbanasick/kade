@@ -50,7 +50,7 @@ const pushDistinguishingStatementsToOutput = function(
 
     // const factorNumber3 = factorNumber2.slice(0, -1);
     // factorNumber = `${factorNumber3} ${number}`;
-    factorNumber = `${i18n.t("Factor")} ${number}`;
+    factorNumber = `${i18n.t("Fac")} ${number}`;
 
     sheetNamesXlsx.push(`${chartText1} ${factorNumber}`);
 

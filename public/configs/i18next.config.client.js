@@ -1,8 +1,7 @@
 const i18n = require("i18next");
-const appConfig = require('electron-settings');
+const appConfig = require("electron-settings");
 const reactI18nextModule = require("react-i18next").reactI18nextModule;
 const config = require("../configs/app.config");
-
 
 let currentLanguage;
 
@@ -12,7 +11,6 @@ if (appConfig.has(`currentLanguage`)) {
   currentLanguage = "en";
 }
 
-
 const i18nextOptions = {
   interpolation: {
     escapeValue: false
@@ -21,8 +19,8 @@ const i18nextOptions = {
   lng: currentLanguage,
   fallbackLng: config.fallbackLng,
   whitelist: config.languages,
-  keySeparator: '>',
-  nsSeparator: '|',
+  keySeparator: ">",
+  nsSeparator: "|",
   react: {
     wait: false
   }

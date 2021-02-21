@@ -292,7 +292,7 @@ const TextDiv = styled.div`
   background-color: ${props => props.inputColor};
   font-size: 20px;
   margin-bottom: 5px;
-  width: 140px;
+  width: 400px;
   padding-top: 4px;
   padding-left: 4px;
   height: 25px;

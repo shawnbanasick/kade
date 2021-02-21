@@ -48,7 +48,7 @@ const pushCribSheetsToOutput = function(outputData, sheetNamesXlsx, colSizes) {
   for (let j = 0, jLen = userSelectedFactors.length; j < jLen; j++) {
     let name = userSelectedFactors[j];
     let facNum = name.slice(7);
-    sheetNamesXlsx.push(`${i18n.t("Factor")} ${facNum} - ${appendText1}`);
+    sheetNamesXlsx.push(`${i18n.t("Fac")} ${facNum} - ${appendText1}`);
 
     const columns = [
       {

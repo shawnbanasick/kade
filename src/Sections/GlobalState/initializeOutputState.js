@@ -1,9 +1,6 @@
 import outputState from "../GlobalState/outputState";
 
 const initializeOutputState = () => {
-  outputState.consensus01Statements = [];
-  outputState.consensus05Statements = [];
-
   outputState.displayFactorVisualizations = false;
   outputState.distStateListSortKey = "";
   outputState.distStateLowerValueText = "";
@@ -40,8 +37,6 @@ const initializeOutputState = () => {
   outputState.distStateListSortKey = "statementNum";
 
   outputState.threshold = 3;
-  outputState.userSelectedDistStateSigLevel1 = 1.96;
-  outputState.userSelectedDistStateSigLevel2 = 2.575;
   outputState.userSelectedFactors = [];
 
   return;

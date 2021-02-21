@@ -2,7 +2,7 @@ import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
 import config from "./app.config";
 
-const appConfig = require('electron-settings');
+const appConfig = require("electron-settings");
 
 let currentLanguage;
 
@@ -12,14 +12,12 @@ if (appConfig.has(`currentLanguage`)) {
   currentLanguage = "en";
 }
 
-
 const i18nextOptions = {
   backend: {
     // path where resources get loaded from
     // loadPath: "../../public/locales/{{lng}}/{{ns}}.json",
     // working
     // working -> loadPath: "../build/locales/{{lng}}/{{ns}}.json",
-
 
     loadPath: `../build/locales/${currentLanguage}/translation.json`,
 
@@ -34,17 +32,16 @@ const i18nextOptions = {
   interpolation: {
     escapeValue: false
   },
-  keySeparator: '>',
-  nsSeparator: '|',
+  keySeparator: ">",
+  nsSeparator: "|",
   saveMissing: false,
   lng: currentLanguage,
   fallbackLng: config.fallbackLng,
   whitelist: config.languages,
   react: {
-    wait: true
+    wait: false
   }
 };
-
 
 i18n.use(initReactI18next);
 

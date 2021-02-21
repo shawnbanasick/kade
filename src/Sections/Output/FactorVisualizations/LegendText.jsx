@@ -66,10 +66,10 @@ const LegendText = props => {
     // let arrowLeft = "\u003C\u003C";
     // let arrowRight = "\u003E\u003E";
     // if (useUnicode) {
-    // symbol05 = "\u25CE";
-    const symbol05 = "\u2733\u0020\u0020";
+    // symbol05 =  `* `; // "\u25CE";
+    const symbol05 = `*`; // "\u26B9\u0020\u0020";
     // symbol01 = "\u25C9";
-    const symbol01 = "\u2733\u2733";
+    const symbol01 = `**`; // "\u26B9\u26B9";
     const arrowLeft = "\u25C4\u0020";
     const arrowRight = "\u25BA\u0020";
     // }
@@ -92,7 +92,7 @@ const LegendText = props => {
     };
 
     const astrick01Style = {
-      x: xLocation - additionalXLocationValue,
+      x: xLocation - additionalXLocationValue + 12,
       y: yLocation + 95,
       fontSize: 16,
       fontFamily: "Arial, sans-serif"

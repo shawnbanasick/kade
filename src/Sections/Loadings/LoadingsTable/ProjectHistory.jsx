@@ -156,7 +156,6 @@ const ProjectHistory = () => {
     outputState.showFactorCharacteristicsTable = false;
     outputState.showDownloadOutputButtons = false;
     outputState.displayFactorVisualizations = false;
-    outputState.shouldDisplayFactorViz = false;
     loadingState.sendDataToOutputButtonColor = "#d6dbe0";
     loadingState.bipolarDisabled = false;
     loadingState.bipolarIndexArray = [];

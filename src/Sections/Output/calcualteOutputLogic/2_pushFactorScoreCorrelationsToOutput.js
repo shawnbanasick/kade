@@ -11,7 +11,11 @@ const pushFactorScoreCorrelationsToOutput = function(
   sheetNamesXlsx,
   colSizes
 ) {
-  const appendText1 = i18n.t("Factor score correlations");
+  let appendText1 = i18n.t("Factor score correlations");
+  // MS Excel tabs have max 30 characters, so shorten if long
+  if (appendText1.length > 30) {
+    appendText1 = i18n.t("Factor score correlations short");
+  }
 
   sheetNamesXlsx.push(appendText1);
 

@@ -26,8 +26,14 @@ const pushFactorScoreComparisonRanksTableToOutput = function(
   let rankingTempArray;
   const statementRankingArray = [];
 
-  // set sheetnam
-  sheetNamesXlsx.push(i18n.t("Factor Score Ranks"));
+  // get sheetname - MS Excel has max 30 char. for tabs, so if long - shorten
+  let sheetName1 = i18n.t("Factor Score Ranks");
+  if (sheetName1.length > 30) {
+    sheetName1 = i18n.t("Factor Score Ranks short");
+  }
+
+  // set sheetname
+  sheetNamesXlsx.push(sheetName1);
 
   // set column width for Excel
   const maxStatementLength = calcState.maxStatementLength;

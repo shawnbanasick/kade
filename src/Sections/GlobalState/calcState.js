@@ -2,16 +2,15 @@ import { store } from "react-easy-state";
 
 const calcState = store({
   analysisOutput: [],
+
   colSizes: [],
   compositeFactorMasterArray: [],
-
-  correlationTableArrayHolder: [],
-
   consensus05Statements: [],
   consensus01Statements: [],
+  correlationTableArrayHolder: [],
 
-  distStatementDataVizArray: [],
   distStateListData: [],
+  distStatementDataVizArray: [],
 
   factorCharacteristicsArray: [],
   factorCorrelationsTableData: [],
@@ -29,7 +28,7 @@ const calcState = store({
   maxStatementLength: 0,
   miniCorrelationArrayHolder: [],
 
-  output: [],
+  // output: [],
   outputData: [],
 
   posShiftSortArray: [],

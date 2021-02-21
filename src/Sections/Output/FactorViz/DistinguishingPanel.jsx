@@ -19,7 +19,8 @@ const styles2 = {
   marginTop: 15,
   marginRight: 5,
   fontSize: 16,
-  userSelect: "none"
+  userSelect: "none",
+  textAlign: "center"
 };
 
 const localStore = store({ showDistinguishingAs: "symbol" });

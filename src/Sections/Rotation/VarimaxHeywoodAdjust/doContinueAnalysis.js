@@ -2,6 +2,7 @@ import rotationState from "../../GlobalState/rotationState";
 import factorState from "../../GlobalState/factorState";
 import outputState from "../../GlobalState/outputState";
 import projectHistoryState from "../../GlobalState/projectHistoryState";
+import loadingState from "../../GlobalState/loadingState";
 import calculateCommunalities from "../varimaxLogic/2calculateCommunalities";
 import calcuateSigCriterionValues from "../varimaxLogic/2calculateSigCriterionValues";
 import loadingsTableDataPrep from "../../Loadings/LoadingsTable/loadingsTableDataPrep";
@@ -40,7 +41,7 @@ const doContinueAnalysis = () => {
   outputState.showFactorCharacteristicsTable = false;
   outputState.showDownloadOutputButtons = false;
   outputState.displayFactorVisualizations = false;
-  outputState.sendDataToOutputButtonColor = "#d6dbe0";
+  loadingState.sendDataToOutputButtonColor = "#d6dbe0";
 
   // remember - calc commun must be a matrix in table format
   calculateCommunalities(newRotatedResults);

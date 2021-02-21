@@ -12,7 +12,11 @@ const pushStandardErrorsDifferencesToOutput = function(
   sheetNamesXlsx,
   colSizes
 ) {
-  const chartText1 = i18n.t("Standard Errors for Diffs");
+  let chartText1 = i18n.t("Standard Errors for Diffs");
+  if (chartText1.length > 30) {
+    chartText1 = i18n.t("Standard Errors for Diffs short");
+  }
+
   const chartText2 = i18n.t(
     "Standard Errors for Differences in Factor Z scores"
   );
@@ -62,9 +66,7 @@ const pushStandardErrorsDifferencesToOutput = function(
 
     // tempArray1.push(sigSortsArray[j]["Factor Number"]);
     const factorNum = sigSortsArray[j]["Factor Number"].slice(6);
-   tempArray1.push(
-      `${i18n.t("Factor")} ${factorNum}`
-    );
+    tempArray1.push(`${i18n.t("Factor")} ${factorNum}`);
 
     for (let k = 0; k < sigSortsArray.length; k++) {
       const stndErrorDiffDataArrayTemp1 = [];

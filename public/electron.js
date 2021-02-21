@@ -64,15 +64,18 @@ function createWindow() {
     y: mainWindowStateKeeper.y,
     width: mainWindowStateKeeper.width,
     height: mainWindowStateKeeper.height,
-    webPreferences: { nodeIntegration: true }
+    webPreferences: { nodeIntegration: true, enableRemoteModule: true }
   };
 
-  let currentLanguage;
-  if (appConfig.has(`currentLanguage`)) {
-    currentLanguage = appConfig.get(`currentLanguage`);
-  } else {
-    currentLanguage = "en";
-  }
+  // let currentLanguage;
+  // if (appConfig.has(`currentLanguage`)) {
+  //   currentLanguage = appConfig.get(`currentLanguage`);
+  // } else {
+  //   currentLanguage = "en";
+  // }
+
+  // for testing - remove
+  currentLanguage = "en";
 
   let pathToTranslation;
   if (isDev) {
@@ -108,7 +111,7 @@ function createWindow() {
     fallbackLng: config.fallbackLng,
     whitelist: config.languages,
     react: {
-      wait: true
+      wait: false
     }
   };
 

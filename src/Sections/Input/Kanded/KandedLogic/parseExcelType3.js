@@ -1,7 +1,6 @@
 import XLSX from "xlsx";
 import formatExcelType3ForDisplay from "../KandedLogic/formatExcelType3ForDisplay";
-import inputState from '../../../GlobalState/inputState';
-
+import inputState from "../../../GlobalState/inputState";
 
 function parseExcelType3(excelFile) {
   const workbook = XLSX.readFile(excelFile, {
@@ -40,7 +39,7 @@ function parseExcelType3(excelFile) {
         }
         allWorksheets.push(temp99Array);
 
-      // find q sorts
+        // find q sorts
       } else if (y === "Q-sorts" || y === "Q sorts") {
         // turn off error report
         hasSortsWorksheetFromKenQ = true;
@@ -54,7 +53,7 @@ function parseExcelType3(excelFile) {
         });
         allWorksheets.push(tempArray3);
 
-      // find Statements
+        // find Statements
       } else if (y === "Statements") {
         // turn off error report
         hasStatementsWorksheet = true;
@@ -77,24 +76,22 @@ function parseExcelType3(excelFile) {
     // set error message
     if (hasSortsWorksheetFromKenQ === false) {
       console.log("missing sorts worksheet");
-        inputState.excelErrorMessage1 = "Can't find the Q-sorts worksheet tab!";
-        inputState.showExcelErrorModal = true;
+      inputState.excelErrorMessage1 = "Can't find the Q-sorts worksheet tab!";
+      inputState.showExcelErrorModal = true;
     }
     if (hasStatementsWorksheet === false) {
       console.log(JSON.stringify("missing statements worksheet"));
-        inputState.excelErrorMessage1 = "Can't find the Statements worksheet tab!";
-        inputState.showExcelErrorModal = true;
+      inputState.excelErrorMessage1 =
+        "Can't find the Statements worksheet tab!";
+      inputState.showExcelErrorModal = true;
     }
     if (hasAnalysisOverviewWorksheet === false) {
       console.log(JSON.stringify("missing overview worksheet"));
-        inputState.excelErrorMessage1 = "Can't find the Analysis Overview worksheet tab!"
-        inputState.showExcelErrorModal = true;
+      inputState.excelErrorMessage1 =
+        "Can't find the Analysis Overview worksheet tab!";
+      inputState.showExcelErrorModal = true;
     }
   } // end error catching
-
-  // console.log(`all worksheets ${JSON.stringify(allWorksheets[0])}`);
-  // console.log(`all worksheets ${JSON.stringify(allWorksheets[1])}`);
-  // console.log(`all worksheets ${JSON.stringify(allWorksheets[2])}`);
 
   if (
     hasSortsWorksheetFromKenQ === true &&

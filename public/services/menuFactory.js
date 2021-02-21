@@ -19,11 +19,11 @@ function buildMenu(app, mainWindow, i18n) {
   //   this.menu = Menu.buildFromTemplate(darwinTemplate(app, mainWindow, i18n));
   //   Menu.setApplicationMenu(this.menu);
   // } else {
-    this.menu = Menu.buildFromTemplate(otherTemplate(app, mainWindow, i18n));
-    // console.log(this.menu);
-    // console.log(this.menu);
-    Menu.setApplicationMenu(this.menu);
-    // mainWindow.setMenu(this.menu)
+  this.menu = Menu.buildFromTemplate(otherTemplate(app, mainWindow, i18n));
+  // console.log(this.menu);
+  // console.log(this.menu);
+  Menu.setApplicationMenu(this.menu);
+  // mainWindow.setMenu(this.menu)
   // }
 }
 

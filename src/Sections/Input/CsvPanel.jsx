@@ -22,10 +22,10 @@ const CsvPanel = () => {
         <CsvStatementCard />
         <CsvQsortsCard />
         <ProjectNameInput />
-        <ForcedUnforcedRadio />
-        <QsortDesignInputElement />
-        <CsvSuccessfulLoadBar />
       </CardHolder>
+      <ForcedUnforcedRadio />
+      <QsortDesignInputElement />
+      <CsvSuccessfulLoadBar />
     </DataWindow>
   );
 };
@@ -48,7 +48,7 @@ const CardHolder = styled.div`
 
 const Header = styled.div`
   font-family: Helvetica;
-  font-size: 22px;
+  font-size: 1.5vw;
   font-weight: bold;
   height: 30px;
   margin-top: 10px;

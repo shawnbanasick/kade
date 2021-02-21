@@ -1,13 +1,11 @@
 import { store } from "react-easy-state";
 
 const outputState = store({
-  consensus01Statements: [],
-  consensus05Statements: [],
-
   displayFactorVisualizations: false,
   distStateListSortKey: "",
   distStateLowerValueText: `p<0.05`,
   distStateUpperValueText: `p<0.01`,
+
   factorsWithoutLoading: [],
 
   notifyOutputDistStateError: false,
@@ -18,6 +16,8 @@ const outputState = store({
   outputForDataViz: [],
   outputForDataViz2: [],
 
+  qSortValueButtonActive: false,
+
   selectAllClicked: false,
 
   shouldDisplayFactorVizOptions: false,
@@ -27,22 +27,19 @@ const outputState = store({
   showFactorCorrelationsTable: false,
   showMultipleFactorsFlaggedWarningModal: false,
   showNoLoadingsFlaggedWarningModal: false,
-  showTableDataNotSentWarning: true,
   showOutputFactorSelection: false,
   showStandardErrorsDifferences: false,
+  showTableDataNotSentWarning: true,
 
   sliceValueDistStateSigLevelDrop1: 1.96,
-
   sortsFlaggedOnTwoFactors: [],
+  statementNumButtonActive: true,
 
   threshold: 3,
-  userSelectedDistStateSigLevel1: 1.96,
-  userSelectedDistStateSigLevel2: 2.575,
+  thresholdButtonActive: false,
+
   userSelectedFactors: [],
 
-  thresholdButtonActive: false,
-  qSortValueButtonActive: false,
-  statementNumButtonActive: true,
   zScoreButtonActive: false
 });
 

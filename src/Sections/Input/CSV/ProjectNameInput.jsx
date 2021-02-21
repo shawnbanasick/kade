@@ -45,7 +45,7 @@ export default view(ProjectNameInput);
 const Input = styled.input`
   font-size: 20px;
   height: 30px;
-  width: 250px;
+  width: 325px;
   padding: 0.5em;
   margin: 3px;
   color: black;

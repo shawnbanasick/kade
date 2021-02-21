@@ -62,7 +62,7 @@ const RefreshButtonContainerDiv = styled.div`
   /* margin-bottom: ${props => `${props.marginBottom}px`}; */
   margin-bottom: 10px;
   margin-left: 20px;
-  display: block;
+  display: inline-flex;
 `;
 
 const RefreshButton = styled.div`

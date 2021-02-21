@@ -24,7 +24,7 @@ const appState = store({
 
   updateVersion: "",
 
-  version: "1.2.0",
+  version: "1.2.1",
   viewAttribution: false,
   viewData: false,
   viewClearProject: false,
@@ -41,4 +41,3 @@ const appState = store({
 });
 
 export default appState;
-

@@ -36,11 +36,11 @@ const JsonPanel = () => {
           class="ui fluid selection dropdown"
           onChangeMessageUpTree={handleMessage}
         />
-        <ForcedUnforcedRadio />
         <div />
         <QsortDesignInputElement style={{ gridRowStart: 4 }} />
         <DownloadCsvModal />
       </CardHolder>
+      <ForcedUnforcedRadio />
     </DataWindow>
   );
 };
@@ -54,7 +54,7 @@ const DataWindow = styled.div`
 const CardHolder = styled.div`
   display: grid;
   grid-template-columns: 350px 350px 1fr;
-  grid-template-rows: 310px 55px 30px 105px 1fr;
+  grid-template-rows: 310px 45px 30px 70px 1fr;
   grid-template-areas:
     "card card"
     "projectName projectName"
@@ -67,7 +67,7 @@ const CardHolder = styled.div`
 
 const Header = styled.div`
   font-family: Helvetica;
-  font-size: 22px;
+  font-size: 1.5vw;
   font-weight: bold;
   height: 30px;
   margin-top: 10px;

@@ -145,5 +145,5 @@ const TextLabel = styled.div`
 `;
 
 const SortButton = styled(GeneralButton)`
-  width: 120px;
+  min-width: 120px;
 `;

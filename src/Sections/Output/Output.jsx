@@ -256,8 +256,8 @@ const OutputDataWindow2 = styled.div`
   height: calc(100vh - 48px);
   min-width: calc(100vw - 166px);
   overflow: auto;
+  box-sizing: border-box;
 `;
-// border: 2px solid blue;
 // max-height: calc(100vh-22px);
 // padding: 5px;
 // padding-top: 5px;

@@ -39,7 +39,7 @@ const CardHolder = styled.div`
 
 const Header = styled.div`
   font-family: Helvetica;
-  font-size: 22px;
+  font-size: 1.5vw;
   font-weight: bold;
   height: 25px;
   margin-top: 1px;

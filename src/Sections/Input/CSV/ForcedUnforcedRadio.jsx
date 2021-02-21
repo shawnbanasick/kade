@@ -68,7 +68,7 @@ const RadioExampleRadioGroup = () => {
         checked={localStore.value === "forced"}
         onChange={e => handleChange(e)}
       />
-      <Label htmlFor="forcedButton">{t("Forced")}</Label>
+      <LabelDiv2 htmlFor="forcedButton">{t("Forced")}</LabelDiv2>
       <StyledInput
         type="radio"
         id="unforcedButton"
@@ -93,7 +93,13 @@ const RadioDiv = styled.div`
   grid-column-start: 1;
 `;
 
+const LabelDiv2 = styled.label`
+  margin-right: 10px;
+  min-width: 200x;
+`;
+
 const Label = styled.label`
+  width: 20x;
   margin-right: 10px;
 `;
 
@@ -104,6 +110,7 @@ const StyledInput = styled.input`
 
 const LabelDiv = styled.div`
   text-align: right;
-  width: 140px;
+  min-width: 240px;
+  width: fit-content;
   padding-right: 10px;
 `;

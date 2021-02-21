@@ -14,6 +14,11 @@ const options = [
     key: "language2",
     text: "Japanese",
     value: "jp"
+  },
+  {
+    key: "language3",
+    text: "Spanish",
+    value: "es"
   }
 ];
 

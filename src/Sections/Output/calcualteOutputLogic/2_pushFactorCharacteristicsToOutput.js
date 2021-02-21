@@ -11,7 +11,12 @@ const pushFactorCharacteristicsToOutput = function(
   sheetNamesXlsx,
   colSizes
 ) {
-  const chartText1 = i18n.t("Factor Characteristics");
+  // MS Excel has max char. length of 30, so shorten if necessary
+  let chartText1 = i18n.t("Factor Characteristics");
+  if (chartText1.length > 30) {
+    chartText1 = i18n.t("Factor Characteristics short");
+  }
+
   const chartText3 = i18n.t("No of Defining Variables");
   const chartText4 = i18n.t("Avg Rel Coef");
   const chartText5 = i18n.t("Composite Reliability");
