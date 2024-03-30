@@ -8,9 +8,9 @@
 </p>
 
 <strong>Download Links:</strong> &nbsp; 
-[macOS](https://github.com/shawnbanasick/kade/releases/download/v1.2.1/KADE-1.2.1.dmg) &nbsp;||&nbsp;
-[Windows-installer](https://github.com/shawnbanasick/kade/releases/download/v1.2.1/kade.Setup.1.2.1.exe) &nbsp;||&nbsp;
-[Windows-portable](https://github.com/shawnbanasick/kade/releases/download/v1.2.1/kade.1.2.1.exe) &nbsp;||&nbsp;
+[macOS](https://github.com/shawnbanasick/kade/releases/download/v1.2.1/KADE-1.3.0.dmg) &nbsp;||&nbsp;
+[Windows-installer](https://github.com/shawnbanasick/kade/releases/download/v1.3.0/kade.Setup.1.3.0.exe) &nbsp;||&nbsp;
+[Windows-portable](https://github.com/shawnbanasick/kade/releases/download/v1.2.1/kade.1.3.0.exe) &nbsp;||&nbsp;
 [Linux](https://github.com/shawnbanasick/kade/releases) <br/>
 
 <strong>(See installation instructions below.)</strong>
@@ -20,17 +20,13 @@ KenQ Analysis Desktop Edition (KADE) is a desktop application for the analysis o
 <br/>
 
 ## Change Log
-The current version is 1.2.1 (released Feb. 21, 2021). 
+The current version is 1.3.0 (released March 30, 2024). 
 Changes in this version include:
-* Spanish translations for UI
-* Security updates
-* Electron version update 
-
-Bug Fixes:
-* Bipolar split table column size fix
-* PCA first run no output fix
-* JSON data export fix
-* Single factor output fix
+* Added DOCX output option
+* Added input data book download
+* Added nine new user interface languages
+* Simplified Excel input file format
+* Updated help section content
 
 
 <br/>
@@ -160,7 +156,7 @@ I have not integrated automatic updating functions into the application. To upda
 * In Linux, locate the AppImage file of the old version and delete it.
 
 ## Contributions and Problems
-If you discover a problem with the software or want to make a feature request, please describe it on the issue tracker - https://github.com/shawnbanasick/kade/issues or email to ken.q.tools@gmail.com. Contributions are welcome. Make a pull request.
+If you discover a problem with the software or want to make a feature request, send an email to ken.q.tools@gmail.com. 
 
 ## User Interface Translators Welcomed!
 If you would like to volunteer to translate the user interface (about 400 words and phrases) into another language, please contact me at ken.q.tools@gmail.com
