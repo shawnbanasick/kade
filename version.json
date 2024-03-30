@@ -1,3 +1,10 @@
 {
-    "releaseVersion": "1.2.0"
+    "releaseVersion": "1.3.0",
+    "changes": [
+        "Added docx output option",
+        "Added input data book download",
+        "Added nine new user interface languages",
+        "Simplified Excel input file format",
+        "Updated help section content"
+    ]
 }
