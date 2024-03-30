@@ -13,7 +13,7 @@
 [Windows-portable](https://github.com/shawnbanasick/kade/releases/download/v1.3.0/kade.1.3.0.exe) &nbsp;||&nbsp;
 [Linux](https://github.com/shawnbanasick/kade/releases) <br/>
 
-<strong>(See installation instructions below.)</strong>
+<strong>(See installation and update instructions below.)</strong>
 
 KenQ Analysis Desktop Edition (KADE) is a desktop application for the analysis of Q methodology data which operates with full functionality on Microsoft Windows, Apple macOS, and Linux operating systems. It has a graphic user interface that makes it easy to use for students or for researchers with a background mainly in qualitative methods. Installation is not required for use; KADE is portable and can be run from a usb flash drive. It includes a variety of interactive visualization tools to explore and analyze Q methodological data.
 
