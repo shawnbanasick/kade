@@ -4,6 +4,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
 import i18n from './configs/i18nResources';
+import './customSettings.css';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.Suspense fallback="loading">

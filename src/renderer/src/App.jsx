@@ -1,5 +1,3 @@
-// import React from 'react';
-// import { view } from '@risingstack/react-easy-state';
 import styled, { css } from 'styled-components';
 import Start from './Sections/Start/Start';
 // import Input from './Sections/Input/Input';
@@ -13,16 +11,15 @@ import Start from './Sections/Start/Start';
 // import Help from './Sections/Help/Help';
 // import License from './Sections/License/License';
 // import ClearProject from './Sections//ClearProject/ClearProject';
+// import getInputState from "./Sections/GlobalState/getInputState";
 import UpdateModal from './Sections/Start/UpdateModal';
 import ErrorBoundary from './Utils/ErrorBoundary';
 import appState from './Sections/GlobalState/appState';
-// import getInputState from "./Sections/GlobalState/getInputState";
 import indicateDataButtonColor from './Sections/Start/indicateDataButtonColor';
 import './Utils/ag-grid.css';
 import './Utils/ag-theme-fresh.css';
 import './Utils/loadingsTable.css';
 import { useTranslation } from 'react-i18next';
-import getAppState from './Sections/GlobalState/getAppState';
 
 // const semverEq = require('semver/functions/eq');
 // const electron = window.require('electron');
@@ -60,50 +57,48 @@ const handleClick = (target) => {
 };
 
 const App = () => {
-  const [t] = useTranslation();
+  const { t } = useTranslation();
 
-  const {
-    viewStart,
-    viewInput,
-    viewData,
-    viewClearProject,
-    viewCorrelations,
-    viewFactors,
-    viewRotation,
-    viewLoadings,
-    viewOutput,
-    viewProjectHistory,
-    viewHelp,
-    viewLicense
-  } = appState;
+  const viewStart = appState((state) => state.viewStart);
+  console.log('viewStart: ', JSON.stringify(viewStart));
 
-  const isDataButtonGreen = getAppState('isDataButtonGreen');
-  const hasDataBeenConfirmed = getAppState('hasDataBeenConfirmed');
+  const viewInput = appState((state) => state.viewInput);
+  const viewData = appState((state) => state.viewData);
+  const viewCorrelations = appState((state) => state.viewCorrelations);
+  const viewFactors = appState((state) => state.viewFactors);
+  const viewRotation = appState((state) => state.viewRotation);
+  const viewLoadings = appState((state) => state.viewLoadings);
+  const viewOutput = appState((state) => state.viewOutput);
+  const viewProjectHistory = appState((state) => state.viewProjectHistory);
+  const viewClearProject = appState((state) => state.viewClearProject);
+  const viewHelp = appState((state) => state.viewHelp);
+  const viewLicense = appState((state) => state.viewLicense);
 
-  let showUpdateModal = getAppState('showUpdateModal');
+  const isDataButtonGreen = appState((state) => state.isDataButtonGreen);
+  const hasDataBeenConfirmed = appState((state) => state.hasDataBeenConfirmed);
+  const showUpdateModal = appState((state) => state.showUpdateModal);
+  const isInputButtonGreen = appState((state) => state.isInputButtonGreen);
+  const isCorrelationsButtonGreen = appState((state) => state.isCorrelationsButtonGreen);
+  const isFactorsButtonGreen = appState((state) => state.isFactorsButtonGreen);
+  const isRotationButtonGreen = appState((state) => state.isRotationButtonGreen);
+  const isLoadingsButtonGreen = appState((state) => state.isLoadingsButtonGreen);
+  const isOutputButtonGreen = appState((state) => state.isOutputButtonGreen);
 
   // const installedVersion = appState.version;
   // const updateVersion = appState.updateVersion;
 
   // getState
-  const inputButtonColor = getAppState('isInputButtonGreen')
-    ? 'var(--main-theme-color)'
-    : '#d6dbe0';
-  const correlationsButtonColor = getAppState('isCorrelationsButtonGreen')
-    ? 'var(--main-theme-color)'
-    : '#d6dbe0';
-  const factorsButtonColor = getAppState('isFactorsButtonGreen')
-    ? 'var(--main-theme-color)'
-    : '#d6dbe0';
-  const rotationButtonColor = getAppState('isRotationButtonGreen')
-    ? 'var(--main-theme-color)'
-    : '#d6dbe0';
-  const loadingsButtonColor = getAppState('isLoadingsButtonGreen')
-    ? 'var(--main-theme-color)'
-    : '#d6dbe0';
-  const outputButtonColor = getAppState('isOutputButtonGreen')
-    ? 'var(--main-theme-color)'
-    : '#d6dbe0';
+  const inputButtonColor = isInputButtonGreen ? 'var(--main-theme-color)' : '#d6dbe0';
+  const correlationsButtonColor = isCorrelationsButtonGreen ? 'var(--main-theme-color)' : '#d6dbe0';
+  const factorsButtonColor = isFactorsButtonGreen ? 'var(--main-theme-color)' : '#d6dbe0';
+  const rotationButtonColor = isRotationButtonGreen ? 'var(--main-theme-color)' : '#d6dbe0';
+  const loadingsButtonColor = isLoadingsButtonGreen ? 'var(--main-theme-color)' : '#d6dbe0';
+  const outputButtonColor = isOutputButtonGreen ? 'var(--main-theme-color)' : '#d6dbe0';
+
+  const isDataButtonGreenCombined = indicateDataButtonColor(
+    isDataButtonGreen,
+    hasDataBeenConfirmed
+  );
 
   let showTopBar = false;
   // if (process.platform === "darwin") {
@@ -111,65 +106,65 @@ const App = () => {
   // }
 
   return (
-    <AppWrap active={showTopBar}>
+    <AppWrap $active={showTopBar}>
       {showTopBar ? <Header>KADE</Header> : null}
       <ErrorBoundary>
         <Split>
           <FilesWindow>
-            <StartButton active={viewStart} onClick={() => handleClick('viewStart')}>
-              <p className="title">KADE v1.3.0</p>
+            <StartButton $active={viewStart} onClick={() => handleClick('viewStart')}>
+              <p className="title">KADE v1.4.0</p>
             </StartButton>
             <FileButton
-              buttonColor={inputButtonColor}
-              active={viewInput}
+              $buttoncolor={inputButtonColor}
+              $active={viewInput}
               onClick={() => handleClick('viewInput')}
             >
               <p className="title">{`1. ${t('Input')}`}</p>
             </FileButton>
             <FileButton
-              buttonColor={indicateDataButtonColor(isDataButtonGreen, hasDataBeenConfirmed)}
-              active={viewData}
+              $buttoncolor={isDataButtonGreenCombined}
+              $active={viewData ? 1 : 0}
               onClick={() => handleClick('viewData')}
             >
               <p className="title">{`2. ${t('Data')}`}</p>
             </FileButton>
             <FileButton
-              buttonColor={correlationsButtonColor}
-              active={viewCorrelations}
+              $buttoncolor={correlationsButtonColor}
+              $active={viewCorrelations}
               onClick={() => handleClick('viewCorrelations')}
             >
               <p className="title">{`3. ${t('Correlations')}`}</p>
             </FileButton>
             <FileButton
-              buttonColor={factorsButtonColor}
-              active={viewFactors}
+              $buttoncolor={factorsButtonColor}
+              $active={viewFactors}
               onClick={() => handleClick('viewFactors')}
             >
               <p className="title">{`4. ${t('Factors')}`}</p>
             </FileButton>
             <FileButton
-              buttonColor={rotationButtonColor}
-              active={viewRotation}
+              $buttoncolor={rotationButtonColor}
+              $active={viewRotation}
               onClick={() => handleClick('viewRotation')}
             >
               <p className="title">{`5. ${t('Rotation')}`}</p>
             </FileButton>
             <FileButton
-              buttonColor={loadingsButtonColor}
-              active={viewLoadings}
+              $buttoncolor={loadingsButtonColor}
+              $active={viewLoadings}
               onClick={() => handleClick('viewLoadings')}
             >
               <p className="title">{`6. ${t('Loadings')}`}</p>
             </FileButton>
             <FileButton
-              buttonColor={outputButtonColor}
-              active={viewOutput}
+              $buttoncolor={outputButtonColor}
+              $active={viewOutput}
               onClick={() => handleClick('viewOutput')}
             >
               <p className="title">{`7. ${t('Output')}`}</p>
             </FileButton>
             <FileButton
-              active={viewProjectHistory}
+              $active={viewProjectHistory}
               onClick={() => handleClick('viewProjectHistory')}
             >
               <p className="title">{t('Project Log')}</p>
@@ -177,15 +172,15 @@ const App = () => {
 
             {showUpdateModal ? <UpdateModal /> : <NoUpdateSpacer />}
 
-            <FileButton active={viewClearProject} onClick={() => handleClick('viewClearProject')}>
+            <FileButton $active={viewClearProject} onClick={() => handleClick('viewClearProject')}>
               <p className="title">{t('Clear Project')}</p>
             </FileButton>
-            <FileButton active={viewHelp} onClick={() => handleClick('viewHelp')}>
+            <FileButton $active={viewHelp} onClick={() => handleClick('viewHelp')}>
               <p className="title">{t('Help')}</p>
             </FileButton>
             <FileButton
               className="attributionBox"
-              active={viewLicense}
+              $active={viewLicense}
               onClick={() => handleClick('viewLicense')}
             >
               <p className="title">
@@ -288,7 +283,7 @@ const FileButton = styled.button`
   padding-top: 15px;
   width: 100%;
   height: auto;
-  background: ${(props) => props.buttonColor || '#d6dbe0'};
+  background: ${(props) => props.$buttoncolor || '#d6dbe0'};
   color: black;
   border: none;
   text-align: left;
@@ -336,7 +331,7 @@ const StartButton = styled.button`
 
   .title {
     font-weight: bold;
-    font-size: 1.2rem;
+    font-size: 1rem;
     margin: 5px 0 5px;
     color: black;
   }
@@ -348,8 +343,8 @@ const StartButton = styled.button`
       0 0 1px transparent;
   }
 
-  ${({ active }) =>
-    active &&
+  ${({ $active }) =>
+    $active &&
     `
     background-color: white;
     opacity: 1;

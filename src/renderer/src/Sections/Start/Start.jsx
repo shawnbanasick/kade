@@ -1,5 +1,3 @@
-// import { view } from '@risingstack/react-easy-state';
-import React from 'react';
 import styled, { keyframes } from 'styled-components';
 import './anchorStyling.css';
 import heroImage from '../../assets/kade-hero-image.png';

@@ -8,38 +8,38 @@ const options = [
   {
     key: 'language1',
     text: 'Chinese',
-    value: 'cn'
+    value: 'cn',
   },
   {
     key: 'language2',
     text: 'English',
-    value: 'en'
+    value: 'en',
   },
   {
     key: 'language3',
     text: 'French',
-    value: 'fr'
+    value: 'fr',
   },
   {
     key: 'language4',
     text: 'German',
-    value: 'de'
+    value: 'de',
   },
   {
     key: 'language5',
     text: 'Japanese',
-    value: 'jp'
+    value: 'jp',
   },
   {
     key: 'language6',
     text: 'Korean',
-    value: 'kr'
+    value: 'kr',
   },
   {
     key: 'language7',
     text: 'Spanish',
-    value: 'es'
-  }
+    value: 'es',
+  },
 ];
 
 const languageDropdown = (props) => {

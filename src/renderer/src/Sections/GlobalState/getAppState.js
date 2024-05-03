@@ -1,5 +1,5 @@
 import appState from './appState';
-import clone from 'rfdc';
+import { cloneDeep } from 'lodash/cloneDeep';
 
 const getAppState = (key) => {
   try {
@@ -9,7 +9,7 @@ const getAppState = (key) => {
       throw new Error(`null or undefined value: ${key}`);
     }
 
-    const returnValue = clone(stateValue);
+    const returnValue = cloneDeep(stateValue);
 
     return returnValue;
   } catch (error) {

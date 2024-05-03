@@ -1,11 +1,8 @@
 import { React, useState } from 'react';
-// import { view, store } from '@risingstack/react-easy-state';
 import { Button, Header, Modal } from 'semantic-ui-react';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 import appState from '../GlobalState/appState';
-// import getAppState from '../GlobalState/getAppState';
-// const ipc = require('electron').ipcRenderer;
 const ipc = window.electron.ipcRenderer;
 
 const UpdateModal = () => {

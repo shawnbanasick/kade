@@ -6,6 +6,7 @@ import MenuFactory from './menu';
 // import i18nextBackend from 'i18next-electron-fs-backend';
 import i18nextMainBackend from '../../app/localization/i18n.mainconfig';
 import fs from 'fs';
+import installExtension, { REACT_DEVELOPER_TOOLS } from 'electron-devtools-installer';
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -15,8 +16,8 @@ let menuBuilder;
 function createWindow() {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
-    width: 900,
-    height: 670,
+    width: 1000,
+    height: 900,
     show: false,
     autoHideMenuBar: false,
     ...(process.platform === 'linux' ? { icon } : {}),
@@ -27,8 +28,8 @@ function createWindow() {
       nodeIntegrationInWorker: false,
       nodeIntegrationInSubFrames: false,
       contextIsolation: true,
-      enableRemoteModule: false
-    }
+      enableRemoteModule: false,
+    },
   });
 
   // Sets up main.js bindings for our i18next backend
@@ -82,6 +83,10 @@ function createWindow() {
 app.whenReady().then(() => {
   // Set app user model id for windows
   electronApp.setAppUserModelId('com.electron');
+
+  // installExtension(REACT_DEVELOPER_TOOLS)
+  //   .then((name) => console.log(`Added Extension: ${name}`))
+  //   .catch((err) => console.log('An error occurred: ', err));
 
   // Default open or close DevTools by F12 in development
   // and ignore CommandOrControl + R in production.

@@ -1,5 +1,3 @@
-import React from 'react';
-// import { view } from '@risingstack/react-easy-state';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
