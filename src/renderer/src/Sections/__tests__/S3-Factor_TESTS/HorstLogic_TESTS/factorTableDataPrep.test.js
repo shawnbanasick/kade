@@ -1,0 +1,25 @@
+import factorTableDataPrep from '../../../Factors/FactorTable/factorTableDataPrep';
+
+const parameter1 = 7;
+const parameter2 = [[-0.4133943,-0.5102135,0.5053612,0.3822851,-0.6152223,0.5530391,0.512551,-0.5359175,0.2387648],[0.4776108,0.5401326,0.4404741,0.5584199,-0.4048066,0.2997255,0.0747728,0.3734018,-0.3870535],[-0.3645791,-0.1455137,-0.4312683,-0.1910319,0.3875506,0.6249765,0.3848749,-0.1687701,-0.6788629],[0.3170824,0.4821828,-0.2308075,0.067419,0.3661825,0.3479879,0.181583,-0.2696946,0.5295711],[-0.2706538,0.2534525,0.1990063,-0.1855144,0.2162075,0.0808673,0.1218483,0.2199166,0.2027153],[0.3342935,-0.1265196,0.5237578,-0.1130418,0.3159844,0.010716,-0.1054482,-0.302506,-0.0947324],[0.0846403,-0.3013802,-0.0296224,0.1596084,0.1871177,0.0021132,0.0550185,0.2738709,0.0571313]];
+const parameter3 = ["US1","US2","US3","US4","JP5","CA6","UK7","US8","FR9"];
+const parameter4 = {"participantTrans":"Participant","factorTrans":"Factor","nmTrans":"Nm"};
+
+const testValue1 = [{"headerName":"Nm","field":"resNum","pinned":true,"editable":false,"sortable":true,"width":80,"sort":"asc","cellStyle":{"textAlign":"center"}},{"headerName":"Participant","field":"respondent","pinned":true,"editable":false,"sortable":true,"width":180,"cellStyle":{"textAlign":"center"}},{"headerName":"Factor 1","field":"factor1","pinned":false,"sortable":true,"editable":false,"width":90,"cellStyle":{"textAlign":"center"}},{"headerName":"Factor 2","field":"factor2","pinned":false,"sortable":true,"editable":false,"width":90,"cellStyle":{"textAlign":"center"}},{"headerName":"Factor 3","field":"factor3","pinned":false,"sortable":true,"editable":false,"width":90,"cellStyle":{"textAlign":"center"}},{"headerName":"Factor 4","field":"factor4","pinned":false,"sortable":true,"editable":false,"width":90,"cellStyle":{"textAlign":"center"}},{"headerName":"Factor 5","field":"factor5","pinned":false,"sortable":true,"editable":false,"width":90,"cellStyle":{"textAlign":"center"}},{"headerName":"Factor 6","field":"factor6","pinned":false,"sortable":true,"editable":false,"width":90,"cellStyle":{"textAlign":"center"}},{"headerName":"Factor 7","field":"factor7","pinned":false,"sortable":true,"editable":false,"width":90,"cellStyle":{"textAlign":"center"}}];
+const testValue2 = [{"resNum":1,"respondent":"US1","factor1":-0.4134,"factor2":0.4776,"factor3":-0.3646,"factor4":0.3171,"factor5":-0.2707,"factor6":0.3343,"factor7":0.0846},{"resNum":2,"respondent":"US2","factor1":-0.5102,"factor2":0.5401,"factor3":-0.1455,"factor4":0.4822,"factor5":0.2535,"factor6":-0.1265,"factor7":-0.3014},{"resNum":3,"respondent":"US3","factor1":0.5054,"factor2":0.4405,"factor3":-0.4313,"factor4":-0.2308,"factor5":0.199,"factor6":0.5238,"factor7":-0.0296},{"resNum":4,"respondent":"US4","factor1":0.3823,"factor2":0.5584,"factor3":-0.191,"factor4":0.0674,"factor5":-0.1855,"factor6":-0.113,"factor7":0.1596},{"resNum":5,"respondent":"JP5","factor1":-0.6152,"factor2":-0.4048,"factor3":0.3876,"factor4":0.3662,"factor5":0.2162,"factor6":0.316,"factor7":0.1871},{"resNum":6,"respondent":"CA6","factor1":0.553,"factor2":0.2997,"factor3":0.625,"factor4":0.348,"factor5":0.0809,"factor6":0.0107,"factor7":0.0021},{"resNum":7,"respondent":"UK7","factor1":0.5126,"factor2":0.0748,"factor3":0.3849,"factor4":0.1816,"factor5":0.1218,"factor6":-0.1054,"factor7":0.055},{"resNum":8,"respondent":"US8","factor1":-0.5359,"factor2":0.3734,"factor3":-0.1688,"factor4":-0.2697,"factor5":0.2199,"factor6":-0.3025,"factor7":0.2739},{"resNum":9,"respondent":"FR9","factor1":0.2388,"factor2":-0.3871,"factor3":-0.6789,"factor4":0.5296,"factor5":0.2027,"factor6":-0.0947,"factor7":0.0571}];
+const testValue3 = [["Nm","Participant","Factor 1","Factor 2","Factor 3","Factor 4","Factor 5","Factor 6","Factor 7"],[1,"US1",-0.4134,0.4776,-0.3646,0.3171,-0.2707,0.3343,0.0846],[2,"US2",-0.5102,0.5401,-0.1455,0.4822,0.2535,-0.1265,-0.3014],[3,"US3",0.5054,0.4405,-0.4313,-0.2308,0.199,0.5238,-0.0296],[4,"US4",0.3823,0.5584,-0.191,0.0674,-0.1855,-0.113,0.1596],[5,"JP5",-0.6152,-0.4048,0.3876,0.3662,0.2162,0.316,0.1871],[6,"CA6",0.553,0.2997,0.625,0.348,0.0809,0.0107,0.0021],[7,"UK7",0.5126,0.0748,0.3849,0.1816,0.1218,-0.1054,0.055],[8,"US8",-0.5359,0.3734,-0.1688,-0.2697,0.2199,-0.3025,0.2739],[9,"FR9",0.2388,-0.3871,-0.6789,0.5296,0.2027,-0.0947,0.0571]];
+
+
+
+test("factor Table Data Prep", () => {
+    const value1 = factorTableDataPrep(parameter1, parameter2, parameter3, parameter4);
+    expect(value1.gridColDefsFactorTable).toEqual(testValue1);
+    expect(value1.gridRowDataFactorTable).toEqual(testValue2);
+    expect(value1.unrotatedFactorArray).toEqual(testValue3);
+  });
+
+/*
+  factorState.gridColDefsFactorTable = factorTableData.gridColDefsFactorTable;
+  factorState.gridRowDataFactorTable = factorTableData.gridRowDataFactorTable;
+  factorState.unrotatedFactorMatrixOutput = factorTableData.unrotatedFactorArray;
+*/

@@ -69,7 +69,8 @@
     "semantic-ui-react": "^2.1.5",
     "semver": "^7.6.0",
     "styled-components": "^6.1.9",
-    "xlsx": "https://cdn.sheetjs.com/xlsx-0.20.2/xlsx-0.20.2.tgz"
+    "xlsx": "https://cdn.sheetjs.com/xlsx-0.20.2/xlsx-0.20.2.tgz",
+    "zustand": "^4.5.2"
   },
   "devDependencies": {
     "@electron-toolkit/eslint-config": "^1.0.2",
