@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 const GeneralButton = styled.button`
   display: grid;
@@ -28,19 +28,20 @@ const GeneralButton = styled.button`
   transition-duration: 0.3s;
   transition-property: box-shadow;
   transform: translateZ(0);
-  box-shadow: inset 0 0 0 4px
-      ${props => (props.isActive ? "var(--main-theme-color)" : "#d6dbe0")},
+  box-shadow:
+    inset 0 0 0 4px ${(props) => (props.isActive ? 'var(--main-theme-color)' : '#d6dbe0')},
     0 0 1px 0.6;
-  background-color: ${props =>
-    props.isActive ? "var(--main-theme-color)" : "#d6dbe0"};
+  background-color: ${(props) => (props.isActive ? 'var(--main-theme-color)' : '#d6dbe0')};
 
-  box-shadow: ${props =>
+  box-shadow: ${(props) =>
     props.isActive
-      ? "inset 0 0 0 2px #666, 0 0 1px transparent"
-      : "inset 0 0 0 0px #666, 0 0 0px transparent"};
+      ? 'inset 0 0 0 2px #666, 0 0 1px transparent'
+      : 'inset 0 0 0 0px #666, 0 0 0px transparent'};
 
   &:hover {
-    box-shadow: inset 0 0 0 4px #666, 0 0 1px transparent;
+    box-shadow:
+      inset 0 0 0 4px #666,
+      0 0 1px transparent;
   }
 
   &:focus {
