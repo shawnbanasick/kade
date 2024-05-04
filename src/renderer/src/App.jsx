@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import styled, { css } from 'styled-components';
 import Start from './Sections/Start/Start';
 // import Input from './Sections/Input/Input';
@@ -20,6 +21,7 @@ import './Utils/ag-grid.css';
 import './Utils/ag-theme-fresh.css';
 import './Utils/loadingsTable.css';
 import { useTranslation } from 'react-i18next';
+import i18next from 'i18next';
 
 // const semverEq = require('semver/functions/eq');
 // const electron = window.require('electron');
@@ -57,6 +59,16 @@ const handleClick = (target) => {
 };
 
 const App = () => {
+  const [language, setLanguage] = useState('en');
+
+  useEffect(() => {
+    window.languageChange.language((value) => {
+      setLanguage(value);
+    });
+
+    i18next.changeLanguage(language);
+  }, [language]);
+
   const { t } = useTranslation();
 
   const viewStart = appState((state) => state.viewStart);

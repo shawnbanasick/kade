@@ -12,7 +12,15 @@ if (process.contextIsolated) {
   try {
     contextBridge.exposeInMainWorld('electron', electronAPI);
     contextBridge.exposeInMainWorld('languageChange', {
-      language: (callback) => ipcRenderer.on('languageSignal', (_event, value) => callback(value))
+      // language: ipcRenderer.on('languageSignal', (_event, value) => {
+      //   console.log('Language changed');
+      //   return value;
+      // }),
+      language: (callback) =>
+        ipcRenderer.on('languageSignal', (_event, value) => {
+          console.log('Language changed');
+          callback(value);
+        }),
     });
   } catch (error) {
     console.error(error);

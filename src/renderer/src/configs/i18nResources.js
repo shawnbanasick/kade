@@ -6,12 +6,15 @@ i18n
     resourcesToBackend((language, namespace) => import(`../locales/${language}/${namespace}.json`))
   )
   .on('failedLoading', (lng, ns, msg) => console.error(msg))
+  .on('languageChange', (lng) => {
+    console.log('Language changed to', lng);
+  })
   .init({
     debug: true,
     fallbackLng: 'en',
     interpolation: {
-      escapeValue: false // not needed for react as it escapes by default
-    }
+      escapeValue: false, // not needed for react as it escapes by default
+    },
   });
 
 i18n.languages = ['en', 'de', 'ja'];
