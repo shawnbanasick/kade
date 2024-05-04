@@ -8,9 +8,9 @@ import Start from './Sections/Start/Start';
 // import Rotation from './Sections/Rotation/Rotation';
 // import Loadings from './Sections/Loadings/Loadings';
 // import Output from './Sections/Output/Output';
-// import ProjectHistory from './Sections/ProjectHistory/ProjectHistory';
-// import Help from './Sections/Help/Help';
-// import License from './Sections/License/License';
+import ProjectHistory from './Sections/ProjectHistory/ProjectHistory';
+import Help from './Sections/Help/Help';
+import License from './Sections/License/License';
 // import ClearProject from './Sections//ClearProject/ClearProject';
 // import getInputState from "./Sections/GlobalState/getInputState";
 import UpdateModal from './Sections/Start/UpdateModal';
@@ -51,13 +51,6 @@ window.onerror = function (errorMsg, url, lineNumber, column, error) {
   return false;
 };
 
-const handleClick = (target) => {
-  // const activeWindow = getAppState('activeWindow');
-  // appState[activeWindow] = false;
-  // appState[target] = true;
-  // appState.activeWindow = target;
-};
-
 const App = () => {
   const [language, setLanguage] = useState('en');
 
@@ -72,8 +65,7 @@ const App = () => {
   const { t } = useTranslation();
 
   const viewStart = appState((state) => state.viewStart);
-  console.log('viewStart: ', JSON.stringify(viewStart));
-
+  console.log('viewStart: ', viewStart);
   const viewInput = appState((state) => state.viewInput);
   const viewData = appState((state) => state.viewData);
   const viewCorrelations = appState((state) => state.viewCorrelations);
@@ -85,6 +77,8 @@ const App = () => {
   const viewClearProject = appState((state) => state.viewClearProject);
   const viewHelp = appState((state) => state.viewHelp);
   const viewLicense = appState((state) => state.viewLicense);
+  console.log('viewLicense: ', viewLicense);
+  //const activeWindow = appState((state) => state.activeWindow);
 
   const isDataButtonGreen = appState((state) => state.isDataButtonGreen);
   const hasDataBeenConfirmed = appState((state) => state.hasDataBeenConfirmed);
@@ -95,6 +89,21 @@ const App = () => {
   const isRotationButtonGreen = appState((state) => state.isRotationButtonGreen);
   const isLoadingsButtonGreen = appState((state) => state.isLoadingsButtonGreen);
   const isOutputButtonGreen = appState((state) => state.isOutputButtonGreen);
+
+  const updateViewAttribution = appState((state) => state.updateViewAttribution);
+  const updateViewData = appState((state) => state.updateViewData);
+  const updateViewClearProject = appState((state) => state.updateViewClearProject);
+  const updateViewCorrelations = appState((state) => state.updateViewCorrelations);
+  const updateViewFactors = appState((state) => state.updateViewFactors);
+  const updateViewHelp = appState((state) => state.updateViewHelp);
+  const updateViewInput = appState((state) => state.updateViewInput);
+  const updateViewLicense = appState((state) => state.updateViewLicense);
+  const updateViewLoadings = appState((state) => state.updateViewLoadings);
+  const updateViewOutput = appState((state) => state.updateViewOutput);
+  const updateViewProjectHistory = appState((state) => state.updateViewProjectHistory);
+  const updateViewRotation = appState((state) => state.updateViewRotation);
+  const updateViewStart = appState((state) => state.updateViewStart);
+  const updateActiveWindow = appState((state) => state.updateActiveWindow);
 
   // const installedVersion = appState.version;
   // const updateVersion = appState.updateVersion;
@@ -111,6 +120,64 @@ const App = () => {
     isDataButtonGreen,
     hasDataBeenConfirmed
   );
+
+  const handleClick = (target) => {
+    console.log('target: ', target);
+
+    updateViewAttribution(false);
+    updateViewData(false);
+    updateViewClearProject(false);
+    updateViewCorrelations(false);
+    updateViewFactors(false);
+    updateViewHelp(false);
+    updateViewInput(false);
+    updateViewLicense(false);
+    updateViewLoadings(false);
+    updateViewOutput(false);
+    updateViewProjectHistory(false);
+    updateViewRotation(false);
+    updateViewStart(false);
+
+    updateActiveWindow(target);
+
+    if (target === 'viewStart') {
+      updateViewStart(true);
+    }
+    if (target === 'viewInput') {
+      updateViewInput(true);
+    }
+    if (target === 'viewData') {
+      updateViewData(true);
+    }
+    if (target === 'viewCorrelations') {
+      updateViewCorrelations(true);
+    }
+    if (target === 'viewFactors') {
+      updateViewFactors(true);
+    }
+    if (target === 'viewRotation') {
+      updateViewRotation(true);
+    }
+    if (target === 'viewLoadings') {
+      updateViewLoadings(true);
+    }
+    if (target === 'viewOutput') {
+      updateViewOutput(true);
+    }
+    if (target === 'viewProjectHistory') {
+      updateViewProjectHistory(true);
+    }
+    if (target === 'viewHelp') {
+      updateViewHelp(true);
+    }
+    if (target === 'viewLicense') {
+      console.log('License called');
+      updateViewLicense(true);
+    }
+    if (target === 'viewClearProject') {
+      updateViewClearProject(true);
+    }
+  };
 
   let showTopBar = false;
   // if (process.platform === "darwin") {
@@ -200,7 +267,12 @@ const App = () => {
               </p>
             </FileButton>
           </FilesWindow>
-          <ActionWindow>{viewStart && <Start view={viewStart} />}</ActionWindow>
+          <ActionWindow>
+            {viewStart && <Start view={viewStart} />}
+            {viewLicense && <License view={viewLicense} />}
+            {/* {viewHelp && <Help view={viewHelp} />} */}
+            {viewProjectHistory && <ProjectHistory view={viewProjectHistory} />}
+          </ActionWindow>
         </Split>
       </ErrorBoundary>
     </AppWrap>
@@ -216,9 +288,6 @@ export default App;
 // {viewRotation && <Rotation view={viewRotation} />}
 // {viewLoadings && <Loadings view={viewLoadings} />}
 // {viewOutput && <Output view={viewOutput} />}
-// {viewProjectHistory && <ProjectHistory view={viewProjectHistory} />}
-// {viewHelp && <Help view={viewHelp} />}
-// {viewLicense && <License view={viewLicense} />}
 // {viewClearProject && <ClearProject view={viewClearProject} />}
 
 const Header = styled.header`

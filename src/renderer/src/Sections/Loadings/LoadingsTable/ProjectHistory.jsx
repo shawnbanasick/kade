@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 import React from 'react';
-import { view } from '@risingstack/react-easy-state';
 import transposeMatrix from '../../../Utils/transposeMatrix';
 import calculateCommunalities from '../../Rotation/varimaxLogic/2calculateCommunalities';
 import calcuateSigCriterionValues from '../../Rotation/varimaxLogic/2calculateSigCriterionValues';
@@ -202,7 +201,7 @@ const ProjectHistory = () => {
   );
 };
 
-export default view(ProjectHistory);
+export default ProjectHistory;
 
 // const ContentWrapper = styled.div`
 //   /* width: calc(100vw - 250px);

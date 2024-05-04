@@ -1,6 +1,6 @@
-import { store } from '@risingstack/react-easy-state';
+import { create } from 'zustand';
 
-const correlationState = store({
+const correlationState = create((set) => ({
   activeStartAnalysisButton: false,
 
   colMaxWidth: 0,
@@ -14,7 +14,17 @@ const correlationState = store({
 
   isLoadingBeginAnalysis: false,
 
-  showCorrelationMatrix: false
-});
+  showCorrelationMatrix: false,
+
+  updateActiveStartAnalysisButton: (inputValue) => set({ activeStartAnalysisButton: inputValue }),
+  updateColMaxWidth: (inputValue) => set({ colMaxWidth: inputValue }),
+  updateCorrelationTableArray: (inputValue) => set({ correlationTableArray: inputValue }),
+  updateCorrelation5Calcs: (inputValue) => set({ correlation5Calcs: inputValue }),
+  updateFirstColMaxWidth: (inputValue) => set({ firstColMaxWidth: inputValue }),
+  updateGridColDefs: (inputValue) => set({ gridColDefs: inputValue }),
+  updateGridRowData: (inputValue) => set({ gridRowData: inputValue }),
+  updateIsLoadingBeginAnalysis: (inputValue) => set({ isLoadingBeginAnalysis: inputValue }),
+  updateShowCorrelationMatrix: (inputValue) => set({ showCorrelationMatrix: inputValue }),
+}));
 
 export default correlationState;

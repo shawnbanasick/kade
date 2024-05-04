@@ -2,7 +2,7 @@
 const whitelistMap = {
   de: 'Deutsche', // German
   en: 'English',
-  ja: '日本語' // Japanese
+  ja: '日本語', // Japanese
   // af: 'Afrikaans', //Afrikaans
   // ar: 'عربى', // Arabic
   // am: 'አማርኛ', // Amharic
@@ -11,35 +11,35 @@ const whitelistMap = {
   // cs: 'čeština', // Czech
   // da: 'Dansk', // Danish
   // el: 'Ελληνικά', // Greek
-  // es: 'Español', // Spanish
+  es: 'Español', // Spanish
   // et: 'Eestlane', // Estonian
   // fa: 'فارسی', // Persian
   // fi: 'Suomalainen', // Finnish
   // fil: 'Pilipino', // Filipino
-  // fr: 'Français', // French
+  fr: 'Français', // French
   // gu: 'ગુજરાતી', // Gujarati
   // he: 'עברית', // Hebrew
   // hi: 'हिंदी', // Hindi
   // hr: 'Hrvatski', // Croatian
   // hu: 'Magyar', // Hungarian
   // id: 'Indonesia', // Indonesian
-  // it: 'Italiano', // Italian
+  it: 'Italiano', // Italian
   // kn: 'ಕನ್ನಡ', // Kannada
-  // ko: '한국어', // Korean
+  ko: '한국어', // Korean
   // lt: 'Lietuvis', // Lithuanian
   // lv: 'Latvietis', // Latvian
   // ml: 'മലയാളം', // Malayalam
   // mr: 'मराठी', // Marathi
   // ms: 'Melayu', // Malay
-  // nl: 'Nederlands', // Dutch
-  // no: 'norsk', // Norwegian
+  nl: 'Nederlands', // Dutch
+  nb: 'norsk', // Norwegian
   // pl: 'Polskie', // Polish
-  // pt: 'Português', // Portuguese
+  pt: 'Português', // Portuguese
   // ro: 'Română', // Romanian
   // ru: 'Pусский', // Russian
   // sk: 'Slovenský', // Slovak
   // sr: 'Српски', // Serbian
-  // sv: 'Svenska', // Swedish
+  sv: 'Svenska', // Swedish
   // sw: 'Kiswahili', // Swahili
   // ta: 'தமிழ்', // Tamil
   // te: 'తెలుగు', // Telugu
@@ -47,7 +47,7 @@ const whitelistMap = {
   // tr: 'Türk', // Turkish
   // uk: 'Українська', // Ukranian
   // vi: 'Tiếng Việt', // Vietnamese
-  // zh_CN: '简体中文' // Chinese
+  zh_CN: '简体中文', // Chinese
 };
 
 const whitelist = (function () {
@@ -59,7 +59,7 @@ const whitelist = (function () {
 
       // Between renderer > main process
       browserWindow.webContents.send(channel, {
-        lng
+        lng,
       });
     };
   };
@@ -72,12 +72,12 @@ const whitelist = (function () {
       for (const key of keys) {
         submenu.push({
           label: whitelistMap[key],
-          click: clickFunction(channel, key, i18nextMainBackend)
+          click: clickFunction(channel, key, i18nextMainBackend),
         });
       }
 
       return submenu;
-    }
+    },
   };
 })();
 

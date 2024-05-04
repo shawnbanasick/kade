@@ -17,6 +17,6 @@ i18n
     },
   });
 
-i18n.languages = ['en', 'de', 'ja'];
+i18n.languages = ['en', 'de', 'es', 'fr', 'it', 'nb', 'nl', 'pt', 'sv', 'zh_CN', 'ko', 'ja'];
 
 export default i18n;

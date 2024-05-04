@@ -1,6 +1,5 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Tab } from 'semantic-ui-react';
-import { view, store } from '@risingstack/react-easy-state';
 import styled, { keyframes } from 'styled-components';
 import HelpHome from './HelpHome';
 import InputHelpText from './InputHelpText';
@@ -28,7 +27,7 @@ const panes = [
           <HelpHome />
         </DataWindow2>
       </Tab.Pane>
-    )
+    ),
   },
   {
     menuItem: 'Help-Input',
@@ -44,7 +43,7 @@ const panes = [
           <InputHelpTextPqmethod />
         </DataWindow2>
       </Tab.Pane>
-    )
+    ),
   },
   {
     menuItem: 'Help-Correlations',
@@ -54,7 +53,7 @@ const panes = [
           <CorrelationsHelpText />
         </DataWindow2>
       </Tab.Pane>
-    )
+    ),
   },
   {
     menuItem: 'Help-Factors',
@@ -64,7 +63,7 @@ const panes = [
           <FactorsHelpText />
         </DataWindow2>
       </Tab.Pane>
-    )
+    ),
   },
   {
     menuItem: 'Help-Rotation',
@@ -74,7 +73,7 @@ const panes = [
           <RotationHelpText />
         </DataWindow2>
       </Tab.Pane>
-    )
+    ),
   },
   {
     menuItem: 'Help-Loadings',
@@ -84,7 +83,7 @@ const panes = [
           <LoadingsHelpText />
         </DataWindow2>
       </Tab.Pane>
-    )
+    ),
   },
   {
     menuItem: 'Help-Output',
@@ -94,20 +93,17 @@ const panes = [
           <OutputHelpText />
         </DataWindow2>
       </Tab.Pane>
-    )
-  }
+    ),
+  },
 ];
 
-const localStore = store({
-  activeIndex: 0
-});
-
-function handleTabChange(e, { activeIndex }) {
-  localStore.activeIndex = activeIndex;
-}
-
 const Output = () => {
-  const { activeIndex } = localStore;
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  function handleTabChange(e, { activeIndex }) {
+    setActiveIndex(activeIndex);
+  }
+
   return (
     <MainContent>
       <Tab
@@ -121,7 +117,7 @@ const Output = () => {
   );
 };
 
-export default view(Output);
+export default Output;
 
 const fadeIn = keyframes`
   from {

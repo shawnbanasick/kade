@@ -1,5 +1,4 @@
 import React from 'react';
-import { view } from '@risingstack/react-easy-state';
 import styled from 'styled-components';
 import ProjectHistory from '../Loadings/LoadingsTable/ProjectHistory';
 
@@ -11,7 +10,7 @@ const License = () => {
   );
 };
 
-export default view(License);
+export default License;
 
 const MainContent = styled.div`
   /* display: grid;

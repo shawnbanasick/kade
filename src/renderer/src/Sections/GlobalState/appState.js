@@ -41,90 +41,34 @@ const appState = create((set) => ({
   viewRotation: false,
   viewStart: true,
 
-  updateActiveWindow: (inputValue) => {
-    set(() => ({ activeWindow: inputValue }));
-  },
-  updateErrorMessage: (inputValue) => {
-    set(() => ({ errorMessage: inputValue }));
-  },
-  updateExtendedErrorMessage: (inputValue) => {
-    set(() => ({ extendedErrorMessage: inputValue }));
-  },
-  updateErrorStackTrace: (inputValue) => {
-    set(() => ({ errorStackTrace: inputValue }));
-  },
-  updateHasDataBeenConfirmed: (inputValue) => {
-    set(() => ({ hasDataBeenConfirmed: inputValue }));
-  },
-  updateIsDataButtonGreen: (inputValue) => {
-    set(() => ({ isDataButtonGreen: inputValue }));
-  },
-  updateIsInputButtonGreen: (inputValue) => {
-    set(() => ({ isInputButtonGreen: inputValue }));
-  },
-  updateIsCorrelationsButtonGreen: (inputValue) => {
-    set(() => ({ isCorrelationsButtonGreen: inputValue }));
-  },
-  updateIsFactorsButtonGreen: (inputValue) => {
-    set(() => ({ isFactorsButtonGreen: inputValue }));
-  },
-  updateIsLoadingsButtonGreen: (inputValue) => {
-    set(() => ({ isLoadingsButtonGreen: inputValue }));
-  },
-  updateIsRotationButtonGreen: (inputValue) => {
-    set(() => ({ isRotationButtonGreen: inputValue }));
-  },
-  updateIsOutputButtonGreen: (inputValue) => {
-    set(() => ({ isOutputButtonGreen: inputValue }));
-  },
-  updateShowErrorMessageBar: (inputValue) => {
-    set(() => ({ showErrorMessageBar: inputValue }));
-  },
-  updateShowUpdateModal: (inputValue) => {
-    set(() => ({ showUpdateModal: inputValue }));
-  },
-  updateUpdateVersion: (inputValue) => {
-    set(() => ({ updateVersion: inputValue }));
-  },
-  updateViewAttribution: (inputValue) => {
-    set(() => ({ viewAttribution: inputValue }));
-  },
-  updateViewData: (inputValue) => {
-    set(() => ({ viewData: inputValue }));
-  },
-  updateViewClearProject: (inputValue) => {
-    set(() => ({ viewClearProject: inputValue }));
-  },
-  updateViewCorrelations: (inputValue) => {
-    set(() => ({ viewCorrelations: inputValue }));
-  },
-  updateViewFactors: (inputValue) => {
-    set(() => ({ viewFactors: inputValue }));
-  },
-  updateViewHelp: (inputValue) => {
-    set(() => ({ viewHelp: inputValue }));
-  },
-  updateViewInput: (inputValue) => {
-    set(() => ({ viewInput: inputValue }));
-  },
-  updateViewLicense: (inputValue) => {
-    set(() => ({ viewLicense: inputValue }));
-  },
-  updateViewLoadings: (inputValue) => {
-    set(() => ({ viewLoadings: inputValue }));
-  },
-  updateViewOutput: (inputValue) => {
-    set(() => ({ viewOutput: inputValue }));
-  },
-  updateViewProjectHistory: (inputValue) => {
-    set(() => ({ viewProjectHistory: inputValue }));
-  },
-  updateViewRotation: (inputValue) => {
-    set(() => ({ viewRotation: inputValue }));
-  },
-  updateViewStart: (inputValue) => {
-    set(() => ({ viewStart: inputValue }));
-  }
+  updateActiveWindow: (inputValue) => set({ activeWindow: inputValue }),
+  updateErrorMessage: (inputValue) => set({ errorMessage: inputValue }),
+  updateExtendedErrorMessage: (inputValue) => set({ extendedErrorMessage: inputValue }),
+  updateErrorStackTrace: (inputValue) => set({ errorStackTrace: inputValue }),
+  updateHasDataBeenConfirmed: (inputValue) => set({ hasDataBeenConfirmed: inputValue }),
+  updateIsDataButtonGreen: (inputValue) => set({ isDataButtonGreen: inputValue }),
+  updateIsInputButtonGreen: (inputValue) => set({ isInputButtonGreen: inputValue }),
+  updateIsCorrelationsButtonGreen: (inputValue) => set({ isCorrelationsButtonGreen: inputValue }),
+  updateIsFactorsButtonGreen: (inputValue) => set({ isFactorsButtonGreen: inputValue }),
+  updateIsLoadingsButtonGreen: (inputValue) => set({ isLoadingsButtonGreen: inputValue }),
+  updateIsRotationButtonGreen: (inputValue) => set({ isRotationButtonGreen: inputValue }),
+  updateIsOutputButtonGreen: (inputValue) => set({ isOutputButtonGreen: inputValue }),
+  updateShowErrorMessageBar: (inputValue) => set({ showErrorMessageBar: inputValue }),
+  updateShowUpdateModal: (inputValue) => set({ showUpdateModal: inputValue }),
+  updateUpdateVersion: (inputValue) => set({ updateVersion: inputValue }),
+  updateViewAttribution: (inputValue) => set({ viewAttribution: inputValue }),
+  updateViewData: (inputValue) => set({ viewData: inputValue }),
+  updateViewClearProject: (inputValue) => set({ viewClearProject: inputValue }),
+  updateViewCorrelations: (inputValue) => set({ viewCorrelations: inputValue }),
+  updateViewFactors: (inputValue) => set({ viewFactors: inputValue }),
+  updateViewHelp: (inputValue) => set({ viewHelp: inputValue }),
+  updateViewInput: (inputValue) => set({ viewInput: inputValue }),
+  updateViewLicense: (inputValue) => set({ viewLicense: inputValue }),
+  updateViewLoadings: (inputValue) => set({ viewLoadings: inputValue }),
+  updateViewOutput: (inputValue) => set({ viewOutput: inputValue }),
+  updateViewProjectHistory: (inputValue) => set({ viewProjectHistory: inputValue }),
+  updateViewRotation: (inputValue) => set({ viewRotation: inputValue }),
+  updateViewStart: (inputValue) => set({ viewStart: inputValue }),
 }));
 
 export default appState;

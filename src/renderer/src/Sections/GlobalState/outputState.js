@@ -1,8 +1,8 @@
-import { store } from '@risingstack/react-easy-state';
+import { create } from 'zustand';
 
 //   distStateListSortKey: "",
 
-const outputState = store({
+const outputState = create((set) => ({
   displayFactorVisualizations: false,
   distStateLowerValueText: `p<0.05`,
   distStateUpperValueText: `p<0.01`,
@@ -110,8 +110,80 @@ const outputState = store({
     '451 - 465',
     '466 - 480',
     '481 - 495',
-    '496 - 510'
-  ]
-});
+    '496 - 510',
+  ],
+
+  updateDisplayFactorVisualizations: (inputValue) =>
+    set({ displayFactorVisualizations: inputValue }),
+  updateDistStateLowerValueText: (inputValue) => set({ distStateLowerValueText: inputValue }),
+  updateDistStateUpperValueText: (inputValue) => set({ distStateUpperValueText: inputValue }),
+  updateFactorsWithoutLoading: (inputValue) => set({ factorsWithoutLoading: inputValue }),
+  updateNotifyOutputDistStateError: (inputValue) => set({ notifyOutputDistStateError: inputValue }),
+  updateOutputActiveTabIndex: (inputValue) => set({ outputActiveTabIndex: inputValue }),
+  updateOutputButtonsArray: (inputValue) => set({ outputButtonsArray: inputValue }),
+  updateOutputFactorSelectButtonsDisabled: (inputValue) =>
+    set({ outputFactorSelectButtonsDisabled: inputValue }),
+  updateOutputForDataViz: (inputValue) => set({ outputForDataViz: inputValue }),
+  updateOutputForDataViz2: (inputValue) => set({ outputForDataViz2: inputValue }),
+  updateSelectAllClicked: (inputValue) => set({ selectAllClicked: inputValue }),
+  updateShouldDisplayFactorVizOptions: (inputValue) =>
+    set({ shouldDisplayFactorVizOptions: inputValue }),
+  updateShowDocxOptions: (inputValue) => set({ showDocxOptions: inputValue }),
+  updateDownloadDocxButtonActive: (inputValue) => set({ downloadDocxButtonActive: inputValue }),
+  updateShowDownloadOutputButtons: (inputValue) => set({ showDownloadOutputButtons: inputValue }),
+  updateShowFactorCharacteristicsTable: (inputValue) =>
+    set({ showFactorCharacteristicsTable: inputValue }),
+  updateShowFactorCorrelationsTable: (inputValue) =>
+    set({ showFactorCorrelationsTable: inputValue }),
+  updateShowMultipleFactorsFlaggedWarningModal: (inputValue) =>
+    set({ showMultipleFactorsFlaggedWarningModal: inputValue }),
+  updateShowNoLoadingsFlaggedWarningModal: (inputValue) =>
+    set({ showNoLoadingsFlaggedWarningModal: inputValue }),
+  updateShowTableDataNotSentWarning: (inputValue) =>
+    set({ showTableDataNotSentWarning: inputValue }),
+  updateShowOutputFactorSelection: (inputValue) => set({ showOutputFactorSelection: inputValue }),
+  updateShowStandardErrorsDifferences: (inputValue) =>
+    set({ showStandardErrorsDifferences: inputValue }),
+  updateSliceValueDistStateSigLevelDrop1: (inputValue) =>
+    set({ sliceValueDistStateSigLevelDrop1: inputValue }),
+  updateSortsFlaggedOnTwoFactors: (inputValue) => set({ sortsFlaggedOnTwoFactors: inputValue }),
+  updateThresholdButtonActive: (inputValue) => set({ thresholdButtonActive: inputValue }),
+  updateQSortValueButtonActive: (inputValue) => set({ qSortValueButtonActive: inputValue }),
+  updateStatementNumButtonActive: (inputValue) => set({ statementNumButtonActive: inputValue }),
+  updateZScoreButtonActive: (inputValue) => set({ zScoreButtonActive: inputValue }),
+  updateDistStateListSortKey: (inputValue) => set({ distStateListSortKey: inputValue }),
+  updateThreshold: (inputValue) => set({ threshold: inputValue }),
+  updateUserSelectedFactors: (inputValue) => set({ userSelectedFactors: inputValue }),
+  updateWillIncludeThreshold: (inputValue) => set({ willIncludeThreshold: inputValue }),
+  updateCorrelationThreshold: (inputValue) => set({ correlationThreshold: inputValue }),
+  updateUseClipped: (inputValue) => set({ useClipped: inputValue }),
+  updateUseClippedButtonActive: (inputValue) => set({ useClippedButtonActive: inputValue }),
+  updateUseTables: (inputValue) => set({ useTables: inputValue }),
+  updateUseTablesButtonActive: (inputValue) => set({ useTablesButtonActive: inputValue }),
+  updateUseZebra: (inputValue) => set({ useZebra: inputValue }),
+  updateWillIncludeToc: (inputValue) => set({ willIncludeToc: inputValue }),
+  updateWillUseHyperlinks: (inputValue) => set({ willUseHyperlinks: inputValue }),
+  updateWillIncludeDataFiles: (inputValue) => set({ willIncludeDataFiles: inputValue }),
+  updateWillIncludeOverview: (inputValue) => set({ willIncludeOverview: inputValue }),
+  updateWillIncludeStatements: (inputValue) => set({ willIncludeStatements: inputValue }),
+  updateWillIncludeQsorts: (inputValue) => set({ willIncludeQsorts: inputValue }),
+  updateWillIncludeCorrMatrix: (inputValue) => set({ willIncludeCorrMatrix: inputValue }),
+  updateWillIncludeUnrotFacMatrix: (inputValue) => set({ willIncludeUnrotFacMatrix: inputValue }),
+  updateWillIncludeCumulComm: (inputValue) => set({ willIncludeCumulComm: inputValue }),
+  updateWillIncludeFacLoadings: (inputValue) => set({ willIncludeFacLoadings: inputValue }),
+  updateWillIncludeFacLoadingsTable: (inputValue) =>
+    set({ willIncludeFacLoadingsTable: inputValue }),
+  updateWillIncludeFreeDist: (inputValue) => set({ willIncludeFreeDist: inputValue }),
+  updateWillIncludeFacScoreRanks: (inputValue) => set({ willIncludeFacScoreRanks: inputValue }),
+  updateWillIncludeFacScoreCorr: (inputValue) => set({ willIncludeFacScoreCorr: inputValue }),
+  updateWillIncludeFactors: (inputValue) => set({ willIncludeFactors: inputValue }),
+  updateWillIncludeFacDiffs: (inputValue) => set({ willIncludeFacDiffs: inputValue }),
+  updateWillIncludeConDis: (inputValue) => set({ willIncludeConDis: inputValue }),
+  updateWillIncludeFacChar: (inputValue) => set({ willIncludeFacChar: inputValue }),
+  updateWillIncludeDist: (inputValue) => set({ willIncludeDist: inputValue }),
+  updateWillIncludeConsensus: (inputValue) => set({ willIncludeConsensus: inputValue }),
+  updateWillIncludeRelRanks: (inputValue) => set({ willIncludeRelRanks: inputValue }),
+  updatePartNumArray: (inputValue) => set({ partNumArray: inputValue }),
+}));
 
 export default outputState;

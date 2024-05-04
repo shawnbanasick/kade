@@ -16,39 +16,39 @@ const MenuBuilder = function (mainWindow, appName) {
               submenu: [
                 {
                   role: 'about',
-                  label: i18nextMainBackend.t('About')
+                  label: i18nextMainBackend.t('About'),
                 },
                 {
-                  type: 'separator'
+                  type: 'separator',
                 },
 
                 {
-                  type: 'separator'
+                  type: 'separator',
                 },
                 {
                   role: 'hide',
-                  label: i18nextMainBackend.t('Hide')
+                  label: i18nextMainBackend.t('Hide'),
                 },
                 {
                   role: 'hideothers',
-                  label: i18nextMainBackend.t('Hide Others')
+                  label: i18nextMainBackend.t('Hide Others'),
                 },
                 {
                   role: 'unhide',
-                  label: i18nextMainBackend.t('Unhide')
+                  label: i18nextMainBackend.t('Unhide'),
                 },
                 {
-                  type: 'separator'
+                  type: 'separator',
                 },
                 {
                   role: 'quit',
-                  label: i18nextMainBackend.t('Quit')
+                  label: i18nextMainBackend.t('Quit'),
                 },
                 {
-                  type: 'separator'
-                }
-              ]
-            }
+                  type: 'separator',
+                },
+              ],
+            },
           ]
         : []),
       // { role: "fileMenu" }
@@ -58,13 +58,13 @@ const MenuBuilder = function (mainWindow, appName) {
           isMac
             ? {
                 role: 'close',
-                label: i18nextMainBackend.t('Quit')
+                label: i18nextMainBackend.t('Quit'),
               }
             : {
                 role: 'quit',
-                label: i18nextMainBackend.t('Exit')
-              }
-        ]
+                label: i18nextMainBackend.t('Exit'),
+              },
+        ],
       },
       // { role: "editMenu" }
       {
@@ -72,72 +72,72 @@ const MenuBuilder = function (mainWindow, appName) {
         submenu: [
           {
             role: 'undo',
-            label: i18nextMainBackend.t('Undo')
+            label: i18nextMainBackend.t('Undo'),
           },
           {
             role: 'redo',
-            label: i18nextMainBackend.t('Redo')
+            label: i18nextMainBackend.t('Redo'),
           },
           {
-            type: 'separator'
+            type: 'separator',
           },
           {
             role: 'cut',
-            label: i18nextMainBackend.t('Cut')
+            label: i18nextMainBackend.t('Cut'),
           },
           {
             role: 'copy',
-            label: i18nextMainBackend.t('Copy')
+            label: i18nextMainBackend.t('Copy'),
           },
           {
             role: 'paste',
-            label: i18nextMainBackend.t('Paste')
+            label: i18nextMainBackend.t('Paste'),
           },
           ...(isMac
             ? [
                 {
                   role: 'pasteAndMatchStyle',
-                  label: i18nextMainBackend.t('Paste and Match Style')
+                  label: i18nextMainBackend.t('Paste and Match Style'),
                 },
                 {
                   role: 'delete',
-                  label: i18nextMainBackend.t('Delete')
+                  label: i18nextMainBackend.t('Delete'),
                 },
                 {
                   role: 'selectAll',
-                  label: i18nextMainBackend.t('Select All')
+                  label: i18nextMainBackend.t('Select All'),
                 },
                 {
-                  type: 'separator'
+                  type: 'separator',
                 },
                 {
                   label: i18nextMainBackend.t('Speech'),
                   submenu: [
                     {
                       role: 'startspeaking',
-                      label: i18nextMainBackend.t('Start Speaking')
+                      label: i18nextMainBackend.t('Start Speaking'),
                     },
                     {
                       role: 'stopspeaking',
-                      label: i18nextMainBackend.t('Stop Speaking')
-                    }
-                  ]
-                }
+                      label: i18nextMainBackend.t('Stop Speaking'),
+                    },
+                  ],
+                },
               ]
             : [
                 {
                   role: 'delete',
-                  label: i18nextMainBackend.t('Delete')
+                  label: i18nextMainBackend.t('Delete'),
                 },
                 {
-                  type: 'separator'
+                  type: 'separator',
                 },
                 {
                   role: 'selectAll',
-                  label: i18nextMainBackend.t('Select All')
-                }
-              ])
-        ]
+                  label: i18nextMainBackend.t('Select All'),
+                },
+              ]),
+        ],
       },
       // { role: "viewMenu" }
       {
@@ -145,44 +145,44 @@ const MenuBuilder = function (mainWindow, appName) {
         submenu: [
           {
             role: 'reload',
-            label: i18nextMainBackend.t('Reload')
+            label: i18nextMainBackend.t('Reload'),
           },
           {
             role: 'forcereload',
-            label: i18nextMainBackend.t('Force Reload')
+            label: i18nextMainBackend.t('Force Reload'),
           },
           {
             role: 'toggledevtools',
-            label: i18nextMainBackend.t('Toggle Developer Tools')
+            label: i18nextMainBackend.t('Toggle Developer Tools'),
           },
           {
-            type: 'separator'
+            type: 'separator',
           },
           {
             role: 'resetzoom',
-            label: i18nextMainBackend.t('Reset Zoom')
+            label: i18nextMainBackend.t('Reset Zoom'),
           },
           {
             role: 'zoomin',
-            label: i18nextMainBackend.t('Zoom In')
+            label: i18nextMainBackend.t('Zoom In'),
           },
           {
             role: 'zoomout',
-            label: i18nextMainBackend.t('Zoom Out')
+            label: i18nextMainBackend.t('Zoom Out'),
           },
           {
-            type: 'separator'
+            type: 'separator',
           },
           {
             role: 'togglefullscreen',
-            label: i18nextMainBackend.t('Toggle Fullscreen')
-          }
-        ]
+            label: i18nextMainBackend.t('Toggle Fullscreen'),
+          },
+        ],
       },
       // language menu
       {
         label: i18nextMainBackend.t('Language'),
-        submenu: whitelist.buildSubmenu(i18nBackend.changeLanguageRequest, i18nextMainBackend)
+        submenu: whitelist.buildSubmenu(i18nBackend.changeLanguageRequest, i18nextMainBackend),
       },
       // { role: "windowMenu" }
       {
@@ -190,36 +190,36 @@ const MenuBuilder = function (mainWindow, appName) {
         submenu: [
           {
             role: 'minimize',
-            label: i18nextMainBackend.t('Minimize')
+            label: i18nextMainBackend.t('Minimize'),
           },
           {
             role: 'zoom',
-            label: i18nextMainBackend.t('Zoom')
+            label: i18nextMainBackend.t('Zoom'),
           },
           ...(isMac
             ? [
                 {
-                  type: 'separator'
+                  type: 'separator',
                 },
                 {
                   role: 'front',
-                  label: i18nextMainBackend.t('Front')
+                  label: i18nextMainBackend.t('Front'),
                 },
                 {
-                  type: 'separator'
+                  type: 'separator',
                 },
                 {
                   role: 'window',
-                  label: i18nextMainBackend.t('Window')
-                }
+                  label: i18nextMainBackend.t('Window'),
+                },
               ]
             : [
                 {
                   role: 'close',
-                  label: i18nextMainBackend.t('Close')
-                }
-              ])
-        ]
+                  label: i18nextMainBackend.t('Close'),
+                },
+              ]),
+        ],
       },
       // help menu
       {
@@ -231,10 +231,10 @@ const MenuBuilder = function (mainWindow, appName) {
             click: async () => {
               const { shell } = require('electron');
               await shell.openExternal('https://electronjs.org');
-            }
-          }
-        ]
-      }
+            },
+          },
+        ],
+      },
     ];
   };
 
@@ -243,7 +243,7 @@ const MenuBuilder = function (mainWindow, appName) {
       const menu = Menu.buildFromTemplate(defaultTemplate(i18nextMainBackend));
       Menu.setApplicationMenu(menu);
       return menu;
-    }
+    },
   };
 };
 

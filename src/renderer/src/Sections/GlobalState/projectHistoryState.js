@@ -1,7 +1,7 @@
-import { store } from '@risingstack/react-easy-state';
+// removed easy-state
 
-const projectHistoryState = store({
-  projectHistoryArray: []
-});
+const projectHistoryState = {
+  projectHistoryArray: [],
+};
 
 export default projectHistoryState;

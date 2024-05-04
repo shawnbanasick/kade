@@ -1,11 +1,8 @@
-import React from 'react';
-import { view } from '@risingstack/react-easy-state';
 import styled from 'styled-components';
 
 const License = () => {
   return (
     <MainContent>
-      <div />
       <div>
         <h1>KADE (Ken-Q Analysis Desktop Edition)</h1>
         <h2>Copyright (C) 2024 Shawn Banasick</h2>
@@ -80,7 +77,7 @@ const License = () => {
   );
 };
 
-export default view(License);
+export default License;
 
 const MainContent = styled.div`
   display: grid;

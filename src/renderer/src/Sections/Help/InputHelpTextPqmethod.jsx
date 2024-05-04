@@ -1,5 +1,4 @@
 import React from 'react';
-import { view } from '@risingstack/react-easy-state';
 import styled from 'styled-components';
 import PqmethodInputImage from './helpImages/k3-pqmethod.png';
 
@@ -47,7 +46,7 @@ const HelpSection = () => {
   );
 };
 
-export default view(HelpSection);
+export default HelpSection;
 
 const MainContent = styled.div`
   background-color: white;
