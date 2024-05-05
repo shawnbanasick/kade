@@ -44,7 +44,9 @@ const initializeAppState = () => {
   updateErrorMessage('');
   updateExtendedErrorMessage('');
   updateErrorStackTrace('');
+
   updateHasDataBeenConfirmed(false);
+
   updateIsDataButtonGreen(false);
   updateIsInputButtonGreen(false);
   updateIsCorrelationsButtonGreen(false);

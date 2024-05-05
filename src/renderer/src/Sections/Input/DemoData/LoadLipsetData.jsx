@@ -1,5 +1,4 @@
 import React from 'react';
-import { view } from '@risingstack/react-easy-state';
 import uploadLipsetData from './uploadLipsetData';
 import revertLoadButtonsColors from './revertLoadButtonsColors';
 import LoadButton from './LoadButton';
@@ -53,7 +52,7 @@ const LipsetButton1 = () => {
   );
 };
 
-export default view(LipsetButton1);
+export default LipsetButton1;
 
 const SvgContainer = styled.svg`
   transform: rotate(180deg);

@@ -1,7 +1,7 @@
-import inputState from "./inputState";
-const clone = require("rfdc")();
+import inputState from './inputState';
+import { cloneDeep as clone } from 'lodash/cloneDeep';
 
-const getInputState = key => {
+const getInputState = (key) => {
   try {
     const stateValue = inputState[key];
 
@@ -13,10 +13,10 @@ const getInputState = key => {
 
     return returnValue;
   } catch (error) {
-    const spacing = "5px";
+    const spacing = '5px';
     const styles = `padding: ${spacing}; background-color: darkblue; color: white; font-style: 
      italic; border: ${spacing} solid crimson; font-size: 2em;`;
-    console.error("%cError", styles, error.message);
+    console.error('%cError', styles, error.message);
   }
 };
 

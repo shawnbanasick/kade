@@ -3,7 +3,7 @@ import { join } from 'path';
 import { electronApp, optimizer, is } from '@electron-toolkit/utils';
 import icon from '../../resources/icon.png?asset';
 import MenuFactory from './menu';
-import i18nextBackend from 'i18next-electron-fs-backend';
+// import i18nextBackend from 'i18next-electron-fs-backend';
 import i18nextMainBackend from '../../app/localization/i18n.mainconfig';
 import fs from 'fs';
 //import installExtension, { REACT_DEVELOPER_TOOLS } from 'electron-devtools-installer';
@@ -33,7 +33,7 @@ function createWindow() {
   });
 
   // Sets up main.js bindings for our i18next backend
-  i18nextBackend.mainBindings(ipcMain, win, fs);
+  // i18nextBackend.mainBindings(ipcMain, win, fs);
 
   mainWindow.on('ready-to-show', () => {
     mainWindow.show();
@@ -115,18 +115,18 @@ app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
     app.quit();
   } else {
-    i18nextBackend.clearMainBindings(ipcMain);
+    // i18nextBackend.clearMainBindings(ipcMain);
   }
 });
 
 app.on('web-contents-created', (event, contents) => {
   // enable i18next translations in popup window
   contents.on('did-create-window', (window) => {
-    i18nextBackend.mainBindings(ipcMain, window, fs);
+    // i18nextBackend.mainBindings(ipcMain, window, fs);
   });
   // destroy bindings on popup window closed
   contents.on('destroyed', () => {
-    i18nextBackend.clearMainBindings(ipcMain);
+    // i18nextBackend.clearMainBindings(ipcMain);
   });
 });
 

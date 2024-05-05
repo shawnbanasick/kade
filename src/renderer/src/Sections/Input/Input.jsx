@@ -1,27 +1,24 @@
 import { Tab } from 'semantic-ui-react';
-import React from 'react';
-import { view, store } from '@risingstack/react-easy-state';
+import React, { useState } from 'react';
 import styled, { keyframes } from 'styled-components';
 import { ToastContainer, toast, Zoom } from 'react-toastify';
 // import CsvPanel from "./CSV/CsvPanel";
-import JsonPanel from './JsonPanel';
-import ExcelPanel from './ExcelPanel';
-import KandedPanel from './KandedPanel';
-import PQMethodPanel from './PQMethodPanel';
+//import JsonPanel from './JsonPanel';
+//import ExcelPanel from './ExcelPanel';
+//import KandedPanel from './KandedPanel';
+//import PQMethodPanel from './PQMethodPanel';
+//import KadeZipPanel from './KadeZipPanel';
 import DemoDataPanel from './DemoDataPanel';
-import ErrorNotification from './ErrorChecking/ErrorNotification';
-import WarningNotification from './ErrorChecking/WarningNotification';
+// import ErrorNotification from './ErrorChecking/ErrorNotification';
+// import WarningNotification from './ErrorChecking/WarningNotification';
 import { useTranslation } from 'react-i18next';
 import inputState from '../GlobalState/inputState';
 import getInputState from '../GlobalState/getInputState';
-import KadeZipPanel from './KadeZipPanel';
 // import i18n from "i18next";
 
-const localStore = store({
-  activeIndex: 0
-});
-
 function Input() {
+  const [activeIndex, setActiveIndex] = useState(0);
+
   // put here to be able to use React hook for t
   function notify() {
     toast.success(t('File Load Success'));
@@ -31,13 +28,14 @@ function Input() {
   const { t } = useTranslation();
 
   const panes = [
+    /*
     {
       menuItem: t('XLSX'),
       render: () => (
         <Tab.Pane>
           <ExcelPanel />
         </Tab.Pane>
-      )
+      ),
     },
     {
       menuItem: t('KADE XLSX'),
@@ -45,7 +43,7 @@ function Input() {
         <Tab.Pane>
           <KandedPanel />
         </Tab.Pane>
-      )
+      ),
     },
     {
       menuItem: t('KADE ZIP'),
@@ -53,7 +51,7 @@ function Input() {
         <Tab.Pane>
           <KadeZipPanel />
         </Tab.Pane>
-      )
+      ),
     },
     {
       menuItem: t('EQ Web Sort'),
@@ -61,7 +59,7 @@ function Input() {
         <Tab.Pane>
           <JsonPanel />
         </Tab.Pane>
-      )
+      ),
     },
     {
       menuItem: t('PQMethod'),
@@ -69,23 +67,23 @@ function Input() {
         <Tab.Pane>
           <PQMethodPanel />
         </Tab.Pane>
-      )
+      ),
     },
+    */
     {
       menuItem: t('Demo Data'),
       render: () => (
         <Tab.Pane>
           <DemoDataPanel />
         </Tab.Pane>
-      )
-    }
+      ),
+    },
   ];
 
   const handleTabChange = (e, { activeIndex }) => {
-    localStore.activeIndex = activeIndex;
+    setActiveIndex(activeIndex);
   };
 
-  const { activeIndex } = localStore;
   const showNotification = getInputState('notifyDataUploadSuccess');
   if (showNotification) {
     notify();
@@ -95,14 +93,14 @@ function Input() {
       <ToastContainer transition={Zoom} />
       <MainContent>
         <Tab panes={panes} activeIndex={activeIndex} onTabChange={handleTabChange} />
-        <ErrorNotification />
-        <WarningNotification />
+        {/* <ErrorNotification /> */}
+        {/* <WarningNotification /> */}
       </MainContent>
     </React.Fragment>
   );
 }
 
-export default view(Input);
+export default Input;
 
 const fadeIn = keyframes`
   from {

@@ -1,7 +1,9 @@
-import projectHistoryState from "../GlobalState/projectHistoryState";
+import projectHistoryState from '../GlobalState/projectHistoryState';
 
 const initializeProjectHistoryState = () => {
-  projectHistoryState.projectHistoryArray = [];
+  const updateProjectHistoryArray = projectHistoryState((state) => state.updateProjectHistoryArray);
+
+  updateProjectHistoryArray([]);
 
   return;
 };

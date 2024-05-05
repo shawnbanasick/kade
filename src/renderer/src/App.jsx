@@ -1,15 +1,15 @@
 import { useEffect, useState } from 'react';
 import styled, { css } from 'styled-components';
 import Start from './Sections/Start/Start';
-// import Input from './Sections/Input/Input';
+import Input from './Sections/Input/Input';
 // import Data from './Sections/Data/Data';
 // import Correlations from './Sections/Correlations/Correlations';
 // import Factors from './Sections/Factors/Factors';
 // import Rotation from './Sections/Rotation/Rotation';
 // import Loadings from './Sections/Loadings/Loadings';
 // import Output from './Sections/Output/Output';
-import ProjectHistory from './Sections/ProjectHistory/ProjectHistory';
-import Help from './Sections/Help/Help';
+// import ProjectHistory from './Sections/ProjectHistory/ProjectHistory';
+// import Help from './Sections/Help/Help';
 import License from './Sections/License/License';
 // import ClearProject from './Sections//ClearProject/ClearProject';
 // import getInputState from "./Sections/GlobalState/getInputState";
@@ -108,7 +108,7 @@ const App = () => {
   // const installedVersion = appState.version;
   // const updateVersion = appState.updateVersion;
 
-  // getState
+  // get button colors
   const inputButtonColor = isInputButtonGreen ? 'var(--main-theme-color)' : '#d6dbe0';
   const correlationsButtonColor = isCorrelationsButtonGreen ? 'var(--main-theme-color)' : '#d6dbe0';
   const factorsButtonColor = isFactorsButtonGreen ? 'var(--main-theme-color)' : '#d6dbe0';
@@ -269,9 +269,8 @@ const App = () => {
           </FilesWindow>
           <ActionWindow>
             {viewStart && <Start view={viewStart} />}
+            {viewInput && <Input view={viewInput} />}
             {viewLicense && <License view={viewLicense} />}
-            {/* {viewHelp && <Help view={viewHelp} />} */}
-            {viewProjectHistory && <ProjectHistory view={viewProjectHistory} />}
           </ActionWindow>
         </Split>
       </ErrorBoundary>
@@ -281,7 +280,6 @@ const App = () => {
 
 export default App;
 
-// {viewInput && <Input view={viewInput} />}
 // {viewData && <Data view={viewData} />}
 // {viewCorrelations && <Correlations view={viewCorrelations} />}
 // {viewFactors && <Factors view={viewFactors} />}
@@ -289,6 +287,8 @@ export default App;
 // {viewLoadings && <Loadings view={viewLoadings} />}
 // {viewOutput && <Output view={viewOutput} />}
 // {viewClearProject && <ClearProject view={viewClearProject} />}
+// {viewProjectHistory && <ProjectHistory view={viewProjectHistory} />}
+// {viewHelp && <Help view={viewHelp} />}
 
 const Header = styled.header`
   box-sizing: border-box;
@@ -315,6 +315,7 @@ const AppWrap = styled.div`
   font-family: Helvetica;
   height: 100vh;
   width: 100vw;
+  margin-top: 80px;
   ${({ active }) =>
     active &&
     css`

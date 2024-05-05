@@ -1,59 +1,134 @@
-import calcState from "../GlobalState/calcState";
+import calcState from '../GlobalState/calcState';
 
 const initializeCalcState = () => {
-  calcState.analysisOutput = [];
+  const updateAnalysisOutput = calcState((state) => state.updateAnalysisOutput);
 
-  calcState.colSizes = [];
-  calcState.compositeFactorMasterArray = [];
-  calcState.consensus05Statements = [];
-  calcState.consensus01Statements = [];
-  calcState.correlationTableArrayHolder = [];
+  const updateColSizes = calcState((state) => state.updateColSizes);
+  const updateCompositeFactorMasterArray = calcState(
+    (state) => state.updateCompositeFactorMasterArray
+  );
+  const updateConsensus05Statements = calcState((state) => state.updateConsensus05Statements);
+  const updateConsensus01Statements = calcState((state) => state.updateConsensus01Statements);
+  const updateCorrelationTableArrayHolder = calcState(
+    (state) => state.updateCorrelationTableArrayHolder
+  );
 
-  calcState.distStateListData = [];
-  calcState.distStatementDataVizArray = [];
+  const updateDistStateListData = calcState((state) => state.updateDistStateListData);
+  const updateDistStatementDataVizArray = calcState(
+    (state) => state.updateDistStatementDataVizArray
+  );
 
-  calcState.factorCharacteristicsArray = [];
-  calcState.factorCorrelationsTableData = [];
-  calcState.factorScoreRanksArray = [];
-  calcState.factorWeightFactorArrayHolder = [];
+  const updateFactorCharacteristicsArray = calcState(
+    (state) => state.updateFactorCharacteristicsArray
+  );
+  const updateFactorCorrelationsTableData = calcState(
+    (state) => state.updateFactorCorrelationsTableData
+  );
+  const updateFactorScoreRanksArray = calcState((state) => state.updateFactorScoreRanksArray);
+  const updateFactorWeightFactorArrayHolder = calcState(
+    (state) => state.updateFactorWeightFactorArrayHolder
+  );
 
-  calcState.freeDistributionArray = [];
+  const updateFreeDistributionArray = calcState((state) => state.updateFreeDistributionArray);
+  const updateFormattedConsensusStatements = calcState(
+    (state) => state.updateFormattedConsensusStatements
+  );
 
-  calcState.formattedConsensusStatements = [];
+  const updateMasterDistingStatementNumbersArray01 = calcState(
+    (state) => state.updateMasterDistingStatementNumbersArray01
+  );
+  const updateMasterDistingStatementNumbersArray05 = calcState(
+    (state) => state.updateMasterDistingStatementNumbersArray05
+  );
 
-  calcState.masterDistingStatementNumbersArray01 = [];
-  calcState.masterDistingStatementNumbersArray05 = [];
+  const updateMatchCount = calcState((state) => state.updateMatchCount);
+  const updateMaxStatementLength = calcState((state) => state.updateMaxStatementLength);
+  const updateMiniCorrelationArrayHolder = calcState(
+    (state) => state.updateMiniCorrelationArrayHolder
+  );
 
-  calcState.matchCount = [];
-  calcState.maxStatementLength = 0;
-  calcState.miniCorrelationArrayHolder = [];
+  const updateOutputData = calcState((state) => state.updateOutputData);
 
-  // calcState.output = [];
-  calcState.outputData = [];
+  const updatePosShiftSortArray = calcState((state) => state.updatePosShiftSortArray);
 
-  calcState.posShiftSortArray = [];
+  const updateSheetNames = calcState((state) => state.updateSheetNames);
+  const updateSheetNamesHolder1 = calcState((state) => state.updateSheetNamesHolder1);
+  const updateSheetNamesHolder2 = calcState((state) => state.updateSheetNamesHolder2);
+  const updateSheetNamesHolder3 = calcState((state) => state.updateSheetNamesHolder3);
+  const updateSheetNamesXlsx = calcState((state) => state.updateSheetNamesXlsx);
 
-  calcState.sheetNames = [];
-  calcState.sheetNamesHolder1 = [];
-  calcState.sheetNamesHolder2 = [];
-  calcState.sheetNamesHolder3 = [];
-  calcState.sheetNamesXlsx = [];
+  const updateShouldIncludeTimestamp = calcState((state) => state.updateShouldIncludeTimestamp);
 
-  calcState.shouldIncludeTimestamp = true;
+  const updateSigFactorNumbersArray = calcState((state) => state.updateSigFactorNumbersArray);
+  const updateSigSortsArray = calcState((state) => state.updateSigSortsArray);
 
-  calcState.sigFactorNumbersArray = [];
-  calcState.sigSortsArray = [];
+  const updateSortsAsNumbers = calcState((state) => state.updateSortsAsNumbers);
+  const updateSortWeights = calcState((state) => state.updateSortWeights);
 
-  calcState.sortsAsNumbers = [];
-  calcState.sortWeights = [];
+  const updateStandardErrorDiffSheetArray = calcState(
+    (state) => state.updateStandardErrorDiffSheetArray
+  );
+  const updateStatementRankingArray = calcState((state) => state.updateStatementRankingArray);
+  const updateSynFactorArray1Holder = calcState((state) => state.updateSynFactorArray1Holder);
+  const updateUserSelectedDistStateSigLevel1 = calcState(
+    (state) => state.updateUserSelectedDistStateSigLevel1
+  );
+  const updateUserSelectedDistStateSigLevel2 = calcState(
+    (state) => state.updateUserSelectedDistStateSigLevel2
+  );
 
-  calcState.standardErrorDiffSheetArray = [];
+  updateAnalysisOutput([]);
 
-  calcState.statementRankingArray = [];
-  calcState.synFactorArray1Holder = [];
+  updateColSizes([]);
+  updateCompositeFactorMasterArray([]);
+  updateConsensus05Statements([]);
+  updateConsensus01Statements([]);
+  updateCorrelationTableArrayHolder([]);
 
-  calcState.userSelectedDistStateSigLevel1 = 2.575;
-  calcState.userSelectedDistStateSigLevel2 = 1.96;
+  updateDistStateListData([]);
+  updateDistStatementDataVizArray([]);
+
+  updateFactorCharacteristicsArray([]);
+  updateFactorCorrelationsTableData([]);
+  updateFactorScoreRanksArray([]);
+  updateFactorWeightFactorArrayHolder([]);
+
+  updateFreeDistributionArray([]);
+
+  updateFormattedConsensusStatements([]);
+
+  updateMasterDistingStatementNumbersArray01([]);
+  updateMasterDistingStatementNumbersArray05([]);
+
+  updateMatchCount([]);
+  updateMaxStatementLength(0);
+  updateMiniCorrelationArrayHolder([]);
+
+  updateOutputData([]);
+
+  updatePosShiftSortArray([]);
+
+  updateSheetNames([]);
+  updateSheetNamesHolder1([]);
+  updateSheetNamesHolder2([]);
+  updateSheetNamesHolder3([]);
+  updateSheetNamesXlsx([]);
+
+  updateShouldIncludeTimestamp(true);
+
+  updateSigFactorNumbersArray([]);
+  updateSigSortsArray([]);
+
+  updateSortsAsNumbers([]);
+  updateSortWeights([]);
+
+  updateStandardErrorDiffSheetArray([]);
+
+  updateStatementRankingArray([]);
+  updateSynFactorArray1Holder([]);
+
+  updateUserSelectedDistStateSigLevel1(2.575);
+  updateUserSelectedDistStateSigLevel2(1.96);
 
   return;
 };

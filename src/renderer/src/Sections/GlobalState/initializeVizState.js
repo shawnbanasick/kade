@@ -1,69 +1,145 @@
-import vizState from "../GlobalState/vizState";
+import vizState from '../GlobalState/vizState';
 
 const initializeVizState = () => {
-  vizState.consensusIndicator = false;
-  vizState.customFactorNames = false;
-  vizState.customFileNameLocation = "";
+  const updateConsensusIndicator = vizState((state) => state.updateConsensusIndicator);
+  const updateCustomFactorNames = vizState((state) => state.updateCustomFactorNames);
+  const updateCustomFileNameLocation = vizState((state) => state.updateCustomFileNameLocation);
 
-  vizState.factorVizOptions = {};
-  vizState.facVizContainerHeight = 600;
-  vizState.facVizContainerWidth = 1000;
-  vizState.factorVizOptionsHolder = {};
-  vizState.maxColumnHeight = 0;
+  const updateFacVisContainerHeight = vizState((state) => state.updateFacVisContainerHeight);
+  const updateFacVisContainerWidth = vizState((state) => state.updateFacVisContainerWidth);
+  const updateFactorVizOptionsHolder = vizState((state) => state.updateFactorVizOptionsHolder);
+  const updateMaxColumnHeight = vizState((state) => state.updateMaxColumnHeight);
 
-  vizState.numbersHaveBeenAppended = false;
+  const updateNumbersHaveBeenAppended = vizState((state) => state.updateNumbersHaveBeenAppended);
 
-  vizState.positionData = {};
+  const updatePositionData = vizState((state) => state.updatePositionData);
 
-  vizState.stateFrag = {};
+  const updateStateFrag = vizState((state) => state.updateStateFrag);
 
-  vizState.titleHeight = 30;
+  const updateTitleHeight = vizState((state) => state.updateTitleHeight);
 
-  vizState.updateFactorVisualizationsButtonColor = "";
+  const updateFactorVisualizationsButtonColor = vizState(
+    (state) => state.updateFactorVisualizationsButtonColor
+  );
 
-  vizState.willAddCustomNames = false;
+  const updateWillAddCustomNames = vizState((state) => state.updateWillAddCustomNames);
 
-  vizState.willAdjustCardFontSize = false;
-  vizState.willAdjustCardFontSizeBy = 5;
+  const updateWillAdjustCardFontSize = vizState((state) => state.updateWillAdjustCardFontSize);
+  const updateWillAdjustCardFontSizeBy = vizState((state) => state.updateWillAdjustCardFontSizeBy);
 
-  vizState.willAdjustCardHeight = false;
-  vizState.willAdjustCardHeightBy = 5;
+  const updateWillAdjustCardHeight = vizState((state) => state.updateWillAdjustCardHeight);
+  const updateWillAdjustCardHeightBy = vizState((state) => state.updateWillAdjustCardHeightBy);
 
-  vizState.willAdjustCardWidth = false;
-  vizState.willAdjustCardWidthBy = 5;
+  const updateWillAdjustCardWidth = vizState((state) => state.updateWillAdjustCardWidth);
+  const updateWillAdjustCardWidthBy = vizState((state) => state.updateWillAdjustCardWidthBy);
 
-  vizState.willAdjustFontSize = false;
+  const updateWillAdjustFontSize = vizState((state) => state.updateWillAdjustFontSize);
 
-  vizState.willAdjustDistIndicatorSize = false;
-  vizState.willAdjustDistIndicatorSizeBy = 5;
+  const updateWillAdjustDistIndicatorSize = vizState(
+    (state) => state.updateWillAdjustDistIndicatorSize
+  );
+  const updateWillAdjustDistIndicatorSizeBy = vizState(
+    (state) => state.updateWillAdjustDistIndicatorSizeBy
+  );
 
-  vizState.willAdjustLineSpacing = false;
-  vizState.willAdjustLineSpacingBy = 0;
+  const updateWillAdjustLineSpacing = vizState((state) => state.updateWillAdjustLineSpacing);
+  const updateWillAdjustLineSpacingBy = vizState((state) => state.updateWillAdjustLineSpacingBy);
 
-  vizState.willAdjustStatementWidth = false;
-  vizState.willAdjustStatementWidthBy = 5;
+  const updateWillAdjustStatementWidth = vizState((state) => state.updateWillAdjustStatementWidth);
+  const updateWillAdjustStatementWidthBy = vizState(
+    (state) => state.updateWillAdjustStatementWidthBy
+  );
 
-  vizState.willAdjustWidthAsian = false;
-  vizState.willAdjustWidthAsianBy = 0;
+  const updateWillAdjustWidthAsian = vizState((state) => state.updateWillAdjustWidthAsian);
+  const updateWillAdjustWidthAsianBy = vizState((state) => state.updateWillAdjustWidthAsianBy);
 
-  vizState.willDisplayDistingCompareSymbols = false;
+  const updateWillDisplayDistingCompareSymbols = vizState(
+    (state) => state.updateWillDisplayDistingCompareSymbols
+  );
 
-  vizState.willDisplayConsensusStates = false;
+  const updateWillDisplayConsensusStates = vizState(
+    (state) => state.updateWillDisplayConsensusStates
+  );
 
-  vizState.willDisplayOnlyStateNums = false;
+  const updateWillDisplayOnlyStateNums = vizState((state) => state.updateWillDisplayOnlyStateNums);
 
-  vizState.willIncludeLegend = true;
+  const updateWillIncludeLegend = vizState((state) => state.updateWillIncludeLegend);
 
-  vizState.willIndicateDistinguishing = false;
+  const updateWillIndicateDistinguishing = vizState(
+    (state) => state.updateWillIndicateDistinguishing
+  );
 
-  vizState.willPrependStateNums = false;
+  const updateWillPrependStateNums = vizState((state) => state.updateWillPrependStateNums);
 
-  vizState.willTrimStatement = true;
-  vizState.willTrimStatementBy = 5;
+  const updateWillTrimStatement = vizState((state) => state.updateWillTrimStatement);
+  const updateWillTrimStatementBy = vizState((state) => state.updateWillTrimStatementBy);
 
-  vizState.willUseDistingUnicode = false;
+  const updateWillUseDistingUnicode = vizState((state) => state.updateWillUseDistingUnicode);
 
-  vizState.factorVizOptions = {
+  const updateFactorVizOptions = vizState((state) => state.updateFactorVizOptions);
+
+  updateConsensusIndicator(false);
+  updateCustomFactorNames(false);
+  updateCustomFileNameLocation('');
+
+  updateFacVisContainerHeight(600);
+  updateFacVisContainerWidth(1000);
+  updateFactorVizOptionsHolder({});
+  updateMaxColumnHeight(0);
+
+  updateNumbersHaveBeenAppended(false);
+
+  updatePositionData({});
+
+  updateStateFrag({});
+
+  updateTitleHeight(30);
+
+  updateFactorVisualizationsButtonColor('');
+
+  updateWillAddCustomNames(false);
+
+  updateWillAdjustCardFontSize(false);
+  updateWillAdjustCardFontSizeBy(5);
+
+  updateWillAdjustCardHeight(false);
+  updateWillAdjustCardHeightBy(5);
+
+  updateWillAdjustCardWidth(false);
+  updateWillAdjustCardWidthBy(5);
+
+  updateWillAdjustFontSize(false);
+
+  updateWillAdjustDistIndicatorSize(false);
+  updateWillAdjustDistIndicatorSizeBy(5);
+
+  updateWillAdjustLineSpacing(false);
+  updateWillAdjustLineSpacingBy(0);
+
+  updateWillAdjustStatementWidth(false);
+  updateWillAdjustStatementWidthBy(5);
+
+  updateWillAdjustWidthAsian(false);
+  updateWillAdjustWidthAsianBy(0);
+
+  updateWillDisplayDistingCompareSymbols(false);
+
+  updateWillDisplayConsensusStates(false);
+
+  updateWillDisplayOnlyStateNums(false);
+
+  updateWillIncludeLegend(true);
+
+  updateWillIndicateDistinguishing(false);
+
+  updateWillPrependStateNums(false);
+
+  updateWillTrimStatement(true);
+  updateWillTrimStatementBy(5);
+
+  updateWillUseDistingUnicode(false);
+
+  updateFactorVizOptions({
     willAddCustomNames: false,
     willAddCustomNameToDownload: false,
     willAdjustCardFontSize: false,
@@ -95,13 +171,13 @@ const initializeVizState = () => {
     willTrimStatement: true,
     willTrimStatementBy: 5,
     willUseDistingUnicode: true,
-    showDistinguishingAs: "symbol",
-    consensusIndicator: "#d9effe",
-    distinguishingIndicator05: "#ededed",
-    distinguishingIndicator01: "#bdbdbd",
+    showDistinguishingAs: 'symbol',
+    consensusIndicator: '#d9effe',
+    distinguishingIndicator05: '#ededed',
+    distinguishingIndicator01: '#bdbdbd',
     customFactorNames: [],
-    customFileNameLocation: "append"
-  };
+    customFileNameLocation: 'append',
+  });
 
   return;
 };

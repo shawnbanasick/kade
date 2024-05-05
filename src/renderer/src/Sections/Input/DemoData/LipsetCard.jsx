@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { view } from '@risingstack/react-easy-state';
-import LoadLipsetData from './LoadLipsetData';
+//import LoadLipsetData from './LoadLipsetData';
 import { useTranslation } from 'react-i18next';
 
 const LipsetCard = () => {
@@ -11,11 +10,11 @@ const LipsetCard = () => {
       <CardMeta>Lipset</CardMeta>
       <CardLabel>33 {t('Statements')}</CardLabel>
       <CardSubLabel>9 {t('Participants')}</CardSubLabel>
-      <LoadLipsetData />
+      {/* <LoadLipsetData /> */}
     </Card>
   );
 };
-export default view(LipsetCard);
+export default LipsetCard;
 
 const Card = styled.div`
   display: grid;

@@ -1,10 +1,9 @@
 import React from 'react';
-import { view } from '@risingstack/react-easy-state';
 import styled from 'styled-components';
 import LipsetCard from './DemoData/LipsetCard';
-import BuzzwordCard from './DemoData/BuzzwordCard';
-import MotivationalCard from './DemoData/MotivationalCard';
-import IpadSurveyCard from './DemoData/IpadSurveyCard';
+//import BuzzwordCard from './DemoData/BuzzwordCard';
+// import MotivationalCard from './DemoData/MotivationalCard';
+// import IpadSurveyCard from './DemoData/IpadSurveyCard';
 import { useTranslation } from 'react-i18next';
 
 const DemoDataPanel = () => {
@@ -15,15 +14,15 @@ const DemoDataPanel = () => {
       <Header>{t('Choose a demo data file')}.</Header>
       <CardHolder>
         <LipsetCard />
-        <BuzzwordCard />
-        <MotivationalCard />
-        <IpadSurveyCard />
+        {/* <BuzzwordCard /> */}
+        {/* <MotivationalCard /> */}
+        {/* <IpadSurveyCard /> */}
       </CardHolder>
     </DataWindow>
   );
 };
 
-export default view(DemoDataPanel);
+export default DemoDataPanel;
 
 const DataWindow = styled.div`
   padding-top: 10px;
