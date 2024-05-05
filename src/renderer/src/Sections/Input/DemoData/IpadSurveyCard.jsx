@@ -1,6 +1,4 @@
-import React from 'react';
 import styled from 'styled-components';
-import { view } from '@risingstack/react-easy-state';
 import LoadIpadSurveyData from './LoadIpadSurveyData';
 import { useTranslation } from 'react-i18next';
 
@@ -16,7 +14,7 @@ const IpadSurveyCard = () => {
     </Card>
   );
 };
-export default view(IpadSurveyCard);
+export default IpadSurveyCard;
 
 const Card = styled.div`
   display: grid;

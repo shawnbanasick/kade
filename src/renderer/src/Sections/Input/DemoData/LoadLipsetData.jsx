@@ -39,8 +39,6 @@ const LipsetButton1 = () => {
     } else {
       // upload data
       uploadLipsetData();
-      // revertLoadButtonsColors();
-
       // state updates to indicate success
       updateIsLoadLipsetButtonGreen(true);
       updateIsDataAlreadyLoaded(true);

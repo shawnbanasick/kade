@@ -59,7 +59,7 @@ export default function uploadLipsetData() {
       '25. Trust in police has sunk deeply into our national character',
       '26. Worth of a man is judged by what he is, not by education   ',
       '27. Deep respect for the rich, the educated, the social elite  ',
-      '28. We are tolerant of popular opinion, don&#39;t like extremes',
+      `28. We are tolerant of popular opinion, don't like extremes    `,
       '29. Poor on earth will enjoy higher status in after-life       ',
       '30. Respect for civil liberties and minority rights            ',
       '31. Virtue tends to be its own reward                          ',

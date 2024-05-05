@@ -1,68 +1,20 @@
-import motivationalToArray from "../logic/motivationalToArray";
-import sortsDisplayText from "../logic/sortsDisplayText";
-import coreState from "../../GlobalState/coreState";
-import projectHistoryState from "../../GlobalState/projectHistoryState";
-import i18n from "i18next";
-import calcMultiplierArrayT2 from "../Excel/excelLogic/calcMultiplierArrayT2";
-import inputState from "../../GlobalState/inputState";
+import motivationalToArray from '../logic/motivationalToArray';
+import sortsDisplayText from '../logic/sortsDisplayText';
+import coreState from '../../GlobalState/coreState';
+import projectHistoryState from '../../GlobalState/projectHistoryState';
+import i18n from 'i18next';
+import calcMultiplierArrayT2 from '../Excel/excelLogic/calcMultiplierArrayT2';
+import inputState from '../../GlobalState/inputState';
 
 function uploadBuzzwordData() {
   const multiplierArray = calcMultiplierArrayT2([
-    -5,
-    -5,
-    -4,
-    -4,
-    -4,
-    -3,
-    -3,
-    -3,
-    -3,
-    -2,
-    -2,
-    -2,
-    -2,
-    -2,
-    -1,
-    -1,
-    -1,
-    -1,
-    -1,
-    -1,
-    -1,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    2,
-    2,
-    2,
-    2,
-    2,
-    3,
-    3,
-    3,
-    3,
-    4,
-    4,
-    4,
-    5,
-    5
+    -5, -5, -4, -4, -4, -3, -3, -3, -3, -2, -2, -2, -2, -2, -1, -1, -1, -1, -1, -1, -1, 0, 0, 0, 0,
+    0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 5, 5,
   ]);
 
   const data = [
     [
-      "participant_1",
+      'participant_1',
       1,
       3,
       -5,
@@ -112,10 +64,10 @@ function uploadBuzzwordData() {
       0,
       0,
       -1,
-      0
+      0,
     ],
     [
-      "participant_2",
+      'participant_2',
       1,
       0,
       2,
@@ -165,10 +117,10 @@ function uploadBuzzwordData() {
       0,
       0,
       -1,
-      0
+      0,
     ],
     [
-      "participant_3",
+      'participant_3',
       1,
       0,
       2,
@@ -218,10 +170,10 @@ function uploadBuzzwordData() {
       0,
       0,
       -1,
-      0
+      0,
     ],
     [
-      "participant_4",
+      'participant_4',
       -2,
       3,
       0,
@@ -271,10 +223,10 @@ function uploadBuzzwordData() {
       0,
       0,
       2,
-      0
+      0,
     ],
     [
-      "participant_5",
+      'participant_5',
       1,
       0,
       2,
@@ -324,10 +276,10 @@ function uploadBuzzwordData() {
       0,
       0,
       -1,
-      0
+      0,
     ],
     [
-      "participant_6",
+      'participant_6',
       1,
       0,
       2,
@@ -377,10 +329,10 @@ function uploadBuzzwordData() {
       0,
       0,
       -1,
-      0
+      0,
     ],
     [
-      "participant_7",
+      'participant_7',
       1,
       0,
       2,
@@ -430,10 +382,10 @@ function uploadBuzzwordData() {
       0,
       0,
       -1,
-      0
+      0,
     ],
     [
-      "participant_8",
+      'participant_8',
       1,
       0,
       2,
@@ -483,10 +435,10 @@ function uploadBuzzwordData() {
       0,
       0,
       -1,
-      0
+      0,
     ],
     [
-      "participant_9",
+      'participant_9',
       1,
       2,
       -1,
@@ -536,10 +488,10 @@ function uploadBuzzwordData() {
       0,
       0,
       -1,
-      0
+      0,
     ],
     [
-      "participant_10",
+      'participant_10',
       1,
       0,
       2,
@@ -589,10 +541,10 @@ function uploadBuzzwordData() {
       0,
       0,
       -1,
-      0
+      0,
     ],
     [
-      "participant_11",
+      'participant_11',
       -4,
       0,
       -3,
@@ -642,10 +594,10 @@ function uploadBuzzwordData() {
       3,
       1,
       -2,
-      2
+      2,
     ],
     [
-      "participant_12",
+      'participant_12',
       -4,
       1,
       4,
@@ -695,10 +647,10 @@ function uploadBuzzwordData() {
       1,
       1,
       -1,
-      2
+      2,
     ],
     [
-      "participant_13",
+      'participant_13',
       -4,
       4,
       -2,
@@ -748,10 +700,10 @@ function uploadBuzzwordData() {
       3,
       1,
       -2,
-      2
+      2,
     ],
     [
-      "participant_14",
+      'participant_14',
       -4,
       4,
       -2,
@@ -801,10 +753,10 @@ function uploadBuzzwordData() {
       3,
       1,
       -2,
-      2
+      2,
     ],
     [
-      "participant_15",
+      'participant_15',
       -4,
       4,
       -2,
@@ -854,10 +806,10 @@ function uploadBuzzwordData() {
       3,
       1,
       -2,
-      2
+      2,
     ],
     [
-      "participant_16",
+      'participant_16',
       -4,
       0,
       -1,
@@ -907,10 +859,10 @@ function uploadBuzzwordData() {
       3,
       1,
       -2,
-      2
+      2,
     ],
     [
-      "participant_17",
+      'participant_17',
       -4,
       4,
       -2,
@@ -960,10 +912,10 @@ function uploadBuzzwordData() {
       3,
       1,
       -2,
-      2
+      2,
     ],
     [
-      "participant_18",
+      'participant_18',
       -4,
       4,
       -2,
@@ -1013,10 +965,10 @@ function uploadBuzzwordData() {
       3,
       1,
       -2,
-      2
+      2,
     ],
     [
-      "participant_19",
+      'participant_19',
       -4,
       4,
       -2,
@@ -1066,10 +1018,10 @@ function uploadBuzzwordData() {
       3,
       1,
       -2,
-      2
+      2,
     ],
     [
-      "participant_20",
+      'participant_20',
       -4,
       4,
       -2,
@@ -1119,10 +1071,10 @@ function uploadBuzzwordData() {
       3,
       1,
       -2,
-      2
+      2,
     ],
     [
-      "participant_21",
+      'participant_21',
       3,
       -5,
       0,
@@ -1172,10 +1124,10 @@ function uploadBuzzwordData() {
       -1,
       1,
       0,
-      5
+      5,
     ],
     [
-      "participant_22",
+      'participant_22',
       3,
       -5,
       0,
@@ -1225,10 +1177,10 @@ function uploadBuzzwordData() {
       -1,
       1,
       0,
-      5
+      5,
     ],
     [
-      "participant_23",
+      'participant_23',
       3,
       -5,
       0,
@@ -1278,10 +1230,10 @@ function uploadBuzzwordData() {
       -1,
       1,
       0,
-      5
+      5,
     ],
     [
-      "participant_24",
+      'participant_24',
       3,
       -5,
       0,
@@ -1331,10 +1283,10 @@ function uploadBuzzwordData() {
       -1,
       1,
       0,
-      5
+      5,
     ],
     [
-      "participant_25",
+      'participant_25',
       3,
       -5,
       0,
@@ -1384,10 +1336,10 @@ function uploadBuzzwordData() {
       -1,
       1,
       0,
-      5
+      5,
     ],
     [
-      "participant_26",
+      'participant_26',
       3,
       -5,
       0,
@@ -1437,10 +1389,10 @@ function uploadBuzzwordData() {
       -1,
       1,
       0,
-      5
+      5,
     ],
     [
-      "participant_27",
+      'participant_27',
       3,
       -5,
       0,
@@ -1490,10 +1442,10 @@ function uploadBuzzwordData() {
       -1,
       1,
       0,
-      5
+      5,
     ],
     [
-      "participant_28",
+      'participant_28',
       1,
       -4,
       -3,
@@ -1543,10 +1495,10 @@ function uploadBuzzwordData() {
       -1,
       1,
       0,
-      5
+      5,
     ],
     [
-      "participant_29",
+      'participant_29',
       3,
       -5,
       0,
@@ -1596,10 +1548,10 @@ function uploadBuzzwordData() {
       -1,
       1,
       0,
-      5
+      5,
     ],
     [
-      "participant_30",
+      'participant_30',
       3,
       -5,
       -1,
@@ -1649,10 +1601,10 @@ function uploadBuzzwordData() {
       -1,
       1,
       0,
-      5
+      5,
     ],
     [
-      "participant_31",
+      'participant_31',
       1,
       -2,
       -2,
@@ -1702,10 +1654,10 @@ function uploadBuzzwordData() {
       0,
       2,
       4,
-      0
+      0,
     ],
     [
-      "participant_32",
+      'participant_32',
       1,
       -2,
       -2,
@@ -1755,10 +1707,10 @@ function uploadBuzzwordData() {
       0,
       2,
       4,
-      0
+      0,
     ],
     [
-      "participant_33",
+      'participant_33',
       1,
       -1,
       1,
@@ -1808,10 +1760,10 @@ function uploadBuzzwordData() {
       -2,
       2,
       4,
-      0
+      0,
     ],
     [
-      "participant_34",
+      'participant_34',
       1,
       -2,
       -2,
@@ -1861,10 +1813,10 @@ function uploadBuzzwordData() {
       0,
       2,
       4,
-      0
+      0,
     ],
     [
-      "participant_35",
+      'participant_35',
       1,
       -2,
       -2,
@@ -1914,10 +1866,10 @@ function uploadBuzzwordData() {
       0,
       2,
       4,
-      0
+      0,
     ],
     [
-      "participant_36",
+      'participant_36',
       1,
       -2,
       -2,
@@ -1967,10 +1919,10 @@ function uploadBuzzwordData() {
       0,
       2,
       4,
-      0
+      0,
     ],
     [
-      "participant_37",
+      'participant_37',
       1,
       -2,
       -2,
@@ -2020,10 +1972,10 @@ function uploadBuzzwordData() {
       0,
       2,
       4,
-      0
+      0,
     ],
     [
-      "participant_38",
+      'participant_38',
       1,
       -2,
       -3,
@@ -2073,10 +2025,10 @@ function uploadBuzzwordData() {
       0,
       2,
       4,
-      0
+      0,
     ],
     [
-      "participant_39",
+      'participant_39',
       1,
       -2,
       2,
@@ -2126,10 +2078,10 @@ function uploadBuzzwordData() {
       0,
       2,
       4,
-      0
+      0,
     ],
     [
-      "participant_40",
+      'participant_40',
       1,
       -2,
       -2,
@@ -2179,10 +2131,10 @@ function uploadBuzzwordData() {
       0,
       2,
       4,
-      0
+      0,
     ],
     [
-      "participant_41",
+      'participant_41',
       0,
       -1,
       5,
@@ -2232,10 +2184,10 @@ function uploadBuzzwordData() {
       1,
       1,
       1,
-      -3
+      -3,
     ],
     [
-      "participant_42",
+      'participant_42',
       -2,
       3,
       -3,
@@ -2285,10 +2237,10 @@ function uploadBuzzwordData() {
       2,
       3,
       1,
-      -3
+      -3,
     ],
     [
-      "participant_43",
+      'participant_43',
       -2,
       3,
       -3,
@@ -2338,10 +2290,10 @@ function uploadBuzzwordData() {
       2,
       3,
       1,
-      -3
+      -3,
     ],
     [
-      "participant_44",
+      'participant_44',
       0,
       1,
       4,
@@ -2391,10 +2343,10 @@ function uploadBuzzwordData() {
       1,
       0,
       4,
-      2
+      2,
     ],
     [
-      "participant_45",
+      'participant_45',
       -2,
       3,
       -3,
@@ -2444,10 +2396,10 @@ function uploadBuzzwordData() {
       2,
       3,
       1,
-      -3
+      -3,
     ],
     [
-      "participant_46",
+      'participant_46',
       -1,
       -3,
       1,
@@ -2497,10 +2449,10 @@ function uploadBuzzwordData() {
       -2,
       1,
       1,
-      -3
+      -3,
     ],
     [
-      "participant_47",
+      'participant_47',
       -2,
       3,
       -3,
@@ -2550,10 +2502,10 @@ function uploadBuzzwordData() {
       2,
       3,
       1,
-      -3
+      -3,
     ],
     [
-      "participant_48",
+      'participant_48',
       -2,
       3,
       -3,
@@ -2603,10 +2555,10 @@ function uploadBuzzwordData() {
       2,
       3,
       1,
-      -3
+      -3,
     ],
     [
-      "participant_49",
+      'participant_49',
       -2,
       3,
       0,
@@ -2656,10 +2608,10 @@ function uploadBuzzwordData() {
       2,
       3,
       1,
-      -3
+      -3,
     ],
     [
-      "participant_50",
+      'participant_50',
       -2,
       3,
       -3,
@@ -2709,136 +2661,90 @@ function uploadBuzzwordData() {
       2,
       3,
       1,
-      -3
-    ]
+      -3,
+    ],
   ];
 
   const statements = [
-    "Collaboratively administrate empowered markets via plug-and-play networks.",
-    "Dynamically procrastinate B2C users after installed base benefits.",
-    "Dramatically visualize customer directed convergence without revolutionary ROI.",
-    "Efficiently unleash cross-media information without cross-media value.",
-    "Quickly maximize timely deliverables for real-time schemas.",
-    "Dramatically maintain clicks-and-mortar solutions without functional solutions.",
-    "Completely synergize resource taxing relationships via premier niche markets.",
-    "Professionally cultivate one-to-one customer service with robust ideas.",
-    "Dynamically innovate resource-leveling customer service for state of the art customer service.",
-    "Objectively innovate empowered manufactured products whereas parallel platforms.",
-    "Holisticly predominate extensible testing procedures for reliable supply chains.",
-    "Dramatically engage top-line web services vis-a-vis cutting-edge deliverables.",
-    "Proactively envisioned multimedia based expertise and cross-media growth strategies.",
-    "Seamlessly visualize quality intellectual capital without superior collaboration and idea-sharing.",
-    "Holistically pontificate installed base portals after maintainable products.",
-    "Phosfluorescently engage worldwide methodologies with web - enabled technology.",
+    'Collaboratively administrate empowered markets via plug-and-play networks.',
+    'Dynamically procrastinate B2C users after installed base benefits.',
+    'Dramatically visualize customer directed convergence without revolutionary ROI.',
+    'Efficiently unleash cross-media information without cross-media value.',
+    'Quickly maximize timely deliverables for real-time schemas.',
+    'Dramatically maintain clicks-and-mortar solutions without functional solutions.',
+    'Completely synergize resource taxing relationships via premier niche markets.',
+    'Professionally cultivate one-to-one customer service with robust ideas.',
+    'Dynamically innovate resource-leveling customer service for state of the art customer service.',
+    'Objectively innovate empowered manufactured products whereas parallel platforms.',
+    'Holisticly predominate extensible testing procedures for reliable supply chains.',
+    'Dramatically engage top-line web services vis-a-vis cutting-edge deliverables.',
+    'Proactively envisioned multimedia based expertise and cross-media growth strategies.',
+    'Seamlessly visualize quality intellectual capital without superior collaboration and idea-sharing.',
+    'Holistically pontificate installed base portals after maintainable products.',
+    'Phosfluorescently engage worldwide methodologies with web - enabled technology.',
     "Interactively coordinate proactive e - commerce via process - centric 'outside the box' thinking.",
-    "Completely pursue scalable customer service through sustainable potentialities.",
-    "Collaboratively administrate turnkey channels whereas virtual e - tailers.",
-    "Objectively seize scalable metrics whereas proactive e - services.",
+    'Completely pursue scalable customer service through sustainable potentialities.',
+    'Collaboratively administrate turnkey channels whereas virtual e - tailers.',
+    'Objectively seize scalable metrics whereas proactive e - services.',
     "Seamlessly empower fully researched growth strategies and interoperable internal or 'organic' sources.",
     "Credibly innovate granular internal or 'organic' sources whereas high standards in web - readiness.",
-    "Energistically scale future - proof core competencies vis - a - vis impactful experiences.",
-    "Dramatically synthesize integrated schemas with optimal networks.",
-    "Interactively procrastinate high - payoff content without backward - compatible data.",
-    "Quickly cultivate optimal processes and tactical architectures.",
-    "Completely iterate covalent strategic theme areas via accurate e - markets.",
-    "Globally incubate standards compliant channels before scalable benefits.",
-    "Quickly drive clicks - and - mortar catalysts for change before vertical architectures.",
-    "Credibly reintermediate backend ideas for cross - platform models.",
-    "Continually reintermediate integrated processes through technically sound intellectual capital.",
-    "Holistically foster superior methodologies without market - driven best practices.",
-    "Distinctively exploit optimal alignments for intuitive bandwidth.",
-    "Quickly coordinate e - business applications through revolutionary catalysts for change.",
-    "Seamlessly underwhelm optimal testing procedures whereas bricks - and - clicks processes.",
-    "Synergistically evolve 2.0 technologies rather than just in time initiatives.",
-    "Quickly deploy strategic networks with compelling e - business.",
-    "Credibly pontificate highly efficient manufactured products and enabled data.",
-    "Dynamically target high - payoff intellectual capital for customized technologies.",
-    "Objectively integrate emerging core competencies before process - centric communities.",
-    "Dramatically evisculate holistic innovation rather than client - centric data.",
-    "Progressively maintain extensive infomediaries via extensible niches.",
-    "Dramatically disseminate standardized metrics after resource - leveling processes.",
-    "Objectively pursue diverse catalysts for change for interoperable meta - services.",
-    "Proactively fabricate one - to - one materials via effective e - business.",
-    "Completely synergize scalable e - commerce rather than high standards in e - services.",
-    "Assertively iterate resource maximizing products after leading - edge intellectual capital.",
-    "Distinctively re - engineer revolutionary meta - services and premium architectures.",
-    "Intrinsically incubate intuitive opportunities and real - time potentialities.",
-    "Appropriately communicate one - to - one technology after plug - and - play networks."
+    'Energistically scale future - proof core competencies vis - a - vis impactful experiences.',
+    'Dramatically synthesize integrated schemas with optimal networks.',
+    'Interactively procrastinate high - payoff content without backward - compatible data.',
+    'Quickly cultivate optimal processes and tactical architectures.',
+    'Completely iterate covalent strategic theme areas via accurate e - markets.',
+    'Globally incubate standards compliant channels before scalable benefits.',
+    'Quickly drive clicks - and - mortar catalysts for change before vertical architectures.',
+    'Credibly reintermediate backend ideas for cross - platform models.',
+    'Continually reintermediate integrated processes through technically sound intellectual capital.',
+    'Holistically foster superior methodologies without market - driven best practices.',
+    'Distinctively exploit optimal alignments for intuitive bandwidth.',
+    'Quickly coordinate e - business applications through revolutionary catalysts for change.',
+    'Seamlessly underwhelm optimal testing procedures whereas bricks - and - clicks processes.',
+    'Synergistically evolve 2.0 technologies rather than just in time initiatives.',
+    'Quickly deploy strategic networks with compelling e - business.',
+    'Credibly pontificate highly efficient manufactured products and enabled data.',
+    'Dynamically target high - payoff intellectual capital for customized technologies.',
+    'Objectively integrate emerging core competencies before process - centric communities.',
+    'Dramatically evisculate holistic innovation rather than client - centric data.',
+    'Progressively maintain extensive infomediaries via extensible niches.',
+    'Dramatically disseminate standardized metrics after resource - leveling processes.',
+    'Objectively pursue diverse catalysts for change for interoperable meta - services.',
+    'Proactively fabricate one - to - one materials via effective e - business.',
+    'Completely synergize scalable e - commerce rather than high standards in e - services.',
+    'Assertively iterate resource maximizing products after leading - edge intellectual capital.',
+    'Distinctively re - engineer revolutionary meta - services and premium architectures.',
+    'Intrinsically incubate intuitive opportunities and real - time potentialities.',
+    'Appropriately communicate one - to - one technology after plug - and - play networks.',
   ];
 
   const sortsData = motivationalToArray(data, 50, -5);
   const sortsDisplayText2 = sortsDisplayText(sortsData[1]);
 
-  coreState.projectName = "Buzzwords";
+  coreState.setState({ projectName: 'Buzzwords' });
 
   const logMessageObj1 = {
-    logMessage: `Buzzwords project ${i18n.t("loaded from demo data")}`,
-    logType: "buzzwordsInput"
+    logMessage: `Buzzwords project ${i18n.t('loaded from demo data')}`,
+    logType: 'buzzwordsInput',
   };
 
-  projectHistoryState.projectHistoryArray = [logMessageObj1];
+  projectHistoryState.setState({ projectHistoryArray: [logMessageObj1] });
 
-  coreState.statements = statements;
-  coreState.numQsorts = 50;
-  coreState.numStatements = 50;
-  coreState.multiplierArray = multiplierArray;
-  coreState.mainDataObject = sortsData[1];
-  coreState.sortsDisplayText = sortsDisplayText2;
-  coreState.respondentNames = sortsData[0];
-  coreState.qSortPattern = [
-    -5,
-    -5,
-    -4,
-    -4,
-    -4,
-    -3,
-    -3,
-    -3,
-    -3,
-    -2,
-    -2,
-    -2,
-    -2,
-    -2,
-    -1,
-    -1,
-    -1,
-    -1,
-    -1,
-    -1,
-    -1,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    2,
-    2,
-    2,
-    2,
-    2,
-    3,
-    3,
-    3,
-    3,
-    4,
-    4,
-    4,
-    5,
-    5
-  ];
-  inputState.areQsortsLoaded = true;
-  inputState.isQsortPatternLoaded = true;
+  coreState.setState({ statements: statements });
+  coreState.setState({ numQsorts: 50 });
+  coreState.setState({ numStatements: 50 });
+  coreState.setState({ multiplierArray: multiplierArray });
+  coreState.setState({ mainDataObject: sortsData[1] });
+  coreState.setState({ sortsDisplayText: sortsDisplayText2 });
+  coreState.setState({ respondentNames: sortsData[0] });
+  coreState.setState({
+    qSortPattern: [
+      -5, -5, -4, -4, -4, -3, -3, -3, -3, -2, -2, -2, -2, -2, -1, -1, -1, -1, -1, -1, -1, 0, 0, 0,
+      0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 5, 5,
+    ],
+  });
+  inputState.setState({ areQsortsLoaded: true });
+  inputState.setState({ isQsortPatternLoaded: true });
 }
 
 export default uploadBuzzwordData;

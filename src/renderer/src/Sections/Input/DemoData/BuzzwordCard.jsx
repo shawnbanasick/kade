@@ -1,6 +1,4 @@
-import React from 'react';
 import styled from 'styled-components';
-import { view } from '@risingstack/react-easy-state';
 import LoadBuzzwordData from './LoadBuzzwordData';
 import { useTranslation } from 'react-i18next';
 
@@ -16,7 +14,7 @@ const BuzzwordCard = () => {
     </Card>
   );
 };
-export default view(BuzzwordCard);
+export default BuzzwordCard;
 
 const Card = styled.div`
   display: grid;

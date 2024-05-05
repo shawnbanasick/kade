@@ -1,51 +1,64 @@
-import React from 'react';
-import { view } from '@risingstack/react-easy-state';
 import uploadBuzzwordData from './uploadBuzzwordData';
 import revertLoadButtonsColors from './revertLoadButtonsColors';
 import LoadButton from './LoadButton';
 import inputState from '../../GlobalState/inputState';
-import getInputState from '../../GlobalState/getInputState';
 import appState from '../../GlobalState/appState';
 import { useTranslation } from 'react-i18next';
 import i18n from 'i18next';
 import styled from 'styled-components';
 
-const handleClick = () => {
+const BuzzwordButton1 = () => {
+  const { t } = useTranslation();
+
   const message1 = i18n.t('Data are already loaded click Clear Project to restart');
   const message2 = i18n.t('Data have already been loaded and the analysis has started');
   const message3 = i18n.t('To clear this analysis and restart the application');
   const message4 = i18n.t('click the Clear Project button near the bottom of the navigation panel');
   const message5 = i18n.t('no stack trace available');
 
-  const isDataAlreadyLoaded = getInputState('isDataAlreadyLoaded');
-  if (isDataAlreadyLoaded) {
-    inputState.errorMessage = message1;
-    inputState.extendedErrorMessage = `${message2}${message3}${message4}`;
-    inputState.errorStackTrace = message5;
-    inputState.showErrorMessageBar = true;
-  } else {
-    uploadBuzzwordData();
-    revertLoadButtonsColors();
-    inputState.isLoadBuzzwordsButtonGreen = true;
-    inputState.notifyDataUploadSuccess = true;
-    inputState.areStatementsLoaded = true;
-    inputState.areQsortsLoaded = true;
-    appState.isInputButtonGreen = true;
-    appState.isDataButtonGreen = true;
-    inputState.isDataAlreadyLoaded = true;
-  }
-};
+  const isLoadBuzzwordsButtonGreen = inputState((state) => state.isLoadBuzzwordsButtonGreen);
 
-const BuzzwordButton1 = () => {
-  const { t } = useTranslation();
+  const isDataAlreadyLoaded = inputState((state) => state.isDataAlreadyLoaded);
+  const updateErrorMessage = inputState((state) => state.updateErrorMessage);
+  const updateExtendedErrorMessage = inputState((state) => state.updateExtendedErrorMessage);
+  const updateErrorStackTrace = inputState((state) => state.updateErrorStackTrace);
+  const updateShowErrorMessageBar = inputState((state) => state.updateShowErrorMessageBar);
 
-  const isLoadBuzzwordsButtonGreen = getInputState('isLoadBuzzwordsButtonGreen');
+  const updateNotifyDataUploadSuccess = inputState((state) => state.updateNotifyDataUploadSuccess);
+  const updateAreStatementsLoaded = inputState((state) => state.updateAreStatementsLoaded);
+  const updateAreQsortsLoaded = inputState((state) => state.updateAreQsortsLoaded);
+  const updateIsInputButtonGreen = appState((state) => state.updateIsInputButtonGreen);
+  const updateIsDataButtonGreen = appState((state) => state.updateIsDataButtonGreen);
+  const updateIsDataAlreadyLoaded = inputState((state) => state.updateIsDataAlreadyLoaded);
+  const updateIsLoadBuzzwordsButtonGreen = inputState(
+    (state) => state.updateIsLoadBuzzwordsButtonGreen
+  );
+
+  const handleClick = () => {
+    if (isDataAlreadyLoaded) {
+      updateErrorMessage(message1);
+      updateExtendedErrorMessage(`${message2}${message3}${message4}`);
+      updateErrorStackTrace(message5);
+      updateShowErrorMessageBar(true);
+    } else {
+      uploadBuzzwordData();
+      revertLoadButtonsColors();
+      updateIsLoadBuzzwordsButtonGreen(true);
+      updateNotifyDataUploadSuccess(true);
+      updateAreStatementsLoaded(true);
+      updateAreQsortsLoaded(true);
+      updateIsInputButtonGreen(true);
+      updateIsDataButtonGreen(true);
+      updateIsDataAlreadyLoaded(true);
+    }
+  };
+
   return (
     <LoadButton
       id="buzzwordButton"
-      floated="right"
+      $floated="right"
       onClick={handleClick}
-      isActive={isLoadBuzzwordsButtonGreen}
+      $isActive={isLoadBuzzwordsButtonGreen}
     >
       <LineContainer>
         <SvgContainer xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
@@ -58,7 +71,7 @@ const BuzzwordButton1 = () => {
   );
 };
 
-export default view(BuzzwordButton1);
+export default BuzzwordButton1;
 
 const SvgContainer = styled.svg`
   transform: rotate(180deg);

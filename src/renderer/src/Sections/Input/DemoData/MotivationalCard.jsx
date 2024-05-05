@@ -1,6 +1,4 @@
-import React from 'react';
 import styled from 'styled-components';
-import { view } from '@risingstack/react-easy-state';
 import LoadMotivationalData from './LoadMotivationalData';
 import { useTranslation } from 'react-i18next';
 
@@ -16,7 +14,7 @@ const MotivationalCard = () => {
     </Card>
   );
 };
-export default view(MotivationalCard);
+export default MotivationalCard;
 
 const Card = styled.div`
   display: grid;

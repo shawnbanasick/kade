@@ -99,7 +99,7 @@ const Data = () => {
         </UnforcedContainer>
         <SortsListContainer>
           <ButtonsContainer>
-            <h1>{`${t('Display Participant Q Sorts as')}: `}</h1>
+            <h2>{`${t('Display Participant Q Sorts as')}: `}</h2>
             <DisplayDataQsortsButton />
             <DisplayDataSortsGridButton />
             <DownloadDatabookButton />

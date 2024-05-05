@@ -50,7 +50,7 @@ function generateGridColDefs(props) {
       field: 'resNum',
       pinned: true,
       editable: false,
-      width: 80,
+      width: 56,
       cellStyle: {
         textAlign: 'center',
       },
@@ -70,7 +70,7 @@ function generateGridColDefs(props) {
     const tempObj = {};
     tempObj.headerName = `S${i + 1}`;
     tempObj.field = `s${i + 1}`;
-    tempObj.width = 65;
+    tempObj.width = 50;
     tempObj.pinned = false;
     tempObj.editable = false;
     tempObj.sortable = true;
