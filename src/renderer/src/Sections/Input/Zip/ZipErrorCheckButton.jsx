@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import { view } from '@risingstack/react-easy-state';
 import GeneralButton from './../../../Utils/GeneralButton';
 import getInputState from '../../GlobalState/getInputState';
 import inputState from '../../GlobalState/inputState';
@@ -53,7 +52,7 @@ const CsvDataErrorCheckButton = (props) => {
   );
 };
 
-export default view(CsvDataErrorCheckButton);
+export default CsvDataErrorCheckButton;
 
 const TradButton = styled.div`
   margin-right: 5px;

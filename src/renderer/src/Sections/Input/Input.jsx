@@ -2,33 +2,37 @@ import { Tab } from 'semantic-ui-react';
 import React, { useState } from 'react';
 import styled, { keyframes } from 'styled-components';
 import { ToastContainer, toast, Zoom } from 'react-toastify';
-// import CsvPanel from "./CSV/CsvPanel";
-//import JsonPanel from './JsonPanel';
-//import ExcelPanel from './ExcelPanel';
-//import KandedPanel from './KandedPanel';
-//import PQMethodPanel from './PQMethodPanel';
-//import KadeZipPanel from './KadeZipPanel';
+import inputState from '../GlobalState/inputState';
+import JsonPanel from './JsonPanel';
+import ExcelPanel from './ExcelPanel';
+import Excel3Panel from './KandedPanel';
+import PQMethodPanel from './PQMethodPanel';
+import KadeZipPanel from './KadeZipPanel';
 import DemoDataPanel from './DemoDataPanel';
 // import ErrorNotification from './ErrorChecking/ErrorNotification';
 // import WarningNotification from './ErrorChecking/WarningNotification';
 import { useTranslation } from 'react-i18next';
-import inputState from '../GlobalState/inputState';
-import getInputState from '../GlobalState/getInputState';
+// import getInputState from '../GlobalState/getInputState';
 // import i18n from "i18next";
 
 function Input() {
   const [activeIndex, setActiveIndex] = useState(0);
 
+  const showNotification = inputState((state) => state.notifyDataUploadSuccess);
+  const updateNotifyDataUploadSuccess = inputState((state) => state.updateNotifyDataUploadSuccess);
+
   // put here to be able to use React hook for t
   function notify() {
     toast.success(t('File Load Success'));
-    inputState.notifyDataUploadSuccess = false;
+    updateNotifyDataUploadSuccess(false);
   }
 
   const { t } = useTranslation();
 
   const panes = [
     /*
+    
+    */
     {
       menuItem: t('XLSX'),
       render: () => (
@@ -38,15 +42,15 @@ function Input() {
       ),
     },
     {
-      menuItem: t('KADE XLSX'),
+      menuItem: 'KADE XLSX',
       render: () => (
         <Tab.Pane>
-          <KandedPanel />
+          <Excel3Panel />
         </Tab.Pane>
       ),
     },
     {
-      menuItem: t('KADE ZIP'),
+      menuItem: 'KADE ZIP',
       render: () => (
         <Tab.Pane>
           <KadeZipPanel />
@@ -54,7 +58,7 @@ function Input() {
       ),
     },
     {
-      menuItem: t('EQ Web Sort'),
+      menuItem: 'EQ Web Sort',
       render: () => (
         <Tab.Pane>
           <JsonPanel />
@@ -69,7 +73,7 @@ function Input() {
         </Tab.Pane>
       ),
     },
-    */
+
     {
       menuItem: t('Demo Data'),
       render: () => (
@@ -84,7 +88,6 @@ function Input() {
     setActiveIndex(activeIndex);
   };
 
-  const showNotification = getInputState('notifyDataUploadSuccess');
   if (showNotification) {
     notify();
   }

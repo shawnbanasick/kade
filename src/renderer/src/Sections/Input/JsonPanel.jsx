@@ -1,37 +1,36 @@
 import React from 'react';
-import { view } from '@risingstack/react-easy-state';
 import styled from 'styled-components';
-import Dropdown from './JSON/DropdownJSON';
-import JsonQsortsCard from './JSON/JsonQsortsCard';
-import displayJsonData from './JSON/displayJsonData';
-import LoadJsonStatementsCard from './JSON/LoadJsonStatementsCard';
-import ProjectNameInput from './CSV/ProjectNameInput';
-import DownloadCsvModal from './JSON/DownloadCsvModal';
-import ForcedUnforcedRadio from './CSV/ForcedUnforcedRadio';
-import QsortDesignInputElement from './CSV/QsortDesignInputElement';
-// import { useTranslation } from "react-i18next";
-import getInputState from '../GlobalState/getInputState';
-import DatabaseSelectButtons from './JSON/DatabaseSelectButtons';
-import CsvJsonCard from './JSON/CsvJsonCard';
-import DropdownSheets from './JSON/DropdownSheets';
-import ZipErrorCheckButton from './Zip/ZipErrorCheckButton';
-import NetlifyCard from './JSON/NetlifyCard';
-import NetlifyDropdown from './JSON/NetlifyDropdown';
+// import displayJsonData from './JSON/displayJsonData';
+// import getInputState from '../GlobalState/getInputState';
+// import DatabaseSelectButtons from './JSON/DatabaseSelectButtons';
 
-const handleMessage = (jsonIdSelection) => {
-  displayJsonData(jsonIdSelection);
-};
+// import Dropdown from './JSON/DropdownJSON';
+// import JsonQsortsCard from './JSON/JsonQsortsCard';
+// import LoadJsonStatementsCard from './JSON/LoadJsonStatementsCard';
+// import ProjectNameInput from './CSV/ProjectNameInput';
+// import DownloadCsvModal from './JSON/DownloadCsvModal';
+// import ForcedUnforcedRadio from './CSV/ForcedUnforcedRadio';
+// import QsortDesignInputElement from './CSV/QsortDesignInputElement';
+// import CsvJsonCard from './JSON/CsvJsonCard';
+// import DropdownSheets from './JSON/DropdownSheets';
+// import ZipErrorCheckButton from './Zip/ZipErrorCheckButton';
+// import NetlifyCard from './JSON/NetlifyCard';
+// import NetlifyDropdown from './JSON/NetlifyDropdown';
 
-const handleSheetsMessage = (sheetsIdSelection) => {
-  console.log(sheetsIdSelection);
-};
+// const handleMessage = (jsonIdSelection) => {
+//   displayJsonData(jsonIdSelection);
+// };
 
-const handleNetlifyMessage = (netlifyIdSelection) => {
-  console.log(netlifyIdSelection);
-};
+// const handleSheetsMessage = (sheetsIdSelection) => {
+//   console.log(sheetsIdSelection);
+// };
+
+// const handleNetlifyMessage = (netlifyIdSelection) => {
+//   console.log(netlifyIdSelection);
+// };
 
 const JsonPanel = () => {
-  const options = getInputState('jsonParticipantId');
+  // const options = getInputState('jsonParticipantId');
   // const { t } = useTranslation();
   const showSheetsInput = false; // getInputState("showSheetsInput");
   const showFirebaseInput = true; //getInputState("showFirebaseInput");
@@ -40,12 +39,14 @@ const JsonPanel = () => {
   if (!showFirebaseInput && !showSheetsInput && !showNetlifyInput) {
     return (
       <DataWindow>
-        <DatabaseSelectButtons />
+        <p>JSON panel</p>
+        {/* <DatabaseSelectButtons /> */}
       </DataWindow>
     );
   } else {
     return (
       <DataWindow>
+        {/*
         <DatabaseSelectButtons />
         <CardHolder id="JsonCardHolder">
           <LoadJsonStatementsCard />
@@ -86,12 +87,13 @@ const JsonPanel = () => {
           {showFirebaseInput && <DownloadCsvModal />}
           <ZipErrorCheckButton number={'7.'} gridRow={5} />
         </CardHolder>
+        */}
       </DataWindow>
     );
   }
 };
 
-export default view(JsonPanel);
+export default JsonPanel;
 
 const DataWindow = styled.div`
   background-color: white;

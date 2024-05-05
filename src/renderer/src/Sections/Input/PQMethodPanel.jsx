@@ -1,11 +1,10 @@
 import React from 'react';
-import { view } from '@risingstack/react-easy-state';
 import styled from 'styled-components';
-import ForcedUnforcedRadio from './CSV/ForcedUnforcedRadio';
-import PQMethodStaCard from './PQMethod/PQMethodStaCard';
-import PQMethodQsortsCard from './PQMethod/PQMethodQsortsCard';
+// import ForcedUnforcedRadio from './CSV/ForcedUnforcedRadio';
+// import PQMethodStaCard from './PQMethod/PQMethodStaCard';
+// import PQMethodQsortsCard from './PQMethod/PQMethodQsortsCard';
+// import ZipErrorCheckButton from './Zip/ZipErrorCheckButton';
 import { useTranslation } from 'react-i18next';
-import ZipErrorCheckButton from './Zip/ZipErrorCheckButton';
 
 const CsvPanel = () => {
   const { t } = useTranslation();
@@ -14,16 +13,16 @@ const CsvPanel = () => {
     <DataWindow>
       <Header>{t('Load both a statements STA file and Q sorts DAT file')}</Header>
       <CardHolder id="pqmethodPanel">
-        <PQMethodStaCard />
+        {/* <PQMethodStaCard />
         <PQMethodQsortsCard />
         <ForcedUnforcedRadio startingRow={2} number={'3.'} />
-        <ZipErrorCheckButton number={'4.'} gridRow={3} />
+        <ZipErrorCheckButton number={'4.'} gridRow={3} /> */}
       </CardHolder>
     </DataWindow>
   );
 };
 
-export default view(CsvPanel);
+export default CsvPanel;
 
 const DataWindow = styled.div`
   background-color: white;

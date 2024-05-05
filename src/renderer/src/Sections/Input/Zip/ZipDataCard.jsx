@@ -1,11 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
-import { view } from '@risingstack/react-easy-state';
 import kadeZip from '../../images/kadeZip.png';
 import LoadKadeZip from './LoadKadeZip';
 import { useTranslation } from 'react-i18next';
 
-const ExcelT3Card = () => {
+const ZipDataCard = () => {
   const { t } = useTranslation();
 
   return (
@@ -20,7 +19,7 @@ const ExcelT3Card = () => {
     </Card>
   );
 };
-export default view(ExcelT3Card);
+export default ZipDataCard;
 
 const Card = styled.div`
   display: grid;

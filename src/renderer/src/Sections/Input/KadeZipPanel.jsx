@@ -1,9 +1,8 @@
 import React from 'react';
-import { view } from '@risingstack/react-easy-state';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
-import ZipDataCard from './Zip/ZipDataCard';
-import ZipErrorCheckButton from './Zip/ZipErrorCheckButton';
+// import ZipDataCard from './Zip/ZipDataCard';
+// import ZipErrorCheckButton from './Zip/ZipErrorCheckButton';
 
 const CsvPanel = () => {
   const { t } = useTranslation();
@@ -12,14 +11,14 @@ const CsvPanel = () => {
     <DataWindow>
       <Header>{t('Load a KADE or Ken-Q Analysis (web) Zip output file')}</Header>
       <CardHolder id="kadeZipPanel">
-        <ZipDataCard />
-        <ZipErrorCheckButton number={''} gridRow={3} />
+        {/* <ZipDataCard /> */}
+        {/* <ZipErrorCheckButton number={''} gridRow={3} /> */}
       </CardHolder>
     </DataWindow>
   );
 };
 
-export default view(CsvPanel);
+export default CsvPanel;
 
 const DataWindow = styled.div`
   background-color: white;

@@ -80,8 +80,9 @@ const License = () => {
 export default License;
 
 const MainContent = styled.div`
-  display: grid;
-  grid-template-columns: 50px 700px 1fr;
+  display: flex;
+  margin: 50px;
+  margin-top: 200px;
   justify-items: center;
   align-items: center;
   box-sizing: border-box;
@@ -90,9 +91,9 @@ const MainContent = styled.div`
   padding-top: 50px;
   font-family: Helvetica, sans-serif;
   font-size: 18px;
-  width: calc(100vw - 135px);
+  max-width: calc(100vw - 335px);
   height: calc(100vh);
-  overflow: auto;
+  /* overflow: auto; */
 `;
 
 const SelectableText = styled.h3`

@@ -1,11 +1,10 @@
 import React from 'react';
-import { view } from '@risingstack/react-easy-state';
 import styled from 'styled-components';
-import ExcelT1Card from './Excel/ExcelT1Card';
-import ExcelT2Card from './Excel/ExcelT2Card';
-import ForcedUnforcedRadio from './CSV/ForcedUnforcedRadio';
+// import ExcelT1Card from './Excel/ExcelT1Card';
+// import ExcelT2Card from './Excel/ExcelT2Card';
+// import ForcedUnforcedRadio from './CSV/ForcedUnforcedRadio';
 import { useTranslation } from 'react-i18next';
-import ZipErrorCheckButton from './Zip/ZipErrorCheckButton';
+// import ZipErrorCheckButton from './Zip/ZipErrorCheckButton';
 
 const ExcelPanel = () => {
   const [t] = useTranslation();
@@ -14,16 +13,16 @@ const ExcelPanel = () => {
     <DataWindow>
       <Header>{t('Load a Type 1 OR Type 2 Spreadsheet (XLSX) File')}</Header>
       <CardHolder id="excelPanelWindow">
-        <ExcelT1Card />
-        <ExcelT2Card />
-        <ForcedUnforcedRadio startingRow={2} number={'2.'} />
-        <ZipErrorCheckButton number={'3.'} gridRow={3} />
+        {/* <ExcelT1Card /> */}
+        {/* <ExcelT2Card /> */}
+        {/* <ForcedUnforcedRadio startingRow={2} number={'2.'} /> */}
+        {/* <ZipErrorCheckButton number={'3.'} gridRow={3} /> */}
       </CardHolder>
     </DataWindow>
   );
 };
 
-export default view(ExcelPanel);
+export default ExcelPanel;
 
 const DataWindow = styled.div`
   min-height: ${(props) => props.height};

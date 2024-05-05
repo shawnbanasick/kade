@@ -65,7 +65,6 @@ const App = () => {
   const { t } = useTranslation();
 
   const viewStart = appState((state) => state.viewStart);
-  console.log('viewStart: ', viewStart);
   const viewInput = appState((state) => state.viewInput);
   const viewData = appState((state) => state.viewData);
   const viewCorrelations = appState((state) => state.viewCorrelations);
@@ -77,7 +76,6 @@ const App = () => {
   const viewClearProject = appState((state) => state.viewClearProject);
   const viewHelp = appState((state) => state.viewHelp);
   const viewLicense = appState((state) => state.viewLicense);
-  console.log('viewLicense: ', viewLicense);
   //const activeWindow = appState((state) => state.activeWindow);
 
   const isDataButtonGreen = appState((state) => state.isDataButtonGreen);
@@ -122,8 +120,6 @@ const App = () => {
   );
 
   const handleClick = (target) => {
-    console.log('target: ', target);
-
     updateViewAttribution(false);
     updateViewData(false);
     updateViewClearProject(false);
@@ -171,7 +167,6 @@ const App = () => {
       updateViewHelp(true);
     }
     if (target === 'viewLicense') {
-      console.log('License called');
       updateViewLicense(true);
     }
     if (target === 'viewClearProject') {
