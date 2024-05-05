@@ -1,9 +1,9 @@
-import uniq from "lodash/uniq";
-import zip from "lodash/zip";
-import { v4 as uuidv4 } from "uuid";
-import calcMultiplierArrayT2 from "../../Input/Excel/excelLogic/calcMultiplierArrayT2";
-import isEqual from "lodash/isEqual";
-import i18n from "i18next";
+import uniq from 'lodash/uniq';
+import zip from 'lodash/zip';
+import { v4 as uuidv4 } from 'uuid';
+import calcMultiplierArrayT2 from '../../Input/Excel/excelLogic/calcMultiplierArrayT2';
+import isEqual from 'lodash/isEqual';
+import i18n from 'i18next';
 
 const compareSecondColumn = (a, b) => {
   if (a[1] === b[1]) {
@@ -23,27 +23,22 @@ const reorderByFirstColumn = (a, b) => {
   }
 };
 
-const generateSortMaps = (
-  qSortPattern,
-  mainDataObject,
-  statementNumArray,
-  multiplierArray
-) => {
+const generateSortMaps = (qSortPattern, mainDataObject, statementNumArray, multiplierArray) => {
   // ex => [-4, -3, -2, -1, 0, 1, 2, 3, 4]
   const newArray = uniq(qSortPattern);
   let paragraphStrings = [];
 
-  let newString = "";
+  let newString = '';
   const newArray2 = [...newArray];
   for (let r = 0; r < newArray2.length; r++) {
     if (newArray2[r] < 0) {
-      newString = newString + "| " + newArray2[r] + " ";
+      newString = newString + '| ' + newArray2[r] + ' ';
     } else {
-      newString = newString + "|  " + newArray2[r] + " ";
+      newString = newString + '|  ' + newArray2[r] + ' ';
     }
   }
 
-  newString = newString + "|";
+  newString = newString + '|';
 
   let respondentArray;
   let unforcedParticipantNamesArray = [];
@@ -54,14 +49,10 @@ const generateSortMaps = (
     for (let m = 0; m < mainDataObject.length; m++) {
       respondentArray = [...mainDataObject[m].rawSort];
 
-      let thisMultiplierArray2 = [...mainDataObject[m].rawSort].sort(
-        (a, b) => a - b
-      );
+      let thisMultiplierArray2 = [...mainDataObject[m].rawSort].sort((a, b) => a - b);
 
       // to deal with unforced Q sorts - triangle shape may vary
-      let thisMultiplierArray = calcMultiplierArrayT2([
-        ...thisMultiplierArray2
-      ]);
+      let thisMultiplierArray = calcMultiplierArrayT2([...thisMultiplierArray2]);
 
       let unforcedTest = isEqual(multiplierArray, thisMultiplierArray);
 
@@ -77,10 +68,10 @@ const generateSortMaps = (
       // MODIFY NAME STRING
       let nameString = mainDataObject[m].name;
       if (!invalidCharacterText) {
-        nameString = `${nameString}     ** ${i18n.t("Input Error")} **`;
+        nameString = `${nameString}     ** ${i18n.t('Input Error')} **`;
         numUnforcedParts = numUnforcedParts + 1;
       } else if (!unforcedTest) {
-        nameString = `${nameString}     ** ${i18n.t("Unforced Q sort")} **`;
+        nameString = `${nameString}     ** ${i18n.t('Unforced Q sort')} **`;
         numUnforcedParts = numUnforcedParts + 1;
       }
       unforcedParticipantNamesArray.push(nameString);
@@ -119,7 +110,7 @@ const generateSortMaps = (
                   // adjust spacing if triple digit statement numbers
                   if (currentArray[1] > 99) {
                     let string1 = `${currentArray[0]} `;
-                    let string2 = string1.padStart(4, " ");
+                    let string2 = string1.padStart(4, ' ');
                     textString = textString + string2;
                     // remove from next pass
                     currentArray[1] = 999;
@@ -127,7 +118,7 @@ const generateSortMaps = (
                     isMidRow = true;
                   } else {
                     let string1 = `${currentArray[0]} `;
-                    let string2 = string1.padStart(5, " ");
+                    let string2 = string1.padStart(5, ' ');
                     textString = textString + string2;
                     currentArray[1] = 999;
                     columnCheck = true;
@@ -138,14 +129,14 @@ const generateSortMaps = (
                 // if it is undefined (end of array)
                 if (currentArray[1] > 99) {
                   let string1 = `${currentArray[0]} `;
-                  let string2 = string1.padStart(4, " ");
+                  let string2 = string1.padStart(4, ' ');
                   textString = textString + string2;
                   currentArray[1] = 999;
                   columnCheck = true;
                   isMidRow = true;
                 } else {
                   let string1 = `${currentArray[0]} `;
-                  let string2 = string1.padStart(5, " ");
+                  let string2 = string1.padStart(5, ' ');
                   textString = textString + string2;
                   currentArray[1] = 999;
                   columnCheck = true;

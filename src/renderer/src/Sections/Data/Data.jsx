@@ -1,73 +1,48 @@
 import React from 'react';
-import { view, store } from '@risingstack/react-easy-state';
 import styled, { keyframes } from 'styled-components';
 import StatementsList from './StatementsList';
 import QsortsPatternList from './QsortsPatternList';
 import ParticipantsQsortsGrid from './ParticipantQsortsGrid';
 import UnforcedSortsDisplay from './UnforcedSortsDisplay';
-import getInputState from '../GlobalState/getInputState';
 import calcPatternArray from './calcPatternArray';
-import { useTranslation } from 'react-i18next';
-import getCoreState from '../GlobalState/getCoreState';
 import DownloadDatabookButton from './Databook/DownloadDatabookButton';
 import DisplayDataSortsGridButton from './DisplayDataSortsGridButton';
 import DisplayDataQsortsButton from './DisplayDataQsortsButton';
-import getDataDisplayState from '../GlobalState/getDataDisplayState';
 import generateDisplaySortMaps from './Databook/generateDisplaySortMaps';
 import SortsDisplayList from './SortsDisplayList';
-// import inputState from "../GlobalState/inputState";
-// import appState from "../GlobalState/appState";
 import DatFileButton from './ExportDAT';
 import StaFileButton from './ExportSTA';
-
-const localStore = store({
-  sortsDisplayText: [],
-  statements: [],
-  projectName: '',
-  numQsorts: 0,
-  numStatements: 0,
-  qSortPattern: ['none'],
-  multiplierArray: [],
-  mainDataObject: [],
-  // hasUnforcedSorts: false,
-  hasSortsWithErrors: false,
-  isForcedQsortPattern: false,
-  showUnforcedConfirmMessage: false
-});
+import coreState from '../GlobalState/coreState';
+import inputState from '../GlobalState/inputState';
+import dataDisplayState from '../GlobalState/dataDisplayState';
+import { useTranslation } from 'react-i18next';
 
 const Data = () => {
   const { t } = useTranslation();
 
-  const showQsortsSpreadsheet = getDataDisplayState('showQsortsSpreadsheet');
-  const showQsorts = getDataDisplayState('showQsorts');
-  const mainDataObject = getCoreState('mainDataObject');
-  const sortsDisplayText = getCoreState('sortsDisplayText');
-  const statements = getCoreState('statements');
-  const projectName = getCoreState('projectName');
-  const numQsorts = getCoreState('numQsorts');
-  const numStatements = getCoreState('numStatements');
-  const qSortPattern = getCoreState('qSortPattern');
-  const areQsortsLoaded = getInputState('areQsortsLoaded');
-  const multiplierArray = getCoreState('multiplierArray');
-  const showExportButtons = getInputState('showExportButtons');
-  const isQsortPatternLoaded = getInputState('isQsortPatternLoaded');
+  const mainDataObject = coreState((state) => state.mainDataObject);
+  // const sortsDisplayText = coreState((state) => state.sortsDisplayText);
+  const statements = coreState((state) => state.statements);
+  const projectName = coreState((state) => state.projectName);
+  const numQsorts = coreState((state) => state.numQsorts);
+  const numStatements = coreState((state) => state.numStatements);
+  const qSortPattern = coreState((state) => state.qSortPattern);
+  const multiplierArray = coreState((state) => state.multiplierArray);
+  const areQsortsLoaded = inputState((state) => state.areQsortsLoaded);
+  const isQsortPatternLoaded = inputState((state) => state.isQsortPatternLoaded);
+  const showExportButtons = inputState((state) => state.showExportButtons);
+  const showQsortsSpreadsheet = dataDisplayState((state) => state.showQsortsSpreadsheet);
+  const showQsorts = dataDisplayState((state) => state.showQsorts);
 
-  localStore.sortsDisplayText = sortsDisplayText;
-  localStore.statements = statements;
-  localStore.projectName = projectName;
-  localStore.numQsorts = numQsorts;
-  localStore.numStatements = numStatements;
-  localStore.mainDataObject = mainDataObject;
-  localStore.multiplierArray = multiplierArray;
-  localStore.showUnforcedConfirmMessage = false;
+  let showUnforcedConfirmMessage = false;
+
   let texts = calcPatternArray([...multiplierArray]);
 
   const statementNumArray = statements.map((item, index) => {
     return index + 1;
   });
 
-  // check for unforced participants
-  // let unforcedParticipants;
+  // check for unforced participants??
 
   let sortMapsArray = generateDisplaySortMaps(
     qSortPattern,
@@ -75,18 +50,16 @@ const Data = () => {
     statementNumArray,
     multiplierArray
   );
-  let displayForcedComfirmMessage = false;
+
   let numUnforcedParts = sortMapsArray[2];
-  // let hasUnforcedSorts = false;
+
+  let displayForcedComfirmMessage = false;
   if (numUnforcedParts > 0) {
-    // hasUnforcedSorts = true;
-    // localStore.hasUnforcedSorts = true;
-    localStore.showUnforcedConfirmMessage = true;
-    // appState.hasDataBeenConfirmed = false;
+    showUnforcedConfirmMessage = true;
     displayForcedComfirmMessage = false;
   } else {
     displayForcedComfirmMessage = true;
-    localStore.showUnforcedConfirmMessage = true;
+    showUnforcedConfirmMessage = true;
   }
 
   if (areQsortsLoaded && isQsortPatternLoaded) {
@@ -110,10 +83,10 @@ const Data = () => {
         </InformationContainer>
         <StatementListContainer>
           <h1>{`${t('Statements')}: `}</h1>
-          <StatementsList statements={localStore.statements} />
+          <StatementsList statements={statements} />
         </StatementListContainer>
         <UnforcedContainer>
-          {localStore.showUnforcedConfirmMessage && (
+          {showUnforcedConfirmMessage && (
             <UnforcedSortsDisplay number={numUnforcedParts} display={displayForcedComfirmMessage} />
           )}
           {showExportButtons && (
@@ -131,14 +104,14 @@ const Data = () => {
             <DisplayDataSortsGridButton />
             <DownloadDatabookButton />
           </ButtonsContainer>
-          {showQsortsSpreadsheet && <ParticipantsQsortsGrid data={localStore.mainDataObject} />}
+          {showQsortsSpreadsheet && <ParticipantsQsortsGrid data={mainDataObject} />}
           {showQsorts && (
             <SortsDisplayList
               sortsDisplayText={sortMapsArray[0]}
               respondentNames={sortMapsArray[1]}
             />
           )}
-        </SortsListContainer>
+        </SortsListContainer>{' '}
       </MainContent>
     );
   } else {
@@ -155,7 +128,7 @@ const Data = () => {
   }
 };
 
-export default view(Data);
+export default Data;
 
 const fadeIn = keyframes`
   from {
@@ -222,6 +195,7 @@ const ProjectTitle = styled.h1`
 
 const StatementListContainer = styled.div`
   grid-area: statementList;
+  padding-top: 30px;
   padding-bottom: 50px;
 `;
 

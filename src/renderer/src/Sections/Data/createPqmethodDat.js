@@ -1,4 +1,4 @@
-import checkPqmethodUniqueNames from "./checkPqmethodUniqueNames";
+import checkPqmethodUniqueNames from './checkPqmethodUniqueNames';
 
 const createPQMethodDAT = (
   mainDataOject,
@@ -9,31 +9,10 @@ const createPQMethodDAT = (
 ) => {
   // project name = max 60 characters
   let projectNameText = projectName.substring(0, 60);
-  let numSortsText = mainDataOject.length.toString().padStart(3, " ");
-  let numStatementsText = numStatements.toString().padStart(3, " ");
+  let numSortsText = mainDataOject.length.toString().padStart(3, ' ');
+  let numStatementsText = numStatements.toString().padStart(3, ' ');
   // min max value
-  let refArray = [
-    -6,
-    -5,
-    -4,
-    -3,
-    -2,
-    -1,
-    0,
-    1,
-    2,
-    3,
-    4,
-    5,
-    6,
-    7,
-    8,
-    9,
-    10,
-    11,
-    12,
-    13
-  ];
+  let refArray = [-6, -5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13];
   let minMaxArray = [];
   multiplierArray.forEach((value, index) => {
     if (value !== 0) {
@@ -43,24 +22,24 @@ const createPQMethodDAT = (
   });
   let minValueText = Math.min(...minMaxArray)
     .toString()
-    .padStart(3, " ");
+    .padStart(3, ' ');
   let maxValueText = Math.max(...minMaxArray)
     .toString()
-    .padStart(3, " ");
+    .padStart(3, ' ');
   let multiplierArrayText = ``;
   multiplierArray.forEach((value, index) => {
-    multiplierArrayText += value.toString().padStart(3, " ");
+    multiplierArrayText += value.toString().padStart(3, ' ');
   });
 
-  let participantNames2 = respondentNames.map(name => {
+  let participantNames2 = respondentNames.map((name) => {
     return name.substring(0, 8);
   });
 
   let sortsTextArray = [];
-  mainDataOject.forEach(item => {
+  mainDataOject.forEach((item) => {
     let sortText = ``;
-    item.rawSort.forEach(value => {
-      sortText += value.toString().padStart(2, " ");
+    item.rawSort.forEach((value) => {
+      sortText += value.toString().padStart(2, ' ');
     });
     sortsTextArray.push(sortText);
   });
@@ -69,7 +48,7 @@ const createPQMethodDAT = (
   let participantNamesText = [];
   mainDataOject.forEach((participant, index) => {
     participantNamesText.push(
-      `${participantNames[index].padEnd(10, " ")}${sortsTextArray[index]}\n`
+      `${participantNames[index].padEnd(10, ' ')}${sortsTextArray[index]}\n`
     );
   });
 

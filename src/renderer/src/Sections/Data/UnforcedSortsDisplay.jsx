@@ -1,5 +1,3 @@
-import React from 'react';
-import { view } from '@risingstack/react-easy-state';
 import styled from 'styled-components';
 import ConfirmButton from './UnforcedSortsDisplayButton';
 import { useTranslation } from 'react-i18next';
@@ -24,7 +22,7 @@ const UnforcedSortsDisplay = (props) => {
   }
 };
 
-export default view(UnforcedSortsDisplay);
+export default UnforcedSortsDisplay;
 
 const Container = styled.div`
   display: flex;

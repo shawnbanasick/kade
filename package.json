@@ -36,6 +36,7 @@
     }
   },
   "dependencies": {
+    "@ag-grid-community/all-modules": "^27.3.0",
     "@ag-grid-community/react": "^31.3.1",
     "@electron-toolkit/preload": "^3.0.0",
     "@electron-toolkit/utils": "^3.0.0",
@@ -70,6 +71,7 @@
     "semantic-ui-react": "^2.1.5",
     "semver": "^7.6.0",
     "styled-components": "^6.1.9",
+    "uuid": "^9.0.1",
     "xlsx": "https://cdn.sheetjs.com/xlsx-0.20.2/xlsx-0.20.2.tgz",
     "zustand": "^4.5.2"
   },

@@ -1,5 +1,3 @@
-import React from 'react';
-import { view } from '@risingstack/react-easy-state';
 import styled from 'styled-components';
 import * as docx from 'docx';
 import * as FileSaver from 'file-saver';
@@ -14,12 +12,12 @@ import {
   PageNumber,
   TextRun,
   Header,
-  Paragraph
+  Paragraph,
 } from 'docx';
-import getCoreState from '../../GlobalState/getCoreState';
 import GeneralButton from './../../../Utils/GeneralButton';
 import { useTranslation } from 'react-i18next';
 import DocxIcon from '../../images/DOCX_Icon2.svg';
+import coreState from '../../GlobalState/coreState';
 
 const DownloadDatabookButton = () => {
   const { t } = useTranslation();
@@ -29,22 +27,22 @@ const DownloadDatabookButton = () => {
     projectData: t('Project Data'),
     downloaded: t('Download'),
     participants: t('Participants'),
-    partQsorts: t('Participant Q Sorts')
+    partQsorts: t('Participant Q Sorts'),
   };
 
-  const handleClick = async () => {
-    const qSortPattern = getCoreState('qSortPattern');
-    const respondentNames = getCoreState('respondentNames');
-    const mainDataObject = getCoreState('mainDataObject');
-    const multiplierArray = getCoreState('multiplierArray');
-    const statements = getCoreState('statements');
-    const projectName = getCoreState('projectName');
+  const qSortPattern = coreState((state) => state.qSortPattern);
+  const respondentNames = coreState((state) => state.respondentNames);
+  const mainDataObject = coreState((state) => state.mainDataObject);
+  const multiplierArray = coreState((state) => state.multiplierArray);
+  const statements = coreState((state) => state.statements);
+  const projectName = coreState((state) => state.projectName);
 
+  const handleClick = () => {
     const statementNumArray = statements.map((item, index) => {
       return index + 1;
     });
 
-    const generatedString = await generateSortMaps(
+    const generatedString = generateSortMaps(
       qSortPattern,
       respondentNames,
       mainDataObject,
@@ -71,10 +69,10 @@ const DownloadDatabookButton = () => {
             quickFormat: true,
             run: {
               font: 'Courier New',
-              size: 24
-            }
-          }
-        ]
+              size: 24,
+            },
+          },
+        ],
       },
       numbering: {
         config: [
@@ -89,13 +87,13 @@ const DownloadDatabookButton = () => {
                   paragraph: {
                     indent: {
                       left: convertInchesToTwip(0.5),
-                      hanging: convertInchesToTwip(0.18)
-                    }
-                  }
-                }
-              }
+                      hanging: convertInchesToTwip(0.18),
+                    },
+                  },
+                },
+              },
             ],
-            reference: 'my-crazy-reference'
+            reference: 'my-crazy-reference',
           },
           {
             levels: [
@@ -108,13 +106,13 @@ const DownloadDatabookButton = () => {
                   paragraph: {
                     indent: {
                       left: convertInchesToTwip(0.3),
-                      hanging: convertInchesToTwip(0.3)
-                    }
-                  }
-                }
-              }
+                      hanging: convertInchesToTwip(0.3),
+                    },
+                  },
+                },
+              },
             ],
-            reference: 'my-number-numbering-reference'
+            reference: 'my-number-numbering-reference',
           },
           {
             levels: [
@@ -127,15 +125,15 @@ const DownloadDatabookButton = () => {
                   paragraph: {
                     indent: {
                       left: convertInchesToTwip(0.5),
-                      hanging: convertInchesToTwip(0.18)
-                    }
-                  }
-                }
-              }
+                      hanging: convertInchesToTwip(0.18),
+                    },
+                  },
+                },
+              },
             ],
-            reference: 'padded-numbering-reference'
-          }
-        ]
+            reference: 'padded-numbering-reference',
+          },
+        ],
       },
       sections: [
         {
@@ -145,13 +143,13 @@ const DownloadDatabookButton = () => {
                 top: 1200,
                 right: 1000,
                 bottom: 1000,
-                left: 1000
+                left: 1000,
               },
               pageNumbers: {
                 start: 1,
-                formatType: NumberFormat.DECIMAL
-              }
-            }
+                formatType: NumberFormat.DECIMAL,
+              },
+            },
           },
           headers: {
             default: new Header({
@@ -161,17 +159,17 @@ const DownloadDatabookButton = () => {
                   children: [
                     new TextRun('KADE Data Book '),
                     new TextRun({
-                      children: [' Page ', PageNumber.CURRENT]
+                      children: [' Page ', PageNumber.CURRENT],
                     }),
                     new TextRun({
-                      children: [' of ', PageNumber.TOTAL_PAGES]
-                    })
-                  ]
-                })
-              ]
-            })
+                      children: [' of ', PageNumber.TOTAL_PAGES],
+                    }),
+                  ],
+                }),
+              ],
+            }),
           },
-          children: statementsList
+          children: statementsList,
         },
         {
           properties: {
@@ -180,13 +178,13 @@ const DownloadDatabookButton = () => {
                 top: 1200,
                 right: 1000,
                 bottom: 1000,
-                left: 1000
-              }
-            }
+                left: 1000,
+              },
+            },
           },
-          children: generatedString
-        }
-      ]
+          children: generatedString,
+        },
+      ],
     });
 
     let currentdate = new Date();
@@ -218,7 +216,7 @@ const DownloadDatabookButton = () => {
     </TradButton>
   );
 };
-export default view(DownloadDatabookButton);
+export default DownloadDatabookButton;
 
 const TradButton = styled.div`
   margin-left: 150px;

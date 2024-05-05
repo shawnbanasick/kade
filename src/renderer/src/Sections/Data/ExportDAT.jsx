@@ -1,5 +1,3 @@
-import React from 'react';
-import { view } from '@risingstack/react-easy-state';
 import styled from 'styled-components';
 import GeneralButton from '../../Utils/GeneralButton';
 import { useTranslation } from 'react-i18next';
@@ -7,19 +5,19 @@ import coreState from '../GlobalState/coreState';
 import createPQMethodDAT from './createPqmethodDat';
 import * as FileSaver from 'file-saver';
 import DatIcon from '../images/DAT_Icon.svg';
+import cloneDeep from 'lodash/cloneDeep';
 
-const UnforcedSortsDisplayButton = (props) => {
+const ExportDatButton = () => {
   const { t } = useTranslation();
 
+  const mainDataObject2 = coreState((state) => state.mainDataObject);
+  const mainDataObject = cloneDeep(mainDataObject2);
+  const multiplierArray = coreState((state) => state.multiplierArray);
+  const projectName = coreState((state) => state.projectName);
+  const statements = coreState((state) => state.statements);
+  const respondentNames = coreState((state) => state.respondentNames);
+
   const handleOnClick = async () => {
-    let mainDataObject2 = coreState.mainDataObject;
-    let mainDataObject = JSON.parse(JSON.stringify(mainDataObject2));
-
-    let multiplierArray = [...coreState.multiplierArray];
-    let projectName = coreState.projectName;
-    let statements = [...coreState.statements];
-    let respondentNames = [...coreState.respondentNames];
-
     let datString = createPQMethodDAT(
       mainDataObject,
       multiplierArray,
@@ -29,7 +27,7 @@ const UnforcedSortsDisplayButton = (props) => {
     );
 
     var blob = new Blob([datString], {
-      type: 'text/plain;charset=ascii'
+      type: 'text/plain;charset=ascii',
     });
     FileSaver.saveAs(blob, `${projectName.substring(0, 8)}.DAT`);
   };
@@ -46,7 +44,7 @@ const UnforcedSortsDisplayButton = (props) => {
   );
 };
 
-export default view(UnforcedSortsDisplayButton);
+export default ExportDatButton;
 
 const Button = styled.button`
   background-color: ${(props) => props.buttonColor};

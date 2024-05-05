@@ -1,13 +1,11 @@
-import React, { useEffect, useRef } from 'react';
-import { AgGridReact } from '@ag-grid-community/react';
-import { AllCommunityModules } from '@ag-grid-community/all-modules';
-import { view, store } from '@risingstack/react-easy-state';
-import getCoreState from '../GlobalState/getCoreState';
+import { useEffect, useRef } from 'react';
+import { AgGridReact } from 'ag-grid-react';
+import 'ag-grid-community/styles/ag-grid.css';
+// import 'ag-grid-community/styles/ag-theme-quartz.css';
+import '../../Utils/ag-theme-fresh.css';
+import coreState from '../GlobalState/coreState';
 
-const localStore = store({
-  numQsorts: 0
-});
-
+// HELPER FUNCTION
 function getWidth(numStatements) {
   let widthVal = 230 + 65 * numStatements;
   let x = window.innerWidth - 40 - 152;
@@ -20,6 +18,7 @@ function getWidth(numStatements) {
   return widthVal;
 }
 
+// HELPER FUNCTION
 function getHeight(numQsorts) {
   let heightVal = 40 + 25 * numQsorts;
   let y = window.innerHeight - 120 - 100;
@@ -31,9 +30,8 @@ function getHeight(numQsorts) {
   return heightVal;
 }
 
-function resetWidthAndHeight() {
-  const numQsorts = localStore.numQsorts;
-  const numStatements = localStore.numStatements;
+// HELPER FUNCTION
+function resetWidthAndHeight(numQsorts, numStatements) {
   const table = document.querySelector('#participantQsortData');
   if (table !== null) {
     table.style.height = getHeight(numQsorts);
@@ -41,6 +39,7 @@ function resetWidthAndHeight() {
   }
 }
 
+// HELPER FUNCTION
 function generateGridColDefs(props) {
   if (props.data.length === undefined) {
     return;
@@ -53,8 +52,8 @@ function generateGridColDefs(props) {
       editable: false,
       width: 80,
       cellStyle: {
-        textAlign: 'center'
-      }
+        textAlign: 'center',
+      },
     },
     {
       headerName: 'Participant',
@@ -63,9 +62,9 @@ function generateGridColDefs(props) {
       pinned: true,
       editable: false,
       cellStyle: {
-        textAlign: 'center'
-      }
-    }
+        textAlign: 'center',
+      },
+    },
   ];
   for (let i = 0; i < props.data[0].rawSort.length; i += 1) {
     const tempObj = {};
@@ -76,13 +75,14 @@ function generateGridColDefs(props) {
     tempObj.editable = false;
     tempObj.sortable = true;
     tempObj.cellStyle = {
-      textAlign: 'right'
+      textAlign: 'right',
     };
     gridColDefsQsorts.push(tempObj);
   }
-  localStore.gridColDefsQsorts = gridColDefsQsorts;
+  return gridColDefsQsorts;
 }
 
+// HELPER FUNCTION
 function generateGridRowData(props) {
   if (props.data.length === undefined) {
     return;
@@ -97,18 +97,22 @@ function generateGridRowData(props) {
     }
     gridRowDataQsorts.push(tempObj);
   }
-  localStore.gridRowDataQsorts = gridRowDataQsorts;
+  return gridRowDataQsorts;
 }
 
+// COMPONENT
 const ParticipantQsortsGrid = (props) => {
+  let numQsorts = coreState((state) => state.numQsorts);
+  let statements = coreState((state) => state.statements);
+
   useEffect(() => {
     window.addEventListener('resize', () => {
-      resetWidthAndHeight();
+      resetWidthAndHeight(numQsorts, statements.length);
     });
 
     return () => {
       window.removeEventListener('resize', () => {
-        resetWidthAndHeight();
+        resetWidthAndHeight(numQsorts, statements.length);
       });
     };
   }, []);
@@ -120,36 +124,35 @@ const ParticipantQsortsGrid = (props) => {
     // columnApi.current = params.columnApi;
   };
 
-  let statements;
-  let numQsorts;
+  let gridOptions = {
+    suppressRowHoverHighlight: false,
+    columnHoverHighlight: true,
+    enableSorting: true,
+  };
 
+  let gridColDefsQsorts;
+  let gridRowDataQsorts;
   if (props) {
-    generateGridColDefs(props);
-    generateGridRowData(props);
-    numQsorts = getCoreState('numQsorts');
-    statements = getCoreState('statements');
-
-    localStore.numQsorts = numQsorts;
-    localStore.numStatements = statements.length;
+    gridColDefsQsorts = generateGridColDefs(props);
+    gridRowDataQsorts = generateGridRowData(props);
   }
 
-  // const { onGridReady } = this;
   const style1 = {
     width: getWidth(statements.length),
-    height: getHeight(numQsorts)
+    height: getHeight(numQsorts),
   };
 
   return (
     <div id="participantQsortData" style={style1} className="ag-theme-fresh">
       <AgGridReact
-        columnDefs={localStore.gridColDefsQsorts}
+        columnDefs={gridColDefsQsorts}
         ref={gridApi}
-        rowData={localStore.gridRowDataQsorts}
+        rowData={gridRowDataQsorts}
         onGridReady={onGridReady}
-        modules={AllCommunityModules}
+        gridOptions={gridOptions}
       />
     </div>
   );
 };
 
-export default view(ParticipantQsortsGrid);
+export default ParticipantQsortsGrid;

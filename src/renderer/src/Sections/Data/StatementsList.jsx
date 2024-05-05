@@ -1,6 +1,3 @@
-import { view } from '@risingstack/react-easy-state';
-import React from 'react';
-
 const StatementList = (props) => {
   let mapKey = 1;
   return (
@@ -12,4 +9,4 @@ const StatementList = (props) => {
   );
 };
 
-export default view(StatementList);
+export default StatementList;

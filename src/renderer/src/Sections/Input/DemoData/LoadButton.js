@@ -24,9 +24,9 @@ const LoadButton = styled.div`
   transition-property: box-shadow;
   transform: translateZ(0);
   box-shadow:
-    inset 0 0 0 4px ${(props) => (props.isActive ? 'var(--main-theme-color)' : '#d6dbe0')},
+    inset 0 0 0 4px ${(props) => (props.$isActive ? 'var(--main-theme-color)' : '#d6dbe0')},
     0 0 1px 0.6;
-  background-color: ${(props) => (props.isActive ? 'var(--main-theme-color)' : '#d6dbe0')};
+  background-color: ${(props) => (props.$isActive ? 'var(--main-theme-color)' : '#d6dbe0')};
 
   box-shadow: ${(props) =>
     props.isActive

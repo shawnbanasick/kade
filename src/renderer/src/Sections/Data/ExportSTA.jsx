@@ -1,5 +1,3 @@
-import React from 'react';
-import { view } from '@risingstack/react-easy-state';
 import styled from 'styled-components';
 import GeneralButton from '../../Utils/GeneralButton';
 import coreState from '../GlobalState/coreState';
@@ -7,11 +5,11 @@ import { useTranslation } from 'react-i18next';
 import * as FileSaver from 'file-saver';
 import StaIcon from '../images/STA_Icon.svg';
 
-const UnforcedSortsDisplayButton = (props) => {
+const ExportStaButton = () => {
   const { t } = useTranslation();
 
-  const projectName = coreState.projectName;
-  const statements = [...coreState.statements];
+  const projectName = coreState((state) => state.projectName);
+  const statements = coreState((state) => state.statements);
 
   const handleOnClick = async () => {
     // Create statements.txt
@@ -21,7 +19,7 @@ const UnforcedSortsDisplayButton = (props) => {
     });
 
     const blob = new Blob([statementsString], {
-      type: 'text/plain;charset=ascii'
+      type: 'text/plain;charset=ascii',
     });
     FileSaver.saveAs(blob, `${projectName.substring(0, 8)}.STA`);
   };
@@ -38,7 +36,7 @@ const UnforcedSortsDisplayButton = (props) => {
   );
 };
 
-export default view(UnforcedSortsDisplayButton);
+export default ExportStaButton;
 
 const Button = styled.button`
   background-color: ${(props) => props.buttonColor};

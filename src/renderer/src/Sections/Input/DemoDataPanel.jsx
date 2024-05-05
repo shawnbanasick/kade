@@ -1,4 +1,3 @@
-import React from 'react';
 import styled from 'styled-components';
 import LipsetCard from './DemoData/LipsetCard';
 //import BuzzwordCard from './DemoData/BuzzwordCard';

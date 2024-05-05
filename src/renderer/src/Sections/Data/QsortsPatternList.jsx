@@ -1,6 +1,4 @@
 import styled from 'styled-components';
-import { view } from '@risingstack/react-easy-state';
-import React from 'react';
 
 const StatementList = (props) => {
   let mapKey = 1;
@@ -13,7 +11,7 @@ const StatementList = (props) => {
   );
 };
 
-export default view(StatementList);
+export default StatementList;
 
 const CustomUl = styled.ul`
   list-style-type: none;
