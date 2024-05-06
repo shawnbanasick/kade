@@ -4,7 +4,7 @@ import { immer } from 'zustand/middleware/immer';
 //   distStateListSortKey: "",
 
 const outputState = create(
-  immer((set) => ({
+  immer((set, get) => ({
     displayFactorVisualizations: false,
     distStateLowerValueText: `p<0.05`,
     distStateUpperValueText: `p<0.01`,

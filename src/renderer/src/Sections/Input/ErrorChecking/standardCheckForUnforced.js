@@ -1,12 +1,8 @@
-import inputState from "../../GlobalState/inputState";
-import isEqual from "lodash/isEqual";
-import i18n from "i18next";
+import inputState from '../../GlobalState/inputState';
+import isEqual from 'lodash/isEqual';
+import i18n from 'i18next';
 
-const standardCheckForUnforced = (
-  testSortArray,
-  qSortPattern,
-  respondentNames
-) => {
+const standardCheckForUnforced = (testSortArray, qSortPattern, respondentNames) => {
   let passesTest = true;
   let unforcedParticipantNamesArray = [];
   let numUnforcedParts = 0;
@@ -24,21 +20,23 @@ const standardCheckForUnforced = (
 
   if (numUnforcedParts > 0) {
     passesTest = false;
-    inputState.showWarningMessageBar = true;
-    inputState.errorMessage = `${i18n.t(
-      "Unforced Q sorts"
-    )} ${numUnforcedParts} >>> ${unforcedParticipantNamesArray.join(", ")}`;
-    inputState.errorStackTrace = i18n.t(
-      "Warning in 'standardErrorChecks' function"
-    );
-    inputState.extendedErrorMessage = `${i18n.t(
-      "Unforced Q sorts"
-    )} ${unforcedParticipantNamesArray.join(", ")}. 
-        \n\n ${i18n.t("Check the sort data in the Data section")}`;
-    inputState.showDataImportSuccessMessage = true;
-    inputState.isLoadZipButtonGreen = true;
-    inputState.isCsvDataErrorCheckButtonGreen = true;
-    inputState.showDataImportSuccessMessage = true;
+    inputState.setState({ showWarningMessageBar: true });
+    inputState.setState({
+      errorMessage: `${i18n.t(
+        'Unforced Q sorts'
+      )} ${numUnforcedParts} >>> ${unforcedParticipantNamesArray.join(', ')}`,
+    });
+    inputState.setState({ errorStackTrace: i18n.t("Warning in 'standardErrorChecks' function") });
+    inputState.setState({
+      extendedErrorMessage: `${i18n.t(
+        'Unforced Q sorts'
+      )} ${unforcedParticipantNamesArray.join(', ')}. 
+        \n\n ${i18n.t('Check the sort data in the Data section')}`,
+    });
+    inputState.setState({ showDataImportSuccessMessage: true });
+    inputState.setState({ isLoadZipButtonGreen: true });
+    inputState.setState({ isCsvDataErrorCheckButtonGreen: true });
+    inputState.setState({ showDataImportSuccessMessage: true });
   }
   return passesTest;
 };

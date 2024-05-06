@@ -2,7 +2,7 @@ import { create } from 'zustand';
 import { immer } from 'zustand/middleware/immer';
 
 const inputState = create(
-  immer((set) => ({
+  immer((set, get) => ({
     // progress check
     areStatementsLoaded: false,
     areQsortsLoaded: false,

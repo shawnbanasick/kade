@@ -1,42 +1,36 @@
 import React from 'react';
-import { view, store } from '@risingstack/react-easy-state';
 import mainCorrCalcs from './correlationsLogic/mainCorrCalcs';
 import ErrorNotification from '../Input/ErrorChecking/ErrorNotification';
 import calcMaxRespondentNameLength from './calcMaxRespondentNameLength';
-import getCoreState from '../GlobalState/getCoreState';
-import getAppState from '../GlobalState/getAppState';
 import inputState from '../GlobalState/inputState';
 import GeneralButton from '../../Utils/GeneralButton';
 import { useTranslation } from 'react-i18next';
-
-const localStore = store({
-  isCorrelationsButtonGreen: false
-});
+import coreState from '../GlobalState/coreState';
+import appState from '../GlobalState/appState';
 
 const CalculateCorrelationsButton = () => {
   const { t } = useTranslation();
+  // Global State
+  const respondentNames = coreState((state) => state.respondentNames);
+  const mainDataObject = coreState((state) => state.mainDataObject);
+  const updateShowErrorMessageBar = inputState((state) => state.updateShowErrorMessageBar);
+  const updateErrorMessage = inputState((state) => state.updateErrorMessage);
+  const isCorrelationsButtonGreen = appState((state) => state.isCorrelationsButtonGreen);
 
   const handleClick = () => {
-    // State
-    const respondentNames = getCoreState('respondentNames');
-
     if (respondentNames) {
       calcMaxRespondentNameLength(respondentNames);
-      const mainDataObject = getCoreState('mainDataObject');
       const rawSortsArray = mainDataObject.map((item) => item.rawSort);
       mainCorrCalcs(respondentNames, rawSortsArray);
     } else {
-      inputState.showErrorMessageBar = true;
-      inputState.errorMessage = t('No data to calculate correlations');
+      updateShowErrorMessageBar(true);
+      updateErrorMessage(t('No data to calculate correlations'));
     }
   };
 
-  const isCorrelationsButtonGreen = getAppState('isCorrelationsButtonGreen');
-
-  localStore.isCorrelationsButtonGreen = isCorrelationsButtonGreen;
   return (
     <React.Fragment>
-      <GeneralButton isActive={localStore.isCorrelationsButtonGreen} onClick={() => handleClick()}>
+      <GeneralButton $isActive={isCorrelationsButtonGreen} onClick={() => handleClick()}>
         <p>{t('Calculate Correlations')}</p>
       </GeneralButton>
       <ErrorNotification />
@@ -44,4 +38,4 @@ const CalculateCorrelationsButton = () => {
   );
 };
 
-export default view(CalculateCorrelationsButton);
+export default CalculateCorrelationsButton;

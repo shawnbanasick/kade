@@ -1,26 +1,30 @@
-import { view } from '@risingstack/react-easy-state';
 import styled from 'styled-components';
 import { Button } from 'semantic-ui-react';
-import React from 'react';
 import ExtendedErrorModal from './ExtendedErrorModal';
 import inputState from '../../GlobalState/inputState';
-import getInputState from '../../GlobalState/getInputState';
 import { useTranslation } from 'react-i18next';
 
 const ErrorNotification = () => {
   const { t } = useTranslation();
+  const updateShowErrorMessageBar = inputState((state) => state.updateShowErrorMessageBar);
+  const updateErrorStackTrace = inputState((state) => state.updateErrorStackTrace);
+  const updateIsCsvDataErrorCheckButtonGreen = inputState(
+    (state) => state.updateIsCsvDataErrorCheckButtonGreen
+  );
+  const updateShowDataImportSuccessMessage = inputState(
+    (state) => state.updateShowDataImportSuccessMessage
+  );
+
+  const showErrorMessageBar = inputState((state) => state.showErrorMessageBar);
+  const errorMessage = inputState((state) => state.errorMessage);
+  const errorMessageString = `${t('Error')}:  ${errorMessage}`;
 
   const handleOnClick = () => {
-    inputState.showErrorMessageBar = false;
-    inputState.errorStackTrace = t('no stack trace available');
-    inputState.isCsvDataErrorCheckButtonGreen = false;
-    inputState.showDataImportSuccessMessage = false;
+    updateShowErrorMessageBar(false);
+    updateErrorStackTrace(t('no stack trace available'));
+    updateIsCsvDataErrorCheckButtonGreen(false);
+    updateShowDataImportSuccessMessage(false);
   };
-
-  const showErrorMessageBar = getInputState('showErrorMessageBar');
-
-  const errorMessage = getInputState('errorMessage');
-  const errorMessageString = `${t('Error')}:  ${errorMessage}`;
 
   if (showErrorMessageBar) {
     return (
@@ -38,7 +42,7 @@ const ErrorNotification = () => {
   return null;
 };
 
-export default view(ErrorNotification);
+export default ErrorNotification;
 
 const ErrorBar = styled.div`
   position: absolute;

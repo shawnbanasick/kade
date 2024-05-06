@@ -2,7 +2,7 @@ import { create } from 'zustand';
 import { immer } from 'zustand/middleware/immer';
 
 const dataDisplayState = create(
-  immer((set) => ({
+  immer((set, get) => ({
     showQsortsSpreadsheet: false,
     showQsorts: true,
 

@@ -3,7 +3,7 @@ import styled, { css } from 'styled-components';
 import Start from './Sections/Start/Start';
 import Input from './Sections/Input/Input';
 import Data from './Sections/Data/Data';
-// import Correlations from './Sections/Correlations/Correlations';
+import Correlations from './Sections/Correlations/Correlations';
 // import Factors from './Sections/Factors/Factors';
 // import Rotation from './Sections/Rotation/Rotation';
 // import Loadings from './Sections/Loadings/Loadings';
@@ -266,6 +266,7 @@ const App = () => {
             {viewStart && <Start view={viewStart} />}
             {viewInput && <Input view={viewInput} />}
             {viewData && <Data view={viewData} />}
+            {viewCorrelations && <Correlations view={viewCorrelations} />}
             {viewLicense && <License view={viewLicense} />}
           </ActionWindow>
         </Split>
@@ -276,7 +277,6 @@ const App = () => {
 
 export default App;
 
-// {viewCorrelations && <Correlations view={viewCorrelations} />}
 // {viewFactors && <Factors view={viewFactors} />}
 // {viewRotation && <Rotation view={viewRotation} />}
 // {viewLoadings && <Loadings view={viewLoadings} />}

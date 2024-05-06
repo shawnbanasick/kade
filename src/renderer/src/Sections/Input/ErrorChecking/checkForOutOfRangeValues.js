@@ -1,12 +1,7 @@
-import isNumber from "lodash/isNumber";
-import cloneDeep from "lodash/cloneDeep";
+import isNumber from 'lodash/isNumber';
+import cloneDeep from 'lodash/cloneDeep';
 
-const checkForOutOfRangeValues = (
-  mainDataObject,
-  min,
-  max,
-  numberStatements
-) => {
+const checkForOutOfRangeValues = (mainDataObject, min, max, numberStatements) => {
   let nonNumericArray = [];
   let outsideRangeArray = [];
   let overUnderCountArray = [];
@@ -17,7 +12,7 @@ const checkForOutOfRangeValues = (
     if (testItem.length !== numberStatements) {
       overUnderCountArray.push([mainDataObject[index].name, index + 1]);
     }
-    testItem.forEach(entry => {
+    testItem.forEach((entry) => {
       let isNumeric = isNumber(entry);
       if (!isNumeric) {
         nonNumericArray.push([mainDataObject[index].name, index + 1]);

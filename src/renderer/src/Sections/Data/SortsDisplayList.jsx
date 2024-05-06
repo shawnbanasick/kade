@@ -1,27 +1,19 @@
-import React from "react";
-import { v4 as uuidv4 } from "uuid";
-import styled from "styled-components";
+import React from 'react';
+import { v4 as uuidv4 } from 'uuid';
+import styled from 'styled-components';
 
-const SortsList = props => {
+const SortsList = (props) => {
   return (
     <ul>
-      {props.sortsDisplayText.map(function(listValue, index) {
+      {props.sortsDisplayText.map(function (listValue, index) {
         return (
           <div key={uuidv4()}>
-            <StyledPartName key={listValue["key"]}>
-              {props.respondentNames[index]}
-            </StyledPartName>
-            {listValue["sortArray"].map(function(item, index2) {
+            <StyledPartName key={listValue['key']}>{props.respondentNames[index]}</StyledPartName>
+            {listValue['sortArray'].map(function (item, index2) {
               if (index2 === 0) {
-                return (
-                  <QitemHeader key={`${listValue["key"]}_${index2}`}>
-                    {item}
-                  </QitemHeader>
-                );
+                return <QitemHeader key={`${listValue['key']}_${index2}`}>{item}</QitemHeader>;
               } else {
-                return (
-                  <Qitem key={`${listValue["key"]}_${index2}_99`}>{item}</Qitem>
-                );
+                return <Qitem key={`${listValue['key']}_${index2}_99`}>{item}</Qitem>;
               }
             })}
             <br />

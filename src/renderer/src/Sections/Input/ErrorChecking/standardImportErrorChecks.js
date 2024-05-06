@@ -1,6 +1,5 @@
-import coreState from "../../GlobalState/coreState";
-import getCoreState from "../../GlobalState/getCoreState";
-import cleanRespondentNames from "../CSV/cleanRespondentNames";
+import coreState from '../../GlobalState/coreState';
+import cleanRespondentNames from '../CSV/cleanRespondentNames';
 // import getInputState from "../../GlobalState/getInputState";
 // import setForcedUnforcedErrorContent from "../CSV/setForcedUnforcedErrorContent";
 // import setNonNumericErrorContent from "../CSV/setNonNumericErrorContent";
@@ -10,18 +9,18 @@ import cleanRespondentNames from "../CSV/cleanRespondentNames";
 // import checkForcedUnforcedSorts from "../../Data/Databook/checkForcedUnforcedSorts ";
 // NO ZEROS In Qsort Pattern
 //
-import addPosShiftSorts from "../CSV/addPosShiftSorts";
-import standardCheckForUnforcedSorts from "./standardCheckForUnforced";
-import checkForOutOfRangeValues2 from "./checkForOutOfRangeValues2";
-import checkForIncorrectLengths from "./checkForIncorrectLengths";
-import checkForIncorrectQsortPattern from "./checkForIncorrectQsortPattern";
-import checkForNan from "./checkForNan";
+import addPosShiftSorts from '../CSV/addPosShiftSorts';
+import standardCheckForUnforcedSorts from './standardCheckForUnforced';
+import checkForOutOfRangeValues2 from './checkForOutOfRangeValues2';
+import checkForIncorrectLengths from './checkForIncorrectLengths';
+import checkForIncorrectQsortPattern from './checkForIncorrectQsortPattern';
+import checkForNan from './checkForNan';
 
 const standardImportErrorChecks = () => {
-  const mainDataObject = getCoreState("mainDataObject");
-  const numStatements = getCoreState("numStatements");
-  const qSortPattern = getCoreState("qSortPattern");
-  const respondentNames = getCoreState("respondentNames");
+  const mainDataObject = coreState.getState().mainDataObject;
+  const numStatements = coreState.getState().numStatements;
+  const qSortPattern = coreState.getState().qSortPattern;
+  const respondentNames = coreState.getState().respondentNames;
   // const multiplierArray = getCoreState("multiplierArray");
   // const multiplierArray = getCoreState("multiplierArray");
   // const unforcedRadioButtonState = getInputState("unforcedRadioButtonState");
@@ -29,17 +28,12 @@ const standardImportErrorChecks = () => {
   const min = Math.min(...qSortPattern);
   const max = Math.max(...qSortPattern);
 
-  const testSortArray = mainDataObject.map(item => item.rawSort);
+  const testSortArray = mainDataObject.map((item) => item.rawSort);
 
   let errorResponseArray = [];
 
   // check values beyond Q sort design
-  let test1 = checkForOutOfRangeValues2(
-    [...testSortArray],
-    min,
-    max,
-    respondentNames
-  );
+  let test1 = checkForOutOfRangeValues2([...testSortArray], min, max, respondentNames);
   errorResponseArray.push(test1);
 
   if (!errorResponseArray.includes(false)) {
@@ -53,11 +47,7 @@ const standardImportErrorChecks = () => {
   }
 
   if (!errorResponseArray.includes(false)) {
-    let test3 = checkForIncorrectQsortPattern(
-      [...testSortArray],
-      [...qSortPattern],
-      numStatements
-    );
+    let test3 = checkForIncorrectQsortPattern([...testSortArray], [...qSortPattern], numStatements);
     errorResponseArray.push(test3);
   }
 
@@ -67,11 +57,7 @@ const standardImportErrorChecks = () => {
   }
 
   if (!errorResponseArray.includes(false)) {
-    let test5 = standardCheckForUnforcedSorts(
-      [...testSortArray],
-      qSortPattern,
-      respondentNames
-    );
+    let test5 = standardCheckForUnforcedSorts([...testSortArray], qSortPattern, respondentNames);
     errorResponseArray.push(test5);
   }
 
@@ -86,8 +72,8 @@ const standardImportErrorChecks = () => {
   let adjustment1 = cleanRespondentNames(respondentNames);
   let adjustment2 = addPosShiftSorts(mainDataObject, min);
 
-  coreState.respondentNames = adjustment1;
-  coreState.mainDataObject = adjustment2;
+  coreState.setState({ respondentNames: adjustment1 });
+  coreState.setState({ mainDataObject: adjustment2 });
   if (errorResponseArray.includes(false)) {
     return false;
   } else {

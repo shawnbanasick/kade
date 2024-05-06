@@ -5,7 +5,7 @@
  *  Licensed under MIT (http://opensource.org/licenses/MIT).
  */
 
-import evenRound from "../../../Utils/evenRound";
+import evenRound from '../../../Utils/evenRound';
 
 export default function getPqmethodCorrelation(x, y) {
   const n = x.length;

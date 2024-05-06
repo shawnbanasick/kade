@@ -2,7 +2,7 @@ import { create } from 'zustand';
 import { immer } from 'zustand/middleware/immer';
 
 const loadingState = create(
-  immer((set) => ({
+  immer((set, get) => ({
     autoflagButtonColor: '#d6dbe0',
     autoFlagHistory: [],
 

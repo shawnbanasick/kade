@@ -18,12 +18,12 @@ const handleChange = (event) => {
   }
   qSortPatternArray.sort((a, b) => a - b);
   state.setState({
-    qSortPattern: qSortPatternArray
+    qSortPattern: qSortPatternArray,
   });
 };
 
 const ForcedInput = () => {
-  const showForcedInput = state.getState('showForcedInput');
+  const showForcedInput = state.getState().showForcedInput;
   if (showForcedInput) {
     return (
       <div>

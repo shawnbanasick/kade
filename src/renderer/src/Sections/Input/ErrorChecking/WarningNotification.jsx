@@ -1,25 +1,29 @@
-import { view } from '@risingstack/react-easy-state';
 import styled from 'styled-components';
 import { Button } from 'semantic-ui-react';
-import React from 'react';
 import inputState from '../../GlobalState/inputState';
-import getInputState from '../../GlobalState/getInputState';
 import { useTranslation } from 'react-i18next';
 
 const WarningNotification = () => {
   const { t } = useTranslation();
 
-  const handleOnClick = () => {
-    inputState.showWarningMessageBar = false;
-    inputState.errorStackTrace = t('no stack trace available');
-    inputState.isCsvDataErrorCheckButtonGreen = false;
-    inputState.showDataImportSuccessMessage = false;
-  };
-
-  const showWarningMessageBar = getInputState('showWarningMessageBar');
-
-  const errorMessage = getInputState('errorMessage');
+  const showWarningMessageBar = inputState((state) => state.showWarningMessageBar);
+  const errorMessage = inputState((state) => state.errorMessage);
   const errorMessageString = `${t('Warning')}:  ${errorMessage}`;
+  const updateShowWarningMessageBar = inputState((state) => state.updateShowWarningMessageBar);
+  const updateErrorStackTrace = inputState((state) => state.updateErrorStackTrace);
+  const updateIsCsvDataErrorCheckButtonGreen = inputState(
+    (state) => state.updateIsCsvDataErrorCheckButtonGreen
+  );
+  const updateShowDataImportSuccessMessage = inputState(
+    (state) => state.updateShowDataImportSuccessMessage
+  );
+
+  const handleOnClick = () => {
+    updateShowWarningMessageBar(false);
+    updateErrorStackTrace(t('no stack trace available'));
+    updateIsCsvDataErrorCheckButtonGreen(false);
+    updateShowDataImportSuccessMessage(false);
+  };
 
   if (showWarningMessageBar) {
     return (
@@ -37,7 +41,7 @@ const WarningNotification = () => {
   return null;
 };
 
-export default view(WarningNotification);
+export default WarningNotification;
 
 const ErrorBar = styled.div`
   position: absolute;

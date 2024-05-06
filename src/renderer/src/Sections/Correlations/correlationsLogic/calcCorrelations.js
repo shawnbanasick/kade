@@ -1,13 +1,10 @@
-import getPqmethodCorrelation from "./getPqmethodCorrelation";
-import correlationState from "../../GlobalState/correlationState";
-import getCorrelationState from "../../GlobalState/getCorrelationState";
-
-import i18n from "i18next";
-
-const clone = require("rfdc")();
+import correlationState from '../../GlobalState/correlationState';
+import { cloneDeep as clone } from 'lodash/cloneDeep';
+import i18n from 'i18next';
+import getPqmethodCorrelation from './getPqmethodCorrelation';
 
 export default function calculateCorrelations(rawSorts, respondentNames) {
-  const participantTrans = i18n.t("Participant");
+  const participantTrans = i18n.t('Participant');
 
   // controls matrix formation - corrs calculated in "getPqmethodCorrelations"
 
@@ -18,8 +15,8 @@ export default function calculateCorrelations(rawSorts, respondentNames) {
   const correlationTableArray = [];
   const correlationTableArrayFormatted = [];
 
-  const firstColMaxWidth = getCorrelationState("firstColMaxWidth");
-  const colMaxWidth = getCorrelationState("colMaxWidth");
+  const firstColMaxWidth = correlationState.getState().firstColMaxWidth;
+  const colMaxWidth = correlationState.getState().colMaxWidth;
 
   for (let m = 0; m < totalSorts; m += 1) {
     correlationTableArray[m] = [];
@@ -29,19 +26,13 @@ export default function calculateCorrelations(rawSorts, respondentNames) {
   for (let i = 0; i < totalSorts; i += 1) {
     const pullX = rawSortsCloned[i];
 
-    const correlationValue = getPqmethodCorrelation(
-      rawSortsCloned[i],
-      rawSortsCloned[i]
-    );
+    const correlationValue = getPqmethodCorrelation(rawSortsCloned[i], rawSortsCloned[i]);
 
     correlationTableArray[0][0] = correlationValue[0];
     correlationTableArrayFormatted[0][0] = correlationValue[1];
 
     for (let k = i; k < totalSorts; k += 1) {
-      const correlationValue2 = getPqmethodCorrelation(
-        pullX,
-        rawSortsCloned[k]
-      );
+      const correlationValue2 = getPqmethodCorrelation(pullX, rawSortsCloned[k]);
 
       correlationTableArray[i][k] = correlationValue2[0];
       correlationTableArrayFormatted[i][k] = correlationValue2[1];
@@ -69,15 +60,15 @@ export default function calculateCorrelations(rawSorts, respondentNames) {
   const gridColDefs = [];
   const tempObj2 = {};
   tempObj2.headerName = participantTrans;
-  tempObj2.field = "respondent";
+  tempObj2.field = 'respondent';
   tempObj2.pinned = true;
   tempObj2.sortable = true;
   tempObj2.width = firstColMaxWidth;
   tempObj2.cellStyle = {
-    textAlign: "center"
+    textAlign: 'center',
   };
   gridColDefs.push(tempObj2);
-  respondentNames.forEach(element => {
+  respondentNames.forEach((element) => {
     const tempObj3 = {};
     tempObj3.headerName = element;
     tempObj3.field = element;
@@ -85,23 +76,23 @@ export default function calculateCorrelations(rawSorts, respondentNames) {
     tempObj3.sortable = true;
     tempObj3.editable = false;
     tempObj3.width = colMaxWidth;
-    tempObj3.cellStyle = params => {
+    tempObj3.cellStyle = (params) => {
       if (params.value < 0) {
         return {
-          textAlign: "right",
-          color: "red"
+          textAlign: 'right',
+          color: 'red',
         };
       }
       return {
-        textAlign: "right"
+        textAlign: 'right',
       };
     };
     gridColDefs.push(tempObj3);
   });
 
   // push data objects to STATE
-  correlationState.gridColDefs = gridColDefs;
-  correlationState.gridRowData = gridRowData;
-  correlationState.correlationTableArray = correlationTableArrayFormatted;
-  correlationState.correlation5Calcs = correlationTableArray;
+  correlationState.setState({ gridColDefs: gridColDefs });
+  correlationState.setState({ gridRowData: gridRowData });
+  correlationState.setState({ correlationTableArray: correlationTableArrayFormatted });
+  correlationState.setState({ correlation5Calcs: correlationTableArray });
 }

@@ -2,7 +2,7 @@ import { create } from 'zustand';
 import { immer } from 'zustand/middleware/immer';
 
 const vizState = create(
-  immer((set) => ({
+  immer((set, get) => ({
     consensusIndicator: false,
     customFactorNames: false,
     customFileNameLocation: '',

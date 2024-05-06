@@ -12,6 +12,7 @@ const UnforcedSortsDisplayButton = (props) => {
   const updateHasDataBeenConfirmed = appState((state) => state.updateHasDataBeenConfirmed);
   const updateShowExportButtons = inputState((state) => state.updateShowExportButtons);
   const updateIsForcedQsortPattern = inputState((state) => state.updateIsForcedQsortPattern);
+  const areQsortsVerified = inputState((state) => state.areQsortsVerified);
 
   function handleOnClick() {
     updateAreQsortsVerified(true);
@@ -32,7 +33,7 @@ const UnforcedSortsDisplayButton = (props) => {
       <Button
         as={GeneralButton}
         onClick={handleOnClick}
-        $buttonColor={inputState.areQsortsVerified ? '#a5d6a7' : 'orange'}
+        $buttonColor={areQsortsVerified ? '#a5d6a7' : 'orange'}
       >
         <p>{t('Click after Verifying Sorts')}.</p>
       </Button>
@@ -42,7 +43,7 @@ const UnforcedSortsDisplayButton = (props) => {
       <Button
         as={GeneralButton}
         onClick={handleOnClick2}
-        $buttonColor={inputState.areQsortsVerified ? '#a5d6a7' : 'orange'}
+        $buttonColor={areQsortsVerified ? '#a5d6a7' : 'orange'}
       >
         <p>
           {t('Click after Verifying Sorts')}. {t('Unforced Q sorts')}:{` ${props.number}`}

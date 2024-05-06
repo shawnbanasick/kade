@@ -2,7 +2,7 @@ import { create } from 'zustand';
 import { immer } from 'zustand/middleware/immer';
 
 const rotationState = create(
-  immer((set) => ({
+  immer((set, get) => ({
     abFactors: [],
     archiveCounter: 0,
     calculateRotationsArray: [],

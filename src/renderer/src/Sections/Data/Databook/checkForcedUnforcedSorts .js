@@ -1,6 +1,6 @@
-import calcMultiplierArrayT2 from "../../Input/Excel/excelLogic/calcMultiplierArrayT2";
-import isEqual from "lodash/isEqual";
-import cloneDeep from "lodash/cloneDeep";
+import calcMultiplierArrayT2 from '../../Input/Excel/excelLogic/calcMultiplierArrayT2';
+import isEqual from 'lodash/isEqual';
+import cloneDeep from 'lodash/cloneDeep';
 
 const checkForcedUnforcedSorts = (dataObject, multiplierArray) => {
   let mainDataObject = cloneDeep(dataObject);

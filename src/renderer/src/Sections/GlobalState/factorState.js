@@ -2,7 +2,7 @@ import { create } from 'zustand';
 import { immer } from 'zustand/middleware/immer';
 
 const factorState = create(
-  immer((set) => ({
+  immer((set, get) => ({
     activeCentroidRevealButton: false,
     activeTraditionalCentroidFactorButton: false,
     activeHorst55CentroidButton: false,

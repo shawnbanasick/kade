@@ -1,18 +1,20 @@
-import { view } from '@risingstack/react-easy-state';
-import React from 'react';
 import styled, { keyframes } from 'styled-components';
 import CorrelationTable from './CorrelationTable/CorrelationTable';
 import CalculateCorrelationsButton from './CalculateCorrelationsButton';
 import ErrorNotification from '../Input/ErrorChecking/ErrorNotification';
-import getAppState from '../GlobalState/getAppState';
 import { useTranslation } from 'react-i18next';
-import getCorrelationState from '../GlobalState/getCorrelationState';
+import correlationState from '../GlobalState/correlationState';
+import appState from '../GlobalState/appState';
+import coreState from '../GlobalState/coreState';
 
 const Correlations = () => {
   const { t } = useTranslation();
 
-  const showCorrelationMatrix = getCorrelationState('showCorrelationMatrix');
-  const hasDataBeenConfirmed = getAppState('hasDataBeenConfirmed');
+  const qSortPattern = coreState((state) => state.qSortPattern);
+  console.log(JSON.stringify(qSortPattern));
+
+  const showCorrelationMatrix = correlationState((state) => state.showCorrelationMatrix);
+  const hasDataBeenConfirmed = appState((state) => state.hasDataBeenConfirmed);
 
   return (
     <MainContent>
@@ -35,7 +37,7 @@ const Correlations = () => {
   );
 };
 
-export default view(Correlations);
+export default Correlations;
 
 const fadeIn = keyframes`
   from {

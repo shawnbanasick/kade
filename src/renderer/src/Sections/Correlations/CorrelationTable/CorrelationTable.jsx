@@ -1,22 +1,14 @@
-import React, { useEffect } from 'react';
-import { view, store } from '@risingstack/react-easy-state';
+import { useEffect } from 'react';
 import styled from 'styled-components';
 import { AgGridReact } from 'ag-grid-react';
-// import { AllCommunityModules } from "@ag-grid-community/all-modules";
-import getCorrelationState from '../../GlobalState/getCorrelationState';
-import getCoreState from '../../GlobalState/getCoreState';
 import { useTranslation } from 'react-i18next';
 import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
+import coreState from '../../GlobalState/coreState';
+import correlationState from '../../GlobalState/correlationState';
 
-const localStore = store({
-  numQsorts: 0
-});
-
-function getWidth(numQsorts) {
-  const width1 = getCorrelationState('firstColMaxWidth');
-  const width2 = getCorrelationState('colMaxWidth');
-
+// HELPER FUNCTION
+function getWidth(numQsorts, width1, width2) {
   let widthVal = width1 + 10 + width2 * numQsorts;
   let x = window.innerWidth - 40 - 152;
 
@@ -28,6 +20,7 @@ function getWidth(numQsorts) {
   return widthVal;
 }
 
+// HELPER FUNCTION
 function getHeight(numQsorts) {
   let heightVal = 40 + 25 * numQsorts;
   let y = window.innerHeight - 140;
@@ -39,43 +32,44 @@ function getHeight(numQsorts) {
   return heightVal;
 }
 
-function resetWidthAndHeight() {
-  const numQsorts = localStore.numQsorts;
+// HELPER FUNCTION
+function resetWidthAndHeight(numQsorts, width1, width2) {
   const table = document.querySelector('#innerContainerCorrelations');
   if (table !== null) {
     table.style.height = getHeight(numQsorts);
-    table.style.width = getWidth(numQsorts);
+    table.style.width = getWidth(numQsorts, width1, width2);
   }
 }
 
 const CorrelationTable = () => {
   const { t } = useTranslation();
 
+  const gridColDefs = correlationState((state) => state.gridColDefs);
+  const gridRowData = correlationState((state) => state.gridRowData);
+  const numQsorts = coreState((state) => state.numQsorts);
+  const width1 = correlationState((state) => state.firstColMaxWidth);
+  const width2 = correlationState((state) => state.colMaxWidth);
+
   let gridOptions = {
     suppressRowHoverHighlight: false,
     columnHoverHighlight: true,
-    enableSorting: true
+    enableSorting: true,
   };
 
   useEffect(() => {
     window.addEventListener('resize', () => {
-      resetWidthAndHeight();
+      resetWidthAndHeight(numQsorts, width1, width2);
     });
 
     return () => {
       window.removeEventListener('resize', () => {
-        resetWidthAndHeight();
+        resetWidthAndHeight(numQsorts, width1, width2);
       });
     };
   }, []);
 
-  const gridColDefs = getCorrelationState('gridColDefs');
-  const gridRowData = getCorrelationState('gridRowData');
-  const numQsorts = getCoreState('numQsorts');
-  localStore.numQsorts = numQsorts;
-
   const style1 = { fontWeight: 'normal', marginTop: 15, textAlign: 'left' };
-  const style2 = { width: getWidth(numQsorts), height: getHeight(numQsorts) };
+  const style2 = { width: getWidth(numQsorts, width1, width2), height: getHeight(numQsorts) };
 
   return (
     <TableHolder>
@@ -96,6 +90,6 @@ const CorrelationTable = () => {
   );
 };
 
-export default view(CorrelationTable);
+export default CorrelationTable;
 
 const TableHolder = styled.div``;

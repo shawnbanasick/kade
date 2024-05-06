@@ -1,28 +1,26 @@
-import React from 'react';
+import { useState } from 'react';
 import { Button, Header, Modal } from 'semantic-ui-react';
-import { view, store } from '@risingstack/react-easy-state';
 import styled from 'styled-components';
-import getInputState from '../../GlobalState/getInputState';
 import { useTranslation } from 'react-i18next';
-
-const localStore = store({
-  modalOpen: false
-});
-
-const handleOpen = () => {
-  localStore.modalOpen = true;
-};
-
-const handleClose = () => {
-  localStore.modalOpen = false;
-};
+import inputState from '../../GlobalState/inputState';
 
 const ExtendedErrorModal = () => {
   const { t } = useTranslation();
 
-  // getState
-  const extendedErrorMessage = getInputState('extendedErrorMessage');
-  const errorStackTrace = getInputState('errorStackTrace');
+  const [modalOpen, setModalOpen] = useState(false);
+
+  const handleOpen = () => {
+    setModalOpen(true);
+  };
+
+  const handleClose = () => {
+    setModalOpen(false);
+  };
+
+  // Global State
+  const extendedErrorMessage = inputState((state) => state.extendedErrorMessage);
+  const errorStackTrace = inputState((state) => state.errorStackTrace);
+
   return (
     <Modal
       dimmer={'blurring'}
@@ -33,7 +31,7 @@ const ExtendedErrorModal = () => {
           </Button>
         </StyledWrapper>
       }
-      open={localStore.modalOpen}
+      open={modalOpen}
       onClose={handleClose}
       basic
       size="small"
@@ -55,7 +53,7 @@ const ExtendedErrorModal = () => {
   );
 };
 
-export default view(ExtendedErrorModal);
+export default ExtendedErrorModal;
 
 const StyledWrapper = styled.div`
   /*

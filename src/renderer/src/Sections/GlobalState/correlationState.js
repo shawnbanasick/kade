@@ -2,7 +2,7 @@ import { create } from 'zustand';
 import { immer } from 'zustand/middleware/immer';
 
 const correlationState = create(
-  immer((set) => ({
+  immer((set, get) => ({
     activeStartAnalysisButton: false,
 
     colMaxWidth: 0,

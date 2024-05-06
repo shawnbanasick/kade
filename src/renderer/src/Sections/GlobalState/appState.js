@@ -4,7 +4,7 @@ import { immer } from 'zustand/middleware/immer';
 // change version in three places to show update message (and github)
 
 const appState = create(
-  immer((set) => ({
+  immer((set, get) => ({
     activeWindow: 'viewStart',
 
     changes: [],

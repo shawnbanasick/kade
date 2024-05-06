@@ -2,7 +2,7 @@ import { create } from 'zustand';
 import { immer } from 'zustand/middleware/immer';
 
 const calcState = create(
-  immer((set) => ({
+  immer((set, get) => ({
     analysisOutput: [],
 
     colSizes: [],
