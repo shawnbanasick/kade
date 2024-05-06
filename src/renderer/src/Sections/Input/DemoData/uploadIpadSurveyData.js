@@ -1,78 +1,21 @@
-import sortsDisplayText from "../logic/sortsDisplayText";
-import motivationalToArray from "../logic/motivationalToArray";
-import coreState from "../../GlobalState/coreState";
-import projectHistoryState from "../../GlobalState/projectHistoryState";
-import i18n from "i18next";
-import calcMultiplierArrayT2 from "../Excel/excelLogic/calcMultiplierArrayT2";
-import inputState from "../../GlobalState/inputState";
+import sortsDisplayText from '../logic/sortsDisplayText';
+import motivationalToArray from '../logic/motivationalToArray';
+import coreState from '../../GlobalState/coreState';
+import projectHistoryState from '../../GlobalState/projectHistoryState';
+import i18n from 'i18next';
+import calcMultiplierArrayT2 from '../Excel/excelLogic/calcMultiplierArrayT2';
+import inputState from '../../GlobalState/inputState';
 
 const uploadJapaneseData = () => {
   const multiplierArray = calcMultiplierArrayT2([
-    -5,
-    -5,
-    -5,
-    -5,
-    -4,
-    -4,
-    -4,
-    -4,
-    -4,
-    -3,
-    -3,
-    -3,
-    -3,
-    -3,
-    -2,
-    -2,
-    -2,
-    -2,
-    -2,
-    -1,
-    -1,
-    -1,
-    -1,
-    -1,
-    -1,
-    -1,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    2,
-    2,
-    2,
-    2,
-    2,
-    3,
-    3,
-    3,
-    3,
-    3,
-    4,
-    4,
-    4,
-    4,
-    4,
-    5,
-    5,
-    5,
-    5
+    -5, -5, -5, -5, -4, -4, -4, -4, -4, -3, -3, -3, -3, -3, -2, -2, -2, -2, -2, -1, -1, -1, -1, -1,
+    -1, -1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 4, 4, 4, 4,
+    4, 5, 5, 5, 5,
   ]);
 
   const data = [
     [
-      "participant_1",
+      'participant_1',
       0,
       0,
       -2,
@@ -132,10 +75,10 @@ const uploadJapaneseData = () => {
       3,
       1,
       0,
-      4
+      4,
     ],
     [
-      "participant_2",
+      'participant_2',
       -4,
       3,
       -1,
@@ -195,10 +138,10 @@ const uploadJapaneseData = () => {
       3,
       1,
       0,
-      4
+      4,
     ],
     [
-      "participant_3",
+      'participant_3',
       -4,
       3,
       -1,
@@ -258,10 +201,10 @@ const uploadJapaneseData = () => {
       3,
       1,
       0,
-      4
+      4,
     ],
     [
-      "participant_4",
+      'participant_4',
       -4,
       3,
       -1,
@@ -321,10 +264,10 @@ const uploadJapaneseData = () => {
       3,
       1,
       0,
-      4
+      4,
     ],
     [
-      "participant_5",
+      'participant_5',
       -4,
       3,
       -1,
@@ -384,10 +327,10 @@ const uploadJapaneseData = () => {
       3,
       1,
       0,
-      4
+      4,
     ],
     [
-      "participant_6",
+      'participant_6',
       -4,
       3,
       -1,
@@ -447,10 +390,10 @@ const uploadJapaneseData = () => {
       3,
       1,
       0,
-      4
+      4,
     ],
     [
-      "participant_7",
+      'participant_7',
       -4,
       3,
       5,
@@ -510,10 +453,10 @@ const uploadJapaneseData = () => {
       3,
       1,
       0,
-      4
+      4,
     ],
     [
-      "participant_8",
+      'participant_8',
       -4,
       -4,
       1,
@@ -573,10 +516,10 @@ const uploadJapaneseData = () => {
       3,
       1,
       0,
-      4
+      4,
     ],
     [
-      "participant_9",
+      'participant_9',
       -4,
       3,
       -1,
@@ -636,10 +579,10 @@ const uploadJapaneseData = () => {
       3,
       1,
       0,
-      4
+      4,
     ],
     [
-      "participant_10",
+      'participant_10',
       -4,
       3,
       -1,
@@ -699,10 +642,10 @@ const uploadJapaneseData = () => {
       3,
       1,
       0,
-      4
+      4,
     ],
     [
-      "participant_11",
+      'participant_11',
       -4,
       3,
       -1,
@@ -762,10 +705,10 @@ const uploadJapaneseData = () => {
       3,
       1,
       0,
-      4
+      4,
     ],
     [
-      "participant_12",
+      'participant_12',
       -4,
       3,
       -1,
@@ -825,10 +768,10 @@ const uploadJapaneseData = () => {
       3,
       1,
       0,
-      4
+      4,
     ],
     [
-      "participant_13",
+      'participant_13',
       -4,
       3,
       -1,
@@ -888,10 +831,10 @@ const uploadJapaneseData = () => {
       3,
       1,
       0,
-      4
+      4,
     ],
     [
-      "participant_14",
+      'participant_14',
       -4,
       3,
       -1,
@@ -951,10 +894,10 @@ const uploadJapaneseData = () => {
       3,
       1,
       0,
-      4
+      4,
     ],
     [
-      "participant_15",
+      'participant_15',
       -4,
       -4,
       4,
@@ -1014,10 +957,10 @@ const uploadJapaneseData = () => {
       0,
       2,
       1,
-      0
+      0,
     ],
     [
-      "participant_16",
+      'participant_16',
       3,
       -3,
       -1,
@@ -1077,10 +1020,10 @@ const uploadJapaneseData = () => {
       -2,
       4,
       4,
-      -4
+      -4,
     ],
     [
-      "participant_17",
+      'participant_17',
       3,
       -3,
       -1,
@@ -1140,10 +1083,10 @@ const uploadJapaneseData = () => {
       -2,
       4,
       4,
-      -4
+      -4,
     ],
     [
-      "participant_18",
+      'participant_18',
       3,
       -3,
       -1,
@@ -1203,10 +1146,10 @@ const uploadJapaneseData = () => {
       -2,
       4,
       4,
-      -4
+      -4,
     ],
     [
-      "participant_19",
+      'participant_19',
       0,
       5,
       3,
@@ -1266,10 +1209,10 @@ const uploadJapaneseData = () => {
       -2,
       4,
       4,
-      -4
+      -4,
     ],
     [
-      "participant_20",
+      'participant_20',
       3,
       -3,
       -1,
@@ -1329,10 +1272,10 @@ const uploadJapaneseData = () => {
       -2,
       4,
       4,
-      -4
+      -4,
     ],
     [
-      "participant_21",
+      'participant_21',
       3,
       -3,
       -1,
@@ -1392,10 +1335,10 @@ const uploadJapaneseData = () => {
       -2,
       4,
       4,
-      -4
+      -4,
     ],
     [
-      "participant_22",
+      'participant_22',
       3,
       -3,
       -1,
@@ -1455,10 +1398,10 @@ const uploadJapaneseData = () => {
       -2,
       4,
       4,
-      -4
+      -4,
     ],
     [
-      "participant_23",
+      'participant_23',
       3,
       -3,
       -1,
@@ -1518,10 +1461,10 @@ const uploadJapaneseData = () => {
       -2,
       4,
       4,
-      -4
+      -4,
     ],
     [
-      "participant_24",
+      'participant_24',
       3,
       -3,
       -1,
@@ -1581,10 +1524,10 @@ const uploadJapaneseData = () => {
       -2,
       4,
       4,
-      -4
+      -4,
     ],
     [
-      "participant_25",
+      'participant_25',
       3,
       -3,
       -1,
@@ -1644,10 +1587,10 @@ const uploadJapaneseData = () => {
       -2,
       4,
       4,
-      -4
+      -4,
     ],
     [
-      "participant_26",
+      'participant_26',
       3,
       -4,
       1,
@@ -1707,10 +1650,10 @@ const uploadJapaneseData = () => {
       -2,
       -4,
       2,
-      -4
+      -4,
     ],
     [
-      "participant_27",
+      'participant_27',
       3,
       -3,
       -1,
@@ -1770,10 +1713,10 @@ const uploadJapaneseData = () => {
       -2,
       4,
       4,
-      -4
+      -4,
     ],
     [
-      "participant_28",
+      'participant_28',
       3,
       -3,
       -1,
@@ -1833,10 +1776,10 @@ const uploadJapaneseData = () => {
       -2,
       4,
       4,
-      -4
+      -4,
     ],
     [
-      "participant_29",
+      'participant_29',
       3,
       -3,
       -1,
@@ -1896,10 +1839,10 @@ const uploadJapaneseData = () => {
       -2,
       4,
       4,
-      -4
+      -4,
     ],
     [
-      "participant_30",
+      'participant_30',
       2,
       1,
       -5,
@@ -1959,10 +1902,10 @@ const uploadJapaneseData = () => {
       -2,
       4,
       4,
-      -4
+      -4,
     ],
     [
-      "participant_31",
+      'participant_31',
       3,
       0,
       -1,
@@ -2022,10 +1965,10 @@ const uploadJapaneseData = () => {
       -1,
       0,
       -2,
-      -5
+      -5,
     ],
     [
-      "participant_32",
+      'participant_32',
       3,
       0,
       -3,
@@ -2085,10 +2028,10 @@ const uploadJapaneseData = () => {
       -1,
       0,
       -2,
-      -5
+      -5,
     ],
     [
-      "participant_33",
+      'participant_33',
       3,
       0,
       -3,
@@ -2148,10 +2091,10 @@ const uploadJapaneseData = () => {
       -1,
       0,
       -2,
-      -5
+      -5,
     ],
     [
-      "participant_34",
+      'participant_34',
       3,
       0,
       -3,
@@ -2211,10 +2154,10 @@ const uploadJapaneseData = () => {
       -1,
       0,
       -2,
-      -5
+      -5,
     ],
     [
-      "participant_35",
+      'participant_35',
       3,
       0,
       -3,
@@ -2274,10 +2217,10 @@ const uploadJapaneseData = () => {
       -1,
       0,
       -2,
-      -5
+      -5,
     ],
     [
-      "participant_36",
+      'participant_36',
       3,
       0,
       -3,
@@ -2337,10 +2280,10 @@ const uploadJapaneseData = () => {
       -1,
       0,
       -2,
-      -5
+      -5,
     ],
     [
-      "participant_37",
+      'participant_37',
       3,
       0,
       -3,
@@ -2400,10 +2343,10 @@ const uploadJapaneseData = () => {
       -1,
       0,
       -2,
-      -5
+      -5,
     ],
     [
-      "participant_38",
+      'participant_38',
       3,
       0,
       -3,
@@ -2463,10 +2406,10 @@ const uploadJapaneseData = () => {
       -1,
       0,
       -2,
-      -5
+      -5,
     ],
     [
-      "participant_39",
+      'participant_39',
       3,
       0,
       -3,
@@ -2526,10 +2469,10 @@ const uploadJapaneseData = () => {
       -1,
       0,
       -2,
-      -5
+      -5,
     ],
     [
-      "participant_40",
+      'participant_40',
       3,
       0,
       -3,
@@ -2589,10 +2532,10 @@ const uploadJapaneseData = () => {
       -1,
       0,
       -2,
-      -5
+      -5,
     ],
     [
-      "participant_41",
+      'participant_41',
       3,
       0,
       -3,
@@ -2652,10 +2595,10 @@ const uploadJapaneseData = () => {
       -1,
       0,
       -2,
-      -5
+      -5,
     ],
     [
-      "participant_42",
+      'participant_42',
       3,
       0,
       -3,
@@ -2715,10 +2658,10 @@ const uploadJapaneseData = () => {
       -1,
       0,
       -2,
-      -5
+      -5,
     ],
     [
-      "participant_43",
+      'participant_43',
       3,
       0,
       -3,
@@ -2778,10 +2721,10 @@ const uploadJapaneseData = () => {
       -1,
       0,
       -2,
-      -5
+      -5,
     ],
     [
-      "participant_44",
+      'participant_44',
       3,
       0,
       -1,
@@ -2841,10 +2784,10 @@ const uploadJapaneseData = () => {
       -1,
       0,
       -2,
-      -5
+      -5,
     ],
     [
-      "participant_45",
+      'participant_45',
       3,
       0,
       -3,
@@ -2904,10 +2847,10 @@ const uploadJapaneseData = () => {
       -1,
       0,
       -2,
-      -5
+      -5,
     ],
     [
-      "participant_46",
+      'participant_46',
       -4,
       -3,
       1,
@@ -2967,10 +2910,10 @@ const uploadJapaneseData = () => {
       -4,
       5,
       2,
-      -4
+      -4,
     ],
     [
-      "participant_47",
+      'participant_47',
       -4,
       -3,
       1,
@@ -3030,10 +2973,10 @@ const uploadJapaneseData = () => {
       -4,
       5,
       2,
-      -4
+      -4,
     ],
     [
-      "participant_48",
+      'participant_48',
       -4,
       -3,
       1,
@@ -3093,10 +3036,10 @@ const uploadJapaneseData = () => {
       -4,
       5,
       2,
-      -4
+      -4,
     ],
     [
-      "participant_49",
+      'participant_49',
       -4,
       -3,
       1,
@@ -3156,10 +3099,10 @@ const uploadJapaneseData = () => {
       -4,
       5,
       2,
-      -4
+      -4,
     ],
     [
-      "participant_50",
+      'participant_50',
       -4,
       1,
       0,
@@ -3219,10 +3162,10 @@ const uploadJapaneseData = () => {
       -4,
       5,
       2,
-      -4
+      -4,
     ],
     [
-      "participant_51",
+      'participant_51',
       -4,
       -5,
       3,
@@ -3282,10 +3225,10 @@ const uploadJapaneseData = () => {
       4,
       4,
       2,
-      -4
+      -4,
     ],
     [
-      "participant_52",
+      'participant_52',
       -4,
       -3,
       1,
@@ -3345,10 +3288,10 @@ const uploadJapaneseData = () => {
       -4,
       5,
       2,
-      -4
+      -4,
     ],
     [
-      "participant_53",
+      'participant_53',
       -4,
       -3,
       1,
@@ -3408,10 +3351,10 @@ const uploadJapaneseData = () => {
       -4,
       5,
       2,
-      -4
+      -4,
     ],
     [
-      "participant_54",
+      'participant_54',
       -4,
       -3,
       1,
@@ -3471,10 +3414,10 @@ const uploadJapaneseData = () => {
       -4,
       5,
       2,
-      -4
+      -4,
     ],
     [
-      "participant_55",
+      'participant_55',
       -4,
       -3,
       1,
@@ -3534,10 +3477,10 @@ const uploadJapaneseData = () => {
       -4,
       5,
       2,
-      -4
+      -4,
     ],
     [
-      "participant_56",
+      'participant_56',
       -4,
       -3,
       1,
@@ -3597,10 +3540,10 @@ const uploadJapaneseData = () => {
       -4,
       5,
       2,
-      -4
+      -4,
     ],
     [
-      "participant_57",
+      'participant_57',
       -4,
       -3,
       1,
@@ -3660,10 +3603,10 @@ const uploadJapaneseData = () => {
       -4,
       5,
       2,
-      -4
+      -4,
     ],
     [
-      "participant_58",
+      'participant_58',
       0,
       1,
       -1,
@@ -3723,10 +3666,10 @@ const uploadJapaneseData = () => {
       -4,
       5,
       2,
-      -4
+      -4,
     ],
     [
-      "participant_59",
+      'participant_59',
       -4,
       -3,
       1,
@@ -3786,10 +3729,10 @@ const uploadJapaneseData = () => {
       -4,
       5,
       2,
-      -4
+      -4,
     ],
     [
-      "participant_60",
+      'participant_60',
       -4,
       -3,
       1,
@@ -3849,10 +3792,10 @@ const uploadJapaneseData = () => {
       -4,
       5,
       2,
-      -4
+      -4,
     ],
     [
-      "participant_61",
+      'participant_61',
       0,
       -4,
       2,
@@ -3912,10 +3855,10 @@ const uploadJapaneseData = () => {
       -4,
       4,
       3,
-      2
+      2,
     ],
     [
-      "participant_62",
+      'participant_62',
       0,
       -4,
       2,
@@ -3975,10 +3918,10 @@ const uploadJapaneseData = () => {
       -4,
       4,
       3,
-      2
+      2,
     ],
     [
-      "participant_63",
+      'participant_63',
       0,
       -4,
       2,
@@ -4038,10 +3981,10 @@ const uploadJapaneseData = () => {
       -4,
       4,
       3,
-      2
+      2,
     ],
     [
-      "participant_64",
+      'participant_64',
       0,
       -4,
       2,
@@ -4101,10 +4044,10 @@ const uploadJapaneseData = () => {
       -4,
       4,
       3,
-      2
+      2,
     ],
     [
-      "participant_65",
+      'participant_65',
       0,
       -4,
       2,
@@ -4164,10 +4107,10 @@ const uploadJapaneseData = () => {
       -4,
       4,
       3,
-      2
+      2,
     ],
     [
-      "participant_66",
+      'participant_66',
       0,
       -4,
       2,
@@ -4227,10 +4170,10 @@ const uploadJapaneseData = () => {
       -4,
       4,
       3,
-      2
+      2,
     ],
     [
-      "participant_67",
+      'participant_67',
       0,
       -4,
       2,
@@ -4290,10 +4233,10 @@ const uploadJapaneseData = () => {
       -4,
       4,
       3,
-      2
+      2,
     ],
     [
-      "participant_68",
+      'participant_68',
       0,
       -4,
       2,
@@ -4353,10 +4296,10 @@ const uploadJapaneseData = () => {
       -4,
       4,
       3,
-      2
+      2,
     ],
     [
-      "participant_69",
+      'participant_69',
       -1,
       -2,
       4,
@@ -4416,10 +4359,10 @@ const uploadJapaneseData = () => {
       3,
       3,
       0,
-      5
+      5,
     ],
     [
-      "participant_70",
+      'participant_70',
       0,
       -4,
       2,
@@ -4479,10 +4422,10 @@ const uploadJapaneseData = () => {
       -4,
       4,
       3,
-      2
+      2,
     ],
     [
-      "participant_71",
+      'participant_71',
       0,
       3,
       0,
@@ -4542,10 +4485,10 @@ const uploadJapaneseData = () => {
       -1,
       4,
       3,
-      2
+      2,
     ],
     [
-      "participant_72",
+      'participant_72',
       0,
       -4,
       2,
@@ -4605,10 +4548,10 @@ const uploadJapaneseData = () => {
       -4,
       4,
       3,
-      2
+      2,
     ],
     [
-      "participant_73",
+      'participant_73',
       0,
       0,
       2,
@@ -4668,10 +4611,10 @@ const uploadJapaneseData = () => {
       4,
       4,
       3,
-      2
+      2,
     ],
     [
-      "participant_74",
+      'participant_74',
       0,
       -4,
       2,
@@ -4731,10 +4674,10 @@ const uploadJapaneseData = () => {
       -4,
       4,
       3,
-      2
+      2,
     ],
     [
-      "participant_75",
+      'participant_75',
       0,
       -1,
       2,
@@ -4794,10 +4737,10 @@ const uploadJapaneseData = () => {
       -4,
       4,
       3,
-      2
+      2,
     ],
     [
-      "participant_76",
+      'participant_76',
       -1,
       1,
       -4,
@@ -4857,10 +4800,10 @@ const uploadJapaneseData = () => {
       0,
       5,
       -4,
-      0
+      0,
     ],
     [
-      "participant_77",
+      'participant_77',
       -1,
       1,
       -4,
@@ -4920,10 +4863,10 @@ const uploadJapaneseData = () => {
       0,
       5,
       -4,
-      0
+      0,
     ],
     [
-      "participant_78",
+      'participant_78',
       -1,
       2,
       -2,
@@ -4983,10 +4926,10 @@ const uploadJapaneseData = () => {
       0,
       5,
       -4,
-      0
+      0,
     ],
     [
-      "participant_79",
+      'participant_79',
       -1,
       1,
       -4,
@@ -5046,10 +4989,10 @@ const uploadJapaneseData = () => {
       0,
       5,
       -4,
-      0
+      0,
     ],
     [
-      "participant_80",
+      'participant_80',
       -1,
       -3,
       2,
@@ -5109,155 +5052,100 @@ const uploadJapaneseData = () => {
       0,
       5,
       -4,
-      0
-    ]
+      0,
+    ],
   ];
 
   const statements = [
-    "私は、iPadがこの授業で良い学習環境作りに役立ったと思います",
-    "私たちは、iPadを使用したため、私はこの授業では、より簡単に概念を学びました",
-    "私は、iPadのため、私の他のクラスに比べて、このクラスの同級生からより多くを学びました",
-    "iPadは、私がそうでなければ学んでなかったであろうことは、このクラスで物事を学ぶために私を助けました",
-    "iPadを使用すると、それが簡単に私がクラスで使用される概念間の接続を分かるようようにしました",
-    " iPadを使用することで、学習の私の好ましい方法とよく一致しました",
-    "私は、このクラスで iPadを使用したため、 学ぶために私のやる気を引き出します",
-    "私は、このクラスで学んだのiPadのスキルが他のクラスで私を役に立つと思います",
-    "iPadを使用によって、私はもっとクラスの概念に集中することができた",
-    "iPadを使用によって、前のクラスセッションからの概念を覚えて私を助けました",
-    "私がiPadの使用によって、私の他のクラスよりも、このクラスではより多くに参加しました",
-    "iPadのSocrativeアプリを使用したから、より簡単に授業の概念について意見を表現することができた",
-    " iPadのSocrativeアプリを使用によって、他の生徒の意見を参照を見ることが面白かったです",
-    "フィードバックを与えるためのiPadを使用したのは、学生のプレゼンテーションより興味深いになった",
-    "Kahootのクイズは、コースの概念を学ぶために私を助けました",
-    "クラスでのiPadを使用するには、私は英語で話すことがより困難になります",
-    "私は授業中にソーシャルメディアアプリケーション（LINEやFacebook）にアクセスするためのiPadを使用していました",
-    "このクラスでのiPadを使用して貴重な授業時間を無駄にした",
-    "私はこのクラスのiPadのアプリを使用する方法を理解するのは困難でした",
-    "このクラスでのiPadを使用すると、コースの概念はさらに混乱製された",
-    "iPadを使って、自分の考えを表現することは困難でした",
-    "アプリ関連の材料は、他のクラスの材料とよく統合されていませんでした",
-    "教室の前に画面に表示される持つ私の意見は私の意見を表現するために、私はより消極製になった",
-    "授業中のiPadを使用している間、私は退屈になりました",
-    "iPadを使用しているとき、私は、他の学生の技術と同様に熟練していないので、私はぎこちない感じました",
-    "iPadを使ったため、私はコースの概念に集中するのは、より困難になりました",
-    "iPadを使ったため、教授と英語で話すことがより困難になります",
-    "iPadを使ったため、他の学生と英語で話すことがより困難になります",
-    " 私は理由のiPadの使用の授業中に英語を話すために私の能力にいくつかの信頼を失いました",
-    "授業中のiPadを使用すると、不便でした",
-    "私は、iPadがこの授業で良い学習環境作りに役立ったと思います",
-    "私たちは、iPadを使用したため、私はこの授業では、より簡単に概念を学びました",
-    "私は、iPadのため、私の他のクラスに比べて、このクラスの同級生からより多くを学びました",
-    "iPadは、私がそうでなければ学んでなかったであろうことは、このクラスで物事を学ぶために私を助けました",
-    "iPadを使用すると、それが簡単に私がクラスで使用される概念間の接続を分かるようようにしました",
-    " iPadを使用することで、学習の私の好ましい方法とよく一致しました",
-    "私は、このクラスで iPadを使用したため、 学ぶために私のやる気を引き出します",
-    "私は、このクラスで学んだのiPadのスキルが他のクラスで私を役に立つと思います",
-    "iPadを使用によって、私はもっとクラスの概念に集中することができた",
-    "iPadを使用によって、前のクラスセッションからの概念を覚えて私を助けました",
-    "私がiPadの使用によって、私の他のクラスよりも、このクラスではより多くに参加しました",
-    "iPadのSocrativeアプリを使用したから、より簡単に授業の概念について意見を表現することができた",
-    " iPadのSocrativeアプリを使用によって、他の生徒の意見を参照を見ることが面白かったです",
-    "フィードバックを与えるためのiPadを使用したのは、学生のプレゼンテーションより興味深いになった",
-    "Kahootのクイズは、コースの概念を学ぶために私を助けました",
-    "クラスでのiPadを使用するには、私は英語で話すことがより困難になります",
-    "私は授業中にソーシャルメディアアプリケーション（LINEやFacebook）にアクセスするためのiPadを使用していました",
-    "このクラスでのiPadを使用して貴重な授業時間を無駄にした",
-    "私はこのクラスのiPadのアプリを使用する方法を理解するのは困難でした",
-    "このクラスでのiPadを使用すると、コースの概念はさらに混乱製された",
-    "iPadを使って、自分の考えを表現することは困難でした",
-    "アプリ関連の材料は、他のクラスの材料とよく統合されていませんでした",
-    "教室の前に画面に表示される持つ私の意見は私の意見を表現するために、私はより消極製になった",
-    "授業中のiPadを使用している間、私は退屈になりました",
-    "iPadを使用しているとき、私は、他の学生の技術と同様に熟練していないので、私はぎこちない感じました",
-    "iPadを使ったため、私はコースの概念に集中するのは、より困難になりました",
-    "iPadを使ったため、教授と英語で話すことがより困難になります",
-    "iPadを使ったため、他の学生と英語で話すことがより困難になります",
-    " 私は理由のiPadの使用の授業中に英語を話すために私の能力にいくつかの信頼を失いました",
-    "授業中のiPadを使用すると、不便でした"
+    '私は、iPadがこの授業で良い学習環境作りに役立ったと思います',
+    '私たちは、iPadを使用したため、私はこの授業では、より簡単に概念を学びました',
+    '私は、iPadのため、私の他のクラスに比べて、このクラスの同級生からより多くを学びました',
+    'iPadは、私がそうでなければ学んでなかったであろうことは、このクラスで物事を学ぶために私を助けました',
+    'iPadを使用すると、それが簡単に私がクラスで使用される概念間の接続を分かるようようにしました',
+    ' iPadを使用することで、学習の私の好ましい方法とよく一致しました',
+    '私は、このクラスで iPadを使用したため、 学ぶために私のやる気を引き出します',
+    '私は、このクラスで学んだのiPadのスキルが他のクラスで私を役に立つと思います',
+    'iPadを使用によって、私はもっとクラスの概念に集中することができた',
+    'iPadを使用によって、前のクラスセッションからの概念を覚えて私を助けました',
+    '私がiPadの使用によって、私の他のクラスよりも、このクラスではより多くに参加しました',
+    'iPadのSocrativeアプリを使用したから、より簡単に授業の概念について意見を表現することができた',
+    ' iPadのSocrativeアプリを使用によって、他の生徒の意見を参照を見ることが面白かったです',
+    'フィードバックを与えるためのiPadを使用したのは、学生のプレゼンテーションより興味深いになった',
+    'Kahootのクイズは、コースの概念を学ぶために私を助けました',
+    'クラスでのiPadを使用するには、私は英語で話すことがより困難になります',
+    '私は授業中にソーシャルメディアアプリケーション（LINEやFacebook）にアクセスするためのiPadを使用していました',
+    'このクラスでのiPadを使用して貴重な授業時間を無駄にした',
+    '私はこのクラスのiPadのアプリを使用する方法を理解するのは困難でした',
+    'このクラスでのiPadを使用すると、コースの概念はさらに混乱製された',
+    'iPadを使って、自分の考えを表現することは困難でした',
+    'アプリ関連の材料は、他のクラスの材料とよく統合されていませんでした',
+    '教室の前に画面に表示される持つ私の意見は私の意見を表現するために、私はより消極製になった',
+    '授業中のiPadを使用している間、私は退屈になりました',
+    'iPadを使用しているとき、私は、他の学生の技術と同様に熟練していないので、私はぎこちない感じました',
+    'iPadを使ったため、私はコースの概念に集中するのは、より困難になりました',
+    'iPadを使ったため、教授と英語で話すことがより困難になります',
+    'iPadを使ったため、他の学生と英語で話すことがより困難になります',
+    ' 私は理由のiPadの使用の授業中に英語を話すために私の能力にいくつかの信頼を失いました',
+    '授業中のiPadを使用すると、不便でした',
+    '私は、iPadがこの授業で良い学習環境作りに役立ったと思います',
+    '私たちは、iPadを使用したため、私はこの授業では、より簡単に概念を学びました',
+    '私は、iPadのため、私の他のクラスに比べて、このクラスの同級生からより多くを学びました',
+    'iPadは、私がそうでなければ学んでなかったであろうことは、このクラスで物事を学ぶために私を助けました',
+    'iPadを使用すると、それが簡単に私がクラスで使用される概念間の接続を分かるようようにしました',
+    ' iPadを使用することで、学習の私の好ましい方法とよく一致しました',
+    '私は、このクラスで iPadを使用したため、 学ぶために私のやる気を引き出します',
+    '私は、このクラスで学んだのiPadのスキルが他のクラスで私を役に立つと思います',
+    'iPadを使用によって、私はもっとクラスの概念に集中することができた',
+    'iPadを使用によって、前のクラスセッションからの概念を覚えて私を助けました',
+    '私がiPadの使用によって、私の他のクラスよりも、このクラスではより多くに参加しました',
+    'iPadのSocrativeアプリを使用したから、より簡単に授業の概念について意見を表現することができた',
+    ' iPadのSocrativeアプリを使用によって、他の生徒の意見を参照を見ることが面白かったです',
+    'フィードバックを与えるためのiPadを使用したのは、学生のプレゼンテーションより興味深いになった',
+    'Kahootのクイズは、コースの概念を学ぶために私を助けました',
+    'クラスでのiPadを使用するには、私は英語で話すことがより困難になります',
+    '私は授業中にソーシャルメディアアプリケーション（LINEやFacebook）にアクセスするためのiPadを使用していました',
+    'このクラスでのiPadを使用して貴重な授業時間を無駄にした',
+    '私はこのクラスのiPadのアプリを使用する方法を理解するのは困難でした',
+    'このクラスでのiPadを使用すると、コースの概念はさらに混乱製された',
+    'iPadを使って、自分の考えを表現することは困難でした',
+    'アプリ関連の材料は、他のクラスの材料とよく統合されていませんでした',
+    '教室の前に画面に表示される持つ私の意見は私の意見を表現するために、私はより消極製になった',
+    '授業中のiPadを使用している間、私は退屈になりました',
+    'iPadを使用しているとき、私は、他の学生の技術と同様に熟練していないので、私はぎこちない感じました',
+    'iPadを使ったため、私はコースの概念に集中するのは、より困難になりました',
+    'iPadを使ったため、教授と英語で話すことがより困難になります',
+    'iPadを使ったため、他の学生と英語で話すことがより困難になります',
+    ' 私は理由のiPadの使用の授業中に英語を話すために私の能力にいくつかの信頼を失いました',
+    '授業中のiPadを使用すると、不便でした',
   ];
 
   const sortsData = motivationalToArray(data, 60, -5);
   const sortsDisplayText2 = sortsDisplayText(sortsData[1]);
 
   const logMessageObj1 = {
-    logMessage: `iPad project ${i18n.t("loaded from demo data")}`,
-    logType: "ipadInput"
+    logMessage: `iPad project ${i18n.t('loaded from demo data')}`,
+    logType: 'ipadInput',
   };
 
-  projectHistoryState.projectHistoryArray = [logMessageObj1];
+  projectHistoryState.setState({ projectHistoryArray: [logMessageObj1] });
 
-  coreState.projectName = "iPad Survey (Japanese)";
-  coreState.statements = statements;
-  coreState.numQsorts = 80;
-  coreState.numStatements = 60;
-  coreState.multiplierArray = multiplierArray;
-  coreState.mainDataObject = sortsData[1];
-  coreState.sortsDisplayText = sortsDisplayText2;
-  coreState.respondentNames = sortsData[0];
-  coreState.qSortPattern = [
-    -5,
-    -5,
-    -5,
-    -5,
-    -4,
-    -4,
-    -4,
-    -4,
-    -4,
-    -3,
-    -3,
-    -3,
-    -3,
-    -3,
-    -2,
-    -2,
-    -2,
-    -2,
-    -2,
-    -1,
-    -1,
-    -1,
-    -1,
-    -1,
-    -1,
-    -1,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    1,
-    2,
-    2,
-    2,
-    2,
-    2,
-    3,
-    3,
-    3,
-    3,
-    3,
-    4,
-    4,
-    4,
-    4,
-    4,
-    5,
-    5,
-    5,
-    5
-  ];
-  inputState.areQsortsLoaded = true;
-  inputState.isQsortPatternLoaded = true;
+  coreState.setState({ projectName: 'iPad Survey (Japanese)' });
+  coreState.setState({ statements: statements });
+  coreState.setState({ numQsorts: 80 });
+  coreState.setState({ numStatements: 60 });
+  coreState.setState({ multiplierArray: multiplierArray });
+  coreState.setState({ mainDataObject: sortsData[1] });
+  coreState.setState({ sortsDisplayText: sortsDisplayText2 });
+  coreState.setState({ respondentNames: sortsData[0] });
+  coreState.setState({
+    qSortPattern: [
+      -5, -5, -5, -5, -4, -4, -4, -4, -4, -3, -3, -3, -3, -3, -2, -2, -2, -2, -2, -1, -1, -1, -1,
+      -1, -1, -1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 4, 4,
+      4, 4, 4, 5, 5, 5, 5,
+    ],
+  });
+  inputState.setState({ areQsortsLoaded: true });
+  inputState.setState({ isQsortPatternLoaded: true });
 };
 
 export default uploadJapaneseData;

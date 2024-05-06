@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 import LipsetCard from './DemoData/LipsetCard';
 import BuzzwordCard from './DemoData/BuzzwordCard';
-// import MotivationalCard from './DemoData/MotivationalCard';
-// import IpadSurveyCard from './DemoData/IpadSurveyCard';
+import MotivationalCard from './DemoData/MotivationalCard';
+import IpadSurveyCard from './DemoData/IpadSurveyCard';
 import { useTranslation } from 'react-i18next';
 
 const DemoDataPanel = () => {
@@ -14,8 +14,8 @@ const DemoDataPanel = () => {
       <CardHolder>
         <LipsetCard />
         <BuzzwordCard />
-        {/* <MotivationalCard /> */}
-        {/* <IpadSurveyCard /> */}
+        <MotivationalCard />
+        <IpadSurveyCard />
       </CardHolder>
     </DataWindow>
   );

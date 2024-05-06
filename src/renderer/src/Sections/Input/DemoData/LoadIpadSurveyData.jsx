@@ -55,9 +55,9 @@ const IpadSurveyButton1 = () => {
     <div>
       <LoadButton
         id="ipadSurveyButton"
-        floated="right"
+        $floated="right"
         onClick={handleClick}
-        isActive={isLoadIpadSurveyButtonGreen}
+        $isActive={isLoadIpadSurveyButtonGreen}
       >
         <LineContainer>
           <SvgContainer xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
