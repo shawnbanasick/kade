@@ -1,7 +1,6 @@
-import React from 'react';
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
-// import ZipDataCard from './Zip/ZipDataCard';
+import ZipDataCard from './Zip/ZipDataCard';
 // import ZipErrorCheckButton from './Zip/ZipErrorCheckButton';
 
 const CsvPanel = () => {
@@ -11,7 +10,7 @@ const CsvPanel = () => {
     <DataWindow>
       <Header>{t('Load a KADE or Ken-Q Analysis (web) Zip output file')}</Header>
       <CardHolder id="kadeZipPanel">
-        {/* <ZipDataCard /> */}
+        <ZipDataCard />
         {/* <ZipErrorCheckButton number={''} gridRow={3} /> */}
       </CardHolder>
     </DataWindow>

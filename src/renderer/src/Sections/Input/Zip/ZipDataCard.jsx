@@ -1,7 +1,6 @@
-import React from 'react';
 import styled from 'styled-components';
 import kadeZip from '../../images/kadeZip.png';
-import LoadKadeZip from './LoadKadeZip';
+// import LoadKadeZip from './LoadKadeZip';
 import { useTranslation } from 'react-i18next';
 
 const ZipDataCard = () => {
@@ -15,7 +14,7 @@ const ZipDataCard = () => {
       <Image>
         <img style={{ width: '250px', height: '175px' }} alt="KADE Zip File" src={kadeZip} />
       </Image>
-      <LoadKadeZip />
+      {/* <LoadKadeZip /> */}
     </Card>
   );
 };

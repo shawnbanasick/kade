@@ -1,7 +1,5 @@
-import React from 'react';
 import styled from 'styled-components';
-import { view } from '@risingstack/react-easy-state';
-import LoadJsonQsorts from './LoadJsonQsorts';
+// import LoadJsonQsorts from './LoadJsonQsorts';
 import { useTranslation } from 'react-i18next';
 
 const JsonQsortsCard = () => {
@@ -522,12 +520,12 @@ puo9ZsUK5AAoEEXBIIlJ1LHMFFIIFAAhtVAoGy26g1G5QrkEAgAZcEAmXnEkdwEUggkMBGlUCg7D
 ZqzQblCiQQSMAlgf8f9sftM14kzxAAAAAASUVORK5CYII="
         />
       </Image>
-      <LoadJsonQsorts />
+      {/* <LoadJsonQsorts /> */}
     </Card>
   );
 };
 
-export default view(JsonQsortsCard);
+export default JsonQsortsCard;
 
 const Card = styled.div`
   display: grid;

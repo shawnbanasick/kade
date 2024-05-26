@@ -1,22 +1,19 @@
-import React from 'react';
 import styled from 'styled-components';
-import { view } from '@risingstack/react-easy-state';
 import GeneralButton from './../../../Utils/GeneralButton';
 import { useTranslation } from 'react-i18next';
 import getInputState from '../../GlobalState/getInputState';
 import inputState from '../../GlobalState/inputState';
 
-const handleOnclick = () => {
-  inputState.showSheetsInput = false;
-  inputState.showNetlifyInput = true;
-  inputState.showFirebaseInput = false;
-  inputState.isShowSheetsInputButtonGreen = false;
-  inputState.isShowFirebaseInputButtonGreen = false;
-  inputState.isShowNetlifyInputButtonGreen = true;
-};
-
 const SheetsButton = () => {
   const { t } = useTranslation();
+  const handleOnclick = () => {
+    inputState.showSheetsInput = false;
+    inputState.showNetlifyInput = true;
+    inputState.showFirebaseInput = false;
+    inputState.isShowSheetsInputButtonGreen = false;
+    inputState.isShowFirebaseInputButtonGreen = false;
+    inputState.isShowNetlifyInputButtonGreen = true;
+  };
 
   // getState
   const isActive = getInputState('isShowNetlifyInputButtonGreen');
@@ -35,7 +32,7 @@ const SheetsButton = () => {
   );
 };
 
-export default view(SheetsButton);
+export default SheetsButton;
 
 const TradButton = styled.div`
   min-width: 120px;

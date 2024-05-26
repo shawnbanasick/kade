@@ -1,5 +1,3 @@
-import { view } from '@risingstack/react-easy-state';
-import React from 'react';
 import revertLoadButtonsColors from '../DemoData/revertLoadButtonsColors';
 import numStatementsMatchErrorModal from '../ErrorChecking/numStatementsMatchErrorModal';
 import coreState from '../../GlobalState/coreState';
@@ -24,9 +22,9 @@ const handleClick = async () => {
     filters: [
       {
         name: 'STA',
-        extensions: ['sta', 'STA']
-      }
-    ]
+        extensions: ['sta', 'STA'],
+      },
+    ],
   });
 
   const path = files.filePaths[0];
@@ -96,7 +94,7 @@ const LoadTxtStatementFile = () => {
   );
 };
 
-export default view(LoadTxtStatementFile);
+export default LoadTxtStatementFile;
 
 const SvgContainer = styled.svg`
   transform: rotate(180deg);

@@ -1,6 +1,4 @@
-import React from 'react';
 import styled from 'styled-components';
-import { view } from '@risingstack/react-easy-state';
 import GeneralButton from './../../../Utils/GeneralButton';
 import { useTranslation } from 'react-i18next';
 import getInputState from '../../GlobalState/getInputState';
@@ -35,7 +33,7 @@ const FirebaseButton = () => {
   );
 };
 
-export default view(FirebaseButton);
+export default FirebaseButton;
 
 const TradButton = styled.div`
   margin-left: 70px;

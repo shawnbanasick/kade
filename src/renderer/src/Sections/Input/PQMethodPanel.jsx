@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 // import ForcedUnforcedRadio from './CSV/ForcedUnforcedRadio';
-// import PQMethodStaCard from './PQMethod/PQMethodStaCard';
-// import PQMethodQsortsCard from './PQMethod/PQMethodQsortsCard';
+import PQMethodStaCard from './PQMethod/PQMethodStaCard';
+import PQMethodQsortsCard from './PQMethod/PQMethodQsortsCard';
 // import ZipErrorCheckButton from './Zip/ZipErrorCheckButton';
 import { useTranslation } from 'react-i18next';
 
@@ -13,9 +13,9 @@ const CsvPanel = () => {
     <DataWindow>
       <Header>{t('Load both a statements STA file and Q sorts DAT file')}</Header>
       <CardHolder id="pqmethodPanel">
-        {/* <PQMethodStaCard />
+        <PQMethodStaCard />
         <PQMethodQsortsCard />
-        <ForcedUnforcedRadio startingRow={2} number={'3.'} />
+        {/* <ForcedUnforcedRadio startingRow={2} number={'3.'} />
         <ZipErrorCheckButton number={'4.'} gridRow={3} /> */}
       </CardHolder>
     </DataWindow>

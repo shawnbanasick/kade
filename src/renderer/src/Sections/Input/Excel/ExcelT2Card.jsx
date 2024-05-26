@@ -1,11 +1,9 @@
-import React from 'react';
 import styled from 'styled-components';
-import { view } from '@risingstack/react-easy-state';
-import LoadExcelT2 from './LoadExcelT2';
+// import LoadExcelT2 from './LoadExcelT2';
 import { useTranslation } from 'react-i18next';
 import excel2 from '../../images/Excel2.png';
 
-const CsvQsortsCard = () => {
+const ExcelT2Card = () => {
   const [t] = useTranslation();
 
   return (
@@ -21,18 +19,18 @@ const CsvQsortsCard = () => {
           style={{
             width: '250px',
             height: '165px',
-            outline: '1px solid lightgray'
+            outline: '1px solid lightgray',
           }}
           alt="Excel Type 2 sample"
           src={excel2}
         />
       </Image>
-      <LoadExcelT2 />
+      {/* <LoadExcelT2 /> */}
     </Card>
   );
 };
 
-export default view(CsvQsortsCard);
+export default ExcelT2Card;
 
 const Card = styled.div`
   display: grid;

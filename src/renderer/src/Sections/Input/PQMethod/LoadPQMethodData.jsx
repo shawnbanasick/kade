@@ -1,4 +1,3 @@
-import { view } from '@risingstack/react-easy-state';
 import React from 'react';
 import parsePQMethodFile from '../logic/parsePQMethodFile';
 import sortsDisplayText from '../logic/sortsDisplayText';
@@ -42,9 +41,9 @@ const handleClick = async () => {
         filters: [
           {
             name: 'DAT',
-            extensions: ['dat', 'DAT']
-          }
-        ]
+            extensions: ['dat', 'DAT'],
+          },
+        ],
       });
 
       const path = files.filePaths[0];
@@ -90,7 +89,7 @@ const handleClick = async () => {
 
           const logMessageObj1 = {
             logMessage: `${data[1]} data loaded from PQMethod DAT file`,
-            logType: 'pqmethodInput'
+            logType: 'pqmethodInput',
           };
 
           projectHistoryState.projectHistoryArray = [logMessageObj1];
@@ -139,7 +138,7 @@ const LoadTxtStatementFile = () => {
   );
 };
 
-export default view(LoadTxtStatementFile);
+export default LoadTxtStatementFile;
 
 const SvgContainer = styled.svg`
   transform: rotate(180deg);

@@ -1,20 +1,19 @@
-import React from 'react';
 import styled from 'styled-components';
 // import displayJsonData from './JSON/displayJsonData';
 // import getInputState from '../GlobalState/getInputState';
-// import DatabaseSelectButtons from './JSON/DatabaseSelectButtons';
+import DatabaseSelectButtons from './JSON/DatabaseSelectButtons';
 
 // import Dropdown from './JSON/DropdownJSON';
-// import JsonQsortsCard from './JSON/JsonQsortsCard';
-// import LoadJsonStatementsCard from './JSON/LoadJsonStatementsCard';
+import JsonQsortsCard from './JSON/JsonQsortsCard';
+import LoadJsonStatementsCard from './JSON/LoadJsonStatementsCard';
 // import ProjectNameInput from './CSV/ProjectNameInput';
 // import DownloadCsvModal from './JSON/DownloadCsvModal';
 // import ForcedUnforcedRadio from './CSV/ForcedUnforcedRadio';
 // import QsortDesignInputElement from './CSV/QsortDesignInputElement';
-// import CsvJsonCard from './JSON/CsvJsonCard';
+import CsvJsonCard from './JSON/CsvJsonCard';
 // import DropdownSheets from './JSON/DropdownSheets';
 // import ZipErrorCheckButton from './Zip/ZipErrorCheckButton';
-// import NetlifyCard from './JSON/NetlifyCard';
+import NetlifyCard from './JSON/NetlifyCard';
 // import NetlifyDropdown from './JSON/NetlifyDropdown';
 
 // const handleMessage = (jsonIdSelection) => {
@@ -40,16 +39,16 @@ const JsonPanel = () => {
     return (
       <DataWindow>
         <p>JSON panel</p>
-        {/* <DatabaseSelectButtons /> */}
+        <DatabaseSelectButtons />
       </DataWindow>
     );
   } else {
     return (
       <DataWindow>
-        {/*
         <DatabaseSelectButtons />
         <CardHolder id="JsonCardHolder">
           <LoadJsonStatementsCard />
+          {/*
           {showFirebaseInput && <JsonQsortsCard />}
           {showSheetsInput && <CsvJsonCard />}
           {showNetlifyInput && <NetlifyCard />}
@@ -86,8 +85,8 @@ const JsonPanel = () => {
           <QsortDesignInputElement style={{ gridRowStart: 4 }} number={'6.'} />
           {showFirebaseInput && <DownloadCsvModal />}
           <ZipErrorCheckButton number={'7.'} gridRow={5} />
-        </CardHolder>
         */}
+        </CardHolder>
       </DataWindow>
     );
   }

@@ -1,11 +1,9 @@
-import React from 'react';
 import styled from 'styled-components';
-import { view } from '@risingstack/react-easy-state';
 import { useTranslation } from 'react-i18next';
 import netlifyImage from '../../images/netlify-sorts-data-image.png';
-import NetlifyLoadCsv from './NetlifyLoadCsv';
+// import NetlifyLoadCsv from './NetlifyLoadCsv';
 
-const CsvQsortsCard = () => {
+const NetlifyCard = () => {
   const { t } = useTranslation();
 
   return (
@@ -22,11 +20,11 @@ const CsvQsortsCard = () => {
           />
         </Image>
       </center>
-      <NetlifyLoadCsv />
+      {/* <NetlifyLoadCsv /> */}
     </Card>
   );
 };
-export default view(CsvQsortsCard);
+export default NetlifyCard;
 
 const Card = styled.div`
   display: grid;
