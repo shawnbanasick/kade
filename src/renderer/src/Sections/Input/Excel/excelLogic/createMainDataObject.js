@@ -1,8 +1,12 @@
-import shiftRawSortsPositive from "../../logic/shiftRawSortsPositive";
+import shiftRawSortsPositive from '../../logic/shiftRawSortsPositive';
+import flatten from 'lodash/flatten';
+import cloneDeep from 'lodash/cloneDeep';
 
 function createMainDataObject(names, rawSorts) {
   // find min value of sort pattern
-  const minValue = rawSorts[0].reduce((a, b) => Math.min(a, b));
+  const minValueArray = cloneDeep(rawSorts);
+  const minValueArray2 = flatten(minValueArray);
+  const minValue = Math.min(...minValueArray2);
 
   // map values to object
   const mainDataObject = [];

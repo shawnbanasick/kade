@@ -1,4 +1,3 @@
-import React from 'react';
 import parsePQMethodFile from '../logic/parsePQMethodFile';
 import sortsDisplayText from '../logic/sortsDisplayText';
 import checkUniqueParticipantName from '../logic/checkUniqueParticipantNames';

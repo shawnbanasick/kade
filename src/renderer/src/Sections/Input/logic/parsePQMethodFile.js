@@ -1,5 +1,6 @@
-import cloneDeep from "lodash/cloneDeep";
-import sortsTextToArray from "./sortsTextToArray";
+import cloneDeep from 'lodash/cloneDeep';
+import sortsTextToArray from './sortsTextToArray';
+import convertMultiplierToQSortPattern from './convertMultiplierToQSortPattern';
 
 export default function parsePQMethodFile(dataBlob) {
   // break by new lines
@@ -23,8 +24,8 @@ export default function parsePQMethodFile(dataBlob) {
 
   // parsing and coercing second line of PQMethod file
   // warning - array temp1 has an extra "0" entry in position 0
-  const temp1b = sortNumberString.replace(/\s\s/g, " ");
-  const temp1a = temp1b.split(" ");
+  const temp1b = sortNumberString.replace(/\s\s/g, ' ');
+  const temp1a = temp1b.split(' ');
   const temp1 = temp1a.map(Number);
   const multiplierArray = temp1.slice(3, temp1.length);
   // get max sort value to use in shift raw sorts to all positive
@@ -32,16 +33,9 @@ export default function parsePQMethodFile(dataBlob) {
   const min = value.reduce((a, b) => Math.min(a, b));
 
   // transform sorts text to name and sorts arrays - returns names, sorts, main data array
-  const namesSortsMaindataArray = sortsTextToArray(
-    array1,
-    numSortStatements,
-    min
-  );
+  const namesSortsMaindataArray = sortsTextToArray(array1, numSortStatements, min);
 
-  // todo - fix this if unforced sorts are used in project
-  // create Q sort pattern from initial respondent sort
-  const sampleSort = cloneDeep(namesSortsMaindataArray[1][0].rawSort);
-  const qSortPattern = sampleSort.sort((a, b) => a - b);
+  const qSortPattern = convertMultiplierToQSortPattern(multiplierArray);
 
   return [
     numberSorts,
@@ -49,6 +43,6 @@ export default function parsePQMethodFile(dataBlob) {
     numSortStatements,
     multiplierArray,
     namesSortsMaindataArray,
-    qSortPattern
+    qSortPattern,
   ];
 }

@@ -5,82 +5,96 @@ import appState from '../../GlobalState/appState';
 import inputState from '../../GlobalState/inputState';
 import LoadButton from '../DemoData/LoadButton';
 import { useTranslation } from 'react-i18next';
-import getInputState from '../../GlobalState/getInputState';
-import getCoreState from '../../GlobalState/getCoreState';
 import styled from 'styled-components';
 
-const { dialog } = require('electron').remote;
-const fs = require('fs');
-const { remote } = require('electron');
-const mainWindow = remote.getCurrentWindow();
+// const { dialog } = require('electron').remote;
+// const fs = require('fs')
+// const { remote } = require('electron');
+// const mainWindow = remote.getCurrentWindow();
 
-const handleClick = async () => {
-  let isNoError = true;
+// import { app, BrowserWindow, dialog, ipcMain } from 'electron';
 
-  const files = await dialog.showOpenDialog(mainWindow, {
-    properties: ['openFile'],
-    filters: [
-      {
-        name: 'STA',
-        extensions: ['sta', 'STA'],
-      },
-    ],
-  });
-
-  const path = files.filePaths[0];
-
-  // dialog cancelled case
-  if (path === undefined) {
-    return;
-  }
-
-  fs.readFile(path, 'utf8', (error, data) => {
-    if (error != null) {
-      // alert("file open error.");
-      console.log('file open error');
-      return;
-    }
-    processBlob(data.toString());
-  });
-
-  const processBlob = (data) => {
-    // split into lines
-    const lines = data.split(/[\r\n]+/g);
-    // remove empty strings
-    const lines2 = lines.filter((e) => e === 0 || e);
-
-    // getState
-    const areQsortsLoaded = getInputState('areQsortsLoaded');
-    if (areQsortsLoaded) {
-      const qSortPattern = getCoreState('qSortPattern');
-      if (qSortPattern.length !== lines2.length) {
-        isNoError = false;
-        numStatementsMatchErrorModal();
-      } else {
-        inputState.statementsLoaded = true;
-      }
-    }
-
-    if (isNoError) {
-      coreState.statements = lines2;
-      inputState.statementsLoaded = true;
-
-      revertLoadButtonsColors('pqmethod');
-      inputState.notifyDataUploadSuccess = true;
-      inputState.areStatementsLoaded = true;
-      inputState.isLoadPqmethodTextButtonButtonGreen = true;
-      const areQsortsLoaded = getInputState('areQsortsLoaded');
-      appState.isInputButtonGreen = areQsortsLoaded;
-      appState.isDataButtonGreen = areQsortsLoaded;
-    }
-  };
-};
+import { dialog, BrowserWindow } from 'electron';
 
 const LoadTxtStatementFile = () => {
   const { t } = useTranslation();
+  const updateStatements = coreState((state) => state.updateStatements);
+  const updateNotifyDataUploadSuccess = inputState((state) => state.updateNotifyDataUploadSuccess);
+  const updateStatementsLoaded = inputState((state) => state.updateStatementsLoaded);
+  // const areQsortsLoaded = inputState((state) => state.areQsortsLoaded);
+  const updateIsLoadPqmethodTextButtonButtonGreen = inputState(
+    (state) => state.updateIsLoadPqmethodTextButtonButtonGreen
+  );
+  const updateIsInputButtonGreen = appState((state) => state.updateIsInputButtonGreen);
+  const updateIsDataButtonGreen = appState((state) => state.updateIsDataButtonGreen);
+  const updateAreStatementsLoaded = inputState((state) => state.updateAreStatementsLoaded);
 
   // getState
-  const isLoadPqmethodTextButtonButtonGreen = getInputState('isLoadPqmethodTextButtonButtonGreen');
+  const isLoadPqmethodTextButtonButtonGreen = inputState(
+    (state) => state.isLoadPqmethodTextButtonButtonGreen
+  );
+
+  const handleClick = async () => {
+    let isNoError = true;
+
+    const files = await dialog.showOpenDialog(BrowserWindow, {
+      properties: ['openFile'],
+      filters: [
+        {
+          name: 'STA',
+          extensions: ['sta', 'STA'],
+        },
+      ],
+    });
+
+    const path = files.filePaths[0];
+
+    // dialog cancelled case
+    if (path === undefined) {
+      return;
+    }
+
+    fs.readFile(path, 'utf8', (error, data) => {
+      if (error != null) {
+        // alert("file open error.");
+        console.log('file open error');
+        return;
+      }
+      processBlob(data.toString());
+    });
+
+    const processBlob = (data) => {
+      // split into lines
+      const lines = data.split(/[\r\n]+/g);
+      // remove empty strings
+      const lines2 = lines.filter((e) => e === 0 || e);
+
+      // getState
+      const areQsortsLoaded = inputState((state) => state.areQsortsLoaded);
+      if (areQsortsLoaded) {
+        const qSortPattern = coreState((state) => state.qSortPattern);
+        if (qSortPattern.length !== lines2.length) {
+          isNoError = false;
+          numStatementsMatchErrorModal();
+        } else {
+          inputState.statementsLoaded = true;
+        }
+      }
+
+      if (isNoError) {
+        revertLoadButtonsColors('pqmethod');
+        // update state
+        updateStatements(lines2);
+        updateStatementsLoaded(true);
+        updateNotifyDataUploadSuccess(true);
+        updateIsLoadPqmethodTextButtonButtonGreen(true);
+        updateAreStatementsLoaded(true);
+
+        updateIsInputButtonGreen(areQsortsLoaded);
+        updateIsDataButtonGreen(areQsortsLoaded);
+      }
+    };
+  };
 
   return (
     <LoadButton isActive={isLoadPqmethodTextButtonButtonGreen} onClick={() => handleClick()}>
