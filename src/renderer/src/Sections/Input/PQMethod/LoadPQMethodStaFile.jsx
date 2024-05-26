@@ -9,6 +9,13 @@ import styled from 'styled-components';
 
 const LoadTxtStatementFile = () => {
   const { t } = useTranslation();
+  // getState
+  const areQsortsLoaded = inputState((state) => state.areQsortsLoaded);
+  const qSortPattern = coreState((state) => state.qSortPattern);
+  const isLoadPqmethodTextButtonButtonGreen = inputState(
+    (state) => state.isLoadPqmethodTextButtonButtonGreen
+  );
+
   const updateStatements = coreState((state) => state.updateStatements);
   const updateNotifyDataUploadSuccess = inputState((state) => state.updateNotifyDataUploadSuccess);
   const updateStatementsLoaded = inputState((state) => state.updateStatementsLoaded);
@@ -19,13 +26,6 @@ const LoadTxtStatementFile = () => {
   const updateIsInputButtonGreen = appState((state) => state.updateIsInputButtonGreen);
   const updateIsDataButtonGreen = appState((state) => state.updateIsDataButtonGreen);
   const updateAreStatementsLoaded = inputState((state) => state.updateAreStatementsLoaded);
-
-  // getState
-  const isLoadPqmethodTextButtonButtonGreen = inputState(
-    (state) => state.isLoadPqmethodTextButtonButtonGreen
-  );
-  const areQsortsLoaded = inputState((state) => state.areQsortsLoaded);
-  const qSortPattern = coreState((state) => state.qSortPattern);
 
   const processBlob = (data) => {
     let isNoError = true;
@@ -60,9 +60,8 @@ const LoadTxtStatementFile = () => {
   };
 
   const handleClick = async () => {
-    await window.electronAPI.openFile();
+    await window.electronAPI.openStaFile();
     window.bridge.staData((event, staData) => {
-      console.log('staData', staData);
       processBlob(staData);
     });
   };

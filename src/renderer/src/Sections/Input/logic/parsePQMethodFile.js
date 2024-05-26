@@ -1,7 +1,7 @@
 import cloneDeep from 'lodash/cloneDeep';
 import sortsTextToArray from './sortsTextToArray';
-import convertMultiplierToQSortPattern from './convertMultiplierToQSortPattern';
-
+// import convertMultiplierToQSortPattern from './convertMultiplierToQSortPattern';
+import convertMultiplierToQSortPattern from '../PQMethod/convertMultiplierToQSortPattern';
 export default function parsePQMethodFile(dataBlob) {
   // break by new lines
   const arr = dataBlob.split(/\r\n|\r|\n/g);

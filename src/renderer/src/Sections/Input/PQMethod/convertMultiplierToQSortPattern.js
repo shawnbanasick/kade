@@ -10,7 +10,6 @@ const findMinValueInMultiplierArray = (multiplierArray) => {
       }
     }
   }
-  console.log(JSON.stringify(qSortPatternArray));
   return qSortPatternArray;
 };
 

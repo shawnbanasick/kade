@@ -6,7 +6,8 @@ if (process.contextIsolated) {
     console.log('contextIsolated');
     contextBridge.exposeInMainWorld('electron', electronAPI);
     contextBridge.exposeInMainWorld('electronAPI', {
-      openFile: () => ipcRenderer.send('dialog:openStaFile'),
+      openStaFile: () => ipcRenderer.send('dialog:openStaFile'),
+      openDatFile: () => ipcRenderer.send('dialog:openDatFile'),
     });
     contextBridge.exposeInMainWorld('languageChange', {
       language: (callback) =>
@@ -18,6 +19,11 @@ if (process.contextIsolated) {
     contextBridge.exposeInMainWorld('bridge', {
       staData: (content) => {
         ipcRenderer.on('staData', content);
+      },
+    });
+    contextBridge.exposeInMainWorld('bridgeDat', {
+      datData: (content) => {
+        ipcRenderer.on('datData', content);
       },
     });
   } catch (error) {

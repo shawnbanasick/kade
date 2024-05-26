@@ -11,14 +11,7 @@ import LoadButton from '../DemoData/LoadButton';
 import { useTranslation } from 'react-i18next';
 import i18n from 'i18next';
 import styled from 'styled-components';
-import getInputState from '../../GlobalState/getInputState';
-import getCoreState from '../../GlobalState/getCoreState';
-
-const clone = require('rfdc')();
-const { dialog } = require('electron').remote;
-const fs = require('fs');
-const { remote } = require('electron');
-const mainWindow = remote.getCurrentWindow();
+import cloneDeep from 'lodash/cloneDeep';
 
 const LoadTxtStatementFile = () => {
   const { t } = useTranslation();
@@ -26,11 +19,15 @@ const LoadTxtStatementFile = () => {
   const isLoadPqmethodQsortsButtonGreen = inputState(
     (state) => state.isLoadPqmethodQsortsButtonGreen
   );
-  const updateShowErrorMessageBar = inputState((state) => state.updateShowErrorMessageBar);
   const isDataAlreadyLoaded = inputState((state) => state.isDataAlreadyLoaded);
+  const areStatementsLoaded = inputState((state) => state.areStatementsLoaded);
+  const statementsLoaded = inputState((state) => state.statementsLoaded);
+  const statements = coreState((state) => state.statements);
+
+  const updateShowErrorMessageBar = inputState((state) => state.updateShowErrorMessageBar);
   const updateErrorMessage = inputState((state) => state.updateErrorMessage);
   const updateExtendedErrorMessage = inputState((state) => state.updateExtendedErrorMessage);
-  const updateErrorStackTrace = inputState((state) => state.updateErrorStackTrace));
+  const updateErrorStackTrace = inputState((state) => state.updateErrorStackTrace);
   const updateNumQsorts = coreState((state) => state.updateNumQsorts);
   const updateProjectName = coreState((state) => state.updateProjectName);
   const updateProjectHistoryArray = projectHistoryState((state) => state.updateProjectHistoryArray);
@@ -38,18 +35,22 @@ const LoadTxtStatementFile = () => {
   const updateMultiplierArray = coreState((state) => state.updateMultiplierArray);
   const updateRespondentNames = coreState((state) => state.updateRespondentNames);
   const updateMainDataObject = coreState((state) => state.updateMainDataObject);
-  /*
-  projectHistoryState.projectHistoryArray = [logMessageObj1];
-  coreState.numStatements = data[2];
-  coreState.multiplierArray = clone(data[3]);
-  coreState.respondentNames = participantNamesPrep2;
-  coreState.mainDataObject = mainDataObject;
-  coreState.sortsDisplayText = sortsDisplayTextArray;
-  coreState.qSortPattern = data[5];
-  inputState.isQsortPatternLoaded = true;
-  inputState.dataOrigin = 'pqmethod';
-  */
-  
+  const updateSortsDisplayText = coreState((state) => state.updateSortsDisplayText);
+  const updateQSortPattern = coreState((state) => state.updateQSortPattern);
+  const updateIsQsortPatternLoaded = inputState((state) => state.updateIsQsortPatternLoaded);
+  const updateDataOrigin = inputState((state) => state.updateDataOrigin);
+  const updateIsLoadPqmethodQsortsButtonGreen = inputState(
+    (state) => state.updateIsLoadPqmethodQsortsButtonGreen
+  );
+  const updateNotifyDataUploadSuccess = inputState((state) => state.updateNotifyDataUploadSuccess);
+  const updateAreQsortsLoaded = inputState((state) => state.updateAreQsortsLoaded);
+  // const updateAreStatementsLoaded = inputState((state) => state.updateAreStatementsLoaded);
+  const updateIsInputButtonGreen = appState((state) => state.updateIsInputButtonGreen);
+  const updateIsDataButtonGreen = appState((state) => state.updateIsDataButtonGreen);
+  const updateIsDataAlreadyLoaded = inputState((state) => state.updateIsDataAlreadyLoaded);
+  const updateCsvErrorMessage1 = inputState((state) => state.updateCsvErrorMessage1);
+  const updateShowCsvErrorModal = inputState((state) => state.updateShowCsvErrorModal);
+
   const handleClick = async () => {
     // check to see if data loaded and correlations started - true ==> throw error
     const trans1 = i18n.t('Data have already been loaded and the analysis has started');
@@ -64,46 +65,16 @@ const LoadTxtStatementFile = () => {
       let isNoError = true;
 
       try {
-        const files = await dialog.showOpenDialog(mainWindow, {
-          properties: ['openFile'],
-          filters: [
-            {
-              name: 'DAT',
-              extensions: ['dat', 'DAT'],
-            },
-          ],
-        });
-
-        const path = files.filePaths[0];
-
-        // dialog cancelled case
-        if (path === undefined) {
-          return;
-        }
-
-        fs.readFile(path, 'utf8', (error, data) => {
-          if (error != null) {
-            // alert("file open error.");
-            console.log('file open error');
-            return;
-          }
-          processBlob(data.toString());
-        });
-
         const processBlob = (data2) => {
           const data = parsePQMethodFile(data2);
 
-          const mainDataObject = clone(data[4][1]);
+          const mainDataObject = cloneDeep(data[4][1]);
           const sortsDisplayTextArray = sortsDisplayText(mainDataObject);
-
-          const participantNamesPrep = clone(data[4][0]);
+          const participantNamesPrep = cloneDeep(data[4][0]);
           const participantNamesPrep2 = checkUniqueParticipantName(participantNamesPrep);
 
           // error check number of statements
-          const statementsLoaded = getInputState('statementsLoaded');
           if (statementsLoaded) {
-            // getState
-            const statements = getCoreState('statements');
             if (data[5].length !== statements.length) {
               isNoError = false;
               numStatementsMatchErrorModal();
@@ -120,35 +91,40 @@ const LoadTxtStatementFile = () => {
               logType: 'pqmethodInput',
             };
 
-            projectHistoryState.projectHistoryArray = [logMessageObj1];
-            coreState.numStatements = data[2];
-            coreState.multiplierArray = clone(data[3]);
-            coreState.respondentNames = participantNamesPrep2;
-            coreState.mainDataObject = mainDataObject;
-            coreState.sortsDisplayText = sortsDisplayTextArray;
-            coreState.qSortPattern = data[5];
-            inputState.isQsortPatternLoaded = true;
-            inputState.dataOrigin = 'pqmethod';
+            updateProjectHistoryArray([logMessageObj1]);
+            updateNumStatements(data[2]);
+            updateMultiplierArray(cloneDeep(data[3]));
+            updateRespondentNames(participantNamesPrep2);
+            updateMainDataObject(mainDataObject);
+            updateSortsDisplayText(sortsDisplayTextArray);
+            updateQSortPattern(data[5]);
+            updateIsQsortPatternLoaded(true);
+            updateDataOrigin('pqmethod');
 
             revertLoadButtonsColors('pqmethod');
-            inputState.notifyDataUploadSuccess = true;
-            inputState.areQsortsLoaded = true;
-            inputState.isLoadPqmethodQsortsButtonGreen = true;
-            const areStatementsLoaded = getInputState('areStatementsLoaded');
-            appState.isInputButtonGreen = areStatementsLoaded;
-            appState.isDataButtonGreen = areStatementsLoaded;
-            inputState.isDataAlreadyLoaded = true;
+
+            updateNotifyDataUploadSuccess(true);
+            updateAreQsortsLoaded(true);
+            updateIsLoadPqmethodQsortsButtonGreen(true);
+            updateIsInputButtonGreen(areStatementsLoaded);
+            updateIsDataButtonGreen(areStatementsLoaded);
+            updateIsDataAlreadyLoaded(true);
           }
         };
+
+        await window.electronAPI.openDatFile();
+        window.bridgeDat.datData((event, datData) => {
+          processBlob(datData);
+        });
       } catch (error) {
-        inputState.csvErrorMessage1 = error.message;
-        inputState.showCsvErrorModal = true;
+        updateCsvErrorMessage1(error.message);
+        updateShowCsvErrorModal(true);
       }
     }
   };
 
   return (
-    <LoadButton isActive={isLoadPqmethodQsortsButtonGreen} onClick={() => handleClick()}>
+    <LoadButton $isActive={isLoadPqmethodQsortsButtonGreen} onClick={() => handleClick()}>
       <LineContainer>
         <SvgContainer xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
           <path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z" />
