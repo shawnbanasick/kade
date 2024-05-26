@@ -8,9 +8,14 @@ import { electronAPI } from '@electron-toolkit/preload';
 // Use `contextBridge` APIs to expose Electron APIs to
 // renderer only if context isolation is enabled, otherwise
 // just add to the DOM global.
+
 if (process.contextIsolated) {
   try {
-    contextBridge.exposeInMainWorld('electron', electronAPI);
+    // contextBridge.exposeInMainWorld('electron', electronAPI);
+    contextBridge.exposeInMainWorld('electronAPI', {
+      openFile: () => ipcRenderer.invoke('dialog:openFile'),
+    });
+    // export type ElectronHandler = typeof handler;
     contextBridge.exposeInMainWorld('languageChange', {
       // language: ipcRenderer.on('languageSignal', (_event, value) => {
       //   console.log('Language changed');

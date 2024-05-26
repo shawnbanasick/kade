@@ -1,17 +1,24 @@
-import { app, shell, BrowserWindow, ipcMain } from 'electron';
+import { app, shell, BrowserWindow, ipcMain, dialog } from 'electron';
 import { join } from 'path';
 import { electronApp, optimizer, is } from '@electron-toolkit/utils';
 import icon from '../../resources/icon.png?asset';
 import MenuFactory from './menu';
 // import i18nextBackend from 'i18next-electron-fs-backend';
 import i18nextMainBackend from '../../app/localization/i18n.mainconfig';
-import fs from 'fs';
+// import fs from 'fs';
 //import installExtension, { REACT_DEVELOPER_TOOLS } from 'electron-devtools-installer';
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let win;
 let menuBuilder;
+
+async function handleFileOpen() {
+  const { canceled, filePaths } = await dialog.showOpenDialog({});
+  if (!canceled) {
+    return filePaths[0];
+  }
+}
 
 function createWindow() {
   // Create the browser window.
@@ -98,6 +105,8 @@ app.whenReady().then(() => {
 
   // IPC test
   ipcMain.on('ping', () => console.log('pong'));
+
+  ipcMain.handle('dialog:openFile', handleFileOpen);
 
   createWindow();
 

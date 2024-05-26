@@ -8,13 +8,13 @@ import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
 // const { dialog } = require('electron').remote;
-// const fs = require('fs')
+// const fs = require('fs');
 // const { remote } = require('electron');
 // const mainWindow = remote.getCurrentWindow();
 
 // import { app, BrowserWindow, dialog, ipcMain } from 'electron';
 
-import { dialog, BrowserWindow } from 'electron';
+//  import { dialog, BrowserWindow } from window.electron;
 
 const LoadTxtStatementFile = () => {
   const { t } = useTranslation();
@@ -34,35 +34,40 @@ const LoadTxtStatementFile = () => {
     (state) => state.isLoadPqmethodTextButtonButtonGreen
   );
 
-  const handleClick = async () => {
-    let isNoError = true;
+  const handleClick = () => {
+    // let isNoError = true;
 
-    const files = await dialog.showOpenDialog(BrowserWindow, {
-      properties: ['openFile'],
-      filters: [
-        {
-          name: 'STA',
-          extensions: ['sta', 'STA'],
-        },
-      ],
-    });
+    window.electron.openFile().then((files) => {
+      // .showOpenDialog({
+      //   // const files = await dialog.showOpenDialog(mainWindow, {
+      //   properties: ['openFile'],
+      //   filters: [
+      //     {
+      //       name: 'STA',
+      //       extensions: ['sta', 'STA'],
+      //     },
+      //   ],
+      // })
+      // .then((files) => {
+      console.log('ok', files);
 
-    const path = files.filePaths[0];
+      // const path = files.filePaths[0];
 
-    // dialog cancelled case
-    if (path === undefined) {
-      return;
-    }
+      // // dialog cancelled case
+      // if (path === undefined) {
+      //   return;
+      // }
 
-    fs.readFile(path, 'utf8', (error, data) => {
-      if (error != null) {
-        // alert("file open error.");
-        console.log('file open error');
-        return;
-      }
-      processBlob(data.toString());
-    });
+      // fs.readFile(path, 'utf8', (error, data) => {
+      //   if (error != null) {
+      //     // alert("file open error.");
+      //     console.log('file open error');
+      //     return;
+      //   }
+      //   processBlob(data.toString());
+      // });
 
+      /*
     const processBlob = (data) => {
       // split into lines
       const lines = data.split(/[\r\n]+/g);
@@ -93,11 +98,12 @@ const LoadTxtStatementFile = () => {
         updateIsInputButtonGreen(areQsortsLoaded);
         updateIsDataButtonGreen(areQsortsLoaded);
       }
-    };
+      */
+    });
   };
 
   return (
-    <LoadButton isActive={isLoadPqmethodTextButtonButtonGreen} onClick={() => handleClick()}>
+    <LoadButton $isActive={isLoadPqmethodTextButtonButtonGreen} onClick={() => handleClick()}>
       <LineContainer>
         <SvgContainer xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
           <path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z" />
