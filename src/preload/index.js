@@ -6,8 +6,7 @@ if (process.contextIsolated) {
     console.log('contextIsolated');
     contextBridge.exposeInMainWorld('electron', electronAPI);
     contextBridge.exposeInMainWorld('electronAPI', {
-      openFile: () => ipcRenderer.send('dialog:openFile'),
-      //  export type ElectronHandler = typeof handler;
+      openFile: () => ipcRenderer.send('dialog:openStaFile'),
     });
     contextBridge.exposeInMainWorld('languageChange', {
       language: (callback) =>
