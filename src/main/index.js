@@ -3,9 +3,9 @@ import { join } from 'path';
 import { electronApp, optimizer, is } from '@electron-toolkit/utils';
 import icon from '../../resources/icon.png?asset';
 import MenuFactory from './menu';
-// import i18nextBackend from 'i18next-electron-fs-backend';
 import i18nextMainBackend from '../../app/localization/i18n.mainconfig';
-// import fs from 'fs';
+import fs from 'fs';
+// import i18nextBackend from 'i18next-electron-fs-backend';
 //import installExtension, { REACT_DEVELOPER_TOOLS } from 'electron-devtools-installer';
 
 // Keep a global reference of the window object, if you don't, the window will
@@ -14,10 +14,32 @@ let win;
 let menuBuilder;
 
 async function handleFileOpen() {
-  const { canceled, filePaths } = await dialog.showOpenDialog({});
-  if (!canceled) {
-    return filePaths[0];
-  }
+  const options = {
+    //   // const files = await dialog.showOpenDialog(mainWindow, {
+    properties: ['openFile'],
+    title: 'Open STA File',
+    filters: [
+      {
+        name: 'STA',
+        extensions: ['sta', 'STA'],
+      },
+    ],
+  };
+  const window = BrowserWindow.getFocusedWindow();
+  dialog
+    .showOpenDialog(window, options)
+    .then((result) => {
+      if (!result.canceled) {
+        let paths = result.filePaths;
+        if (paths && paths.length > 0) {
+          const content = fs.readFileSync(paths[0], 'utf-8').toString();
+          window.webContents.send('staData', content);
+        }
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 }
 
 function createWindow() {
@@ -106,7 +128,7 @@ app.whenReady().then(() => {
   // IPC test
   ipcMain.on('ping', () => console.log('pong'));
 
-  ipcMain.handle('dialog:openFile', handleFileOpen);
+  ipcMain.on('dialog:openFile', handleFileOpen);
 
   createWindow();
 
