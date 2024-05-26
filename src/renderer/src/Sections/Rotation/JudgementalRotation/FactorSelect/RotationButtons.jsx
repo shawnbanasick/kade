@@ -8,7 +8,7 @@ import getRotationState from '../../../GlobalState/getRotationState';
 
 const localStore = store({
   rotationDegreeInput: '',
-  pressed: false
+  pressed: false,
 });
 
 const getRotationDegreeFromUI = (event) => {
@@ -134,7 +134,7 @@ const RotationButtons = () => {
   return null;
 };
 
-export default view(RotationButtons);
+export default RotationButtons;
 
 const ButtonsContainer = styled.div`
   display: flex;

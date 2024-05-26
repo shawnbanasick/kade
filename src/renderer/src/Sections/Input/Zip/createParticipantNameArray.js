@@ -1,10 +1,10 @@
-import cloneDeep from "lodash/cloneDeep";
-import checkUniqueName from "../ErrorChecking/checkUniqueParticipantName";
+import cloneDeep from 'lodash/cloneDeep';
+import checkUniqueName from '../ErrorChecking/checkUniqueParticipantName';
 
-const createParticipantNameArray = array => {
+const createParticipantNameArray = (array) => {
   let tempArray = [];
   let result = cloneDeep(array);
-  result.forEach(element => {
+  result.forEach((element) => {
     let tempVar = element[0];
     tempArray.push(tempVar);
   });

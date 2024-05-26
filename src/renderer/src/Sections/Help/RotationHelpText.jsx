@@ -1,5 +1,5 @@
 import React from 'react';
-import { view } from '@risingstack/react-easy-state';
+
 import styled from 'styled-components';
 import rotationJudgmental from './helpImages/k3-rotation-judgmental.png';
 import varimax from './helpImages/k3-rotation-varimax.png';
@@ -94,7 +94,7 @@ const HelpSection = () => {
   );
 };
 
-export default view(HelpSection);
+export default HelpSection;
 
 const MainContent = styled.div`
   background-color: white;

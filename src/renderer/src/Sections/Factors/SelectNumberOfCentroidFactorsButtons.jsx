@@ -1,6 +1,4 @@
-import React from 'react';
 import styled from 'styled-components';
-import { view } from '@risingstack/react-easy-state';
 import GeneralButton from '../../Utils//GeneralButton';
 import factorState from '../GlobalState/factorState';
 import getCoreState from '../GlobalState/getCoreState';
@@ -109,7 +107,7 @@ const SelectNumberOfCentroidFactorsButtons = () => {
   }
 };
 
-export default view(SelectNumberOfCentroidFactorsButtons);
+export default SelectNumberOfCentroidFactorsButtons;
 
 const NumCentroidFacButtonsContainerDiv = styled.div`
   display: flex;

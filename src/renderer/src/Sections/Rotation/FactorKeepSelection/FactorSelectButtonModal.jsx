@@ -16,7 +16,7 @@ import getLoadingState from '../../GlobalState/getLoadingState';
 
 const localStore = store({
   isActive: false,
-  modalOpenSelect: false
+  modalOpenSelect: false,
 });
 
 const handleOpen = () => {
@@ -43,7 +43,7 @@ const handleOpen = () => {
 
     const logMessageObj = {
       logMessage: projectHistoryText,
-      logType: 'factorsSelected'
+      logType: 'factorsSelected',
     };
 
     projectHistoryArray.push(logMessageObj);
@@ -122,7 +122,7 @@ const FactorSelectButtonModal = () => {
   return null;
 };
 
-export default view(FactorSelectButtonModal);
+export default FactorSelectButtonModal;
 
 const GeneralFacSelectButton = styled.div`
   height: 40px;

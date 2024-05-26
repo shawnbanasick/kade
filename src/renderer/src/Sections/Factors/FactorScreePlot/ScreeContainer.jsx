@@ -1,5 +1,4 @@
 import React from 'react';
-import { view } from '@risingstack/react-easy-state';
 import ScreePlot from './ScreePlot';
 import DownloadSvgButtons from './DownloadSvgButtons';
 import { useTranslation } from 'react-i18next';
@@ -9,7 +8,7 @@ import getCoreState from '../../GlobalState/getCoreState';
 const styles = {
   width: 800,
   height: 600,
-  padding: 80
+  padding: 80,
 };
 
 const ScreeContainer = (props) => {
@@ -42,4 +41,4 @@ const ScreeContainer = (props) => {
   );
 };
 
-export default view(ScreeContainer);
+export default ScreeContainer;

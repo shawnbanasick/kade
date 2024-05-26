@@ -1,4 +1,3 @@
-import { view } from '@risingstack/react-easy-state';
 import styled from 'styled-components';
 import React from 'react';
 
@@ -19,7 +18,7 @@ const RotationDegreeInput = (props) => {
   );
 };
 
-export default view(RotationDegreeInput);
+export default RotationDegreeInput;
 
 // 0 2px 2px 0 black
 const InputColumn = styled.div`

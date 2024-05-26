@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { view } from '@risingstack/react-easy-state';
+
 import { useTranslation } from 'react-i18next';
 import HorstNumberInput from './HorstNumberInput';
 import getFactorState from '../../GlobalState/getFactorState';
@@ -32,7 +32,7 @@ const InputHorstCutoffsNoLimit = () => {
   }
 };
 
-export default view(InputHorstCutoffsNoLimit);
+export default InputHorstCutoffsNoLimit;
 
 const HorstIterationContainerDiv1 = styled.div`
   display: flex;

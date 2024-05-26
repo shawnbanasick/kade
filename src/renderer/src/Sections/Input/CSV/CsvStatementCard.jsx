@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { view } from '@risingstack/react-easy-state';
+
 import LoadTxtStatementFile from './LoadTxtStatementFile';
 
 const CsvStatementCard = () => (
@@ -19,7 +19,7 @@ const CsvStatementCard = () => (
   </Card>
 );
 
-export default view(CsvStatementCard);
+export default CsvStatementCard;
 
 const Card = styled.div`
   display: grid;

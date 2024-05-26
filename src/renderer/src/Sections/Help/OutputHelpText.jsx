@@ -1,5 +1,5 @@
 import React from 'react';
-import { view } from '@risingstack/react-easy-state';
+
 import styled from 'styled-components';
 import options from './helpImages/k3-output-1.png';
 import factorChar from './helpImages/k3-output-factor-characteristics.png';
@@ -257,7 +257,7 @@ const HelpSection = () => {
   );
 };
 
-export default view(HelpSection);
+export default HelpSection;
 
 const MainContent = styled.div`
   user-select: all;

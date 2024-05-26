@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { view } from '@risingstack/react-easy-state';
+
 import calculateRotatedFactors from '../rotationLogic/calculateRotatedFactors';
 import GeneralButton from '../../../../Utils/GeneralButton';
 import getRotationState from '../../../GlobalState/getRotationState';
@@ -37,7 +37,7 @@ const ClockwiseButtons = (props) => {
   );
 };
 
-export default view(ClockwiseButtons);
+export default ClockwiseButtons;
 
 const ClockwiseButton = styled.div`
   font-size: 25px;

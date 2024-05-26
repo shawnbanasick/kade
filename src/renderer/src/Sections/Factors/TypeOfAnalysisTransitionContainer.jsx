@@ -1,6 +1,4 @@
-import React from 'react';
 import styled from 'styled-components';
-import { view } from '@risingstack/react-easy-state';
 import ResetAnalysisButton from './ResetAnalysisButton';
 import PcaButton from './factorSelection/ExtractPrinCompButton';
 import RevealCentroidTypeSelectionButton from './RevealCentroidTypeSelectionButton';
@@ -17,7 +15,7 @@ const TypeOfAnalysisTransitionContainer = () => {
   );
 };
 
-export default view(TypeOfAnalysisTransitionContainer);
+export default TypeOfAnalysisTransitionContainer;
 
 const TypeOfAnalysisTransitionContainerDiv = styled.div`
   display: flex;

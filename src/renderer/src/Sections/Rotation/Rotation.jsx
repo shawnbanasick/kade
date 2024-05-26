@@ -1,6 +1,6 @@
 import { Tab } from 'semantic-ui-react';
 import React from 'react';
-import { view } from '@risingstack/react-easy-state';
+
 import styled, { keyframes } from 'styled-components';
 import rotationState from '../GlobalState/rotationState';
 import FactorsKeptNotification from './FactorKeepSelection/FactorsKeptNotification';
@@ -40,7 +40,7 @@ const getPanes = (
             <FactorsKeptNotification />
           </DataWindow1>
         </Tab.Pane>
-      )
+      ),
     },
     {
       menuItem: varimaxTrans,
@@ -51,7 +51,7 @@ const getPanes = (
             <VarimaxHeywoodWarning />
           </DataWindow2>
         </Tab.Pane>
-      )
+      ),
     },
     {
       menuItem: judgmentalTrans,
@@ -62,8 +62,8 @@ const getPanes = (
             <JudgementalRotationContainer />
           </DataWindow2>
         </Tab.Pane>
-      )
-    }
+      ),
+    },
   ];
 };
 
@@ -105,7 +105,7 @@ const Rotation = () => {
   );
 };
 
-export default view(Rotation);
+export default Rotation;
 
 const DataWindow1 = styled.div`
   display: grid;

@@ -7,7 +7,7 @@ import factorState from '../../GlobalState/factorState';
 import getFactorState from '../../GlobalState/getFactorState';
 
 const localStore = store({
-  value: 7
+  value: 7,
 });
 
 const saveDropdownValueToState = (event, data) => {
@@ -19,43 +19,43 @@ const options = [
   {
     key: 'factor1',
     text: '1',
-    value: 1
+    value: 1,
   },
   {
     key: 'factor2',
     text: '2',
-    value: 2
+    value: 2,
   },
   {
     key: 'factor3',
     text: '3',
-    value: 3
+    value: 3,
   },
   {
     key: 'factor4',
     text: '4',
-    value: 4
+    value: 4,
   },
   {
     key: 'factor5',
     text: '5',
-    value: 5
+    value: 5,
   },
   {
     key: 'factor6',
     text: '6',
-    value: 6
+    value: 6,
   },
   {
     key: 'factor7',
     text: '7',
-    value: 7
+    value: 7,
   },
   {
     key: 'factor8',
     text: '8',
-    value: 8
-  }
+    value: 8,
+  },
 ];
 
 const CentroidSelectDropdown = () => {
@@ -73,7 +73,7 @@ const CentroidSelectDropdown = () => {
           height: 40,
           marginTop: 5,
           paddingTop: 6,
-          fontSize: 22
+          fontSize: 22,
         }}
       >
         Extract
@@ -96,11 +96,11 @@ const CentroidSelectDropdown = () => {
             fontSize: 14,
             paddingBottom: 7,
             marginBottom: 5,
-            height: 36
+            height: 36,
           }}
         />
       </div>
     </div>
   );
 };
-export default view(CentroidSelectDropdown);
+export default CentroidSelectDropdown;

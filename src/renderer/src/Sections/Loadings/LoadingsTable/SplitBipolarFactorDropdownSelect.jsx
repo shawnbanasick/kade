@@ -1,5 +1,5 @@
 import React from 'react';
-import { view } from '@risingstack/react-easy-state';
+
 import { Dropdown } from 'semantic-ui-react';
 import loadingState from '../../GlobalState/loadingState';
 import { useTranslation } from 'react-i18next';
@@ -47,4 +47,4 @@ const InvertFactorDropdownSelect = () => {
   );
 };
 
-export default view(InvertFactorDropdownSelect);
+export default InvertFactorDropdownSelect;

@@ -1,5 +1,5 @@
 import React from 'react';
-import { view } from '@risingstack/react-easy-state';
+
 import rotationState from '../../GlobalState/rotationState';
 import getRotationState from '../../GlobalState/getRotationState';
 import GeneralButton from '../../../Utils/GeneralButton';
@@ -54,4 +54,4 @@ const RotationButtonGroup = () => {
   );
 };
 
-export default view(RotationButtonGroup);
+export default RotationButtonGroup;

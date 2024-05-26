@@ -1,5 +1,5 @@
 import React from 'react';
-import { view } from '@risingstack/react-easy-state';
+
 import { Button, Header, Modal } from 'semantic-ui-react';
 import outputState from '../GlobalState/outputState';
 import appState from '../GlobalState/appState';
@@ -82,4 +82,4 @@ const UnforcedWarningModal = () => {
   }
   return null;
 };
-export default view(UnforcedWarningModal);
+export default UnforcedWarningModal;

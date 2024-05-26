@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { view } from '@risingstack/react-easy-state';
+
 import { ToastContainer, toast, Zoom } from 'react-toastify';
 import transposeMatrix from '../../../../Utils/transposeMatrix';
 import FactorSelectButtons from '../FactorSelect/FactorSelectButtons';
@@ -18,7 +18,7 @@ const JudgementalTitleDiv = () => {
   const notifyForSavedRotation = getRotationState('notifyForSavedRotation');
   if (notifyForSavedRotation) {
     toast.success(t('Rotation Data Saved to Loadings Table'), {
-      autoClose: 5000
+      autoClose: 5000,
     });
     rotationState.notifyForSavedRotation = false;
   }
@@ -35,7 +35,7 @@ const JudgementalTitleDiv = () => {
   );
 };
 
-export default view(JudgementalTitleDiv);
+export default JudgementalTitleDiv;
 
 const JudgeTitleDiv = styled.div`
   width: 100%;

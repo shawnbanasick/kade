@@ -23,7 +23,7 @@ const localStore = store({
   numQsorts: 0,
   numFacsForTableWidth: 0,
   sendDataToOutputButtonColor: '#d6dbe0',
-  autoflagButtonColor: '#d6dbe0'
+  autoflagButtonColor: '#d6dbe0',
 });
 
 // inline styles
@@ -37,7 +37,7 @@ const noneButtonStyle = { marginLeft: '40px' };
 // notification of table data sent to output
 function notify() {
   toast.success(i18n.t('Data sent to Output'), {
-    autoClose: 1500
+    autoClose: 1500,
   });
   loadingState.notifyDataSentToOutputSuccess = false;
   appState.isLoadingsButtonGreen = true;
@@ -117,7 +117,7 @@ const LoadingsTable = (props) => {
   let gridOptions = {
     suppressRowHoverHighlight: false,
     // turns ON column hover, it's off by default
-    columnHoverHighlight: true
+    columnHoverHighlight: true,
   };
 
   const grabTableLocalState = () => {
@@ -283,7 +283,7 @@ const LoadingsTable = (props) => {
     marginTop: 2,
     height: getHeight(numQsorts),
     width: getWidth(numFacsForTableWidth),
-    marginBottom: 15
+    marginBottom: 15,
   };
 
   return (
@@ -397,7 +397,7 @@ const LoadingsTable = (props) => {
   );
 };
 
-export default view(LoadingsTable);
+export default LoadingsTable;
 
 const ColumnSortText = styled.p`
   font-size: 12px;

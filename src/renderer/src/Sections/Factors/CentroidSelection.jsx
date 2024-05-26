@@ -1,6 +1,4 @@
-import React from 'react';
 import styled from 'styled-components';
-import { view } from '@risingstack/react-easy-state';
 import TraditionalCentroidButton from './factorSelection/TraditionalCentroidButton';
 import Horst55CentroidModal from './factorSelection/Horst55CentroidModal';
 // import TuckerMacCallumButton from "./factorSelection/TuckerMacCallumCentroidButton";
@@ -21,7 +19,7 @@ const TypeOfCentroidTransitionContainer = () => {
   }
 };
 
-export default view(TypeOfCentroidTransitionContainer);
+export default TypeOfCentroidTransitionContainer;
 
 const TypeOfAnalysisTransitionContainerDiv = styled.div`
   display: flex;

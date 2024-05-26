@@ -1,5 +1,5 @@
 import React from 'react';
-import { view } from '@risingstack/react-easy-state';
+
 import styled from 'styled-components';
 import FactorImagePca from './helpImages/k3-pca-1.png';
 import FactorImagePca2 from './helpImages/k3-pca2-scree.png';
@@ -87,7 +87,7 @@ const HelpSection = () => {
   );
 };
 
-export default view(HelpSection);
+export default HelpSection;
 
 const MainContent = styled.div`
   background-color: white;

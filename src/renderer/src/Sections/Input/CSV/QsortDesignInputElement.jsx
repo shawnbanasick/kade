@@ -33,7 +33,7 @@ const localStore = store({
   activeValue13: '',
   inputTitle: 'Enter the Number of Statements in Each Column',
   inputColor: 'white',
-  qSortPattern: []
+  qSortPattern: [],
 });
 
 const calcQsortDesign = (event) => {
@@ -283,7 +283,7 @@ const QsortDesignInputElement = (props) => {
   return <div />;
 };
 
-export default view(QsortDesignInputElement);
+export default QsortDesignInputElement;
 
 const InputRow = styled.div`
   display: flex;

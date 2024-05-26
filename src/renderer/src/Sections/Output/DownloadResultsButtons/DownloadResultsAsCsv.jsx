@@ -10,7 +10,7 @@ import outputState from '../../GlobalState/outputState';
 import CsvIcon from '../../images/CSV_Icon2.svg';
 
 const localStore = store({
-  modalOpen: false
+  modalOpen: false,
 });
 
 const DownloadResultsAsCsv1 = () => {
@@ -75,7 +75,7 @@ const DownloadResultsAsCsv1 = () => {
   );
 };
 
-export default view(DownloadResultsAsCsv1);
+export default DownloadResultsAsCsv1;
 
 const CsvButton = styled.div`
   width: fit-content;

@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { view } from '@risingstack/react-easy-state';
+
 import React, { Component } from 'react';
 import TimestampSelectionSwitch from '../FactorViz/TimestampSelectionSwitch';
 
@@ -22,7 +22,7 @@ class RemoveTimestampOption extends Component {
   }
 }
 
-export default view(RemoveTimestampOption);
+export default RemoveTimestampOption;
 
 const SwitchDivContainer = styled.div`
   display: flex;

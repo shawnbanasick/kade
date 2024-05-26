@@ -9,7 +9,7 @@ import getOutputState from '../../GlobalState/getOutputState';
 import createOutputDoc from '../downloadDocxLogic/createOutputDoc';
 
 const localStore = store({
-  modalOpen: false
+  modalOpen: false,
 });
 
 const handleClose = () => {
@@ -44,7 +44,7 @@ const DownloadResultsAsDocx = () => {
     factorZScoresTxt,
     flaggedFactorLoadingsText,
     contTxt,
-    noDistinguishingText
+    noDistinguishingText,
   };
 
   const handleOpen = () => {
@@ -106,7 +106,7 @@ const DownloadResultsAsDocx = () => {
   );
 };
 
-export default view(DownloadResultsAsDocx);
+export default DownloadResultsAsDocx;
 
 const DocxButton = styled.div`
   min-width: 250px;

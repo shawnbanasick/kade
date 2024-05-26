@@ -1,7 +1,7 @@
 import React from 'react';
 // import { toast } from "react-toastify";
 import { Dropdown } from 'semantic-ui-react';
-import { view } from '@risingstack/react-easy-state';
+
 import i18n from 'i18next';
 
 const options = [
@@ -60,4 +60,4 @@ const languageDropdown = (props) => {
   );
 };
 
-export default view(languageDropdown);
+export default languageDropdown;

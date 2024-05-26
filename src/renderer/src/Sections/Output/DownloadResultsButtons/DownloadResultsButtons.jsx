@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { view } from '@risingstack/react-easy-state';
+
 import { Transition } from 'semantic-ui-react';
 import DownloadResultsAsExcel from './DownloadResultsAsExcel';
 import DownloadResultsAsCsv from './DownloadResultsAsCsv';
@@ -28,7 +28,7 @@ const DownloadResultsButtons = () => {
   );
 };
 
-export default view(DownloadResultsButtons);
+export default DownloadResultsButtons;
 
 const DownloadOutputButtons = styled.div`
   display: flex;

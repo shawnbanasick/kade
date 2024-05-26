@@ -1,7 +1,7 @@
 import React from 'react';
 import getVizState from '../../GlobalState/getVizState';
 
-// import { view } from '@risingstack/react-easy-state';
+//
 
 const styles = {
   fill: 'black',
@@ -9,7 +9,7 @@ const styles = {
   fontWeight: 'bold',
 
   // strokeWidth: 1,
-  zindex: 99
+  zindex: 99,
 };
 
 const widthValue = (props) => {
@@ -31,7 +31,7 @@ const renderBaseRectangles = (props) => (coords, index) => {
     // height: heightValue(),
     key: props.positionData.uniques[index],
     text: props.positionData.uniques[index],
-    textAnchor: 'middle'
+    textAnchor: 'middle',
   };
   return (
     <text fontFamily="arial" {...styles} {...textProps}>

@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { view } from '@risingstack/react-easy-state';
+
 import { Transition } from 'semantic-ui-react';
 import { useTranslation } from 'react-i18next';
 import getRotationState from '../../GlobalState/getRotationState';
@@ -29,7 +29,7 @@ const FactorsKeptNotification = () => {
   // return null;
 };
 
-export default view(FactorsKeptNotification);
+export default FactorsKeptNotification;
 
 const FactorsKeptDiv = styled.div`
   margin-top: 20px;

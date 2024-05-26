@@ -1,5 +1,5 @@
 import React from 'react';
-import { view } from '@risingstack/react-easy-state';
+
 import parseExcelType3 from './KandedLogic/parseExcelType3.js';
 import revertLoadButtonsColors from '../DemoData/revertLoadButtonsColors';
 import LoadButton from '../DemoData/LoadButton';
@@ -33,9 +33,9 @@ const handleClick = async () => {
         filters: [
           {
             name: 'Excel',
-            extensions: ['xls', 'XLS', 'xlsx', 'XLSX']
-          }
-        ]
+            extensions: ['xls', 'XLS', 'xlsx', 'XLSX'],
+          },
+        ],
       });
 
       const path = data.filePaths[0];
@@ -79,7 +79,7 @@ const LoadTxtStatementFile = () => {
   );
 };
 
-export default view(LoadTxtStatementFile);
+export default LoadTxtStatementFile;
 
 const SvgContainer = styled.svg`
   transform: rotate(180deg);

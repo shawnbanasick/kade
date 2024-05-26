@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { view } from '@risingstack/react-easy-state';
+
 import getRotationState from '../../../GlobalState/getRotationState';
 import { useTranslation } from 'react-i18next';
 
@@ -32,7 +32,7 @@ const ParticipantPopUp = () => {
   );
 };
 
-export default view(ParticipantPopUp);
+export default ParticipantPopUp;
 
 const PopupDiv = styled.div`
   display: flex;

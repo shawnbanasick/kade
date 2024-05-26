@@ -1,5 +1,5 @@
 import React from 'react';
-import { view } from '@risingstack/react-easy-state';
+
 import { Transition } from 'semantic-ui-react';
 import FactorCorrelationsTable from './Factor Info/FactorCorrelationsTable';
 import FactorCharacteristicsTable from './Factor Info/FactorCharacteristicsTable';
@@ -48,7 +48,7 @@ const OutputFactorTablesTranstionContainer = () => {
   );
 };
 
-export default view(OutputFactorTablesTranstionContainer);
+export default OutputFactorTablesTranstionContainer;
 
 /*
 .outputFactorTables {

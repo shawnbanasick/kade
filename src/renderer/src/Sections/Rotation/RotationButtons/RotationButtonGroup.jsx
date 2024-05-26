@@ -1,5 +1,5 @@
 import React from "react";
-import { view } from '@risingstack/react-easy-state';
+ 
 import { Button } from "semantic-ui-react";
 import varimaxDispatch from "../varimaxLogic/varimaxDispatch";
 import state from "../../../store";
@@ -89,4 +89,4 @@ const RotationButtonGroup = () => {
     //   return null;
 }
 
-export default view(RotationButtonGroup);
+ export default(RotationButtonGroup);

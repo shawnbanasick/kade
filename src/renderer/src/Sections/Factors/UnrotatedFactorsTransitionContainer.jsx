@@ -1,5 +1,3 @@
-import React from 'react';
-import { view } from '@risingstack/react-easy-state';
 import styled from 'styled-components';
 import SpinnerCircle from './SpinnerCircle';
 import ScreeContainer from './FactorScreePlot/ScreeContainer';
@@ -31,7 +29,7 @@ const UnrotatedFactorsTransitionContainer = () => {
   }
 };
 
-export default view(UnrotatedFactorsTransitionContainer);
+export default UnrotatedFactorsTransitionContainer;
 
 const Container = styled.div`
   grid-row-start: 3;

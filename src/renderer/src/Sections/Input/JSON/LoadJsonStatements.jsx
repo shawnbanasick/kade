@@ -1,5 +1,5 @@
 import React from 'react';
-import { view } from '@risingstack/react-easy-state';
+
 import revertLoadButtonsColors from '../DemoData/revertLoadButtonsColors';
 import throwNoStatementsInputErrorModal from '../ErrorChecking/throwNoStatementsInputErrorModal';
 import LoadButton from '../DemoData/LoadButton';
@@ -24,9 +24,9 @@ const handleClick = async () => {
     filters: [
       {
         name: 'Text',
-        extensions: ['txt', 'TXT']
-      }
-    ]
+        extensions: ['txt', 'TXT'],
+      },
+    ],
   });
 
   // handle case when open dialog closed
@@ -86,7 +86,7 @@ const LoadTxtStatementFile = () => {
   );
 };
 
-export default view(LoadTxtStatementFile);
+export default LoadTxtStatementFile;
 
 const SvgContainer = styled.svg`
   transform: rotate(180deg);

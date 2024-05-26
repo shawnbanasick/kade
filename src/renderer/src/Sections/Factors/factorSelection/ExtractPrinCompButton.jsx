@@ -1,5 +1,3 @@
-import React from 'react';
-import { view } from '@risingstack/react-easy-state';
 import pcaDispatch from '../PcaLogic/pcaDispatch';
 import GeneralButton from '../../../Utils/GeneralButton';
 import factorState from '../../GlobalState/factorState';
@@ -43,4 +41,4 @@ const PCAButton = () => {
   );
 };
 
-export default view(PCAButton);
+export default PCAButton;

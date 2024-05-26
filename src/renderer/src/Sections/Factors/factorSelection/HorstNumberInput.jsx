@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { view } from '@risingstack/react-easy-state';
+
 import { useTranslation } from 'react-i18next';
 import factorState from '../../GlobalState/factorState';
 
@@ -46,10 +46,10 @@ const UserNumberInput = (props) => {
   );
 };
 
-export default view(UserNumberInput);
+export default UserNumberInput;
 
 const NumberInput = styled.input.attrs({
-  type: 'number'
+  type: 'number',
 })`
   color: black;
   cursor: pointer;

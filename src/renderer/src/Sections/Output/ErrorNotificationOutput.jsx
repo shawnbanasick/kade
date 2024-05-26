@@ -1,4 +1,3 @@
-import { view } from '@risingstack/react-easy-state';
 import styled from 'styled-components';
 import { Button } from 'semantic-ui-react';
 import React from 'react';
@@ -8,7 +7,7 @@ import ExtendedErrorModal from '../Input/ExtendedErrorModal';
 function handleOnClick() {
   state.setState({
     showErrorMessageBarOutput: false,
-    errorStackTrace: 'no stack trace available'
+    errorStackTrace: 'no stack trace available',
   });
 }
 
@@ -34,7 +33,7 @@ const ErrorNotificationOutput = () => {
   return null;
 };
 
-export default view(ErrorNotificationOutput);
+export default ErrorNotificationOutput;
 
 const ErrorBar = styled.div`
   position: absolute;

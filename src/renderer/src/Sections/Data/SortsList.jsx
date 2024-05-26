@@ -1,6 +1,3 @@
-import React, { Component } from 'react';
-import { view } from '@risingstack/react-easy-state';
-
 const style1 = { width: 1150, wordWrap: 'break-word' };
 
 const SortsList = () => {
@@ -15,4 +12,4 @@ const SortsList = () => {
   );
 };
 
-export default view(SortsList);
+export default SortsList;

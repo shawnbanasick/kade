@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { view } from '@risingstack/react-easy-state';
+
 import { AgGridReact } from '@ag-grid-community/react';
 import { AllCommunityModules } from '@ag-grid-community/all-modules';
 import getFactorState from '../../GlobalState/getFactorState';
@@ -39,6 +39,6 @@ const EigenTable = () => {
   );
 };
 
-export default view(EigenTable);
+export default EigenTable;
 
 // className="ag-theme-fresh"

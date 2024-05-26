@@ -1,5 +1,5 @@
 import React from 'react';
-import { view } from '@risingstack/react-easy-state';
+
 import styled from 'styled-components';
 import CsvQsortsCard from './CsvQsortsCard';
 import ProjectNameInput from './ProjectNameInput';
@@ -32,7 +32,7 @@ const CsvPanel = () => {
   );
 };
 
-export default view(CsvPanel);
+export default CsvPanel;
 
 // height: ${props => `${props.height}px`};
 // 645px  ;

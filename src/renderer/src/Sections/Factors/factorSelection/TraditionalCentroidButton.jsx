@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { view } from '@risingstack/react-easy-state';
+
 import React from 'react';
 // import centroidDispatch from "../centroidLogic/centroidDispatch";
 import factorState from '../../GlobalState/factorState';
@@ -60,7 +60,7 @@ const TraditionalCentroidButton = () => {
   );
 };
 
-export default view(TraditionalCentroidButton);
+export default TraditionalCentroidButton;
 
 const TradButton = styled.div`
   margin-left: 70px;

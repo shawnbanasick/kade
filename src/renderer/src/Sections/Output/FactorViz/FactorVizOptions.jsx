@@ -1,5 +1,5 @@
 import React from 'react';
-import { view } from '@risingstack/react-easy-state';
+
 import { Transition } from 'semantic-ui-react';
 import DownloadsPanel from './DownloadsPanel';
 import CardSettingsPanel from './CardSettingsPanel';
@@ -15,7 +15,7 @@ const styles = {
   height: 1100,
   border: '2px solid #666',
   padding: 20,
-  marginLeft: 20
+  marginLeft: 20,
 };
 
 const FactorVizOptions = () => {
@@ -33,4 +33,4 @@ const FactorVizOptions = () => {
   );
 };
 
-export default view(FactorVizOptions);
+export default FactorVizOptions;

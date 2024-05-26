@@ -4,7 +4,7 @@ import vizState from '../../GlobalState/vizState';
 import getVizState from '../../GlobalState/getVizState';
 
 const localStore = store({
-  color: '#d9effe'
+  color: '#d9effe',
 });
 
 function handleChange(e) {
@@ -24,4 +24,4 @@ const ColorSelector = (props) => {
   );
 };
 
-export default view(ColorSelector);
+export default ColorSelector;

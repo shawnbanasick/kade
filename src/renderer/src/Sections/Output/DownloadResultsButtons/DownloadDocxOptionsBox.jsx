@@ -1,5 +1,5 @@
 import React from 'react';
-import { view } from '@risingstack/react-easy-state';
+
 import styled, { keyframes } from 'styled-components';
 import { ToastContainer, Zoom } from 'react-toastify';
 // import { useTranslation } from "react-i18next";
@@ -26,7 +26,7 @@ function OptionsBox() {
   );
 }
 
-export default view(OptionsBox);
+export default OptionsBox;
 
 const fadeIn = keyframes`
   from {

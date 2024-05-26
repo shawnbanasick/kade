@@ -1,5 +1,5 @@
 import React from 'react';
-import { view } from '@risingstack/react-easy-state';
+
 import { Button, Header, Modal } from 'semantic-ui-react';
 import invertFactor from '../loadingsLogic/invertFactor';
 import InvertFactorDropdownSelect from './InvertFactorDropdownSelect';
@@ -56,4 +56,4 @@ const InvertFactorButtonModal = () => {
   return null;
 };
 
-export default view(InvertFactorButtonModal);
+export default InvertFactorButtonModal;

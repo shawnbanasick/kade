@@ -7,7 +7,7 @@ import inputState from '../../GlobalState/inputState';
 
 const localStore = store({
   options: [],
-  activeValue: ''
+  activeValue: '',
 });
 
 function formatOptions(rawOptions) {
@@ -53,4 +53,4 @@ const DropdownJSON = (props) => {
     </div>
   );
 };
-export default view(DropdownJSON);
+export default DropdownJSON;

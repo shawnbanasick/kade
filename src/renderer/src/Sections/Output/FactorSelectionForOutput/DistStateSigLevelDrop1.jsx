@@ -13,47 +13,47 @@ const sigOptions = [
     key: '99.99',
     value: 3.891,
     slice: 0,
-    text: 'p < 0.0001' // text: "99.99%"
+    text: 'p < 0.0001', // text: "99.99%"
   },
   {
     key: '99.95',
     value: 3.481,
-    text: 'p < 0.0005' // text: "99.95%"
+    text: 'p < 0.0005', // text: "99.95%"
   },
   {
     key: '99.9',
     value: 3.291,
-    text: 'p < 0.001' // text: "99.9%"
+    text: 'p < 0.001', // text: "99.9%"
   },
   {
     key: '99.5',
     value: 2.807,
-    text: 'p < 0.005' // text: "99.5%"
+    text: 'p < 0.005', // text: "99.5%"
   },
   {
     key: '99',
     value: 2.575,
-    text: 'p < 0.01' // text: "99%"
+    text: 'p < 0.01', // text: "99%"
   },
   {
     key: '95',
     value: 1.96,
-    text: 'p < 0.05' // text: "95%"
+    text: 'p < 0.05', // text: "95%"
   },
   {
     key: '90',
     value: 1.645,
-    text: 'p < 0.1' // text: "90%"
+    text: 'p < 0.1', // text: "90%"
   },
   {
     key: '85',
     value: 1.44,
-    text: 'p < 0.15' // text: "90%"
-  }
+    text: 'p < 0.15', // text: "90%"
+  },
 ];
 
 const localStore = store({
-  value: 2.575
+  value: 2.575,
 });
 
 const SigLevelDropdown = () => {
@@ -71,7 +71,7 @@ const SigLevelDropdown = () => {
       'P < 0.01',
       'P < 0.05',
       'P < 0.1',
-      'P < 0.15'
+      'P < 0.15',
     ];
     const sliceValue = lookupArray.indexOf(value);
     const distStateUpperValueText = pValuesTextArray[sliceValue];
@@ -119,7 +119,7 @@ const SigLevelDropdown = () => {
   return null;
 };
 
-export default view(SigLevelDropdown);
+export default SigLevelDropdown;
 
 const DropdownRow = styled.div`
   display: flex;

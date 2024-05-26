@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { view } from '@risingstack/react-easy-state';
+
 import { AgGridReact } from '@ag-grid-community/react';
 import { AllCommunityModules } from '@ag-grid-community/all-modules';
 import i18n from 'i18next';
@@ -42,9 +42,9 @@ const getGridColDefsFacCorrTable = (data, numFacs, headerRow) => {
       editable: false,
       width: 180,
       cellStyle: {
-        textAlign: 'center'
-      }
-    }
+        textAlign: 'center',
+      },
+    },
   ];
 
   for (let i = 1; i < numFacs + 1; i++) {
@@ -56,8 +56,8 @@ const getGridColDefsFacCorrTable = (data, numFacs, headerRow) => {
       sortable: true,
       width: 90,
       cellStyle: {
-        textAlign: 'center'
-      }
+        textAlign: 'center',
+      },
     }); // end push
   } // end loop
 
@@ -118,4 +118,4 @@ const FactorCorrelationsTable = () => {
   );
 };
 
-export default view(FactorCorrelationsTable);
+export default FactorCorrelationsTable;

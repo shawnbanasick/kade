@@ -1,5 +1,5 @@
 import React from 'react';
-import { view } from '@risingstack/react-easy-state';
+
 import throwDataAlreadyLoadedInputErrorModal from '../ErrorChecking/throwDataAlreadyLoadedInputErrorModal';
 import inputState from '../../GlobalState/inputState';
 import getInputState from '../../GlobalState/getInputState';
@@ -26,9 +26,9 @@ const handleClick = async () => {
         filters: [
           {
             name: 'CSV',
-            extensions: ['csv', 'CSV']
-          }
-        ]
+            extensions: ['csv', 'CSV'],
+          },
+        ],
       });
 
       const path = files.filePaths[0];
@@ -47,7 +47,7 @@ const handleClick = async () => {
 
         const logMessageObj1 = {
           logMessage: `Data loaded from Sheets CSV file`,
-          logType: 'csvInput'
+          logType: 'csvInput',
         };
 
         projectHistoryState.projectHistoryArray = [logMessageObj1];
@@ -76,7 +76,7 @@ const LoadTxtStatementFile = () => {
   );
 };
 
-export default view(LoadTxtStatementFile);
+export default LoadTxtStatementFile;
 
 const SvgContainer = styled.svg`
   transform: rotate(180deg);

@@ -1,7 +1,7 @@
 import React from 'react';
 import includes from 'lodash/includes';
 import styled from 'styled-components';
-import { view } from '@risingstack/react-easy-state';
+
 import { Transition } from 'semantic-ui-react';
 import outputDispatch from '../calcualteOutputLogic/1_outputDispatch';
 import outputState from '../../GlobalState/outputState';
@@ -163,7 +163,7 @@ const FactorSelectionForOutputButtons = () => {
   }
 };
 
-export default view(FactorSelectionForOutputButtons);
+export default FactorSelectionForOutputButtons;
 
 const StyledWrapper = styled.div`
   display: flex;

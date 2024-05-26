@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { view } from '@risingstack/react-easy-state';
+
 import LoadCsvQsorts from './LoadCsvQsorts';
 
 const CsvQsortsCard = () => (
@@ -19,7 +19,7 @@ const CsvQsortsCard = () => (
   </Card>
 );
 
-export default view(CsvQsortsCard);
+export default CsvQsortsCard;
 
 const Card = styled.div`
   display: grid;

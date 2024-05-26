@@ -1,5 +1,3 @@
-import { view } from '@risingstack/react-easy-state';
-import React, { Component } from 'react';
 import { Button } from 'semantic-ui-react';
 import styled, { keyframes } from 'styled-components';
 import state from '../../store';
@@ -21,7 +19,7 @@ const Attribution = () => {
   );
 };
 
-export default view(Attribution);
+export default Attribution;
 
 const fadeIn = keyframes`
   from {

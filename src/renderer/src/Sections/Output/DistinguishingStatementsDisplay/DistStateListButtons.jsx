@@ -16,7 +16,7 @@ const localStore = store({
   p15Active: false,
   p2Active: false,
   buttonColor: '#d6dbe0',
-  pressed: false
+  pressed: false,
 });
 
 const clearAllButtons = () => {
@@ -175,7 +175,7 @@ const DistStateListButtons = () => {
   return null;
 };
 
-export default view(DistStateListButtons);
+export default DistStateListButtons;
 
 /* 
   begin comparisons

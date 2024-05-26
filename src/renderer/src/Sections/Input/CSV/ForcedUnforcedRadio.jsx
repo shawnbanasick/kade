@@ -9,7 +9,7 @@ import getInputState from '../../GlobalState/getInputState';
 import getCoreState from '../../GlobalState/getCoreState';
 
 const localStore = store({
-  value: 'forced'
+  value: 'forced',
 });
 
 const handleChange = (e) => {
@@ -71,7 +71,7 @@ const RadioExampleRadioGroup = (props) => {
   );
 };
 
-export default view(RadioExampleRadioGroup);
+export default RadioExampleRadioGroup;
 
 const RadioDiv = styled.div`
   display: flex;

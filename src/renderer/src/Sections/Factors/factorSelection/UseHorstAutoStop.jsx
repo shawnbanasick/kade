@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { view } from '@risingstack/react-easy-state';
+
 import GeneralButton from '../../../Utils/GeneralButton';
 import factorState from '../../GlobalState/factorState';
 import { useTranslation } from 'react-i18next';
@@ -65,7 +65,7 @@ const UseHorstAutoStop = () => {
   }
 };
 
-export default view(UseHorstAutoStop);
+export default UseHorstAutoStop;
 
 const HorstLimitContainerDiv = styled.div`
   display: flex;

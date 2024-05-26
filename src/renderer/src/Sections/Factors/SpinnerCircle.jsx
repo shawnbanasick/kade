@@ -1,5 +1,3 @@
-import { view } from '@risingstack/react-easy-state';
-import React from 'react';
 import styled from 'styled-components';
 
 const SpinnerCircle = () => {
@@ -21,7 +19,7 @@ const SpinnerCircle = () => {
   );
 };
 
-export default view(SpinnerCircle);
+export default SpinnerCircle;
 
 const Spinner = styled.div`
   font-size: 120px;

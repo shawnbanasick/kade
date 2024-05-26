@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { view } from '@risingstack/react-easy-state';
+
 import outputState from '../../GlobalState/outputState';
 import { useTranslation } from 'react-i18next';
 
@@ -44,10 +44,10 @@ const DocxNumberInput = (props) => {
   );
 };
 
-export default view(DocxNumberInput);
+export default DocxNumberInput;
 
 const NumberInput = styled.input.attrs({
-  type: 'number'
+  type: 'number',
 })`
   color: black;
   cursor: pointer;

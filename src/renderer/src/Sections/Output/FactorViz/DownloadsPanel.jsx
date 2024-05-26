@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { view } from '@risingstack/react-easy-state';
+
 import React from 'react';
 import UserTextInput from './UserTextInput';
 import UserSelectionSwitch from './UserSelectionSwitch';
@@ -36,7 +36,7 @@ const DistinguishingPanel = () => {
   );
 };
 
-export default view(DistinguishingPanel);
+export default DistinguishingPanel;
 
 const OptionStatementRow = styled.div`
   display: flex;

@@ -1,5 +1,5 @@
 import React from 'react';
-import { view } from '@risingstack/react-easy-state';
+
 import styled from 'styled-components';
 import GeneralButton from '../../../Utils/GeneralButton';
 import rotationState from '../../GlobalState/rotationState';
@@ -104,7 +104,7 @@ const RotationButtonGroup = () => {
   return null;
 };
 
-export default view(RotationButtonGroup);
+export default RotationButtonGroup;
 
 // return <p style={{ fontSize: 22 }}>Continue with Analysis</p>;
 

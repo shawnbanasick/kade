@@ -1,5 +1,3 @@
-import { view } from '@risingstack/react-easy-state';
-import React from 'react';
 import styled, { keyframes } from 'styled-components';
 import ClearProjectModal from './ClearProjectModal';
 import { useTranslation } from 'react-i18next';
@@ -24,7 +22,7 @@ const ClearProject = () => {
   );
 };
 
-export default view(ClearProject);
+export default ClearProject;
 
 const fadeIn = keyframes`
   from {

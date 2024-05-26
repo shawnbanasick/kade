@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { view } from '@risingstack/react-easy-state';
+
 import { Transition } from 'semantic-ui-react';
 import vizState from '../../GlobalState/vizState';
 import getVizState from '../../GlobalState/getVizState';
@@ -49,7 +49,7 @@ const RefreshFactorVizButton = (props) => {
   );
 };
 
-export default view(RefreshFactorVizButton);
+export default RefreshFactorVizButton;
 
 const RefreshButtonContainerDiv = styled.div`
   margin-top: 10px;

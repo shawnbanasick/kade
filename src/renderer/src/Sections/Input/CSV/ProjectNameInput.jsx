@@ -38,7 +38,7 @@ const ProjectNameInput = () => {
   );
 };
 
-export default view(ProjectNameInput);
+export default ProjectNameInput;
 
 const Input = styled.input`
   font-size: 20px;

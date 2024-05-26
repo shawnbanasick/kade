@@ -18,7 +18,7 @@ import GeneralButton from '../../Utils/GeneralButton';
 import { useTranslation } from 'react-i18next';
 
 const localStore = store({
-  modalOpen: false
+  modalOpen: false,
 });
 
 const handleOpen = () => {
@@ -101,4 +101,4 @@ const ClearProjectModal = () => {
   );
 };
 
-export default view(ClearProjectModal);
+export default ClearProjectModal;

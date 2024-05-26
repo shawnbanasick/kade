@@ -10,7 +10,7 @@ import { useTranslation } from 'react-i18next';
 import getVizState from '../../GlobalState/getVizState';
 
 const styles = {
-  width: 150
+  width: 150,
 };
 
 const styles2 = {
@@ -19,7 +19,7 @@ const styles2 = {
   marginRight: 5,
   fontSize: 16,
   userSelect: 'none',
-  textAlign: 'center'
+  textAlign: 'center',
 };
 
 const localStore = store({ showDistinguishingAs: 'symbol' });
@@ -133,7 +133,7 @@ const DistinguishingPanel = () => {
   );
 };
 
-export default view(DistinguishingPanel);
+export default DistinguishingPanel;
 
 const OptionStatementRow = styled.div`
   display: flex;

@@ -1,5 +1,5 @@
 import React from 'react';
-import { view } from '@risingstack/react-easy-state';
+
 import styled from 'styled-components';
 import transposeMatrix from '../../../../Utils/transposeMatrix';
 import calcuateSigCriterionValues from '../../varimaxLogic/2calculateSigCriterionValues';
@@ -60,7 +60,7 @@ const SaveRotationButton = () => {
 
     const logMessageObj = {
       logMessage: projectHistoryText,
-      logType: 'saveRotation'
+      logType: 'saveRotation',
     };
 
     projectHistoryArray.push(logMessageObj);
@@ -117,7 +117,7 @@ const SaveRotationButton = () => {
   );
 };
 
-export default view(SaveRotationButton);
+export default SaveRotationButton;
 
 const OrangeButton = styled.div`
   background-color: orange !important;

@@ -1,4 +1,3 @@
-import { view } from '@risingstack/react-easy-state';
 import styled from 'styled-components';
 import React from 'react';
 // import state from "../../../store";
@@ -11,7 +10,7 @@ const SuccessNotification = () => {
   );
 };
 
-export default view(SuccessNotification);
+export default SuccessNotification;
 
 const SuccessBar = styled.div`
   position: absolute;

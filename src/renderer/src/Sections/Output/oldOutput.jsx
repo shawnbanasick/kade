@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { view } from '@risingstack/react-easy-state';
+
 import styled, { keyframes } from 'styled-components';
 import { Tab } from 'semantic-ui-react';
 import store from '../../store';
@@ -38,7 +38,7 @@ const panes = [
           </div>
         </DataWindow1>
       </Tab.Pane>
-    )
+    ),
   },
   {
     menuItem: 'Varimax',
@@ -48,7 +48,7 @@ const panes = [
           <OutputFactorTablesTransitionContainer />
         </DataWindow2>
       </Tab.Pane>
-    )
+    ),
   },
   {
     menuItem: 'Judgmental',
@@ -56,12 +56,12 @@ const panes = [
       <Tab.Pane>
         <DataWindow2 />
       </Tab.Pane>
-    )
-  }
+    ),
+  },
 ];
 
 const localStore = store({
-  activeIndex: 0
+  activeIndex: 0,
 });
 
 const Output = () => {
@@ -101,7 +101,7 @@ const Output = () => {
   );
 };
 
-export default view(Output);
+export default Output;
 
 const fadeIn = keyframes`
   from {

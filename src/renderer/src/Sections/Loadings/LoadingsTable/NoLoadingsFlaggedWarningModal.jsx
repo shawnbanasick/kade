@@ -1,5 +1,5 @@
 import React from 'react';
-import { view } from '@risingstack/react-easy-state';
+
 import { Button, Header, Modal } from 'semantic-ui-react';
 import getOutputState from '../../GlobalState/getOutputState';
 import loadingState from '../../GlobalState/loadingState';
@@ -53,4 +53,4 @@ const NoLoadingsFlaggedWarningModal = () => {
   }
   return null;
 };
-export default view(NoLoadingsFlaggedWarningModal);
+export default NoLoadingsFlaggedWarningModal;

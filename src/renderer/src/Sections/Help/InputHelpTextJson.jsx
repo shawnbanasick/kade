@@ -1,5 +1,5 @@
 import React from 'react';
-import { view } from '@risingstack/react-easy-state';
+
 import styled from 'styled-components';
 import JsonInputImage1 from './helpImages/k3-json-1.png';
 import JsonInputImage2 from './helpImages/k3-json-2.png';
@@ -126,7 +126,7 @@ const HelpSection = () => {
   );
 };
 
-export default view(HelpSection);
+export default HelpSection;
 
 const MainContent = styled.div`
   background-color: white;

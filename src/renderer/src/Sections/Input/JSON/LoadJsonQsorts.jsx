@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import React from 'react';
-import { view } from '@risingstack/react-easy-state';
+
 import { ToastContainer, toast, Slide } from 'react-toastify';
 import convertJSONToData from './convertJSONToData';
 import revertLoadButtonsColors from '../DemoData/revertLoadButtonsColors';
@@ -21,7 +21,7 @@ const mainWindow = remote.getCurrentWindow();
 
 function notifyWarning() {
   toast.warn('Select Participant Id to complete JSON import', {
-    autoClose: false
+    autoClose: false,
   });
 }
 
@@ -41,9 +41,9 @@ const handleClick = async () => {
         filters: [
           {
             name: 'JSON',
-            extensions: ['json', 'JSON']
-          }
-        ]
+            extensions: ['json', 'JSON'],
+          },
+        ],
       });
 
       const path = files.filePaths[0];
@@ -126,7 +126,7 @@ const LoadTxtStatementFile = () => {
   );
 };
 
-export default view(LoadTxtStatementFile);
+export default LoadTxtStatementFile;
 
 const JsonButton = styled.div`
   margin-top: 18px;

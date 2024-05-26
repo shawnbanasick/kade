@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { view } from '@risingstack/react-easy-state';
+
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import outputState from '../../GlobalState/outputState';
@@ -7,7 +7,7 @@ import DocSelectionSwitch from '../downloadDocxLogic/DocSelectionSwitch';
 
 const styles = {
   fontSize: 22,
-  userSelect: 'none'
+  userSelect: 'none',
 };
 
 const GeneralOptionsPanel = () => {
@@ -31,7 +31,7 @@ const GeneralOptionsPanel = () => {
   );
 };
 
-export default view(GeneralOptionsPanel);
+export default GeneralOptionsPanel;
 
 const OptionStatementRow = styled.div`
   display: flex;

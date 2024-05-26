@@ -43,7 +43,7 @@ const ForcedInput = () => {
   return null;
 };
 
-export default view(ForcedInput);
+export default ForcedInput;
 
 const Label = styled.label`
   font-family: Helvetica, sans-serif;

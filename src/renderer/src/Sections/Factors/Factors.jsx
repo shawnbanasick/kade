@@ -1,5 +1,3 @@
-import { view } from '@risingstack/react-easy-state';
-import React from 'react';
 import styled, { keyframes } from 'styled-components';
 import ErrorNotification from '../Input/ErrorChecking/ErrorNotification';
 import TypeOfAnalysisTransitionContainer from './TypeOfAnalysisTransitionContainer';
@@ -40,7 +38,7 @@ const Factors = () => {
   );
 };
 
-export default view(Factors);
+export default Factors;
 
 const fadeIn = keyframes`
   from {

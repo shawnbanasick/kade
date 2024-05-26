@@ -1,5 +1,5 @@
 import React from 'react';
-import { view } from '@risingstack/react-easy-state';
+
 import styled from 'styled-components';
 import vizState from '../../GlobalState/vizState';
 import getVizState from '../../GlobalState/getVizState';
@@ -26,11 +26,11 @@ const UserTextInput = (props) => {
   );
 };
 
-export default view(UserTextInput);
+export default UserTextInput;
 
 const UserText = styled.input((props) => ({
   // width: `${props.width}px`,
   width: `90%`,
   marginLeft: `${props.left}px`,
-  paddingLeft: `10px`
+  paddingLeft: `10px`,
 }));

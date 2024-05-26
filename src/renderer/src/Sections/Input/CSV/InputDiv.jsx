@@ -1,4 +1,3 @@
-import { view } from '@risingstack/react-easy-state';
 import styled from 'styled-components';
 import React from 'react';
 
@@ -20,7 +19,7 @@ const InputDiv = (props) => {
   );
 };
 
-export default view(InputDiv);
+export default InputDiv;
 
 const InputColumn = styled.div`
   display: flex;

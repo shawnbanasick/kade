@@ -1,4 +1,3 @@
-import { view } from '@risingstack/react-easy-state';
 import styled from 'styled-components';
 import React from 'react';
 import getInputState from '../../GlobalState/getInputState';
@@ -28,7 +27,7 @@ const CsvSuccessfulLoadBar = () => {
   return null;
 };
 
-export default view(CsvSuccessfulLoadBar);
+export default CsvSuccessfulLoadBar;
 
 const SuccessBar = styled.div`
   background-color: var(--main-theme-color);

@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { view } from '@risingstack/react-easy-state';
+
 import LoadingsTable from './LoadingsTable/LoadingsTable';
 import { useTranslation } from 'react-i18next';
 import getLoadingState from '../GlobalState/getLoadingState';
@@ -25,7 +25,7 @@ const LoadingsTableTransitionContainer = () => {
     split: t('Split Bipolar Factor'),
     at: t('at'),
     row: t('Row Highlighting'),
-    flagging: t('Flagging')
+    flagging: t('Flagging'),
   };
 
   if (showLoadingsTable) {
@@ -38,7 +38,7 @@ const LoadingsTableTransitionContainer = () => {
   return <DefaultMessage>{t('No factor loadings calculated')}</DefaultMessage>;
 };
 
-export default view(LoadingsTableTransitionContainer);
+export default LoadingsTableTransitionContainer;
 
 const DefaultMessage = styled.div`
   height: 150px;

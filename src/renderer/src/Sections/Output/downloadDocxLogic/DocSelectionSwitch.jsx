@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { view } from '@risingstack/react-easy-state';
+
 import outputState from '../../GlobalState/outputState';
 import './UserSelectionSwitch.css';
 import Toggle from 'react-toggle';
@@ -26,10 +26,10 @@ const UserSelectionSwitch = (props) => {
       onChange={(e) => clickToggle(e)}
       icons={{
         checked: <CheckMark />,
-        unchecked: <BatsuMark />
+        unchecked: <BatsuMark />,
       }}
     />
   );
 };
 
-export default view(UserSelectionSwitch);
+export default UserSelectionSwitch;

@@ -5,7 +5,7 @@ import styled from 'styled-components';
 const localStore = store({
   expanded: false,
   value: '', // "Select Participant Id..."
-  hasClicked: false
+  hasClicked: false,
 });
 
 class Dropdown extends React.Component {
@@ -79,7 +79,7 @@ class Dropdown extends React.Component {
   }
 }
 
-export default view(Dropdown);
+export default Dropdown;
 
 // <Dropdown options={['Strawberry Cream', 'Chocolate Flakes', 'Marshmallow Sprinkles']} />
 // blue color => #d6dbe0

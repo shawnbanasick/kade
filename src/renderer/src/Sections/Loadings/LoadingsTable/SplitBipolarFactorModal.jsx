@@ -1,5 +1,5 @@
 import React from 'react';
-import { view } from '@risingstack/react-easy-state';
+
 import { Button, Header, Modal } from 'semantic-ui-react';
 import splitBipolarFactor from '../loadingsLogic/splitBipolarFactor';
 import SplitBipolarFactorDropdownSelect from './SplitBipolarFactorDropdownSelect';
@@ -49,4 +49,4 @@ const SplitBipolarFactorButtonModal = () => {
   return null;
 };
 
-export default view(SplitBipolarFactorButtonModal);
+export default SplitBipolarFactorButtonModal;

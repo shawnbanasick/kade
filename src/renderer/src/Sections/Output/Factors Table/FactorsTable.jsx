@@ -56,8 +56,8 @@ const getGridColDefsFacTable = (numFacs, headerRow, pinnedVals, colWidthVals, al
       sortable: true,
       width: colWidthVals[i],
       cellStyle: {
-        textAlign: alignmentVals[i]
-      }
+        textAlign: alignmentVals[i],
+      },
     }); // end push
   } // end loop
 
@@ -86,7 +86,7 @@ function getGridRowDataFacTable(data2, headerRow) {
 
 const localStore = store({
   numFactors: 0,
-  numStatements: 0
+  numStatements: 0,
 });
 
 function getWidth(numFactors) {
@@ -179,7 +179,7 @@ const FactorsTable = () => {
           id="innerContainerFactors"
           style={{
             width: getWidth(numFactors),
-            height: getHeight(numStatements)
+            height: getHeight(numStatements),
           }}
           className="ag-theme-fresh"
         >
@@ -200,7 +200,7 @@ const FactorsTable = () => {
   );
 };
 
-export default view(FactorsTable);
+export default FactorsTable;
 
 const Container1 = styled.div`
   padding-bottom: 50px;

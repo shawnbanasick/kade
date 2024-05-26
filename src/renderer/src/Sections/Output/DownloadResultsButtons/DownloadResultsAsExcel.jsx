@@ -10,7 +10,7 @@ import outputState from '../../GlobalState/outputState';
 import XlsxIcon from '../../images/XLSX_Icon2.svg';
 
 const localStore = store({
-  modalOpen: false
+  modalOpen: false,
 });
 
 const handleOpen = () => {
@@ -75,7 +75,7 @@ const DownloadResultsAsExcel = () => {
   );
 };
 
-export default view(DownloadResultsAsExcel);
+export default DownloadResultsAsExcel;
 
 const ExcelButton = styled.div`
   width: fit-content;

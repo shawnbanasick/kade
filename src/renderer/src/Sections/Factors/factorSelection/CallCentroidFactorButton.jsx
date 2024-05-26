@@ -5,7 +5,7 @@ import state from '../../../store';
 import centroidDispatch from '../centroidLogic/centroidDispatch';
 import GeneralButton from '../../../Utils/GeneralButton';
 const localStore = store({
-  buttonColor: '#d6dbe0'
+  buttonColor: '#d6dbe0',
 });
 
 const handleClick = () => {
@@ -14,11 +14,11 @@ const handleClick = () => {
   if (isNaN(numFactors)) {
     state.setState({
       showCentroidError: true,
-      errorMessage: 'Select the number of factors to extract first'
+      errorMessage: 'Select the number of factors to extract first',
     });
   } else {
     state.setState({
-      isCentroidLoading: true
+      isCentroidLoading: true,
     });
     setTimeout(() => {
       centroidDispatch(numFactors);
@@ -33,7 +33,7 @@ const handleClick = () => {
         showKeepFacForRotButton: true,
         showCentroidSpinner: true,
         showCentroidError: false,
-        isFactorsButtonGreen: true
+        isFactorsButtonGreen: true,
       });
     }, 10);
   }
@@ -48,7 +48,7 @@ const CallCentroidFactorButton = () => {
   );
 };
 
-export default view(CallCentroidFactorButton);
+export default CallCentroidFactorButton;
 
 const BeginCentroidButton = styled.button`
   display: grid;

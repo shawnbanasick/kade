@@ -6,7 +6,7 @@ import loadingState from '../../GlobalState/loadingState';
 import { useTranslation } from 'react-i18next';
 
 const localStore = store({
-  checked: true
+  checked: true,
 });
 
 const MajorityCommonVarianceCheckbox = () => {
@@ -32,7 +32,7 @@ const MajorityCommonVarianceCheckbox = () => {
   );
 };
 
-export default view(MajorityCommonVarianceCheckbox);
+export default MajorityCommonVarianceCheckbox;
 
 const CommonVarianceDiv = styled.div`
   font-size: 21px;

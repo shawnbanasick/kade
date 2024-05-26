@@ -1,5 +1,5 @@
 import React from 'react';
-import { view } from '@risingstack/react-easy-state';
+
 import styled from 'styled-components';
 import k3KadeImport from './helpImages/k3-kade-import.png';
 
@@ -32,7 +32,7 @@ const HelpSection = () => {
   );
 };
 
-export default view(HelpSection);
+export default HelpSection;
 
 const MainContent = styled.div`
   background-color: white;

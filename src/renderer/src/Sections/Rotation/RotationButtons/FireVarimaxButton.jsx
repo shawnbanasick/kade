@@ -1,5 +1,5 @@
 import React from 'react';
-import { view } from '@risingstack/react-easy-state';
+
 import varimaxDispatch from '../varimaxLogic/varimaxDispatch';
 import GeneralButton from '../../../Utils/GeneralButton';
 import rotationState from '../../GlobalState/rotationState';
@@ -64,4 +64,4 @@ const RotationButtonGroup = () => {
   );
 };
 
-export default view(RotationButtonGroup);
+export default RotationButtonGroup;

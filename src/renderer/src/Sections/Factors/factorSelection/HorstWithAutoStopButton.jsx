@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { view } from '@risingstack/react-easy-state';
+
 import GeneralButton from '../../../Utils/GeneralButton';
 import factorState from '../../GlobalState/factorState';
 import appState from '../../GlobalState/appState';
@@ -50,7 +50,7 @@ const Horst55CentroidModal = () => {
   );
 };
 
-export default view(Horst55CentroidModal);
+export default Horst55CentroidModal;
 
 const HorstButton = styled.div`
   margin-right: 15px;

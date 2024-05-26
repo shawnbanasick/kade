@@ -1,5 +1,3 @@
-import React from 'react';
-import { view } from '@risingstack/react-easy-state';
 import GeneralButton from '../../Utils/GeneralButton';
 import factorState from '../GlobalState/factorState';
 import { useTranslation } from 'react-i18next';
@@ -36,4 +34,4 @@ const RevealCentroidTypeSelectionButton = () => {
     </div>
   );
 };
-export default view(RevealCentroidTypeSelectionButton);
+export default RevealCentroidTypeSelectionButton;

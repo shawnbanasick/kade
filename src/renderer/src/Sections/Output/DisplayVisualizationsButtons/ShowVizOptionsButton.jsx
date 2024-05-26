@@ -1,5 +1,5 @@
 import React from 'react';
-import { view } from '@risingstack/react-easy-state';
+
 import GeneralButton from '../../../Utils/GeneralButton';
 import outputState from '../../GlobalState/outputState';
 import { useTranslation } from 'react-i18next';
@@ -40,4 +40,4 @@ const DisplayVisualizationsButtons = () => {
   );
 };
 
-export default view(DisplayVisualizationsButtons);
+export default DisplayVisualizationsButtons;

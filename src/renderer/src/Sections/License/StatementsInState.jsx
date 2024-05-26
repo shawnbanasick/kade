@@ -18,7 +18,7 @@ const StatementsInState = () => {
   );
 };
 
-export default view(StatementsInState);
+export default StatementsInState;
 
 const OrderedList = styled.ol`
   width: 80%;

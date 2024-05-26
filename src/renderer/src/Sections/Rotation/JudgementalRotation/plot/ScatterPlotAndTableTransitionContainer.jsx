@@ -28,12 +28,12 @@ function getWidthHeight() {
 
 const localStore = store({
   width: getWidthHeight(),
-  height: getWidthHeight()
+  height: getWidthHeight(),
 });
 
 const scatterPlotStyles = {
   padding: 30,
-  marginBottom: 10
+  marginBottom: 10,
 };
 
 const ScatterPlotAndTableTransitionContainer = (props) => {
@@ -102,7 +102,7 @@ const ScatterPlotAndTableTransitionContainer = (props) => {
   return null;
 };
 
-export default view(ScatterPlotAndTableTransitionContainer);
+export default ScatterPlotAndTableTransitionContainer;
 
 const DegreesText = styled.div`
   text-align: center;

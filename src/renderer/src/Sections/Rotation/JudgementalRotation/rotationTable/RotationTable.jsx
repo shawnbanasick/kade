@@ -1,7 +1,7 @@
 import React from 'react';
 import { AgGridReact } from '@ag-grid-community/react';
 import { AllCommunityModules } from '@ag-grid-community/all-modules';
-import { view } from '@risingstack/react-easy-state';
+
 import { useTranslation } from 'react-i18next';
 import getCorrelationState from '../../../GlobalState/getCorrelationState';
 
@@ -27,7 +27,7 @@ const RotationTable = (props) => {
   const containerStyle = {
     marginTop: 10,
     height: heightVal,
-    width: colMaxWidth + 390
+    width: colMaxWidth + 390,
   };
 
   return (
@@ -42,4 +42,4 @@ const RotationTable = (props) => {
   );
 };
 
-export default view(RotationTable);
+export default RotationTable;

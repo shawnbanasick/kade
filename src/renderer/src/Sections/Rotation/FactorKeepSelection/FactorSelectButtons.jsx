@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { view } from '@risingstack/react-easy-state';
+
 import rotationState from '../../GlobalState/rotationState';
 import getRotationState from '../../GlobalState/getRotationState';
 import loadingState from '../../GlobalState/loadingState';
@@ -116,7 +116,7 @@ class FactorSelectionForOutputButtons extends React.Component {
     return null;
   }
 }
-export default view(FactorSelectionForOutputButtons);
+export default FactorSelectionForOutputButtons;
 
 const GeneralFacNumButton = styled.div`
   height: 40px;

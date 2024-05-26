@@ -1,6 +1,6 @@
 import React from 'react';
 import includes from 'lodash/includes';
-import { view } from '@risingstack/react-easy-state';
+
 import { Button } from 'semantic-ui-react';
 import state from '../../../store';
 
@@ -9,7 +9,7 @@ import outputDispatch from '../calcualteOutputLogic/1_outputDispatch';
 const handleSubmit = () => {
   outputDispatch();
   state.setState({
-    showDownloadOutputButtons: true
+    showDownloadOutputButtons: true,
   });
 };
 
@@ -28,7 +28,7 @@ const handleOnclick = (event) => {
       'factor 5',
       'factor 6',
       'factor 7',
-      'factor 8'
+      'factor 8',
     ];
     userSelectedFactors.length = numFactorsKeptForRotation;
     state.setState({
@@ -41,7 +41,7 @@ const handleOnclick = (event) => {
       highlightfactor7: true,
       highlightfactor8: true,
       userSelectedFactors,
-      selectAllClicked: true
+      selectAllClicked: true,
     });
 
     // clear all
@@ -56,7 +56,7 @@ const handleOnclick = (event) => {
       highlightfactor6: false,
       highlightfactor7: false,
       highlightfactor8: false,
-      userSelectedFactors
+      userSelectedFactors,
     });
   } else {
     // select individual factors
@@ -73,7 +73,7 @@ const handleOnclick = (event) => {
         highlightfactor7: false,
         highlightfactor8: false,
         userSelectedFactors,
-        selectAllClicked: false
+        selectAllClicked: false,
       });
     }
     if (!includes(userSelectedFactors, factor)) {
@@ -212,4 +212,4 @@ const FactorSelectionForOutputButtons = () => {
   return null;
 };
 
-export default view(FactorSelectionForOutputButtons);
+export default FactorSelectionForOutputButtons;

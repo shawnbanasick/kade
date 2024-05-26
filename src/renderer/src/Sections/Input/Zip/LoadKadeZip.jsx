@@ -1,5 +1,5 @@
 import React from 'react';
-import { view } from '@risingstack/react-easy-state';
+
 // import revertLoadButtonsColors from "../DemoData/revertLoadButtonsColors.js";
 import LoadButton from '../DemoData/LoadButton.js';
 import inputState from '../../GlobalState/inputState.js';
@@ -35,9 +35,9 @@ const handleClick = async () => {
         filters: [
           {
             name: 'Zip',
-            extensions: ['zip', 'ZIP']
-          }
-        ]
+            extensions: ['zip', 'ZIP'],
+          },
+        ],
       });
 
       const path = data.filePaths[0];
@@ -59,7 +59,7 @@ const handleClick = async () => {
 
         const logMessageObj1 = {
           logMessage: `Data loaded from ZIP file`,
-          logType: 'csvInput'
+          logType: 'csvInput',
         };
 
         projectHistoryState.projectHistoryArray = [logMessageObj1];
@@ -100,7 +100,7 @@ const LoadTxtStatementFile = () => {
   );
 };
 
-export default view(LoadTxtStatementFile);
+export default LoadTxtStatementFile;
 
 const SvgContainer = styled.svg`
   transform: rotate(180deg);

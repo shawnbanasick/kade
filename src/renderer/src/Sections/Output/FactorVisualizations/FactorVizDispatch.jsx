@@ -1,5 +1,5 @@
 import React from 'react';
-import { view } from '@risingstack/react-easy-state';
+
 import FactorViz from './FactorViz';
 import createFactorVizDataObjectForProps from './createFactorVizDataObjectForProps';
 
@@ -10,7 +10,7 @@ const styles = {
   width: '100%',
   height: 1200,
   padding: 30,
-  margin: 10
+  margin: 10,
 };
 
 // todo - need to calculate dynamic height here for styles
@@ -35,4 +35,4 @@ const FactorVizDispatch = (props) => {
   return null;
 };
 
-export default view(FactorVizDispatch);
+export default FactorVizDispatch;

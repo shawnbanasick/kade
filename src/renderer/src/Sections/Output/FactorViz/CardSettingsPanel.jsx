@@ -1,12 +1,12 @@
 import styled from 'styled-components';
-import { view } from '@risingstack/react-easy-state';
+
 import React from 'react';
 import UserNumberInput from './UserNumberInput';
 import UserSelectionSwitch from './UserSelectionSwitch';
 import { useTranslation } from 'react-i18next';
 
 const styles = {
-  width: 150
+  width: 150,
 };
 
 const CardSettingsPanel = () => {
@@ -68,7 +68,7 @@ const CardSettingsPanel = () => {
   );
 };
 
-export default view(CardSettingsPanel);
+export default CardSettingsPanel;
 
 const OptionStatementRow = styled.div`
   display: flex;

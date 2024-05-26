@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { view } from '@risingstack/react-easy-state';
+
 import { useTranslation } from 'react-i18next';
 import getFactorState from '../../GlobalState/getFactorState';
 
@@ -21,7 +21,7 @@ const HorstWarningMessage = () => {
   }
 };
 
-export default view(HorstWarningMessage);
+export default HorstWarningMessage;
 
 const HorstNoConvergenceMessage = styled.div`
   margin-bottom: 50px;

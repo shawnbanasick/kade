@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { view } from '@risingstack/react-easy-state';
+
 import downloadDistStates from './downloadDistStates';
 import outputState from '../../GlobalState/outputState';
 import GeneralButton from '../../../Utils/GeneralButton';
@@ -106,7 +106,7 @@ const DistStateListSortByButtons = () => {
   return null;
 };
 
-export default view(DistStateListSortByButtons);
+export default DistStateListSortByButtons;
 
 /* 
           begin comparisons

@@ -1,5 +1,5 @@
 import React from 'react';
-import { view } from '@risingstack/react-easy-state';
+
 import parseExcelType1 from './parseExcelType1';
 import revertLoadButtonsColors from '../DemoData/revertLoadButtonsColors';
 import throwDataAlreadyLoadedInputErrorModal from '../ErrorChecking/throwDataAlreadyLoadedInputErrorModal';
@@ -29,9 +29,9 @@ const LoadExcelT1 = () => {
           filters: [
             {
               name: 'Excel',
-              extensions: ['xls', 'XLS', 'xlsx', 'XLSX']
-            }
-          ]
+              extensions: ['xls', 'XLS', 'xlsx', 'XLSX'],
+            },
+          ],
         });
         // send data to processing
         const path = data.filePaths[0];
@@ -65,7 +65,7 @@ const LoadExcelT1 = () => {
   );
 };
 
-export default view(LoadExcelT1);
+export default LoadExcelT1;
 
 const SvgContainer = styled.svg`
   transform: rotate(180deg);

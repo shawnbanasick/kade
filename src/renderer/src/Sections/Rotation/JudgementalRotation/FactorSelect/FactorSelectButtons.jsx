@@ -1,6 +1,6 @@
 import React from 'react';
 import includes from 'lodash/includes';
-import { view } from '@risingstack/react-easy-state';
+
 import styled from 'styled-components';
 import data from '../plot/data';
 import doD3ChartDataPrep from '../rotationLogic/doD3ChartDataPrep';
@@ -233,7 +233,7 @@ const FactorSelectButtons = (props) => {
                 color: 'white',
                 marginRight: 5,
                 marginLeft: 5,
-                marginTop: 10
+                marginTop: 10,
               }}
             >
               Select 2 factor
@@ -246,7 +246,7 @@ const FactorSelectButtons = (props) => {
   return null;
 };
 
-export default view(FactorSelectButtons);
+export default FactorSelectButtons;
 
 const GenButton = styled.div`
   width: 50px;

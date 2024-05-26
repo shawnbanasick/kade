@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { view } from '@risingstack/react-easy-state';
+
 import GeneralButton from '../../../Utils/GeneralButton';
 import { useTranslation } from 'react-i18next';
 import doHeywoodAdjustment from '../centroidLogic/horst55Logic/doHeywoodAdjustment';
@@ -45,7 +45,7 @@ const HeywoodCaseNotification = () => {
 
     const logMessageObj1 = {
       logMessage: projectLogText3,
-      logType: 'HeywoodAdjustment'
+      logType: 'HeywoodAdjustment',
     };
 
     const newProjectHistoryArray = [...projectHistoryArray, logMessageObj1];
@@ -134,7 +134,7 @@ const HeywoodCaseNotification = () => {
   }
 };
 
-export default view(HeywoodCaseNotification);
+export default HeywoodCaseNotification;
 
 const TextSpanLabel = styled.div`
   margin-top: 25px;

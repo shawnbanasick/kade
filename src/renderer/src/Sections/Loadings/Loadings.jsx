@@ -1,5 +1,5 @@
 import React from 'react';
-import { view } from '@risingstack/react-easy-state';
+
 import styled, { keyframes } from 'styled-components';
 import LoadingsTableTransitionContainer from './LoadingsTableTransitionContainer';
 
@@ -13,7 +13,7 @@ const Loadings = () => {
   );
 };
 
-export default view(Loadings);
+export default Loadings;
 
 const fadeIn = keyframes`
   from {

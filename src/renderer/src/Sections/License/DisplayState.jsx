@@ -29,7 +29,7 @@ const DisplayState = () => {
   );
 };
 
-export default view(DisplayState);
+export default DisplayState;
 
 const OrderedList = styled.ul`
   width: 80%;

@@ -13,9 +13,9 @@ const localStore = store({
   options: [
     { key: 1, text: 'participant ID', value: 'partId' },
     { key: 2, text: 'random ID', value: 'randomId' },
-    { key: 3, text: 'url UserCode', value: 'urlUsercode' }
+    { key: 3, text: 'url UserCode', value: 'urlUsercode' },
   ],
-  activeValue: ''
+  activeValue: '',
 });
 
 const DropdownJSON = (props) => {
@@ -90,4 +90,4 @@ const DropdownJSON = (props) => {
     </div>
   );
 };
-export default view(DropdownJSON);
+export default DropdownJSON;

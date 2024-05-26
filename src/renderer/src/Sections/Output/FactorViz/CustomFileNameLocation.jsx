@@ -10,7 +10,7 @@ const styles = {
   display: 'flex',
   marginTop: 15,
   fontSize: 20,
-  userSelect: 'none'
+  userSelect: 'none',
 };
 
 const localStore = store({ customFileNameLocation: '' });
@@ -64,7 +64,7 @@ const CustomFileNameLocation = () => {
     </HolderDiv>
   );
 };
-export default view(CustomFileNameLocation);
+export default CustomFileNameLocation;
 
 /*
 .ui.radio.checkbox label {

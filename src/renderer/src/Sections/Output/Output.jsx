@@ -1,6 +1,6 @@
 import { Tab } from 'semantic-ui-react';
 import React from 'react';
-import { view } from '@risingstack/react-easy-state';
+
 import styled, { keyframes } from 'styled-components';
 import { ToastContainer, toast, Zoom } from 'react-toastify';
 import FactorsTable from './Factors Table/FactorsTable';
@@ -32,7 +32,7 @@ function notify() {
   toast.error('Error >>> Reset threshold levels', {
     className: 'outputToast',
     progressClassName: 'outputToastProgress',
-    bodyClassName: 'outputToastBody'
+    bodyClassName: 'outputToastBody',
   });
   outputState.notifyOutputDistStateError = false;
 }
@@ -67,7 +67,7 @@ const Output = () => {
             <MultipleFactorsFlaggedWarningModal />
           </OutputDataWindow1>
         </Tab.Pane>
-      )
+      ),
     },
     {
       menuItem: t('Factor Characteristics'),
@@ -77,7 +77,7 @@ const Output = () => {
             <OutputFactorTablesTransitionContainer />
           </OutputDataWindow2>
         </Tab.Pane>
-      )
+      ),
     },
     {
       menuItem: t('Factors Table'),
@@ -87,7 +87,7 @@ const Output = () => {
             <FactorsTable />
           </OutputDataWindow2>
         </Tab.Pane>
-      )
+      ),
     },
     {
       menuItem: t('Distinguishing Statements'),
@@ -97,7 +97,7 @@ const Output = () => {
             <DistinguishingStatementsList />
           </OutputDataWindow2>
         </Tab.Pane>
-      )
+      ),
     },
     {
       menuItem: t('Factor Visualizations'),
@@ -122,8 +122,8 @@ const Output = () => {
             </OutputDataWindow2>
           </Tab.Pane>
         </React.Fragment>
-      )
-    }
+      ),
+    },
   ];
 
   function handleTabChange(e, { activeIndex }) {
@@ -151,7 +151,7 @@ const Output = () => {
   );
 };
 
-export default view(Output);
+export default Output;
 
 const fadeIn = keyframes`
   from {

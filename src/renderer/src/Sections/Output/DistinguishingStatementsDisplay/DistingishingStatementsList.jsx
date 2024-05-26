@@ -1,5 +1,5 @@
 import React from 'react';
-import { view } from '@risingstack/react-easy-state';
+
 import styled from 'styled-components';
 import DistStateListButtons from './DistStateListButtons';
 import filterDistStateListData from './filterDistStateListData';
@@ -63,7 +63,7 @@ const DistinguishingStatementsList = () => {
   );
 };
 
-export default view(DistinguishingStatementsList);
+export default DistinguishingStatementsList;
 
 const Container1 = styled.div`
   padding-bottom: 150px;
