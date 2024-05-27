@@ -1,7 +1,7 @@
-const calcStatementsNum = (multiplierArray: number[]) => {
+const calcStatementsNum = (multiplierArray) => {
   const initialValue = 0;
   const numStatements = multiplierArray.reduce(
-    (accumulator: number, currentValue: number) => accumulator + currentValue,
+    (accumulator, currentValue) => accumulator + currentValue,
     initialValue
   );
   return numStatements;

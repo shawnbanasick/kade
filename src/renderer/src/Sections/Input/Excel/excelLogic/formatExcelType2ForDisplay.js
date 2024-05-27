@@ -1,12 +1,12 @@
-import grabProjectStatements from "./grabProjectStatements";
-import calcMultiplierArrayT2 from "./calcMultiplierArrayT2";
-import createMainDataObject from "./createMainDataObject";
-import calcSortTriangleShapeT2 from "./calcSortTriangleShapeT2";
-import grabRespondentNamesAndSorts from "./grabRespondentNamesAndSorts";
-import checkUniqueParticipantNames from "../../logic/checkUniqueParticipantNames";
-import projectHistoryState from "../../../GlobalState/projectHistoryState";
-import coreState from "../../../GlobalState/coreState";
-import inputState from "../../../GlobalState/inputState";
+import grabProjectStatements from './grabProjectStatements';
+import calcMultiplierArrayT2 from './calcMultiplierArrayT2';
+import createMainDataObject from './createMainDataObject';
+import calcSortTriangleShapeT2 from './calcSortTriangleShapeT2';
+import grabRespondentNamesAndSorts from './grabRespondentNamesAndSorts';
+import checkUniqueParticipantNames from '../../logic/checkUniqueParticipantNames';
+import projectHistoryState from '../../../GlobalState/projectHistoryState';
+import coreState from '../../../GlobalState/coreState';
+import inputState from '../../../GlobalState/inputState';
 
 export default function formatype2ForDisplay(rawStatementsData, rawSortsData) {
   let noSortPatternError = false;
@@ -15,12 +15,12 @@ export default function formatype2ForDisplay(rawStatementsData, rawSortsData) {
   try {
     // store #1
     const projectName1 = rawSortsData[0][1];
-    const projectName = projectName1.toString().replace(/,/g, "");
+    const projectName = projectName1.toString().replace(/,/g, '');
 
     // store #2 project history array
     const logMessageObj1 = {
       logMessage: `${projectName} data loaded from XLSX Type 2 file`,
-      logType: "excel2Input"
+      logType: 'excel2Input',
     };
 
     const projectHistoryArray = [logMessageObj1];
@@ -70,13 +70,25 @@ export default function formatype2ForDisplay(rawStatementsData, rawSortsData) {
     coreState.multiplierArray = multiplierArray;
 
     // store #8  -  sort data
-    const mainDataObject = createMainDataObject(
-      respondentNames,
-      symmetryCheckArray
-    );
+    const mainDataObject = createMainDataObject(respondentNames, symmetryCheckArray);
 
     const participantNames = checkUniqueParticipantNames(respondentNames);
 
+    updateProjectHistoryArray(projectHistoryArray);
+    updateProjectName(projectName);
+    updateMultiplierArray(multiplierArray);
+    updateStatements(currentStatements);
+    updateNumQsorts(totalNumberSorts);
+    updateQSortPattern(sortTriangleShape);
+    updateNumStatements(originalSortSize);
+    updateMainDataObject(mainDataObject);
+    updateStatementNumArray(statementNumArray);
+    updateSortsDisplayText(sortsDisplayText);
+    updateRespondentNames(participantNames);
+    updateAreQsortsLoaded(true);
+    updateIsQsortPatternLoaded(true);
+
+    /*
     projectHistoryState.projectHistoryArray = projectHistoryArray;
     coreState.projectName = projectName;
     coreState.multiplierArray = multiplierArray;
@@ -90,11 +102,18 @@ export default function formatype2ForDisplay(rawStatementsData, rawSortsData) {
     coreState.respondentNames = participantNames;
     inputState.areQsortsLoaded = true;
     inputState.isQsortPatternLoaded = true;
+    */
   } catch (error) {
     console.log(error.message);
     console.log(error.stack);
+
+    updateExcelErrorMessage1(error.message);
+    updateShowExcelErrorModal(true);
+
+    /*
     inputState.excelErrorMessage1 = error.message;
     inputState.showExcelErrorModal = true;
+    */
   }
   return [noSortPatternError, numStatementsMatchError];
 }

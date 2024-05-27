@@ -1,9 +1,6 @@
-const createSortsDisplayText = (
-  participantNames: string[],
-  participantSorts: number[]
-) => {
+const createSortsDisplayText = (participantNames, participantSorts) => {
   return participantNames.map(function (item, i) {
-    return item + ": " + participantSorts[i];
+    return item + ': ' + participantSorts[i];
   });
 };
 

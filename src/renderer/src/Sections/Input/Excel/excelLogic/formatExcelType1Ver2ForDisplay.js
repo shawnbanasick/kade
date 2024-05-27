@@ -1,22 +1,22 @@
-import checkUniqueParticipantNames from "../../logic/checkUniqueParticipantNames";
-import createMainDataObject from "./createMainDataObject";
-import projectHistoryState from "../../../GlobalState/projectHistoryState";
-import coreState from "../../../GlobalState/coreState";
-import inputState from "../../../GlobalState/inputState";
-import cleanMultiplierArray from "./cleanMultiplierArray";
-import i18n from "i18next";
-import createStatementNumArray from "./createStatementNumArray";
-import calcStatementsNum from "./calcStatementsNum";
-import transformExcelType1Ver2Sorts from "./transformExcelType1Ver2Sorts";
-import extremeValueErrorCheck from "./extremeValueErrorCheck";
-import transformExcelType1Ver2Statements from "./transformExcelType1Ver2Statements";
-import calcQsortPatternArray from "./calcQsortPatternArray";
-import sortErrorCheckT2 from "./sortErrorCheckT2";
-import createSortsDisplayText from "./createSortsDisplayText";
+import checkUniqueParticipantNames from '../../logic/checkUniqueParticipantNames';
+import createMainDataObject from './createMainDataObject';
+import projectHistoryState from '../../../GlobalState/projectHistoryState';
+import coreState from '../../../GlobalState/coreState';
+import inputState from '../../../GlobalState/inputState';
+import cleanMultiplierArray from './cleanMultiplierArray';
+import i18n from 'i18next';
+// import createStatementNumArray from './createStatementNumArray';
+import calcStatementsNum from './calcStatementsNum';
+import transformExcelType1Ver2Sorts from './transformExcelType1Ver2Sorts';
+import extremeValueErrorCheck from './extremeValueErrorCheck';
+import transformExcelType1Ver2Statements from './transformExcelType1Ver2Statements';
+import calcQsortPatternArray from './calcQsortPatternArray';
+import sortErrorCheckT2 from './sortErrorCheckT2';
+import createSortsDisplayText from './createSortsDisplayText';
 
-import cloneDeep from "lodash/cloneDeep";
+import cloneDeep from 'lodash/cloneDeep';
 
-const formatExcelType1Ver2 = dataObject => {
+const formatExcelType1Ver2 = (dataObject) => {
   let outOfRangeError = false;
   let noSortsError = false;
   let noSortPatternError = false;
@@ -25,7 +25,35 @@ const formatExcelType1Ver2 = dataObject => {
   let numStatementsMatchError = false;
   let missingStatementNumberError = false;
 
-  // TODO - Add error handling
+  const updateShowWarningMessageBar = inputState((state) => state.updateShowWarningMessageBar);
+  const updateShowErrorMessageBar = inputState((state) => state.updateShowErrorMessageBar);
+  const updateErrorMessage = inputState((state) => state.updateErrorMessage);
+  const updateErrorStackTrace = inputState((state) => state.updateErrorStackTrace);
+  const updateExtendedErrorMessage = inputState((state) => state.updateExtendedErrorMessage);
+  const updateIsLoadZipButtonGreen = inputState((state) => state.updateIsLoadZipButtonGreen);
+  const updateIsCsvDataErrorCheckButtonGreen = inputState(
+    (state) => state.updateIsCsvDataErrorCheckButtonGreen
+  );
+  const updateShowDataImportSuccessMessage = inputState(
+    (state) => state.updateShowDataImportSuccessMessage
+  );
+  const updateProjectHistoryArray = projectHistoryState((state) => state.updateProjectHistoryArray);
+  const updateMultiplierArray = coreState((state) => state.updateMultiplierArray);
+  const updateRespondentNames = coreState((state) => state.updateRespondentNames);
+  const updateMainDataObject = coreState((state) => state.updateMainDataObject);
+  const updateSortsDisplayText = coreState((state) => state.updateSortsDisplayText);
+  const updateProjectName = coreState((state) => state.updateProjectName);
+  const updateNumQsorts = coreState((state) => state.updateNumQsorts);
+  const updateNumStatements = coreState((state) => state.updateNumStatements);
+  const updateQSortPattern = coreState((state) => state.updateQSortPattern);
+  const updateAreQsortsLoaded = inputState((state) => state.updateAreQsortsLoaded);
+  const updateIsQsortPatternLoaded = inputState((state) => state.updateIsQsortPatternLoaded);
+  const updateStatements = coreState((state) => state.updateStatements);
+  const updateStatementsLoaded = inputState((state) => state.updateStatementsLoaded);
+  const updateExcelErrorMessage1 = inputState((state) => state.updateExcelErrorMessage1);
+  const updateShowExcelErrorModal = inputState((state) => state.updateShowExcelErrorModal);
+
+  // TODO - Add more error handling
 
   try {
     // QAV#1  Project Name
@@ -36,15 +64,15 @@ const formatExcelType1Ver2 = dataObject => {
     let multiplierArray = cleanMultiplierArray(multiplierArray3);
 
     if (multiplierArray.length !== 20) {
-      inputState.showWarningMessageBar = false;
-      inputState.showErrorMessageBar = true;
-      inputState.errorMessage = i18n.t("The Q sort pattern input is incorrect");
-      inputState.errorStackTrace = i18n.t("no stack trace available");
-      inputState.extendedErrorMessage = i18n.t("Check the Q sort pattern data");
-      inputState.isLoadZipButtonGreen = false;
-      inputState.isCsvDataErrorCheckButtonGreen = false;
-      inputState.showDataImportSuccessMessage = false;
-      throw new Error("Check the Q sort pattern data");
+      updateShowWarningMessageBar(false);
+      updateShowErrorMessageBar(true);
+      updateErrorMessage(i18n.t('The Q sort pattern input is incorrect'));
+      updateErrorStackTrace(i18n.t('no stack trace available'));
+      updateExtendedErrorMessage(i18n.t('Check the Q sort pattern data'));
+      updateIsLoadZipButtonGreen(false);
+      updateIsCsvDataErrorCheckButtonGreen(false);
+      updateShowDataImportSuccessMessage(false);
+      throw new Error('Check the Q sort pattern data');
     }
 
     // QAV#3  Number of Statements
@@ -53,7 +81,7 @@ const formatExcelType1Ver2 = dataObject => {
 
     // QAV#4  Participant Names
     let participantNames2 = [...dataObject.sortsArray[0]];
-    let participantNames3 = participantNames2.filter(item => item);
+    let participantNames3 = participantNames2.filter((item) => item);
     participantNames3.shift();
     let participantNames = checkUniqueParticipantNames(participantNames3);
 
@@ -70,17 +98,15 @@ const formatExcelType1Ver2 = dataObject => {
     let participantSorts = cloneDeep(participantSorts2.participantSorts);
 
     if (participantSorts.length !== numberOfParticipants) {
-      inputState.showWarningMessageBar = false;
-      inputState.showErrorMessageBar = true;
-      inputState.errorMessage = i18n.t(
-        "Participant data and Q sort data do not match"
-      );
-      inputState.errorStackTrace = i18n.t("no stack trace available");
-      inputState.extendedErrorMessage = i18n.t("Check the Q sort data");
-      inputState.isLoadZipButtonGreen = false;
-      inputState.isCsvDataErrorCheckButtonGreen = false;
-      inputState.showDataImportSuccessMessage = false;
-      throw new Error("Check the Q sort data");
+      updateShowWarningMessageBar(false);
+      updateShowErrorMessageBar(true);
+      updateErrorMessage(i18n.t('Participant data and Q sort data do not match'));
+      updateErrorStackTrace(i18n.t('no stack trace available'));
+      updateExtendedErrorMessage(i18n.t('Check the Q sort data'));
+      updateIsLoadZipButtonGreen(false);
+      updateIsCsvDataErrorCheckButtonGreen(false);
+      updateShowDataImportSuccessMessage(false);
+      throw new Error('Check the Q sort data');
     }
 
     // Error Checking
@@ -89,34 +115,28 @@ const formatExcelType1Ver2 = dataObject => {
     // QAV#7  Project Statements
     let projectStatements2 = cloneDeep(dataObject.statementsArray);
 
-    let projectStatements = transformExcelType1Ver2Statements(
-      projectStatements2
-    );
+    let projectStatements = transformExcelType1Ver2Statements(projectStatements2);
 
     // QAV#8  Create Q sort Pattern Array
     let qSortPatternArray = calcQsortPatternArray(multiplierArray);
 
     if (qSortPatternArray.length !== projectStatements.length) {
-      inputState.showWarningMessageBar = false;
-      inputState.showErrorMessageBar = true;
-      inputState.errorMessage = i18n.t(
-        "The Q sort pattern input or number of statements is incorrect"
-      );
-      inputState.errorStackTrace = i18n.t("no stack trace available");
-      inputState.extendedErrorMessage = i18n.t(
-        "Check the statements input and the Q sort pattern data"
-      );
-      inputState.isLoadZipButtonGreen = false;
-      inputState.isCsvDataErrorCheckButtonGreen = false;
-      inputState.showDataImportSuccessMessage = false;
-      throw new Error("Check the Q sort pattern data");
+      updateShowWarningMessageBar(false);
+      updateShowErrorMessageBar(true);
+      updateErrorMessage(i18n.t('The Q sort pattern input or number of statements is incorrect'));
+      updateErrorStackTrace(i18n.t('no stack trace available'));
+      updateExtendedErrorMessage(i18n.t('Check the statements input and the Q sort pattern data'));
+      updateIsLoadZipButtonGreen(false);
+      updateIsCsvDataErrorCheckButtonGreen(false);
+      updateShowDataImportSuccessMessage(false);
+      throw new Error('Check the Q sort pattern data');
     }
 
     // Error Checking
     sortErrorCheckT2(qSortPatternArray, participantSorts, participantNames);
 
     // Create Statement Num Array
-    let statementNumArray = createStatementNumArray(numStatements);
+    // let statementNumArray = createStatementNumArray(numStatements);
 
     // Create Excel Type 1 Nonsymmetric Array Text
     /* let excelType1NonsymmetricArrayText = createExcelType1NonsymmetricalArrayText(
@@ -125,46 +145,37 @@ const formatExcelType1Ver2 = dataObject => {
     */
 
     // Create Sorts Display Text
-    let sortsDisplayText = createSortsDisplayText(
-      participantNames,
-      participantSorts
-    );
+    let sortsDisplayText = createSortsDisplayText(participantNames, participantSorts);
 
     // Create Main Data Object
-    let mainDataObject = createMainDataObject(
-      participantNames,
-      participantSorts
-    );
+    let mainDataObject = createMainDataObject(participantNames, participantSorts);
 
     // ** OUTPUT PROCESSING ** //
 
     const logMessageObj1 = {
-      logMessage: `${projectName} ${i18n.t(
-        "data loaded from XLSX Type 1 file"
-      )}`,
-      logType: "excelInput"
+      logMessage: `${projectName} ${i18n.t('data loaded from XLSX Type 1 file')}`,
+      logType: 'excelInput',
     };
 
-    projectHistoryState.projectHistoryArray = [logMessageObj1];
-
-    coreState.statements = projectStatements;
-    coreState.sortsDisplayText = sortsDisplayText;
-    coreState.projectName = projectName;
-    coreState.numQsorts = numberOfParticipants;
-    coreState.numStatements = numStatements;
-    coreState.qSortPattern = qSortPatternArray;
-    coreState.mainDataObject = mainDataObject;
-    coreState.multiplierArray = multiplierArray;
-    coreState.statementNumArray = statementNumArray;
-    coreState.respondentNames = participantNames;
-    inputState.areQsortsLoaded = true;
-    inputState.isQsortPatternLoaded = true;
-    inputState.statementsLoaded = true;
+    updateProjectHistoryArray(logMessageObj1);
+    updateMultiplierArray(multiplierArray);
+    updateRespondentNames(participantNames);
+    updateMainDataObject(mainDataObject);
+    updateSortsDisplayText(sortsDisplayText);
+    updateProjectName(projectName);
+    updateNumQsorts(numberOfParticipants);
+    updateNumStatements(numStatements);
+    updateQSortPattern(qSortPatternArray);
+    updateAreQsortsLoaded(true);
+    updateIsQsortPatternLoaded(true);
+    updateStatements(projectStatements);
+    updateStatementsLoaded(true);
   } catch (error) {
     console.log(error.message);
     console.log(error.stack);
-    inputState.excelErrorMessage1 = error.message;
-    inputState.showExcelErrorModal = true;
+
+    updateExcelErrorMessage1(error.message);
+    updateShowExcelErrorModal(true);
   }
 
   return [
@@ -174,7 +185,7 @@ const formatExcelType1Ver2 = dataObject => {
     hasDuplicateStatementNumbers,
     noHeaderMatchError,
     numStatementsMatchError,
-    missingStatementNumberError
+    missingStatementNumberError,
   ];
 };
 
