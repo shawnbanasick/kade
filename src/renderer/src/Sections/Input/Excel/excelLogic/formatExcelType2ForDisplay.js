@@ -12,6 +12,22 @@ export default function formatype2ForDisplay(rawStatementsData, rawSortsData) {
   let noSortPatternError = false;
   let numStatementsMatchError = false;
 
+  const updateProjectHistoryArray = projectHistoryState((state) => state.updateProjectHistoryArray);
+  const updateProjectName = coreState((state) => state.updateProjectName);
+  const updateMultiplierArray = coreState((state) => state.updateMultiplierArray);
+  const updateStatements = coreState((state) => state.updateStatements);
+  const updateNumQsorts = coreState((state) => state.updateNumQsorts);
+  const updateQSortPattern = coreState((state) => state.updateQSortPattern);
+  const updateNumStatements = coreState((state) => state.updateNumStatements);
+  const updateMainDataObject = coreState((state) => state.updateMainDataObject);
+  const updateStatementNumArray = coreState((state) => state.updateStatementNumArray);
+  const updateSortsDisplayText = coreState((state) => state.updateSortsDisplayText);
+  const updateRespondentNames = coreState((state) => state.updateRespondentNames);
+  const updateAreQsortsLoaded = inputState((state) => state.updateAreQsortsLoaded);
+  const updateIsQsortPatternLoaded = inputState((state) => state.updateIsQsortPatternLoaded);
+  const updateExcelErrorMessage1 = inputState((state) => state.updateExcelErrorMessage1);
+  const updateShowExcelErrorModal = inputState((state) => state.updateShowExcelErrorModal);
+
   try {
     // store #1
     const projectName1 = rawSortsData[0][1];
@@ -26,7 +42,6 @@ export default function formatype2ForDisplay(rawStatementsData, rawSortsData) {
     const projectHistoryArray = [logMessageObj1];
 
     // store #3
-    // const statementsDataT2 = rawStatementsData;
     const currentStatements = grabProjectStatements(rawStatementsData[0]);
     inputState.statementsLoaded = true;
 
@@ -46,7 +61,6 @@ export default function formatype2ForDisplay(rawStatementsData, rawSortsData) {
     if (copyTriangleShape.length < 3) {
       noSortPatternError = true;
     }
-    // let testSortTriangleShapeArray = calcSortTriangleT2[1];
     const sortTriangleShape = calcSortTriangleT2[2];
 
     // statement number match
@@ -87,22 +101,6 @@ export default function formatype2ForDisplay(rawStatementsData, rawSortsData) {
     updateRespondentNames(participantNames);
     updateAreQsortsLoaded(true);
     updateIsQsortPatternLoaded(true);
-
-    /*
-    projectHistoryState.projectHistoryArray = projectHistoryArray;
-    coreState.projectName = projectName;
-    coreState.multiplierArray = multiplierArray;
-    coreState.statements = currentStatements;
-    coreState.numQsorts = totalNumberSorts;
-    coreState.qSortPattern = sortTriangleShape;
-    coreState.numStatements = originalSortSize;
-    coreState.mainDataObject = mainDataObject;
-    coreState.statementNumArray = statementNumArray;
-    coreState.sortsDisplayText = sortsDisplayText;
-    coreState.respondentNames = participantNames;
-    inputState.areQsortsLoaded = true;
-    inputState.isQsortPatternLoaded = true;
-    */
   } catch (error) {
     console.log(error.message);
     console.log(error.stack);
