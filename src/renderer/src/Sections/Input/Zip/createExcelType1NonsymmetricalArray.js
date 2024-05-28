@@ -1,4 +1,4 @@
-const createExcelType1NonsymmetricalArrayText = participantNames => {
+const createExcelType1NonsymmetricalArrayText = (participantNames) => {
   let string = participantNames.toString();
   return string;
 };

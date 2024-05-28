@@ -1,6 +1,6 @@
 const createSortsDisplayText = (participantNames, participantSorts) => {
-  return participantNames.map(function(item, i) {
-    return item + ": " + participantSorts[i];
+  return participantNames.map(function (item, i) {
+    return item + ': ' + participantSorts[i];
   });
 };
 

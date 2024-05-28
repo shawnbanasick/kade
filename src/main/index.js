@@ -105,6 +105,7 @@ app.whenReady().then(() => {
   ipcMain.on('dialog:openStaFile', openStaFile);
   ipcMain.on('dialog:openDatFile', openDatFile);
   ipcMain.on('dialog:openExcelFile', openExcelFile);
+  ipcMain.on('dialog:openZipFile', openZipFile);
 
   createWindow();
 

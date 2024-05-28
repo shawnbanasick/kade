@@ -4,6 +4,7 @@ const grabStatementsT3 = (data) => {
     const temp11 = data[pp].split(',');
     const testValue = +temp11[0];
     if (isNaN(testValue) || temp11[0] === '' || temp11[1] === null) {
+      console.log("Error: Can't find any statements on the 'Statements' worksheet!");
     } else {
       currentStatements.push(temp11[1]);
     }
