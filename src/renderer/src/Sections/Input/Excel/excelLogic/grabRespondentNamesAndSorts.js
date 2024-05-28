@@ -1,6 +1,6 @@
 function removeTrailingCommaFromText(string) {
   const lastChar = string.slice(-1);
-  if (lastChar === ",") {
+  if (lastChar === ',') {
     const string2 = string.slice(0, -1);
     return string2;
   }
@@ -13,7 +13,7 @@ function grabRespondentNamesAndSorts(sortsDataT2) {
   const sortsForDisplay = [];
   const respondentSortsArray = [];
   for (let m = 6; m < sortsDataT2.length; m += 1) {
-    let temp1 = sortsDataT2[m].toString().replace(/,,/g, "");
+    let temp1 = sortsDataT2[m].toString().replace(/,,/g, '');
     // to prevent from reading empty cells as data
     if (temp1.length < 5) {
       break;
@@ -21,7 +21,7 @@ function grabRespondentNamesAndSorts(sortsDataT2) {
 
     // convert from array of strings to array of numbers
     temp1 = removeTrailingCommaFromText(temp1);
-    const temp6 = temp1.split(",");
+    const temp6 = temp1.split(',');
     const temp4 = temp6.shift();
     // best way to convert strings to numbers array
     // can do in one line -> .split(',').map(Number).filter(Boolean)
