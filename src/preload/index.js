@@ -8,6 +8,7 @@ if (process.contextIsolated) {
     contextBridge.exposeInMainWorld('electronAPI', {
       openStaFile: () => ipcRenderer.send('dialog:openStaFile'),
       openDatFile: () => ipcRenderer.send('dialog:openDatFile'),
+      openExcelFile: () => ipcRenderer.send('dialog:openExcelFile'),
     });
     contextBridge.exposeInMainWorld('languageChange', {
       language: (callback) =>
@@ -24,6 +25,11 @@ if (process.contextIsolated) {
     contextBridge.exposeInMainWorld('bridgeDat', {
       datData: (content) => {
         ipcRenderer.on('datData', content);
+      },
+    });
+    contextBridge.exposeInMainWorld('bridgeExcel', {
+      excelData: (content) => {
+        ipcRenderer.on('excelData', content);
       },
     });
   } catch (error) {

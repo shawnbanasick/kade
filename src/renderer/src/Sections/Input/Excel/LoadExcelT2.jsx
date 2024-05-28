@@ -1,48 +1,27 @@
-import React from 'react';
-
 import parseExcelType2 from './parseExcelType2';
 import revertLoadButtonsColors from '../DemoData/revertLoadButtonsColors';
 import throwDataAlreadyLoadedInputErrorModal from '../ErrorChecking/throwDataAlreadyLoadedInputErrorModal';
 import LoadButton from '../DemoData/LoadButton';
 import inputState from '../../GlobalState/inputState';
-import getInputState from '../../GlobalState/getInputState';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
-const { remote } = require('electron');
-const mainWindow = remote.getCurrentWindow();
-const { dialog } = require('electron').remote;
-
 const LoadTxtStatementFile = () => {
   const [t] = useTranslation();
-  const isLoadExcelT2ButtonGreen = getInputState('isLoadExcelT2ButtonGreen');
+  const isLoadExcelT2ButtonGreen = inputState.getState().isLoadExcelT2ButtonGreen;
 
   const handleClick = async () => {
     // check to see if data loaded and correlations started - true ==> throw error
-    const isDataAlreadyLoaded = getInputState('isDataAlreadyLoaded');
+    const isDataAlreadyLoaded = inputState.getState().isDataAlreadyLoaded;
     if (isDataAlreadyLoaded) {
       throwDataAlreadyLoadedInputErrorModal();
     } else {
       try {
-        const data = await dialog.showOpenDialog(mainWindow, {
-          properties: ['openFile'],
-          filters: [
-            {
-              name: 'Excel',
-              extensions: ['xls', 'XLS', 'xlsx', 'XLSX'],
-            },
-          ],
+        await window.electronAPI.openExcelFile();
+        window.bridgeExcel.excelData((event, excelData) => {
+          parseExcelType2(excelData);
+          revertLoadButtonsColors('excelT2');
         });
-        // send data to processing
-        const path = data.filePaths[0];
-
-        // dialog cancelled case
-        if (path === undefined) {
-          return;
-        }
-
-        parseExcelType2(path);
-        revertLoadButtonsColors('excelT2');
       } catch (error) {
         // catch unknown input error
         inputState.errorMessage = t('There was an unexpected XSLX data input error');
@@ -54,7 +33,7 @@ const LoadTxtStatementFile = () => {
   };
 
   return (
-    <LoadButton isActive={isLoadExcelT2ButtonGreen} onClick={handleClick}>
+    <LoadButton $isActive={isLoadExcelT2ButtonGreen} onClick={handleClick}>
       <LineContainer>
         <SvgContainer xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
           <path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z" />

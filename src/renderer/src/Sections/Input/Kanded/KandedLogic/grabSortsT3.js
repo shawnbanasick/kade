@@ -1,6 +1,6 @@
 // strips everything but letters and numbers and "." "-"
 function sanitizeSortValues(value) {
-  return value.replace(/[^a-zA-Z0-9.-]/g, () => "");
+  return value.replace(/[^a-zA-Z0-9.-]/g, () => '');
 }
 
 function grabSortsT3(data, numStatements) {
@@ -9,8 +9,8 @@ function grabSortsT3(data, numStatements) {
     const tempArray1 = [];
     const isEmpty = data[k][1];
     // had to seperate out the undefined check otherwise would not work
-    if (typeof isEmpty !== "undefined") {
-      if (isEmpty !== "" || isEmpty !== null) {
+    if (typeof isEmpty !== 'undefined') {
+      if (isEmpty !== '' || isEmpty !== null) {
         const temp2 = data[k][1].toString();
 
         const start = sanitizeSortValues(temp2);

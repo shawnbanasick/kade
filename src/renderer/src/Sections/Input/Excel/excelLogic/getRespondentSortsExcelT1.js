@@ -8,8 +8,6 @@ export default function getRespondentSortsExcelT1(sortData, respondentNames, num
   let hasDuplicateStatementNumbers = false;
   let missingStatementNumbersError = false;
 
-  const updateErrorMessage = inputState((state) => state.updateErrorMessage);
-
   // generate the original load value for statement number array
   const statementNumArray = [];
   for (let i = 0; i < numStatements; i += 1) {
@@ -51,7 +49,7 @@ export default function getRespondentSortsExcelT1(sortData, respondentNames, num
       // insert check here
       if (temp2a < 1 || temp2a > numStatements) {
         const message = `${i18n.t('Q sort with an out of range value')}: ${respondentNames[q]}`;
-        updateErrorMessage(message);
+        inputState.setState({ errorMessage: message });
         outOfRangeError = true;
       }
 
@@ -71,7 +69,7 @@ export default function getRespondentSortsExcelT1(sortData, respondentNames, num
         'Q sort with statement number problems'
       )}: ${excelType1NonsymmetricArrayText}`;
 
-      updateErrorMessage(errorMessage);
+      inputState.setState({ errorMessage: errorMessage });
     }
 
     // todo - check if this is needed?

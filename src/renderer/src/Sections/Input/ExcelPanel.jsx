@@ -1,4 +1,3 @@
-import React from 'react';
 import styled from 'styled-components';
 import ExcelT1Card from './Excel/ExcelT1Card';
 import ExcelT2Card from './Excel/ExcelT2Card';

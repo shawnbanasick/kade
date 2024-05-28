@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-// import LoadExcelT1 from './LoadExcelT1';
+import LoadExcelT1 from './LoadExcelT1';
 import { useTranslation } from 'react-i18next';
 import excel1 from '../../images/Excel1.png';
 
@@ -30,7 +30,7 @@ const ExcelT1Card = () => {
           src={excel1}
         />
       </Image>
-      {/* <LoadExcelT1 /> */}
+      <LoadExcelT1 />
     </Card>
   );
 };

@@ -6,6 +6,7 @@ import MenuFactory from './menu';
 import i18nextMainBackend from '../../app/localization/i18n.mainconfig';
 import openStaFile from './openStaFile';
 import openDatFile from './openDatFile';
+import openExcelFile from './openExcelFile';
 // import fs from 'fs';
 // import i18nextBackend from 'i18next-electron-fs-backend';
 //import installExtension, { REACT_DEVELOPER_TOOLS } from 'electron-devtools-installer';
@@ -103,6 +104,7 @@ app.whenReady().then(() => {
 
   ipcMain.on('dialog:openStaFile', openStaFile);
   ipcMain.on('dialog:openDatFile', openDatFile);
+  ipcMain.on('dialog:openExcelFile', openExcelFile);
 
   createWindow();
 

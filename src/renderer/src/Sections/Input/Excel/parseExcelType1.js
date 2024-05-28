@@ -15,10 +15,10 @@ import i18n from 'i18next';
 import inputState from '../../GlobalState/inputState';
 import appState from '../../GlobalState/appState';
 
-function parseExcelType1(excelFile) {
-  const workbook = XLSX.readFile(excelFile, {
-    type: 'binary',
-  });
+function parseExcelType1(workbook) {
+  // const workbook = XLSX.readFile(excelFile, {
+  //   type: 'binary',
+  // });
 
   let tester;
   let tester2;
@@ -77,14 +77,14 @@ function parseExcelType1(excelFile) {
         tempVar4 = tempVar4.replace(/,/g, '');
         let tempVar5 = tempVar4.toLowerCase().trim();
         if (tempVar5 !== '1') {
-          inputState.showWarningMessageBar = false;
-          inputState.showErrorMessageBar = true;
-          inputState.errorMessage = i18n.t('Wrong spreadsheet type - must be Type 1');
-          inputState.errorStackTrace = i18n.t('no stack trace available');
-          inputState.extendedErrorMessage = i18n.t('Check the spreadsheet type');
-          inputState.isLoadZipButtonGreen = false;
-          inputState.isCsvDataErrorCheckButtonGreen = false;
-          inputState.showDataImportSuccessMessage = false;
+          inputState.setState({ showWarningMessageBar: false });
+          inputState.setState({ showErrorMessageBar: true });
+          inputState.setState({ errorMessage: i18n.t('Wrong spreadsheet type - must be Type 1') });
+          inputState.setState({ errorStackTrace: i18n.t('no stack trace available') });
+          inputState.setState({ extendedErrorMessage: i18n.t('Check the spreadsheet type') });
+          inputState.setState({ isLoadZipButtonGreen: false });
+          inputState.setState({ isCsvDataErrorCheckButtonGreen: false });
+          inputState.setState({ showDataImportSuccessMessage: false });
           throw new Error('Wrong spreadsheet type!');
         }
       }
@@ -143,14 +143,17 @@ function parseExcelType1(excelFile) {
     }
 
     if (hasPatternTab === true && dataObject.version === 'old') {
-      inputState.showWarningMessageBar = false;
-      inputState.showErrorMessageBar = true;
-      inputState.errorMessage = i18n.t("The 'version' tab is missing from the spreadsheet");
-      inputState.errorStackTrace = i18n.t('no stack trace available');
-      inputState.extendedErrorMessage = i18n.t('Check the spreadsheet type');
-      inputState.isLoadZipButtonGreen = false;
-      inputState.isCsvDataErrorCheckButtonGreen = false;
-      inputState.showDataImportSuccessMessage = false;
+      inputState.setState({ showWarningMessageBar: false });
+      inputState.setState({ showErrorMessageBar: true });
+      inputState.setState({
+        errorMessage: i18n.t("The 'version' tab is missing from the spreadsheet"),
+      });
+      inputState.setState({ errorStackTrace: i18n.t('no stack trace available') });
+      inputState.setState({ extendedErrorMessage: i18n.t('Check the spreadsheet type') });
+      inputState.setState({ isLoadZipButtonGreen: false });
+      inputState.setState({ isCsvDataErrorCheckButtonGreen: false });
+      inputState.setState({ showDataImportSuccessMessage: false });
+
       throw new Error('Missing version tab!');
     }
 
@@ -213,23 +216,22 @@ function parseExcelType1(excelFile) {
     }
 
     if (isNoError && finalErrorCheck !== true) {
-      inputState.dataOrigin = 'excel';
-      inputState.notifyDataUploadSuccess = true;
-      inputState.areQsortsLoaded = true;
-      appState.isInputButtonGreen = true;
-      appState.isDataButtonGreen = true;
-      inputState.isDataAlreadyLoaded = true;
+      inputState.setState({ dataOrigin: 'excel' });
+      inputState.setState({ notifyDataUploadSuccess: true });
+      inputState.setState({ areQsortsLoaded: true });
+      appState.setState({ isInputButtonGreen: true });
+      appState.setState({ isDataButtonGreen: true });
+      inputState.setState({ isDataAlreadyLoaded: true });
       // button won't go green without timeout
       setTimeout(() => {
-        inputState.isLoadExcelT1ButtonGreen = true;
-      }, 100);
+        inputState.setState({ isLoadExcelT1ButtonGreen: true });
+      }, 10);
     }
-
     // manage error messages
   } catch (error) {
     // set error message
-    inputState.excelErrorMessage1 = error.message;
-    inputState.showExcelErrorModal = true;
+    inputState.setState({ excelErrorMessage1: error.message });
+    inputState.setState({ showExcelErrorModal: true });
   }
 }
 

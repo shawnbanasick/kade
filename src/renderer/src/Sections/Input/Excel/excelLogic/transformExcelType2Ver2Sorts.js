@@ -1,6 +1,6 @@
-import checkUniqueParticipantName from "../../logic/checkUniqueParticipantNames";
-import inputState from "../../../GlobalState/inputState";
-import i18n from "i18next";
+import checkUniqueParticipantName from '../../logic/checkUniqueParticipantNames';
+import inputState from '../../../GlobalState/inputState';
+import i18n from 'i18next';
 
 const transformExcelType2Ver2Sorts = (sortData, qSortPatternArray) => {
   let maxValue = Math.max(...qSortPatternArray);
@@ -13,12 +13,12 @@ const transformExcelType2Ver2Sorts = (sortData, qSortPatternArray) => {
   let sortsArray = [];
   let namesArray = [];
 
-  sortData[0].forEach(row => {
+  sortData[0].forEach((row) => {
     let tempArray = [];
-    row = row.split(",");
-    if (row[0] !== "") {
+    row = row.split(',');
+    if (row[0] !== '') {
       row.forEach((item, index) => {
-        if (item !== "") {
+        if (item !== '') {
           if (index > 0) {
             item = parseInt(item, 10);
             if (item > maxValue) {
@@ -44,36 +44,34 @@ const transformExcelType2Ver2Sorts = (sortData, qSortPatternArray) => {
   });
 
   if (maxValueArray.length > 0 || minValueArray.length > 0) {
-    inputState.showWarningMessageBar = false;
-    inputState.showErrorMessageBar = true;
-    inputState.errorMessage = `${i18n.t(
-      "There is a Q sort with values beyond the range of the Q sort design"
-    )}`;
-    inputState.errorStackTrace = i18n.t("no stack trace available");
-    inputState.extendedErrorMessage = `${i18n.t(
-      "Participants with a value beyond the range of the Q sort design"
-    )}: ${maxValueArray.join(", ")} ${minValueArray.join(", ")}.`;
-    inputState.isLoadZipButtonGreen = false;
-    inputState.isCsvDataErrorCheckButtonGreen = false;
-    inputState.showDataImportSuccessMessage = false;
-
-    throw new Error("Q sort values outside allowed range");
+    inputState.setState({ showWarningMessageBar: false });
+    inputState.setState({ showErrorMessageBar: true });
+    inputState.setState({
+      errorMessage: `${i18n.t('There is a Q sort with values beyond the range of the Q sort design')}`,
+    });
+    inputState.setState({ errorStackTrace: i18n.t('no stack trace available') });
+    inputState.setState({
+      extendedErrorMessage: `${i18n.t(
+        'Participants with a value beyond the range of the Q sort design'
+      )}: ${maxValueArray.join(', ')} ${minValueArray.join(', ')}.`,
+    });
+    inputState.setState({ isLoadZipButtonGreen: false });
+    inputState.setState({ isCsvDataErrorCheckButtonGreen: false });
+    inputState.setState({ showDataImportSuccessMessage: false });
+    throw new Error('Q sort values outside allowed range');
   }
   if (nonNumericArray.length > 0) {
-    inputState.showWarningMessageBar = false;
-    inputState.showErrorMessageBar = true;
-    inputState.errorMessage = `${i18n.t(
-      "The Q sorts contain a non-numeric value"
-    )}`;
-    inputState.errorStackTrace = i18n.t("no stack trace available");
-    inputState.extendedErrorMessage = `${i18n.t(
-      "Check the Q sort data for non-numeric values"
-    )}: ${nonNumericArray.join(", ")}.`;
-    inputState.isLoadZipButtonGreen = false;
-    inputState.isCsvDataErrorCheckButtonGreen = false;
-    inputState.showDataImportSuccessMessage = false;
-
-    throw new Error("Q sort values non-numeric");
+    inputState.setState({ showWarningMessageBar: false });
+    inputState.setState({ showErrorMessageBar: true });
+    inputState.setState({ errorMessage: `${i18n.t('The Q sorts contain a non-numeric value')}` });
+    inputState.setState({ errorStackTrace: i18n.t('no stack trace available') });
+    inputState.setState({
+      extendedErrorMessage: `${i18n.t('Check the Q sort data for non-numeric values')}: ${nonNumericArray.join(', ')}.`,
+    });
+    inputState.setState({ isLoadZipButtonGreen: false });
+    inputState.setState({ isCsvDataErrorCheckButtonGreen: false });
+    inputState.setState({ showDataImportSuccessMessage: false });
+    throw new Error('Q sort values non-numeric');
   }
   namesArray = checkUniqueParticipantName(namesArray);
   return { sortsArray, namesArray };

@@ -20,21 +20,6 @@ export default function formatExcelType1ForDisplay(rawStatementsData, rawSortsDa
   let numStatementsMatchError = false;
   let missingStatementNumberError = false;
 
-  const updateStatements = coreState((state) => state.updateStatements);
-  const updateSortsDisplayText = coreState((state) => state.updateSortsDisplayText);
-  const updateProjectName = coreState((state) => state.updateProjectName);
-  const updateNumQsorts = coreState((state) => state.updateNumQsorts);
-  const updateNumStatements = coreState((state) => state.updateNumStatements);
-  const updateQSortPattern = coreState((state) => state.updateQSortPattern);
-  const updateMainDataObject = coreState((state) => state.updateMainDataObject);
-  const updateMultiplierArray = coreState((state) => state.updateMultiplierArray);
-  const updateRespondentNames = coreState((state) => state.updateRespondentNames);
-  const updateAreQsortsLoaded = inputState((state) => state.updateAreQsortsLoaded);
-  const updateIsQsortPatternLoaded = inputState((state) => state.updateIsQsortPatternLoaded);
-  const updateExcelErrorMessage1 = inputState((state) => state.updateExcelErrorMessage1);
-  const updateShowExcelErrorModal = inputState((state) => state.updateShowExcelErrorModal);
-  const updateStatementsLoaded = inputState((state) => state.updateStatementsLoaded);
-
   try {
     console.log(`3. formatExcelType1ForDisplay called`);
 
@@ -56,7 +41,7 @@ export default function formatExcelType1ForDisplay(rawStatementsData, rawSortsDa
     const numStatements = sortTriangleShape.length; // number of statements
 
     // creates array of objects with sort value and statement number
-    const inputData2 = rawSortsData.slice();
+    const inputData2 = cloneDeep(rawSortsData);
     const sortData = getExcelT1SortText(inputData2, numStatements);
 
     if (sortData[1].length === 0 && sortData[2].length === 0) {
@@ -95,7 +80,7 @@ export default function formatExcelType1ForDisplay(rawStatementsData, rawSortsDa
     if (statements.length !== numStatements) {
       numStatementsMatchError = true;
     } else {
-      updateStatementsLoaded(true);
+      inputState.setState({ statementsLoaded: true });
     }
 
     const sortsDisplayText = respondentNames.map((item, i) => `${item} : ${respondentSorts[i]}`);
@@ -110,22 +95,22 @@ export default function formatExcelType1ForDisplay(rawStatementsData, rawSortsDa
 
     projectHistoryState.projectHistoryArray = [logMessageObj1];
 
-    updateStatements(statements);
-    updateSortsDisplayText(sortsDisplayText);
-    updateProjectName(projectName);
-    updateNumQsorts(numQsorts);
-    updateNumStatements(numStatements);
-    updateQSortPattern(sortTriangleShape);
-    updateMainDataObject(mainDataObject);
-    updateMultiplierArray(multiplierArray);
-    updateRespondentNames(participantNames);
-    updateAreQsortsLoaded(true);
-    updateIsQsortPatternLoaded(true);
+    coreState.setState({ statements: statements });
+    coreState.setState({ sortsDisplayText: sortsDisplayText });
+    coreState.setState({ projectName: projectName });
+    coreState.setState({ numQsorts: numQsorts });
+    coreState.setState({ numStatements: numStatements });
+    coreState.setState({ qSortPattern: sortTriangleShape });
+    coreState.setState({ mainDataObject: mainDataObject });
+    coreState.setState({ multiplierArray: multiplierArray });
+    coreState.setState({ respondentNames: participantNames });
+    inputState.setState({ areQsortsLoaded: true });
+    inputState.setState({ isQsortPatternLoaded: true });
   } catch (error) {
     console.log(error.message);
     console.log(error.stack);
-    updateExcelErrorMessage1(error.message);
-    updateShowExcelErrorModal(true);
+    inputState.setState({ excelErrorMessage1: error.message });
+    inputState.setState({ showExcelErrorModal: true });
   }
   return [
     outOfRangeError,

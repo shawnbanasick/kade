@@ -1,40 +1,38 @@
-import grabSortsT3 from "./grabSortsT3";
-import grabStatementsT3 from "./grabStatementsT3";
-import createMainDataObject from "../../Excel/excelLogic/createMainDataObject";
-import calcMultiplierArrayT2 from "../../Excel/excelLogic/calcMultiplierArrayT2";
-import grabRespondentNamesT3 from "./grabRespondentNamesT3";
-import checkUniqueParticipantNames from "../../logic/checkUniqueParticipantNames";
-import projectHistoryState from "../../../GlobalState/projectHistoryState";
-import coreState from "../../../GlobalState/coreState";
-import inputState from "../../../GlobalState/inputState";
+import grabSortsT3 from './grabSortsT3';
+import grabStatementsT3 from './grabStatementsT3';
+import createMainDataObject from '../../Excel/excelLogic/createMainDataObject';
+import calcMultiplierArrayT2 from '../../Excel/excelLogic/calcMultiplierArrayT2';
+import grabRespondentNamesT3 from './grabRespondentNamesT3';
+import checkUniqueParticipantNames from '../../logic/checkUniqueParticipantNames';
+import projectHistoryState from '../../../GlobalState/projectHistoryState';
+import coreState from '../../../GlobalState/coreState';
+import inputState from '../../../GlobalState/inputState';
 
 function formatype3ForDisplay(data) {
   try {
     // store #1
-    let projectName = "";
+    let projectName = '';
     let projectNameString = data[0][2][0];
     if (projectNameString) {
-      projectNameString = projectNameString.split(",");
+      projectNameString = projectNameString.split(',');
       projectName = projectNameString[1];
     }
 
     // store #2
     const logMessageObj1 = {
       logMessage: `${projectName} data loaded from Excel Type 3 file`,
-      logType: "excel3Input"
+      logType: 'excel3Input',
     };
     const projectHistoryArray = [logMessageObj1];
 
     // store #3 - Q-sort pattern
     const qSortPattern1 = data[0][6][0].toString();
     if (qSortPattern1.length < 18) {
-      throw new Error(
-        "Can't find Q-sort pattern on 'Analysis Overview' worksheet!"
-      );
+      throw new Error("Can't find Q-sort pattern on 'Analysis Overview' worksheet!");
     }
 
     const qSortPattern2 = qSortPattern1.split('"');
-    const qSortPattern = qSortPattern2[1].split(",").map(Number);
+    const qSortPattern = qSortPattern2[1].split(',').map(Number);
 
     // store #4 - multiplierArray
     const multiplierArray = calcMultiplierArrayT2([...qSortPattern]);
@@ -56,22 +54,15 @@ function formatype3ForDisplay(data) {
 
     // store #9 - get statements
     const currentStatements = grabStatementsT3(data[1]);
-    const errorCheck = currentStatements.filter(
-      statement => statement.length > 0
-    );
+    const errorCheck = currentStatements.filter((statement) => statement.length > 0);
     if (errorCheck.length === 0) {
-      throw new Error(
-        "Can't find any statements on the 'Statements' worksheet!"
-      );
+      throw new Error("Can't find any statements on the 'Statements' worksheet!");
     } else {
-      inputState.statementsLoaded = true;
+      inputState.setState({ statementsLoaded: true });
     }
 
     // store #10 mainDataObject
-    const mainDataObject = createMainDataObject(
-      respondentNames,
-      respondentSorts
-    );
+    const mainDataObject = createMainDataObject(respondentNames, respondentSorts);
 
     // store #11 statements number array
     const statementNumArray = [];
@@ -88,25 +79,25 @@ function formatype3ForDisplay(data) {
 
     const participantNames = checkUniqueParticipantNames(respondentNames);
 
-    projectHistoryState.projectHistoryArray = projectHistoryArray;
-    coreState.projectName = projectName;
-    coreState.qSortPattern = qSortPattern;
-    coreState.multiplierArray = multiplierArray;
-    coreState.numStatements = numStatements;
-    coreState.respondentNames = participantNames;
-    coreState.numQsorts = numQsorts;
-    coreState.statements = currentStatements;
-    coreState.mainDataObject = mainDataObject;
-    coreState.statementNumArray = statementNumArray;
-    coreState.sortsDisplayText = sortsDisplayText;
-    inputState.areQsortsLoaded = true;
-    inputState.isQsortPatternLoaded = true;
-    inputState.statementsLoaded = true;
+    projectHistoryState.setState({ projectHistoryArray: projectHistoryArray });
+    coreState.setState({ projectName: projectName });
+    coreState.setState({ qSortPattern: qSortPattern });
+    coreState.setState({ multiplierArray: multiplierArray });
+    coreState.setState({ numStatements: numStatements });
+    coreState.setState({ respondentNames: participantNames });
+    coreState.setState({ numQsorts: numQsorts });
+    coreState.setState({ statements: currentStatements });
+    coreState.setState({ mainDataObject: mainDataObject });
+    coreState.setState({ statementNumArray: statementNumArray });
+    coreState.setState({ sortsDisplayText: sortsDisplayText });
+    inputState.setState({ areQsortsLoaded: true });
+    inputState.setState({ isQsortPatternLoaded: true });
+    inputState.setState({ statementsLoaded: true });
   } catch (error) {
     console.log(error.message); //
     console.log(error.stack);
-    inputState.excelErrorMessage1 = error.message;
-    inputState.showExcelErrorModal = true;
+    inputState.setState({ excelErrorMessage1: error.message });
+    inputState.setState({ showExcelErrorModal: true });
   }
 }
 

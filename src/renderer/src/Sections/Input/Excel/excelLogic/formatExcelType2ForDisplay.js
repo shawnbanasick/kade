@@ -12,22 +12,6 @@ export default function formatype2ForDisplay(rawStatementsData, rawSortsData) {
   let noSortPatternError = false;
   let numStatementsMatchError = false;
 
-  const updateProjectHistoryArray = projectHistoryState((state) => state.updateProjectHistoryArray);
-  const updateProjectName = coreState((state) => state.updateProjectName);
-  const updateMultiplierArray = coreState((state) => state.updateMultiplierArray);
-  const updateStatements = coreState((state) => state.updateStatements);
-  const updateNumQsorts = coreState((state) => state.updateNumQsorts);
-  const updateQSortPattern = coreState((state) => state.updateQSortPattern);
-  const updateNumStatements = coreState((state) => state.updateNumStatements);
-  const updateMainDataObject = coreState((state) => state.updateMainDataObject);
-  const updateStatementNumArray = coreState((state) => state.updateStatementNumArray);
-  const updateSortsDisplayText = coreState((state) => state.updateSortsDisplayText);
-  const updateRespondentNames = coreState((state) => state.updateRespondentNames);
-  const updateAreQsortsLoaded = inputState((state) => state.updateAreQsortsLoaded);
-  const updateIsQsortPatternLoaded = inputState((state) => state.updateIsQsortPatternLoaded);
-  const updateExcelErrorMessage1 = inputState((state) => state.updateExcelErrorMessage1);
-  const updateShowExcelErrorModal = inputState((state) => state.updateShowExcelErrorModal);
-
   try {
     // store #1
     const projectName1 = rawSortsData[0][1];
@@ -88,25 +72,24 @@ export default function formatype2ForDisplay(rawStatementsData, rawSortsData) {
 
     const participantNames = checkUniqueParticipantNames(respondentNames);
 
-    updateProjectHistoryArray(projectHistoryArray);
-    updateProjectName(projectName);
-    updateMultiplierArray(multiplierArray);
-    updateStatements(currentStatements);
-    updateNumQsorts(totalNumberSorts);
-    updateQSortPattern(sortTriangleShape);
-    updateNumStatements(originalSortSize);
-    updateMainDataObject(mainDataObject);
-    updateStatementNumArray(statementNumArray);
-    updateSortsDisplayText(sortsDisplayText);
-    updateRespondentNames(participantNames);
-    updateAreQsortsLoaded(true);
-    updateIsQsortPatternLoaded(true);
+    projectHistoryState.setState({ projectHistoryArray: projectHistoryArray });
+    coreState.setState({ projectName: projectName });
+    coreState.setState({ multiplierArray: multiplierArray });
+    coreState.setState({ statements: currentStatements });
+    coreState.setState({ numQsorts: totalNumberSorts });
+    coreState.setState({ qSortPattern: sortTriangleShape });
+    coreState.setState({ numStatements: originalSortSize });
+    coreState.setState({ mainDataObject: mainDataObject });
+    coreState.setState({ statementNumArray: statementNumArray });
+    coreState.setState({ sortsDisplayText: sortsDisplayText });
+    coreState.setState({ respondentNames: participantNames });
+    inputState.setState({ areQsortsLoaded: true });
+    inputState.setState({ isQsortPatternLoaded: true });
   } catch (error) {
     console.log(error.message);
     console.log(error.stack);
-
-    updateExcelErrorMessage1(error.message);
-    updateShowExcelErrorModal(true);
+    inputState.setState({ excelErrorMessage1: error.message });
+    inputState.setState({ showExcelErrorModal: true });
 
     /*
     inputState.excelErrorMessage1 = error.message;

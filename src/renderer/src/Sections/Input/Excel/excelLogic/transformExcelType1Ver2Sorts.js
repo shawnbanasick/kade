@@ -18,18 +18,6 @@ const transformExcelType1Ver2Sorts = (sortData, numStatements, participantNames)
   sortData3.shift();
   const sortData4 = transposeMatrix(sortData3);
   const sortPattern = sortData4.shift();
-  const updateShowWarningMessageBar = inputState((state) => state.updateShowWarningMessageBar);
-  const updateShowErrorMessageBar = inputState((state) => state.updateShowErrorMessageBar);
-  const updateErrorMessage = inputState((state) => state.updateErrorMessage);
-  const updateErrorStackTrace = inputState((state) => state.updateErrorStackTrace);
-  const updateExtendedErrorMessage = inputState((state) => state.updateExtendedErrorMessage);
-  const updateIsLoadZipButtonGreen = inputState((state) => state.updateIsLoadZipButtonGreen);
-  const updateIsCsvDataErrorCheckButtonGreen = inputState(
-    (state) => state.updateIsCsvDataErrorCheckButtonGreen
-  );
-  const updateShowDataImportSuccessMessage = inputState(
-    (state) => state.updateShowDataImportSuccessMessage
-  );
 
   let overRangeSorts = [];
   let underRangeSorts = [];
@@ -44,31 +32,18 @@ const transformExcelType1Ver2Sorts = (sortData, numStatements, participantNames)
     let length = item.length;
 
     if (length !== +numStatements) {
-      updateShowWarningMessageBar(false);
-      updateShowErrorMessageBar(true);
-      updateErrorMessage(
-        i18n.t(
+      inputState.setState({ showWarningMessageBar: false });
+      inputState.setState({ showErrorMessageBar: true });
+      inputState.setState({
+        errorMessage: i18n.t(
           'One or more participants have a different number of Q sorts values than the project design'
-        )
-      );
-      updateErrorStackTrace(i18n.t('no stack trace available'));
-      updateExtendedErrorMessage(i18n.t('Check the Q sort data'));
-      updateIsLoadZipButtonGreen(false);
-      updateIsCsvDataErrorCheckButtonGreen(false);
-      updateShowDataImportSuccessMessage(false);
-
-      /*
-      inputState.showWarningMessageBar = false;
-      inputState.showErrorMessageBar = true;
-      inputState.errorMessage = i18n.t(
-        'One or more participants have a different number of Q sorts values than the project design'
-      );
-      inputState.errorStackTrace = i18n.t('no stack trace available');
-      inputState.extendedErrorMessage = i18n.t('Check the Q sort data');
-      inputState.isLoadZipButtonGreen = false;
-      inputState.isCsvDataErrorCheckButtonGreen = false;
-      inputState.showDataImportSuccessMessage = false;
-      */
+        ),
+      });
+      inputState.setState({ errorStackTrace: i18n.t('no stack trace available') });
+      inputState.setState({ extendedErrorMessage: i18n.t('Check the Q sort data') });
+      inputState.setState({ isLoadZipButtonGreen: false });
+      inputState.setState({ isCsvDataErrorCheckButtonGreen: false });
+      inputState.setState({ showDataImportSuccessMessage: false });
       throw new Error('Check the Q sort data');
     }
     item.forEach((item2, index) => {
