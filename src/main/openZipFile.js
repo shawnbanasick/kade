@@ -20,7 +20,7 @@ async function openDatFile() {
       if (!result.canceled) {
         let paths = result.filePaths;
         if (paths && paths.length > 0) {
-          const content = fs.readFileSync(paths[0]);
+          const content = fs.readFileSync(paths[0], 'utf-8').toString();
           window.webContents.send('zipData', content);
         }
       }

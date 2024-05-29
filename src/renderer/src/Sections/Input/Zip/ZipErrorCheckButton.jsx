@@ -1,38 +1,46 @@
-import React from 'react';
 import styled from 'styled-components';
 import GeneralButton from './../../../Utils/GeneralButton';
-import getInputState from '../../GlobalState/getInputState';
 import inputState from '../../GlobalState/inputState';
 import standardImportErrorChecks from '../ErrorChecking/standardImportErrorChecks';
 import { useTranslation } from 'react-i18next';
-
-const handleOnclick = () => {
-  const statementsImported = getInputState('statementsLoaded');
-  const areQsortsLoaded = getInputState('areQsortsLoaded');
-  const isQsortPatternLoaded = getInputState('isQsortPatternLoaded');
-
-  if (statementsImported && areQsortsLoaded && isQsortPatternLoaded) {
-    let passesChecks = standardImportErrorChecks();
-    if (passesChecks) {
-      inputState.isCsvDataErrorCheckButtonGreen = true;
-      inputState.showDataImportSuccessMessage = true;
-      inputState.showErrorMessageBar = false;
-    }
-  } else {
-    inputState.showErrorMessageBar = true;
-    inputState.errorMessage = 'Statements, Q sorts, or Q sort pattern values have not been loaded';
-    inputState.errorStackTrace = 'Error in CSV data check';
-    inputState.extendedErrorMessage =
-      'Load the statements, Q sorts and Q sort pattern values before checking for errors';
-  }
-};
 
 const CsvDataErrorCheckButton = (props) => {
   const { t } = useTranslation();
 
   // getState
-  const isActive = getInputState('isCsvDataErrorCheckButtonGreen');
-  const showDataImportSuccessMessage = getInputState('showDataImportSuccessMessage');
+  const isActive = inputState((state) => state.isCsvDataErrorCheckButtonGreen);
+  const showDataImportSuccessMessage = inputState((state) => state.showDataImportSuccessMessage);
+  const statementsImported = inputState((state) => state.statementsLoaded);
+  const areQsortsLoaded = inputState((state) => state.areQsortsLoaded);
+  const isQsortPatternLoaded = inputState((state) => state.isQsortPatternLoaded);
+  const updateIsCsvDataErrorCheckButtonGreen = inputState(
+    (state) => state.updateIsCsvDataErrorCheckButtonGreen
+  );
+  const updateShowDataImportSuccessMessage = inputState(
+    (state) => state.updateShowDataImportSuccessMessage
+  );
+  const updateShowErrorMessageBar = inputState((state) => state.updateShowErrorMessageBar);
+  const updateErrorMessage = inputState((state) => state.updateErrorMessage);
+  const updateErrorStackTrace = inputState((state) => state.updateErrorStackTrace);
+  const updateExtendedErrorMessage = inputState((state) => state.updateExtendedErrorMessage);
+
+  const handleOnclick = () => {
+    if (statementsImported && areQsortsLoaded && isQsortPatternLoaded) {
+      let passesChecks = standardImportErrorChecks();
+      if (passesChecks) {
+        updateIsCsvDataErrorCheckButtonGreen(true);
+        updateShowDataImportSuccessMessage(true);
+        updateShowErrorMessageBar(false);
+      }
+    } else {
+      updateShowErrorMessageBar(true);
+      updateErrorMessage('Statements, Q sorts, or Q sort pattern values have not been loaded');
+      updateErrorStackTrace('Error in Zip data check');
+      updateExtendedErrorMessage(
+        'Load the statements, Q sorts and Q sort pattern values before checking for errors'
+      );
+    }
+  };
 
   return (
     <Container>
@@ -42,7 +50,7 @@ const CsvDataErrorCheckButton = (props) => {
       <TradButton
         as={GeneralButton}
         id="csvDataErrorCheckButton"
-        isActive={isActive}
+        $isActive={isActive}
         onClick={handleOnclick}
       >
         {t('Check for Errors')}

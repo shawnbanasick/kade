@@ -1,16 +1,16 @@
-const parseKade = data => {
-  const result = data.split(/\r?\n/).filter(element => element);
+const parseKade = (data) => {
+  const result = data.split(/\r?\n/).filter((element) => element);
 
   // delimiter check - comma or semicolon
-  const commaLen = result[0].split(",").length - 1;
-  const semiLen = result[0].split(";").length - 1;
+  const commaLen = result[0].split(',').length - 1;
+  const semiLen = result[0].split(';').length - 1;
 
   let result2 = [];
   if (commaLen > semiLen) {
-    result2 = result.map(element =>
+    result2 = result.map((element) =>
       element
-        .split(",")
-        .filter(element => element)
+        .split(',')
+        .filter((element) => element)
         .map((element, index) => {
           element.trim();
 
@@ -21,10 +21,10 @@ const parseKade = data => {
         })
     );
   } else {
-    result2 = result.map(element =>
+    result2 = result.map((element) =>
       element
-        .split(";")
-        .filter(element => element)
+        .split(';')
+        .filter((element) => element)
         .map((element, index) => {
           element.trim();
 

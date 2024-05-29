@@ -12,7 +12,7 @@ import JSZip from 'jszip';
 
 function processKadeZip(data) {
   if (inputState.isDataAlreadyLoaded) {
-    inputState.excelErrorMessage1 = 'Data are already loaded.';
+    inputState.setState({ excelErrorMessage1: 'Data are already loaded.' });
     return;
   }
 
@@ -27,7 +27,7 @@ function processKadeZip(data) {
   try {
     JSZip.loadAsync(data).then(function (zip) {
       Object.keys(zip.files).forEach(function (filename) {
-        inputState.dataOrigin = 'zip';
+        inputState.setState({ dataOrigin: 'zip' });
 
         // HANDLE STATEMENTS
         if (filename === 'statements.txt') {
@@ -37,13 +37,13 @@ function processKadeZip(data) {
               .filter((element) => element)
               .map((element) => element.trim());
 
-            coreState.numStatements = result.length;
+            coreState.setState({ numStatements: result.length });
 
             statementNumArray = createStatementNumArray(result.length);
 
-            coreState.statementNumArray = statementNumArray;
-            coreState.statements = result;
-            inputState.areStatementsLoaded = true;
+            coreState.setState({ statementNumArray: statementNumArray });
+            coreState.setState({ statements: result });
+            inputState.setState({ areStatementsLoaded: true });
           });
         }
 
@@ -61,11 +61,11 @@ function processKadeZip(data) {
               sortDisplayText = sortsDisplayText(mainDataObject);
             })
             .then(function () {
-              coreState.respondentNames = participantNames;
-              coreState.numQsorts = numberSorts;
-              coreState.mainDataObject = mainDataObject;
-              coreState.sortsDisplayText = sortDisplayText;
-              inputState.areQsortsLoaded = true;
+              coreState.setState({ respondentNames: participantNames });
+              coreState.setState({ numQsorts: numberSorts });
+              coreState.setState({ mainDataObject: mainDataObject });
+              coreState.setState({ sortsDisplayText: sortDisplayText });
+              inputState.setState({ areQsortsLoaded: true });
             });
         }
 
@@ -76,22 +76,22 @@ function processKadeZip(data) {
             sortPattern = parseKade(fileData);
             multiplierArray = modifySortPattern(sortPattern);
             qSortPatternArray = calcQsortPatternArray(multiplierArray);
-            coreState.multiplierArray = multiplierArray;
-            coreState.qSortPattern = qSortPatternArray;
-            inputState.isQsortPatternLoaded = true;
+            coreState.setState({ multiplierArray: multiplierArray });
+            coreState.setState({ qSortPattern: qSortPatternArray });
+            inputState.setState({ isQsortPatternLoaded: true });
           });
         }
 
         // HANDLE NAME
         if (filename === 'name.txt') {
           zip.files['name.txt'].async('string').then(function (fileData) {
-            coreState.projectName = fileData;
+            coreState.setState({ projectName: fileData });
           });
         }
       });
     });
 
-    inputState.isDataAlreadyLoaded = true;
+    inputState.setState({ isDataAlreadyLoaded: true });
   } catch (error) {
     console.log(error.message);
   }

@@ -7,6 +7,7 @@ import i18nextMainBackend from '../../app/localization/i18n.mainconfig';
 import openStaFile from './openStaFile';
 import openDatFile from './openDatFile';
 import openExcelFile from './openExcelFile';
+import openZipFile from './openZipFile';
 // import fs from 'fs';
 // import i18nextBackend from 'i18next-electron-fs-backend';
 //import installExtension, { REACT_DEVELOPER_TOOLS } from 'electron-devtools-installer';

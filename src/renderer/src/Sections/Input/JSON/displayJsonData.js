@@ -3,13 +3,12 @@ import checkUniqueParticipantName from '../logic/checkUniqueParticipantNames';
 import coreState from '../../GlobalState/coreState';
 import projectHistoryState from '../../GlobalState/projectHistoryState';
 import inputState from '../../GlobalState/inputState';
-import getCoreState from '../../GlobalState/getCoreState';
 import flatten from 'lodash/flatten';
 
 // todo - all-app fix - re-calcuate posShiftSorts with user input if unforced sorts present
 function displayJsonData(selection) {
   const id = selection;
-  const JsonObj = getCoreState('jsonObj');
+  const JsonObj = coreState.getState().jsonObj;
 
   let temp1;
   let sort0;
@@ -92,20 +91,20 @@ function displayJsonData(selection) {
   }
 
   const participantNames2 = checkUniqueParticipantName(participantNames);
-  const projectName = getCoreState('projectName');
+  const projectName = coreState.getState().projectName;
 
   const logMessageObj1 = {
     logMessage: `${projectName} data loaded from JSON file`,
     logType: 'jsonInput',
   };
 
-  projectHistoryState.projectHistoryArray = [logMessageObj1];
-  coreState.numQsorts = sortsAsNumbers.length;
-  coreState.sortsDisplayText = sortsDisplayText;
-  coreState.mainDataObject = mainDataObject;
-  coreState.respondentNames = participantNames2;
-  coreState.multiplierArray = ['not loaded'];
-  inputState.showJsonFileLoadedMessage = true;
-  inputState.dataOrigin = 'json';
+  projectHistoryState.setState({ projectHistoryArray: [logMessageObj1] });
+  coreState.setState({ numQsorts: sortsAsNumbers.length });
+  coreState.setState({ sortsDisplayText: sortsDisplayText });
+  coreState.setState({ mainDataObject: mainDataObject });
+  coreState.setState({ respondentNames: participantNames2 });
+  coreState.setState({ multiplierArray: ['not loaded'] });
+  inputState.setState({ showJsonFileLoadedMessage: true });
+  inputState.setState({ dataOrigin: 'json' });
 }
 export default displayJsonData;

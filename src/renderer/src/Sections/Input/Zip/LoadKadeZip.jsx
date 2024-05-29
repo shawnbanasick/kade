@@ -44,21 +44,20 @@ const LoadTxtStatementFile = () => {
         await window.electronAPI.openZipFile();
         window.bridgeZip.zipData((event, zipData) => {
           processKadeZip(zipData);
-          inputState.showErrorMessageBar = false;
+          updateShowErrorMessageBar(false);
           const logMessageObj1 = {
             logMessage: `Data loaded from ZIP file`,
             logType: 'csvInput',
           };
+          updateIsInputButtonGreen(true);
+          updateNotifyDataUploadSuccess(true);
+          updateIsLoadExcelT3ButtonGreen(true);
+          updateIsLoadZipButtonGreen(true);
+          updateStatementsLoaded(true);
+          updateAreQsortsLoaded(true);
+          updateIsQsortPatternLoaded(true);
           projectHistoryState.projectHistoryArray = [logMessageObj1];
         });
-
-        updateIsInputButtonGreen(true);
-        updateNotifyDataUploadSuccess(true);
-        updateIsLoadExcelT3ButtonGreen(true);
-        updateIsLoadZipButtonGreen(true);
-        updateStatementsLoaded(true);
-        updateAreQsortsLoaded(true);
-        updateIsQsortPatternLoaded(true);
       } catch (error) {
         // catch unknown input error
         updateShowErrorMessageBar(true);

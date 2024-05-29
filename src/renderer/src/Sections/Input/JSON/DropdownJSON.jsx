@@ -1,14 +1,8 @@
-import React from 'react';
+import { useState } from 'react';
 import { toast } from 'react-toastify';
 import { Dropdown } from 'semantic-ui-react';
-import { view, store } from '@risingstack/react-easy-state';
 import { useTranslation } from 'react-i18next';
 import inputState from '../../GlobalState/inputState';
-
-const localStore = store({
-  options: [],
-  activeValue: '',
-});
 
 function formatOptions(rawOptions) {
   const formattedOptions = [];
@@ -25,17 +19,27 @@ function formatOptions(rawOptions) {
 
 const DropdownJSON = (props) => {
   const { t } = useTranslation();
+  const updateNotifyDataUploadSuccess = inputState((state) => state.updateNotifyDataUploadSuccess);
+  const updateIsLoadJsonQsortsButtonGreen = inputState(
+    (state) => state.updateIsLoadJsonQsortsButtonGreen
+  );
 
-  const saveDropdownValueToState = (event, data) => {
-    localStore.activeValue = data.value;
-    props.onChangeMessageUpTree(data.value);
-    toast.dismiss();
-    inputState.notifyDataUploadSuccess = true;
-    inputState.isLoadJsonQsortsButtonGreen = true;
-  };
+  const [localStore, setLocalStore] = useState({
+    options: [],
+    activeValue: '',
+  });
 
   const options = formatOptions(props.options);
   localStore.options = options;
+
+  const saveDropdownValueToState = (event, data) => {
+    setLocalStore({ options: options, activeValue: data.value });
+    props.onChangeMessageUpTree(data.value);
+    toast.dismiss();
+    updateNotifyDataUploadSuccess(true);
+    updateIsLoadJsonQsortsButtonGreen(true);
+  };
+
   return (
     <div role="listbox" style={{ marginLeft: 20 }}>
       <span style={{ marginRight: 10, fontSize: 20 }}>

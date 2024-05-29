@@ -1,29 +1,36 @@
-import React from 'react';
+import { useState } from 'react';
 import { toast } from 'react-toastify';
 import { Dropdown } from 'semantic-ui-react';
-import { view, store } from '@risingstack/react-easy-state';
 import { useTranslation } from 'react-i18next';
 import inputState from '../../GlobalState/inputState';
-import getInputState from '../../GlobalState/getInputState';
-import getCoreState from '../../GlobalState/getCoreState';
 import coreState from '../../GlobalState/coreState';
 import checkUniqueParticipantNames from '../logic/checkUniqueParticipantNames';
 
-const localStore = store({
-  options: [
+const DropdownJSON = (props) => {
+  const { t } = useTranslation();
+  const updateNotifyDataUploadSuccess = inputState((state) => state.updateNotifyDataUploadSuccess);
+  const updateIsLoadSheetsCsvButtonGreen = inputState(
+    (state) => state.updateIsLoadSheetsCsvButtonGreen
+  );
+  const updateUserSelectSheetsPartId = inputState((state) => state.updateUserSelectSheetsPartId);
+  const qSortsLoaded = inputState((state) => state.isLoadSheetsCsvButtonGreen);
+  const mainDataObjectArray = coreState((state) => state.mainDataObject);
+  const names2 = inputState((state) => state.csvRandomIdArray);
+
+  const mainOptions = [
     { key: 1, text: 'participant ID', value: 'partId' },
     { key: 2, text: 'random ID', value: 'randomId' },
     { key: 3, text: 'url UserCode', value: 'urlUsercode' },
-  ],
-  activeValue: '',
-});
+  ];
 
-const DropdownJSON = (props) => {
-  const { t } = useTranslation();
+  const [localStore, setLocalStore] = useState({
+    options: mainOptions,
+    activeValue: '',
+  });
 
   const saveDropdownValueToState = (event, data) => {
     let value = data.value;
-    localStore.activeValue = value;
+    setLocalStore({ options: mainOptions, activeValue: value });
 
     console.log('value', value);
 
@@ -33,16 +40,13 @@ const DropdownJSON = (props) => {
 
     props.onChangeMessageUpSheetsTree(value);
     toast.dismiss();
-    inputState.notifyDataUploadSuccess = true;
-    inputState.isLoadSheetsCsvButtonGreen = true;
-    inputState.userSelectSheetsPartId = value;
 
-    let qSortsLoaded = getInputState('isLoadSheetsCsvButtonGreen');
+    updateNotifyDataUploadSuccess(true);
+    updateIsLoadSheetsCsvButtonGreen(true);
+    updateUserSelectSheetsPartId(value);
+
     if (qSortsLoaded) {
-      let mainDataObjectArray = getCoreState('mainDataObject');
-
       if (value === 'randomId') {
-        let names2 = getInputState('csvRandomIdArray');
         let names = checkUniqueParticipantNames(names2);
         mainDataObjectArray.forEach((item, index) => {
           item.name = names[index];
