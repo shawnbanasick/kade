@@ -1,5 +1,5 @@
-import difference from "lodash/difference";
-import union from "lodash/union";
+import difference from 'lodash/difference';
+import union from 'lodash/union';
 
 function convertJSONToData(JsonObj) {
   const csvBody = [];
@@ -8,7 +8,7 @@ function convertJSONToData(JsonObj) {
   const keys = Object.keys(JsonObj);
   // const headerArray = Object.keys(JsonObj[keys[0]]);
   const sort0 = JsonObj[keys[0]].sort;
-  const sortArray = sort0.split("|");
+  const sortArray = sort0.split('|');
 
   // get the Q-sort headers
   for (let k = 0, kLen = sortArray.length; k < kLen; k += 1) {
@@ -31,7 +31,7 @@ function convertJSONToData(JsonObj) {
 
   const headerArray2 = headers.concat(sortHeaders);
   // do not change to "ID" - will throw error when opening in MS Excel!
-  headerArray2.unshift("Id");
+  headerArray2.unshift('Id');
   csvBody.push(headerArray2);
 
   for (let i = 0, iLen = keys.length; i < iLen; i += 1) {
@@ -55,19 +55,19 @@ function convertJSONToData(JsonObj) {
       let value = arrayObj[arrayObjKeys[m]];
       // add for missing information
       if (value === null || value === undefined) {
-        value = "--";
+        value = '--';
       }
       // to keep commas in the list of statement numbers in the presort columns
       if (
-        arrayObjKeys[m] === "negStateNums" ||
-        arrayObjKeys[m] === "neuStateNums" ||
-        arrayObjKeys[m] === "posStateNums"
+        arrayObjKeys[m] === 'negStateNums' ||
+        arrayObjKeys[m] === 'neuStateNums' ||
+        arrayObjKeys[m] === 'posStateNums'
       ) {
         value = value.toString();
       } else {
         // remove any line break or extra comma in string
         if (isNaN(value) && value !== undefined && value !== null) {
-          value = value.replace(/(\r\n\t|\n|\r\t|,)/gm, "");
+          value = value.replace(/(\r\n\t|\n|\r\t|,)/gm, '');
         }
       }
 
@@ -76,7 +76,7 @@ function convertJSONToData(JsonObj) {
 
     // get Q-sort of object
     const sort1 = arrayObj.sort;
-    const sort2 = sort1.split("|");
+    const sort2 = sort1.split('|');
 
     for (let j = 0, jLen = sort2.length; j < jLen; j += 1) {
       const temp5 = +sort2[j];

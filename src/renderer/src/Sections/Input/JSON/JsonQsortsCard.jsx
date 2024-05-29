@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-// import LoadJsonQsorts from './LoadJsonQsorts';
+import LoadJsonQsorts from './LoadJsonQsorts';
 import { useTranslation } from 'react-i18next';
 
 const JsonQsortsCard = () => {
@@ -520,7 +520,7 @@ puo9ZsUK5AAoEEXBIIlJ1LHMFFIIFAAhtVAoGy26g1G5QrkEAgAZcEAmXnEkdwEUggkMBGlUCg7D
 ZqzQblCiQQSMAlgf8f9sftM14kzxAAAAAASUVORK5CYII="
         />
       </Image>
-      {/* <LoadJsonQsorts /> */}
+      <LoadJsonQsorts />
     </Card>
   );
 };

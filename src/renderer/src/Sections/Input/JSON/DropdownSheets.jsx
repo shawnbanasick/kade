@@ -16,6 +16,8 @@ const DropdownJSON = (props) => {
   const qSortsLoaded = inputState((state) => state.isLoadSheetsCsvButtonGreen);
   const mainDataObjectArray = coreState((state) => state.mainDataObject);
   const names2 = inputState((state) => state.csvRandomIdArray);
+  const updateMainDataObject = coreState((state) => state.updateMainDataObject);
+  const updateRespondentNames = coreState((state) => state.updateRespondentNames);
 
   const mainOptions = [
     { key: 1, text: 'participant ID', value: 'partId' },
@@ -51,12 +53,12 @@ const DropdownJSON = (props) => {
         mainDataObjectArray.forEach((item, index) => {
           item.name = names[index];
         });
-        coreState.mainDataObject = [...mainDataObjectArray];
-        coreState.respondentNames = [...names];
+        updateMainDataObject([...mainDataObjectArray]);
+        updateRespondentNames([...names]);
       }
 
       if (value === 'partId') {
-        let names2 = getInputState('csvPartIdArray');
+        let names2 = inputState((state) => state.csvPartIdArray);
         let names = checkUniqueParticipantNames(names2);
         mainDataObjectArray.forEach((item, index) => {
           item.name = names[index];
@@ -65,13 +67,13 @@ const DropdownJSON = (props) => {
         coreState.respondentNames = [...names];
       }
       if (value === 'urlUsercode') {
-        let names2 = getInputState('csvUrlUsercodeArray');
-        let names = checkUniqueParticipantNames(names2);
+        let names2b = inputState((state) => state.csvUrlUsercodeArray);
+        let names = checkUniqueParticipantNames(names2b);
         mainDataObjectArray.forEach((item, index) => {
           item.name = names[index];
         });
-        coreState.mainDataObject = [...mainDataObjectArray];
-        coreState.respondentNames = [...names];
+        updateMainDataObject([...mainDataObjectArray]);
+        updateRespondentNames([...names]);
       }
     }
   };

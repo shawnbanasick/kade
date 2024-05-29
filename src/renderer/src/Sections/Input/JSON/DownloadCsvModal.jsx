@@ -1,26 +1,27 @@
 import styled from 'styled-components';
-import React from 'react';
 import downloadCSVdata from './downloadCSVdata';
 import LoadButton from '../DemoData/LoadButton';
 import inputState from '../../GlobalState/inputState';
-import getInputState from '../../GlobalState/getInputState';
 import { useTranslation } from 'react-i18next';
 import i18n from 'i18next';
 import CsvIcon from '../../images/CSV_Icon2.svg';
 
-const handleClick = () => {
-  const isJsonLoaded = getInputState('showJsonFileLoadedMessage');
-  if (isJsonLoaded) {
-    downloadCSVdata();
-  } else {
-    inputState.showErrorMessageBar = true;
-    inputState.errorMessage = i18n.t('No data to download');
-    inputState.extendedErrorMessage = i18n.t('No data available for download');
-  }
-};
-
 const DownloadCsvModal = () => {
   const { t } = useTranslation();
+  const isJsonLoaded = inputState((state) => state.showJsonFileLoadedMessage);
+  const updateShowErrorMessageBar = inputState((state) => state.updateShowErrorMessageBar);
+  const updateExtendedErrorMessage = inputState((state) => state.updateExtendedErrorMessage);
+  const updateErrorMessage = inputState((state) => state.updateErrorMessage);
+
+  const handleClick = () => {
+    if (isJsonLoaded) {
+      downloadCSVdata();
+    } else {
+      updateShowErrorMessageBar(true);
+      updateErrorMessage(i18n.t('No data to download'));
+      updateExtendedErrorMessage(i18n.t('No data available for download'));
+    }
+  };
 
   return (
     <GridContainerDiv>

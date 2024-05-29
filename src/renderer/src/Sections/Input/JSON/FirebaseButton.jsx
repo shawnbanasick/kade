@@ -1,30 +1,39 @@
 import styled from 'styled-components';
 import GeneralButton from './../../../Utils/GeneralButton';
 import { useTranslation } from 'react-i18next';
-import getInputState from '../../GlobalState/getInputState';
 import inputState from '../../GlobalState/inputState';
 
 const FirebaseButton = () => {
   const { t } = useTranslation();
+  const updateShowSheetsInput = inputState((state) => state.updateShowSheetsInput);
+  const updateShowFirebaseInput = inputState((state) => state.updateShowFirebaseInput);
+  const updateShowNetlifyInput = inputState((state) => state.updateShowNetlifyInput);
+  const updateIsShowFirebaseInputButtonGreen = inputState(
+    (state) => state.updateIsShowFirebaseInputButtonGreen
+  );
+  const updateIsShowSheetsInputButtonGreen = inputState(
+    (state) => state.updateIsShowSheetsInputButtonGreen
+  );
+  const updateIsShowNetlifyInputButtonGreen = inputState(
+    (state) => state.updateIsShowNetlifyInputButtonGreen
+  );
+  const isActive = inputState((state) => state.isShowFirebaseInputButtonGreen);
+  const isDisabled = inputState((state) => state.disabledFirebaseButton);
 
   const handleOnclick = () => {
-    inputState.showSheetsInput = false;
-    inputState.showFirebaseInput = true;
-    inputState.showNetlifyInput = false;
-    inputState.isShowFirebaseInputButtonGreen = true;
-    inputState.isShowSheetsInputButtonGreen = false;
-    inputState.isShowNetlifyInputButtonGreen = false;
+    updateShowSheetsInput(false);
+    updateShowFirebaseInput(true);
+    updateShowNetlifyInput(false);
+    updateIsShowFirebaseInputButtonGreen(true);
+    updateIsShowSheetsInputButtonGreen(false);
+    updateIsShowNetlifyInputButtonGreen(false);
   };
-
-  // getState
-  const isActive = getInputState('isShowFirebaseInputButtonGreen');
-  const isDisabled = getInputState('disabledFirebaseButton');
 
   return (
     <TradButton
       as={GeneralButton}
       id="FirebaseButton"
-      isActive={isActive}
+      $isActive={isActive}
       onClick={handleOnclick}
       disabled={isDisabled}
     >

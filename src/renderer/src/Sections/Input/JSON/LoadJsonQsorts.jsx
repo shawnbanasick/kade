@@ -1,23 +1,21 @@
-import styled from 'styled-components';
 import React from 'react';
-
+import styled from 'styled-components';
 import { ToastContainer, toast, Slide } from 'react-toastify';
 import convertJSONToData from './convertJSONToData';
 import revertLoadButtonsColors from '../DemoData/revertLoadButtonsColors';
 import throwDataAlreadyLoadedInputErrorModal from '../ErrorChecking/throwDataAlreadyLoadedInputErrorModal';
 import throwNoSortsInputErrorModal from '../ErrorChecking/throwNoSortsInputError';
 import LoadButton from '../DemoData/LoadButton';
+import { useTranslation } from 'react-i18next';
 import inputState from '../../GlobalState/inputState';
 import coreState from '../../GlobalState/coreState';
 import appState from '../../GlobalState/appState';
-import { useTranslation } from 'react-i18next';
-import getInputState from '../../GlobalState/getInputState';
 
-const { dialog } = require('electron').remote;
-const fs = require('fs');
-// needed to attach open dialog to mainWindow when opened
-const { remote } = require('electron');
-const mainWindow = remote.getCurrentWindow();
+// const { dialog } = require('electron').remote;
+// const fs = require('fs');
+// // needed to attach open dialog to mainWindow when opened
+// const { remote } = require('electron');
+// const mainWindow = remote.getCurrentWindow();
 
 function notifyWarning() {
   toast.warn('Select Participant Id to complete JSON import', {
@@ -25,38 +23,55 @@ function notifyWarning() {
   });
 }
 
-let isNoError = true;
+const LoadTxtStatementFile = () => {
+  const { t } = useTranslation();
+  const isLoadJsonQsortsButtonGreen = inputState((state) => state.isLoadJsonQsortsButtonGreen);
+  const isDataAlreadyLoaded = inputState((state) => state.isDataAlreadyLoaded);
+  const updateJsonParticipantId = inputState((state) => state.updateJsonParticipantId);
+  const updateShowJsonParticipantIdDropdown = inputState(
+    (state) => state.updateShowJsonParticipantIdDropdown
+  );
+  const updateCsvData = coreState((state) => state.updateCsvData);
+  const updateJsonObj = coreState((state) => state.updateJsonObj);
+  const updateDataOrigin = inputState((state) => state.updateDataOrigin);
+  const updateAreQsortsLoaded = inputState((state) => state.updateAreQsortsLoaded);
+  const updateIsInputButtonGreen = appState((state) => state.updateIsInputButtonGreen);
+  const updateIsDataButtonGreen = appState((state) => state.updateIsDataButtonGreen);
+  const updateDisabledSheetsButton = inputState((state) => state.updateDisabledSheetsButton);
+  const updateIsDataAlreadyLoaded = inputState((state) => state.updateIsDataAlreadyLoaded);
+  const updateCsvErrorMessage1 = inputState((state) => state.updateCsvErrorMessage1);
+  const updateShowCsvErrorModal = inputState((state) => state.updateShowCsvErrorModal);
+  const areStatementsLoaded = inputState((state) => state.areStatementsLoaded);
 
-const handleClick = async () => {
-  // check to see if data loaded and correlations started - true ==> throw error
+  let isNoError = true;
 
-  const isDataAlreadyLoaded = getInputState('isDataAlreadyLoaded');
+  const handleClick = async () => {
+    // check to see if data loaded and correlations started - true ==> throw error
+    if (isDataAlreadyLoaded) {
+      throwDataAlreadyLoadedInputErrorModal();
+    } else {
+      try {
+        // const files = await dialog.showOpenDialog(mainWindow, {
+        //   properties: ['openFile'],
+        //   filters: [
+        //     {
+        //       name: 'JSON',
+        //       extensions: ['json', 'JSON'],
+        //     },
+        //   ],
+        // });
 
-  if (isDataAlreadyLoaded) {
-    throwDataAlreadyLoadedInputErrorModal();
-  } else {
-    try {
-      const files = await dialog.showOpenDialog(mainWindow, {
-        properties: ['openFile'],
-        filters: [
-          {
-            name: 'JSON',
-            extensions: ['json', 'JSON'],
-          },
-        ],
-      });
+        // const path = files.filePaths[0];
 
-      const path = files.filePaths[0];
+        // fs.readFile(path, 'utf8', (error, data) => {
+        //   if (error != null) {
+        //     alert('file open error.');
+        //     return;
+        //   }
 
-      fs.readFile(path, 'utf8', (error, data) => {
-        if (error != null) {
-          alert('file open error.');
-          return;
-        }
-
-        if (data === undefined) {
-          return;
-        }
+        //   if (data === undefined) {
+        //     return;
+        //   }
 
         const results = JSON.parse(data);
 
@@ -81,37 +96,31 @@ const handleClick = async () => {
 
           const columnHeaders = csvData[0][0];
           revertLoadButtonsColors('json');
-          inputState.jsonParticipantId = columnHeaders;
-          inputState.showJsonParticipantIdDropdown = true;
-          coreState.csvData = csvData;
-          coreState.jsonObj = results;
-          inputState.dataOrigin = 'json';
-          inputState.areQsortsLoaded = true;
-          let areStatementsLoaded = getInputState('areStatementsLoaded');
-          appState.isInputButtonGreen = areStatementsLoaded;
-          appState.isDataButtonGreen = areStatementsLoaded;
-          inputState.disabledSheetsButton = true;
+          updateJsonParticipantId(columnHeaders);
+          updateShowJsonParticipantIdDropdown(true);
+          updateCsvData(csvData);
+          updateJsonObj(results);
+          updateDataOrigin('json');
+          updateAreQsortsLoaded(true);
+          updateIsInputButtonGreen(areStatementsLoaded);
+          updateIsDataButtonGreen(areStatementsLoaded);
+          updateDisabledSheetsButton(true);
           notifyWarning();
-          inputState.isDataAlreadyLoaded = true;
+          updateIsDataAlreadyLoaded(true);
         } // end if
-      }); // end read file path
-    } catch (error) {
-      inputState.csvErrorMessage1 = error.message;
-      inputState.showCsvErrorModal = true;
+        // end read file path
+      } catch (error) {
+        updateCsvErrorMessage1(error.message);
+        updateShowCsvErrorModal(true);
+      }
     }
-  }
-};
-
-const LoadTxtStatementFile = () => {
-  const { t } = useTranslation();
-
-  const isLoadJsonQsortsButtonGreen = getInputState('isLoadJsonQsortsButtonGreen');
+  };
 
   return (
     <React.Fragment>
       <JsonButton
         as={LoadButton}
-        isActive={isLoadJsonQsortsButtonGreen}
+        $isActive={isLoadJsonQsortsButtonGreen}
         onClick={() => handleClick()}
       >
         <LineContainer>
