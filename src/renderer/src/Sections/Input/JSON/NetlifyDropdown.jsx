@@ -1,29 +1,38 @@
-import React from 'react';
+import { useState } from 'react';
 import { toast } from 'react-toastify';
 import { Dropdown } from 'semantic-ui-react';
-import { view, store } from '@risingstack/react-easy-state';
 import { useTranslation } from 'react-i18next';
 import inputState from '../../GlobalState/inputState';
-import getInputState from '../../GlobalState/getInputState';
-import getCoreState from '../../GlobalState/getCoreState';
 import coreState from '../../GlobalState/coreState';
 import checkUniqueParticipantNames from '../logic/checkUniqueParticipantNames';
 
-const localStore = store({
-  options: [
+const DropdownJSON = (props) => {
+  const { t } = useTranslation();
+  const updateNotifyDataUploadSuccess = inputState((state) => state.updateNotifyDataUploadSuccess);
+  const updateUserSelectNetlifyPartId = inputState((state) => state.updateUserSelectNetlifyPartId);
+  const updateMainDataObject = coreState((state) => state.updateMainDataObject);
+  const updateRespondentNames = coreState((state) => state.updateRespondentNames);
+  let mainDataObjectArray = coreState((state) => state.mainDataObject);
+  // let mainDataObjectArray = getCoreState('mainDataObject');
+
+  const mainOptions = [
     { key: 1, text: 'participant ID', value: 'partId' },
     { key: 2, text: 'random ID', value: 'randomId' },
     { key: 3, text: 'url UserCode', value: 'urlUsercode' },
-  ],
-  activeValue: '',
-});
+  ];
 
-const DropdownJSON = (props) => {
-  const { t } = useTranslation();
+  const [localStore, setLocalStore] = useState({
+    options: mainOptions,
+    activeValue: '',
+  });
 
   const saveDropdownValueToState = (event, data) => {
     let value = data.value;
-    localStore.activeValue = value;
+    setLocalStore({
+      options: mainOptions,
+      activeValue: value,
+    });
+    // localStore.activeValue = value;
 
     if (value !== 'randomId' && value !== 'partId' && value !== 'urlUsercode') {
       return;
@@ -33,40 +42,52 @@ const DropdownJSON = (props) => {
     toast.dismiss();
     // inputState.isLoadNetlifyCsvButtonGreen = true;
 
-    let qSortsLoaded = getInputState('isLoadNetlifyCsvButtonGreen');
+    let qSortsLoaded = inputState((state) => state.isLoadNetlifyCsvButtonGreen);
+    // let qSortsLoaded = getInputState('isLoadNetlifyCsvButtonGreen');
 
     if (qSortsLoaded) {
-      inputState.notifyDataUploadSuccess = true;
-      inputState.userSelectNetlifyPartId = value;
-      let mainDataObjectArray = getCoreState('mainDataObject');
+      updateNotifyDataUploadSuccess(true);
+      updateUserSelectNetlifyPartId(value);
+      // inputState.notifyDataUploadSuccess = true;
+      // inputState.userSelectNetlifyPartId = value;
 
       if (value === 'randomId') {
-        let names2 = getInputState('csvRandomIdArray');
+        let names2 = inputState((state) => state.csvRandomIdArray);
+        // let names2 = getInputState('csvRandomIdArray');
         let names = checkUniqueParticipantNames(names2);
         mainDataObjectArray.forEach((item, index) => {
           item.name = names[index];
         });
-        coreState.mainDataObject = [...mainDataObjectArray];
-        coreState.respondentNames = [...names];
+
+        updateMainDataObject([...mainDataObjectArray]);
+        updateRespondentNames([...names]);
+        // coreState.mainDataObject = [...mainDataObjectArray];
+        // coreState.respondentNames = [...names];
       }
 
       if (value === 'partId') {
-        let names2 = getInputState('csvPartIdArray');
-        let names = checkUniqueParticipantNames(names2);
+        let names2c = inputState((state) => state.csvPartIdArray);
+        // let names2c = getInputState('csvPartIdArray');
+        let names = checkUniqueParticipantNames(names2c);
         mainDataObjectArray.forEach((item, index) => {
           item.name = names[index];
         });
-        coreState.mainDataObject = [...mainDataObjectArray];
-        coreState.respondentNames = [...names];
+        updateMainDataObject([...mainDataObjectArray]);
+        updateRespondentNames([...names]);
+        // coreState.mainDataObject = [...mainDataObjectArray];
+        // coreState.respondentNames = [...names];
       }
       if (value === 'urlUsercode') {
-        let names2 = getInputState('csvUrlUsercodeArray');
-        let names = checkUniqueParticipantNames(names2);
+        let names2b = inputState((state) => state.csvUrlUsercodeArray);
+        // let names2b = getInputState('csvUrlUsercodeArray');
+        let names = checkUniqueParticipantNames(names2b);
         mainDataObjectArray.forEach((item, index) => {
           item.name = names[index];
         });
-        coreState.mainDataObject = [...mainDataObjectArray];
-        coreState.respondentNames = [...names];
+        updateMainDataObject([...mainDataObjectArray]);
+        updateRespondentNames([...names]);
+        // coreState.mainDataObject = [...mainDataObjectArray];
+        // coreState.respondentNames = [...names];
       }
     }
 
