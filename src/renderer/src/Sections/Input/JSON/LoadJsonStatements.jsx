@@ -1,88 +1,55 @@
 import revertLoadButtonsColors from '../DemoData/revertLoadButtonsColors';
 import throwNoStatementsInputErrorModal from '../ErrorChecking/throwNoStatementsInputErrorModal';
 import LoadButton from '../DemoData/LoadButton';
-import inputState from '../../GlobalState/inputState';
-import getInputState from '../../GlobalState/getInputState';
-import coreState from '../../GlobalState/coreState';
-import appState from '../../GlobalState/appState';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-
-// const { dialog } = require('electron').remote;
-// const fs = require('fs');
-// // needed to attach open dialog to mainWindow when opened
-// const { remote } = require('electron');
-// const mainWindow = remote.getCurrentWindow();
+import coreState from '../../GlobalState/coreState';
+import inputState from '../../GlobalState/inputState';
+import appState from '../../GlobalState/appState';
+import { set } from 'lodash';
 
 const LoadTxtStatementFile = () => {
   const { t } = useTranslation();
-  const isLoadJsonTextButtonGreen = getInputState('isLoadJsonTextButtonGreen');
+  const isLoadJsonTextButtonGreen = inputState((state) => state.isLoadJsonTextButtonGreen);
+  const areQsortsLoaded = inputState((state) => state.areQsortsLoaded);
+  revertLoadButtonsColors('json');
 
-  const handleClick = async () => {
-    // check to see if data loaded and correlations started - true ==> throw error
+  const updateStatements = coreState((state) => state.updateStatements);
+  const updateNumStatements = coreState((state) => state.updateNumStatements);
+  const updateStatementsLoaded = inputState((state) => state.updateStatementsLoaded);
+  const updateNotifyDataUploadSuccess = inputState((state) => state.updateNotifyDataUploadSuccess);
+  const updateAreStatementsLoaded = inputState((state) => state.updateAreStatementsLoaded);
+  const updateIsLoadJsonTextButtonGreen = inputState(
+    (state) => state.updateIsLoadJsonTextButtonGreen
+  );
+  const updateIsInputButtonGreen = appState((state) => state.updateIsInputButtonGreen);
+  const updateIsDataButtonGreen = appState((state) => state.updateIsDataButtonGreen);
 
-    const files = await dialog.showOpenDialog(mainWindow, {
-      properties: ['openFile'],
-      filters: [
-        {
-          name: 'Text',
-          extensions: ['txt', 'TXT'],
-        },
-      ],
-    });
+  const processBlob = (data) => {
+    console.log(JSON.stringify(data, null, 2));
+    // split into lines
+    const lines = data.split(/[\r\n]+/g);
+    // remove empty strings
+    const lines2 = lines.filter((e) => e === 0 || e);
 
-    // handle case when open dialog closed
-    if (files.filePaths[0] === undefined) {
-      return;
-    }
+    if (lines2.length > 1) {
+      // const updateAreQsortsLoaded = inputState((state) => state.updateAreQsortsLoaded);
 
-    const path = files.filePaths[0];
+      console.log(JSON.stringify(lines2, null, 2));
 
-    fs.readFile(path, 'utf8', (error, data) => {
-      if (error != null) {
-        // alert("file open error.");
-        console.log('file open error');
-        return;
-      }
-      processBlob(data.toString());
-    });
-
-    const processBlob = (data) => {
-      // split into lines
-      const lines = data.split(/[\r\n]+/g);
-      // remove empty strings
-      const lines2 = lines.filter((e) => e === 0 || e);
-
-      if (lines2.length > 1) {
-        const areQsortsLoaded = inputState((state) => state.areQsortsLoaded);
-        revertLoadButtonsColors('json');
-
-        const updateStatements = coreState((state) => state.updateStatements);
-        const updateNumStatements = coreState((state) => state.updateNumStatements);
-        const updateStatementsLoaded = inputState((state) => state.updateStatementsLoaded);
-        const updateNotifyDataUploadSuccess = inputState(
-          (state) => state.updateNotifyDataUploadSuccess
-        );
-        const updateAreStatementsLoaded = inputState((state) => state.updateAreStatementsLoaded);
-        const updateIsLoadJsonTextButtonGreen = inputState(
-          (state) => state.updateIsLoadJsonTextButtonGreen
-        );
-        const updateIsInputButtonGreen = appState((state) => state.updateIsInputButtonGreen);
-        const updateIsDataButtonGreen = appState((state) => state.updateIsDataButtonGreen);
-
-        // const updateAreQsortsLoaded = inputState((state) => state.updateAreQsortsLoaded);
-
-        updateStatements(lines2);
-        updateNumStatements(lines2.length);
-        updateStatementsLoaded(true);
+      updateStatements(lines2);
+      updateNumStatements(lines2.length);
+      updateStatementsLoaded(true);
+      updateAreStatementsLoaded(true);
+      updateStatementsLoaded(true);
+      updateIsLoadJsonTextButtonGreen(true);
+      setTimeout(() => {
         updateNotifyDataUploadSuccess(true);
-        updateAreStatementsLoaded(true);
-        updateStatementsLoaded(true);
-        updateIsLoadJsonTextButtonGreen(true);
         updateIsInputButtonGreen(areQsortsLoaded);
         updateIsDataButtonGreen(areQsortsLoaded);
+      }, 50);
 
-        /*
+      /*
         coreState.statements = lines2;
         coreState.numStatements = lines2.length;
         inputState.statementsLoaded = true;
@@ -93,10 +60,22 @@ const LoadTxtStatementFile = () => {
         appState.isInputButtonGreen = areQsortsLoaded;
         appState.isDataButtonGreen = areQsortsLoaded;
         */
-      } else {
-        throwNoStatementsInputErrorModal(`Can't find any statements in the file!`);
-      }
-    };
+    } else {
+      throwNoStatementsInputErrorModal(`Can't find any statements in the file!`);
+    }
+  };
+
+  const handleClick = async () => {
+    // check to see if data loaded and correlations started - true ==> throw error
+
+    await window.electronAPI.openTxtFile();
+    window.bridgeTxt.txtData((event, txtData) => {
+      // updateShowErrorMessageBar(false);
+      // const logMessageObj1 = {
+      //   logMessage: `Data loaded from ZIP file`,
+      //   logType: 'csvInput',
+      processBlob(txtData);
+    });
   };
 
   return (

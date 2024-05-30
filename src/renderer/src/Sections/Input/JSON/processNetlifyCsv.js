@@ -1,23 +1,22 @@
-import coreState from "../../GlobalState/coreState";
-import appState from "../../GlobalState/appState";
-import Papa from "papaparse";
-import shiftRawSortsPositive from "../logic/shiftRawSortsPositive";
-import inputState from "../../GlobalState/inputState";
-import getInputState from "../../GlobalState/getInputState";
-import sortsDisplayText from "../logic/sortsDisplayText";
-import revertLoadButtonsColors from "../DemoData/revertLoadButtonsColors";
-import calcMultiplierArrayT2 from "../Excel/excelLogic/calcMultiplierArrayT2";
-import checkUniqueParticipantNames from "../logic/checkUniqueParticipantNames";
+import Papa from 'papaparse';
+import shiftRawSortsPositive from '../logic/shiftRawSortsPositive';
+import sortsDisplayText from '../logic/sortsDisplayText';
+import revertLoadButtonsColors from '../DemoData/revertLoadButtonsColors';
+import calcMultiplierArrayT2 from '../Excel/excelLogic/calcMultiplierArrayT2';
+import checkUniqueParticipantNames from '../logic/checkUniqueParticipantNames';
+import { toast } from 'react-toastify';
 // import { ToastContainer, toast, Slide } from "react-toastify";
-import { toast } from "react-toastify";
+import coreState from '../../GlobalState/coreState';
+import appState from '../../GlobalState/appState';
+import inputState from '../../GlobalState/inputState';
 
 function notifyWarning() {
-  toast.warn("Select Participant Id to complete Sheets import", {
-    autoClose: false
+  toast.warn('Select Participant Id to complete Sheets import', {
+    autoClose: false,
   });
 }
 
-const processBlob = data => {
+const processBlob = (data) => {
   // todo - integrate this properly
   const hasInputError = false;
 
@@ -33,38 +32,38 @@ const processBlob = data => {
   for (let i = 1; i < newDataArray2.data.length; i++) {
     // Get participant sorts
     if (newDataArray2.data[i][0].length > 50) {
-      let string1 = newDataArray2.data[i][0].split("| sort:|");
-      let sortArray2 = string1[1].split("|");
-      let sortArray = sortArray2.map(item => {
+      let string1 = newDataArray2.data[i][0].split('| sort:|');
+      let sortArray2 = string1[1].split('|');
+      let sortArray = sortArray2.map((item) => {
         return parseInt(item, 10);
       });
-      sortArray = sortArray.filter(a => !isNaN(a));
+      sortArray = sortArray.filter((a) => !isNaN(a));
       netlifySortsArray.push(sortArray);
-      let split2 = string1[0].split("| urlUsercode:|");
+      let split2 = string1[0].split('| urlUsercode:|');
 
       // Get url usercode
-      let split3 = split2[1].split("|");
+      let split3 = split2[1].split('|');
       let urlUsercode = split3[0].trim();
       urlUsercodeArray.push(urlUsercode);
 
       // Get randomId
-      let split4 = split2[0].split("| randomId:|");
+      let split4 = split2[0].split('| randomId:|');
       let randomId = split4[1].trim();
       randomIdArray.push(randomId);
 
       // Get partId
-      let split5 = split4[0].split("| partId:|");
+      let split5 = split4[0].split('| partId:|');
       let partId = split5[1].trim();
-      if (partId === "") {
-        partId = "not-set";
+      if (partId === '') {
+        partId = 'not-set';
       }
       partIdArray.push(partId);
     }
   }
 
-  inputState.csvPartIdArray = partIdArray;
-  inputState.csvUrlUsercodeArray = urlUsercodeArray;
-  inputState.csvRandomIdArray = randomIdArray;
+  inputState.setState({ csvPartIdArray: partIdArray });
+  inputState.setState({ csvUrlUsercodeArray: urlUsercodeArray });
+  inputState.setState({ csvRandomIdArray: randomIdArray });
 
   // 1. QAV - respondent names
   let respondentNamesArray = [...randomIdArray];
@@ -74,7 +73,7 @@ const processBlob = data => {
 
   // min values for POS SHIFT
   let minValue = 1;
-  netlifySortsArray.forEach(element => {
+  netlifySortsArray.forEach((element) => {
     let tempMinValue = Math.min(...element);
     if (tempMinValue < minValue) {
       minValue = tempMinValue;
@@ -92,7 +91,7 @@ const processBlob = data => {
   let arrayShiftedPositive;
   if (minValue < 1) {
     // make the shift to pos.
-    arrayShiftedPositive = netlifySortsArray.map(item => {
+    arrayShiftedPositive = netlifySortsArray.map((item) => {
       let tempShiftArray = shiftRawSortsPositive(item, minValue);
       return tempShiftArray;
     });
@@ -119,19 +118,19 @@ const processBlob = data => {
   const sortsDisplayTextArray = sortsDisplayText([...mainDataObjectArray]);
 
   if (hasInputError === false) {
-    revertLoadButtonsColors("json");
-    coreState.numQsorts = numberSorts;
-    coreState.qSortPattern = qSortPatternArray;
-    coreState.respondentNames = participantNames;
-    coreState.mainDataObject = mainDataObjectArray;
-    coreState.sortsDisplayText = sortsDisplayTextArray;
-    coreState.multiplierArray = multiplierArray;
-    inputState.dataOrigin = "netlify";
-    inputState.areQsortsLoaded = true;
-    inputState.isLoadNetlifyCsvButtonGreen = true;
-    appState.isInputButtonGreen = getInputState("areStatementsLoaded");
-    appState.isDataButtonGreen = getInputState("areStatementsLoaded");
-    inputState.disabledFirebaseButton = true;
+    revertLoadButtonsColors('json');
+    coreState.setState({ numQsorts: numberSorts });
+    coreState.setState({ qSortPattern: qSortPatternArray });
+    coreState.setState({ respondentNames: participantNames });
+    coreState.setState({ mainDataObject: mainDataObjectArray });
+    coreState.setState({ sortsDisplayText: sortsDisplayTextArray });
+    coreState.setState({ multiplierArray: multiplierArray });
+    inputState.setState({ dataOrigin: 'netlify' });
+    inputState.setState({ areQsortsLoaded: true });
+    inputState.setState({ isLoadNetlifyCsvButtonGreen: true });
+    appState.isInputButtonGreen = inputState.getState().areStatementsLoaded;
+    appState.isDataButtonGreen = inputState.getState().areStatementsLoaded;
+    inputState.setState({ disabledFirebaseButton: true });
     notifyWarning();
   }
 };

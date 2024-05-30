@@ -6,8 +6,8 @@ import inputState from '../../GlobalState/inputState';
 const SheetsButton = () => {
   const { t } = useTranslation();
   // getState
-  const isActive = getInputState('isShowNetlifyInputButtonGreen');
-  const isDisabled = getInputState('disabledNetlifyButton');
+  const isActive = inputState((state) => state.isShowNetlifyInputButtonGreen);
+  const isDisabled = inputState((state) => state.disabledNetlifyButton);
   const updateShowSheetsInput = inputState((state) => state.updateShowSheetsInput);
   const updateShowNetlifyInput = inputState((state) => state.updateShowNetlifyInput);
   const updateShowFirebaseInput = inputState((state) => state.updateShowFirebaseInput);

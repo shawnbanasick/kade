@@ -10,6 +10,7 @@ if (process.contextIsolated) {
       openDatFile: () => ipcRenderer.send('dialog:openDatFile'),
       openExcelFile: () => ipcRenderer.send('dialog:openExcelFile'),
       openZipFile: () => ipcRenderer.send('dialog:openZipFile'),
+      openTxtFile: () => ipcRenderer.send('dialog:openTxtFile'),
     });
     contextBridge.exposeInMainWorld('languageChange', {
       language: (callback) =>
@@ -36,6 +37,11 @@ if (process.contextIsolated) {
     contextBridge.exposeInMainWorld('bridgeZip', {
       zipData: (content) => {
         ipcRenderer.on('zipData', content);
+      },
+    });
+    contextBridge.exposeInMainWorld('bridgeTxt', {
+      txtData: (content) => {
+        ipcRenderer.on('txtData', content);
       },
     });
   } catch (error) {

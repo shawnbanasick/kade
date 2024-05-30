@@ -1,20 +1,21 @@
-import React from 'react';
 import styled from 'styled-components';
-
 import inputState from '../../GlobalState/inputState';
 
-const handleChange = (event) => {
-  let textareaInput = event.target.value.toString();
-  console.log(textareaInput);
-  inputState.sortsPasteTextArea = textareaInput;
-  localStorage.setItem('sortsPasteTextArea', textareaInput);
-
-  //appState.currentStatements = statementInput;
-  //  localStorage.setItem("currentStatements", statementInput);
-};
-
 const StatementTextArea = () => {
-  inputState.sortsPasteTextAreaContent = localStorage.getItem('sortsPasteTextArea');
+  const updateSortsPasteTextArea = inputState((state) => state.updateSortsPasteTextArea);
+  const pasteTextAreaContent = inputState((state) => state.sortsPasteTextAreaContent);
+
+  updateSortsPasteTextArea(localStorage.getItem('sortsPasteTextArea'));
+
+  const handleChange = (event) => {
+    let textareaInput = event.target.value.toString();
+    console.log(textareaInput);
+    inputState.sortsPasteTextArea = textareaInput;
+    localStorage.setItem('sortsPasteTextArea', textareaInput);
+
+    //appState.currentStatements = statementInput;
+    //  localStorage.setItem("currentStatements", statementInput);
+  };
 
   return (
     <Container>
@@ -22,7 +23,7 @@ const StatementTextArea = () => {
       <StatementTextsInput
         type="textarea"
         name="textValue"
-        value={inputState.sortsPasteTextAreaContent || ''}
+        value={pasteTextAreaContent || ''}
         onChange={handleChange}
       />
     </Container>
