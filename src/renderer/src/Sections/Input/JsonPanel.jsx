@@ -1,38 +1,40 @@
 import styled from 'styled-components';
-// import displayJsonData from './JSON/displayJsonData';
+import displayJsonData from './JSON/displayJsonData';
 import DatabaseSelectButtons from './JSON/DatabaseSelectButtons';
-
-// import Dropdown from './JSON/DropdownJSON';
-// import JsonQsortsCard from './JSON/JsonQsortsCard';
+import Dropdown from './JSON/DropdownJSON';
+import JsonQsortsCard from './JSON/JsonQsortsCard';
 import LoadJsonStatementsCard from './JSON/LoadJsonStatementsCard';
-// import ProjectNameInput from './CSV/ProjectNameInput';
+import ProjectNameInput from './CSV/ProjectNameInput';
 // import DownloadCsvModal from './JSON/DownloadCsvModal';
 // import ForcedUnforcedRadio from './CSV/ForcedUnforcedRadio';
 // import QsortDesignInputElement from './CSV/QsortDesignInputElement';
-// import CsvJsonCard from './JSON/CsvJsonCard';
+import CsvJsonCard from './JSON/CsvJsonCard';
 // import DropdownSheets from './JSON/DropdownSheets';
 // import ZipErrorCheckButton from './Zip/ZipErrorCheckButton';
-// import NetlifyCard from './JSON/NetlifyCard';
-// import NetlifyDropdown from './JSON/NetlifyDropdown';
+import NetlifyCard from './JSON/NetlifyCard';
+import inputState from '../GlobalState/inputState';
+import NetlifyDropdown from './JSON/NetlifyDropdown';
+import { useTranslation } from 'react-i18next';
 
-// const handleMessage = (jsonIdSelection) => {
-//   displayJsonData(jsonIdSelection);
-// };
+const handleMessage = (jsonIdSelection) => {
+  displayJsonData(jsonIdSelection);
+};
 
-// const handleSheetsMessage = (sheetsIdSelection) => {
-//   console.log(sheetsIdSelection);
-// };
+const handleSheetsMessage = (sheetsIdSelection) => {
+  console.log(sheetsIdSelection);
+};
 
-// const handleNetlifyMessage = (netlifyIdSelection) => {
-//   console.log(netlifyIdSelection);
-// };
+const handleNetlifyMessage = (netlifyIdSelection) => {
+  console.log(netlifyIdSelection);
+};
 
 const JsonPanel = () => {
-  // const options = getInputState('jsonParticipantId');
-  // const { t } = useTranslation();
-  const showSheetsInput = false; // getInputState("showSheetsInput");
-  const showFirebaseInput = true; //getInputState("showFirebaseInput");
-  const showNetlifyInput = false; //getInputState("showNetlifyInput");
+  const options = inputState((state) => state.jsonParticipantId);
+  const showSheetsInput = inputState((state) => state.showSheetsInput);
+  const showFirebaseInput = inputState((state) => state.showFirebaseInput);
+  const showNetlifyInput = inputState((state) => state.showNetlifyInput);
+
+  const { t } = useTranslation();
 
   if (!showFirebaseInput && !showSheetsInput && !showNetlifyInput) {
     return (
@@ -47,7 +49,6 @@ const JsonPanel = () => {
         <DatabaseSelectButtons />
         <CardHolder id="JsonCardHolder">
           <LoadJsonStatementsCard />
-          {/*
           {showFirebaseInput && <JsonQsortsCard />}
           {showSheetsInput && <CsvJsonCard />}
           {showNetlifyInput && <NetlifyCard />}
@@ -62,7 +63,8 @@ const JsonPanel = () => {
               onChangeMessageUpTree={handleMessage}
             />
           )}
-          {showSheetsInput && (
+
+          {/* {showSheetsInput && (
             <DropdownSheets
               id="selectSheets"
               options={options}
@@ -77,14 +79,13 @@ const JsonPanel = () => {
               class="ui fluid selection dropdown"
               onChangeMessageUpNetlifyTree={handleNetlifyMessage}
             />
-          )}
-          <ForcedUnforcedRadio number={'5.'} />
+          )} */}
+          {/* <ForcedUnforcedRadio number={'5.'} /> */}
 
           <div />
-          <QsortDesignInputElement style={{ gridRowStart: 4 }} number={'6.'} />
-          {showFirebaseInput && <DownloadCsvModal />}
-          <ZipErrorCheckButton number={'7.'} gridRow={5} />
-        */}
+          {/* <QsortDesignInputElement style={{ gridRowStart: 4 }} number={'6.'} /> */}
+          {/* {showFirebaseInput && <DownloadCsvModal />} */}
+          {/* <ZipErrorCheckButton number={'7.'} gridRow={5} /> */}
         </CardHolder>
       </DataWindow>
     );

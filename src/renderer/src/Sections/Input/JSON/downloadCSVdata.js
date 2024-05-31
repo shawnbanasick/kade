@@ -1,10 +1,3 @@
-import getCoreState from '../../GlobalState/getCoreState';
-const fs = require('fs');
-const { dialog } = require('electron').remote;
-// needed to attach open dialog to mainWindow when opened
-const { remote } = require('electron');
-const mainWindow = remote.getCurrentWindow();
-
 async function saveFile(fileName, csvFile) {
   const files = await dialog.showSaveDialog(mainWindow, {
     title: 'Save file as',

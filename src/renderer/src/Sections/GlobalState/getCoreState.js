@@ -1,7 +1,8 @@
-import coreState from "./coreState";
-const clone = require("rfdc")();
+import coreState from './coreState';
+import cloneDeep from 'lodash/cloneDeep';
 
-const getCoreState = key => {
+const getCoreState = (key) => {
+  console.log(getCoreState.caller.name);
   try {
     const stateValue = coreState[key];
 
@@ -9,14 +10,14 @@ const getCoreState = key => {
       throw new Error(`null or undefined value: ${key}`);
     }
 
-    const returnValue = clone(stateValue);
+    const returnValue = cloneDeep(stateValue);
 
     return returnValue;
   } catch (error) {
-    const spacing = "5px";
+    const spacing = '5px';
     const styles = `padding: ${spacing}; background-color: darkblue; color: white; font-style: 
      italic; border: ${spacing} solid crimson; font-size: 1.2em;`;
-    console.error("%cError", styles, error.message);
+    console.error('%cError', styles, error.message);
   }
 };
 

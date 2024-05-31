@@ -9,6 +9,8 @@ import openDatFile from './openDatFile';
 import openExcelFile from './openExcelFile';
 import openZipFile from './openZipFile';
 import openTxtFile from './openTxtFile';
+import openJsonFile from './openJsonFile';
+
 // import fs from 'fs';
 // import i18nextBackend from 'i18next-electron-fs-backend';
 //import installExtension, { REACT_DEVELOPER_TOOLS } from 'electron-devtools-installer';
@@ -109,6 +111,7 @@ app.whenReady().then(() => {
   ipcMain.on('dialog:openExcelFile', openExcelFile);
   ipcMain.on('dialog:openZipFile', openZipFile);
   ipcMain.on('dialog:openTxtFile', openTxtFile);
+  ipcMain.on('dialog:openJsonFile', openJsonFile);
 
   createWindow();
 

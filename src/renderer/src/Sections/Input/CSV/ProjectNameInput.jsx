@@ -1,27 +1,25 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
-import { view, store } from '@risingstack/react-easy-state';
 import coreState from '../../GlobalState/coreState';
 import inputState from '../../GlobalState/inputState';
 import { useTranslation } from 'react-i18next';
 
-const localStore = store({ projectName: '' });
-
-const handleChange = (e) => {
-  const projectName = e.target.value;
-  let hasAddedProjectName = false;
-  if (projectName.length > 0) {
-    hasAddedProjectName = true;
-  }
-
-  localStore.projectName = projectName;
-  inputState.hasAddedProjectName = hasAddedProjectName;
-
-  coreState.projectName = projectName;
-};
-
 const ProjectNameInput = () => {
   const { t } = useTranslation();
+  const [projectName, setProjectName] = useState('');
+  const updateHasAddedProjectName = inputState((state) => state.updateHasAddedProjectName);
+  const updateProjectName = coreState((state) => state.updateProjectName);
+
+  const handleChange = (e) => {
+    const projectName = e.target.value;
+    let hasAddedProjectName = false;
+    if (projectName.length > 0) {
+      hasAddedProjectName = true;
+    }
+    setProjectName(projectName);
+    updateHasAddedProjectName(hasAddedProjectName);
+    updateProjectName(projectName);
+  };
 
   return (
     <React.Fragment>
@@ -31,7 +29,7 @@ const ProjectNameInput = () => {
           onChange={(e) => handleChange(e)}
           label="Project Name:"
           placeholder={t('Input Project Name')}
-          value={localStore.projectName}
+          value={projectName}
         />
       </Container>
     </React.Fragment>

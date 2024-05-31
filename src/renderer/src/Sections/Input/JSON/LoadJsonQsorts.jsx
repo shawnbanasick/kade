@@ -11,19 +11,13 @@ import inputState from '../../GlobalState/inputState';
 import coreState from '../../GlobalState/coreState';
 import appState from '../../GlobalState/appState';
 
-// const { dialog } = require('electron').remote;
-// const fs = require('fs');
-// // needed to attach open dialog to mainWindow when opened
-// const { remote } = require('electron');
-// const mainWindow = remote.getCurrentWindow();
-
 function notifyWarning() {
   toast.warn('Select Participant Id to complete JSON import', {
     autoClose: false,
   });
 }
 
-const LoadTxtStatementFile = () => {
+const LoadJsonQsortsFile = () => {
   const { t } = useTranslation();
   const isLoadJsonQsortsButtonGreen = inputState((state) => state.isLoadJsonQsortsButtonGreen);
   const isDataAlreadyLoaded = inputState((state) => state.isDataAlreadyLoaded);
@@ -51,64 +45,50 @@ const LoadTxtStatementFile = () => {
       throwDataAlreadyLoadedInputErrorModal();
     } else {
       try {
-        // const files = await dialog.showOpenDialog(mainWindow, {
-        //   properties: ['openFile'],
-        //   filters: [
-        //     {
-        //       name: 'JSON',
-        //       extensions: ['json', 'JSON'],
-        //     },
-        //   ],
-        // });
+        const processJson = (results) => {
+          // convert from JSON to array
+          const resultsArray = [];
+          const resultsKeys = Object.keys(results);
 
-        // const path = files.filePaths[0];
+          for (let k = 0; k < resultsKeys.length; k += 1) {
+            resultsArray.push(results[resultsKeys[k]]);
+          }
 
-        // fs.readFile(path, 'utf8', (error, data) => {
-        //   if (error != null) {
-        //     alert('file open error.');
-        //     return;
-        //   }
+          const testValue = Object.prototype.hasOwnProperty.call(resultsArray[0], 'sort');
 
-        //   if (data === undefined) {
-        //     return;
-        //   }
+          if (!testValue) {
+            throwNoSortsInputErrorModal(`Can't find the key named "sort" in JSON object`);
+            isNoError = false;
+          }
 
-        const results = JSON.parse(data);
+          if (isNoError === true) {
+            // todo - this is the source of the extra brackets
 
-        // convert from JSON to array
-        const resultsArray = [];
-        const resultsKeys = Object.keys(results);
+            console.log(JSON.stringify(results, null, 2));
 
-        for (let k = 0; k < resultsKeys.length; k += 1) {
-          resultsArray.push(results[resultsKeys[k]]);
-        }
+            const csvData = convertJSONToData(results);
 
-        const testValue = Object.prototype.hasOwnProperty.call(resultsArray[0], 'sort');
+            const columnHeaders = csvData[0][0];
+            revertLoadButtonsColors('json');
+            updateJsonParticipantId(columnHeaders);
+            updateShowJsonParticipantIdDropdown(true);
+            updateCsvData(csvData);
+            updateJsonObj(results);
+            updateDataOrigin('json');
+            updateAreQsortsLoaded(true);
+            updateIsInputButtonGreen(areStatementsLoaded);
+            updateIsDataButtonGreen(areStatementsLoaded);
+            updateDisabledSheetsButton(true);
+            notifyWarning();
+            updateIsDataAlreadyLoaded(true);
+          } // end if
+          // end read file path
+        };
 
-        if (!testValue) {
-          throwNoSortsInputErrorModal(`Can't find the key named "sort" in JSON object`);
-          isNoError = false;
-        }
-
-        if (isNoError === true) {
-          // todo - this is the source of the extra brackets
-          const csvData = convertJSONToData(results);
-
-          const columnHeaders = csvData[0][0];
-          revertLoadButtonsColors('json');
-          updateJsonParticipantId(columnHeaders);
-          updateShowJsonParticipantIdDropdown(true);
-          updateCsvData(csvData);
-          updateJsonObj(results);
-          updateDataOrigin('json');
-          updateAreQsortsLoaded(true);
-          updateIsInputButtonGreen(areStatementsLoaded);
-          updateIsDataButtonGreen(areStatementsLoaded);
-          updateDisabledSheetsButton(true);
-          notifyWarning();
-          updateIsDataAlreadyLoaded(true);
-        } // end if
-        // end read file path
+        await window.electronAPI.openJsonFile();
+        window.bridgeJson.jsonData((event, jsonData) => {
+          processJson(JSON.parse(jsonData));
+        });
       } catch (error) {
         updateCsvErrorMessage1(error.message);
         updateShowCsvErrorModal(true);
@@ -135,7 +115,7 @@ const LoadTxtStatementFile = () => {
   );
 };
 
-export default LoadTxtStatementFile;
+export default LoadJsonQsortsFile;
 
 const JsonButton = styled.div`
   margin-top: 18px;

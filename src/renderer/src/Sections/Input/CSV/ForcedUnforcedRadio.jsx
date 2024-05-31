@@ -1,48 +1,51 @@
+import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
-import React from 'react';
-import { view, store } from '@risingstack/react-easy-state';
-
 import inputState from '../../GlobalState/inputState';
 import coreState from '../../GlobalState/coreState';
-import { useTranslation } from 'react-i18next';
-import getInputState from '../../GlobalState/getInputState';
-import getCoreState from '../../GlobalState/getCoreState';
-
-const localStore = store({
-  value: 'forced',
-});
-
-const handleChange = (e) => {
-  const value = e.target.value;
-
-  localStore.value = value;
-
-  // if "UNFORCED" is selected
-  // const hasQsortPattern = getCoreState("qSortPattern");
-  const dataOrigin = getInputState('dataOrigin');
-  if (value === 'unforced') {
-    inputState.showForcedInput = true;
-    inputState.isForcedQsortPattern = false;
-    inputState.requireQsortPatternInput = true;
-    inputState.unforcedRadioButtonState = 'unforced';
-  } else {
-    // getState - if FORCED is selected
-    const oldQsortPattern = getCoreState('oldQsortPattern');
-    inputState.showForcedInput = false;
-    inputState.isForcedQsortPattern = true;
-    inputState.requireQsortPatternInput = false;
-    inputState.unforcedRadioButtonState = 'forced';
-
-    if (dataOrigin === 'json') {
-      coreState.qSortPattern = oldQsortPattern;
-    }
-  }
-};
 
 const RadioExampleRadioGroup = (props) => {
   const { t } = useTranslation();
-  const unforcedRadioButtonState = getInputState('unforcedRadioButtonState');
-  localStore.value = unforcedRadioButtonState;
+  const unforcedRadioButtonState = inputState((state) => state.unforcedRadioButtonState);
+  const updateShowForcedInput = inputState((state) => state.updateShowForcedInput);
+  const updateIsForcedQsortPattern = inputState((state) => state.updateIsForcedQsortPattern);
+  const updateRequireQsortPatternInput = inputState(
+    (state) => state.updateRequireQsortPatternInput
+  );
+  const updateUnforcedRadioButtonState = inputState(
+    (state) => state.updateUnforcedRadioButtonState
+  );
+  const oldQsortPattern = coreState((state) => state.oldQsortPattern);
+  const dataOrigin = inputState((state) => state.dataOrigin);
+  const updateQsortPattern = coreState((state) => state.updateQSortPattern);
+
+  const [localStore, setLocalStore] = useState({
+    value: 'forced',
+  });
+
+  setLocalStore({ value: unforcedRadioButtonState });
+
+  const handleChange = (e) => {
+    const valueIn = e.target.value;
+    setLocalStore({ value: valueIn });
+
+    // if "UNFORCED" is selected
+    if (valueIn === 'unforced') {
+      updateShowForcedInput(true);
+      updateIsForcedQsortPattern(false);
+      updateRequireQsortPatternInput(true);
+      updateUnforcedRadioButtonState('unforced');
+    } else {
+      // getState - if FORCED is selected
+      updateShowForcedInput(false);
+      updateIsForcedQsortPattern(true);
+      updateRequireQsortPatternInput(false);
+      updateUnforcedRadioButtonState('forced');
+      if (dataOrigin === 'json') {
+        updateQsortPattern(oldQsortPattern);
+      }
+    }
+  };
 
   return (
     <RadioDiv>
