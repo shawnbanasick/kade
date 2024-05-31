@@ -1,29 +1,29 @@
 async function saveFile(fileName, csvFile) {
-  const files = await dialog.showSaveDialog(mainWindow, {
-    title: 'Save file as',
-    defaultPath: `*/${fileName}`,
-    filters: [
-      {
-        name: 'csv',
-        extensions: ['csv'],
-      },
-    ],
-  });
+//   const files = await dialog.showSaveDialog(mainWindow, {
+//     title: 'Save file as',
+//     defaultPath: `*/${fileName}`,
+//     filters: [
+//       {
+//         name: 'csv',
+//         extensions: ['csv'],
+//       },
+//     ],
+//   });
 
-  const filePath = files.filePath;
+//   const filePath = files.filePath;
 
-  fs.writeFile(filePath, csvFile, (err) => {
-    console.log(err);
-    if (err === undefined || err === null) {
-      dialog.showMessageBoxSync(mainWindow, {
-        message: `The file has been saved to ${filePath}.`,
-        buttons: ['OK'],
-      });
-    } else {
-      dialog.showErrorBox('File Save Error', err.message);
-    }
-  });
-}
+//   fs.writeFile(filePath, csvFile, (err) => {
+//     console.log(err);
+//     if (err === undefined || err === null) {
+//       dialog.showMessageBoxSync(mainWindow, {
+//         message: `The file has been saved to ${filePath}.`,
+//         buttons: ['OK'],
+//       });
+//     } else {
+//       dialog.showErrorBox('File Save Error', err.message);
+//     }
+//   });
+// }
 
 function exportToCsv(fileName, rows) {
   const processRow = (row) => {

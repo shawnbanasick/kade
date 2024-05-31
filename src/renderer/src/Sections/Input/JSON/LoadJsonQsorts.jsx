@@ -86,7 +86,7 @@ const LoadJsonQsortsFile = () => {
         };
 
         await window.electronAPI.openJsonFile();
-        window.bridgeJson.jsonData((event, jsonData) => {
+        window.bridge.jsonData((event, jsonData) => {
           processJson(JSON.parse(jsonData));
         });
       } catch (error) {

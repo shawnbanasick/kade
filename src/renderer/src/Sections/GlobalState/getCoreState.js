@@ -2,7 +2,6 @@ import coreState from './coreState';
 import cloneDeep from 'lodash/cloneDeep';
 
 const getCoreState = (key) => {
-  console.log(getCoreState.caller.name);
   try {
     const stateValue = coreState[key];
 

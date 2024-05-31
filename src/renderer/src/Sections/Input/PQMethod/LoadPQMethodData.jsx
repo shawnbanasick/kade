@@ -113,7 +113,7 @@ const LoadTxtStatementFile = () => {
         };
 
         await window.electronAPI.openDatFile();
-        window.bridgeDat.datData((event, datData) => {
+        window.bridge.datData((event, datData) => {
           processBlob(datData);
         });
       } catch (error) {

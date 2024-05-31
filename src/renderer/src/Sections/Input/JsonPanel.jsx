@@ -9,7 +9,7 @@ import ProjectNameInput from './CSV/ProjectNameInput';
 // import ForcedUnforcedRadio from './CSV/ForcedUnforcedRadio';
 // import QsortDesignInputElement from './CSV/QsortDesignInputElement';
 import CsvJsonCard from './JSON/CsvJsonCard';
-// import DropdownSheets from './JSON/DropdownSheets';
+import DropdownSheets from './JSON/DropdownSheets';
 // import ZipErrorCheckButton from './Zip/ZipErrorCheckButton';
 import NetlifyCard from './JSON/NetlifyCard';
 import inputState from '../GlobalState/inputState';
@@ -64,7 +64,7 @@ const JsonPanel = () => {
             />
           )}
 
-          {/* {showSheetsInput && (
+          {showSheetsInput && (
             <DropdownSheets
               id="selectSheets"
               options={options}
@@ -79,7 +79,7 @@ const JsonPanel = () => {
               class="ui fluid selection dropdown"
               onChangeMessageUpNetlifyTree={handleNetlifyMessage}
             />
-          )} */}
+          )}
           {/* <ForcedUnforcedRadio number={'5.'} /> */}
 
           <div />

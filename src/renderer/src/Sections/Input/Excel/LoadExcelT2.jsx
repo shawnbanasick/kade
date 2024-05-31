@@ -18,7 +18,7 @@ const LoadTxtStatementFile = () => {
     } else {
       try {
         await window.electronAPI.openExcelFile();
-        window.bridgeExcel.excelData((event, excelData) => {
+        window.bridge.excelData((event, excelData) => {
           parseExcelType2(excelData);
           revertLoadButtonsColors('excelT2');
         });

@@ -40,7 +40,7 @@ const LoadExcelT3 = () => {
     } else {
       try {
         await window.electronAPI.openExcelFile();
-        window.bridgeExcel.excelData((event, excelData) => {
+        window.bridge.excelData((event, excelData) => {
           parseExcelType3(excelData);
           revertLoadButtonsColors('excelT3');
           updateNotifyDataUploadSuccess(true);

@@ -6,7 +6,6 @@ import styled from 'styled-components';
 import coreState from '../../GlobalState/coreState';
 import inputState from '../../GlobalState/inputState';
 import appState from '../../GlobalState/appState';
-import { set } from 'lodash';
 
 const LoadTxtStatementFile = () => {
   const { t } = useTranslation();
@@ -69,11 +68,7 @@ const LoadTxtStatementFile = () => {
     // check to see if data loaded and correlations started - true ==> throw error
 
     await window.electronAPI.openTxtFile();
-    window.bridgeTxt.txtData((event, txtData) => {
-      // updateShowErrorMessageBar(false);
-      // const logMessageObj1 = {
-      //   logMessage: `Data loaded from ZIP file`,
-      //   logType: 'csvInput',
+    window.bridge.txtData((event, txtData) => {
       processBlob(txtData);
     });
   };

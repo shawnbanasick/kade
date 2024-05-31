@@ -42,7 +42,7 @@ const LoadTxtStatementFile = () => {
     } else {
       try {
         await window.electronAPI.openZipFile();
-        window.bridgeZip.zipData((event, zipData) => {
+        window.bridge.zipData((event, zipData) => {
           processKadeZip(zipData);
           updateShowErrorMessageBar(false);
           const logMessageObj1 = {

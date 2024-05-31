@@ -41,9 +41,9 @@ const DropdownJSON = (props) => {
   };
 
   return (
-    <div role="listbox" style={{ marginLeft: 20 }}>
-      <span style={{ marginRight: 10, fontSize: 20 }}>
-        <b>4.</b> ID:{' '}
+    <div role="listbox" style={{ marginLeft: 20, backgroundColor: 'lightgray', fontSize: 18 }}>
+      <span style={{ marginRight: 10, fontSize: 18, width: 150, paddingLeft: 20 }}>
+        <b>4.</b>
       </span>
       <Dropdown
         placeholder={t('Select Participant ID')}

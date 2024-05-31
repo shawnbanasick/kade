@@ -24,28 +24,18 @@ if (process.contextIsolated) {
       staData: (content) => {
         ipcRenderer.on('staData', content);
       },
-    });
-    contextBridge.exposeInMainWorld('bridgeDat', {
       datData: (content) => {
         ipcRenderer.on('datData', content);
       },
-    });
-    contextBridge.exposeInMainWorld('bridgeExcel', {
       excelData: (content) => {
         ipcRenderer.on('excelData', content);
       },
-    });
-    contextBridge.exposeInMainWorld('bridgeZip', {
       zipData: (content) => {
         ipcRenderer.on('zipData', content);
       },
-    });
-    contextBridge.exposeInMainWorld('bridgeTxt', {
       txtData: (content) => {
         ipcRenderer.on('txtData', content);
       },
-    });
-    contextBridge.exposeInMainWorld('bridgeJson', {
       jsonData: (content) => {
         ipcRenderer.on('jsonData', content);
       },
