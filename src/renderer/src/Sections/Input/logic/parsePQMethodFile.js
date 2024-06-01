@@ -1,4 +1,4 @@
-import cloneDeep from 'lodash/cloneDeep';
+// import cloneDeep from 'lodash/cloneDeep';
 import sortsTextToArray from './sortsTextToArray';
 // import convertMultiplierToQSortPattern from './convertMultiplierToQSortPattern';
 import convertMultiplierToQSortPattern from '../PQMethod/convertMultiplierToQSortPattern';

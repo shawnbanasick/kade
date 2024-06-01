@@ -1,4 +1,4 @@
-import evenRound from "../../../../Utils/evenRound";
+import evenRound from '../../../../Utils/evenRound';
 
 const testSigResAvrgsAndS = (rMatrix, N) => {
   let S = 0.0;

@@ -1,4 +1,4 @@
-const getEigenValues = eigenData => {
+const getEigenValues = (eigenData) => {
   // to remove label "eigenvalues"
   eigenData.shift();
   const data = [];

@@ -1,7 +1,7 @@
-import cloneDeep from "lodash/cloneDeep";
-import uniq from "lodash/uniq";
+import cloneDeep from 'lodash/cloneDeep';
+import uniq from 'lodash/uniq';
 
-const checkUniqueName = namesFromExistingData => {
+const checkUniqueName = (namesFromExistingData) => {
   const namesUniqueArrayTest2 = cloneDeep(namesFromExistingData);
   const namesUniqueArrayTest = uniq(namesUniqueArrayTest2);
 

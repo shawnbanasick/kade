@@ -1,35 +1,33 @@
-import calcEigenValues from "./calcEigenValues";
-import transposeMatrix from "../../../Utils/transposeMatrix";
-import calculateFactorLoadings from "./calculateFactorLoadings";
-import calcScreePlotData from "../centroidLogic/calcScreePlotData";
-import factorTableDataPrep from "../FactorTable/factorTableDataPrep";
-import calcEigenCumulPercentArray from "../PcaLogic/calcEigenCumulPercentArray";
-import factorTableEigenDataPrep from "../FactorTableEigen/FactorTableEigenDataPrep";
-import calculateCommunalities from "../../Rotation/varimaxLogic/2calculateCommunalities";
+import calcEigenValues from './calcEigenValues';
+import transposeMatrix from '../../../Utils/transposeMatrix';
+import calculateFactorLoadings from './calculateFactorLoadings';
+import calcScreePlotData from '../centroidLogic/calcScreePlotData';
+import factorTableDataPrep from '../FactorTable/factorTableDataPrep';
+import calcEigenCumulPercentArray from '../PcaLogic/calcEigenCumulPercentArray';
+import factorTableEigenDataPrep from '../FactorTableEigen/FactorTableEigenDataPrep';
+import calculateCommunalities from '../../Rotation/varimaxLogic/2calculateCommunalities';
+import doHeywoodCheck from '../centroidLogic/horst55Logic/doHeywoodCheck';
+import i18n from 'i18next';
+import cloneDeep from 'lodash/cloneDeep';
 
-import projectHistoryState from "../../GlobalState/projectHistoryState";
-import getProjectHistoryState from "../../GlobalState/getProjectHistoryState";
-import getCorrelationState from "../../GlobalState/getCorrelationState";
-import factorState from "../../GlobalState/factorState";
-import getFactorState from "../../GlobalState/getFactorState";
-import getCoreState from "../../GlobalState/getCoreState";
-
-import doHeywoodCheck from "../centroidLogic/horst55Logic/doHeywoodCheck";
-import i18n from "i18next";
-const clone = require("rfdc")();
+import projectHistoryState from '../../GlobalState/projectHistoryState';
+import getProjectHistoryState from '../../GlobalState/getProjectHistoryState';
+import getCorrelationState from '../../GlobalState/getCorrelationState';
+import factorState from '../../GlobalState/factorState';
+import coreState from '../../GlobalState/coreState';
 
 // todo - make the centroid dropdown list dynamic in case only few sorts - not
 // enough for all 7 factors
 
-const centroidDispatch = numFactors => {
+const centroidDispatch = (numFactors) => {
   // ************************************
   // GET STATE
   // ************************************
-  let dataArray = getCorrelationState("correlation5Calcs");
-  let projectHistoryArray = getProjectHistoryState("projectHistoryArray");
-  let numCentroidFactors = getFactorState("numCentroidFactors");
-  const numQsorts = getCoreState("numQsorts");
-  const respondentNames = getCoreState("respondentNames");
+  let dataArray = getCorrelationState('correlation5Calcs');
+  let projectHistoryArray = getProjectHistoryState('projectHistoryArray');
+  let numCentroidFactors = factorState.getState().numCentroidFactors;
+  const numQsorts = coreState.getState().numQsorts;
+  const respondentNames = coreState.getState().respondentNames;
 
   // ************************************
   // CALC LOADINGS
@@ -40,14 +38,14 @@ const centroidDispatch = numFactors => {
     factorMatrix.push(tempArray[0]);
     dataArray = tempArray[1];
   }
-  let factorMatrix1 = clone(factorMatrix);
+  let factorMatrix1 = cloneDeep(factorMatrix);
 
   // ************************************
   // CALC COMMUNALITIES
   // ************************************
 
   // display style matrix
-  let rotFacStateArray1 = clone(factorMatrix);
+  let rotFacStateArray1 = cloneDeep(factorMatrix);
 
   // calc style matrix
   let rotFacStateArray = transposeMatrix(rotFacStateArray1);
@@ -70,9 +68,9 @@ const centroidDispatch = numFactors => {
   // ************************************
   // FACTOR TABLE DATA PREP
   // ************************************
-  const participantTrans = i18n.t("Participant");
-  const factorTrans = i18n.t("Factor");
-  const nmTrans = i18n.t("Nm");
+  const participantTrans = i18n.t('Participant');
+  const factorTrans = i18n.t('Factor');
+  const nmTrans = i18n.t('Nm');
   const translationsText = { participantTrans, factorTrans, nmTrans };
   const factorTableData = factorTableDataPrep(
     numFactors,
@@ -80,29 +78,25 @@ const centroidDispatch = numFactors => {
     respondentNames,
     translationsText
   );
-  factorState.gridColDefsFactorTable = factorTableData.gridColDefsFactorTable;
-  factorState.gridRowDataFactorTable = factorTableData.gridRowDataFactorTable;
-  factorState.unrotatedFactorMatrixOutput =
-    factorTableData.unrotatedFactorArray;
+  factorState.setState({ gridColDefsFactorTable: factorTableData.gridColDefsFactorTable });
+  factorState.setState({ gridRowDataFactorTable: factorTableData.gridRowDataFactorTable });
+  factorState.setState({ unrotatedFactorMatrixOutput: factorTableData.unrotatedFactorArray });
 
   // ************************************
   // EIGEN TABLE DATA PREP
   // ************************************
-  let percentEigenVal = calcEigenCumulPercentArray(
-    explainVarandEigens[0],
-    numQsorts
-  );
+  let percentEigenVal = calcEigenCumulPercentArray(explainVarandEigens[0], numQsorts);
 
   // draw eigenvalues sub table
-  const eigenValuesTrans = i18n.t("Eigenvalues");
-  const explainedVarianceTrans = i18n.t("Explained Variance");
-  const cumuExplainedVarianceTrans = i18n.t("Cumulative Explained Variance");
-  const factorTrans2 = i18n.t("Factor");
+  const eigenValuesTrans = i18n.t('Eigenvalues');
+  const explainedVarianceTrans = i18n.t('Explained Variance');
+  const cumuExplainedVarianceTrans = i18n.t('Cumulative Explained Variance');
+  const factorTrans2 = i18n.t('Factor');
   const eigensTranslations = {
     eigenValuesTrans,
     explainedVarianceTrans,
     cumuExplainedVarianceTrans,
-    factorTrans2
+    factorTrans2,
   };
 
   const factorTableEigenData = factorTableEigenDataPrep(
@@ -111,10 +105,8 @@ const centroidDispatch = numFactors => {
     eigensTranslations
   );
 
-  factorState.gridColDefsFacTableEigen =
-    factorTableEigenData.gridColDefsFacTableEigen;
-  factorState.gridRowDataFacTableEigen =
-    factorTableEigenData.gridRowDataFacTableEigen;
+  factorState.setState({ gridColDefsFacTableEigen: factorTableEigenData.gridColDefsFacTableEigen });
+  factorState.setState({ gridRowDataFacTableEigen: factorTableEigenData.gridRowDataFacTableEigen });
 
   // ************************************
   // SCREE PLOT DATA PREP
@@ -127,32 +119,30 @@ const centroidDispatch = numFactors => {
   // DO PROJECT LOG UPDATE
   // ************************************
   const logMessageObj = {
-    logMessage: `${i18n.t(
-      "Brown Centroid Factors Extracted"
-    )}: ${numCentroidFactors}`,
-    logType: "centroid"
+    logMessage: `${i18n.t('Brown Centroid Factors Extracted')}: ${numCentroidFactors}`,
+    logType: 'centroid',
   };
 
   projectHistoryArray.push(logMessageObj);
 
   const eigenvaluesArray = explainVarandEigens[0];
-  eigenvaluesArray.unshift(i18n.t("Eigenvalues"));
+  eigenvaluesArray.unshift(i18n.t('Eigenvalues'));
 
   // ************************************
   // UPDATE STATE
   // ************************************
-  factorState.factorMatrix = rotFacStateArray1; // pulled for first display on loadings table
-  factorState.eigenvalues = eigenvaluesArray;
-  factorState.explainedVariance = explainVarandEigens[1];
-  factorState.unrotatedFactorMatrix = factorMatrix;
-  factorState.eigensPercentExpVar = percentEigenVal[0];
-  factorState.cumulEigenPerVar = percentEigenVal[1];
-  factorState.screePlotData = screePlotData;
-  factorState.isCentroidLoading = false;
-  projectHistoryState.projectHistoryArray = projectHistoryArray;
+  factorState.setState({ factorMatrix: rotFacStateArray1 }); // pulled for first display on loadings table
+  factorState.setState({ eigenvalues: eigenvaluesArray });
+  factorState.setState({ explainedVariance: explainVarandEigens[1] });
+  factorState.setState({ unrotatedFactorMatrix: factorMatrix });
+  factorState.setState({ eigensPercentExpVar: percentEigenVal[0] });
+  factorState.setState({ cumulEigenPerVar: percentEigenVal[1] });
+  factorState.setState({ screePlotData: screePlotData });
+  factorState.setState({ isCentroidLoading: false });
+  projectHistoryState.setState({ projectHistoryArray: projectHistoryArray });
 
   // to use with the undo function in Project History
-  sessionStorage.setItem("facMatrixArc0", JSON.stringify(rotFacStateArray1));
+  sessionStorage.setItem('facMatrixArc0', JSON.stringify(rotFacStateArray1));
 };
 
 export default centroidDispatch;

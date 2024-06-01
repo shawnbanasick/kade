@@ -1,6 +1,6 @@
-import evenRound from "../../../../Utils/evenRound";
+import evenRound from '../../../../Utils/evenRound';
 
-const accumulateW = rMatrix => {
+const accumulateW = (rMatrix) => {
   // helper
   const acculmulate = (value, acc) => acc + value;
   // W = reduce and map rows from rMatrix

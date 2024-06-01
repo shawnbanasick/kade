@@ -1,4 +1,4 @@
-import shiftRawSortsPositive from "./shiftRawSortsPositive";
+import shiftRawSortsPositive from './shiftRawSortsPositive';
 
 const motivationalToArray = (array, numSortStatements, min) => {
   const respondentNames = [];

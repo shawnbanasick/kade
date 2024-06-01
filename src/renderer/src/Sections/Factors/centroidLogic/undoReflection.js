@@ -3,7 +3,7 @@ const undoReflection = (subtractedArray2, factorLoadings2, reflectedRowCol) => {
   const subtractedArray = subtractedArray2.slice();
   const factorLoadings = factorLoadings2.slice();
 
-  reflectedRowCol.forEach(rowcolnumber => {
+  reflectedRowCol.forEach((rowcolnumber) => {
     for (let i = 0; i < subtractedArray.length; i += 1) {
       subtractedArray[i][rowcolnumber] = -subtractedArray[i][rowcolnumber];
     }

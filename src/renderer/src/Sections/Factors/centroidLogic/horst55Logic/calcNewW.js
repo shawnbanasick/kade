@@ -1,4 +1,4 @@
-import evenRound from "../../../../Utils/evenRound";
+import evenRound from '../../../../Utils/evenRound';
 
 const calcNewW = (D, N, V, W) => {
   W = W.map((item, index) => {

@@ -1,6 +1,6 @@
-import evenRound from "../.././../Utils/evenRound";
-import sumArrayValues from "../../../Utils/sumArrayValues";
-import squareValuesToNewArray from "../../../Utils/squareValuesToNewArray";
+import evenRound from '../.././../Utils/evenRound';
+import sumArrayValues from '../../../Utils/sumArrayValues';
+import squareValuesToNewArray from '../../../Utils/squareValuesToNewArray';
 
 const calcEigenValues = (factorMatrix, numberSorts) => {
   const explainedVariance = [];

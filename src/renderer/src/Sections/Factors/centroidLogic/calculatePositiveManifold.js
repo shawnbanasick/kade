@@ -1,5 +1,5 @@
-import calculateColumnSums from "./calculateColumnSums";
-import caculateMinValueAndIndex from "./calculateMinValueAndIndex";
+import calculateColumnSums from './calculateColumnSums';
+import caculateMinValueAndIndex from './calculateMinValueAndIndex';
 
 const calculatePositiveManifold = (manifoldArray2, minColumnSum2) => {
   // eslint re-assignment

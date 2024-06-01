@@ -1,4 +1,4 @@
-import evenRound from "../../../../Utils/evenRound";
+import evenRound from '../../../../Utils/evenRound';
 
 const checkForHeywoodCommunalities = (communalityArray, respondentNames) => {
   const adjustedParticipantsIndex = [];
@@ -11,9 +11,9 @@ const checkForHeywoodCommunalities = (communalityArray, respondentNames) => {
     const communality = row.pop();
     let newRow;
     if (communality > 1) {
-      let tempText = "";
+      let tempText = '';
       let name = respondentNames[rowIndex];
-      name = name.replace(/ /g, "");
+      name = name.replace(/ /g, '');
       heywoodParticipantsArray.push(respondentNames[rowIndex]);
       tempObj.participantName = name;
       tempObj.communality = communality;
@@ -21,7 +21,7 @@ const checkForHeywoodCommunalities = (communalityArray, respondentNames) => {
       tempText = `(${name}: ${communality})`;
       heywoodParticipantsTextArray.push(tempText);
       const reduceValue = evenRound(1 / Math.sqrt(communality), 7);
-      newRow = row.map(item => {
+      newRow = row.map((item) => {
         let reduction = item * reduceValue;
         return evenRound(reduction, 7);
       });
@@ -37,7 +37,7 @@ const checkForHeywoodCommunalities = (communalityArray, respondentNames) => {
     communalityArray: results,
     heywoodParticipantsArray,
     heywoodParticipantsCommunalityArray,
-    heywoodParticipantsTextArray
+    heywoodParticipantsTextArray,
   };
   return resultsObject;
 };

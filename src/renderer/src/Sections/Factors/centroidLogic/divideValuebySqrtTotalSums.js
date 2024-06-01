@@ -1,7 +1,7 @@
-import evenRound from "../../../Utils/evenRound";
+import evenRound from '../../../Utils/evenRound';
 
 const divideValuebySqrtTotalSums = (array, totalsSumsSqrt) => {
-  const factorLoad1 = array.map(value => evenRound(value / totalsSumsSqrt, 8));
+  const factorLoad1 = array.map((value) => evenRound(value / totalsSumsSqrt, 8));
 
   return factorLoad1;
 };

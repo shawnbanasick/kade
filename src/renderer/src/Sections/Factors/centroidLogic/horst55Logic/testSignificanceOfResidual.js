@@ -1,6 +1,6 @@
 // import _ from "lodash";
-import testSigResD from "./testSigResD";
-import testSigResAvrgsAndS from "./testSigResAvrgsAndS";
+import testSigResD from './testSigResD';
+import testSigResAvrgsAndS from './testSigResAvrgsAndS';
 
 const testSignificanceOfResidual = (rMatrix, N, D) => {
   // rMatrix is correl or residual matrix, N is size of matrix. D is diagonal array
@@ -16,4 +16,3 @@ const testSignificanceOfResidual = (rMatrix, N, D) => {
   return { D, AVRGS, S, rMatrix };
 };
 export default testSignificanceOfResidual;
-

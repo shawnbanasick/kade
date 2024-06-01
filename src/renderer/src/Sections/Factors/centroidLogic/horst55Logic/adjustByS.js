@@ -1,9 +1,9 @@
-import evenRound from "../../../../Utils/evenRound";
+import evenRound from '../../../../Utils/evenRound';
 
 const adjustByS = (N, W) => {
   let S = 0.0;
   // helper
-  let tempW = W.map(item => Math.abs(item));
+  let tempW = W.map((item) => Math.abs(item));
   const acculumate = (acc, value) => acc + value;
 
   S = tempW.reduce(acculumate, 0.0);
@@ -11,7 +11,7 @@ const adjustByS = (N, W) => {
   S = 1.0 / Math.sqrt(S);
   S = evenRound(S, 7);
 
-  let newW = W.map(item => {
+  let newW = W.map((item) => {
     let temp1 = item * S;
     let temp2 = evenRound(temp1, 7);
     return temp2;

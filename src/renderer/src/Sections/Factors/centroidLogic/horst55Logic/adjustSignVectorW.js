@@ -1,4 +1,4 @@
-import evenRound from "../../../../Utils/evenRound";
+import evenRound from '../../../../Utils/evenRound';
 
 const adjustSignVectorW = (jj, rMatrix, W, V) => {
   W = W.map((item, index) => {

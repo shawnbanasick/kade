@@ -1,8 +1,8 @@
-import calculateColumnSums from "./calculateColumnSums";
-import calculateMinValueAndIndex from "./calculateMinValueAndIndex";
-import calculatePositiveManifold from "./calculatePositiveManifold";
+import calculateColumnSums from './calculateColumnSums';
+import calculateMinValueAndIndex from './calculateMinValueAndIndex';
+import calculatePositiveManifold from './calculatePositiveManifold';
 
-const checkPositiveManifold = dataArray => {
+const checkPositiveManifold = (dataArray) => {
   const columnSums = calculateColumnSums(dataArray);
   const findMinColumnSum = calculateMinValueAndIndex(columnSums);
   const minColumnSum = findMinColumnSum[0];

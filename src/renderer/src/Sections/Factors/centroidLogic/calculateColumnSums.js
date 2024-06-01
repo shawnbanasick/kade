@@ -1,6 +1,6 @@
-import evenRound from "../../../Utils/evenRound";
+import evenRound from '../../../Utils/evenRound';
 
-const calculateColumnSums = sortMatrix => {
+const calculateColumnSums = (sortMatrix) => {
   const columnTotals = [];
 
   for (let j = 0, jLen = sortMatrix.length; j < jLen; j += 1) {

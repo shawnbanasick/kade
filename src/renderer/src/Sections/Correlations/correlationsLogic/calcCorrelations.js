@@ -1,5 +1,5 @@
 import correlationState from '../../GlobalState/correlationState';
-import { cloneDeep as clone } from 'lodash/cloneDeep';
+import cloneDeep from 'lodash/cloneDeep';
 import i18n from 'i18next';
 import getPqmethodCorrelation from './getPqmethodCorrelation';
 
@@ -11,7 +11,7 @@ export default function calculateCorrelations(rawSorts, respondentNames) {
   // todo - clean up! and add unit tests
   // todo - remove unnecessary correlationtablearray code - only using formatted array
   const totalSorts = respondentNames.length;
-  const rawSortsCloned = clone(rawSorts);
+  const rawSortsCloned = cloneDeep(rawSorts);
   const correlationTableArray = [];
   const correlationTableArrayFormatted = [];
 

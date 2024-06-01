@@ -1,13 +1,12 @@
-import evenRound from "../../../../Utils/evenRound";
-import adjustSignVectorW from "./adjustSignVectorW";
-import adjustSignVectorIterator from "./adjustSignVectorIterator";
+import evenRound from '../../../../Utils/evenRound';
+import adjustSignVectorW from './adjustSignVectorW';
+import adjustSignVectorIterator from './adjustSignVectorIterator';
 
 const calcSignAndFactorVectors = (rMatrix, W, V) => {
   //  SIGN VECTOR and FACTOR VECTOR LOOP  (a do-while loop)
   let endLoop = false;
   let infiniteLoopCatch = 0;
 
-  
   // V = create a vector of 1s
   V = Array(rMatrix.length).fill(1.0);
 

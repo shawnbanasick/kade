@@ -1,8 +1,8 @@
-import evenRound from "../../../../Utils/evenRound";
+import evenRound from '../../../../Utils/evenRound';
 
 const calcNewDandS = (D, U) => {
   let sStartValue = 0.0;
-  let newD = D.map(item => Math.abs(item));
+  let newD = D.map((item) => Math.abs(item));
   newD.push(sStartValue);
   // spread to find max value
   let S = Math.max(...newD);

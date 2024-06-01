@@ -1,15 +1,14 @@
-import testSignificanceOfResidual from "./testSignificanceOfResidual";
-import calcSignVector from "./calcSignVector";
-import accumulateW from "./accumulateW";
-import calcResidualMatrix from "./calcResidualMatrix";
-import calcFactorVector from "./calcFactorVector";
-import writeFactorMatrix from "./writeFactorMatrix";
-import calcNewDandS from "./calcNewDandS";
-import insertNewDiagonals from "./insertNewDiagonals";
-import evenRound from "../../../../Utils/evenRound";
-import factorState from "../../../GlobalState/factorState";
-
-const clone = require("rfdc")();
+import testSignificanceOfResidual from './testSignificanceOfResidual';
+import calcSignVector from './calcSignVector';
+import accumulateW from './accumulateW';
+import calcResidualMatrix from './calcResidualMatrix';
+import calcFactorVector from './calcFactorVector';
+import writeFactorMatrix from './writeFactorMatrix';
+import calcNewDandS from './calcNewDandS';
+import insertNewDiagonals from './insertNewDiagonals';
+import evenRound from '../../../../Utils/evenRound';
+import cloneDeep from 'lodash/cloneDeep';
+import factorState from '../../../GlobalState/factorState';
 
 const horstMain = (NFAX, STPCRT, HOLDR, numState, NL, P) => {
   // Conversion of Horst 5.5's fortran HELL-scape of nested loops, GOTOs, and CONTINUEs into javascript
@@ -21,7 +20,7 @@ const horstMain = (NFAX, STPCRT, HOLDR, numState, NL, P) => {
   let L = 0;
   let didNotConverge = false;
   // copy the correl matrix from HOLDR
-  let rMatrix = clone(HOLDR);
+  let rMatrix = cloneDeep(HOLDR);
   // size of the matrix
   const N = rMatrix.length;
   const FN = N;
@@ -111,7 +110,7 @@ const horstMain = (NFAX, STPCRT, HOLDR, numState, NL, P) => {
         // line 732 (2045)
         if (L > NL) {
           // goto line 83 ---> write output file
-          console.log("did not converge");
+          console.log('did not converge');
 
           didNotConverge = true;
           breakLoop = true;
@@ -156,7 +155,7 @@ const horstMain = (NFAX, STPCRT, HOLDR, numState, NL, P) => {
   // reduce if autostop
   if (STPCRT === true) {
     K = K - 1;
-    factorState.numCentroidFactors = K;
+    factorState.setState({ numCentroidFactors: K });
     // trim for autostop
     fMatrix.length = K;
   } else {

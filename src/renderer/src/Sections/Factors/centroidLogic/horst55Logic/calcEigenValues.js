@@ -1,12 +1,12 @@
-import squareValuesToNewArray from "./squareValuesToNewArray";
-import sumArrayValues from "./sumArrayValues";
-import evenRound from "../../../../Utils/evenRound";
+import squareValuesToNewArray from './squareValuesToNewArray';
+import sumArrayValues from './sumArrayValues';
+import evenRound from '../../../../Utils/evenRound';
 
 const calcEigenValues = (factorMatrix, numberSorts) => {
   let explainedVariance = [];
   let eigenvalues = [];
 
-  factorMatrix.forEach(function(element, jIndex) {
+  factorMatrix.forEach(function (element, jIndex) {
     let array = factorMatrix[jIndex];
     let eigenPrep = squareValuesToNewArray(array);
     let eigen = evenRound(sumArrayValues(eigenPrep), 4);

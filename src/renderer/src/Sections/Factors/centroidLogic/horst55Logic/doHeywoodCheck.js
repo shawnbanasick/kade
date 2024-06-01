@@ -1,7 +1,7 @@
-import factorState from "../../../GlobalState/factorState";
-import appState from "../../../GlobalState/appState";
-import rotationState from "../../../GlobalState/rotationState";
-import checkForHeywoodCaseInCommunalities from "./checkForHeywoodCommunalities";
+import factorState from '../../../GlobalState/factorState';
+import appState from '../../../GlobalState/appState';
+import rotationState from '../../../GlobalState/rotationState';
+import checkForHeywoodCaseInCommunalities from './checkForHeywoodCommunalities';
 
 const doHeywoodCheck = (communalityArray, respondentNames, hasHeywoodCase) => {
   const heywoodCaseInCommunalities = checkForHeywoodCaseInCommunalities(
@@ -9,42 +9,40 @@ const doHeywoodCheck = (communalityArray, respondentNames, hasHeywoodCase) => {
     respondentNames
   );
 
-  factorState.heywoodAdjustedMatrix =
-    heywoodCaseInCommunalities.communalityArray;
+  factorState.setState({ heywoodAdjustedMatrix: heywoodCaseInCommunalities.communalityArray });
 
-  const heywoodParticipantsTextArray =
-    heywoodCaseInCommunalities.heywoodParticipantsTextArray;
+  const heywoodParticipantsTextArray = heywoodCaseInCommunalities.heywoodParticipantsTextArray;
 
-  factorState.heywoodParticipantsTextJoin = heywoodParticipantsTextArray.join(
-    ", "
-  );
+  factorState.setState({ heywoodParticipantsTextJoin: heywoodParticipantsTextArray.join(', ') });
 
-  const heywoodParticipants =
-    heywoodCaseInCommunalities.heywoodParticipantsArray || [];
+  const heywoodParticipants = heywoodCaseInCommunalities.heywoodParticipantsArray || [];
 
   // if heywood present, update state
   if (heywoodParticipants.length > 0) {
-    factorState.showHeywoodCaseNotifications = true;
+    factorState.setState({ showHeywoodCaseNotifications: true });
 
-    factorState.heywoodParticipantsArray =
-      heywoodCaseInCommunalities.heywoodParticipantsArray;
+    factorState.setState({
+      heywoodParticipantsArray: heywoodCaseInCommunalities.heywoodParticipantsArray,
+    });
 
-    factorState.heywoodParticipantsCommunalityArray =
-      heywoodCaseInCommunalities.heywoodParticipantsCommunalityArray;
+    factorState.setState({
+      heywoodParticipantsCommunalityArray:
+        heywoodCaseInCommunalities.heywoodParticipantsCommunalityArray,
+    });
 
-    factorState.showUnrotatedFactorTable = false;
-    factorState.showEigenvaluesTable = false;
-    factorState.showScreePlot = false;
-    factorState.showKeepFacForRotButton = false;
-    appState.isFactorsButtonGreen = false;
-    rotationState.showKeepFacForRotButton = false;
+    factorState.setState({ showUnrotatedFactorTable: false });
+    factorState.setState({ showEigenvaluesTable: false });
+    factorState.setState({ showScreePlot: false });
+    factorState.setState({ showKeepFacForRotButton: false });
+    appState.setState({ isFactorsButtonGreen: false });
+    rotationState.setState({ showKeepFacForRotButton: false });
   } else {
-    factorState.showUnrotatedFactorTable = true;
-    factorState.showEigenvaluesTable = true;
-    factorState.showScreePlot = true;
-    factorState.showKeepFacForRotButton = true;
-    appState.isFactorsButtonGreen = true;
-    rotationState.showKeepFacForRotButton = true;
+    factorState.setState({ showUnrotatedFactorTable: true });
+    factorState.setState({ showEigenvaluesTable: true });
+    factorState.setState({ showScreePlot: true });
+    factorState.setState({ showKeepFacForRotButton: true });
+    appState.setState({ isFactorsButtonGreen: true });
+    rotationState.setState({ showKeepFacForRotButton: true });
   }
 };
 

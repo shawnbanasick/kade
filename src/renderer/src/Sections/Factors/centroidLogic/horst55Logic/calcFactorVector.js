@@ -1,6 +1,6 @@
 // import _ from "lodash";
-import calcNewW from "./calcNewW";
-import adjustByS from "./adjustByS";
+import calcNewW from './calcNewW';
+import adjustByS from './adjustByS';
 
 const calcFactorVector = (D, K, N, V, W, fMatrix, rMatrix) => {
   W = calcNewW(D, N, V, W);
@@ -16,4 +16,3 @@ const calcFactorVector = (D, K, N, V, W, fMatrix, rMatrix) => {
 };
 
 export default calcFactorVector;
-

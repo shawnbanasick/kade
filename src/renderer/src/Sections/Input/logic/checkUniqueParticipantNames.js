@@ -1,7 +1,7 @@
-import cloneDeep from "lodash/cloneDeep";
-import uniq from "lodash/uniq";
+import cloneDeep from 'lodash/cloneDeep';
+import uniq from 'lodash/uniq';
 
-const checkUniqueName = namesFromExistingData => {
+const checkUniqueName = (namesFromExistingData) => {
   const namesUniqueArrayTest2 = cloneDeep(namesFromExistingData);
   const namesUniqueArrayTest = uniq(namesUniqueArrayTest2);
 
@@ -10,13 +10,13 @@ const checkUniqueName = namesFromExistingData => {
       // stripping out "." because of display error in datatables
       const ii = i + 1;
       const currentName = namesFromExistingData[i];
-      const currentName2 = currentName.replace(/\./g, "\\.");
+      const currentName2 = currentName.replace(/\./g, '\\.');
       namesFromExistingData[i] = `${ii}_${currentName2}`;
     }
   } else {
     for (let j = 0; j < namesFromExistingData.length; j += 1) {
       // stripping out "." because of display error in datatables
-      namesFromExistingData[j] = namesFromExistingData[j].replace(/\./g, " ");
+      namesFromExistingData[j] = namesFromExistingData[j].replace(/\./g, ' ');
     }
   }
   return namesFromExistingData;

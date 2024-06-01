@@ -1,4 +1,4 @@
-const calculateMinValueAndIndex = columnTotals => {
+const calculateMinValueAndIndex = (columnTotals) => {
   let minIndex = 0;
   let min = columnTotals[0];
 

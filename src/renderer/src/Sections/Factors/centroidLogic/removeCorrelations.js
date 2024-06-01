@@ -1,11 +1,11 @@
-import evenRound from "../../../Utils/evenRound";
+import evenRound from '../../../Utils/evenRound';
 
 const removeCorrelations = (array, factorLoadings) => {
   const factorCorrelations = [];
   let newArrayFrag;
 
   function helper1(factorLoadings2, index) {
-    factorLoadings2.forEach(num => {
+    factorLoadings2.forEach((num) => {
       const temp = num * factorLoadings2[index];
       newArrayFrag.push(evenRound(temp, 8));
     }, this);

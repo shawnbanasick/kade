@@ -11,7 +11,7 @@ import factorState from '../../../GlobalState/factorState';
 import rotationState from '../../../GlobalState/rotationState';
 import coreState from '../../../GlobalState/coreState';
 
-import cloneDeep as clone from 'lodash/cloneDeep';
+import cloneDeep from 'lodash/cloneDeep';
 
 const doHeywoodAdjustment = () => {
   // getState - pull in settings and data
@@ -21,13 +21,31 @@ const doHeywoodAdjustment = () => {
   const respondentNames = coreState.getState().respondentNames;
   const projectHistoryArray = projectHistoryState.getState().projectHistoryArray;
   let numCentroidFactors = factorState.getState().numCentroidFactors;
+  const updateNumFacsForTableWidth = factorState((state) => state.updateNumFacsForTableWidth);
+  const updateFactorMatrix = factorState((state) => state.updateFactorMatrix);
+  const updateEigenvalues = factorState((state) => state.updateEigenvalues);
+  const updateExplainedVariance = factorState((state) => state.updateExplainedVariance);
+  const updateUnrotatedFactorMatrix = factorState((state) => state.updateUnrotatedFactorMatrix);
+  const updateEigensPercentExpVar = factorState((state) => state.updateEigensPercentExpVar);
+  const updateCumulEigenPerVar = factorState((state) => state.updateCumulEigenPerVar);
+  const updateScreePlotData = factorState((state) => state.updateScreePlotData);
+  const updateProjectHistoryArray = projectHistoryState((state) => state.updateProjectHistoryArray);
+  const updateShowKeepFacForRotButton = rotationState(
+    (state) => state.updateShowKeepFacForRotButton
+  );
+  const updateIsCentroidLoading = factorState((state) => state.updateIsCentroidLoading);
+  const showHorstMessage = factorState.getState().didNotConverge;
+  const horstAutoStopYesActive = factorState.getState('horstAutoStopYesActive');
+  const horstIterations = factorState.getState().horstIterations;
+  const brown = factorState((state) => state.activeTraditionalCentroidFactorButton);
+  const horst = factorState((state) => state.activeHorst55CentroidButton);
 
   const numQsorts = fMatrix[0].length;
 
   // ************************************
   // CALC COMMUNALITIES
   // ************************************
-  const rotFacStateArray1 = clone(fMatrix);
+  const rotFacStateArray1 = cloneDeep(fMatrix);
   const rotFacStateArray = transposeMatrix(rotFacStateArray1);
   // in case autoflag of unrotated factor matrix in loadings table
   calculateCommunalities(rotFacStateArray);
@@ -40,9 +58,9 @@ const doHeywoodAdjustment = () => {
   const explainVarandEigens = calcEigenValues(fMatrix, numQsorts);
 
   const cumulativeVar = calcCumulativeVar(explainVarandEigens[1]);
-  const explainedVar = clone(explainVarandEigens[1]);
-  const cumulativeVarWithText1 = clone(cumulativeVar);
-  const eigenvalues = clone(explainVarandEigens[0]);
+  const explainedVar = cloneDeep(explainVarandEigens[1]);
+  const cumulativeVarWithText1 = cloneDeep(cumulativeVar);
+  const eigenvalues = cloneDeep(explainVarandEigens[0]);
   const percentEigenVal = [[...explainedVar], [...cumulativeVarWithText1]];
 
   // ************************************
@@ -113,14 +131,7 @@ const doHeywoodAdjustment = () => {
   const horstMessage = i18n.t('No convergance');
   const iterationsTrans = i18n.t('iterations');
 
-  const showHorstMessage = factorState.getState().didNotConverge;
-  const horstAutoStopYesActive = factorState.getState('horstAutoStopYesActive');
-  const horstIterations = factorState.getState().horstIterations;
-
   let projectLogText4;
-
-  const brown = getFactorState('activeTraditionalCentroidFactorButton');
-  const horst = getFactorState('activeHorst55CentroidButton');
 
   if (brown) {
     projectLogText4 = i18n.t('Brown Centroid Factors Extracted');
@@ -129,7 +140,7 @@ const doHeywoodAdjustment = () => {
     projectLogText4 = i18n.t('Horst Centroid Factors Extracted');
   }
 
-  const heywoodParticipantsTextJoin = getFactorState('heywoodParticipantsTextJoin');
+  const heywoodParticipantsTextJoin = factorState((state) => state.heywoodParticipantsTextJoin);
 
   // remove previous log entry
   projectHistoryArray.pop();
@@ -160,21 +171,19 @@ const doHeywoodAdjustment = () => {
   // ************************************
   // UPDATE STATE
   // ************************************
-  
-  
-  /*
-  factorState.numFacsForTableWidth = numCentroidFactors;
-  factorState.factorMatrix = fMatrix; // pulled for first display on loadings table
-  factorState.eigenvalues = eigenvaluesWithText;
-  factorState.explainedVariance = explainedVar;
-  factorState.unrotatedFactorMatrix = fMatrix;
-  factorState.eigensPercentExpVar = explainedVarWithText;
-  factorState.cumulEigenPerVar = cumulativeVarWithText;
-  factorState.screePlotData = formattedScreePlotData;
-  factorState.isCentroidLoading = false;
-  projectHistoryState.projectHistoryArray = newProjectHistoryArray;
-  rotationState.showKeepFacForRotButton = true;
-  */
+
+  updateNumFacsForTableWidth(numCentroidFactors);
+  updateFactorMatrix(fMatrix);
+  updateEigenvalues(eigenvaluesWithText);
+  updateExplainedVariance(explainedVar);
+  updateUnrotatedFactorMatrix(fMatrix);
+  updateEigensPercentExpVar(explainedVarWithText);
+  updateCumulEigenPerVar(cumulativeVarWithText);
+  updateScreePlotData(formattedScreePlotData);
+  updateIsCentroidLoading(false);
+  updateProjectHistoryArray(newProjectHistoryArray);
+  updateShowKeepFacForRotButton(true);
+
   // to use with the undo function in Project History
   sessionStorage.setItem('facMatrixArc0', JSON.stringify(rotFacStateArray1));
 };

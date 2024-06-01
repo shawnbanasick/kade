@@ -9,4 +9,3 @@ const testSidResD = (D, rMatrix) => {
 };
 
 export default testSidResD;
-
