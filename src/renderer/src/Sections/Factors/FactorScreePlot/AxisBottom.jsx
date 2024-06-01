@@ -1,6 +1,6 @@
-import React from "react";
-import * as d3 from "d3";
-import factorState from "../../GlobalState/factorState";
+import React from 'react';
+import * as d3 from 'd3';
+import factorState from '../../GlobalState/factorState';
 
 export default class AxisBottom extends React.Component {
   componentDidMount() {
@@ -21,10 +21,7 @@ export default class AxisBottom extends React.Component {
 
   renderAxis(facNum) {
     const node = this.axis;
-    const axis = d3
-      .axisBottom()
-      .ticks(facNum)
-      .scale(this.props.scale);
+    const axis = d3.axisBottom().ticks(facNum).scale(this.props.scale);
     d3.select(node).call(axis);
   }
 
@@ -32,7 +29,7 @@ export default class AxisBottom extends React.Component {
     return (
       <g
         className="axis"
-        ref={c => {
+        ref={(c) => {
           this.axis = c;
         }}
         transform={this.props.translate}

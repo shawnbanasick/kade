@@ -9,35 +9,60 @@ import factorState from '../../GlobalState/factorState';
 import appState from '../../GlobalState/appState';
 import rotationState from '../../GlobalState/rotationState';
 import projectHistoryState from '../../GlobalState/projectHistoryState';
-import getProjectHistoryState from '../../GlobalState/getProjectHistoryState';
-import getFactorState from '../../GlobalState/getFactorState';
-
-// set default state on first load
-factorState.heywoodAdjustButtonActive = false;
-factorState.heywoodContinueButtonActive = false;
 
 const HeywoodCaseNotification = () => {
   const { t } = useTranslation();
+  const updateHeywoodAdjustButtonActive = factorState(
+    (state) => state.updateHeywoodAdjustButtonActive
+  );
+  const updateHeywoodContinueButtonActive = factorState(
+    (state) => state.updateHeywoodContinueButtonActive
+  );
 
-  const handleReselectClick = (event) => {
-    factorState.isCentroidFacSelectDisabled = false;
-    factorState.isCentroidExtractButtonDisabled = false;
+  const updateIsCentroidFacSelectDisabled = factorState(
+    (state) => state.updateIsCentroidFacSelectDisabled
+  );
+  const updateIsCentroidExtractButtonDisabled = factorState(
+    (state) => state.updateIsCentroidExtractButtonDisabled
+  );
+  const updateProjectHistoryArray = projectHistoryState((state) => state.updateProjectHistoryArray);
+  const updateShowUnrotatedFactorTable = factorState(
+    (state) => state.updateShowUnrotatedFactorTable
+  );
+  const updateShowEigenvaluesTable = factorState((state) => state.updateShowEigenvaluesTable);
+  const updateShowScreePlot = factorState((state) => state.updateShowScreePlot);
+  const updateShowKeepFacForRotButton = rotationState(
+    (state) => state.updateShowKeepFacForRotButton
+  );
+  const updateHeywoodButtonDisabled = factorState((state) => state.updateHeywoodButtonDisabled);
+  const updateIsFactorsButtonGreen = appState((state) => state.updateIsFactorsButtonGreen);
+  const updateShowHeywoodCaseNotifications = factorState(
+    (state) => state.updateShowHeywoodCaseNotifications
+  );
+
+  // set default state on first load
+  updateHeywoodAdjustButtonActive(false);
+  updateHeywoodContinueButtonActive(false);
+
+  const handleReselectClick = () => {
+    updateIsCentroidFacSelectDisabled(false);
+    updateIsCentroidExtractButtonDisabled(false);
 
     // remove previous log entry
-    const projectHistoryArray = getProjectHistoryState('projectHistoryArray');
+    const projectHistoryArray = projectHistoryState((state) => state.projectHistoryArray);
     projectHistoryArray.pop();
-    projectHistoryState.projectHistoryArray = projectHistoryArray;
+    updateProjectHistoryArray(projectHistoryArray);
 
-    factorState.showUnrotatedFactorTable = false;
-    factorState.showEigenvaluesTable = false;
-    factorState.showScreePlot = false;
-    factorState.showKeepFacForRotButton = false;
-    factorState.showHeywoodCaseNotifications = false;
+    updateShowUnrotatedFactorTable(false);
+    updateShowEigenvaluesTable(false);
+    updateShowScreePlot(false);
+    updateShowKeepFacForRotButton(false);
+    updateShowHeywoodCaseNotifications(false);
   };
 
   const handleContinueClick = () => {
-    const projectHistoryArray = getProjectHistoryState('projectHistoryArray');
-    const heywoodParticipantsTextJoin = getFactorState('heywoodParticipantsTextJoin');
+    const projectHistoryArray = projectHistoryState((state) => state.projectHistoryArray);
+    const heywoodParticipantsTextJoin = factorState((state) => state.heywoodParticipantsTextJoin);
 
     const projectLogText3 = `${i18n.t(
       'Heywood Case Participants'
@@ -49,35 +74,37 @@ const HeywoodCaseNotification = () => {
     };
 
     const newProjectHistoryArray = [...projectHistoryArray, logMessageObj1];
-    projectHistoryState.projectHistoryArray = newProjectHistoryArray;
+    updateProjectHistoryArray(newProjectHistoryArray);
 
-    factorState.showUnrotatedFactorTable = true;
-    factorState.showEigenvaluesTable = true;
-    factorState.showScreePlot = true;
-    factorState.showKeepFacForRotButton = true;
-    factorState.heywoodButtonDisabled = true;
-    appState.isFactorsButtonGreen = true;
-    factorState.heywoodContinueButtonActive = true;
-    rotationState.showKeepFacForRotButton = true;
+    updateShowUnrotatedFactorTable(true);
+    updateShowEigenvaluesTable(true);
+    updateShowScreePlot(true);
+    updateShowKeepFacForRotButton(true);
+    updateHeywoodButtonDisabled(true);
+    updateIsFactorsButtonGreen(true);
+    updateHeywoodContinueButtonActive(true);
+    updateShowKeepFacForRotButton(true);
   };
 
   const handleAdjustClick = () => {
     doHeywoodAdjustment();
-    factorState.showUnrotatedFactorTable = true;
-    factorState.showEigenvaluesTable = true;
-    factorState.showScreePlot = true;
-    factorState.showKeepFacForRotButton = true;
-    factorState.heywoodButtonDisabled = true;
-    appState.isFactorsButtonGreen = true;
-    factorState.heywoodAdjustButtonActive = true;
+    updateShowUnrotatedFactorTable(true);
+    updateShowEigenvaluesTable(true);
+    updateShowScreePlot(true);
+    updateShowKeepFacForRotButton(true);
+    updateHeywoodButtonDisabled(true);
+    updateIsFactorsButtonGreen(true);
+    updateHeywoodAdjustButtonActive(true);
   };
 
-  const heywoodContinueButtonActive = getFactorState('heywoodContinueButtonActive');
-  const heywoodAdjustButtonActive = getFactorState('heywoodAdjustButtonActive');
+  const heywoodContinueButtonActive = factorState((state) => state.heywoodContinueButtonActive);
+  const heywoodAdjustButtonActive = factorState((state) => state.heywoodAdjustButtonActive);
+  const heywoodButtonDisabled = factorState((state) => state.heywoodButtonDisabled);
+  const showHeywoodCaseNotifications = factorState((state) => state.showHeywoodCaseNotifications);
+  const heywoodParticipantsCommunalities = factorState(
+    (state) => state.heywoodParticipantsCommunalityArray
+  );
   const heywoodReselectButtonActive = false;
-  const heywoodButtonDisabled = getFactorState('heywoodButtonDisabled');
-  const showHeywoodCaseNotifications = getFactorState('showHeywoodCaseNotifications');
-  const heywoodParticipantsCommunalities = getFactorState('heywoodParticipantsCommunalityArray');
 
   if (showHeywoodCaseNotifications) {
     return (

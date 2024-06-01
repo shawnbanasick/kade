@@ -1,5 +1,5 @@
-import React from "react";
-import * as d3 from "d3";
+import React from 'react';
+import * as d3 from 'd3';
 
 export default class AxisLeft extends React.Component {
   componentDidMount() {
@@ -12,10 +12,7 @@ export default class AxisLeft extends React.Component {
 
   renderAxis() {
     const node = this.axis;
-    const axis = d3
-      .axisLeft()
-      .ticks(5)
-      .scale(this.props.scale);
+    const axis = d3.axisLeft().ticks(5).scale(this.props.scale);
     d3.select(node).call(axis);
   }
 
@@ -23,7 +20,7 @@ export default class AxisLeft extends React.Component {
     return (
       <g
         className="axis"
-        ref={c => {
+        ref={(c) => {
           this.axis = c;
         }}
         transform={this.props.translate}

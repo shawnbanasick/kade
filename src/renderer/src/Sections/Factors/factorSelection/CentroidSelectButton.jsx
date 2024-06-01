@@ -1,16 +1,15 @@
-import React from "react";
-import styled from "styled-components";
-import { Button } from "semantic-ui-react";
+import React from 'react';
+import styled from 'styled-components';
+import { Button } from 'semantic-ui-react';
 
-import factorState from "../../GlobalState/factorState";
-import getFactorState from "../../GlobalState/getFactorState";
+import factorState from '../../GlobalState/factorState';
 
 const styles = {
   // marginRight: 100,
 };
 
 // getState
-const isActive = getFactorState("activeCentroidRevealButton");
+const isActive = factorState((state) => state.activeCentroidRevealButton);
 
 /*
 
@@ -24,9 +23,9 @@ const CentroidSelectButton = () => (
     <StyledWrapper>
       <Button
         id="centroidSelectButton"
-        size={"big"}
+        size={'big'}
         toggle
-        className={"wrapper1"}
+        className={'wrapper1'}
         active={isActive}
         style={styles}
       >

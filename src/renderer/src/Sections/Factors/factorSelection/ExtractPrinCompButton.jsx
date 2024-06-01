@@ -1,32 +1,40 @@
 import pcaDispatch from '../PcaLogic/pcaDispatch';
 import GeneralButton from '../../../Utils/GeneralButton';
+import { useTranslation } from 'react-i18next';
 import factorState from '../../GlobalState/factorState';
 import appState from '../../GlobalState/appState';
 import rotationState from '../../GlobalState/rotationState';
-import { useTranslation } from 'react-i18next';
-import getFactorState from '../../GlobalState/getFactorState';
-
-function handleClick() {
-  factorState.calculatingPca = true;
-  factorState.activePcaButton = true;
-  factorState.isCentroidRevealButtonDisabled = true;
-  factorState.isPcaButtonDisabled = true;
-  rotationState.showKeepFacForRotButton = true;
-
-  // to allow time for the spinner to display
-  setTimeout(() => {
-    pcaDispatch();
-  }, 10);
-  appState.isFactorsButtonGreen = true;
-}
 
 const PCAButton = () => {
   const { t } = useTranslation();
 
   // getState
-  const isActive = getFactorState('activePcaButton');
-  const isDisabled = getFactorState('isPcaButtonDisabled');
-  // const isCalculating = getFactorState("calculatingPca");
+  const isActive = factorState((state) => state.activePcaButton);
+  const isDisabled = factorState((state) => state.isPcaButtonDisabled);
+  const updateCalculatingPca = factorState((state) => state.updateCalculatingPca);
+  const updateActivePcaButton = factorState((state) => state.updateActivePcaButton);
+  const updateIsCentroidRevealButtonDisabled = factorState(
+    (state) => state.updateIsCentroidRevealButtonDisabled
+  );
+  const updateIsPcaButtonDisabled = factorState((state) => state.updateIsPcaButtonDisabled);
+  const updateShowKeepFacForRotButton = rotationState(
+    (state) => state.updateShowKeepFacForRotButton
+  );
+
+  function handleClick() {
+    updateCalculatingPca(true);
+    updateActivePcaButton(true);
+    updateIsCentroidRevealButtonDisabled(true);
+    updateIsPcaButtonDisabled(true);
+    updateShowKeepFacForRotButton(true);
+
+    // to allow time for the spinner to display
+    setTimeout(() => {
+      pcaDispatch();
+    }, 10);
+    appState.isFactorsButtonGreen = true;
+  }
+
   return (
     <div>
       <GeneralButton

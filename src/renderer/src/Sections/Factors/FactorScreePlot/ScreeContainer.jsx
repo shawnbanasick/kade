@@ -2,8 +2,8 @@ import React from 'react';
 import ScreePlot from './ScreePlot';
 import DownloadSvgButtons from './DownloadSvgButtons';
 import { useTranslation } from 'react-i18next';
-import getFactorState from '../../GlobalState/getFactorState';
-import getCoreState from '../../GlobalState/getCoreState';
+import factorState from '../../GlobalState/factorState';
+import coreState from '../../GlobalState/coreState';
 
 const styles = {
   width: 800,
@@ -13,13 +13,12 @@ const styles = {
 
 const ScreeContainer = (props) => {
   const { t } = useTranslation();
+  const data = factorState((state) => state.screePlotData);
+  const maxLength1 = factorState((state) => state.numCentroidFactors);
+  const numQsorts = coreState((state) => state.numQsorts);
+  const numFacsFromState = factorState((state) => state.numCentroidFactors);
 
-  // get State and adjust if number of sorts is less than 8
-
-  const data = getFactorState('screePlotData');
-  const maxLength1 = getFactorState('numCentroidFactors');
   let maxLength = parseInt(maxLength1, 10);
-  const numQsorts = getCoreState('numQsorts');
 
   if (numQsorts < maxLength) {
     maxLength = numQsorts;
@@ -27,7 +26,6 @@ const ScreeContainer = (props) => {
   // trim data from Horst
   data.length = maxLength;
 
-  const numFacsFromState = getFactorState('numCentroidFactors');
   const numFactors = Number(numFacsFromState) + 1;
 
   return (
