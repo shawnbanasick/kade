@@ -1,40 +1,44 @@
 import React from 'react';
 import styled from 'styled-components';
-
 import GeneralButton from '../../../Utils/GeneralButton';
-import factorState from '../../GlobalState/factorState';
-import appState from '../../GlobalState/appState';
 import horstDispatcher from '../centroidLogic/horst55Logic/horstDispatcher';
-import { useTranslation } from 'react-i18next';
 import HorstNumberInput from './HorstNumberInput';
-import getFactorState from '../../GlobalState/getFactorState';
+import { useTranslation } from 'react-i18next';
+import appState from '../../GlobalState/appState';
+import factorState from '../../GlobalState/factorState';
 
 const UseHorstAutoStop = () => {
   const { t } = useTranslation();
 
   // getState
-  const showUseHorstIterationSetup = getFactorState('showUseHorstIterationSetup');
+  const showUseHorstIterationSetup = factorState('showUseHorstIterationSetup');
+  const horstExtractActive = factorState('horstExtractActive');
+  const horstExtractDisabled = factorState('horstExtractDisabled');
+  const horstIterations = factorState('horstIterations');
+  const horstThresholdLevel = factorState('horstThresholdLevel');
+  const updateShowCentroidSpinner = factorState('updateShowCentroidSpinner');
+  const updateShowUnrotatedFactorTable = factorState('updateShowUnrotatedFactorTable');
+  const updateShowEigenvaluesTable = factorState('updateShowEigenvaluesTable');
+  const updateShowScreePlot = factorState('updateShowScreePlot');
+  const updateHrstExtractActive = factorState('updateHrstExtractActive');
+  const updateHorstExtractDisabled = factorState('updateHorstExtractDisabled');
+  const updateIsFactorsButtonGreen = appState((state) => state.updateIsFactorsButtonGreen);
+  const updateShowKeepFacForRotButton = factorState((state) => state.updateShowKeepFacForRotButton);
 
-  const handleClick = (event) => {
+  const handleClick = () => {
     const shouldUseHorstLimit = true;
-
-    factorState.showCentroidSpinner = true;
+    updateShowCentroidSpinner(true);
     // call function
     horstDispatcher(shouldUseHorstLimit);
-    factorState.showCentroidSpinner = false;
-    factorState.showUnrotatedFactorTable = true;
-    factorState.showEigenvaluesTable = true;
-    factorState.showScreePlot = true;
-    factorState.showKeepFacForRotButton = true;
-    appState.isFactorsButtonGreen = true;
-    factorState.horstExtractActive = true;
-    factorState.horstExtractDisabled = true;
+    updateShowCentroidSpinner(false);
+    updateShowUnrotatedFactorTable(true);
+    updateShowEigenvaluesTable(true);
+    updateShowScreePlot(true);
+    updateShowKeepFacForRotButton(true);
+    updateIsFactorsButtonGreen(true);
+    updateHrstExtractActive(true);
+    updateHorstExtractDisabled(true);
   };
-
-  const horstExtractActive = getFactorState('horstExtractActive');
-  const horstExtractDisabled = getFactorState('horstExtractDisabled');
-  const horstIterations = getFactorState('horstIterations');
-  const horstThresholdLevel = getFactorState('horstThresholdLevel');
 
   if (showUseHorstIterationSetup) {
     return (

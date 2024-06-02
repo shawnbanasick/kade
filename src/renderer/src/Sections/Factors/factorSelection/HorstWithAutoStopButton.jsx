@@ -1,39 +1,59 @@
-import React from 'react';
 import styled from 'styled-components';
-
 import GeneralButton from '../../../Utils/GeneralButton';
+import horstDispatcher from '../centroidLogic/horst55Logic/horstDispatcher';
 import factorState from '../../GlobalState/factorState';
 import appState from '../../GlobalState/appState';
-import horstDispatcher from '../centroidLogic/horst55Logic/horstDispatcher';
-import getFactorState from '../../GlobalState/getFactorState';
 
 const Horst55CentroidModal = () => {
+  const updateIsCentroidLoading = factorState((state) => state.updateIsCentroidLoading);
+  const updateShowUnrotatedFactorTable = factorState(
+    (state) => state.updateShowUnrotatedFactorTable
+  );
+  const updateShowEigenvaluesTable = factorState((state) => state.updateShowEigenvaluesTable);
+  const updateShowScreePlot = factorState((state) => state.updateShowScreePlot);
+  // const updateKeepFacForRotButton = factorState((state) => state.updateKeepFacForRotButton);
+  const updateIsPcaButtonDisabled = factorState((state) => state.updateIsPcaButtonDisabled);
+  const updateDisabledCentroidFactorButton = factorState(
+    (state) => state.updateDisabledCentroidFactorButton
+  );
+  const updateActiveHorst55CentroidButton = factorState(
+    (state) => state.updateActiveHorst55CentroidButton
+  );
+  const updateIsHorst55Disabled = factorState((state) => state.updateIsHorst55Disabled);
+  const updateIsTraditionalCentroidDisabled = factorState(
+    (state) => state.updateIsTraditionalCentroidDisabled
+  );
+  const updateIsTuckerMacCallumCentroidDisabled = factorState(
+    (state) => state.updateIsTuckerMacCallumCentroidDisabled
+  );
+  const updateIsFactorsButtonGreen = appState((state) => state.updateIsFactorsButtonGreen);
+  const updateShowKeepFacForRotButton = factorState((state) => state.updateShowKeepFacForRotButton);
+  const updateIsCentroidFacSelectDisabled = factorState(
+    (state) => state.updateIsCentroidFacSelectDisabled
+  );
+
   const handleOnclick = () => {
-    factorState.isCentroidLoading = true;
+    updateIsCentroidLoading(true);
 
     horstDispatcher();
 
-    // factorState.numFacsForTableWidth = numFactors;
-    factorState.showUnrotatedFactorTable = true;
-    factorState.showEigenvaluesTable = true;
-    factorState.showScreePlot = true;
-    // factorState.activeCentroidRevealButton = true;
-    factorState.isPcaButtonDisabled = true;
-    factorState.disabledCentroidFactorButton = true;
-    factorState.showKeepFacForRotButton = true;
-    appState.isFactorsButtonGreen = true;
-    factorState.activeHorst55CentroidButton = true;
-    factorState.isTraditionalCentroidDisabled = true;
-    factorState.isHorst55Disabled = true;
-    factorState.isTuckerMacCallumCentroidDisabled = true;
-    factorState.isCentroidFacSelectDisabled = true;
+    updateShowUnrotatedFactorTable(true);
+    updateShowEigenvaluesTable(true);
+    updateShowScreePlot(true);
+    updateIsPcaButtonDisabled(true);
+    updateDisabledCentroidFactorButton(true);
+    updateShowKeepFacForRotButton(true);
+    updateIsFactorsButtonGreen(true);
+    updateActiveHorst55CentroidButton(true);
+    updateIsTraditionalCentroidDisabled(true);
+    updateIsHorst55Disabled(true);
+    updateIsTuckerMacCallumCentroidDisabled(true);
+    updateIsCentroidFacSelectDisabled(true);
   };
-  // const isCentroidLoading = getFactorState("isCentroidLoading");
-  // loading={isCentroidLoading}
 
   // getState
-  const isActive = getFactorState('activeHorst55CentroidButton');
-  const isDisabled = getFactorState('isHorst55Disabled');
+  const isActive = factorState((state) => state.activeHorst55CentroidButton);
+  const isDisabled = factorState((state) => state.isHorst55Disabled);
 
   return (
     <HorstButton
@@ -41,7 +61,7 @@ const Horst55CentroidModal = () => {
       id="noFacSelectedModalButton"
       isActive={isActive}
       disabled={isDisabled}
-      onClick={this.handleOnclick}
+      onClick={handleOnclick}
     >
       Use Horst With
       <br />

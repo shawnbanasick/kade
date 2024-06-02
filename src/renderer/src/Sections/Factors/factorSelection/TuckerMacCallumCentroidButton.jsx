@@ -1,47 +1,63 @@
 import styled from 'styled-components';
-
-import React from 'react';
 import GeneralButton from '../../../Utils/GeneralButton';
-import factorState from '../../GlobalState/factorState';
 import tuckerDispatcher from '../centroidLogic/tuckerLogic/tuckerDispatcher';
-import appState from '../../GlobalState/appState';
 import { useTranslation } from 'react-i18next';
-import getFactorState from '../../GlobalState/getFactorState';
+import appState from '../../GlobalState/appState';
+import factorState from '../../GlobalState/factorState';
 
 const TuckerMacCallumCentroidButton = () => {
   const { t } = useTranslation();
+  // getState
+  const isActive = factorState((state) => state.activeTuckerMacCallumCentroidButton);
+  const isDisabled = factorState((state) => state.isTuckerMacCallumCentroidDisabled);
+  const updateShowCentroidSpinner = factorState((state) => state.updateShowCentroidSpinner);
+  const updateShowUnrotatedFactorTable = factorState(
+    (state) => state.updateShowUnrotatedFactorTable
+  );
+  const updateShowEigenvaluesTable = factorState((state) => state.updateShowEigenvaluesTable);
+  const updateShowScreePlot = factorState((state) => state.updateShowScreePlot);
+  const updateShowKeepFacForRotButton = factorState((state) => state.updateShowKeepFacForRotButton);
+  const updateIsFactorsButtonGreen = appState((state) => state.updateIsFactorsButtonGreen);
+  const updateActiveTuckerMacCallumCentroidButton = factorState(
+    (state) => state.updateActiveTuckerMacCallumCentroidButton
+  );
+  const updateDisabledCentroidFactorButton = factorState(
+    (state) => state.updateDisabledCentroidFactorButton
+  );
+  const updateIsPcaButtonDisabled = factorState((state) => state.updateIsPcaButtonDisabled);
+  const updateIsTraditionalCentroidDisabled = factorState(
+    (state) => state.updateIsTraditionalCentroidDisabled
+  );
+  const updateIsHorst55Disabled = factorState((state) => state.updateIsHorst55Disabled);
+  const updateIsTuckerMacCallumCentroidDisabled = factorState(
+    (state) => state.updateIsTuckerMacCallumCentroidDisabled
+  );
+  const updateTuckerMacCallumCentroidButton = factorState(
+    (state) => state.updateTuckerMacCallumCentroidButton
+  );
+  const updateIsCentroidFacSelectDisabled = factorState(
+    (state) => state.updateIsCentroidFacSelectDisabled
+  );
 
-  const handleOnclick = (event) => {
-    factorState.showCentroidSpinner = true;
+  const handleOnclick = () => {
+    updateShowCentroidSpinner(true);
 
     tuckerDispatcher();
-
-    // factorState.numFacsForTableWidth = numFactors;
-    factorState.activeTuckerMacCallumCentroidButton = true;
-
-    factorState.showCentroidSpinner = false;
-
-    factorState.showUnrotatedFactorTable = true;
-    factorState.showEigenvaluesTable = true;
-    factorState.showScreePlot = true;
-    factorState.showKeepFacForRotButton = true;
-
-    // factorState.activeCentroidRevealButton = true;
-    factorState.disabledCentroidFactorButton = true;
-
-    factorState.isPcaButtonDisabled = true;
-    appState.isFactorsButtonGreen = true;
-    factorState.isTraditionalCentroidDisabled = true;
-    factorState.isHorst55Disabled = true;
-    factorState.isTuckerMacCallumCentroidDisabled = true;
-    factorState.TuckerMacCallumCentroidButton = true;
-    factorState.isCentroidFacSelectDisabled = true;
+    updateActiveTuckerMacCallumCentroidButton(true);
+    updateShowCentroidSpinner(false);
+    updateShowUnrotatedFactorTable(true);
+    updateShowEigenvaluesTable(true);
+    updateShowScreePlot(true);
+    updateShowKeepFacForRotButton(true);
+    updateDisabledCentroidFactorButton(true);
+    updateIsPcaButtonDisabled(true);
+    updateIsTraditionalCentroidDisabled(true);
+    updateIsHorst55Disabled(true);
+    updateIsTuckerMacCallumCentroidDisabled(true);
+    updateTuckerMacCallumCentroidButton(true);
+    updateIsCentroidFacSelectDisabled(true);
+    updateIsFactorsButtonGreen(true);
   };
-
-  // getState
-  const isActive = getFactorState('activeTuckerMacCallumCentroidButton');
-  const isDisabled = getFactorState('isTuckerMacCallumCentroidDisabled');
-  // const isCentroidLoading = getFactorState("isCentroidLoading");
 
   return (
     <TuckerButton

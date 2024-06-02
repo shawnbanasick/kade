@@ -1,14 +1,11 @@
-import React from 'react';
 import styled from 'styled-components';
-
 import { useTranslation } from 'react-i18next';
-import getFactorState from '../../GlobalState/getFactorState';
+import factorState from '../../GlobalState/factorState';
 
 const HorstWarningMessage = () => {
   const { t } = useTranslation();
-  const showHorstWarningMessage = getFactorState('didNotConverge');
-  // const horstAutoStopYesActive = getFactorState("horstAutoStopYesActive");
-  const horstIterations = getFactorState('horstIterations');
+  const showHorstWarningMessage = factorState((state) => state.didNotConverge);
+  const horstIterations = factorState((state) => state.horstIterations);
 
   if (showHorstWarningMessage) {
     return (

@@ -1,16 +1,16 @@
 import React from 'react';
 import styled from 'styled-components';
-
 import { useTranslation } from 'react-i18next';
 import HorstNumberInput from './HorstNumberInput';
-import getFactorState from '../../GlobalState/getFactorState';
+import factorState from '../../GlobalState/factorState';
+import { stat } from 'original-fs';
 
 const InputHorstCutoffsNoLimit = () => {
   const { t } = useTranslation();
 
   // getState
-  const showHorstIterationLimit = getFactorState('showHorstIterationLimit');
-  const horstIterations = getFactorState('horstIterations');
+  const showHorstIterationLimit = factorState((state) => state.showHorstIterationLimit);
+  const horstIterations = factorState((state) => state.horstIterations);
 
   if (showHorstIterationLimit) {
     return (

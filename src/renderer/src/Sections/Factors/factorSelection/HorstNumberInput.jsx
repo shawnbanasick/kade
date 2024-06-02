@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-
 import { useTranslation } from 'react-i18next';
 import factorState from '../../GlobalState/factorState';
 
@@ -23,6 +22,8 @@ const UserNumberInput = (props) => {
       setShowWarning(true);
     } else {
       setValue(value);
+
+      // todo - fix dynamic state update
       factorState[e.target.name] = e.target.value;
     }
   };

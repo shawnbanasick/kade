@@ -1,38 +1,48 @@
 import React from 'react';
 import styled from 'styled-components';
-
 import GeneralButton from '../../../Utils/GeneralButton';
 import factorState from '../../GlobalState/factorState';
 import { useTranslation } from 'react-i18next';
-import getFactorState from '../../GlobalState/getFactorState';
 
 const UseHorstAutoStop = () => {
   const { t } = useTranslation();
 
   // getState
-  const showUseHorstLimit = getFactorState('showUseHorstLimit');
+  const showUseHorstLimit = factorState((state) => state.showUseHorstLimit);
+  const horstAutoStopYesActive = factorState((state) => state.horstAutoStopYesActive);
+  const horstAutoStopYesDisabled = factorState((state) => state.horstAutoStopYesDisabled);
+  const horstAutoStopNoActive = factorState((state) => state.horstAutoStopNoActive);
+  const horstAutoStopNoDisabled = factorState((state) => state.horstAutoStopNoDisabled);
+  const updateShowUseHorstIterationSetup = factorState(
+    (state) => state.updateShowUseHorstIterationSetup
+  );
+  const updateShowHorstIterationLimit = factorState((state) => state.updateShowHorstIterationLimit);
+  const updateShowNumberOfCentroidFacToExtract = factorState(
+    (state) => state.updateShowNumberOfCentroidFacToExtract
+  );
+  const updateHorstAutoStopYesActive = factorState((state) => state.updateHorstAutoStopYesActive);
+  const updateHorstAutoStopYesDisabled = factorState(
+    (state) => state.updateHorstAutoStopYesDisabled
+  );
+  const updateHorstAutoStopNoActive = factorState((state) => state.updateHorstAutoStopNoActive);
+  const updateHorstAutoStopNoDisabled = factorState((state) => state.updateHorstAutoStopNoDisabled);
 
   const handleClick = (event) => {
     const id = event.target.id;
     if (id === 'yes') {
       // shouldUseHorstLimit = true;
-      factorState.horstAutoStopYesActive = true;
-      factorState.horstAutoStopYesDisabled = true;
-      factorState.horstAutoStopNoDisabled = true;
-      factorState.showUseHorstIterationSetup = true;
+      updateHorstAutoStopYesActive(true);
+      updateHorstAutoStopYesDisabled(true);
+      updateHorstAutoStopNoDisabled(true);
+      updateShowUseHorstIterationSetup(true);
     } else {
-      factorState.showHorstIterationLimit = true;
-      factorState.horstAutoStopYesDisabled = true;
-      factorState.horstAutoStopNoDisabled = true;
-      factorState.horstAutoStopNoActive = true;
-      factorState.showNumberOfCentroidFacToExtract = true;
+      updateShowHorstIterationLimit(true);
+      updateHorstAutoStopYesDisabled(true);
+      updateHorstAutoStopNoDisabled(true);
+      updateHorstAutoStopNoActive(true);
+      updateShowNumberOfCentroidFacToExtract(true);
     }
   };
-
-  const horstAutoStopYesActive = getFactorState('horstAutoStopYesActive');
-  const horstAutoStopYesDisabled = getFactorState('horstAutoStopYesDisabled');
-  const horstAutoStopNoActive = getFactorState('horstAutoStopNoActive');
-  const horstAutoStopNoDisabled = getFactorState('horstAutoStopNoDisabled');
 
   if (showUseHorstLimit) {
     return (
@@ -44,7 +54,7 @@ const UseHorstAutoStop = () => {
           <YesButton
             id={'yes'}
             onClick={handleClick}
-            isActive={horstAutoStopYesActive}
+            $isActive={horstAutoStopYesActive}
             disabled={horstAutoStopYesDisabled}
           >
             {t('Yes')}
@@ -52,7 +62,7 @@ const UseHorstAutoStop = () => {
           <NoButton
             id={'no'}
             onClick={handleClick}
-            isActive={horstAutoStopNoActive}
+            $isActive={horstAutoStopNoActive}
             disabled={horstAutoStopNoDisabled}
           >
             {t('No')}
