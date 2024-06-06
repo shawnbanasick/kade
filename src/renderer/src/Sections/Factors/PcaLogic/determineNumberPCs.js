@@ -1,10 +1,10 @@
-import getCoreState from "../../GlobalState/getCoreState";
+import coreState from '../../GlobalState/coreState';
 
 const determineNumberPCs = () => {
   // getState
-  const totalNumberSorts1 = getCoreState("respondentNames");
+  const totalNumberSorts1 = coreState.getState().respondentNames;
   const totalNumberSorts = totalNumberSorts1.length;
-  const numStatements = getCoreState("numStatements");
+  const numStatements = coreState.getState().numStatements;
 
   const numFactorsCalcArray = [8, totalNumberSorts, numStatements];
 

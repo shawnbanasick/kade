@@ -1,4 +1,4 @@
-const sortEigenValues = values => {
+const sortEigenValues = (values) => {
   values.sort((a, b) => b - a);
   return values;
 };

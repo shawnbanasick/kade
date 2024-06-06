@@ -1,21 +1,19 @@
 import React, { useRef } from 'react';
-
 import { AgGridReact } from '@ag-grid-community/react';
 import { AllCommunityModules } from '@ag-grid-community/all-modules';
-import getFactorState from '../../GlobalState/getFactorState';
+import factorState from '../../GlobalState/factorState';
 
 const UnrotatedFactorTable = () => {
   const gridApi = useRef();
+  // getState
+  const numFacsForTableWidth = factorState((state) => state.numFacsForTableWidth);
+  const gridColDefsFactorTable = factorState((state) => state.gridColDefsFactorTable);
+  const gridRowDataFactorTable = factorState((state) => state.gridRowDataFactorTable);
 
   const onGridReady = (params) => {
     gridApi.current = params.api;
     gridApi.current.sizeColumnsToFit();
   };
-
-  // getState
-  const numFacsForTableWidth = getFactorState('numFacsForTableWidth');
-  const gridColDefsFactorTable = getFactorState('gridColDefsFactorTable');
-  const gridRowDataFactorTable = getFactorState('gridRowDataFactorTable');
 
   let widthVal = 80 + 190 + 90 * numFacsForTableWidth;
   widthVal += 'px';

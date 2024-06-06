@@ -1,11 +1,6 @@
-import evenRound from "../../../Utils/evenRound";
+import evenRound from '../../../Utils/evenRound';
 
-const calcEigenVectors = (
-  numberOfSorts,
-  numberofPrincipalComps,
-  eigenValuesSorted,
-  svd
-) => {
+const calcEigenVectors = (numberOfSorts, numberofPrincipalComps, eigenValuesSorted, svd) => {
   const inflectionArray = [];
   let temp1;
   let critInflectionValue;

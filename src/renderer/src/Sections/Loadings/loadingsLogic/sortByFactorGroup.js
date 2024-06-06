@@ -1,14 +1,14 @@
-import indexOf from "lodash/indexOf";
-import evenRound from "../../../Utils/evenRound";
-import transposeMatrix from "../../../Utils/transposeMatrix";
-import getRotationState from "../../GlobalState/getRotationState";
-const clone = require("rfdc")();
+import indexOf from 'lodash/indexOf';
+import evenRound from '../../../Utils/evenRound';
+import transposeMatrix from '../../../Utils/transposeMatrix';
+import rotationState from '../../GlobalState/rotationState';
+import cloneDeep from 'lodash/cloneDeep';
 
 const sortByFactorGroup = (data, highlighting) => {
   const sortingArray = [];
   const factorSortedData = [];
   let tempObj;
-  const numFactorsKeptForRot = getRotationState("numFactorsKeptForRot");
+  const numFactorsKeptForRot = rotationState.getState().numFactorsKeptForRot;
 
   // cut the data => get appropriate factor groups
   data.length = numFactorsKeptForRot;
@@ -27,10 +27,7 @@ const sortByFactorGroup = (data, highlighting) => {
     tempObj.maxValue = Math.max(...pullNumbers); // q-sort max
     tempObj.minValue = Math.min(...pullNumbers); // q-sort min
     tempObj.sortNum = i + 1; // participant number
-    tempObj.compareValue = evenRound(
-      Math.abs(tempObj.maxValue) - Math.abs(tempObj.minValue),
-      8
-    );
+    tempObj.compareValue = evenRound(Math.abs(tempObj.maxValue) - Math.abs(tempObj.minValue), 8);
     // if max - min is positive (max loads more than min)
     if (tempObj.compareValue >= 0) {
       // get location (factor id) of max value
@@ -47,7 +44,7 @@ const sortByFactorGroup = (data, highlighting) => {
     sortingArray.push(tempObj);
   }
 
-  const factorSortedArray = clone(sortingArray);
+  const factorSortedArray = cloneDeep(sortingArray);
 
   // sort object by two properties
   factorSortedArray.sort((a, b) => {
@@ -75,12 +72,7 @@ const sortByFactorGroup = (data, highlighting) => {
     // cssClassName = `F${lookUpIndexValue + 1}`;
     factorGroupNumber = `F${lookUpIndexValue + 1}-${subGroupCounter}`;
     // factorGroupNumber = +(lookUpIndexValue + 1 + "." + subGroupCounter);
-    factorSortedData.push([
-      factorSortedArray[j].sortNum,
-      factorGroupNumber,
-      j + 1,
-      cssClassName
-    ]);
+    factorSortedData.push([factorSortedArray[j].sortNum, factorGroupNumber, j + 1, cssClassName]);
   }
 
   // to order by participant number

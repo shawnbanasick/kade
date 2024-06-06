@@ -1,26 +1,22 @@
-import evenRound from "../../../Utils/evenRound";
+import evenRound from '../../../Utils/evenRound';
 
-const factorTableEigenDataPrep = (
-  numFactors,
-  eigenValues,
-  eigensTranslations
-) => {
+const factorTableEigenDataPrep = (numFactors, eigenValues, eigensTranslations) => {
   //   console.log("par1", JSON.stringify(numFactors));
   //   console.log("par2", JSON.stringify(eigenValues));
   //  console.log("par3", JSON.stringify(eigensTranslations));
 
   const gridColDefsFacTableEigen = [
     {
-      headerName: "",
-      field: "EigenList",
+      headerName: '',
+      field: 'EigenList',
       pinned: true,
       sortable: true,
       editable: false,
       width: 280,
       cellStyle: {
-        textAlign: "center"
-      }
-    }
+        textAlign: 'center',
+      },
+    },
   ];
 
   for (let i = 0; i < numFactors; i += 1) {
@@ -33,8 +29,8 @@ const factorTableEigenDataPrep = (
       editable: false,
       width: 90,
       cellStyle: {
-        textAlign: "center"
-      }
+        textAlign: 'center',
+      },
     }); // end push
   } // end loop
 

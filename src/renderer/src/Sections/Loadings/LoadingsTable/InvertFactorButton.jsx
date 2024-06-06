@@ -1,14 +1,13 @@
-import React from 'react';
-
 import { Button, Header, Modal } from 'semantic-ui-react';
 import invertFactor from '../loadingsLogic/invertFactor';
 import InvertFactorDropdownSelect from './InvertFactorDropdownSelect';
 import { useTranslation } from 'react-i18next';
 import loadingState from '../../GlobalState/loadingState';
-import getLoadingState from '../../GlobalState/getLoadingState';
 
 const InvertFactorButtonModal = () => {
   const { t } = useTranslation();
+  const updateShowInvertFactorModal = loadingState((state) => state.showInvertFactorModal);
+  const showInvertFactorModal = loadingState((state) => state.showInvertFactorModal);
 
   const style1 = { display: 'flex', width: 500 };
   const style2 = { alignSelf: 'flexStart' };
@@ -16,16 +15,15 @@ const InvertFactorButtonModal = () => {
   const style4 = { width: 550 };
 
   const doInvertFactor = () => {
-    loadingState.showInvertFactorModal = false;
+    updateShowInvertFactorModal(false);
     // send localStore data here - begin inversion process
     invertFactor();
   };
 
   const quit = () => {
-    loadingState.showInvertFactorModal = false;
+    updateShowInvertFactorModal(false);
   };
 
-  const showInvertFactorModal = getLoadingState('showInvertFactorModal');
   if (showInvertFactorModal) {
     return (
       <Modal dimmer={'blurring'} open={showInvertFactorModal} onClose={quit} style={style4}>

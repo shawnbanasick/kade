@@ -1,17 +1,17 @@
-import React from 'react';
 import { Dropdown } from 'semantic-ui-react';
-
-import getRotationState from '../../GlobalState/getRotationState';
+import rotationState from '../../GlobalState/getRotationState';
 import loadingState from '../../GlobalState/loadingState';
 import { useTranslation } from 'react-i18next';
 
-const saveDropdownValueToState = (event, data) => {
-  const factorToInvert = data.value;
-  loadingState.factorToInvert = factorToInvert;
-};
-
 const InvertFactorDropdownSelect = () => {
   const { t } = useTranslation();
+  const updateFactorToInvert = loadingState((state) => state.updateFactorToInvert);
+  const numFactorsKeptForRot = rotationState((state) => state.numFactorsKeptForRot);
+
+  const saveDropdownValueToState = (event, data) => {
+    const factorToInvert = data.value;
+    updateFactorToInvert(factorToInvert);
+  };
 
   const getOptions = () => {
     const options = [
@@ -57,7 +57,6 @@ const InvertFactorDropdownSelect = () => {
       },
     ];
     // shorten options list if using centroid
-    const numFactorsKeptForRot = getRotationState('numFactorsKeptForRot');
     options.length = +numFactorsKeptForRot;
     return options;
   };

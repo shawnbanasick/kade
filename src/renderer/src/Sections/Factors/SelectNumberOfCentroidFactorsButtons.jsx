@@ -1,68 +1,92 @@
 import styled from 'styled-components';
 import GeneralButton from '../../Utils//GeneralButton';
-import factorState from '../GlobalState/factorState';
-import getCoreState from '../GlobalState/getCoreState';
 import { useTranslation } from 'react-i18next';
 import horstDispatcher from './centroidLogic/horst55Logic/horstDispatcher';
 import centroidDispatch from './centroidLogic/centroidDispatch';
-import getFactorState from '../GlobalState/getFactorState';
-// import appState from "../GlobalState/appState";
-// import rotationState from "../GlobalState/rotationState";
-
-const clearAllButtons = () => {
-  factorState.centroid1FactorsActive = false;
-  factorState.centroid2FactorsActive = false;
-  factorState.centroid3FactorsActive = false;
-  factorState.centroid4FactorsActive = false;
-  factorState.centroid5FactorsActive = false;
-  factorState.centroid6FactorsActive = false;
-  factorState.centroid7FactorsActive = false;
-  factorState.centroid8FactorsActive = false;
-};
+import factorState from '../GlobalState/factorState';
+import coreState from '../GlobalState/coreState';
 
 const SelectNumberOfCentroidFactorsButtons = () => {
   const { t } = useTranslation();
+
+  const updateCentroid1FactorsActive = factorState((state) => state.updateCentroid1FactorsActive);
+  const updateCentroid2FactorsActive = factorState((state) => state.updateCentroid2FactorsActive);
+  const updateCentroid3FactorsActive = factorState((state) => state.updateCentroid3FactorsActive);
+  const updateCentroid4FactorsActive = factorState((state) => state.updateCentroid4FactorsActive);
+  const updateCentroid5FactorsActive = factorState((state) => state.updateCentroid5FactorsActive);
+  const updateCentroid6FactorsActive = factorState((state) => state.updateCentroid6FactorsActive);
+  const updateCentroid7FactorsActive = factorState((state) => state.updateCentroid7FactorsActive);
+  const updateCentroid8FactorsActive = factorState((state) => state.updateCentroid8FactorsActive);
+  const brownCentroids = factorState((state) => state.activeTraditionalCentroidFactorButton);
+  const horstCentroids = factorState((state) => state.activeHorst55CentroidButton);
+  const tuckerCentroids = factorState((state) => state.activeTuckerMacCallumCentroidButton);
+  const updateShowCentroidSpinner = factorState((state) => state.updateShowCentroidSpinner);
+  const updateNumFacsForTableWidth = factorState((state) => state.updateNumFacsForTableWidth);
+  const updateDisabledCentroidFactorButton = factorState(
+    (state) => state.updateDisabledCentroidFactorButton
+  );
+  const updateIsHorst55Disabled = factorState((state) => state.updateIsHorst55Disabled);
+  const updateIsTuckerMacCallumCentroidDisabled = factorState(
+    (state) => state.updateIsTuckerMacCallumCentroidDisabled
+  );
+  const updateIsCentroidFacSelectDisabled = factorState(
+    (state) => state.updateIsCentroidFacSelectDisabled
+  );
+  const updateHorstAutoStopNoActive = factorState((state) => state.updateHorstAutoStopNoActive);
+  const updateHorstAutoStopYesDisabled = factorState(
+    (state) => state.updateHorstAutoStopYesDisabled
+  );
+
+  const clearAllButtons = () => {
+    updateCentroid1FactorsActive(false);
+    updateCentroid2FactorsActive(false);
+    updateCentroid3FactorsActive(false);
+    updateCentroid4FactorsActive(false);
+    updateCentroid5FactorsActive(false);
+    updateCentroid6FactorsActive(false);
+    updateCentroid7FactorsActive(false);
+    updateCentroid8FactorsActive(false);
+  };
 
   const handleOnclick = (event) => {
     clearAllButtons();
     const value = event.target.value;
     const factor = event.target.id;
+    // todo - fix this state management
     factorState[factor] = true;
     factorState.numCentroidFactors = value;
   };
 
   const handleExtraction = () => {
-    const brownCentroids = getFactorState('activeTraditionalCentroidFactorButton');
-    const horstCentroids = getFactorState('activeHorst55CentroidButton');
-    const tuckerCentroids = getFactorState('activeTuckerMacCallumCentroidButton');
     if (brownCentroids === true) {
       console.log('brown centroids selected');
 
       // show spinner duirng calcs
-      factorState.showCentroidSpinner = true;
-      const numFactors = getFactorState('numCentroidFactors');
+      updateShowCentroidSpinner(true);
+      const numFactors = factorState((state) => state.numCentroidFactors);
       // Brown centroids calcs start
       centroidDispatch(numFactors);
-      factorState.numFacsForTableWidth = numFactors;
+      updateNumFacsForTableWidth(numFactors);
       // hide spinner since calcs are done
-      factorState.showCentroidSpinner = false;
-      factorState.disabledCentroidFactorButton = true;
-      factorState.isHorst55Disabled = true;
-      factorState.isTuckerMacCallumCentroidDisabled = true;
-      factorState.isCentroidFacSelectDisabled = true;
+      updateDisabledCentroidFactorButton(true);
+      updateShowCentroidSpinner(false);
+      updateDisabledCentroidFactorButton(true);
+      updateIsHorst55Disabled(true);
+      updateIsTuckerMacCallumCentroidDisabled(true);
+      updateIsCentroidFacSelectDisabled(true);
     }
 
     if (horstCentroids === true) {
       console.log('horst');
       let shouldUseHorstLimit = false;
 
-      factorState.horstAutoStopNoActive = true;
-      factorState.horstAutoStopYesDisabled = true;
-      factorState.showCentroidSpinner = true;
+      updateHorstAutoStopNoActive(true);
+      updateHorstAutoStopYesDisabled(true);
+      updateShowCentroidSpinner(true);
       // call function
       horstDispatcher(shouldUseHorstLimit);
-      factorState.showCentroidSpinner = false;
-      factorState.isCentroidFacSelectDisabled = true;
+      updateShowCentroidSpinner(false);
+      updateIsCentroidFacSelectDisabled(true);
     }
 
     if (tuckerCentroids === true) {
@@ -70,14 +94,15 @@ const SelectNumberOfCentroidFactorsButtons = () => {
     }
   };
 
-  const minNumFactors = getCoreState('numQsorts');
+  const minNumFactors = coreState((state) => state.numQsorts);
+
   const btnId = [1, 2, 3, 4, 5, 6, 7, 8];
   if (minNumFactors < btnId.length) {
     btnId.length = minNumFactors;
   }
 
   const showNumberOfCentroidFacToExtract = factorState.showNumberOfCentroidFacToExtract;
-  const isCentroidFacSelectDisabled = getFactorState('isCentroidFacSelectDisabled');
+  const isCentroidFacSelectDisabled = factorState((state) => state.isCentroidFacSelectDisabled);
 
   if (showNumberOfCentroidFacToExtract) {
     return (

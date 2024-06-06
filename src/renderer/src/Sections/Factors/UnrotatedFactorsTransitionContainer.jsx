@@ -4,12 +4,12 @@ import ScreeContainer from './FactorScreePlot/ScreeContainer';
 import EigenTable from './FactorTableEigen/EigenTable';
 import UnrotatedFactorTable from './FactorTable/UnrotatedFactorTable';
 import HorstWarningMessage from './factorSelection/HorstWarningMessage';
-import getFactorState from '../GlobalState/getFactorState';
+import factorState from '../GlobalState/factorState';
 
 const UnrotatedFactorsTransitionContainer = () => {
   // getState
-  const showUnrotatedFactorTable = getFactorState('showUnrotatedFactorTable');
-  const showCentroidSpinner = getFactorState('showCentroidSpinner');
+  const showUnrotatedFactorTable = factorState((state) => state.showUnrotatedFactorTable);
+  const showCentroidSpinner = factorState((state) => state.showCentroidSpinner);
 
   if (showUnrotatedFactorTable) {
     return (

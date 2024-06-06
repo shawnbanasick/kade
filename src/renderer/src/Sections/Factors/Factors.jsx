@@ -9,15 +9,15 @@ import { useTranslation } from 'react-i18next';
 import InputHorstCutoffs from './factorSelection/InputHorstCutoffs';
 import HeywoodCaseNotification from './factorSelection/HeywoodCaseNotification';
 import InputHorstCutoffsNoLimit from './factorSelection/InputHorstCutoffsNoLimit';
-import getCorrelationState from '../GlobalState/getCorrelationState';
-import getFactorState from '../GlobalState/getFactorState';
+import correlationState from '../GlobalState/correlationState';
+import factorState from '../GlobalState/factorState';
 
 const Factors = () => {
   const { t } = useTranslation();
 
   // getState
-  const showCentroidError = getFactorState('showCentroidError');
-  const showCorrelationMatrix = getCorrelationState('showCorrelationMatrix');
+  const showCentroidError = factorState((state) => state.showCentroidError);
+  const showCorrelationMatrix = correlationState((state) => state.showCorrelationMatrix);
 
   return (
     <MainContent>

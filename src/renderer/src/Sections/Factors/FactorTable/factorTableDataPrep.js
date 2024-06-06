@@ -1,47 +1,39 @@
-import evenRound from "../../../Utils/evenRound";
+import evenRound from '../../../Utils/evenRound';
 
-const clone = require("rfdc")();
+const clone = require('rfdc')();
 
-const factorTableDataPrep = (
-  numFactors,
-  factorMatrix,
-  respondentNames,
-  translationsText
-) => {
+const factorTableDataPrep = (numFactors, factorMatrix, respondentNames, translationsText) => {
   // clone matrix
   const factorMatrix1 = clone(factorMatrix);
 
   const gridColDefsFactorTable = [
     {
       headerName: translationsText.nmTrans,
-      field: "resNum",
+      field: 'resNum',
       pinned: true,
       editable: false,
       sortable: true,
       width: 80,
-      sort: "asc",
+      sort: 'asc',
       cellStyle: {
-        textAlign: "center"
+        textAlign: 'center',
         // backgroundColor: "#eee"
-      }
+      },
     },
     {
       headerName: translationsText.participantTrans,
-      field: "respondent",
+      field: 'respondent',
       pinned: true,
       editable: false,
       sortable: true,
       width: 180,
       cellStyle: {
-        textAlign: "center"
-      }
-    }
+        textAlign: 'center',
+      },
+    },
   ];
 
-  const unrotFacTableHeader = [
-    translationsText.nmTrans,
-    translationsText.participantTrans
-  ];
+  const unrotFacTableHeader = [translationsText.nmTrans, translationsText.participantTrans];
   for (let i = 0; i < numFactors; i += 1) {
     const facNumber = i + 1;
     unrotFacTableHeader.push(`${translationsText.factorTrans} ${facNumber}`);
@@ -53,8 +45,8 @@ const factorTableDataPrep = (
       editable: false,
       width: 90,
       cellStyle: {
-        textAlign: "center"
-      }
+        textAlign: 'center',
+      },
     }); // end push
   } // end loop
 
@@ -85,7 +77,7 @@ const factorTableDataPrep = (
   const results = {
     gridColDefsFactorTable,
     gridRowDataFactorTable,
-    unrotatedFactorArray
+    unrotatedFactorArray,
   };
 
   return results;

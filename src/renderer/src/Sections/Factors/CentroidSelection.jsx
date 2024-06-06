@@ -2,10 +2,10 @@ import styled from 'styled-components';
 import TraditionalCentroidButton from './factorSelection/TraditionalCentroidButton';
 import Horst55CentroidModal from './factorSelection/Horst55CentroidModal';
 // import TuckerMacCallumButton from "./factorSelection/TuckerMacCallumCentroidButton";
-import getFactorState from '../GlobalState/getFactorState';
+import factorState from '../../GlobalState/factorState';
 
 const TypeOfCentroidTransitionContainer = () => {
-  const showCentroidSelection = getFactorState('showCentroidSelection');
+  const showCentroidSelection = factorState.getState().showCentroidSelection;
   if (showCentroidSelection) {
     return (
       <TypeOfAnalysisTransitionContainerDiv>

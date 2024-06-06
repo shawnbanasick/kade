@@ -1,17 +1,14 @@
-import loadingState from "../../GlobalState/loadingState";
-import outputState from "../../GlobalState/outputState";
-import projectHistoryState from "../../GlobalState/projectHistoryState";
-import rotationState from "../../GlobalState/rotationState";
-import i18n from "i18next";
-import getLoadingState from "../../GlobalState/getLoadingState";
-import getRotationState from "../../GlobalState/getRotationState";
-import getFactorState from "../../GlobalState/getFactorState";
-import getProjectHistoryState from "../../GlobalState/getProjectHistoryState";
-const clone = require("rfdc")();
+import loadingState from '../../GlobalState/loadingState';
+import outputState from '../../GlobalState/outputState';
+import projectHistoryState from '../../GlobalState/projectHistoryState';
+import rotationState from '../../GlobalState/rotationState';
+import factorState from '../../GlobalState/factorState';
+import i18n from 'i18next';
+import cloneDeep from 'lodash/cloneDeep';
 
 const splitBipolarFactor = () => {
   // getState
-  const val = getLoadingState("factorToSplit");
+  const val = loadingState.getState().factorToSplit;
 
   if (val === null || val === undefined) {
     return;
@@ -22,18 +19,18 @@ const splitBipolarFactor = () => {
     // Archive current table
 
     // getState - get bipolar split counter and archive counter, then increment
-    let bipolarSplitCounter = getLoadingState("bipolarSplitCount");
-    let archiveCounter = getRotationState("archiveCounter");
+    let bipolarSplitCounter = loadingState.getState().bipolarSplitCount;
+    let archiveCounter = rotationState.getState().archiveCounter;
     archiveCounter += 1;
     const archiveName = `facMatrixArc${archiveCounter}`;
-    const projectHistoryArray = getProjectHistoryState("projectHistoryArray");
+    const projectHistoryArray = projectHistoryState.getState().projectHistoryArray;
     const projectHistoryArrayLength = projectHistoryArray.length;
-    const bipolarIndexArray = getLoadingState("bipolarIndexArray");
+    const bipolarIndexArray = loadingState.getState().bipolarIndexArray;
 
     // check to see if first bipolar split
     if (bipolarSplitCounter === 0) {
       // getState - if yes, archive the usual way
-      const factorMatrix = getFactorState("factorMatrix");
+      const factorMatrix = factorState.getState().factorMatrix;
 
       // increment the bipolar split counter
       bipolarSplitCounter += 1;
@@ -44,37 +41,31 @@ const splitBipolarFactor = () => {
 
       // send archive to local storage to use with the undo function in Project History
       sessionStorage.setItem(archiveName, JSON.stringify(factorMatrix));
+      sessionStorage.setItem('undoAllBipolarMatrix', JSON.stringify(factorMatrix));
       sessionStorage.setItem(
-        "undoAllBipolarMatrix",
-        JSON.stringify(factorMatrix)
-      );
-      sessionStorage.setItem(
-        "projectHistoryArrayLength",
+        'projectHistoryArrayLength',
         JSON.stringify(projectHistoryArrayLength)
       );
     } else {
       // getState - if not first bipolar split, archive the current loadings table AND column defs
-      const currentLoadingsTable = getLoadingState("currentLoadingsTable");
-      const columnDefs = getLoadingState("gridColDefsLoadingsTable");
+      const currentLoadingsTable = loadingState.getState().currentLoadingsTable;
+      const columnDefs = loadingState.getState().gridColDefsLoadingsTable;
 
       // increment the bipolar split counter
       bipolarSplitCounter += 1;
 
       // store the new counter values
-      rotationState.archiveCounter = archiveCounter;
-      loadingState.bipolarSplitCount = bipolarSplitCounter;
+      rotationState.setState({ archiveCounter: archiveCounter });
+      loadingState.setState({ bipolarSplitCount: bipolarSplitCounter });
 
       // send archive to local storage to use with the undo function in Project History
-      sessionStorage.setItem(
-        archiveName,
-        JSON.stringify([columnDefs, currentLoadingsTable])
-      );
+      sessionStorage.setItem(archiveName, JSON.stringify([columnDefs, currentLoadingsTable]));
     }
     // *** end IF ELSE ***
 
     // begin factor split process
-    const dataRows = getLoadingState("currentLoadingsTable");
-    const columnDefs = getLoadingState("gridColDefsLoadingsTable");
+    const dataRows = loadingState.getState().currentLoadingsTable;
+    const columnDefs = loadingState.getState().gridColDefsLoadingsTable;
     const factorValue = `factor${val}`;
     const checkValue = `check${val}`;
 
@@ -95,18 +86,18 @@ const splitBipolarFactor = () => {
     const spliceIndex_check = spliceIndex + 1;
 
     // copy and convert old object to 2 replacement objects
-    const newObjectA = clone(columnDefs[spliceIndex]);
-    const newObjectB = clone(columnDefs[spliceIndex]);
-    const newObjectA_check = clone(columnDefs[spliceIndex_check]);
-    const newObjectB_check = clone(columnDefs[spliceIndex_check]);
+    const newObjectA = cloneDeep(columnDefs[spliceIndex]);
+    const newObjectB = cloneDeep(columnDefs[spliceIndex]);
+    const newObjectA_check = cloneDeep(columnDefs[spliceIndex_check]);
+    const newObjectB_check = cloneDeep(columnDefs[spliceIndex_check]);
 
     // remove the objects from the array
     columnDefs.splice(spliceIndex, 2); // columnDefs[val+4];
 
     // change header names
-    newObjectA.headerName = `${i18n.t("Factor")} ${val}a`;
+    newObjectA.headerName = `${i18n.t('Factor')} ${val}a`;
     newObjectA_check.headerName = `F${val}a`;
-    newObjectB.headerName = `${i18n.t("Factor")} ${val}b`;
+    newObjectB.headerName = `${i18n.t('Factor')} ${val}b`;
     newObjectB_check.headerName = `F${val}b`;
 
     // change field
@@ -116,14 +107,7 @@ const splitBipolarFactor = () => {
     newObjectB_check.field = check_B;
 
     // re-insert into array
-    columnDefs.splice(
-      spliceIndex,
-      0,
-      newObjectA,
-      newObjectA_check,
-      newObjectB,
-      newObjectB_check
-    );
+    columnDefs.splice(spliceIndex, 0, newObjectA, newObjectA_check, newObjectB, newObjectB_check);
 
     // cycle through the array of row objects to insert new column values and flags
     for (let i = 0, iLen = dataRows.length; i < iLen; i += 1) {
@@ -152,36 +136,34 @@ const splitBipolarFactor = () => {
     }
 
     // update the UI with split factor actions added to project history
-    const projectHistoryText = `${i18n.t("Bipolar Factor")} ${val} ${i18n.t(
-      "was split into"
-    )} ${i18n.t("Factor")} ${val}a ${i18n.t("and")} ${i18n.t(
-      "Factor"
-    )} ${val}b`;
+    const projectHistoryText = `${i18n.t('Bipolar Factor')} ${val} ${i18n.t(
+      'was split into'
+    )} ${i18n.t('Factor')} ${val}a ${i18n.t('and')} ${i18n.t('Factor')} ${val}b`;
 
     const logMessageObj = {
       logMessage: projectHistoryText,
-      logType: "Bipolar"
+      logType: 'Bipolar',
     };
 
     projectHistoryArray.push(logMessageObj);
 
-    projectHistoryState.projectHistoryArray = projectHistoryArray;
-    loadingState.gridColDefsLoadingsTable = columnDefs;
-    loadingState.gridRowDataLoadingsTable = dataRows;
-    loadingState.factorToSplit = undefined;
+    projectHistoryState.setState({ projectHistoryArray: projectHistoryArray });
+    loadingState.setState({ gridColDefsLoadingsTable: columnDefs });
+    loadingState.setState({ gridRowDataLoadingsTable: dataRows });
+    loadingState.setState({ factorToSplit: undefined });
     // hide section 6
-    outputState.showOutputFactorSelection = false;
-    outputState.userSelectedFactors = [];
-    outputState.shouldDisplayFactorVizOptions = false;
-    outputState.showFactorCorrelationsTable = false;
-    outputState.showStandardErrorsDifferences = false;
-    outputState.showFactorCharacteristicsTable = false;
-    outputState.showDownloadOutputButtons = false;
-    outputState.displayFactorVisualizations = false;
-    outputState.showDocxOptions = false;
-    loadingState.bipolarDisabled = true;
-    loadingState.bipolarIndexArray = bipolarIndexArray;
-    loadingState.sendDataToOutputButtonColor = "orange";
+    outputState.setState({ showOutputFactorSelection: false });
+    outputState.setState({ userSelectedFactors: [] });
+    outputState.setState({ shouldDisplayFactorVizOptions: false });
+    outputState.setState({ showFactorCorrelationsTable: false });
+    outputState.setState({ showStandardErrorsDifferences: false });
+    outputState.setState({ showFactorCharacteristicsTable: false });
+    outputState.setState({ showDownloadOutputButtons: false });
+    outputState.setState({ displayFactorVisualizations: false });
+    outputState.setState({ showDocxOptions: false });
+    loadingState.setState({ bipolarDisabled: true });
+    loadingState.setState({ bipolarIndexArray: bipolarIndexArray });
+    loadingState.setState({ sendDataToOutputButtonColor: 'orange' });
   }
 };
 

@@ -1,11 +1,14 @@
 import React, { useRef } from 'react';
-
 import { AgGridReact } from '@ag-grid-community/react';
 import { AllCommunityModules } from '@ag-grid-community/all-modules';
-import getFactorState from '../../GlobalState/getFactorState';
+import factorState from '../../GlobalState/factorState';
 
 const EigenTable = () => {
   const gridApi = useRef();
+  const numFacsForTableWidth = factorState((state) => state.numFacsForTableWidth);
+  // getState
+  const gridColDefsFacTableEigen = factorState((state) => state.gridColDefsFacTableEigen);
+  const gridRowDataFacTableEigen = factorState((state) => state.gridRowDataFacTableEigen);
 
   const onGridReady = (params) => {
     gridApi.current = params.api;
@@ -13,13 +16,8 @@ const EigenTable = () => {
   };
 
   // getState
-  const numFacsForTableWidth = getFactorState('numFacsForTableWidth');
   let widthVal = 285 + 90 * numFacsForTableWidth;
   widthVal += 'px';
-
-  // getState
-  const gridColDefsFacTableEigen = getFactorState('gridColDefsFacTableEigen');
-  const gridRowDataFacTableEigen = getFactorState('gridRowDataFacTableEigen');
 
   return (
     <div style={{ marginTop: 30, height: 200, width: widthVal }}>

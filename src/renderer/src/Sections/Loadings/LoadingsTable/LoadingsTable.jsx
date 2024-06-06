@@ -1,8 +1,7 @@
+import { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
-import React, { useEffect, useRef } from 'react';
 import { AgGridReact } from '@ag-grid-community/react';
 import { AllCommunityModules } from '@ag-grid-community/all-modules';
-import { view, store } from '@risingstack/react-easy-state';
 import { ToastContainer, toast, Zoom } from 'react-toastify';
 import SigLevelDropdown from './SigLevelDropdown';
 import InvertFactorButton from './InvertFactorButton';
@@ -15,16 +14,6 @@ import outputState from '../../GlobalState/outputState';
 import GeneralButton from '../../../Utils/GeneralButton';
 import generateOutputFromLoadingTable from './generateOutputFromLoadingTable';
 import i18n from 'i18next';
-import getLoadingState from '../../GlobalState/getLoadingState';
-import getRotationState from '../../GlobalState/getRotationState';
-import getCoreState from '../../GlobalState/getCoreState';
-
-const localStore = store({
-  numQsorts: 0,
-  numFacsForTableWidth: 0,
-  sendDataToOutputButtonColor: '#d6dbe0',
-  autoflagButtonColor: '#d6dbe0',
-});
 
 // inline styles
 const highlightingAndFlaggingStyle = { marginRight: 255 };
@@ -33,15 +22,6 @@ const autoFlagButtonStyle = { marginLeft: 10 };
 const atStyle = { marginLeft: 5, marginRight: 10, marginTop: 15 };
 const allButtonStyle = { marginLeft: '40px', width: 60 };
 const noneButtonStyle = { marginLeft: '40px' };
-
-// notification of table data sent to output
-function notify() {
-  toast.success(i18n.t('Data sent to Output'), {
-    autoClose: 1500,
-  });
-  loadingState.notifyDataSentToOutputSuccess = false;
-  appState.isLoadingsButtonGreen = true;
-}
 
 // helper function for filtering btnId when table loads => output buttons
 const filterArray = (item) => {
@@ -78,23 +58,60 @@ function getHeight(numQsorts) {
   return heightVal2;
 }
 
-function resetWidthAndHeight() {
-  const table = document.querySelector('#loadingsTableContainer');
-  if (table !== null) {
-    table.style.width = getWidth(localStore.numFacsForTableWidth);
-    table.style.height = getHeight(localStore.numQsorts);
-  }
-}
-
-window.addEventListener('resize', () => {
-  resetWidthAndHeight();
-});
-
 /* ********************************************
   Component start
  **********************************************  */
 
 const LoadingsTable = (props) => {
+  const updateNotifyDataSentToOutputSuccess = loadingState(
+    (state) => state.updateNotifyDataSentToOutputSuccess
+  );
+  const updateIsLoadingsButtonGreen = appState((state) => state.updateIsLoadingsButtonGreen);
+  const updateShowOutputFactorSelection = outputState(
+    (state) => state.updateShowOutputFactorSelection
+  );
+  const updateShowFactorCorrelationsTable = outputState(
+    (state) => state.updateShowFactorCorrelationsTable
+  );
+  const updateShowStandardErrorsDifferences = outputState(
+    (state) => state.updateShowStandardErrorsDifferences
+  );
+  const updateShowFactorCharacteristicsTable = outputState(
+    (state) => state.updateShowFactorCharacteristicsTable
+  );
+  const updateShowDownloadOutputButtons = outputState(
+    (state) => state.updateShowDownloadOutputButtons
+  );
+  const updateShouldDisplayFactorVizOptions = outputState(
+    (state) => state.updateShouldDisplayFactorVizOptions
+  );
+  const updateDisplayFactorVisualizations = outputState(
+    (state) => state.updateDisplayFactorVisualizations
+  );
+  const updateShowDocxOptions = outputState((state) => state.updateShowDocxOptions);
+
+  const [localStore, setLocalStore] = useState({
+    numQsorts: 0,
+    numFacsForTableWidth: 0,
+    sendDataToOutputButtonColor: '#d6dbe0',
+    autoflagButtonColor: '#d6dbe0',
+    temp_gridRowDataLoadingsTable: [],
+    gridColDefsLoadingsTable: [],
+    numQsorts: 0,
+  });
+
+  function resetWidthAndHeight() {
+    const table = document.querySelector('#loadingsTableContainer');
+    if (table !== null) {
+      table.style.width = getWidth(localStore.numFacsForTableWidth);
+      table.style.height = getHeight(localStore.numQsorts);
+    }
+  }
+
+  window.addEventListener('resize', () => {
+    resetWidthAndHeight();
+  });
+
   useEffect(() => {
     window.addEventListener('resize', () => {
       resetWidthAndHeight();
@@ -106,6 +123,15 @@ const LoadingsTable = (props) => {
       });
     };
   }, []);
+
+  // notification of table data sent to output
+  function notify() {
+    toast.success(i18n.t('Data sent to Output'), {
+      autoClose: 1500,
+    });
+    updateNotifyDataSentToOutputSuccess(false);
+    updateIsLoadingsButtonGreen(true);
+  }
 
   const gridApi = useRef();
 
@@ -134,15 +160,15 @@ const LoadingsTable = (props) => {
   // todo - fix this hack - button color shifted to different listener
   const updateTableLocalState = () => {
     const currentLoadingsTable = grabTableLocalState();
-    localStore.temp_gridRowDataLoadingsTable = currentLoadingsTable;
-    outputState.showOutputFactorSelection = false;
-    outputState.showFactorCorrelationsTable = false;
-    outputState.showStandardErrorsDifferences = false;
-    outputState.showFactorCharacteristicsTable = false;
-    outputState.showDownloadOutputButtons = false;
-    outputState.shouldDisplayFactorVizOptions = false;
-    outputState.displayFactorVisualizations = false;
-    outputState.showDocxOptions = false;
+    setLocalStore({ temp_gridRowDataLoadingsTable: currentLoadingsTable });
+    updateShowOutputFactorSelection(false);
+    updateShowFactorCorrelationsTable(false);
+    updateShowStandardErrorsDifferences(false);
+    updateShowFactorCharacteristicsTable(false);
+    updateShowDownloadOutputButtons(false);
+    updateShouldDisplayFactorVizOptions(false);
+    updateDisplayFactorVisualizations(false);
+    updateShowDocxOptions(false);
   };
 
   const changeOutputButtonColor = () => {
@@ -153,7 +179,7 @@ const LoadingsTable = (props) => {
     // grab current table data
     const currentLoadingsTable = grabTableLocalState();
     // send current to local state
-    localStore.temp_gridRowDataLoadingsTable = currentLoadingsTable;
+    setLocalStore({ temp_gridRowDataLoadingsTable: currentLoadingsTable });
     generateOutputFromLoadingTable(currentLoadingsTable);
     notify();
   };
@@ -204,7 +230,7 @@ const LoadingsTable = (props) => {
       }
     }
     gridApi.current.redrawRows(currentLoadingsTable);
-    localStore.temp_gridRowDataLoadingsTable = currentLoadingsTable;
+    setLocalStore({ temp_gridRowDataLoadingsTable: currentLoadingsTable });
     loadingState.gridRowDataLoadingsTable = currentLoadingsTable;
     loadingState.sendDataToOutputButtonColor = 'orange';
   };
@@ -219,7 +245,7 @@ const LoadingsTable = (props) => {
       }
     }
     gridApi.current.redrawRows(currentLoadingsTable);
-    localStore.temp_gridRowDataLoadingsTable = currentLoadingsTable;
+    setLocalStore({ temp_gridRowDataLoadingsTable: currentLoadingsTable });
     loadingState.gridRowDataLoadingsTable = currentLoadingsTable;
     loadingState.sendDataToOutputButtonColor = '#d6dbe0';
   };
@@ -229,20 +255,20 @@ const LoadingsTable = (props) => {
   const gridRowDataLoadingsTable = getLoadingState('gridRowDataLoadingsTable');
 
   // push headers and data to preserve local state for remount after unmount
-  localStore.gridColDefsLoadingsTable = gridColDefsLoadingsTable;
-  localStore.gridRowDataLoadingsTable = gridRowDataLoadingsTable;
+  setLocalStore({ gridColDefsLoadingsTable: gridColDefsLoadingsTable });
+  setLocalStore({ gridRowDataLoadingsTable: gridRowDataLoadingsTable });
 
   // getState - push data on initial render so if user unmounts without doing anything, will still remount properly
   const isLoadingsTableInitialRender = loadingState.isLoadingsTableInitialRender;
   if (isLoadingsTableInitialRender) {
-    localStore.temp_gridColDefsLoadingsTable = gridColDefsLoadingsTable;
-    localStore.temp_gridRowDataLoadingsTable = gridRowDataLoadingsTable;
+    setLocalStore({ temp_gridColDefsLoadingsTable: gridColDefsLoadingsTable });
+    setLocalStore({ temp_gridRowDataLoadingsTable: gridRowDataLoadingsTable });
     loadingState.isLoadingsTableInitialRender = false;
   }
 
   // getState - pull number Q sorts for table height calcs
   const numQsorts = getCoreState('numQsorts');
-  localStore.numQsorts = numQsorts;
+  setLocalStore({ numQsorts: numQsorts });
 
   // todo - create output buttons array here to stay in sync, but do performance check
   const outputButtonsArray2 = gridColDefsLoadingsTable.map((item) => item.field);
@@ -275,9 +301,9 @@ const LoadingsTable = (props) => {
     numFacsForTableWidth += bipolarSplitCount;
   }
 
-  localStore.numFacsForTableWidth = numFacsForTableWidth;
-  localStore.sendDataToOutputButtonColor = sendDataToOutputButtonColor;
-  localStore.autoflagButtonColor = autoflagButtonColor;
+  setLocalStore({ numFacsForTableWidth: numFacsForTableWidth });
+  setLocalStore({ sendDataToOutputButtonColor: sendDataToOutputButtonColor });
+  setLocalStore({ autoflagButtonColor: autoflagButtonColor });
 
   const loadingsTableContainerStyle = {
     marginTop: 2,

@@ -1,26 +1,28 @@
 import GeneralButton from '../../Utils/GeneralButton';
-import factorState from '../GlobalState/factorState';
 import { useTranslation } from 'react-i18next';
-import getFactorState from '../GlobalState/getFactorState';
-
-function handleClick() {
-  factorState.activeCentroidRevealButton = true;
-  factorState.isPcaButtonDisabled = true;
-  factorState.showCentroidSelection = true;
-  // to allow time for the spinner to display
-  factorState.isCentroidRevealButtonDisabled = true;
-  // setTimeout(() => {
-  // }, 100);
-}
+import factorState from '../GlobalState/factorState';
 
 const RevealCentroidTypeSelectionButton = () => {
   const { t } = useTranslation();
-
   // getState
-  const isActive = getFactorState('activeCentroidRevealButton');
-  const isDisabled = getFactorState('isCentroidRevealButtonDisabled');
-  // const isCalculating = getFactorState("isCentroidLoading");
-  // loading={isCalculating}
+  const isActive = factorState((state) => state.activeCentroidRevealButton);
+  const isDisabled = factorState((state) => state.isCentroidRevealButtonDisabled);
+  const updateActiveCentroidRevealButton = factorState(
+    (state) => state.updateActiveCentroidRevealButton
+  );
+  const updateIsPcaButtonDisabled = factorState((state) => state.updateIsPcaButtonDisabled);
+  const updateShowCentroidSelection = factorState((state) => state.updateShowCentroidSelection);
+  const updateIsCentroidRevealButtonDisabled = factorState(
+    (state) => state.updateIsCentroidRevealButtonDisabled
+  );
+
+  function handleClick() {
+    updateActiveCentroidRevealButton(true);
+    updateIsPcaButtonDisabled(true);
+    updateShowCentroidSelection(true);
+    updateIsCentroidRevealButtonDisabled(true);
+  }
+
   return (
     <div>
       <GeneralButton

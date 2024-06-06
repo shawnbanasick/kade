@@ -1,6 +1,5 @@
 import React from 'react';
 // import { Checkbox } from "semantic-ui-react";
-
 // import outputState from "../../GlobalState/outputState";
 // import loadingState from "../../GlobalState/loadingState";
 import styled from 'styled-components';
