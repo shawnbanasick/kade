@@ -7,10 +7,10 @@
 <img src="https://github.com/shawnbanasick/kade/blob/master/gifs/kade-hero-image.png" height="325"/>  
 </p>
 
-<strong>Download Links:</strong> &nbsp; 
-[macOS](https://github.com/shawnbanasick/kade/releases/download/v1.3.0/KADE-1.3.0.dmg) &nbsp;||&nbsp;
-[Windows-installer](https://github.com/shawnbanasick/kade/releases/download/v1.3.0/kade.Setup.1.3.0.exe) &nbsp;||&nbsp;
-[Windows-portable](https://github.com/shawnbanasick/kade/releases/download/v1.3.0/kade.1.3.0.exe) &nbsp;||&nbsp;
+<strong>Download Links:</strong> &nbsp;
+[macOS](https://github.com/shawnbanasick/kade/releases/download/v1.3.1/KADE-1.3.0.dmg) &nbsp;||&nbsp;
+[Windows-installer](https://github.com/shawnbanasick/kade/releases/download/v1.3.1/KADE.Setup.1.3.0.exe) &nbsp;||&nbsp;
+[Windows-portable](https://github.com/shawnbanasick/kade/releases/download/v1.3.1/KADE.1.3.0.exe) &nbsp;||&nbsp;
 [Linux](https://github.com/shawnbanasick/kade/releases) <br/>
 
 <strong>(See installation and update instructions below.)</strong>
@@ -20,14 +20,21 @@ KenQ Analysis Desktop Edition (KADE) is a desktop application for the analysis o
 <br/>
 
 ## Change Log
-The current version is 1.3.0 (released March 30, 2024). 
-Changes in this version include:
-* Added DOCX output option
-* Added input data book download
-* Added nine new user interface languages
-* Simplified Excel input file format
-* Updated help section content
 
+Current version - v1.3.1 (released June 10, 2024).
+Changes in this version include:
+
+- Added Netlify file import from EQ Web Sort
+- Added Sheets file import from EQ Web Sort
+
+Previous version - v1.3.0 (released March 30, 2024).
+Changes in this version include:
+
+- Added DOCX output option
+- Added input data book download
+- Added nine new user interface languages
+- Simplified Excel input file format
+- Updated help section content
 
 <br/>
 
@@ -38,11 +45,13 @@ A reference guide and FAQs for each section are available [here.](https://github
 <br />
 
 ## KADE and PQMethod
+
 Comparisons of KADE and PQMethod results are available [here.](https://github.com/shawnbanasick/kade/wiki/KADE-and-PQMethod)
 
 <br/>
 
 ## Start to Finish Demonstration
+
 <p align="center">
 <img src="https://github.com/shawnbanasick/kade/blob/master/gifs/kade_overview_1-2-0.gif" width="500" />
 <p>
@@ -72,11 +81,14 @@ Comparisons of KADE and PQMethod results are available [here.](https://github.co
 <br/>
 
 ## Installation Instructions - Microsoft Windows
+
 #### I haven't certified the application with Microsoft, so it will give a warning on first start-up.
+
 &nbsp;&nbsp;&nbsp;1. Double click the downloaded file.
 
 &nbsp;&nbsp;&nbsp;2. In the Windows warning box, click the "More info" link in the text at the top of the warning box.
 <br/>
+
 <p align="center">
 <img src="https://github.com/shawnbanasick/kade/blob/master/gifs/winWarn.PNG" width="350" />
 </p> 
@@ -90,6 +102,7 @@ Comparisons of KADE and PQMethod results are available [here.](https://github.co
 <br/>
 
 ## Installation Instructions - Apple macOS
+
 #### KADE can be installed following the normal process for macOS.
 
 <p align="center">
@@ -100,20 +113,22 @@ Comparisons of KADE and PQMethod results are available [here.](https://github.co
 
 &nbsp;&nbsp;&nbsp;2. Click and drag the KADE.app icon into the applications folder.
 
-
 #### Version 1.2.0 is code signed and notarized by Apple, so there will be only one warning on the first startup after installation.
+
 <p align="center">
 <img src="https://github.com/shawnbanasick/kade/blob/master/gifs/macOS warning.png" width="350">
 <br/>
 </p>
 
 #### If you have changed your default settings, you may get this warning:
+
 <p align="center">
 <img src="https://github.com/shawnbanasick/kade/blob/master/gifs/macos-catalina-alert-not-app-store.jpg" width="350">
 <br/>
 </p>
 
 #### In this case, to open KADE you will need to reset your security settings to the defaults:
+
 &nbsp;&nbsp;&nbsp;1. Open "System Preferences"
 
 &nbsp;&nbsp;&nbsp;2. Click "Security & Privacy"
@@ -132,10 +147,12 @@ Comparisons of KADE and PQMethod results are available [here.](https://github.co
 <br/>
 
 ## Installation Instructions - Linux
-The application is packaged as an "AppImage" so it can be installed on most of the major distributions (Ubuntu, Mint, MXLinux, Debian, openSUSE, RHEL, CentOS, Fedora, etc.) On some distributions it will offer to install the software. 
+
+The application is packaged as an "AppImage" so it can be installed on most of the major distributions (Ubuntu, Mint, MXLinux, Debian, openSUSE, RHEL, CentOS, Fedora, etc.) On some distributions it will offer to install the software.
 <br/>
 
 #### After downloading, you will need to change the file permissions of the downloaded file.
+
 1. Right click on the downloaded file.
 2. Select "Properties".
 3. Select "Permissions". (Example image from debian-based "MXLinux")
@@ -148,29 +165,34 @@ The application is packaged as an "AppImage" so it can be installed on most of t
 <br/>
 
 ## Updates
+
 I have not integrated automatic updating functions into the application. To update you need to uninstall the old version, then download and install the new version.
 
 ## Uninstallation Instructions
-* In Windows, click the "Start" button, then click "Settings", "Apps", "KADE", and select "uninstall"
-* In macOS, use Finder to go to the "applications" folder and delete the KADE application
-* In Linux, locate the AppImage file of the old version and delete it.
+
+- In Windows, click the "Start" button, then click "Settings", "Apps", "KADE", and select "uninstall"
+- In macOS, use Finder to go to the "applications" folder and delete the KADE application
+- In Linux, locate the AppImage file of the old version and delete it.
 
 ## Contributions and Problems
-If you discover a problem with the software or want to make a feature request, send an email to ken.q.tools@gmail.com. 
+
+If you discover a problem with the software or want to make a feature request, send an email to ken.q.tools@gmail.com.
 
 ## User Interface Translators Welcomed!
+
 If you would like to volunteer to translate the user interface (about 400 words and phrases) into another language, please contact me at ken.q.tools@gmail.com
 Thanks to <strong>Nicolás Medina Silva</strong> for the Spanish translation!
 
-
 ## Attribution
-Banasick, (2019). KADE: A desktop application for Q methodology. Journal of Open Source Software, 4(36), 1360, https://doi.org/10.21105/joss.01360 
+
+Banasick, (2019). KADE: A desktop application for Q methodology. Journal of Open Source Software, 4(36), 1360, https://doi.org/10.21105/joss.01360
 
 ## License
+
 License: GPL-3
 
-
 ## Open Source Alternatives To KADE:
-* [PQMethod](http://schmolck.org/qmethod/)
-* [Pensieve R package](https://github.com/maxheld83/pensieve)
-* [Qmethod R package](https://cran.r-project.org/package=qmethod)
+
+- [PQMethod](http://schmolck.org/qmethod/)
+- [Pensieve R package](https://github.com/maxheld83/pensieve)
+- [Qmethod R package](https://cran.r-project.org/package=qmethod)
