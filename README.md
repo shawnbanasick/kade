@@ -8,7 +8,7 @@
 </p>
 
 <strong>Download Links:</strong> &nbsp;
-[macOS](https://github.com/shawnbanasick/kade/releases/download/v1.3.1/KADE-1.3.0.dmg) &nbsp;||&nbsp;
+[macOS](https://github.com/shawnbanasick/kade/releases/download/v1.3.1/KADE-1.3.1.dmg) &nbsp;||&nbsp;
 [Windows-installer](https://github.com/shawnbanasick/kade/releases/download/v1.3.1/KADE.Setup.1.3.0.exe) &nbsp;||&nbsp;
 [Windows-portable](https://github.com/shawnbanasick/kade/releases/download/v1.3.1/KADE.1.3.0.exe) &nbsp;||&nbsp;
 [Linux](https://github.com/shawnbanasick/kade/releases) <br/>
