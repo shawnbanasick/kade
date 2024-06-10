@@ -1,47 +1,44 @@
 import styled from 'styled-components';
-import React from 'react';
 import transposeMatrix from '../../../Utils/transposeMatrix';
 import calculateCommunalities from '../../Rotation/varimaxLogic/2calculateCommunalities';
 import calcuateSigCriterionValues from '../../Rotation/varimaxLogic/2calculateSigCriterionValues';
 import loadingsTableDataPrep from '../LoadingsTable/loadingsTableDataPrep';
+import GeneralButton from '../../../Utils/GeneralButton';
+import { useTranslation } from 'react-i18next';
 import rotationState from '../../GlobalState/rotationState';
 import outputState from '../../GlobalState/outputState';
 import loadingState from '../../GlobalState/loadingState';
 import factorState from '../../GlobalState/factorState';
 import projectHistoryState from '../../GlobalState/projectHistoryState';
-import GeneralButton from '../../../Utils/GeneralButton';
-import { useTranslation } from 'react-i18next';
-import getRotationState from '../../GlobalState/getRotationState';
-import getProjectHistoryState from '../../GlobalState/getProjectHistoryState';
-import getLoadingState from '../../GlobalState/getLoadingState';
 
 const ProjectHistory = () => {
   const { t } = useTranslation();
 
   const handleUndo = () => {
     // getState - get counter and adjust value
-    let archiveCounter = getRotationState('archiveCounter');
+    let archiveCounter = rotationState((state) => state.archiveCounter);
+
     archiveCounter -= 1;
     const previousFacMatrixArchive = `facMatrixArc${archiveCounter}`;
 
     // getState - remove entry from project history
-    const projectHistoryArray = getProjectHistoryState('projectHistoryArray');
+    const projectHistoryArray = projectHistoryState((state) => state.projectHistoryArray);
     const typeOfUndo3 = projectHistoryArray.pop();
     const typeOfUndo = typeOfUndo3.logType;
 
     // get the previous matrix from archive
     let previousFacMatrix = JSON.parse(sessionStorage.getItem(previousFacMatrixArchive));
 
-    // getState
-    const numFactors = getRotationState('numFactorsKeptForRot');
+    // State
+    const numFactors = rotationState((state) => state.numFactorsKeptForRot);
     // see if there are other bipolar splits
-    let bipolarSplitCount = getLoadingState('bipolarSplitCount');
+    let bipolarSplitCount = loadingState((state) => state.bipolarSplitCount);
 
     if (typeOfUndo === 'Bipolar') {
       previousFacMatrix = JSON.parse(sessionStorage.getItem('undoAllBipolarMatrix'));
 
       // let bipolarFactorsArray = getLoadingState("bipolarFactorsArray");
-      let splitFactorsArray = getLoadingState('splitFactorsArrayArchive');
+      let splitFactorsArray = loadingState((state) => state.splitFactorsArrayArchive);
 
       // bipolarFactorsArray.pop();
 
@@ -55,8 +52,10 @@ const ProjectHistory = () => {
       }
       */
 
-      loadingState.bipolarFactorsArray = [];
-      loadingState.splitFactorsArray = [...splitFactorsArray];
+      const updateBipolarFactorsArray = loadingState((state) => state.updateBipolarFactorsArray);
+      updateBipolarFactorsArray([]);
+      const updateSplitFactorsArray = loadingState((state) => state.updateSplitFactorsArray);
+      updateSplitFactorsArray([...splitFactorsArray]);
 
       const projectHistoryArrayLength = JSON.parse(
         sessionStorage.getItem('projectHistoryArrayLength')
@@ -77,17 +76,28 @@ const ProjectHistory = () => {
     calcuateSigCriterionValues('noFlag');
 
     // restore previous factor matrix to current factor matrix
-    factorState.factorMatrix = previousFacMatrix;
+    const updateFactorMatrix = factorState((state) => state.updateFactorMatrix);
+    updateFactorMatrix(previousFacMatrix);
 
     // re-draw loadings table
     loadingsTableDataPrep(numFactors);
 
     if (typeOfUndo === 'Varimax') {
-      projectHistoryState.projectHistoryArray = projectHistoryArray;
-      rotationState.archiveCounter = archiveCounter;
-      rotationState.varimaxButtonActive = false;
-      rotationState.varimaxButtonDisabled = false;
-      rotationState.varimaxButtonText = 'Varimax Rotation';
+      const updateProjectHistoryArray = projectHistoryState(
+        (state) => state.updateProjectHistoryArray
+      );
+      updateProjectHistoryArray(projectHistoryArray);
+      const updateArchiveCounter = rotationState((state) => state.updateArchiveCounter);
+      updateArchiveCounter(archiveCounter);
+      const updateVarimaxButtonActive = rotationState((state) => state.updateVarimaxButtonActive);
+      updateVarimaxButtonActive(false);
+      const updateVarimaxButtonText = rotationState((state) => state.updateVarimaxButtonText);
+      updateVarimaxButtonText('Varimax Rotation');
+      const updateVarimaxButtonDisabled = rotationState(
+        (state) => state.updateVarimaxButtonDisabled
+      );
+      updateVarimaxButtonDisabled(false);
+
       // hide section 6
       outputState.showOutputFactorSelection = false;
       outputState.userSelectedFactors = [];

@@ -1,23 +1,24 @@
-import React from 'react';
+import { useState } from 'react';
 import { Checkbox } from 'semantic-ui-react';
-import { view, store } from '@risingstack/react-easy-state';
 import styled from 'styled-components';
-import loadingState from '../../GlobalState/loadingState';
 import { useTranslation } from 'react-i18next';
-
-const localStore = store({
-  checked: true,
-});
+import loadingState from '../../GlobalState/loadingState';
 
 const MajorityCommonVarianceCheckbox = () => {
   const { t } = useTranslation();
+  const updateRequireMajorityCommonVariance = loadingState(
+    (state) => state.updateRequireMajorityCommonVariance
+  );
+  let requireMajorityCommonVariance = loadingState((state) => state.requireMajorityCommonVariance);
+
+  const [localStore, setLocalStore] = useState({
+    checked: true,
+  });
 
   const toggle = () => {
-    let requireMajorityCommonVariance = loadingState.requireMajorityCommonVariance;
     requireMajorityCommonVariance = !requireMajorityCommonVariance;
-    loadingState.requireMajorityCommonVariance = requireMajorityCommonVariance;
-
-    localStore.checked = !localStore.checked;
+    updateRequireMajorityCommonVariance(requireMajorityCommonVariance);
+    setLocalStore({ checked: !localStore.checked });
   };
 
   const isChecked = localStore.checked;

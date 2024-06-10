@@ -1,29 +1,28 @@
-import evenRound from "../../../Utils/evenRound";
-import CheckboxRenderer from "./CheckboxRenderer";
-import factorGroupComparator from "./factorGroupComparator";
-import sortByFactorGroup from "../loadingsLogic/sortByFactorGroup";
-import loadingState from "../../GlobalState/loadingState";
-import i18n from "i18next";
-import getFactorState from "../../GlobalState/getFactorState";
-import getCoreState from "../../GlobalState/getCoreState";
-import getRotationState from "../../GlobalState/getRotationState";
-import getLoadingState from "../../GlobalState/getLoadingState";
+import evenRound from '../../../Utils/evenRound';
+import CheckboxRenderer from './CheckboxRenderer';
+import factorGroupComparator from './factorGroupComparator';
+import sortByFactorGroup from '../loadingsLogic/sortByFactorGroup';
+import i18n from 'i18next';
+import loadingState from '../../GlobalState/loadingState';
+import factorState from '../../GlobalState/factorState';
+import coreState from '../../GlobalState/coreState';
+import rotationState from '../../GlobalState/rotationState';
 
 // todo - re-organize factor groupings and sorts to optimize number of required loops
-const loadingsTableDataPrep = numFactors => {
-  const NumTrans = i18n.t("Number");
-  const participantTrans = i18n.t("Participant");
-  const factorTrans = i18n.t("Factor");
+const loadingsTableDataPrep = (numFactors) => {
+  const NumTrans = i18n.t('Number');
+  const participantTrans = i18n.t('Participant');
+  const factorTrans = i18n.t('Factor');
 
   // factorMatrix should be factors as rows - in Lipset => 9 cols, 7 -8 rows
-  const factorMatrix1 = getFactorState("factorMatrix");
-  const respondentNames = getCoreState("respondentNames");
+  const factorMatrix1 = factorState.getState().factorMatrix;
+  const respondentNames = coreState.getState().respondentNames;
 
   // get matrix autoflag booleans
-  const fSigCriterionResults = getRotationState("fSigCriterionResults");
+  const fSigCriterionResults = rotationState.getState().fSigCriterionResults;
 
   // calculate the factor groupings so they can be assigned in col defs
-  const highlighting = getLoadingState("highlighting");
+  const highlighting = loadingState.getState().highlighting;
   const factorGroupings = sortByFactorGroup([...factorMatrix1], highlighting);
 
   // set up Table Headers
@@ -31,59 +30,59 @@ const loadingsTableDataPrep = numFactors => {
   const gridColDefsLoadingsTable = [
     {
       headerName: NumTrans,
-      field: "resNum",
+      field: 'resNum',
       pinned: true,
       editable: false,
       sortable: true,
       width: 70,
       cellStyle: {
-        textAlign: "center"
-      }
+        textAlign: 'center',
+      },
     },
     {
       headerName: participantTrans,
-      field: "respondent",
+      field: 'respondent',
       width: 170,
       pinned: true,
       sortable: true,
       editable: false,
       cellStyle: {
-        textAlign: "center"
-      }
+        textAlign: 'center',
+      },
     },
     {
-      headerName: "FG",
-      field: "factorGroup",
+      headerName: 'FG',
+      field: 'factorGroup',
       pinned: true,
       width: 70,
       editable: false,
       sortable: true,
       comparator: factorGroupComparator,
       cellStyle: {
-        textAlign: "center"
-      }
+        textAlign: 'center',
+      },
     },
 
     {
-      headerName: "highlighting",
-      field: "highlighting",
+      headerName: 'highlighting',
+      field: 'highlighting',
       pinned: false,
       editable: false,
       cellStyle: {
-        textAlign: "center"
+        textAlign: 'center',
       },
-      hide: true
+      hide: true,
     },
     {
-      headerName: "defaultSort",
-      field: "defaultSort",
+      headerName: 'defaultSort',
+      field: 'defaultSort',
       pinned: false,
       editable: false,
       cellStyle: {
-        textAlign: "center"
+        textAlign: 'center',
       },
-      hide: true
-    }
+      hide: true,
+    },
   ];
 
   for (let i = 0; i < numFactors; i += 1) {
@@ -97,8 +96,8 @@ const loadingsTableDataPrep = numFactors => {
         editable: false,
         sortable: true,
         cellStyle: {
-          textAlign: "right"
-        }
+          textAlign: 'right',
+        },
       },
       {
         headerName: `F${facNumber}`,
@@ -109,8 +108,8 @@ const loadingsTableDataPrep = numFactors => {
         width: 35,
         cellRendererFramework: CheckboxRenderer,
         cellStyle: {
-          textAlign: "left"
-        }
+          textAlign: 'left',
+        },
       }
     ); // end push
   } // end loop
@@ -146,11 +145,11 @@ const loadingsTableDataPrep = numFactors => {
   // to default order chart by highest factor loading
   gridRowDataLoadingsTable.sort((a, b) => a.defaultSort - b.defaultSort);
 
-  loadingState.gridColDefsLoadingsTable = gridColDefsLoadingsTable;
-  loadingState.gridRowDataLoadingsTable = gridRowDataLoadingsTable;
-  loadingState.isLoadingFactorsKept = false;
-  loadingState.isLoadingAutoflag = false;
-  loadingState.isLoadingsTableInitialRender = true;
+  loadingState.setState({ gridColDefsLoadingsTable: gridColDefsLoadingsTable });
+  loadingState.setState({ gridRowDataLoadingsTable: gridRowDataLoadingsTable });
+  loadingState.setState({ isLoadingFactorsKept: false });
+  loadingState.setState({ isLoadingAutoflag: false });
+  loadingState.setState({ isLoadingsTableInitialRender: true });
 };
 
 export default loadingsTableDataPrep;

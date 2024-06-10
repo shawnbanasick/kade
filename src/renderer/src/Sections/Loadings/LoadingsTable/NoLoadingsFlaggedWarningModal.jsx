@@ -1,28 +1,55 @@
-import React from 'react';
-
 import { Button, Header, Modal } from 'semantic-ui-react';
-import getOutputState from '../../GlobalState/getOutputState';
 import loadingState from '../../GlobalState/loadingState';
 import outputState from '../../GlobalState/outputState';
 
-const handleClose = () => {
-  outputState.showNoLoadingsFlaggedWarningModal = false;
-  outputState.showOutputFactorSelection = false;
-  outputState.showFactorCorrelationsTable = false;
-  outputState.showStandardErrorsDifferences = false;
-  outputState.showFactorCharacteristicsTable = false;
-  outputState.showDownloadOutputButtons = false;
-  outputState.shouldDisplayFactorVizOptions = false;
-  outputState.displayFactorVisualizations = false;
-  outputState.showDocxOptions = false;
-  loadingState.sendDataToOutputButtonColor = '#d6dbe0';
-};
-
 const NoLoadingsFlaggedWarningModal = () => {
-  const showNoLoadingsFlaggedWarningModal = getOutputState('showNoLoadingsFlaggedWarningModal');
-
   // getState
-  const factorsWithoutLoading = getOutputState('factorsWithoutLoading');
+  const showNoLoadingsFlaggedWarningModal = outputState(
+    (state) => state.showNoLoadingsFlaggedWarningModal
+  );
+  const factorsWithoutLoading = outputState((state) => state.factorsWithoutLoading);
+  const updateShowNoLoadingsFlaggedWarningModal = outputState(
+    (state) => state.updateShowNoLoadingsFlaggedWarningModal
+  );
+  const updateShowOutputFactorSelection = outputState(
+    (state) => state.updateShowOutputFactorSelection
+  );
+  const updateShowFactorCorrelationsTable = outputState(
+    (state) => state.updateShowFactorCorrelationsTable
+  );
+  const updateShowStandardErrorsDifferences = outputState(
+    (state) => state.updateShowStandardErrorsDifferences
+  );
+  const updateShowFactorCharacteristicsTable = outputState(
+    (state) => state.updateShowFactorCharacteristicsTable
+  );
+  const updateShowDownloadOutputButtons = outputState(
+    (state) => state.updateShowDownloadOutputButtons
+  );
+  const updateShouldDisplayFactorVizOptions = outputState(
+    (state) => state.updateShouldDisplayFactorVizOptions
+  );
+  const updateDisplayFactorVisualizations = outputState(
+    (state) => state.updateDisplayFactorVisualizations
+  );
+  const updateShowDocxOptions = outputState((state) => state.updateShowDocxOptions);
+
+  const updateSendDataToOutputButtonColor = loadingState(
+    (state) => state.updateSendDataToOutputButtonColor
+  );
+
+  const handleClose = () => {
+    updateShowNoLoadingsFlaggedWarningModal(false);
+    updateShowOutputFactorSelection(false);
+    updateShowFactorCorrelationsTable(false);
+    updateShowStandardErrorsDifferences(false);
+    updateShowFactorCharacteristicsTable(false);
+    updateShowDownloadOutputButtons(false);
+    updateShouldDisplayFactorVizOptions(false);
+    updateDisplayFactorVisualizations(false);
+    updateShowDocxOptions(false);
+    updateSendDataToOutputButtonColor('#d6dbe0');
+  };
 
   if (showNoLoadingsFlaggedWarningModal) {
     return (
