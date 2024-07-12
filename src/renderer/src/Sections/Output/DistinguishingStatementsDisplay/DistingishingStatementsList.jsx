@@ -5,7 +5,7 @@ import DistStateListButtons from './DistStateListButtons';
 import filterDistStateListData from './filterDistStateListData';
 import DistStateListSortByButtons from './DistStateListSortByButtons';
 import { useTranslation } from 'react-i18next';
-import getOutputState from '../../GlobalState/getOutputState';
+import outputState from '../../GlobalState/outputState';
 
 // todo - need to calculate dynamic height here for styles
 
@@ -13,10 +13,10 @@ const DistinguishingStatementsList = () => {
   const { t } = useTranslation();
 
   // getState
-  const sortKey = getOutputState('distStateListSortKey');
-  const threshold = getOutputState('threshold');
+  const sortKey = outputState((state) => state.distStateListSortKey);
+  const threshold = outputState((state) => state.threshold);
   const displayData = filterDistStateListData(threshold, sortKey);
-  const showFactorCorrelationsTable = getOutputState('showFactorCorrelationsTable');
+  const showFactorCorrelationsTable = outputState((state) => state.showFactorCorrelationsTable);
 
   if (showFactorCorrelationsTable) {
     return (

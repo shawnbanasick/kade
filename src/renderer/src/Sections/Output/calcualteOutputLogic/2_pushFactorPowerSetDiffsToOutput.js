@@ -1,23 +1,23 @@
-import evenRound from "../../../Utils/evenRound";
-import getCalcState from "../../GlobalState/getCalcState";
-import i18n from "i18next";
+import evenRound from '../../../Utils/evenRound';
+import i18n from 'i18next';
+import calcState from '../../GlobalState/calcState';
 
-const pushFactorPowerSetDiffsToOutput = function(
+const pushFactorPowerSetDiffsToOutput = function (
   analysisOutput,
   outputData,
   sheetNamesXlsx,
   colSizes
 ) {
-  const chartText1 = i18n.t("Diff");
-  const chartText2 = i18n.t("Difference");
-  const chartText3 = i18n.t("Statement Number");
-  const chartText4 = i18n.t("Statement");
-  const chartText5 = i18n.t("Descending Array of Differences Between");
-  const chartText6 = i18n.t("and");
+  const chartText1 = i18n.t('Diff');
+  const chartText2 = i18n.t('Difference');
+  const chartText3 = i18n.t('Statement Number');
+  const chartText4 = i18n.t('Statement');
+  const chartText5 = i18n.t('Descending Array of Differences Between');
+  const chartText6 = i18n.t('and');
   let oneFactor, anotherFactor;
 
-  const maxStatementLength = getCalcState("maxStatementLength");
-  const spacer = ["", ""];
+  const maxStatementLength = calcState.getState().maxStatementLength;
+  const spacer = ['', ''];
 
   const factorPairs = [];
   for (let i = 0; i < analysisOutput.length - 1; i++) {
@@ -36,8 +36,7 @@ const pushFactorPowerSetDiffsToOutput = function(
     const sheetHeader1 = [chartText3, chartText4];
 
     oneFactor = factorPairs[k][0][0].factor;
-    const factorNumber2 =
-      oneFactor.charAt(0).toUpperCase() + oneFactor.slice(1);
+    const factorNumber2 = oneFactor.charAt(0).toUpperCase() + oneFactor.slice(1);
     number = factorNumber2.substring(factorNumber2.length - 1);
 
     // for bipolar split - catch "1a" as factor number
@@ -46,11 +45,10 @@ const pushFactorPowerSetDiffsToOutput = function(
     }
 
     // const factorNumber3 = factorNumber2.slice(0, -1);
-    oneFactor = `${i18n.t("Fac")} ${number}`;
+    oneFactor = `${i18n.t('Fac')} ${number}`;
 
     anotherFactor = factorPairs[k][1][0].factor;
-    const factorNumber12 =
-      anotherFactor.charAt(0).toUpperCase() + anotherFactor.slice(1);
+    const factorNumber12 = anotherFactor.charAt(0).toUpperCase() + anotherFactor.slice(1);
     number2 = factorNumber12.substring(factorNumber12.length - 1);
 
     // for bipolar split - catch "1a" as factor number
@@ -59,7 +57,7 @@ const pushFactorPowerSetDiffsToOutput = function(
     }
 
     // const factorNumber13 = factorNumber12.slice(0, -1);
-    anotherFactor = `${i18n.t("Fac")} ${number2}`;
+    anotherFactor = `${i18n.t('Fac')} ${number2}`;
 
     namesComboArrayFrag.push(oneFactor, anotherFactor);
     const temp1 = {};
@@ -73,20 +71,20 @@ const pushFactorPowerSetDiffsToOutput = function(
 
     const columns = [
       {
-        wch: 8
+        wch: 8,
       },
       {
-        wch: maxStatementLength
+        wch: maxStatementLength,
       },
       {
-        wch: 8
+        wch: 8,
       },
       {
-        wch: 8
+        wch: 8,
       },
       {
-        wch: 10
-      }
+        wch: 10,
+      },
     ];
     colSizes.push(columns);
   }
@@ -102,10 +100,7 @@ const pushFactorPowerSetDiffsToOutput = function(
       const temp1b = factorPairs[m][0][p].sortStatement;
       const temp1c = factorPairs[m][0][p].zScore;
       const temp1d = factorPairs[m][1][p].zScore;
-      const factorsDiff = evenRound(
-        factorPairs[m][0][p].zScore - factorPairs[m][1][p].zScore,
-        3
-      );
+      const factorsDiff = evenRound(factorPairs[m][0][p].zScore - factorPairs[m][1][p].zScore, 3);
       tempArray.push(temp1a, temp1b, temp1c, temp1d, factorsDiff);
       diffArrayXlsx.push(tempArray);
     }
@@ -117,18 +112,16 @@ const pushFactorPowerSetDiffsToOutput = function(
       return b[4] < a[4] ? -1 : 1;
     });
     diffArrayXlsx.unshift(
-      ["descend", `${namesComboArray[m][0]} / ${namesComboArray[m][1]}`],
+      ['descend', `${namesComboArray[m][0]} / ${namesComboArray[m][1]}`],
       spacer,
-      [
-        `${chartText5} ${namesComboArray[m][0]} ${chartText6} ${namesComboArray[m][1]}`
-      ],
+      [`${chartText5} ${namesComboArray[m][0]} ${chartText6} ${namesComboArray[m][1]}`],
       spacer,
       sheetHeader1Array[m]
     );
     outputData.push(diffArrayXlsx);
   }
 
-  console.log("dispatch - 13 - pushFactorPowerSetDiffs complete");
+  console.log('dispatch - 13 - pushFactorPowerSetDiffs complete');
 
   return [analysisOutput, outputData, sheetNamesXlsx, colSizes];
 };

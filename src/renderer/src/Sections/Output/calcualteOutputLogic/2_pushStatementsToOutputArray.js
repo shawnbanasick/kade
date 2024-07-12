@@ -1,11 +1,4 @@
-// import { max } from "d3";
-
-// import coreState from '../../GlobalState/coreState';
-// import calcState from '../../GlobalState/calcState';
-// import i18n from "i18next";
-// const clone = require('rfdc')()
-
-const pushStatementsToOutputArray = function(
+const pushStatementsToOutputArray = function (
   outputData,
   sheetNamesXlsx,
   colSizes,
@@ -20,14 +13,10 @@ const pushStatementsToOutputArray = function(
   // const statements = clone(coreState.statements);
 
   // no translation to preserve Excel Type 3 input parsing
-  sheetNamesXlsx.push("statements");
+  sheetNamesXlsx.push('statements');
 
   const arrayOfStatements = [];
-  arrayOfStatements.push(
-    ["statements", ""],
-    ["", ""],
-    [statementNumTrans, statementsTrans]
-  );
+  arrayOfStatements.push(['statements', ''], ['', ''], [statementNumTrans, statementsTrans]);
 
   let maxStatementLength = 0;
   for (let ii = 0, iiLen = statements.length; ii < iiLen; ii++) {
@@ -43,11 +32,11 @@ const pushStatementsToOutputArray = function(
 
   const columns = [
     {
-      wch: 10
+      wch: 10,
     },
     {
-      wch: maxStatementLength
-    }
+      wch: maxStatementLength,
+    },
   ];
   colSizes.push(columns);
 

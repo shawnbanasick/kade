@@ -1,22 +1,18 @@
-import xor from "lodash/xor";
-import uniq from "lodash/uniq";
-import flatten from "lodash/flatten";
-import difference from "lodash/difference";
-import evenRound from "../../../Utils/evenRound";
-import reduceDistingArray from "./3_reduceDistingArray";
-import formatDistingArrayForDownload from "./3_formatDistinguishingArrayForDownload";
-import formatConsensusArrayForDownload from "./3_formatConsensusArrayForDownload";
-import addDistinguishingSymbolsToData from "../FactorVisualizations/addDistinguishingSymbolsToData";
+import xor from 'lodash/xor';
+import uniq from 'lodash/uniq';
+import flatten from 'lodash/flatten';
+import difference from 'lodash/difference';
+import cloneDeep from 'lodash/cloneDeep';
+import evenRound from '../../../Utils/evenRound';
+import reduceDistingArray from './3_reduceDistingArray';
+import formatDistingArrayForDownload from './3_formatDistinguishingArrayForDownload';
+import formatConsensusArrayForDownload from './3_formatConsensusArrayForDownload';
+import addDistinguishingSymbolsToData from '../FactorVisualizations/addDistinguishingSymbolsToData';
+import outputState from '../../GlobalState/outputState';
+import calcState from '../../GlobalState/calcState';
+import i18n from 'i18next';
 
-import outputState from "../../GlobalState/outputState";
-import getOutputState from "../../GlobalState/getOutputState";
-import calcState from "../../GlobalState/calcState";
-import getCalcState from "../../GlobalState/getCalcState";
-
-import i18n from "i18next";
-const clone = require("rfdc")();
-
-const pushDistinguishingStatementsToOutput = function(
+const pushDistinguishingStatementsToOutput = function (
   sigSortsArray,
   analysisOutput,
   stndErrorDiffDataArray,
@@ -26,40 +22,35 @@ const pushDistinguishingStatementsToOutput = function(
   sheetNamesXlsx,
   colSizes
 ) {
-  const chartText1 = i18n.t("Dist State");
-  const chartText2 = i18n.t("Consensus Statements");
+  const chartText1 = i18n.t('Dist State');
+  const chartText2 = i18n.t('Consensus Statements');
 
   // State
   // const maxStatementLength = calcState.maxStatementLength;
-  const maxStatementLength = getCalcState("maxStatementLength");
+  const maxStatementLength = calcState.getState().maxStatementLength;
 
   // const userSelectedFactors = clone(outputState.userSelectedFactors);
-  const userSelectedFactors = getOutputState("userSelectedFactors");
+  const userSelectedFactors = outputState.getState().userSelectedFactors;
 
   // const userSelectedDistStateSigLevel1 =
   //   calcState.userSelectedDistStateSigLevel1; // upper level
   // upper level
-  const userSelectedDistStateSigLevel1 = getCalcState(
-    "userSelectedDistStateSigLevel1"
-  );
+  const userSelectedDistStateSigLevel1 = calcState.getState().userSelectedDistStateSigLevel1;
 
   // const userSelectedDistStateSigLevel2 =
   // calcState.userSelectedDistStateSigLevel2; // lower level
 
   // lower level
-  const userSelectedDistStateSigLevel2 = getCalcState(
-    "userSelectedDistStateSigLevel2"
-  );
+  const userSelectedDistStateSigLevel2 = calcState.getState().userSelectedDistStateSigLevel2;
 
   // property to count loop iterations for assigning significance * in disting factor output
   formatDistingArrayForDownload.calledTimes = 0;
 
   // loop to set up worksheet names and push into output array
   for (let i = 0; i < sigSortsArray.length; i++) {
-    let factorNumber = sigSortsArray[i]["Factor Number"];
+    let factorNumber = sigSortsArray[i]['Factor Number'];
     // let factorNumberB = factorNumber.slice(7);
-    const factorNumber2 =
-      factorNumber.charAt(0).toUpperCase() + factorNumber.slice(1);
+    const factorNumber2 = factorNumber.charAt(0).toUpperCase() + factorNumber.slice(1);
     let number = factorNumber2.substring(factorNumber2.length - 1);
 
     // for bipolar split - catch "1a" as factor number
@@ -69,32 +60,32 @@ const pushDistinguishingStatementsToOutput = function(
 
     // const factorNumber3 = factorNumber2.slice(0, -1);
     // factorNumber = `${factorNumber3} ${number}`;
-    factorNumber = `${i18n.t("Fac")} ${number}`;
+    factorNumber = `${i18n.t('Fac')} ${number}`;
 
     sheetNamesXlsx.push(`${chartText1} ${factorNumber}`);
 
     // set up col widths for excel output - todo - change maxStatementLength?
     const columns = [
       {
-        wch: 8
+        wch: 8,
       },
       {
-        wch: maxStatementLength
+        wch: maxStatementLength,
       },
       {
-        wch: 8
-      }
+        wch: 8,
+      },
     ];
     for (let tt = 0, ttLen = userSelectedFactors.length; tt < ttLen; tt++) {
       columns.push(
         {
-          wch: 8
+          wch: 8,
         },
         {
-          wch: 8
+          wch: 8,
         },
         {
-          wch: 8
+          wch: 8,
         }
       );
     }
@@ -163,10 +154,7 @@ const pushDistinguishingStatementsToOutput = function(
             const iteratorJShift = sigFactorNumbersArray[j];
             const iteratorMShift = sigFactorNumbersArray[m];
 
-            if (
-              searchVal1 === iteratorJShift &&
-              searchVal2 === iteratorMShift
-            ) {
+            if (searchVal1 === iteratorJShift && searchVal2 === iteratorMShift) {
               sedComparisonValue = stndErrorDiffDataDistingArray[p][2];
             }
           }
@@ -193,12 +181,9 @@ const pushDistinguishingStatementsToOutput = function(
           distStatementsTableTempObj.sortValue = analysisOutput[j][k].sortValue;
           distStatementsTableTempObj.zScore = analysisOutput[j][k].zScore;
           distStatementsTableTempObj.statement = analysisOutput[j][k].statement;
-          distStatementsTableTempObj.sortStatement =
-            analysisOutput[j][k].sortStatement;
+          distStatementsTableTempObj.sortStatement = analysisOutput[j][k].sortStatement;
 
-          const testValue = Math.abs(
-            analysisOutput[j][k].zScore - analysisOutput[m][k].zScore
-          );
+          const testValue = Math.abs(analysisOutput[j][k].zScore - analysisOutput[m][k].zScore);
 
           // P < 0.0001 Level
           if (testValue >= sedComparisonValue * 3.891) {
@@ -239,29 +224,19 @@ const pushDistinguishingStatementsToOutput = function(
 
           // User selections
           if (
-            Math.abs(
-              analysisOutput[j][k].zScore - analysisOutput[m][k].zScore
-            ) >=
+            Math.abs(analysisOutput[j][k].zScore - analysisOutput[m][k].zScore) >=
             sedComparisonValue * userSelectedDistStateSigLevel2 // 1.96
           ) {
-            analysisOutput[j][k].zScore = evenRound(
-              analysisOutput[j][k].zScore,
-              2
-            );
+            analysisOutput[j][k].zScore = evenRound(analysisOutput[j][k].zScore, 2);
             sig05 = true;
             sig05Array.push(sig05);
           }
 
           if (
-            Math.abs(
-              analysisOutput[j][k].zScore - analysisOutput[m][k].zScore
-            ) >=
+            Math.abs(analysisOutput[j][k].zScore - analysisOutput[m][k].zScore) >=
             sedComparisonValue * userSelectedDistStateSigLevel1 // 2.58
           ) {
-            analysisOutput[j][k].zScore = evenRound(
-              analysisOutput[j][k].zScore,
-              2
-            );
+            analysisOutput[j][k].zScore = evenRound(analysisOutput[j][k].zScore, 2);
             sig01 = true;
             sig01Array.push(sig01);
           }
@@ -271,55 +246,55 @@ const pushDistinguishingStatementsToOutput = function(
       switch (true) {
         // P < 0.0001 Level
         case array0001.length === sigFactorNumbersArray.length - 1:
-          distStatementsTableTempObj.sigLevelText = "P < 0.0001";
+          distStatementsTableTempObj.sigLevelText = 'P < 0.0001';
           distStatementsTableTempObj.sigLevelRank = 8;
           distStatementsTableTempArray.push(distStatementsTableTempObj);
           break;
         // P < 0.0005 Level
         case array0005.length === sigFactorNumbersArray.length - 1:
-          distStatementsTableTempObj.sigLevelText = "P < 0.0005";
+          distStatementsTableTempObj.sigLevelText = 'P < 0.0005';
           distStatementsTableTempObj.sigLevelRank = 7;
           distStatementsTableTempArray.push(distStatementsTableTempObj);
           break;
         // P < 0.001 Level
         case array001.length === sigFactorNumbersArray.length - 1:
-          distStatementsTableTempObj.sigLevelText = "P < 0.001";
+          distStatementsTableTempObj.sigLevelText = 'P < 0.001';
           distStatementsTableTempObj.sigLevelRank = 6;
           distStatementsTableTempArray.push(distStatementsTableTempObj);
           break;
         // P < 0.005 Level
         case array005.length === sigFactorNumbersArray.length - 1:
-          distStatementsTableTempObj.sigLevelText = "P < 0.005";
+          distStatementsTableTempObj.sigLevelText = 'P < 0.005';
           distStatementsTableTempObj.sigLevelRank = 5;
           distStatementsTableTempArray.push(distStatementsTableTempObj);
           break;
         // P < 0.01 Level
         case array01.length === sigFactorNumbersArray.length - 1:
-          distStatementsTableTempObj.sigLevelText = "P < 0.01";
+          distStatementsTableTempObj.sigLevelText = 'P < 0.01';
           distStatementsTableTempObj.sigLevelRank = 4;
           distStatementsTableTempArray.push(distStatementsTableTempObj);
           break;
         // P < 0.05 Level
         case array05.length === sigFactorNumbersArray.length - 1:
-          distStatementsTableTempObj.sigLevelText = "P < 0.05";
+          distStatementsTableTempObj.sigLevelText = 'P < 0.05';
           distStatementsTableTempObj.sigLevelRank = 3;
           distStatementsTableTempArray.push(distStatementsTableTempObj);
           break;
         // P < 0.1 Level
         case array1.length === sigFactorNumbersArray.length - 1:
-          distStatementsTableTempObj.sigLevelText = "P < 0.1";
+          distStatementsTableTempObj.sigLevelText = 'P < 0.1';
           distStatementsTableTempObj.sigLevelRank = 2;
           distStatementsTableTempArray.push(distStatementsTableTempObj);
           break;
         // P < 0.15 Level
         case array15.length === sigFactorNumbersArray.length - 1:
-          distStatementsTableTempObj.sigLevelText = "P < 0.15";
+          distStatementsTableTempObj.sigLevelText = 'P < 0.15';
           distStatementsTableTempObj.sigLevelRank = 1;
           distStatementsTableTempArray.push(distStatementsTableTempObj);
           break;
         // P < 0.2 Level
         case array2.length === sigFactorNumbersArray.length - 1:
-          distStatementsTableTempObj.sigLevelText = "P < 0.2";
+          distStatementsTableTempObj.sigLevelText = 'P < 0.2';
           distStatementsTableTempObj.sigLevelRank = 0;
           distStatementsTableTempArray.push(distStatementsTableTempObj);
           break;
@@ -347,31 +322,21 @@ const pushDistinguishingStatementsToOutput = function(
     }
 
     const tempPushObj = {
-      factor: `${i18n.t("Factor")} ${j + 1}`,
-      distStates: distStatementsTableTempArray
+      factor: `${i18n.t('Factor')} ${j + 1}`,
+      distStates: distStatementsTableTempArray,
     };
 
     distStatementsTableArray.push(tempPushObj);
 
-    const distingStatementsTransferArray05b = uniq(
-      distingStatementsTransferArray05,
-      true
-    );
-    const distingStatementsTransferArray01b = uniq(
-      distingStatementsTransferArray01,
-      true
-    );
+    const distingStatementsTransferArray05b = uniq(distingStatementsTransferArray05, true);
+    const distingStatementsTransferArray01b = uniq(distingStatementsTransferArray01, true);
     const distingStatementsTransferArray05c = difference(
       distingStatementsTransferArray05b,
       distingStatementsTransferArray01b
     );
 
-    masterDistingStatementNumbersArray05.push(
-      distingStatementsTransferArray05c
-    );
-    masterDistingStatementNumbersArray01.push(
-      distingStatementsTransferArray01b
-    );
+    masterDistingStatementNumbersArray05.push(distingStatementsTransferArray05c);
+    masterDistingStatementNumbersArray01.push(distingStatementsTransferArray01b);
 
     consensusStatementComparisonArray05.push(consensusStatementTransferArray05);
     consensusStatementComparisonArray01.push(consensusStatementTransferArray01);
@@ -399,21 +364,15 @@ const pushDistinguishingStatementsToOutput = function(
   // ******
 
   do {
-    consensusStatementComparisonArray05 = reduceDistingArray(
-      consensusStatementComparisonArray05
-    );
+    consensusStatementComparisonArray05 = reduceDistingArray(consensusStatementComparisonArray05);
   } while (consensusStatementComparisonArray05.length > 1);
 
   do {
-    consensusStatementComparisonArray01 = reduceDistingArray(
-      consensusStatementComparisonArray01
-    );
+    consensusStatementComparisonArray01 = reduceDistingArray(consensusStatementComparisonArray01);
   } while (consensusStatementComparisonArray01.length > 1);
 
   const consensus05 = flatten(consensusStatementComparisonArray05);
-  const consensusStatementComparisonArray01b = flatten(
-    consensusStatementComparisonArray01
-  );
+  const consensusStatementComparisonArray01b = flatten(consensusStatementComparisonArray01);
 
   const consensus01 = xor(consensus05, consensusStatementComparisonArray01b);
 
@@ -425,28 +384,28 @@ const pushDistinguishingStatementsToOutput = function(
   // set up col widths for excel output
   const columns2 = [
     {
-      wch: 12
+      wch: 12,
     },
     {
-      wch: 12
+      wch: 12,
     },
     {
-      wch: maxStatementLength
+      wch: maxStatementLength,
     },
     {
-      wch: 12
-    }
+      wch: 12,
+    },
   ];
   for (let ttt = 0, tttLen = userSelectedFactors.length; ttt < tttLen; ttt++) {
     columns2.push(
       {
-        wch: 12
+        wch: 12,
       },
       {
-        wch: 15
+        wch: 15,
       },
       {
-        wch: 15
+        wch: 15,
       }
     );
   }
@@ -458,9 +417,9 @@ const pushDistinguishingStatementsToOutput = function(
     analysisOutput,
     sigFactorNumbersArray
   );
-  calcState.formattedConsensusStatements = formattedConsensusStatements[0];
+  calcState.setState({ formattedConsensusStatements: formattedConsensusStatements[0] });
 
-  const analysisOutput2 = clone(analysisOutput);
+  const analysisOutput2 = cloneDeep(analysisOutput);
 
   outputData.push(formattedConsensusStatements[1]);
 
@@ -471,11 +430,11 @@ const pushDistinguishingStatementsToOutput = function(
     formattedConsensusStatements[0]
   );
 
-  calcState.distStatementDataVizArray = distStatementDataVizArray;
-  calcState.distStateListData = distStatementsTableArray;
-  outputState.outputForDataViz = outputForDataVizWithSig;
+  calcState.setState({ distStatementDataVizArray: distStatementDataVizArray });
+  calcState.setState({ distStateListData: distStatementsTableArray });
+  outputState.setState({ outputForDataViz: outputForDataVizWithSig });
 
-  console.log("dispatch - 17 - pushDistinguishingStatements complete");
+  console.log('dispatch - 17 - pushDistinguishingStatements complete');
   return [outputData, sheetNamesXlsx, colSizes];
 };
 

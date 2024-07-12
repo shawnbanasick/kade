@@ -1,13 +1,13 @@
-import currentDate1 from "../../../Utils/currentDate1";
-import currentTime1 from "../../../Utils/currentTime1";
-import exportToCsv from "./exportToCsv";
-import getCalcState from "../../GlobalState/getCalcState";
-import getCoreState from "../../GlobalState/getCoreState";
+import currentDate1 from '../../../Utils/currentDate1';
+import currentTime1 from '../../../Utils/currentTime1';
+import exportToCsv from './exportToCsv';
+import calcState from '../../GlobalState/calcState';
+import coreState from '../../GlobalState/coreState';
 
-const downloadCsvOutputFile = function() {
-  const data = getCalcState("outputData");
+const downloadCsvOutputFile = function () {
+  const data = calcState.getState().outputData;
 
-  const spacer = ["", "", ""];
+  const spacer = ['', '', ''];
 
   const newDataArray = [];
   for (let i = 0, iLen = data.length; i < iLen; i++) {
@@ -21,8 +21,8 @@ const downloadCsvOutputFile = function() {
 
   const timeStamp = `${currentDate1()}_${currentTime1()}`;
   // getState
-  const projectName = getCoreState("projectName");
-  const shouldIncludeTimestamp = getCalcState("shouldIncludeTimestamp");
+  const projectName = coreState.getState().projectName;
+  const shouldIncludeTimestamp = calcState.getState().shouldIncludeTimestamp;
 
   let nameFile;
   if (shouldIncludeTimestamp === true) {

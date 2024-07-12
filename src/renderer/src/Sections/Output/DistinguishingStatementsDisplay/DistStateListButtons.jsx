@@ -1,97 +1,96 @@
-import React from 'react';
+import { useState } from 'react';
 import styled from 'styled-components';
-import { view, store } from '@risingstack/react-easy-state';
 import GeneralButton from '../../../Utils/GeneralButton';
 import outputState from '../../GlobalState/outputState';
 
-const localStore = store({
-  rotationDegreeInput: '',
-  p0001Active: false,
-  p0005Active: false,
-  p001Active: false,
-  p005Active: false,
-  p01Active: false,
-  p05Active: true,
-  p1Active: false,
-  p15Active: false,
-  p2Active: false,
-  buttonColor: '#d6dbe0',
-  pressed: false,
-});
-
-const clearAllButtons = () => {
-  localStore.p0001Active = false;
-  localStore.p0005Active = false;
-  localStore.p001Active = false;
-  localStore.p005Active = false;
-  localStore.p01Active = false;
-  localStore.p05Active = false;
-  localStore.p1Active = false;
-  localStore.p15Active = false;
-  localStore.p2Active = false;
-};
-
-const handleOnclick = (event) => {
-  const buttonId = event.target.id;
-
-  // clear all button highlighting
-
-  if (buttonId === 'p0001Button') {
-    clearAllButtons();
-    localStore.p0001Active = true;
-    outputState.threshold = 8;
-  }
-
-  if (buttonId === 'p0005Button') {
-    clearAllButtons();
-    localStore.p0005Active = true;
-    outputState.threshold = 7;
-  }
-
-  if (buttonId === 'p001Button') {
-    clearAllButtons();
-    localStore.p001Active = true;
-    outputState.threshold = 6;
-  }
-
-  if (buttonId === 'p005Button') {
-    clearAllButtons();
-    localStore.p005Active = true;
-    outputState.threshold = 5;
-  }
-
-  if (buttonId === 'p01Button') {
-    clearAllButtons();
-    localStore.p01Active = true;
-    outputState.threshold = 4;
-  }
-
-  if (buttonId === 'p05Button') {
-    clearAllButtons();
-    localStore.p05Active = true;
-    outputState.threshold = 3;
-  }
-
-  if (buttonId === 'p1Button') {
-    clearAllButtons();
-    localStore.p1Active = true;
-    outputState.threshold = 2;
-  }
-
-  if (buttonId === 'p15Button') {
-    clearAllButtons();
-    localStore.p15Active = true;
-    outputState.threshold = 1;
-  }
-
-  if (buttonId === 'p2Button') {
-    clearAllButtons();
-    localStore.p2Active = true;
-    outputState.threshold = 0;
-  }
-};
-
 const DistStateListButtons = () => {
+  const localStore = useState({
+    rotationDegreeInput: '',
+    p0001Active: false,
+    p0005Active: false,
+    p001Active: false,
+    p005Active: false,
+    p01Active: false,
+    p05Active: true,
+    p1Active: false,
+    p15Active: false,
+    p2Active: false,
+    buttonColor: '#d6dbe0',
+    pressed: false,
+  });
+
+  const clearAllButtons = () => {
+    localStore.p0001Active = false;
+    localStore.p0005Active = false;
+    localStore.p001Active = false;
+    localStore.p005Active = false;
+    localStore.p01Active = false;
+    localStore.p05Active = false;
+    localStore.p1Active = false;
+    localStore.p15Active = false;
+    localStore.p2Active = false;
+  };
+
+  const handleOnclick = (event) => {
+    const buttonId = event.target.id;
+
+    // clear all button highlighting
+
+    if (buttonId === 'p0001Button') {
+      clearAllButtons();
+      localStore.p0001Active = true;
+      outputState.threshold = 8;
+    }
+
+    if (buttonId === 'p0005Button') {
+      clearAllButtons();
+      localStore.p0005Active = true;
+      outputState.threshold = 7;
+    }
+
+    if (buttonId === 'p001Button') {
+      clearAllButtons();
+      localStore.p001Active = true;
+      outputState.threshold = 6;
+    }
+
+    if (buttonId === 'p005Button') {
+      clearAllButtons();
+      localStore.p005Active = true;
+      outputState.threshold = 5;
+    }
+
+    if (buttonId === 'p01Button') {
+      clearAllButtons();
+      localStore.p01Active = true;
+      outputState.threshold = 4;
+    }
+
+    if (buttonId === 'p05Button') {
+      clearAllButtons();
+      localStore.p05Active = true;
+      outputState.threshold = 3;
+    }
+
+    if (buttonId === 'p1Button') {
+      clearAllButtons();
+      localStore.p1Active = true;
+      outputState.threshold = 2;
+    }
+
+    if (buttonId === 'p15Button') {
+      clearAllButtons();
+      localStore.p15Active = true;
+      outputState.threshold = 1;
+    }
+
+    if (buttonId === 'p2Button') {
+      clearAllButtons();
+      localStore.p2Active = true;
+      outputState.threshold = 0;
+    }
+  };
+
   const shouldDisplayDistStateListButtons = true;
   if (shouldDisplayDistStateListButtons) {
     return (

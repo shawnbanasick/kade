@@ -1,15 +1,14 @@
-import React from "react";
-import getVizState from "../../GlobalState/getVizState";
+import vizState from '../../GlobalState/vizState';
 
 const styles = {
   // fill: "white",
-  stroke: "black",
+  stroke: 'black',
   strokeWidth: 0.5,
-  zindex: 99
+  zindex: 99,
   // backgroundColor: "#FFFF"
 };
 
-const widthValue = props => {
+const widthValue = (props) => {
   const shouldAdjustWidth = props.factorVizOptions.willAdjustCardWidth;
   if (shouldAdjustWidth === true) {
     const cardWidth = props.factorVizOptions.willAdjustCardWidthBy;
@@ -21,7 +20,7 @@ const widthValue = props => {
 // const headerHeight = userValues => 26;
 const headerHeight = () => 26;
 
-const heightValue = props => {
+const heightValue = (props) => {
   const shouldAdjustHeight = props.factorVizOptions.willAdjustCardHeight;
   if (shouldAdjustHeight === true) {
     let cardHeight = props.factorVizOptions.willAdjustCardHeightBy;
@@ -33,27 +32,21 @@ const heightValue = props => {
   return 110;
 };
 // getState
-const titleHeight = getVizState("titleHeight");
+const titleHeight = vizState.getState().titleHeight;
 
-const renderBaseRectangles = props => (coords, index) => {
-  const factorVizOptions = getVizState("factorVizOptions");
+const renderBaseRectangles = (props) => (coords, index) => {
+  const factorVizOptions = vizState.getState().factorVizOptions;
   const shouldUseColor = factorVizOptions.willDisplayConsensusStates;
-  const willIndicateDistinguishing =
-    factorVizOptions.willIndicateDistinguishing;
+  const willIndicateDistinguishing = factorVizOptions.willIndicateDistinguishing;
   const showDistinguishingAs = factorVizOptions.showDistinguishingAs;
   const newFillColorConsensus = factorVizOptions.consensusIndicator;
-  const newFillColorDistinguishing01 =
-    factorVizOptions.distinguishingIndicator01;
-  const newFillColorDistinguishing05 =
-    factorVizOptions.distinguishingIndicator05;
+  const newFillColorDistinguishing01 = factorVizOptions.distinguishingIndicator01;
+  const newFillColorDistinguishing05 = factorVizOptions.distinguishingIndicator05;
 
   // set default color
-  let fillColor = "white";
+  let fillColor = 'white';
   // check if show distinguishing checked and color selected
-  if (
-    willIndicateDistinguishing === true &&
-    showDistinguishingAs === "distinguishingColor"
-  ) {
+  if (willIndicateDistinguishing === true && showDistinguishingAs === 'distinguishingColor') {
     if (props.data[index].isDistinguishing01 === true) {
       fillColor = newFillColorDistinguishing01;
     }
@@ -73,18 +66,15 @@ const renderBaseRectangles = props => (coords, index) => {
 
   const rectangleProps = {
     x: props.positionData.xPosLoop[index] * widthValue(props),
-    y:
-      props.positionData.yPosLoop[index] * heightValue(props) +
-      headerHeight() +
-      titleHeight,
+    y: props.positionData.yPosLoop[index] * heightValue(props) + headerHeight() + titleHeight,
     width: widthValue(props),
     height: heightValue(props),
     key: props.positionData.numRectsArray[index],
-    fill: fillColor
+    fill: fillColor,
   };
   return <rect {...styles} {...rectangleProps} />;
 };
 
-export default props => (
+export default (props) => (
   <g>{props.positionData.numRectsArray.map(renderBaseRectangles(props))}</g>
 );

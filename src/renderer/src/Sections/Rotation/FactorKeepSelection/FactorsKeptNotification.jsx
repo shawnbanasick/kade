@@ -1,19 +1,14 @@
-import React from 'react';
 import styled from 'styled-components';
-
 import { Transition } from 'semantic-ui-react';
 import { useTranslation } from 'react-i18next';
-import getRotationState from '../../GlobalState/getRotationState';
-
-// import "./FactorsKeptNotification.css";
+import rotationState from '../../GlobalState/rotationState';
 
 const FactorsKeptNotification = () => {
   const { t } = useTranslation();
 
-  const numFactorsKept = getRotationState('numFactorsKeptForRot');
-  const shouldDisplayDiv = getRotationState('shouldDisplayFacKept');
+  const numFactorsKept = rotationState((state) => state.numFactorsKeptForRot);
+  const shouldDisplayDiv = rotationState((state) => state.shouldDisplayFacKept);
 
-  // if (shouldDisplayDiv) {
   return (
     <Transition visible={shouldDisplayDiv} animation="fade" duration={1000}>
       <FactorsKeptDiv className="factorsKeptDiv">
@@ -25,8 +20,6 @@ const FactorsKeptNotification = () => {
       </FactorsKeptDiv>
     </Transition>
   );
-  // }
-  // return null;
 };
 
 export default FactorsKeptNotification;

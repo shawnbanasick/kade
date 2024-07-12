@@ -1,10 +1,7 @@
-import React from 'react';
-
 import FactorViz from './FactorViz';
 import createFactorVizDataObjectForProps from './createFactorVizDataObjectForProps';
-
-import getVizState from '../../GlobalState/getVizState';
-import getOutputState from '../../GlobalState/getOutputState';
+import vizState from '../../GlobalState/vizState';
+import outputState from '../../GlobalState/outputState';
 
 const styles = {
   width: '100%',
@@ -17,9 +14,9 @@ const styles = {
 
 const FactorVizDispatch = (props) => {
   // getState
-  const factorVizOptions = getVizState('factorVizOptions');
+  const factorVizOptions = vizState((state) => state.factorVizOptions);
   const factorData = createFactorVizDataObjectForProps(factorVizOptions);
-  const shouldDisplayFactorViz = getOutputState('displayFactorVisualizations');
+  const shouldDisplayFactorViz = outputState((state) => state.displayFactorVisualizations);
 
   if (shouldDisplayFactorViz) {
     return (

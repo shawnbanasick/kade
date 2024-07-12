@@ -1,12 +1,12 @@
-import evenRound from "../../../Utils/evenRound";
-import getCoreState from "../../GlobalState/getCoreState";
-import getCalcState from "../../GlobalState/getCalcState";
+import evenRound from '../../../Utils/evenRound';
+import coreState from '../../GlobalState/coreState';
+import calcState from '../../GlobalState/calcState';
 
-const calculateZScores = function(summedWeightedSorts) {
+const calculateZScores = function (summedWeightedSorts) {
   // changing format from MD array to array of objects
   // getState add in statements
-  const statements = getCoreState("statements");
-  const sigFactorNumbersArray = getCalcState("sigFactorNumbersArray");
+  const statements = coreState.getState().statements;
+  const sigFactorNumbersArray = calcState.getState().sigFactorNumbersArray;
   // so that the diff 2 factors output is correct
   sigFactorNumbersArray.sort();
   const length = summedWeightedSorts.length;

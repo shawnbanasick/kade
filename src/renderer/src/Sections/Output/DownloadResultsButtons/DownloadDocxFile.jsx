@@ -1,20 +1,21 @@
-import React from 'react';
 import styled from 'styled-components';
-
 import outputState from '../../GlobalState/outputState';
 import GeneralButton from '../../../Utils/GeneralButton';
 import { useTranslation } from 'react-i18next';
 import DocxIcon from '../../images/DOCX_Icon2.svg';
 
-const handleOnclick = (event) => {
-  // const buttonId = event.target.id;
-  outputState.showDocxOptions = true;
-  outputState.downloadDocxButtonActive = true;
-};
-
 const DistStateListSortByButtons = () => {
   const { t } = useTranslation();
-  // let displayState = outputState.showDocxOptions;
+  const updateShowDocxOptions = outputState((state) => state.updateShowDocxOptions);
+  const updateDownloadDocxButtonActive = outputState(
+    (state) => state.updateDownloadDocxButtonActive
+  );
+  const downloadDocxButtonActive = outputState((state) => state.downloadDocxButtonActive);
+
+  const handleOnclick = () => {
+    updateShowDocxOptions(true);
+    updateDownloadDocxButtonActive(true);
+  };
 
   const shouldDisplayDistStateListButtons = true;
   if (shouldDisplayDistStateListButtons) {
@@ -22,7 +23,7 @@ const DistStateListSortByButtons = () => {
       <StyledWrapper>
         <SortButton
           id={'DownloadDocxFile'}
-          isActive={outputState.downloadDocxButtonActive}
+          isActive={downloadDocxButtonActive}
           onClick={handleOnclick}
           key={'f1'}
         >

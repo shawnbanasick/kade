@@ -1,14 +1,14 @@
-import zip from "lodash/zip";
-import map from "lodash/map";
-import average from "../../../Utils/average";
-import evenRound from "../../../Utils/evenRound";
-import standardDeviation from "../../../Utils/standardDeviation";
-import getCoreState from "../../GlobalState/getCoreState";
+import zip from 'lodash/zip';
+import map from 'lodash/map';
+import average from '../../../Utils/average';
+import evenRound from '../../../Utils/evenRound';
+import standardDeviation from '../../../Utils/standardDeviation';
+import coreState from '../../GlobalState/coreState';
 
 function weightRawSorts(significantFactors) {
   // getState - produces MD array with factor number, flagged respondent, weighted values for each statement (for each flagged respondent)
-  const respondentNames = getCoreState("respondentNames");
-  const mainDataObject = getCoreState("mainDataObject");
+  const respondentNames = coreState.getState().respondentNames;
+  const mainDataObject = coreState.getState().mainDataObject;
   // pos shifted
   const rawSorts = [];
   for (let k = 0, kLen = mainDataObject.length; k < kLen; k += 1) {
@@ -23,10 +23,7 @@ function weightRawSorts(significantFactors) {
     const sortAverage = average(rawSorts[s]);
     const sortStandardDeviation = standardDeviation(rawSorts[s]);
     for (let r = 0, rLen = rawSorts[s].length; r < rLen; r += 1) {
-      const zScore = evenRound(
-        (rawSorts[s][r] - sortAverage) / sortStandardDeviation,
-        3
-      );
+      const zScore = evenRound((rawSorts[s][r] - sortAverage) / sortStandardDeviation, 3);
       tempArray2a.push(zScore);
     }
     normalizedSorts.push(tempArray2a);

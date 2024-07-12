@@ -1,8 +1,7 @@
-import evenRound from "../../../Utils/evenRound";
+import evenRound from '../../../Utils/evenRound';
+import calcState from '../../GlobalState/calcState';
 
-import calcState from "../../GlobalState/calcState";
-
-const computeFactorWeights = significantLoadingsArray => {
+const computeFactorWeights = (significantLoadingsArray) => {
   // source code line 4440
 
   for (let i = 0; i < significantLoadingsArray.length; i += 1) {
@@ -22,7 +21,7 @@ const computeFactorWeights = significantLoadingsArray => {
     }
     significantLoadingsArray[i].push(w);
   }
-  calcState.sortWeights = significantLoadingsArray;
+  calcState.setState({ sortWeights: significantLoadingsArray });
 
   return significantLoadingsArray;
 };

@@ -1,7 +1,4 @@
-import React from 'react';
-import getVizState from '../../GlobalState/getVizState';
-
-//
+import vizState from '../../GlobalState/vizState';
 
 const styles = {
   fill: 'black',
@@ -21,7 +18,7 @@ const widthValue = (props) => {
   return 110;
 };
 
-const titleHeight = getVizState('titleHeight');
+const titleHeight = vizState((state) => state.titleHeight);
 
 const renderBaseRectangles = (props) => (coords, index) => {
   const textProps = {
@@ -33,6 +30,7 @@ const renderBaseRectangles = (props) => (coords, index) => {
     text: props.positionData.uniques[index],
     textAnchor: 'middle',
   };
+
   return (
     <text fontFamily="arial" {...styles} {...textProps}>
       {textProps.text}
@@ -40,8 +38,11 @@ const renderBaseRectangles = (props) => (coords, index) => {
   );
 };
 
-export default (props) => <g>{props.positionData.uniques.map(renderBaseRectangles(props))}</g>;
+const BaseRectangles = (props) => (
+  <g>{props.positionData.uniques.map(renderBaseRectangles(props))}</g>
+);
 
+export default BaseRectangles;
 /*
   indexGroup
         .append('rect')

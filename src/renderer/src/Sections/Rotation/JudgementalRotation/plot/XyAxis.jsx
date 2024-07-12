@@ -1,23 +1,22 @@
-import React from "react";
-import AxisLeft from "./AxisLeft";
-import AxisBottom from "./AxisBottom";
+import AxisLeft from './AxisLeft';
+import AxisBottom from './AxisBottom';
 
-export default props => {
+const XyAxis = (props) => {
   const xSettings = {
     translate: `translate(0, ${props.height - props.padding})`,
     scale: props.xScale,
-    orient: "bottom",
+    orient: 'bottom',
     height: props.height,
     width: props.width,
-    padding: props.padding
+    padding: props.padding,
   };
   const ySettings = {
     translate: `translate(${props.padding}, 0)`,
     scale: props.yScale,
-    orient: "left",
+    orient: 'left',
     height: props.height,
     width: props.width,
-    padding: props.padding
+    padding: props.padding,
   };
   return (
     <g className="xy-axis">
@@ -26,3 +25,5 @@ export default props => {
     </g>
   );
 };
+
+export default XyAxis;

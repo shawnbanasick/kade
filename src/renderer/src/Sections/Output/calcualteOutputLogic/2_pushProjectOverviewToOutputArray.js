@@ -1,7 +1,7 @@
-import currentDate1 from "../../../Utils/currentDate1";
-import currentTime1 from "../../../Utils/currentTime1";
+import currentDate1 from '../../../Utils/currentDate1';
+import currentTime1 from '../../../Utils/currentTime1';
 
-const pushProjectHistoryToOutputArray = function(
+const pushProjectHistoryToOutputArray = function (
   qSortPattern3,
   autoFlagHistory,
   version,
@@ -27,8 +27,8 @@ const pushProjectHistoryToOutputArray = function(
   const sheetNamesXlsx = [sheetidTrans];
   const dataXlsx = [];
 
-  const spacer = ["", ""];
-  const identifier = ["overview", ""];
+  const spacer = ['', ''];
+  const identifier = ['overview', ''];
 
   const projectNameArray = [projectNameTrans, projectName];
   dataXlsx.push(identifier, spacer, projectNameArray, spacer);
@@ -56,25 +56,25 @@ const pushProjectHistoryToOutputArray = function(
     if (i === 0) {
       dataXlsx.push([analsysProcessTrans, `${i + 1}. ${list[i].logMessage}`]);
     } else {
-      dataXlsx.push(["", `${i + 1}. ${list[i].logMessage}`]);
+      dataXlsx.push(['', `${i + 1}. ${list[i].logMessage}`]);
     }
   }
 
   const colSizes = [
     [
       {
-        wch: 40
+        wch: 40,
       },
       {
-        wch: 70
-      }
-    ]
+        wch: 70,
+      },
+    ],
   ];
 
   const outputData = [];
   outputData.push(dataXlsx);
 
-  console.log("dispatch - 1 - pushProjectOverview complete");
+  console.log('dispatch - 1 - pushProjectOverview complete');
   return [outputData, sheetNamesXlsx, colSizes];
 };
 

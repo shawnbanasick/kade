@@ -1,11 +1,10 @@
-import getRotationState from "../../../GlobalState/getRotationState";
-import rotationState from "../../../GlobalState/rotationState";
+import rotationState from '../../../GlobalState/rotationState';
 
 // todo - basically, just to trigger component update - see if delete possible
 const data = () => {
   // getState
-  const newRotationVectors = getRotationState("d3RotChartData");
-  rotationState.newRotationVectors = newRotationVectors;
+  const newRotationVectors = rotationState.getState().d3RotChartData;
+  rotationState.setState({ newRotationVectors: newRotationVectors });
 };
 
 export default data;

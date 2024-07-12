@@ -1,16 +1,15 @@
-import React from "react";
-import { line as d3Line } from "d3";
+import { line as d3Line } from 'd3';
 
-const Line = props => {
+const Line = (props) => {
   const data = props.data;
   const xScale = props.xScale;
   const yScale = props.yScale;
 
   const line = d3Line()
-    .x(data => xScale(data[0]))
-    .y(data => yScale(data[1]));
+    .x((data) => xScale(data[0]))
+    .y((data) => yScale(data[1]));
 
-  return <path d={line(data)} stroke={"black"} fill={"none"} />;
+  return <path d={line(data)} stroke={'black'} fill={'none'} />;
 };
 
 export default Line;

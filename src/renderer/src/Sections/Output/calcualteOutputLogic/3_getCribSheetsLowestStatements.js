@@ -1,5 +1,5 @@
-import checkIfDistinguishingOrConsensus from "./3_checkIfDistinguishingOrConsensus";
-const clone = require("rfdc")();
+import checkIfDistinguishingOrConsensus from './3_checkIfDistinguishingOrConsensus';
+import { cloneDeep } from 'lodash/cloneDeep';
 
 const getCribSheetsLowestStatements = (
   j,
@@ -19,14 +19,9 @@ const getCribSheetsLowestStatements = (
     const statement3 = lowestRankStatements[statementTrans];
     const checkIfDisOrCon3 = checkIfDistinguishingOrConsensus(stateNum3, j);
     const compositeSortValue3 = lowestRankStatements[sortValuesTrans];
-    const otherValues3 = clone(lowestRankStatements.rankArray);
+    const otherValues3 = cloneDeep(lowestRankStatements.rankArray);
     otherValues3.splice(j, 1);
-    const array3 = [
-      stateNum3,
-      statement3,
-      compositeSortValue3,
-      checkIfDisOrCon3
-    ];
+    const array3 = [stateNum3, statement3, compositeSortValue3, checkIfDisOrCon3];
     array3a = array3.concat(otherValues3);
     transferArray.unshift(array3a);
   }

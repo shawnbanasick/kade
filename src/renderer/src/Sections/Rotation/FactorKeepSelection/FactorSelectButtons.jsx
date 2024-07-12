@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-
 import rotationState from '../../GlobalState/rotationState';
 import getRotationState from '../../GlobalState/getRotationState';
 import loadingState from '../../GlobalState/loadingState';

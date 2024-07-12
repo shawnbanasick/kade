@@ -1,6 +1,5 @@
+import { Component } from 'react';
 import styled from 'styled-components';
-
-import React, { Component } from 'react';
 import TimestampSelectionSwitch from '../FactorViz/TimestampSelectionSwitch';
 
 class RemoveTimestampOption extends Component {

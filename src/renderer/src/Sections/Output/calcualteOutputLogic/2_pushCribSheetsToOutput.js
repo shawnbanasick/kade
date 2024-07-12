@@ -1,39 +1,41 @@
-import { countBy, flatten, identity } from "lodash";
-import getCalcState from "../../GlobalState/getCalcState";
-import getOutputState from "../../GlobalState/getOutputState";
-import getCoreState from "../../GlobalState/getCoreState";
-import getCribSheetsHighestStatements from "./3_getCribSheetsHighestStatements";
-import getCribSheetsLowestStatements from "./3_getCribSheetsLowestStatements";
-import getCribSheetsRankedHigherThanOtherFactors from "./3_getCribSheetsRankedHigherThanOtherFactors";
-import getCribSheetsRankedLowerThanOtherFactors from "./3_getCribSheetsRankedLowerThanOtherFactors";
-import i18n from "i18next";
-const clone = require("rfdc")();
+import { countBy } from 'lodash/countBy';
+import { flatten } from 'lodash/flatten';
+import { identity } from 'lodash/identity';
+import { cloneDeep } from 'lodash/cloneDeep';
+import calcState from '../../GlobalState/calcState';
+import outputState from '../../GlobalState/outputState';
+import coreState from '../../GlobalState/coreState';
+import getCribSheetsHighestStatements from './3_getCribSheetsHighestStatements';
+import getCribSheetsLowestStatements from './3_getCribSheetsLowestStatements';
+import getCribSheetsRankedHigherThanOtherFactors from './3_getCribSheetsRankedHigherThanOtherFactors';
+import getCribSheetsRankedLowerThanOtherFactors from './3_getCribSheetsRankedLowerThanOtherFactors';
+import i18n from 'i18next';
 
-const pushCribSheetsToOutput = function(outputData, sheetNamesXlsx, colSizes) {
-  const appendText1 = i18n.t("Rel Ranks");
-  const appendText2 = i18n.t("Relative Ranking of Statements in");
-  const statementNumTrans = "Statement Number";
+const pushCribSheetsToOutput = function (outputData, sheetNamesXlsx, colSizes) {
+  const appendText1 = i18n.t('Rel Ranks');
+  const appendText2 = i18n.t('Relative Ranking of Statements in');
+  const statementNumTrans = 'Statement Number';
   // const zScoreTrans = i18n.t("Z score");
-  const zScoreTrans = "Z-score";
-  const statementTrans = "Statement";
-  const sortValuesTrans = i18n.t("Sort Values");
+  const zScoreTrans = 'Z-score';
+  const statementTrans = 'Statement';
+  const sortValuesTrans = i18n.t('Sort Values');
   // const appendText8 = i18n.t("Consensus");
-  const appendText9 = "Con/Dist"; // i18n.t("Distinguishing");
-  const statementsText = i18n.t("Statements");
-  const nmTrans = i18n.t("Nm");
+  const appendText9 = 'Con/Dist'; // i18n.t("Distinguishing");
+  const statementsText = i18n.t('Statements');
+  const nmTrans = i18n.t('Nm');
 
-  const appendTextHeader1 = i18n.t("Highest Ranked Statements");
-  const appendTextHeader2a = i18n.t("Positive Statements Ranked Higher in");
-  const appendTextHeader2b = i18n.t("Array than in Other Factor Arrays 1");
-  const appendTextHeader3a = i18n.t("Negative Statements Ranked Lower in");
-  const appendTextHeader3b = i18n.t("Array than in Other Factor Arrays 2");
-  const appendTextHeader4 = i18n.t("Lowest Ranked Statements");
+  const appendTextHeader1 = i18n.t('Highest Ranked Statements');
+  const appendTextHeader2a = i18n.t('Positive Statements Ranked Higher in');
+  const appendTextHeader2b = i18n.t('Array than in Other Factor Arrays 1');
+  const appendTextHeader3a = i18n.t('Negative Statements Ranked Lower in');
+  const appendTextHeader3b = i18n.t('Array than in Other Factor Arrays 2');
+  const appendTextHeader4 = i18n.t('Lowest Ranked Statements');
 
   // State
-  const statementRankingArray = getCalcState("statementRankingArray");
-  const userSelectedFactors = getOutputState("userSelectedFactors");
-  const sortTriangleShape = getCoreState("qSortPattern");
-  const synFactorArray1Holder = getCalcState("synFactorArray1Holder");
+  const statementRankingArray = calcState.getState().statementRankingArray;
+  const userSelectedFactors = outputState.getState().userSelectedFactors;
+  const sortTriangleShape = coreState.getState().qSortPattern;
+  const synFactorArray1Holder = calcState.getState().synFactorArray1Holder;
 
   // initialize variables
   let cribArray2 = [];
@@ -49,21 +51,21 @@ const pushCribSheetsToOutput = function(outputData, sheetNamesXlsx, colSizes) {
   for (let j = 0, jLen = userSelectedFactors.length; j < jLen; j++) {
     let name = userSelectedFactors[j];
     let facNum = name.slice(7);
-    sheetNamesXlsx.push(`${i18n.t("Fac")} ${facNum} - ${appendText1}`);
+    sheetNamesXlsx.push(`${i18n.t('Fac')} ${facNum} - ${appendText1}`);
 
     const columns = [
       {
-        wch: 8
+        wch: 8,
       },
       {
-        wch: 80
+        wch: 80,
       },
       {
-        wch: 8
+        wch: 8,
       },
       {
-        wch: 12
-      }
+        wch: 12,
+      },
     ];
     colSizes.push(columns);
 
@@ -79,9 +81,7 @@ const pushCribSheetsToOutput = function(outputData, sheetNamesXlsx, colSizes) {
     });
 
     // sort by statement number
-    factorInformation.sort(
-      (a, b) => a[statementNumTrans] - b[statementNumTrans]
-    );
+    factorInformation.sort((a, b) => a[statementNumTrans] - b[statementNumTrans]);
 
     // append the ranking arrays
     for (let k = 0, kLen = factorInformation.length; k < kLen; k++) {
@@ -140,41 +140,36 @@ const pushCribSheetsToOutput = function(outputData, sheetNamesXlsx, colSizes) {
 
     cribArray2[2] = [...lowerStatements];
 
-    const spacerArray = ["", ""];
+    const spacerArray = ['', ''];
 
     // construct headers for statement groups
-    const facName = `${i18n.t("Factor")} ${userSelectedFactors[j].slice(7)}`;
+    const facName = `${i18n.t('Factor')} ${userSelectedFactors[j].slice(7)}`;
 
     // create column headers for other factors
-    const otherFactorNames = clone(userSelectedFactors);
+    const otherFactorNames = cloneDeep(userSelectedFactors);
     otherFactorNames.splice(j, 1);
 
     // translate user selected factors
     const translatedFactorNames = [];
-    otherFactorNames.forEach(item => {
+    otherFactorNames.forEach((item) => {
       const number = item.slice(7);
-      translatedFactorNames.push(`${i18n.t("Factor")} ${number}`);
+      translatedFactorNames.push(`${i18n.t('Factor')} ${number}`);
     });
 
     // format worksheet
-    const higherRankedHeader = [
-      "",
-      appendTextHeader2a + facName + appendTextHeader2b
-    ];
+    const higherRankedHeader = ['', appendTextHeader2a + facName + appendTextHeader2b];
 
     // "Relative Ranking of Statements in"
-    const header1 = ["", appendText2 + facName];
+    const header1 = ['', appendText2 + facName];
     // header row
-    const header0 = [nmTrans, statementsText, facName, appendText9].concat(
-      translatedFactorNames
-    );
+    const header0 = [nmTrans, statementsText, facName, appendText9].concat(translatedFactorNames);
 
     cribArray2[0].unshift(
-      ["relRanks", ""],
+      ['relRanks', ''],
       spacerArray,
       header1,
       spacerArray,
-      ["", appendTextHeader1], // "Highest Ranked Statements"
+      ['', appendTextHeader1], // "Highest Ranked Statements"
       // ["", "", "", appendText8],
       header0
     );
@@ -182,24 +177,24 @@ const pushCribSheetsToOutput = function(outputData, sheetNamesXlsx, colSizes) {
     cribArray2[1].unshift(spacerArray, higherRankedHeader, header0);
 
     const header3 = {};
-    header3.stateNum = "";
+    header3.stateNum = '';
     header3.statement = appendTextHeader3a + facName + appendTextHeader3b;
-    header3.sortValue = "";
+    header3.sortValue = '';
     cribArray2[2].unshift(
       spacerArray,
-      ["", appendTextHeader3a + facName + appendTextHeader3b, ""],
+      ['', appendTextHeader3a + facName + appendTextHeader3b, ''],
       header0
     );
 
     const header4 = {};
-    header4.stateNum = "";
+    header4.stateNum = '';
     header4.statement = appendTextHeader4;
-    header4.sortValue = "";
-    cribArray2[3].unshift(spacerArray, ["", appendTextHeader4, ""], header0);
+    header4.sortValue = '';
+    cribArray2[3].unshift(spacerArray, ['', appendTextHeader4, ''], header0);
 
     outputData.push(flatten(cribArray2));
   }
-  console.log("dispatch - 18 - pushCribSheets complete");
+  console.log('dispatch - 18 - pushCribSheets complete');
   return [outputData, sheetNamesXlsx, colSizes];
 };
 

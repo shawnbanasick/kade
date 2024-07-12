@@ -1,16 +1,15 @@
-import React, { useRef } from 'react';
-
+import { useRef } from 'react';
 import { AgGridReact } from '@ag-grid-community/react';
 import { AllCommunityModules } from '@ag-grid-community/all-modules';
 import i18n from 'i18next';
-import getCalcState from '../../GlobalState/getCalcState';
-import getOutputState from '../../GlobalState/getOutputState';
+import calcState from '../../GlobalState/calcState';
+import outputState from '../../GlobalState/outputState';
 
 const getCurrentData = () => {
-  const data = getCalcState('factorCorrelationsTableData');
+  const data = calcState((state) => state.FactorCorrelationsTableData);
   // remove unnecessary label at top
   data.shift();
-  const numFacs2 = getOutputState('userSelectedFactors');
+  const numFacs2 = outputState((state) => state.userSelectedFactors);
 
   const numFacs = numFacs2.length;
   // pull out header row

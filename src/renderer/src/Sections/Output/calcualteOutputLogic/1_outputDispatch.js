@@ -1,30 +1,29 @@
-import pushProjectOverviewToOutputArrayDispatcher from "./2_pushProjectOverviewToOutputArrayDispatcher";
-import pushStatementsToOutputArrayDispatcher from "./pushStatementsToOutputArrayDispatcher";
-import pushSortsToOutputArray from "./2_pushSortsToOutputArray";
-import pushCorrelationsToOutputArray from "./2_pushCorrelationsToOutputArray";
-import pushUnrotatedFactorsTableToOutputArray from "./2_pushUnrotatedFactorsTableToOutputArray";
-import pushCumComMaxtrixToOutputArray from "./2_pushCumComMatrixToOutputArray";
-import pushRotatedFactorsArrayToOutput from "./2_pushRotatedFactorsArrayToOutput";
-import pushFreeDistributionDataToOutput from "./2_pushFreeDistributionDataToOutput";
-import pushFactorsToOutput from "./2_pushFactorsToOutput";
-import pushFactorScoreComparisonRanksTableToOutput from "./2_pushFactorScoreComparisonRanksTableToOutput";
-import pushFactorScoreCorrelationsToOutput from "./2_pushFactorScoreCorrelationsToOutput";
-import insertFactorsIntoOutput from "./2_insertFactorsIntoOutput";
-import pushFactorPowerSetDiffsToOutput from "./2_pushFactorPowerSetDiffsToOutput";
-import pushConsensusStatementsToOutput from "./2_pushConsensusStatementsToOutput";
-import pushFactorCharacteristicsToOutput from "./2_pushFactorCharacteristicsToOutput";
-import pushStandardErrorsDifferencesToOutput from "./2_pushStandardErrorsDifferencesToOutput";
-import pushDistinguishingStatementsToOutput from "./2_pushDistinguishingStatementsToOutput";
-import pushCribSheetsToOutput from "./2_pushCribSheetsToOutput";
-import calcState from "../../GlobalState/calcState";
-import outputState from "../../GlobalState/outputState";
-import pushLoadingsTableToOutput from "./2_pushLoadingsTableToOutput";
-import getOutputState from "../../GlobalState/getOutputState";
+import pushProjectOverviewToOutputArrayDispatcher from './2_pushProjectOverviewToOutputArrayDispatcher';
+import pushStatementsToOutputArrayDispatcher from './pushStatementsToOutputArrayDispatcher';
+import pushSortsToOutputArray from './2_pushSortsToOutputArray';
+import pushCorrelationsToOutputArray from './2_pushCorrelationsToOutputArray';
+import pushUnrotatedFactorsTableToOutputArray from './2_pushUnrotatedFactorsTableToOutputArray';
+import pushCumComMaxtrixToOutputArray from './2_pushCumComMatrixToOutputArray';
+import pushRotatedFactorsArrayToOutput from './2_pushRotatedFactorsArrayToOutput';
+import pushFreeDistributionDataToOutput from './2_pushFreeDistributionDataToOutput';
+import pushFactorsToOutput from './2_pushFactorsToOutput';
+import pushFactorScoreComparisonRanksTableToOutput from './2_pushFactorScoreComparisonRanksTableToOutput';
+import pushFactorScoreCorrelationsToOutput from './2_pushFactorScoreCorrelationsToOutput';
+import insertFactorsIntoOutput from './2_insertFactorsIntoOutput';
+import pushFactorPowerSetDiffsToOutput from './2_pushFactorPowerSetDiffsToOutput';
+import pushConsensusStatementsToOutput from './2_pushConsensusStatementsToOutput';
+import pushFactorCharacteristicsToOutput from './2_pushFactorCharacteristicsToOutput';
+import pushStandardErrorsDifferencesToOutput from './2_pushStandardErrorsDifferencesToOutput';
+import pushDistinguishingStatementsToOutput from './2_pushDistinguishingStatementsToOutput';
+import pushCribSheetsToOutput from './2_pushCribSheetsToOutput';
+import calcState from '../../GlobalState/calcState';
+import outputState from '../../GlobalState/outputState';
+import pushLoadingsTableToOutput from './2_pushLoadingsTableToOutput';
 
 const outputDispatch = () => {
-  const userSelectedFactors = getOutputState("userSelectedFactors");
-  // begin output cascade
+  const userSelectedFactors = outputState.getState().userSelectedFactors;
 
+  // begin output cascade
   const step1 = pushProjectOverviewToOutputArrayDispatcher();
   // returns [outputData, sheetNamesXlsx, colSizes]
 
@@ -56,10 +55,8 @@ const outputDispatch = () => {
   const step9 = pushFactorsToOutput(...step8);
 
   // halt processing if factors without flag are selected
-  if (step9 === "haltOutputProcessing") {
-    console.log(
-      "dispatch - processing stopped due to factors without flag selected"
-    );
+  if (step9 === 'haltOutputProcessing') {
+    console.log('dispatch - processing stopped due to factors without flag selected');
     return null;
   }
 
@@ -92,18 +89,18 @@ const outputDispatch = () => {
 
     const step18 = pushCribSheetsToOutput(...step17);
 
-    calcState.outputData = step18[0];
-    calcState.sheetNamesXlsx = step18[1];
-    calcState.colSizes = step18[2];
-    outputState.showFactorCorrelationsTable = true;
-    outputState.showFactorCharacteristicsTable = true;
-    outputState.showStandardErrorsDifferences = true;
-    console.log("dispatch - normal output cascade 1-18 complete");
+    calcState.setState({ outputData: step18[0] });
+    calcState.setState({ sheetNamesXlsx: step18[1] });
+    calcState.setState({ colSizes: step18[2] });
+    outputState.setState({ showFactorCorrelationsTable: true });
+    outputState.setState({ showFactorCharacteristicsTable: true });
+    outputState.setState({ showStandardErrorsDifferences: true });
+    console.log('dispatch - normal output cascade 1-18 complete');
   } else {
-    calcState.outputData = step12[1];
-    calcState.sheetNamesXlsx = step12[2];
-    calcState.colSizes = step12[3];
-    console.log("no user selected factors");
+    calcState.setState({ outputData: step12[1] });
+    calcState.setState({ sheetNamesXlsx: step12[2] });
+    calcState.setState({ colSizes: step12[3] });
+    console.log('no user selected factors');
   }
 };
 

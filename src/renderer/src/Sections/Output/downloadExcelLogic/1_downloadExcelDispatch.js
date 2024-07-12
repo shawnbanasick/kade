@@ -1,12 +1,12 @@
-import downloadExcelOutputFile from "./2_downloadExcelOutputFile";
-import getCalcState from "../../GlobalState/getCalcState";
+import downloadExcelOutputFile from './2_downloadExcelOutputFile';
+import calcState from '../../GlobalState/calcState';
 
 const downloadExcelDispatch = () => {
   // initialize output cascade
 
-  const dataXlsx = getCalcState("outputData");
-  const colSizes = getCalcState("colSizes");
-  const sheetNamesXlsx = getCalcState("sheetNamesXlsx");
+  const dataXlsx = calcState.getState().outputData;
+  const colSizes = calcState.getState().colSizes;
+  const sheetNamesXlsx = calcState.getState().sheetNamesXlsx;
 
   // needs dataXlsx, sheetNamesXlsx, colSizes from store
   downloadExcelOutputFile(dataXlsx, sheetNamesXlsx, colSizes);

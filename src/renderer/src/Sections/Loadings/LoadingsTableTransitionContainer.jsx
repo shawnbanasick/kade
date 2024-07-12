@@ -1,13 +1,11 @@
-import React from 'react';
 import styled from 'styled-components';
-
 import LoadingsTable from './LoadingsTable/LoadingsTable';
 import { useTranslation } from 'react-i18next';
-import getLoadingState from '../GlobalState/getLoadingState';
+import loadingState from '../GlobalState/loadingState';
 
 const LoadingsTableTransitionContainer = () => {
   const { t } = useTranslation();
-  const showLoadingsTable = getLoadingState('showLoadingsTable');
+  const showLoadingsTable = loadingState((state) => state.showLoadingsTable);
 
   // loadings table is still class component, so this is a work around
   // to get proper re-rendering on language change

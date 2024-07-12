@@ -1,9 +1,9 @@
-import uniq from "lodash/uniq";
-import findOccurances from "./findOccurances";
-import sortTriangleShape from "./sortTriangleShape";
-import vizState from "../../GlobalState/vizState";
+import uniq from 'lodash/uniq';
+import findOccurances from './findOccurances';
+import sortTriangleShape from './sortTriangleShape';
+import vizState from '../../GlobalState/vizState';
 
-const getInstances = function() {
+const getInstances = function () {
   const qSortPattern = sortTriangleShape();
 
   const numRectsArray = [];
@@ -49,9 +49,9 @@ const getInstances = function() {
     xPosLoop,
     yPosLoop,
     numRectsArray,
-    uniques
+    uniques,
   };
-  vizState.positionData = positionData;
+  vizState.setState({ positionData: positionData });
   return positionData;
 };
 

@@ -1,10 +1,9 @@
-import styled from 'styled-components';
-
 import React from 'react';
+import styled from 'styled-components';
 import DocSelectionSwitch from '../downloadDocxLogic/DocSelectionSwitch';
 import { useTranslation } from 'react-i18next';
-import outputState from '../../GlobalState/outputState';
 import DocxNumberInput from './DocxNumberInput';
+import outputState from '../../GlobalState/outputState';
 
 const styles = {
   fontSize: 22,
@@ -14,6 +13,25 @@ const styles = {
 const GeneralOptionsPanel = () => {
   const { t } = useTranslation();
   let facCharText = t('Factor Characteristics / Standard Errors');
+  const willIncludeOverview = outputState((state) => state.willIncludeOverview);
+  const willIncludeStatements = outputState((state) => state.willIncludeStatements);
+  const willIncludeQsorts = outputState((state) => state.willIncludeQsorts);
+  const willIncludeCorrMatrix = outputState((state) => state.willIncludeCorrMatrix);
+  const willIncludeThreshold = outputState((state) => state.willIncludeThreshold);
+  const willIncludeUnrotFacMatrix = outputState((state) => state.willIncludeUnrotFacMatrix);
+  const willIncludeCumulComm = outputState((state) => state.willIncludeCumulComm);
+  const willIncludeFacLoadings = outputState((state) => state.willIncludeFacLoadings);
+  const willIncludeFacLoadingsTable = outputState((state) => state.willIncludeFacLoadingsTable);
+  const willIncludeFreeDist = outputState((state) => state.willIncludeFreeDist);
+  const willIncludeFacScoreRanks = outputState((state) => state.willIncludeFacScoreRanks);
+  const willIncludeFacScoreCorr = outputState((state) => state.willIncludeFacScoreCorr);
+  const willIncludeFactors = outputState((state) => state.willIncludeFactors);
+  const willIncludeFacDiffs = outputState((state) => state.willIncludeFacDiffs);
+  const willIncludeConDis = outputState((state) => state.willIncludeConDis);
+  const willIncludeFacChar = outputState((state) => state.willIncludeFacChar);
+  const willIncludeDist = outputState((state) => state.willIncludeDist);
+  const willIncludeConsensus = outputState((state) => state.willIncludeConsensus);
+  const willIncludeRelRanks = outputState((state) => state.willIncludeRelRanks);
 
   return (
     <React.Fragment>
@@ -25,7 +43,7 @@ const GeneralOptionsPanel = () => {
         <DocSelectionSwitch
           name="willIncludeOverview"
           value="willIncludeOverview"
-          toggle={outputState.willIncludeOverview}
+          toggle={willIncludeOverview}
         />
       </OptionStatementRow>
 
@@ -34,7 +52,7 @@ const GeneralOptionsPanel = () => {
         <DocSelectionSwitch
           name="willIncludeStatements"
           value="willIncludeStatements"
-          toggle={outputState.willIncludeStatements}
+          toggle={willIncludeStatements}
         />
       </OptionStatementRow>
 
@@ -43,7 +61,7 @@ const GeneralOptionsPanel = () => {
         <DocSelectionSwitch
           name="willIncludeQsorts"
           value="willIncludeQsorts"
-          toggle={outputState.willIncludeQsorts}
+          toggle={willIncludeQsorts}
         />
       </OptionStatementRow>
 
@@ -52,14 +70,14 @@ const GeneralOptionsPanel = () => {
         <DocSelectionSwitch
           name="willIncludeCorrMatrix"
           value="willIncludeCorrMatrix"
-          toggle={outputState.willIncludeCorrMatrix}
+          toggle={willIncludeCorrMatrix}
         />
         <br />
         <OptionStatementText>{`${t('Highlight')}`}</OptionStatementText>
         <DocSelectionSwitch
           name="willIncludeThreshold"
           value="willIncludeThreshold"
-          toggle={outputState.willIncludeThreshold}
+          toggle={willIncludeThreshold}
         />
         <OptionStatementText>{`${t('Value')}: `}</OptionStatementText>
         <DocxNumberInput
@@ -76,7 +94,7 @@ const GeneralOptionsPanel = () => {
         <DocSelectionSwitch
           name="willIncludeUnrotFacMatrix"
           value="willIncludeUnrotFacMatrix"
-          toggle={outputState.willIncludeUnrotFacMatrix}
+          toggle={willIncludeUnrotFacMatrix}
         />
       </OptionStatementRow>
 
@@ -85,7 +103,7 @@ const GeneralOptionsPanel = () => {
         <DocSelectionSwitch
           name="willIncludeCumulComm"
           value="willIncludeCumulComm"
-          toggle={outputState.willIncludeCumulComm}
+          toggle={willIncludeCumulComm}
         />
       </OptionStatementRow>
 
@@ -94,7 +112,7 @@ const GeneralOptionsPanel = () => {
         <DocSelectionSwitch
           name="willIncludeFacLoadings"
           value="willIncludeFacLoadings"
-          toggle={outputState.willIncludeFacLoadings}
+          toggle={willIncludeFacLoadings}
         />
       </OptionStatementRow>
 
@@ -103,7 +121,7 @@ const GeneralOptionsPanel = () => {
         <DocSelectionSwitch
           name="willIncludeFacLoadingsTable"
           value="willIncludeFacLoadingsTable"
-          toggle={outputState.willIncludeFacLoadingsTable}
+          toggle={willIncludeFacLoadingsTable}
         />
       </OptionStatementRow>
 
@@ -112,7 +130,7 @@ const GeneralOptionsPanel = () => {
         <DocSelectionSwitch
           name="willIncludeFreeDist"
           value="willIncludeFreeDist"
-          toggle={outputState.willIncludeFreeDist}
+          toggle={willIncludeFreeDist}
         />
       </OptionStatementRow>
 
@@ -121,7 +139,7 @@ const GeneralOptionsPanel = () => {
         <DocSelectionSwitch
           name="willIncludeFacScoreRanks"
           value="willIncludeFacScoreRanks"
-          toggle={outputState.willIncludeFacScoreRanks}
+          toggle={willIncludeFacScoreRanks}
         />
       </OptionStatementRow>
 
@@ -130,7 +148,7 @@ const GeneralOptionsPanel = () => {
         <DocSelectionSwitch
           name="willIncludeFacScoreCorr"
           value="willIncludeFacScoreCorr"
-          toggle={outputState.willIncludeFacScoreCorr}
+          toggle={willIncludeFacScoreCorr}
         />
       </OptionStatementRow>
 
@@ -139,7 +157,7 @@ const GeneralOptionsPanel = () => {
         <DocSelectionSwitch
           name="willIncludeFactors"
           value="willIncludeFactors"
-          toggle={outputState.willIncludeFactors}
+          toggle={willIncludeFactors}
         />
       </OptionStatementRow>
 
@@ -148,7 +166,7 @@ const GeneralOptionsPanel = () => {
         <DocSelectionSwitch
           name="willIncludeFacDiffs"
           value="willIncludeFacDiffs"
-          toggle={outputState.willIncludeFacDiffs}
+          toggle={willIncludeFacDiffs}
         />
       </OptionStatementRow>
 
@@ -157,7 +175,7 @@ const GeneralOptionsPanel = () => {
         <DocSelectionSwitch
           name="willIncludeConDis"
           value="willIncludeConDis"
-          toggle={outputState.willIncludeConDis}
+          toggle={willIncludeConDis}
         />
       </OptionStatementRow>
       <OptionStatementRow>
@@ -165,7 +183,7 @@ const GeneralOptionsPanel = () => {
         <DocSelectionSwitch
           name="willIncludeFacChar"
           value="willIncludeFacChar"
-          toggle={outputState.willIncludeFacChar}
+          toggle={willIncludeFacChar}
         />
       </OptionStatementRow>
       <OptionStatementRow>
@@ -173,7 +191,7 @@ const GeneralOptionsPanel = () => {
         <DocSelectionSwitch
           name="willIncludeDist"
           value="willIncludeDist"
-          toggle={outputState.willIncludeDist}
+          toggle={willIncludeDist}
         />
       </OptionStatementRow>
       <OptionStatementRow>
@@ -181,7 +199,7 @@ const GeneralOptionsPanel = () => {
         <DocSelectionSwitch
           name="willIncludeConsensus"
           value="willIncludeConsensus"
-          toggle={outputState.willIncludeConsensus}
+          toggle={willIncludeConsensus}
         />
       </OptionStatementRow>
       <OptionStatementRow>
@@ -189,7 +207,7 @@ const GeneralOptionsPanel = () => {
         <DocSelectionSwitch
           name="willIncludeRelRanks"
           value="willIncludeRelRanks"
-          toggle={outputState.willIncludeRelRanks}
+          toggle={willIncludeRelRanks}
         />
       </OptionStatementRow>
     </React.Fragment>

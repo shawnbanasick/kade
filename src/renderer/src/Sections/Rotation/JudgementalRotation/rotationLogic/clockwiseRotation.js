@@ -1,18 +1,17 @@
-import transposeMatrix from "../../../../Utils/transposeMatrix";
-import evenRound from "../../../../Utils/evenRound";
-import calcCosDegrees from "./calcCosDegrees";
-import calcSinDegrees from "./calcSinDegrees";
-import rotationState from "../../../GlobalState/rotationState";
-import getRotationState from "../../../GlobalState/getRotationState";
+import transposeMatrix from '../../../../Utils/transposeMatrix';
+import evenRound from '../../../../Utils/evenRound';
+import calcCosDegrees from './calcCosDegrees';
+import calcSinDegrees from './calcSinDegrees';
+import rotationState from '../../../GlobalState/rotationState';
 
 const clockwiseRotation = (calculateRotationsArray, rotationByDegree) => {
   const transposedArray = transposeMatrix(calculateRotationsArray);
   const sinDegreesValue = calcSinDegrees(rotationByDegree);
   const cosDegreesValue = calcCosDegrees(rotationByDegree);
   // getState
-  let rotationDegrees = getRotationState("rotationDegrees");
+  let rotationDegrees = rotationState.getState().rotationDegrees;
   rotationDegrees += rotationByDegree;
-  rotationState.rotationDegrees = rotationDegrees;
+  rotationState.setState({ rotationDegrees: rotationDegrees });
 
   let valueA;
   let valueB;

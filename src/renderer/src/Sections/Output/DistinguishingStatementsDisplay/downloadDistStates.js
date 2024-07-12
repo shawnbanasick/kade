@@ -1,20 +1,19 @@
-import currentDate1 from "../../../Utils/currentDate1";
-import currentTime1 from "../../../Utils/currentTime1";
-import exportToCsv from "../../Output/downloadCsvLogic/exportToCsv";
-import getCalcState from "../../GlobalState/getCalcState";
-import getOutputState from "../../GlobalState/getOutputState";
-import getCoreState from "../../GlobalState/getCoreState";
-
-const capitalizeFirstLetter = string =>
-  string.charAt(0).toUpperCase() + string.slice(1);
+import currentDate1 from '../../../Utils/currentDate1';
+import currentTime1 from '../../../Utils/currentTime1';
+import exportToCsv from '../../Output/downloadCsvLogic/exportToCsv';
+import calcState from '../../GlobalState/calcState';
+import outputState from '../../GlobalState/outputState';
+import coreState from '../../GlobalState/coreState';
 
 const dowloadDistStates = () => {
+  const capitalizeFirstLetter = (string) => string.charAt(0).toUpperCase() + string.slice(1);
+
   // getState
-  const distStateListData = getCalcState("distStateListData");
-  const userSelectedFactors = getOutputState("userSelectedFactors");
+  const distStateListData = calcState.getState().distStateListData;
+  const userSelectedFactors = outputState.getState().userSelectedFactors;
 
   const timeStamp = `${currentDate1()}_${currentTime1()}`;
-  const projectName = getCoreState("projectName");
+  const projectName = coreState.getState().projectName;
 
   const downloadArray = [];
 
@@ -34,13 +33,8 @@ const dowloadDistStates = () => {
 
   for (let j = 0; j < userSelectedFactors.length; j++) {
     const userSelectedFactor = capitalizeFirstLetter(userSelectedFactors[j]);
-    downloadArray.push([userSelectedFactor, "", "", ""]);
-    downloadArray.push([
-      "Threshold",
-      "Q Sort Value",
-      "State. No.",
-      "Statement"
-    ]);
+    downloadArray.push([userSelectedFactor, '', '', '']);
+    downloadArray.push(['Threshold', 'Q Sort Value', 'State. No.', 'Statement']);
 
     const loopArray = distStateListData[j].distStates;
 
@@ -54,7 +48,7 @@ const dowloadDistStates = () => {
       downloadArray.push(tempArray);
     }
     // add spacer
-    downloadArray.push(["", "", "", ""]);
+    downloadArray.push(['', '', '', '']);
   }
 
   const fileName = `KADE_dist_state_list_${projectName}_${timeStamp}.csv`;

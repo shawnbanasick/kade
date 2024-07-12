@@ -1,25 +1,19 @@
-import getLoadingState from "../../GlobalState/getLoadingState";
-import i18n from "i18next";
+import loadingState from '../../GlobalState/loadingState';
+import i18n from 'i18next';
 
-const pushLoadingsTableToOutput = function(
-  outputData,
-  sheetNamesXlsx,
-  colSizes
-) {
-  const gridColDefsLoadingsTable = getLoadingState("gridColDefsLoadingsTable");
+const pushLoadingsTableToOutput = function (outputData, sheetNamesXlsx, colSizes) {
+  const gridColDefsLoadingsTable = loadingState.getState().gridColDefsLoadingsTable;
 
   // add worksheet name
-  sheetNamesXlsx.push(i18n.t("Factor Loadings Table"));
+  sheetNamesXlsx.push(i18n.t('Factor Loadings Table'));
 
-  const tableData = getLoadingState("currentLoadingsTable");
+  const tableData = loadingState.getState().currentLoadingsTable;
   // confirm proper sort by factor group
-  const results = tableData
-    .slice()
-    .sort((a, b) => a.defaultSort - b.defaultSort);
+  const results = tableData.slice().sort((a, b) => a.defaultSort - b.defaultSort);
 
   const formattedResults = [];
 
-  const headerRow = [i18n.t("Nm"), i18n.t("Q-sort"), i18n.t("Factor Group")];
+  const headerRow = [i18n.t('Nm'), i18n.t('Q-sort'), i18n.t('Factor Group')];
 
   const key1Array = [];
   const key2Array = [];
@@ -41,20 +35,16 @@ const pushLoadingsTableToOutput = function(
   for (let i = 0; i < iLoopLen; i++) {
     // along each row
     const tempArray = [];
-    tempArray.push(
-      results[i].resNum,
-      results[i].respondent,
-      results[i].factorGroup
-    );
+    tempArray.push(results[i].resNum, results[i].respondent, results[i].factorGroup);
     for (let j = 0; j < key2Array.length; j++) {
       const key1 = key1Array[j];
       const key2 = key2Array[j];
       tempArray.push(results[i][key1]);
       const temp = results[i][key2];
       if (temp === true) {
-        tempArray.push(i18n.t("Flagged"));
+        tempArray.push(i18n.t('Flagged'));
       } else {
-        tempArray.push("");
+        tempArray.push('');
       }
     } // end j loop
     formattedResults.push(tempArray);
@@ -63,27 +53,27 @@ const pushLoadingsTableToOutput = function(
   // set excel column widths
   const columns = [
     {
-      wch: 8
-    }
+      wch: 8,
+    },
   ];
   for (let ii = 0, iiLen = formattedResults[0].length; ii < iiLen; ii++) {
     columns.push({
-      wch: 8
+      wch: 8,
     });
   }
 
   colSizes.push(columns);
 
   formattedResults.unshift(
-    ["loadingsTable", ""],
-    ["", ""],
-    [i18n.t("Loadings Table with Defining Sorts Flagged")],
-    ["", ""],
+    ['loadingsTable', ''],
+    ['', ''],
+    [i18n.t('Loadings Table with Defining Sorts Flagged')],
+    ['', ''],
     headerRow
   );
   outputData.push(formattedResults);
 
-  console.log("dispatch - 7b - pushLoadingsTable complete");
+  console.log('dispatch - 7b - pushLoadingsTable complete');
   return [outputData, sheetNamesXlsx, colSizes];
 };
 

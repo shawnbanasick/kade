@@ -1,31 +1,26 @@
-import includes from "lodash/includes";
-import getCalcState from "../../GlobalState/getCalcState";
+import includes from 'lodash/includes';
+import calcState from '../../GlobalState/calcState';
+import getCalcState from '../../GlobalState/getCalcState';
 
-const checkIfDistinguishingOrConsensus = function(statementNumber, loopNumber) {
+const checkIfDistinguishingOrConsensus = function (statementNumber, loopNumber) {
   // getState
-  const masterDistingStatementNumbersArray01 = getCalcState(
-    "masterDistingStatementNumbersArray01"
-  );
-  const masterDistingStatementNumbersArray05 = getCalcState(
-    "masterDistingStatementNumbersArray05"
-  );
-  const consensus05 = getCalcState("consensus05Statements");
-  const consensus01 = getCalcState("consensus01Statements");
+  const masterDistingStatementNumbersArray01 =
+    calcState.getState().masterDistingStatementNumbersArray01;
+  const masterDistingStatementNumbersArray05 =
+    calcState.getState().masterDistingStatementNumbersArray05;
+  const consensus05 = calcState.getState().consensus05Statements;
+  const consensus01 = calcState.getState().consensus01Statements;
 
-  if (
-    includes(masterDistingStatementNumbersArray05[loopNumber], statementNumber)
-  ) {
-    return "  D";
+  if (includes(masterDistingStatementNumbersArray05[loopNumber], statementNumber)) {
+    return '  D';
   } else if (includes(consensus01, statementNumber)) {
-    return "  C";
-  } else if (
-    includes(masterDistingStatementNumbersArray01[loopNumber], statementNumber)
-  ) {
-    return "  D*";
+    return '  C';
+  } else if (includes(masterDistingStatementNumbersArray01[loopNumber], statementNumber)) {
+    return '  D*';
   } else if (includes(consensus05, statementNumber)) {
-    return "  C*";
+    return '  C*';
   }
-  return "";
+  return '';
 };
 
 export default checkIfDistinguishingOrConsensus;

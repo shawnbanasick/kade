@@ -1,5 +1,4 @@
 import React from 'react';
-
 import styled, { keyframes } from 'styled-components';
 import { ToastContainer, Zoom } from 'react-toastify';
 // import { useTranslation } from "react-i18next";
@@ -7,14 +6,14 @@ import DocxContentSelectionPanel from './DocxContentSelectionPanel';
 import outputState from '../../GlobalState/outputState';
 // import i18n from "i18next";
 
-function OptionsBox() {
+const OptionsBox = () => {
   // put here to be able to use React hook for t
   //  function notify() {
   // toast.success(t("File Load Success"));
   // inputState.notifyDataUploadSuccess = false;
   // }
 
-  let displayState = outputState.showDocxOptions;
+  const displayState = outputState((state) => state.showDocxOptions);
 
   // const { t } = useTranslation();
 
@@ -24,7 +23,7 @@ function OptionsBox() {
       <ToastContainer transition={Zoom} />
     </React.Fragment>
   );
-}
+};
 
 export default OptionsBox;
 

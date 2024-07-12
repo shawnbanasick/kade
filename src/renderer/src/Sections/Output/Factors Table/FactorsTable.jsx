@@ -1,13 +1,12 @@
 import styled from 'styled-components';
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { AgGridReact } from '@ag-grid-community/react';
 import { AllCommunityModules } from '@ag-grid-community/all-modules';
-import { view, store } from '@risingstack/react-easy-state';
 import { useTranslation } from 'react-i18next';
 import i18n from 'i18next';
-import getCalcState from '../../GlobalState/getCalcState';
-import getOutputState from '../../GlobalState/getOutputState';
-import getCoreState from '../../GlobalState/getCoreState';
+import calcState from '../../GlobalState/calcState';
+import outputState from '../../GlobalState/outputState';
+import coreState from '../../GlobalState/coreState';
 
 const getArrayValues = (userSelectedFactors) => {
   const headerRow = [i18n.t('Nm'), i18n.t('Statement'), i18n.t('Nm')];
@@ -33,15 +32,6 @@ const getArrayValues = (userSelectedFactors) => {
   }
 
   return [headerRow, colWidthVals, alignmentVals, pinnedVals];
-};
-
-const getCurrentData = (headerRow, numFacs) => {
-  const data = getCalcState('factorScoreRanksArray');
-
-  const lengthCutOff = numFacs * 2 + 3;
-  headerRow.length = lengthCutOff;
-
-  return [data, numFacs];
 };
 
 const getGridColDefsFacTable = (numFacs, headerRow, pinnedVals, colWidthVals, alignmentVals) => {
@@ -125,6 +115,13 @@ function resetWidthAndHeight() {
 
 const FactorsTable = () => {
   const { t } = useTranslation();
+
+  const getCurrentData = (headerRow, numFacs) => {
+    const data = calcState((state) => state.factorScoreRanksArray);
+    const lengthCutOff = numFacs * 2 + 3;
+    headerRow.length = lengthCutOff;
+    return [data, numFacs];
+  };
 
   useEffect(() => {
     window.addEventListener('resize', () => {

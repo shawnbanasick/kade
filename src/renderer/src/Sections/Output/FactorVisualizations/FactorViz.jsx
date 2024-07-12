@@ -1,17 +1,15 @@
-import React from "react";
-import styled from "styled-components";
-import LegendText from "./LegendText";
-import SigSortsViz from "./SigSortsViz";
-import RectangleText from "./RectangleText";
-import BaseRectangles from "./BaseRectangles";
-import LegendRectangle from "./LegendRectangle";
-import FactorTitleText from "./FactorTitleText";
-import HeaderRectangles from "./HeaderRectangles";
-import HeaderColNumbers from "./HeaderColNumbers";
-import DownloadFactorVizButtons from "./DownloadFactorVizButtons";
-// import vizState from "../../GlobalState/vizState";
+import styled from 'styled-components';
+import LegendText from './LegendText';
+import SigSortsViz from './SigSortsViz';
+import RectangleText from './RectangleText';
+import BaseRectangles from './BaseRectangles';
+import LegendRectangle from './LegendRectangle';
+import FactorTitleText from './FactorTitleText';
+import HeaderRectangles from './HeaderRectangles';
+import HeaderColNumbers from './HeaderColNumbers';
+import DownloadFactorVizButtons from './DownloadFactorVizButtons';
 
-const getStyles = props => {
+const getStyles = (props) => {
   // DYNAMIC height and width from prefs to set CONTAINER size
   // getState
   const positionData = props.positionData;
@@ -44,11 +42,11 @@ const getStyles = props => {
   }
 
   const container = {
-    margin: "0 auto",
-    textAlign: "center",
+    margin: '0 auto',
+    textAlign: 'center',
     width: containerWidth,
     height: containerHeight,
-    marginBottom: 250
+    marginBottom: 250,
   };
 
   // to change output section main content height / width
@@ -59,13 +57,12 @@ const getStyles = props => {
   return container;
 };
 
-const FactorViz = props => {
-  const willIndicateDistinguishing =
-    props.factorVizOptions.willIndicateDistinguishing;
+const FactorViz = (props) => {
+  const willIndicateDistinguishing = props.factorVizOptions.willIndicateDistinguishing;
   const showDistinguishingAs = props.factorVizOptions.showDistinguishingAs;
 
   let shouldDisplaySig = false;
-  if (willIndicateDistinguishing && showDistinguishingAs === "symbol") {
+  if (willIndicateDistinguishing && showDistinguishingAs === 'symbol') {
     shouldDisplaySig = true;
   }
 

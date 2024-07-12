@@ -1,63 +1,74 @@
 import React from 'react';
 import styled from 'styled-components';
-
 import downloadDistStates from './downloadDistStates';
 import outputState from '../../GlobalState/outputState';
 import GeneralButton from '../../../Utils/GeneralButton';
 import { useTranslation } from 'react-i18next';
 import CsvIcon from '../../images/CSV_Icon2.svg';
 
-const clearAllButtons = () => {
-  outputState.thresholdButtonActive = false;
-  outputState.qSortValueButtonActive = false;
-  outputState.statementNumButtonActive = false;
-  outputState.zScoreButtonActive = false;
-};
-
-const handleDownload = () => {
-  downloadDistStates();
-};
-
-const handleOnclick = (event) => {
-  const buttonId = event.target.id;
-
-  // clear all button highlighting
-  if (buttonId === 'thresholdButton') {
-    clearAllButtons();
-    outputState.thresholdButtonActive = true;
-    outputState.distStateListSortKey = 'threshold';
-  }
-
-  if (buttonId === 'qSortValueButton') {
-    clearAllButtons();
-    outputState.qSortValueButtonActive = true;
-    outputState.distStateListSortKey = 'qSortValue';
-  }
-
-  if (buttonId === 'statementNumButton') {
-    clearAllButtons();
-    outputState.statementNumButtonActive = true;
-    outputState.distStateListSortKey = 'statementNum';
-  }
-
-  if (buttonId === 'zScoreButton') {
-    clearAllButtons();
-    outputState.zScoreButtonActive = true;
-    outputState.distStateListSortKey = 'zScore';
-  }
-};
-
 const DistStateListSortByButtons = () => {
   const { t } = useTranslation();
+  const updateThresholdButtonActive = outputState((state) => state.updateThresholdButtonActive);
+  const updateQSortValueButtonActive = outputState((state) => state.updateQSortValueButtonActive);
+  const updateStatementNumButtonActive = outputState(
+    (state) => state.updateStatementNumButtonActive
+  );
+  const updateZScoreButtonActive = outputState((state) => state.updateZScoreButtonActive);
+  const updateDistStateListSortKey = outputState((state) => state.updateDistStateListSortKey);
+
+  const clearAllButtons = () => {
+    updateThresholdButtonActive(false);
+    updateQSortValueButtonActive(false);
+    updateStatementNumButtonActive(false);
+    updateZScoreButtonActive(false);
+  };
+
+  const handleDownload = () => {
+    downloadDistStates();
+  };
+
+  const handleOnclick = (event) => {
+    const buttonId = event.target.id;
+
+    // clear all button highlighting
+    if (buttonId === 'thresholdButton') {
+      clearAllButtons();
+      updateThresholdButtonActive(true);
+      updateDistStateListSortKey('threshold');
+    }
+
+    if (buttonId === 'qSortValueButton') {
+      clearAllButtons();
+      updateQSortValueButtonActive(true);
+      updateDistStateListSortKey('qSortValue');
+    }
+
+    if (buttonId === 'statementNumButton') {
+      clearAllButtons();
+      updateStatementNumButtonActive(true);
+      updateDistStateListSortKey('statementNum');
+    }
+
+    if (buttonId === 'zScoreButton') {
+      clearAllButtons();
+      updateZScoreButtonActive(true);
+      updateDistStateListSortKey('zScore');
+    }
+  };
 
   const shouldDisplayDistStateListButtons = true;
+  const thresholdButtonActive = outputState((state) => state.thresholdButtonActive);
+  const qSortValueButtonActive = outputState((state) => state.qSortValueButtonActive);
+  const statementNumButtonActive = outputState((state) => state.statementNumButtonActive);
+  const zScoreButtonActive = outputState((state) => state.zScoreButtonActive);
+
   if (shouldDisplayDistStateListButtons) {
     return (
       <StyledWrapper>
         <TextLabel>{t('Sort By')}</TextLabel>
         <SortButton
           id={'thresholdButton'}
-          isActive={outputState.thresholdButtonActive}
+          isActive={thresholdButtonActive}
           onClick={handleOnclick}
           key={'f1'}
         >
@@ -65,7 +76,7 @@ const DistStateListSortByButtons = () => {
         </SortButton>
         <SortButton
           id={'qSortValueButton'}
-          isActive={outputState.qSortValueButtonActive}
+          isActive={qSortValueButtonActive}
           onClick={handleOnclick}
           key={'f2'}
         >
@@ -73,7 +84,7 @@ const DistStateListSortByButtons = () => {
         </SortButton>
         <SortButton
           id={'statementNumButton'}
-          isActive={outputState.statementNumButtonActive}
+          isActive={statementNumButtonActive}
           onClick={handleOnclick}
           key={'f3'}
         >
@@ -81,7 +92,7 @@ const DistStateListSortByButtons = () => {
         </SortButton>
         <SortButton
           id={'zScoreButton'}
-          isActive={outputState.zScoreButtonActive}
+          isActive={zScoreButtonActive}
           onClick={handleOnclick}
           key={'f4'}
         >

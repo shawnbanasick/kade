@@ -1,7 +1,7 @@
-import getCalcState from "../../GlobalState/getCalcState";
-import getOutputState from "../../GlobalState/getOutputState";
+import calcState from '../../GlobalState/calcState';
+import outputState from '../../GlobalState/outputState';
 
-const capitalizeFirstLetter = string => {
+const capitalizeFirstLetter = (string) => {
   if (!string) {
     return string;
   }
@@ -9,18 +9,18 @@ const capitalizeFirstLetter = string => {
 };
 
 const filterDistStateListData = (thresholdLevel, sortKey) => {
-  const distStateListData = getCalcState("distStateListData");
-  const userSelectedFactors = getOutputState("userSelectedFactors");
+  const distStateListData = calcState.getState().distStateListData;
+  const userSelectedFactors = outputState.getState().userSelectedFactors;
 
   for (let i = 0; i < distStateListData.length; i++) {
     const userSelectedFactor = capitalizeFirstLetter(userSelectedFactors[i]);
     distStateListData[i].userSelectedFactor = userSelectedFactor;
     distStateListData[i].distStates = distStateListData[i].distStates.filter(
-      item => item.sigLevelRank >= thresholdLevel
+      (item) => item.sigLevelRank >= thresholdLevel
     );
   }
 
-  if (sortKey === "threshold") {
+  if (sortKey === 'threshold') {
     for (let i = 0; i < distStateListData.length; i++) {
       distStateListData[i].distStates.sort((a, b) => {
         if (a.sigLevelRank === b.sigLevelRank) {
@@ -35,7 +35,7 @@ const filterDistStateListData = (thresholdLevel, sortKey) => {
     }
   }
 
-  if (sortKey === "qSortValue") {
+  if (sortKey === 'qSortValue') {
     for (let i = 0; i < distStateListData.length; i++) {
       distStateListData[i].distStates.sort((a, b) => {
         if (a.sortValue === b.sortValue) {
@@ -50,7 +50,7 @@ const filterDistStateListData = (thresholdLevel, sortKey) => {
     }
   }
 
-  if (sortKey === "statementNum") {
+  if (sortKey === 'statementNum') {
     for (let i = 0; i < distStateListData.length; i++) {
       distStateListData[i].distStates.sort((a, b) => {
         if (a.statement === b.statement) {
@@ -65,7 +65,7 @@ const filterDistStateListData = (thresholdLevel, sortKey) => {
     }
   }
 
-  if (sortKey === "zScore") {
+  if (sortKey === 'zScore') {
     for (let i = 0; i < distStateListData.length; i++) {
       distStateListData[i].distStates.sort((a, b) => {
         if (a.zScore === b.zScore) {

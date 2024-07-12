@@ -1,16 +1,13 @@
-import React from 'react';
-
 import GeneralButton from '../../../Utils/GeneralButton';
-import outputState from '../../GlobalState/outputState';
 import { useTranslation } from 'react-i18next';
-import getOutputState from '../../GlobalState/getOutputState';
+import outputState from '../../GlobalState/outputState';
 
 // todo - change this back to normal button
 // display rules prevent premature click now
 const DisplayVisualizationsButtons = () => {
   const { t } = useTranslation();
   // hide button is only one factor selected
-  const userSelectedFactors = getOutputState('userSelectedFactors');
+  const userSelectedFactors = outputState((state) => state.userSelectedFactors);
   let shouldDisplay = true;
   if (userSelectedFactors.length < 2) {
     shouldDisplay = false;
@@ -23,7 +20,7 @@ const DisplayVisualizationsButtons = () => {
   };
 
   // getState
-  const showDownloadOutputButtons = getOutputState('showDownloadOutputButtons');
+  const showDownloadOutputButtons = outputState((state) => state.showDownloadOutputButtons);
   if (showDownloadOutputButtons && shouldDisplay) {
     return (
       <div style={{ display: 'flex' }}>

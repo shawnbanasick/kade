@@ -1,16 +1,14 @@
-import React from 'react';
 import styled from 'styled-components';
-
 import calculateRotatedFactors from '../rotationLogic/calculateRotatedFactors';
 import GeneralButton from '../../../../Utils/GeneralButton';
-import getRotationState from '../../../GlobalState/getRotationState';
+import rotationState from '../../../GlobalState/rotationState';
 
 const ClockwiseButtons = (props) => {
   const handleClick = (event, baselineData) => {
     const direction = event.target.id;
     event.stopPropagation();
     // get current setting of rotation degrees
-    const rotateByDegrees = getRotationState('rotateByDegrees');
+    const rotateByDegrees = rotationState((state) => state.rotateByDegrees);
     // call rotation
     calculateRotatedFactors(direction, rotateByDegrees, baselineData);
   };

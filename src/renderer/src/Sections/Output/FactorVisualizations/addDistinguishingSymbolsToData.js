@@ -1,24 +1,21 @@
-import pull from "lodash/pull";
-import getCalcState from "../../GlobalState/getCalcState";
-import getOutputState from "../../GlobalState/getOutputState";
-const clone = require("rfdc")();
+import pull from 'lodash/pull';
+import cloneDeep from 'lodash/cloneDeep';
+import calcState from '../../GlobalState/calcState';
+import outputState from '../../GlobalState/outputState';
 
 // consensusStatementArrays
-function addDistinguishingSymbolsToData(
-  outputForDataViz2,
-  distStatementDataVizArray
-) {
-  const consensus01Statements = getCalcState("consensus01Statements");
-  const consensus05Statements = getCalcState("consensus05Statements");
-  const userSelectedFactors2 = getOutputState("userSelectedFactors");
+function addDistinguishingSymbolsToData(outputForDataViz2, distStatementDataVizArray) {
+  const consensus01Statements = calcState.getState().consensus01Statements;
+  const consensus05Statements = calcState.getState().consensus05Statements;
+  const userSelectedFactors2 = outputState.getState().userSelectedFactors;
   const userSelectedFactors = [];
 
-  const outputForDataViz = clone(outputForDataViz2);
+  const outputForDataViz = cloneDeep(outputForDataViz2);
 
   // to delete spaces between text "Factor " and factor number
   for (let r = 0; r < userSelectedFactors2.length; r += 1) {
     const temp1 = userSelectedFactors2[r];
-    const temp2 = temp1.replace(/\s/g, "");
+    const temp2 = temp1.replace(/\s/g, '');
     userSelectedFactors.push(temp2);
   }
 
@@ -45,13 +42,9 @@ function addDistinguishingSymbolsToData(
 
     // for distingishing symbols
     // loop through each distinguishing statement in distStatementDataVizArray[i]
-    for (
-      let j = 0, jLen = distStatementDataVizArray[i].length;
-      j < jLen;
-      j += 1
-    ) {
+    for (let j = 0, jLen = distStatementDataVizArray[i].length; j < jLen; j += 1) {
       // get statement number
-      const statementId = distStatementDataVizArray[i][j]["No."];
+      const statementId = distStatementDataVizArray[i][j]['No.'];
 
       // avoid empty objects
       let sigSymbol;
@@ -60,8 +53,7 @@ function addDistinguishingSymbolsToData(
       if (!isNaN(testValue)) {
         // get values for calc of direction symbol
         const sigFactorZscoreKey = `Z-SCR-${userSelectedFactors[i]}`;
-        const sigFactorZscoreValue =
-          distStatementDataVizArray[i][j][sigFactorZscoreKey];
+        const sigFactorZscoreValue = distStatementDataVizArray[i][j][sigFactorZscoreKey];
         const allFactorZscores = [];
 
         // loop through all of the factor z-scores and push to array
@@ -78,9 +70,9 @@ function addDistinguishingSymbolsToData(
         const arrowPointerArrayRight = [];
         for (let kk = 0; kk < otherFactorZscores.length; kk += 1) {
           if (sigFactorZscoreValue - otherFactorZscores[kk] > 0) {
-            arrowPointerArrayRight.push("1");
+            arrowPointerArrayRight.push('1');
           } else {
-            arrowPointerArrayLeft.push("1");
+            arrowPointerArrayLeft.push('1');
           }
         }
 
@@ -91,14 +83,14 @@ function addDistinguishingSymbolsToData(
           otherFactorZscores.length === arrowPointerArrayRight.length &&
           userSelectedFactors.length > 1
         ) {
-          directionSymbol = ">>"; // " >>>"; "&#9658;";  right-pointing pointer
-          directionSymbolUni = "\u25BA"; // "\u25BA";
+          directionSymbol = '>>'; // " >>>"; "&#9658;";  right-pointing pointer
+          directionSymbolUni = '\u25BA'; // "\u25BA";
         } else if (otherFactorZscores.length === arrowPointerArrayLeft.length) {
-          directionSymbol = "<<"; // " <<<";  "&#9668;";  left-pointing pointer
-          directionSymbolUni = "\u25C4";
+          directionSymbol = '<<'; // " <<<";  "&#9668;";  left-pointing pointer
+          directionSymbolUni = '\u25C4';
         } else {
-          directionSymbol = "";
-          directionSymbolUni = "";
+          directionSymbol = '';
+          directionSymbolUni = '';
         }
         // put it all together and insert into object
         const sigFactorName = `SIG${userSelectedFactors[i]}`;
@@ -106,13 +98,13 @@ function addDistinguishingSymbolsToData(
         const location = statementId - 1;
         let isDistinguishing01 = false;
         let isDistinguishing05 = false;
-        if (sigAt01Level === "*") {
-          sigSymbol = "** "; // "**";  "&#9673;";  sig at .01
+        if (sigAt01Level === '*') {
+          sigSymbol = '** '; // "**";  "&#9673;";  sig at .01
           sigSymbolUni = `** `; // "\u26B9\u26B9"; "\u2733\u2733"; \u002A\u002A
           isDistinguishing01 = true;
           // sigSymbolUni = "\u25C9";
-        } else if (sigAt01Level === "") {
-          sigSymbol = "* "; // "*";  "&#9678;";  sig at .05
+        } else if (sigAt01Level === '') {
+          sigSymbol = '* '; // "*";  "&#9678;";  sig at .05
           sigSymbolUni = `* `; // "\u26B9";  "\u002A";
           isDistinguishing05 = true;
           // sigSymbolUni = "\u25CE";

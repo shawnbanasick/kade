@@ -1,12 +1,12 @@
-import getCoreState from "../../GlobalState/getCoreState";
-import getCorrelationState from "../../GlobalState/getCorrelationState";
-import i18n from "i18next";
+import coreState from '../../GlobalState/coreState';
+import correlationState from '../../GlobalState/correlationState';
+import i18n from 'i18next';
 
-const pushCorrelationArray = function(outputData, sheetNamesXlsx, colSizes) {
-  sheetNamesXlsx.push(i18n.t("Correlation Matrix"));
+const pushCorrelationArray = function (outputData, sheetNamesXlsx, colSizes) {
+  sheetNamesXlsx.push(i18n.t('Correlation Matrix'));
   // getState
-  const correlationMatrix = getCorrelationState("correlationTableArray");
-  const respondentNames = getCoreState("respondentNames");
+  const correlationMatrix = correlationState.getState().correlationTableArray;
+  const respondentNames = coreState.getState().respondentNames;
 
   // to add respondent names to matrix
   for (let i = 0, iLen = correlationMatrix.length; i < iLen; i++) {
@@ -29,25 +29,25 @@ const pushCorrelationArray = function(outputData, sheetNamesXlsx, colSizes) {
   const columns = [];
   for (let j = 0, jLen = correlationMatrix[0].length + 1; j < jLen; j++) {
     columns.push({
-      wch: respondentNameMaxLength
+      wch: respondentNameMaxLength,
     });
   }
   colSizes.push(columns);
 
   // to format table header correctly
-  respondentNames.unshift(i18n.t("Participant"));
+  respondentNames.unshift(i18n.t('Participant'));
 
   // to add headers to table display
   correlationMatrix.unshift(
-    ["correlations", ""],
-    ["", ""],
-    [i18n.t("Correlations between Q sorts")],
-    ["", ""],
+    ['correlations', ''],
+    ['', ''],
+    [i18n.t('Correlations between Q sorts')],
+    ['', ''],
     respondentNames
   );
   outputData.push(correlationMatrix);
 
-  console.log("dispatch - 4 - pushCorrelations complete");
+  console.log('dispatch - 4 - pushCorrelations complete');
   return [outputData, sheetNamesXlsx, colSizes];
 };
 

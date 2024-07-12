@@ -1,6 +1,5 @@
-import React from 'react';
+import { useState } from 'react';
 import { Dropdown } from 'semantic-ui-react';
-import { view, store } from '@risingstack/react-easy-state';
 import loadingState from '../../GlobalState/loadingState';
 
 // stateOptions = [ { key: 'AL', value: 'AL', text: 'Alabama' }, ...  ]
@@ -57,18 +56,22 @@ const sigOptions = [
   },
 ];
 
-const localStore = store({
-  value: 1.96,
-});
-
 const SigLevelDropdown = () => {
+  const [localStore, setLocalStore] = useState({ value: 1.96 });
+
+  const updateUserSelectedSigLevel = loadingState((state) => state.updateUserSelectedSigLevel);
+  const updateAutoflagButtonColor = loadingState((state) => state.updateAutoflagButtonColor);
+
   const handleChange = (e, { value }) => {
-    localStore.value = value;
-    loadingState.userSelectedSigLevel = value;
-    loadingState.autoflagButtonColor = 'orange';
+    let tempObj = {};
+    tempObj.value = value;
+    setLocalStore(tempObj);
+    updateUserSelectedSigLevel(value);
+    updateAutoflagButtonColor('orange');
   };
 
   const value = localStore.value;
+
   return (
     <Dropdown
       className="autoflagDropdown"

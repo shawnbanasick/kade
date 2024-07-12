@@ -1,6 +1,6 @@
 // todo - create if statement for case of only two sig factors-bypass processing of second
-import i18n from "i18next";
-import getOutputState from "../../GlobalState/getOutputState";
+import i18n from 'i18next';
+import outputState from '../../GlobalState/outputState';
 
 const formatDistingArrayForDownload = (
   distingStatementsTransferArray01,
@@ -9,21 +9,19 @@ const formatDistingArrayForDownload = (
   analysisOutput,
   sigFactorNumbersArray
 ) => {
-  const chartText1 = i18n.t("Distinguishing Statements for");
+  const chartText1 = i18n.t('Distinguishing Statements for');
   // getState
-  const distStateUpperValueText = getOutputState("distStateUpperValueText");
-  const distStateLowerValueText = getOutputState("distStateLowerValueText");
+  const distStateUpperValueText = outputState.getState().distStateUpperValueText;
+  const distStateLowerValueText = outputState.getState().distStateLowerValueText;
   const chartText2 = `(${distStateLowerValueText}; ${i18n.t(
-    "Asterisk Indicates Significance at"
+    'Asterisk Indicates Significance at'
   )} ${distStateUpperValueText})`;
-  const chartText3 = i18n.t(
-    "Both the Factor Q Sort Value and the Z Score Z SCR are Shown"
-  );
-  const chartText4 = i18n.t("Significance");
-  const chartText5 = i18n.t("Statement");
+  const chartText3 = i18n.t('Both the Factor Q Sort Value and the Z Score Z SCR are Shown');
+  const chartText4 = i18n.t('Significance');
+  const chartText5 = i18n.t('Statement');
   // const chartText6 = "Num";
-  const chartText7 = i18n.t("Nm");
-  const chartText8 = i18n.t("Z score");
+  const chartText7 = i18n.t('Nm');
+  const chartText8 = i18n.t('Z score');
 
   const outputLength = analysisOutput.length;
   const disting05Length = distingStatementsTransferArray05.length;
@@ -31,18 +29,17 @@ const formatDistingArrayForDownload = (
 
   const printArray = [];
   const printArray2 = [];
-  const spacer = ["", ""];
+  const spacer = ['', ''];
 
   const distinguishingSheetArray = [];
 
   // line 1
-  const factorNumber2 =
-    factorNumber.charAt(0).toUpperCase() + factorNumber.slice(1);
+  const factorNumber2 = factorNumber.charAt(0).toUpperCase() + factorNumber.slice(1);
   const number = factorNumber2.substring(factorNumber2.length - 1);
   const factorNumber3 = factorNumber2.slice(0, -1);
   factorNumber = `${factorNumber3} ${number}`;
   const line1Array = [chartText1 + factorNumber];
-  distinguishingSheetArray.push(["distinguishing", ""], spacer, line1Array);
+  distinguishingSheetArray.push(['distinguishing', ''], spacer, line1Array);
 
   // line 2
   distinguishingSheetArray.push(spacer, [chartText2]);
@@ -52,57 +49,54 @@ const formatDistingArrayForDownload = (
 
   // line 4 - headers
   const line4Array = [chartText7, chartText5, chartText7];
-  const line4aArray = [" ", " ", " "];
+  const line4aArray = [' ', ' ', ' '];
 
   // push headers
   const emptyLineObj = {};
-  emptyLineObj["No."] = " ";
-  emptyLineObj["Statement "] = " ";
-  emptyLineObj["Num "] = " ";
+  emptyLineObj['No.'] = ' ';
+  emptyLineObj['Statement '] = ' ';
+  emptyLineObj['Num '] = ' ';
 
   for (let i = 0; i < outputLength; i += 1) {
-    emptyLineObj[`Q-SV-${sigFactorNumbersArray[i]}`] = " ";
-    emptyLineObj[`Z-SCR-${sigFactorNumbersArray[i]}`] = " ";
-    emptyLineObj[`SIG${sigFactorNumbersArray[i]}`] = " ";
+    emptyLineObj[`Q-SV-${sigFactorNumbersArray[i]}`] = ' ';
+    emptyLineObj[`Z-SCR-${sigFactorNumbersArray[i]}`] = ' ';
+    emptyLineObj[`SIG${sigFactorNumbersArray[i]}`] = ' ';
   }
 
   const printHeaderObj0 = {};
-  printHeaderObj0["No."] = "distinguishing";
+  printHeaderObj0['No.'] = 'distinguishing';
   printArray.push(printHeaderObj0);
   printArray.push(emptyLineObj);
   const printHeaderObj1 = {};
-  printHeaderObj1["No."] = chartText1 + factorNumber;
+  printHeaderObj1['No.'] = chartText1 + factorNumber;
   printArray.push(printHeaderObj1);
   printArray.push(emptyLineObj);
   const printHeaderObj2 = {};
-  printHeaderObj2["No."] = chartText2;
+  printHeaderObj2['No.'] = chartText2;
   printArray.push(printHeaderObj2);
   printArray.push(emptyLineObj);
   const printHeaderObj3 = {};
-  printHeaderObj3["No."] = chartText3;
+  printHeaderObj3['No.'] = chartText3;
   printArray.push(printHeaderObj3);
   printArray.push(emptyLineObj);
   printArray.push(emptyLineObj);
   const printHeaderObj4 = {};
-  printHeaderObj4["No."] = chartText7;
-  printHeaderObj4["Statement "] = chartText5;
-  printHeaderObj4["Num "] = chartText7;
+  printHeaderObj4['No.'] = chartText7;
+  printHeaderObj4['Statement '] = chartText5;
+  printHeaderObj4['Num '] = chartText7;
 
   for (let j = 0; j < outputLength; j += 1) {
-    printHeaderObj4[
-      `Q-SV-${sigFactorNumbersArray[j]}`
-    ] = `${sigFactorNumbersArray[j]} Q-SV`;
-    printHeaderObj4[
-      `Z-SCR-${sigFactorNumbersArray[j]}`
-    ] = `${sigFactorNumbersArray[j]} ${chartText8}`;
+    printHeaderObj4[`Q-SV-${sigFactorNumbersArray[j]}`] = `${sigFactorNumbersArray[j]} Q-SV`;
+    printHeaderObj4[`Z-SCR-${sigFactorNumbersArray[j]}`] =
+      `${sigFactorNumbersArray[j]} ${chartText8}`;
     printHeaderObj4[`SIG${sigFactorNumbersArray[j]}`] = chartText4;
 
     let statementNum = sigFactorNumbersArray[j].slice(6);
 
     line4aArray.push(
-      `${i18n.t("Factor")} ${statementNum}`,
-      `${i18n.t("Factor")} ${statementNum}`,
-      `${i18n.t("Factor")} ${statementNum}`
+      `${i18n.t('Factor')} ${statementNum}`,
+      `${i18n.t('Factor')} ${statementNum}`,
+      `${i18n.t('Factor')} ${statementNum}`
     );
 
     line4Array.push(`Q-SV`, `${chartText8}`, chartText4);
@@ -125,23 +119,21 @@ const formatDistingArrayForDownload = (
     kShift = distingStatementsTransferArray05[k];
 
     // cycle through statement numbers and get statement, factors q score and sort value from results object and set sig level to ""
-    tempObj["No."] = kShift;
+    tempObj['No.'] = kShift;
     line5Array.push(kShift);
 
-    tempObj["Statement "] = analysisOutput[0][kShift - 1].sortStatement;
+    tempObj['Statement '] = analysisOutput[0][kShift - 1].sortStatement;
     line5Array.push(analysisOutput[0][kShift - 1].sortStatement, kShift);
 
-    tempObj["Num "] = kShift;
+    tempObj['Num '] = kShift;
     for (let m = 0; m < outputLength; m += 1) {
-      tempObj[`Q-SV-${sigFactorNumbersArray[m]}`] =
-        analysisOutput[m][kShift - 1].sortValue;
-      tempObj[`Z-SCR-${sigFactorNumbersArray[m]}`] =
-        analysisOutput[m][kShift - 1].zScore;
-      tempObj[`SIG${sigFactorNumbersArray[m]}`] = "";
+      tempObj[`Q-SV-${sigFactorNumbersArray[m]}`] = analysisOutput[m][kShift - 1].sortValue;
+      tempObj[`Z-SCR-${sigFactorNumbersArray[m]}`] = analysisOutput[m][kShift - 1].zScore;
+      tempObj[`SIG${sigFactorNumbersArray[m]}`] = '';
       line5Array.push(
         analysisOutput[m][kShift - 1].sortValue,
         analysisOutput[m][kShift - 1].zScore,
-        ""
+        ''
       );
     }
     printArray2.push(tempObj);
@@ -154,21 +146,15 @@ const formatDistingArrayForDownload = (
     tempObj2 = {};
     pShift = distingStatementsTransferArray01[p];
 
-    tempObj2["No."] = pShift;
-    tempObj2["Statement "] = analysisOutput[0][pShift - 1].sortStatement;
-    tempObj2["Num "] = pShift;
+    tempObj2['No.'] = pShift;
+    tempObj2['Statement '] = analysisOutput[0][pShift - 1].sortStatement;
+    tempObj2['Num '] = pShift;
 
-    line6Array.push(
-      pShift,
-      analysisOutput[0][pShift - 1].sortStatement,
-      pShift
-    );
+    line6Array.push(pShift, analysisOutput[0][pShift - 1].sortStatement, pShift);
 
     for (let q = 0; q < outputLength; q += 1) {
-      tempObj2[`Q-SV-${sigFactorNumbersArray[q]}`] =
-        analysisOutput[q][pShift - 1].sortValue;
-      tempObj2[`Z-SCR-${sigFactorNumbersArray[q]}`] =
-        analysisOutput[q][pShift - 1].zScore;
+      tempObj2[`Q-SV-${sigFactorNumbersArray[q]}`] = analysisOutput[q][pShift - 1].sortValue;
+      tempObj2[`Z-SCR-${sigFactorNumbersArray[q]}`] = analysisOutput[q][pShift - 1].zScore;
 
       line6Array.push(
         analysisOutput[q][pShift - 1].sortValue,
@@ -176,26 +162,23 @@ const formatDistingArrayForDownload = (
       );
 
       if (q === formatDistingArrayForDownload.calledTimes) {
-        tempObj2[`SIG${sigFactorNumbersArray[q]}`] = "*";
-        line6Array.push("*");
+        tempObj2[`SIG${sigFactorNumbersArray[q]}`] = '*';
+        line6Array.push('*');
       } else {
-        tempObj2[`SIG${sigFactorNumbersArray[q]}`] = "";
-        line6Array.push("");
+        tempObj2[`SIG${sigFactorNumbersArray[q]}`] = '';
+        line6Array.push('');
       }
     }
     printArray2.push(tempObj2);
     distinguishingSheetArray2.push(line6Array);
   }
 
-  const lookupValue =
-    sigFactorNumbersArray[formatDistingArrayForDownload.calledTimes];
+  const lookupValue = sigFactorNumbersArray[formatDistingArrayForDownload.calledTimes];
 
   const sortFactorValue = `Z-SCR-${lookupValue}`;
 
   // sort desc
-  const printArray3 = printArray2.sort(
-    (a, b) => b[sortFactorValue] - a[sortFactorValue]
-  );
+  const printArray3 = printArray2.sort((a, b) => b[sortFactorValue] - a[sortFactorValue]);
 
   for (let r = 0; r < printArray3.length; r += 1) {
     printArray.push(printArray3[r]);
@@ -214,9 +197,7 @@ const formatDistingArrayForDownload = (
     return b[indexer] < a[indexer] ? -1 : 1;
   });
 
-  const finalSheetArray = distinguishingSheetArray.concat(
-    distinguishingSheetArray2
-  );
+  const finalSheetArray = distinguishingSheetArray.concat(distinguishingSheetArray2);
 
   formatDistingArrayForDownload.calledTimes += 1;
 

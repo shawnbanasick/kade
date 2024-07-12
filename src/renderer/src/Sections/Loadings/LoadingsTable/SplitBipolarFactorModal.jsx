@@ -1,29 +1,28 @@
-import React from 'react';
-
 import { Button, Header, Modal } from 'semantic-ui-react';
 import splitBipolarFactor from '../loadingsLogic/splitBipolarFactor';
 import SplitBipolarFactorDropdownSelect from './SplitBipolarFactorDropdownSelect';
 import loadingState from '../../GlobalState/loadingState';
 import { useTranslation } from 'react-i18next';
-import getLoadingState from '../../GlobalState/getLoadingState';
 
 const SplitBipolarFactorButtonModal = () => {
   const { t } = useTranslation();
+  const updateShowSplitFactorModal = loadingState((state) => state.updateShowSplitFactorModal);
+  const updateBipolarFactorsArray = loadingState((state) => state.updateBipolarFactorsArray);
+  let bipolarFactorsArray = loadingState((state) => state.bipolarFactorsArray);
+  let factorToSplit = loadingState((state) => state.factorToSplit);
+  const showSplitFactorModal = loadingState((state) => state.showSplitFactorModal);
 
   const handleClose = () => {
-    loadingState.showSplitFactorModal = false;
+    updateShowSplitFactorModal(false);
   };
 
   const handleClick = () => {
-    loadingState.showSplitFactorModal = false;
-    let bipolarFactorsArray = getLoadingState('bipolarFactorsArray');
-    let factorToSplit = getLoadingState('factorToSplit');
+    updateShowSplitFactorModal(false);
     bipolarFactorsArray.push(factorToSplit);
-    loadingState.bipolarFactorsArray = [...bipolarFactorsArray];
+    updateBipolarFactorsArray([...bipolarFactorsArray]);
     splitBipolarFactor();
   };
 
-  const showSplitFactorModal = getLoadingState('showSplitFactorModal');
   if (showSplitFactorModal) {
     return (
       <Modal dimmer={'blurring'} open={showSplitFactorModal} onClose={handleClose}>

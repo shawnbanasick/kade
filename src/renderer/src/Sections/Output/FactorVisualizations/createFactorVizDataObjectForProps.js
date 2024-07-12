@@ -1,15 +1,13 @@
-import getInstances from "./getInstances";
-import prepareDataForFactorViz from "./prepareDataForFactorViz";
-import i18n from "i18next";
-import getOutputState from "../../GlobalState/getOutputState";
-
+import getInstances from './getInstances';
+import prepareDataForFactorViz from './prepareDataForFactorViz';
+import i18n from 'i18next';
+import outputState from '../../GlobalState/outputState';
 // helper function
-const capitalizeFirstLetter = string =>
-  string.charAt(0).toUpperCase() + string.slice(1);
+const capitalizeFirstLetter = (string) => string.charAt(0).toUpperCase() + string.slice(1);
 
 // exported function
-const createFactorVizDataObjectForProps = factorVizOptions => {
-  const shouldDisplayFactorViz = getOutputState("displayFactorVisualizations");
+const createFactorVizDataObjectForProps = (factorVizOptions) => {
+  const shouldDisplayFactorViz = outputState.getState().displayFactorVisualizations;
 
   // early return if no display
   if (shouldDisplayFactorViz === false) {
@@ -19,7 +17,7 @@ const createFactorVizDataObjectForProps = factorVizOptions => {
   // create data object for render mapping
   let customFactorNamesArray;
   // getState
-  const userSelectedFactors = getOutputState("userSelectedFactors");
+  const userSelectedFactors = outputState.getState().userSelectedFactors;
 
   const positionData = getInstances();
   const numberOfFactors = userSelectedFactors.length;
@@ -29,7 +27,7 @@ const createFactorVizDataObjectForProps = factorVizOptions => {
   if (useCustomNames) {
     const customFactorNamesArray1 = factorVizOptions.customFactorNames;
     if (customFactorNamesArray1.length !== 0) {
-      customFactorNamesArray = customFactorNamesArray1.split(",");
+      customFactorNamesArray = customFactorNamesArray1.split(',');
     } else {
       customFactorNamesArray = [];
     }
@@ -40,15 +38,15 @@ const createFactorVizDataObjectForProps = factorVizOptions => {
     let name;
     const factorName = capitalizeFirstLetter(userSelectedFactors[i]);
     const factorNum = factorName.charAt(factorName.length - 1);
-    const id = factorName.replace(/\s+/g, "");
+    const id = factorName.replace(/\s+/g, '');
 
     if (useCustomNames) {
       name = customFactorNamesArray[i];
-      if (name === undefined || name === "") {
-        name = `${i18n.t("Composite Q sort for Factor")}${factorNum}`;
+      if (name === undefined || name === '') {
+        name = `${i18n.t('Composite Q sort for Factor')}${factorNum}`;
       }
     } else {
-      name = `${i18n.t("Composite Q sort for Factor")}${factorNum}`;
+      name = `${i18n.t('Composite Q sort for Factor')}${factorNum}`;
     }
     const tempObj = {};
     tempObj.name = name;
@@ -57,10 +55,8 @@ const createFactorVizDataObjectForProps = factorVizOptions => {
     tempObj.positionData = positionData;
     tempObj.factorVizOptions = factorVizOptions;
     tempObj.shouldUseUnicode = factorVizOptions.shouldUseUnicode;
-    tempObj.willDisplayDistingCompareSymbols =
-      factorVizOptions.willDisplayDistingCompareSymbols;
-    tempObj.willAdjustIndicatorSizeBy =
-      factorVizOptions.willAdjustIndicatorSizeBy;
+    tempObj.willDisplayDistingCompareSymbols = factorVizOptions.willDisplayDistingCompareSymbols;
+    tempObj.willAdjustIndicatorSizeBy = factorVizOptions.willAdjustIndicatorSizeBy;
     factorData.push(tempObj);
   }
   return factorData;

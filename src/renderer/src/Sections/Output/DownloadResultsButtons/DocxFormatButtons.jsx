@@ -1,40 +1,9 @@
-import React from 'react';
 import styled from 'styled-components';
-
 // import downloadDistStates from "./downloadDistStates";
-import outputState from '../../GlobalState/outputState';
 import GeneralButton from '../../../Utils/GeneralButton';
 import { useTranslation } from 'react-i18next';
 import DocSelectionSwitch from '../downloadDocxLogic/DocSelectionSwitch';
-
-const clearAllButtons = () => {
-  outputState.useTablesButtonActive = false;
-  outputState.useClippedButtonActive = false;
-};
-
-const styles = {
-  fontSize: 22,
-  userSelect: 'none',
-};
-
-const handleOnclick = (event) => {
-  const buttonId = event.target.id;
-
-  // clear all button highlighting
-  if (buttonId === 'ContentUseTables') {
-    clearAllButtons();
-    outputState.useTablesButtonActive = true;
-    outputState.useClipped = false;
-    outputState.useTables = true;
-  }
-
-  if (buttonId === 'ContentUseClipped') {
-    clearAllButtons();
-    outputState.useClippedButtonActive = true;
-    outputState.useClipped = true;
-    outputState.useTables = false;
-  }
-};
+import outputState from '../../GlobalState/outputState';
 
 const DistStateListSortByButtons = () => {
   const { t } = useTranslation();
@@ -42,6 +11,44 @@ const DistStateListSortByButtons = () => {
     '(MS Word Only) Table of Contents and Section Hyperlinks (will request permission to update links on file open)'
   );
   let zebraText = t('Zebra Striping');
+
+  const updateUseTablesButtonActive = outputState((state) => state.updateUseTablesButtonActive);
+  const updateUseClippedButtonActive = outputState((state) => state.updateUseClippedButtonActive);
+  const updateUseClipped = outputState((state) => state.updateUseClipped);
+  const updateUseTables = outputState((state) => state.updateUseTables);
+  const useTablesButtonActive = outputState((state) => state.useTablesButtonActive);
+  const willUseHyperlinks = outputState((state) => state.willUseHyperlinks);
+  const useZebra = outputState((state) => state.useZebra);
+  const useClippedButtonActive = outputState((state) => state.useClippedButtonActive);
+
+  const clearAllButtons = () => {
+    updateUseTablesButtonActive(false);
+    updateUseClippedButtonActive(false);
+  };
+
+  const styles = {
+    fontSize: 22,
+    userSelect: 'none',
+  };
+
+  const handleOnclick = (event) => {
+    const buttonId = event.target.id;
+
+    // clear all button highlighting
+    if (buttonId === 'ContentUseTables') {
+      clearAllButtons();
+      updateUseTablesButtonActive(true);
+      updateUseClipped(false);
+      updateUseTables(true);
+    }
+
+    if (buttonId === 'ContentUseClipped') {
+      clearAllButtons();
+      updateUseClippedButtonActive(true);
+      updateUseClipped(true);
+      updateUseTables(false);
+    }
+  };
 
   const shouldDisplayDistStateListButtons = true;
   if (shouldDisplayDistStateListButtons) {
@@ -54,17 +61,17 @@ const DistStateListSortByButtons = () => {
           <DocSelectionSwitch
             name="willUseHyperlinks"
             value="willUseHyperlinks"
-            toggle={outputState.willUseHyperlinks}
+            toggle={willUseHyperlinks}
           />
         </OptionStatementRow>
         <OptionStatementRow>
           <OptionStatementText>{`2. ${zebraText}`}</OptionStatementText>
-          <DocSelectionSwitch name="useZebra" value="useZebra" toggle={outputState.useZebra} />
+          <DocSelectionSwitch name="useZebra" value="useZebra" toggle={useZebra} />
         </OptionStatementRow>
         <StyledWrapper>
           <SortButton
             id={'ContentUseTables'}
-            isActive={outputState.useTablesButtonActive}
+            isActive={useTablesButtonActive}
             onClick={handleOnclick}
             key={'f1'}
           >
@@ -72,7 +79,7 @@ const DistStateListSortByButtons = () => {
           </SortButton>
           <SortButton
             id={'ContentUseClipped'}
-            isActive={outputState.useClippedButtonActive}
+            isActive={useClippedButtonActive}
             onClick={handleOnclick}
             key={'f2'}
           >

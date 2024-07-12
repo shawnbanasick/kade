@@ -1,34 +1,34 @@
-import evenRound from "../../../Utils/evenRound";
-import variance from "../../../Utils/variance";
-import getOutputState from "../../GlobalState/getOutputState";
-import getCalcState from "../../GlobalState/getCalcState";
-import i18n from "i18next";
+import evenRound from '../../../Utils/evenRound';
+import variance from '../../../Utils/variance';
+import i18n from 'i18next';
+import outputState from '../../GlobalState/outputState';
+import calcState from '../../GlobalState/calcState';
 
-const pushConsensusStatementsToOutput = function(
+const pushConsensusStatementsToOutput = function (
   analysisOutput,
   outputData,
   sheetNamesXlsx,
   colSizes
 ) {
   // let chartText1 = "Z-Score Variance";
-  const chartText2 = i18n.t("Consensus-Disagreement");
-  const chartText3 = i18n.t("Nm");
-  const chartText4 = i18n.t("Statement");
-  const chartText5 = i18n.t("Ranking var.");
+  const chartText2 = i18n.t('Consensus-Disagreement');
+  const chartText3 = i18n.t('Nm');
+  const chartText4 = i18n.t('Statement');
+  const chartText5 = i18n.t('Ranking var.');
   const chartText6 = i18n.t(
-    "Factor Qsort Values for Statements sorted by Consensus vs Disagreement"
+    'Factor Qsort Values for Statements sorted by Consensus vs Disagreement'
   );
 
-  const sigFactorNumbersArray = getCalcState("sigFactorNumbersArray");
-  const userSelectedFactors = getOutputState("userSelectedFactors");
-  const maxStatementLength = getCalcState("maxStatementLength");
-  const spacer = ["", ""];
+  const sigFactorNumbersArray = calcState.getState().sigFactorNumbersArray;
+  const userSelectedFactors = outputState.getState().userSelectedFactors;
+  const maxStatementLength = calcState.getState().maxStatementLength;
+  const spacer = ['', ''];
 
   // add translations to user selected factors
   const translatedFactorNames = [];
-  userSelectedFactors.forEach(item => {
+  userSelectedFactors.forEach((item) => {
     const number = item.slice(7);
-    translatedFactorNames.push(`${i18n.t("Factor")} ${number}`);
+    translatedFactorNames.push(`${i18n.t('Factor')} ${number}`);
   });
 
   sigFactorNumbersArray.sort();
@@ -42,29 +42,26 @@ const pushConsensusStatementsToOutput = function(
   // set factor sheet cols
   const columns = [
     {
-      wch: 8
+      wch: 8,
     },
     {
-      wch: maxStatementLength
-    }
+      wch: maxStatementLength,
+    },
   ];
   for (let tt = 0, ttLen = userSelectedFactors.length; tt < ttLen; tt++) {
     columns.push({
-      wch: 8
+      wch: 8,
     });
   }
   columns.push({
-    wch: 15
+    wch: 15,
   });
   colSizes.push(columns);
 
   const consensusDisagreeArray = [];
   for (let i = 0; i < analysisOutput[0].length; i++) {
     const tempArray1a = [];
-    tempArray1a.push(
-      analysisOutput[0][i].statement,
-      analysisOutput[0][i].sortStatement
-    );
+    tempArray1a.push(analysisOutput[0][i].statement, analysisOutput[0][i].sortStatement);
     const tempArray = [];
     for (let j = 0; j < analysisOutput.length; j++) {
       // let temp1 = sigFactorNumbersArray[j];
@@ -83,24 +80,12 @@ const pushConsensusStatementsToOutput = function(
     }
     return a[locator] < b[locator] ? -1 : 1;
   });
-  consensusDisagreeArray.unshift(
-    ["con-dis", ""],
-    spacer,
-    [chartText6],
-    spacer,
-    tableHeader2
-  );
+  consensusDisagreeArray.unshift(['con-dis', ''], spacer, [chartText6], spacer, tableHeader2);
   outputData.push(consensusDisagreeArray);
 
-  console.log("dispatch - 14 - pushConsensusStatements complete");
+  console.log('dispatch - 14 - pushConsensusStatements complete');
 
-  return [
-    analysisOutput,
-    sigFactorNumbersArray,
-    outputData,
-    sheetNamesXlsx,
-    colSizes
-  ];
+  return [analysisOutput, sigFactorNumbersArray, outputData, sheetNamesXlsx, colSizes];
 };
 
 export default pushConsensusStatementsToOutput;

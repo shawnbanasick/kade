@@ -1,40 +1,34 @@
-import map from "lodash/map";
-import evenRound from "../../../Utils/evenRound";
-import getPqmethodCorrelation from "../../Correlations/correlationsLogic/getPqmethodCorrelation";
-import i18n from "i18next";
+import map from 'lodash/map';
+import evenRound from '../../../Utils/evenRound';
+import getPqmethodCorrelation from '../../Correlations/correlationsLogic/getPqmethodCorrelation';
+import i18n from 'i18next';
+import calcState from '../../GlobalState/calcState';
+import outputState from '../../GlobalState/outputState';
+import cloneDeep from 'lodash/cloneDeep';
 
-import calcState from "../../GlobalState/calcState";
-import getCalcState from "../../GlobalState/getCalcState";
-import getOutputState from "../../GlobalState/getOutputState";
-const clone = require("rfdc")();
-
-const pushFactorScoreCorrelationsToOutput = function(
-  outputData,
-  sheetNamesXlsx,
-  colSizes
-) {
-  let appendText1 = i18n.t("Factor score correlations");
+const pushFactorScoreCorrelationsToOutput = function (outputData, sheetNamesXlsx, colSizes) {
+  let appendText1 = i18n.t('Factor score correlations');
   // MS Excel tabs have max 30 characters, so shorten if long
   if (appendText1.length > 30) {
-    appendText1 = i18n.t("Factor score correlations short");
+    appendText1 = i18n.t('Factor score correlations short');
   }
 
   sheetNamesXlsx.push(appendText1);
 
-  const analysisOutput = getCalcState("analysisOutput");
-  const userSelectedFactors = getOutputState("userSelectedFactors");
-  const analysisOutput2 = clone(analysisOutput);
+  const analysisOutput = calcState.getState().analysisOutput;
+  const userSelectedFactors = outputState.getState().userSelectedFactors;
+  const analysisOutput2 = cloneDeep(analysisOutput);
   const factorScoresCorrelationArray2 = [];
   let temp1, tempArray;
 
   const columns = [
     {
-      wch: 7
-    }
+      wch: 7,
+    },
   ];
   for (let ss = 0, ssLen = userSelectedFactors.length; ss < ssLen; ss++) {
     columns.push({
-      wch: 7
+      wch: 7,
     });
   }
   colSizes.push(columns);
@@ -67,7 +61,7 @@ const pushFactorScoreCorrelationsToOutput = function(
     let correlationHolder2;
     const correlationTableArrayFragment = [];
 
-    factorScoresCorrelationArray.forEach(element => {
+    factorScoresCorrelationArray.forEach((element) => {
       correlationHolder2 = getPqmethodCorrelation(pullX, element);
       correlationHolder = evenRound(correlationHolder2[0], 4);
       correlationTableArrayFragment.push(correlationHolder);
@@ -91,33 +85,28 @@ const pushFactorScoreCorrelationsToOutput = function(
   // add factor names to first column
   for (let m = 0; m < correlationTableArray.length; m++) {
     const temp8 = userSelectedFactors[m];
-    const factorName = `${i18n.t("Factor")} ${temp8.slice(7)}`;
+    const factorName = `${i18n.t('Factor')} ${temp8.slice(7)}`;
     correlationTableArray[m].unshift(factorName);
   }
 
   const tempArray3 = [];
-  tempArray3.push("");
+  tempArray3.push('');
   for (let p = 0; p < userSelectedFactors.length; p++) {
     const temp9 = userSelectedFactors[p];
-    const factorName = `${i18n.t("Factor")} ${temp9.slice(7)}`;
+    const factorName = `${i18n.t('Factor')} ${temp9.slice(7)}`;
     tempArray3.push(factorName);
   }
   correlationTableArray.unshift(tempArray3);
 
   calcState.correlationTableArrayHolder = correlationTableArray;
 
-  correlationTableArray.unshift(
-    ["scoreCorr", ""],
-    ["", ""],
-    [appendText1],
-    ["", ""]
-  );
+  correlationTableArray.unshift(['scoreCorr', ''], ['', ''], [appendText1], ['', '']);
 
   outputData.push(correlationTableArray);
 
   calcState.factorCorrelationsTableData = correlationTableArray;
 
-  console.log("dispatch - 11 - pushFactorScoreCorrelations complete");
+  console.log('dispatch - 11 - pushFactorScoreCorrelations complete');
   return [analysisOutput, outputData, sheetNamesXlsx, colSizes];
 };
 

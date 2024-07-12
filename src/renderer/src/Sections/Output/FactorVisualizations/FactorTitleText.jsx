@@ -1,23 +1,20 @@
-import React from "react";
-// import state from "../../store";
-
 const styles = {
   fontSize: 28,
-  fill: "black",
-  stroke: "none",
+  fill: 'black',
+  stroke: 'none',
   // width: 50,
   // strokeWidth: 1,
   zindex: 99,
-  fontFamily: "Verdana, sans-serif"
+  fontFamily: 'Verdana, sans-serif',
 };
 
 const textProps = {
   x: 0,
   y: 20,
-  textAnchor: "left"
+  textAnchor: 'left',
 };
 
-export default props => {
+const FactorTitleText = (props) => {
   return (
     <g>
       <text {...styles} {...textProps}>
@@ -26,3 +23,5 @@ export default props => {
     </g>
   );
 };
+
+export default FactorTitleText;

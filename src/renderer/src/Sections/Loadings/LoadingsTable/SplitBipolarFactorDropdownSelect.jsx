@@ -1,9 +1,6 @@
-import React from 'react';
-
 import { Dropdown } from 'semantic-ui-react';
 import loadingState from '../../GlobalState/loadingState';
 import { useTranslation } from 'react-i18next';
-import getLoadingState from '../../GlobalState/getLoadingState';
 
 const saveDropdownValueToState = (event, data) => {
   if (data === null || data === undefined) {
@@ -17,11 +14,11 @@ const InvertFactorDropdownSelect = () => {
   const { t } = useTranslation();
 
   const getOptions = () => {
-    let splitFactorsArray = getLoadingState('splitFactorsArray');
-    let bipolarFactorsArray = getLoadingState('bipolarFactorsArray');
+    let splitFactorsArray = loadingState((state) => state.splitFactorsArray);
+    let bipolarFactorsArray = loadingState((state) => state.bipolarFactorsArray);
 
     if (bipolarFactorsArray.length > 0) {
-      bipolarFactorsArray.forEach((item, index) => {
+      bipolarFactorsArray.forEach((item) => {
         splitFactorsArray = splitFactorsArray.filter((object) => object.value !== item);
       });
     }

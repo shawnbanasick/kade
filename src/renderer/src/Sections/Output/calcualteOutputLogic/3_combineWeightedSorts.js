@@ -1,12 +1,11 @@
-import evenRound from "../../../Utils/evenRound";
-import average from "../../../Utils/average";
-import standardDeviation from "../../../Utils/standardDeviation";
-import calcState from "../../GlobalState/calcState";
-import getCalcState from "../../GlobalState/getCalcState";
+import evenRound from '../../../Utils/evenRound';
+import average from '../../../Utils/average';
+import standardDeviation from '../../../Utils/standardDeviation';
+import calcState from '../../GlobalState/calcState';
 
-const combineWeightedSorts = function(weightedSorts) {
+const combineWeightedSorts = function (weightedSorts) {
   // returns ["factor 1", "factor 2", etc... ]
-  const sigFactorNumbersArray1 = getCalcState("sigFactorNumbersArray");
+  const sigFactorNumbersArray1 = calcState.getState().sigFactorNumbersArray;
   const sigFactorNumbersArray = sigFactorNumbersArray1.sort();
   let tempArray2, summedWeightedSorts;
 
@@ -35,7 +34,7 @@ const combineWeightedSorts = function(weightedSorts) {
     tempArray4.push(tempArray2); // array of flagged respondent names
 
     // converts array of factor numbers and rep sorts to object
-    tempObj2["Factor Number"] = factor;
+    tempObj2['Factor Number'] = factor;
     tempObj2.SigSorts = tempArray2;
     sigSortsArray.push(tempObj2);
 
@@ -54,16 +53,13 @@ const combineWeightedSorts = function(weightedSorts) {
     const sortAverage = average(tempArray3);
     const sortStandardDeviation = standardDeviation(tempArray3);
     for (let r = 0, rLen = tempArray3.length; r < rLen; r++) {
-      const zScore = evenRound(
-        (tempArray3[r] - sortAverage) / sortStandardDeviation,
-        3
-      );
+      const zScore = evenRound((tempArray3[r] - sortAverage) / sortStandardDeviation, 3);
       tempArray3a.push(zScore);
     }
     tempArray4.push(tempArray3a);
     summedWeightedSorts.push(tempArray4);
   }
-  calcState.sigSortsArray = sigSortsArray;
+  calcState.setState({ sigSortsArray: sigSortsArray });
   return summedWeightedSorts;
 };
 

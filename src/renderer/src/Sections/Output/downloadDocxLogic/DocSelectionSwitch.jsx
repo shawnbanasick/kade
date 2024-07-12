@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-
 import outputState from '../../GlobalState/outputState';
 import './UserSelectionSwitch.css';
 import Toggle from 'react-toggle';

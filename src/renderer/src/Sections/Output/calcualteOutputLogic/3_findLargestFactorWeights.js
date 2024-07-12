@@ -1,16 +1,16 @@
-import uniq from "lodash/uniq";
-import evenRound from "../../../Utils/evenRound";
-import calcState from "../../GlobalState/calcState";
-const clone = require("rfdc")();
+import uniq from 'lodash/uniq';
+import cloneDeep from 'lodash/cloneDeep';
+import evenRound from '../../../Utils/evenRound';
+import calcState from '../../GlobalState/calcState';
 
-const findLargestFactorWeights = function(significantLoadingsArray) {
+const findLargestFactorWeights = function (significantLoadingsArray) {
   // remove unique sorts (value 99) from array
-  const factorSelect = significantLoadingsArray.filter(n => n[0] !== 99);
+  const factorSelect = significantLoadingsArray.filter((n) => n[0] !== 99);
 
   // pull out just factor number and W value to array
   const factorNumbersArray2 = [];
   const factorNumbersArray = [];
-  factorSelect.forEach(n => {
+  factorSelect.forEach((n) => {
     const factorNumber = n[0]; // i.e. factor1
     factorNumbersArray2.push(factorNumber);
     const factorWeightW = n[3];
@@ -18,7 +18,7 @@ const findLargestFactorWeights = function(significantLoadingsArray) {
     factorNumbersArray.push(tempArray);
   });
 
-  const sigArray = clone(factorNumbersArray2);
+  const sigArray = cloneDeep(factorNumbersArray2);
 
   // get unique array of significant factors labels
   const sigFactorNumbersArray = uniq(sigArray);
@@ -26,10 +26,10 @@ const findLargestFactorWeights = function(significantLoadingsArray) {
   const maxFactorValuesArray = [];
   let factorValue = 0;
   sigFactorNumbersArray.forEach(() => {
-    const temp = factorNumbersArray.filter(j => j[0] === sigArray[factorValue]);
+    const temp = factorNumbersArray.filter((j) => j[0] === sigArray[factorValue]);
 
     const tempArray2 = [];
-    temp.forEach(q => {
+    temp.forEach((q) => {
       const tempVar3 = evenRound(Math.abs(1 / q[1]), 8);
       tempArray2.push(tempVar3);
     });
@@ -43,13 +43,9 @@ const findLargestFactorWeights = function(significantLoadingsArray) {
   });
 
   // array
-  calcState.sigFactorNumbersArray = sigFactorNumbersArray;
+  calcState.setState({ sigFactorNumbersArray: sigFactorNumbersArray });
 
-  return [
-    significantLoadingsArray,
-    sigFactorNumbersArray,
-    maxFactorValuesArray
-  ];
+  return [significantLoadingsArray, sigFactorNumbersArray, maxFactorValuesArray];
 };
 
 export default findLargestFactorWeights;

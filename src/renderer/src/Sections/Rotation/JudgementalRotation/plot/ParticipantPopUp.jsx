@@ -1,8 +1,6 @@
-import React from 'react';
 import styled from 'styled-components';
-
-import getRotationState from '../../../GlobalState/getRotationState';
 import { useTranslation } from 'react-i18next';
+import rotationState from '../../../GlobalState/rotationState';
 
 const ParticipantPopUp = () => {
   const { t } = useTranslation();
@@ -11,7 +9,7 @@ const ParticipantPopUp = () => {
   let factor1Value;
   let factor2Value;
   // getState
-  const participantDataObject = getRotationState('participantDataObject');
+  const participantDataObject = rotationState((state) => state.participantDataObject);
   if (participantDataObject !== false) {
     respondent = participantDataObject.respondent;
     factor1Value = participantDataObject.factor1;

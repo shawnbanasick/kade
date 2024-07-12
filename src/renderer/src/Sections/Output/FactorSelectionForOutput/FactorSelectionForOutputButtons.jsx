@@ -1,15 +1,13 @@
 import React from 'react';
 import includes from 'lodash/includes';
 import styled from 'styled-components';
-
 import { Transition } from 'semantic-ui-react';
 import outputDispatch from '../calcualteOutputLogic/1_outputDispatch';
-import outputState from '../../GlobalState/outputState';
-import appState from '../../GlobalState/appState';
 import GeneralButton from '../../../Utils/GeneralButton';
 import { useTranslation } from 'react-i18next';
-import getOutputState from '../../GlobalState/getOutputState';
-import getCalcState from '../../GlobalState/getCalcState';
+import outputState from '../../GlobalState/outputState';
+import appState from '../../GlobalState/appState';
+import calcState from '../../GlobalState/calcState';
 
 const FactorSelectionForOutputButtons = () => {
   const { t } = useTranslation();

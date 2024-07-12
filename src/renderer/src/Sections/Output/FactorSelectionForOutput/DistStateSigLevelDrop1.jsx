@@ -1,11 +1,10 @@
-import React from 'react';
+import { useState } from 'react';
 import styled from 'styled-components';
 import { Dropdown } from 'semantic-ui-react';
-import { view, store } from '@risingstack/react-easy-state';
 import outputState from '../../GlobalState/outputState';
 import calcState from '../../GlobalState/calcState';
 import { useTranslation } from 'react-i18next';
-import getOutputState from '../../GlobalState/getOutputState';
+import outputState from '../../GlobalState/outputState';
 
 // stateOptions = [ { key: 'AL', value: 'AL', text: 'Alabama' }, ...  ]
 const sigOptions = [
@@ -52,16 +51,16 @@ const sigOptions = [
   },
 ];
 
-const localStore = store({
-  value: 2.575,
-});
-
 const SigLevelDropdown = () => {
   const { t } = useTranslation();
 
+  const [localStore, setLocalStore] = useState({
+    value: 2.575,
+  });
+
   const handleChange = (e, { value }) => {
     const btnId = getOutputState('outputButtonsArray');
-    localStore.value = value;
+    setLocalStore({ value: value });
     const lookupArray = [3.891, 3.481, 3.291, 2.807, 2.575, 1.96, 1.645, 1.44];
     const pValuesTextArray = [
       'P < 0.0001',
@@ -79,26 +78,59 @@ const SigLevelDropdown = () => {
     for (let i = 0; i < btnId.length; i += 1) {
       outputState[`highlightfactor${btnId[i]}`] = false;
     }
-    outputState.userSelectedFactors = [];
-    outputState.showFactorCorrelationsTable = false;
-    outputState.showFactorCharacteristicsTable = false;
-    outputState.showStandardErrorsDifferences = false;
-    outputState.showDownloadOutputButtons = false;
-    outputState.displayFactorVisualizations = false;
-    outputState.shouldDisplayFactorVizOptions = false;
-    outputState.outputFactorSelectButtonsDisabled = false;
-    outputState.showDocxOptions = false;
+
+    const updateUserSelectedFactors = outputState((state) => state.updateUserSelectedFactors);
+    const updateShowFactorCorrelationsTable = outputState(
+      (state) => state.updateShowFactorCorrelationsTable
+    );
+    const updateShowFactorCharacteristicsTable = outputState(
+      (state) => state.updateShowFactorCharacteristicsTable
+    );
+    const updateShowStandardErrorsDifferences = outputState(
+      (state) => state.updateShowStandardErrorsDifferences
+    );
+    const updateShowDownloadOutputButtons = outputState(
+      (state) => state.updateShowDownloadOutputButtons
+    );
+    const updateDisplayFactorVisualizations = outputState(
+      (state) => state.updateDisplayFactorVisualizations
+    );
+    const updateShouldDisplayFactorVizOptions = outputState(
+      (state) => state.updateShouldDisplayFactorVizOptions
+    );
+    const updateOutputFactorSelectButtonsDisabled = outputState(
+      (state) => state.updateOutputFactorSelectButtonsDisabled
+    );
+    const updateShowDocxOptions = outputState((state) => state.updateShowDocxOptions);
+    const updateOutputForDataViz2 = outputState((state) => state.updateOutputForDataViz2);
+    const updateSliceValueDistStateSigLevelDrop1 = outputState(
+      (state) => state.updateSliceValueDistStateSigLevelDrop1
+    );
+    const updateDistStateUpperValueText = outputState(
+      (state) => state.updateDistStateUpperValueText
+    );
+    const updateUserSelectedDistStateSigLevel1 = calcState(
+      (state) => state.updateUserSelectedDistStateSigLevel1
+    );
+
+    updateUserSelectedFactors([]);
+    updateShowFactorCorrelationsTable(false);
+    updateShowFactorCharacteristicsTable(false);
+    updateShowStandardErrorsDifferences(false);
+    updateShowDownloadOutputButtons(false);
+    updateDisplayFactorVisualizations(false);
+    updateShouldDisplayFactorVizOptions(false);
+    updateOutputFactorSelectButtonsDisabled(false);
+    updateShowDocxOptions(false);
     // reset cache of factor viz data
-    outputState.outputForDataViz2 = [];
-
-    outputState.sliceValueDistStateSigLevelDrop1 = sliceValue;
-    outputState.distStateUpperValueText = distStateUpperValueText;
-
-    calcState.userSelectedDistStateSigLevel1 = value;
+    updateOutputForDataViz2([]);
+    updateSliceValueDistStateSigLevelDrop1(sliceValue);
+    updateDistStateUpperValueText(distStateUpperValueText);
+    updateUserSelectedDistStateSigLevel1(value);
   };
 
   const value = localStore.value;
-  const showOutputFactorSelection = getOutputState('showOutputFactorSelection');
+  const showOutputFactorSelection = outputState((state) => state.showOutputFactorSelection);
   if (showOutputFactorSelection) {
     return (
       <DropdownRow>

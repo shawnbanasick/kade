@@ -1,21 +1,18 @@
-import React from 'react';
 import styled from 'styled-components';
-
 import { ToastContainer, toast, Zoom } from 'react-toastify';
 import transposeMatrix from '../../../../Utils/transposeMatrix';
 import FactorSelectButtons from '../FactorSelect/FactorSelectButtons';
 import ScatterPlotAndTableTransitionContainer from './ScatterPlotAndTableTransitionContainer';
-import rotationState from '../../../GlobalState/rotationState';
 import { useTranslation } from 'react-i18next';
-import getFactorState from '../../../GlobalState/getFactorState';
-import getRotationState from '../../../GlobalState/getRotationState';
+import rotationState from '../../../GlobalState/rotationState';
+import factorState from '../../../GlobalState/factorState';
 
 const JudgementalTitleDiv = () => {
   const { t } = useTranslation();
 
-  const factorMatrix = getFactorState('factorMatrix');
+  const factorMatrix = factorState((state) => state.factorMatrix);
   const baselineData = transposeMatrix(factorMatrix);
-  const notifyForSavedRotation = getRotationState('notifyForSavedRotation');
+  const notifyForSavedRotation = rotationState((state) => state.notifyForSavedRotation);
   if (notifyForSavedRotation) {
     toast.success(t('Rotation Data Saved to Loadings Table'), {
       autoClose: 5000,

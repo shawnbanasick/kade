@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import styled from 'styled-components';
-
-import outputState from '../../GlobalState/outputState';
 import { useTranslation } from 'react-i18next';
+import outputState from '../../GlobalState/outputState';
 
 const DocxNumberInput = (props) => {
   const { t } = useTranslation();
+  const updateCorrelationThreshold = outputState((state) => state.updateCorrelationThreshold);
+  const correlationThreshold = outputState((state) => state.correlationThreshold);
 
   const [showWarning, setShowWarning] = useState(false);
 
@@ -21,7 +22,7 @@ const DocxNumberInput = (props) => {
     if (value < lowerLimit || value > upperLimit) {
       setShowWarning(true);
     } else {
-      outputState.correlationThreshold = value;
+      updateCorrelationThreshold(value);
     }
   };
 
@@ -35,7 +36,7 @@ const DocxNumberInput = (props) => {
         placeholder={props.placeholder}
         name={props.name}
         step={props.step}
-        value={outputState.correlationThreshold}
+        value={correlationThreshold}
         onChange={handleChange}
         className="optionsInput"
       />

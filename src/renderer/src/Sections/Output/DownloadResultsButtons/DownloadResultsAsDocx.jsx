@@ -1,23 +1,21 @@
-import React from 'react';
+import { useState } from 'react';
 import styled from 'styled-components';
-import { view, store } from '@risingstack/react-easy-state';
 import { Button, Header, Modal } from 'semantic-ui-react';
 // import downloadResultsAsCsv from "../downloadCsvLogic/downloadCsvOutputFile";
 import GeneralButton from '../../../Utils/GeneralButton';
 import { useTranslation } from 'react-i18next';
-import getOutputState from '../../GlobalState/getOutputState';
 import createOutputDoc from '../downloadDocxLogic/createOutputDoc';
-
-const localStore = store({
-  modalOpen: false,
-});
-
-const handleClose = () => {
-  localStore.modalOpen = false;
-};
+import outputState from '../../GlobalState/outputState';
 
 const DownloadResultsAsDocx = () => {
   const { t } = useTranslation();
+  const [localStore, setLocalStore] = useState({
+    modalOpen: false,
+  });
+
+  const handleClose = () => {
+    setLocalStore({ modalOpen: false });
+  };
 
   let projectOverTxt = t('Project Overview');
   let projectLogTxt = t('Project Log');
@@ -49,19 +47,20 @@ const DownloadResultsAsDocx = () => {
 
   const handleOpen = () => {
     // getState
-    const userSelectedFactors = getOutputState('userSelectedFactors');
+    const userSelectedFactors = outputState((state) => state.userSelectedFactors);
     if (userSelectedFactors.length === 0) {
-      localStore.modalOpen = true;
+      setLocalStore({ modalOpen: true });
     } else {
       //downloadResultsAsCsv();
       createOutputDoc(translatedTextObj);
     }
   };
 
+  const useZip = outputState((state) => state.willIncludeDataFiles);
   let buttonText;
   const buttonTextDocx = t('Download DOCX File');
   const buttonTextZip = t('Download KADE ZIP File');
-  let useZip = getOutputState('willIncludeDataFiles');
+
   if (useZip) {
     buttonText = buttonTextZip;
   } else {

@@ -1,5 +1,5 @@
-import i18n from "i18next";
-import getOutputState from "../../GlobalState/getOutputState";
+import i18n from 'i18next';
+import outputState from '../../GlobalState/outputState';
 
 const formatConsensusArrayForDownload = (
   consensus05,
@@ -8,25 +8,23 @@ const formatConsensusArrayForDownload = (
   sigFactorNumbersArray
 ) => {
   // getState
-  const distStateThreshold1 = getOutputState("distStateUpperValueText");
-  const distStateThreshold2 = getOutputState("distStateLowerValueText");
+  const distStateThreshold1 = outputState.getState().distStateUpperValueText;
+  const distStateThreshold2 = outputState.getState().distStateLowerValueText;
 
-  const chartText1 = i18n.t("Consensus Statements");
-  const chartText2 = i18n.t(
-    "Those That Do Not Distinguish Between ANY Pair of Factors"
-  );
+  const chartText1 = i18n.t('Consensus Statements');
+  const chartText2 = i18n.t('Those That Do Not Distinguish Between ANY Pair of Factors');
   const chartText3 = `${i18n.t(
-    "All Listed Statements are Non-Significant at"
+    'All Listed Statements are Non-Significant at'
   )} ${distStateThreshold1}${i18n.t(
-    "and Those Flagged with an are also Non Significant at"
+    'and Those Flagged with an are also Non Significant at'
   )} ${distStateThreshold2})`;
-  const chartText4 = i18n.t("Significance");
-  const chartText5 = i18n.t("Statement");
+  const chartText4 = i18n.t('Significance');
+  const chartText5 = i18n.t('Statement');
   // const chartText6 = "Num";
   // const chartText7 = i18n.t("Statement Number");
-  const chartText7 = i18n.t("Nm");
-  const chartText8 = i18n.t("Z score");
-  const spacer = ["", ""];
+  const chartText7 = i18n.t('Nm');
+  const chartText8 = i18n.t('Z score');
+  const spacer = ['', ''];
   const outputLength = analysisOutput.length;
   const consensus05Length = consensus05.length;
   const consensus01Length = consensus01.length;
@@ -38,21 +36,21 @@ const formatConsensusArrayForDownload = (
 
   // push headers
   const emptyLineObj = {};
-  emptyLineObj["No."] = " ";
-  emptyLineObj["SIG "] = " ";
-  emptyLineObj["Statement "] = " ";
-  emptyLineObj["Num "] = " ";
+  emptyLineObj['No.'] = ' ';
+  emptyLineObj['SIG '] = ' ';
+  emptyLineObj['Statement '] = ' ';
+  emptyLineObj['Num '] = ' ';
 
   for (let i = 0; i < outputLength; i += 1) {
-    emptyLineObj[`Q-SV-${sigFactorNumbersArray[i]}`] = " ";
-    emptyLineObj[`Z-SCR-${sigFactorNumbersArray[i]}`] = " ";
-    emptyLineObj[`SIG${sigFactorNumbersArray[i]}`] = " ";
+    emptyLineObj[`Q-SV-${sigFactorNumbersArray[i]}`] = ' ';
+    emptyLineObj[`Z-SCR-${sigFactorNumbersArray[i]}`] = ' ';
+    emptyLineObj[`SIG${sigFactorNumbersArray[i]}`] = ' ';
   }
 
   consensusSheetArray.push(
-    ["consensus", ""],
+    ['consensus', ''],
     spacer,
-    [`${chartText1}`, ""],
+    [`${chartText1}`, ''],
     [`${chartText2}`],
     spacer,
     [chartText3],
@@ -63,39 +61,33 @@ const formatConsensusArrayForDownload = (
   const line3Array = [];
   printArray.push(emptyLineObj);
   const printHeaderObj1 = {};
-  printHeaderObj1["No."] = `${chartText1} -- ${chartText2}`;
+  printHeaderObj1['No.'] = `${chartText1} -- ${chartText2}`;
   printArray.push(printHeaderObj1);
   printArray.push(emptyLineObj);
   const printHeaderObj2 = {};
-  printHeaderObj2["No."] = chartText3;
+  printHeaderObj2['No.'] = chartText3;
   printArray.push(printHeaderObj2);
   printArray.push(emptyLineObj);
   printArray.push(emptyLineObj);
   const printHeaderObj4 = {};
-  printHeaderObj4["No."] = chartText7;
-  printHeaderObj4["SIG "] = chartText4;
-  printHeaderObj4["Statement "] = chartText5;
-  printHeaderObj4["Num "] = chartText7;
+  printHeaderObj4['No.'] = chartText7;
+  printHeaderObj4['SIG '] = chartText4;
+  printHeaderObj4['Statement '] = chartText5;
+  printHeaderObj4['Num '] = chartText7;
 
   line3Array.push(chartText7, chartText4, chartText5, chartText7);
-  const line2bArray = [" ", " ", " ", " "];
+  const line2bArray = [' ', ' ', ' ', ' '];
 
   for (let j = 0; j < outputLength; j += 1) {
-    printHeaderObj4[
-      `Q-SV-${sigFactorNumbersArray[j]}`
-    ] = `${sigFactorNumbersArray[j]} Q-SV`;
-    printHeaderObj4[
-      `Z-SCR-${sigFactorNumbersArray[j]}`
-    ] = `${sigFactorNumbersArray[j]} ${chartText8}`;
+    printHeaderObj4[`Q-SV-${sigFactorNumbersArray[j]}`] = `${sigFactorNumbersArray[j]} Q-SV`;
+    printHeaderObj4[`Z-SCR-${sigFactorNumbersArray[j]}`] =
+      `${sigFactorNumbersArray[j]} ${chartText8}`;
 
     let statementNum = sigFactorNumbersArray[j].slice(6);
 
     line3Array.push(`Q-SV`, `${chartText8}`);
 
-    line2bArray.push(
-      `${i18n.t("Factor")} ${statementNum}`,
-      `${i18n.t("Factor")} ${statementNum}`
-    );
+    line2bArray.push(`${i18n.t('Factor')} ${statementNum}`, `${i18n.t('Factor')} ${statementNum}`);
   }
   printArray.push(printHeaderObj4);
   consensusSheetArray.push(line2bArray, line3Array);
@@ -112,28 +104,18 @@ const formatConsensusArrayForDownload = (
     kShift = consensus05[k];
 
     // cycle through statement numbers and get statement, factors q score and sort value from results object and set sig level to ""
-    tempObj["No."] = kShift;
+    tempObj['No.'] = kShift;
     // ["No."] = kShift;
-    tempObj["SIG "] = "*";
-    tempObj["Statement "] = analysisOutput[0][kShift - 1].sortStatement;
-    tempObj["Num "] = kShift;
+    tempObj['SIG '] = '*';
+    tempObj['Statement '] = analysisOutput[0][kShift - 1].sortStatement;
+    tempObj['Num '] = kShift;
 
-    tempArray.push(
-      kShift,
-      "*",
-      analysisOutput[0][kShift - 1].sortStatement,
-      kShift
-    );
+    tempArray.push(kShift, '*', analysisOutput[0][kShift - 1].sortStatement, kShift);
 
     for (let m = 0; m < outputLength; m += 1) {
-      tempObj[`Q-SV-${sigFactorNumbersArray[m]}`] =
-        analysisOutput[m][kShift - 1].sortValue;
-      tempObj[`Z-SCR-${sigFactorNumbersArray[m]}`] =
-        analysisOutput[m][kShift - 1].zScore;
-      tempArray.push(
-        analysisOutput[m][kShift - 1].sortValue,
-        analysisOutput[m][kShift - 1].zScore
-      );
+      tempObj[`Q-SV-${sigFactorNumbersArray[m]}`] = analysisOutput[m][kShift - 1].sortValue;
+      tempObj[`Z-SCR-${sigFactorNumbersArray[m]}`] = analysisOutput[m][kShift - 1].zScore;
+      tempArray.push(analysisOutput[m][kShift - 1].sortValue, analysisOutput[m][kShift - 1].zScore);
     }
     printArray2.push(tempObj);
     consensusSheetArray2.push(tempArray);
@@ -145,23 +127,16 @@ const formatConsensusArrayForDownload = (
     tempObj2 = {};
     pShift = consensus01[p];
 
-    tempObj2["No."] = pShift;
-    tempObj2["SIG "] = "";
-    tempObj2["Statement "] = analysisOutput[0][pShift - 1].sortStatement;
-    tempObj2["Num "] = pShift;
+    tempObj2['No.'] = pShift;
+    tempObj2['SIG '] = '';
+    tempObj2['Statement '] = analysisOutput[0][pShift - 1].sortStatement;
+    tempObj2['Num '] = pShift;
 
-    tempArray2.push(
-      pShift,
-      "",
-      analysisOutput[0][pShift - 1].sortStatement,
-      pShift
-    );
+    tempArray2.push(pShift, '', analysisOutput[0][pShift - 1].sortStatement, pShift);
 
     for (let q = 0; q < outputLength; q += 1) {
-      tempObj2[`Q-SV-${sigFactorNumbersArray[q]}`] =
-        analysisOutput[q][pShift - 1].sortValue;
-      tempObj2[`Z-SCR-${sigFactorNumbersArray[q]}`] =
-        analysisOutput[q][pShift - 1].zScore;
+      tempObj2[`Q-SV-${sigFactorNumbersArray[q]}`] = analysisOutput[q][pShift - 1].sortValue;
+      tempObj2[`Z-SCR-${sigFactorNumbersArray[q]}`] = analysisOutput[q][pShift - 1].zScore;
       tempArray2.push(
         analysisOutput[q][pShift - 1].sortValue,
         analysisOutput[q][pShift - 1].zScore
@@ -171,7 +146,7 @@ const formatConsensusArrayForDownload = (
     consensusSheetArray2.push(tempArray2);
   }
 
-  const printArray3 = printArray2.sort((a, b) => a["No."] - b["No."]);
+  const printArray3 = printArray2.sort((a, b) => a['No.'] - b['No.']);
 
   consensusSheetArray2.sort((a, b) => {
     if (a[0] === b[0]) {

@@ -1,6 +1,5 @@
-import checkIfDistinguishingOrConsensus from "./3_checkIfDistinguishingOrConsensus";
-const clone = require("rfdc")();
-
+import checkIfDistinguishingOrConsensus from './3_checkIfDistinguishingOrConsensus';
+import cloneDeep from 'lodash/cloneDeep';
 const getCribSheetsRankedLowerThanOtherFactors = (
   j,
   factorInformation,
@@ -17,7 +16,7 @@ const getCribSheetsRankedLowerThanOtherFactors = (
     if (compositeSortValue < 1) {
       const minRankValue = Math.min(...factorInformation[r].rankArray);
       if (compositeSortValue === minRankValue) {
-        const otherValuesLower = clone(factorInformation[r].rankArray);
+        const otherValuesLower = cloneDeep(factorInformation[r].rankArray);
         otherValuesLower.splice(j, 1);
         const stateNum2 = factorInformation[r][statementNumTrans];
         const checkIfDisOrCon2 = checkIfDistinguishingOrConsensus(stateNum2, j);
@@ -25,7 +24,7 @@ const getCribSheetsRankedLowerThanOtherFactors = (
           stateNum2,
           factorInformation[r][statementTrans],
           compositeSortValue,
-          checkIfDisOrCon2
+          checkIfDisOrCon2,
         ];
         const combinedArray2 = tempArray33.concat(otherValuesLower);
         transferArray.push(combinedArray2);

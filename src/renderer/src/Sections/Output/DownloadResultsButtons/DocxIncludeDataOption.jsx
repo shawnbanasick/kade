@@ -1,9 +1,7 @@
 import styled from 'styled-components';
-
-import React from 'react';
 import { useTranslation } from 'react-i18next';
-import outputState from '../../GlobalState/outputState';
 import DocSelectionSwitch from '../downloadDocxLogic/DocSelectionSwitch';
+import outputState from '../../GlobalState/outputState';
 
 const styles = {
   fontSize: 22,
@@ -12,6 +10,7 @@ const styles = {
 
 const GeneralOptionsPanel = () => {
   const { t } = useTranslation();
+  const willIncludeDataFiles = outputState((state) => state.willIncludeDataFiles);
 
   return (
     <Container1>
@@ -24,7 +23,7 @@ const GeneralOptionsPanel = () => {
         <DocSelectionSwitch
           name="willIncludeDataFiles"
           value="willIncludeDataFiles"
-          toggle={outputState.willIncludeDataFiles}
+          toggle={willIncludeDataFiles}
         />
       </OptionStatementRow>
     </Container1>

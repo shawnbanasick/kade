@@ -1,6 +1,5 @@
 import React from 'react';
 import includes from 'lodash/includes';
-
 import styled from 'styled-components';
 import data from '../plot/data';
 import doD3ChartDataPrep from '../rotationLogic/doD3ChartDataPrep';

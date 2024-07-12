@@ -1,16 +1,16 @@
-import calcState from "../../GlobalState/calcState";
-import getCoreState from "../../GlobalState/getCoreState";
-const clone = require("rfdc")();
+import calcState from '../../GlobalState/calcState';
+import coreState from '../../GlobalState/coreState';
+import { cloneDeep } from 'lodash/cloneDeep';
 
 function assignFactorScores(zScoreArray) {
   // getState
-  const qavSortTriangleShape = getCoreState("qSortPattern");
+  const qavSortTriangleShape = coreState.getState().qSortPattern;
 
   const sortedZScoreArray = [];
   for (let i = 0; i < zScoreArray.length; i++) {
     const factorNumbers = zScoreArray[i];
 
-    const temp1 = clone(factorNumbers);
+    const temp1 = cloneDeep(factorNumbers);
 
     temp1.sort((a, b) => {
       if (a.zScore === b.zScore) {
@@ -21,15 +21,15 @@ function assignFactorScores(zScoreArray) {
 
     for (let j = 0; j < qavSortTriangleShape.length; j++) {
       temp1[j].sortValue = qavSortTriangleShape[j];
-      temp1[j].sigVisualization = "";
-      temp1[j].sigVisualizationUni = "";
-      temp1[j].directionSymbol = "";
-      temp1[j].directionSymbolUni = "";
+      temp1[j].sigVisualization = '';
+      temp1[j].sigVisualizationUni = '';
+      temp1[j].directionSymbol = '';
+      temp1[j].directionSymbolUni = '';
     }
     temp1.sort((a, b) => a.statement - b.statement);
     sortedZScoreArray.push(temp1);
   }
-  calcState.analysisOutput = sortedZScoreArray;
+  calcState.setState({ analysisOutput: sortedZScoreArray });
   return sortedZScoreArray;
 }
 

@@ -1,40 +1,12 @@
-import React, { useRef } from 'react';
-
+import { useRef } from 'react';
 import { AgGridReact } from '@ag-grid-community/react';
 import { AllCommunityModules } from '@ag-grid-community/all-modules';
 import i18n from 'i18next';
-import getCalcState from '../../GlobalState/getCalcState';
-import getOutputState from '../../GlobalState/getOutputState';
-
-const getCurrentData = () => {
-  const data = getCalcState('standardErrorDiffSheetArray');
-  data.shift();
-  const numFacs2 = getOutputState('userSelectedFactors');
-
-  const numFacs = numFacs2.length;
-
-  // pull out header row
-  const headerRow = data[3];
-
-  // mutate header row to include translation
-  for (let k = 1; k < headerRow.length; k += 1) {
-    let factorText = i18n.t('Factor');
-    let factorNum = headerRow[k].charAt(headerRow[k].length - 1);
-    // for bipolar split - catch "1a" as factor number
-    if (isNaN(+factorNum)) {
-      factorNum = `${headerRow[k].charAt(headerRow[k].length - 2)}${factorNum}`;
-    }
-    headerRow[k] = `${factorText} ${factorNum}`;
-  }
-
-  return [data, numFacs, headerRow];
-};
-
-let gridRowDataFacCorrTable = [];
-let gridColDefsFacCorrTable = [];
+import calcState from '../../GlobalState/calcState';
+import outputState from '../../GlobalState/outputState';
 
 const getGridColDefsFacCorrTable = (data, numFacs, headerRow) => {
-  gridColDefsFacCorrTable = [
+  let gridColDefsFacCorrTable = [
     {
       headerName: '',
       field: 'factorList',
@@ -65,7 +37,7 @@ const getGridColDefsFacCorrTable = (data, numFacs, headerRow) => {
 };
 
 const getGridRowDataFacCorrTable = (data, headerRow) => {
-  gridRowDataFacCorrTable = [];
+  let gridRowDataFacCorrTable = [];
 
   for (let j = 4; j < data.length; j += 1) {
     // let responNum = j + 1;
@@ -85,6 +57,30 @@ const getGridRowDataFacCorrTable = (data, headerRow) => {
 
 const FactorCorrelationsTable = () => {
   const gridApi = useRef();
+
+  const getCurrentData = () => {
+    const data = calcState((state) => state.standardErrorDiffSheetArray);
+    data.shift();
+    const numFacs2 = outputState((state) => state.userSelectedFactors);
+
+    const numFacs = numFacs2.length;
+
+    // pull out header row
+    const headerRow = data[3];
+
+    // mutate header row to include translation
+    for (let k = 1; k < headerRow.length; k += 1) {
+      let factorText = i18n.t('Factor');
+      let factorNum = headerRow[k].charAt(headerRow[k].length - 1);
+      // for bipolar split - catch "1a" as factor number
+      if (isNaN(+factorNum)) {
+        factorNum = `${headerRow[k].charAt(headerRow[k].length - 2)}${factorNum}`;
+      }
+      headerRow[k] = `${factorText} ${factorNum}`;
+    }
+
+    return [data, numFacs, headerRow];
+  };
 
   const onGridReady = (params) => {
     gridApi.current = params.api;

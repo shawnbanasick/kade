@@ -1,6 +1,5 @@
-import React from 'react';
+import { useState } from 'react';
 import styled from 'styled-components';
-import { view, store } from '@risingstack/react-easy-state';
 import { Button, Header, Modal } from 'semantic-ui-react';
 import downloadResultsAsCsv from '../downloadCsvLogic/downloadCsvOutputFile';
 import GeneralButton from '../../../Utils/GeneralButton';
@@ -9,18 +8,18 @@ import getOutputState from '../../GlobalState/getOutputState';
 import outputState from '../../GlobalState/outputState';
 import CsvIcon from '../../images/CSV_Icon2.svg';
 
-const localStore = store({
-  modalOpen: false,
-});
-
 const DownloadResultsAsCsv1 = () => {
   const { t } = useTranslation();
+
+  const [localStore, setLocalStore] = useState({
+    modalOpen: false,
+  });
 
   const handleOpen = () => {
     // getState
     const userSelectedFactors = getOutputState('userSelectedFactors');
     if (userSelectedFactors.length === 0) {
-      localStore.modalOpen = true;
+      setLocalStore({ modalOpen: true });
     } else {
       outputState.showDocxOptions = false;
       outputState.downloadDocxButtonActive = false;
