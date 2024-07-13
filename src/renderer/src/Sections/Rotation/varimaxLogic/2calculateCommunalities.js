@@ -1,10 +1,10 @@
-import evenRound from "../../../Utils/evenRound";
-import rotationState from "../../GlobalState/rotationState";
-const clone = require("rfdc")();
+import evenRound from '../../../Utils/evenRound';
+import rotationState from '../../GlobalState/rotationState';
+import { cloneDeep } from 'lodash/cloneDeep';
 
 // todo - change function to accept factors as rows format and eliminate need to transpose factorMatrix
-const calculateCommunalities = function(currentFactorData) {
-  const calculateCommunalityArray = clone(currentFactorData);
+const calculateCommunalities = function (currentFactorData) {
+  const calculateCommunalityArray = cloneDeep(currentFactorData);
   let temp, temp2, temp3, temp4, i, roundedValue, chartDataLength;
   const communalitiesArray = [];
   const fSigCriterion = [];
@@ -14,7 +14,7 @@ const calculateCommunalities = function(currentFactorData) {
   }
 
   // for each row (participant q-sort) in table format array
-  calculateCommunalityArray.forEach(n => {
+  calculateCommunalityArray.forEach((n) => {
     // square all array values
     temp = n.map(square);
 
@@ -34,8 +34,8 @@ const calculateCommunalities = function(currentFactorData) {
     fSigCriterion.push(temp4);
   });
 
-  rotationState.fSigCriterion = fSigCriterion;
-  rotationState.rowH2 = communalitiesArray;
+  rotationState.setState({ fSigCriterion: fSigCriterion });
+  rotationState.setState({ rowH2: communalitiesArray });
 
   chartDataLength = calculateCommunalityArray.length;
   for (i = 0; i < chartDataLength; i++) {

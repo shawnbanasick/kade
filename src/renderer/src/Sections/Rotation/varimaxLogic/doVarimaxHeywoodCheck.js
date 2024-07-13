@@ -1,4 +1,4 @@
-import evenRound from "../../../Utils/evenRound";
+import evenRound from '../../../Utils/evenRound';
 
 const doVarimaxHeywoodCheck = (
   matrix,
@@ -33,7 +33,7 @@ const doVarimaxHeywoodCheck = (
     adjValArray,
     adjValPqmArray,
     originalMatrix,
-    over1ParticipantsArray
+    over1ParticipantsArray,
   };
   return returnObject;
 };

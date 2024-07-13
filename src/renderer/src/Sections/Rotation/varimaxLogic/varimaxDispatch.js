@@ -1,60 +1,51 @@
-import calcSumSquares from "./2calcSumSquares";
-import doVarimaxRotations from "./2doVarimaxRotations";
-import transposeMatrix from "../../../Utils/transposeMatrix";
-import calculateCommunalities from "./2calculateCommunalities";
-import calcuateSigCriterionValues from "./2calculateSigCriterionValues";
-import calcStandardizedFactorMatrix from "./2calcStandardizedFactorMatrix";
-import loadingsTableDataPrep from "../../Loadings/LoadingsTable/loadingsTableDataPrep";
-import loadingState from "../../GlobalState/loadingState";
-import rotationState from "../../GlobalState/rotationState";
-import factorState from "../../GlobalState/factorState";
-import projectHistoryState from "../../GlobalState/projectHistoryState";
-import outputState from "../../GlobalState/outputState";
-import doVarimaxHeywoodCheck from "./doVarimaxHeywoodCheck";
-import i18n from "i18next";
-import getFactorState from "../../GlobalState/getFactorState";
-import getRotationState from "../../GlobalState/getRotationState";
-import getProjectHistoryState from "../../GlobalState/getProjectHistoryState";
-import getCoreState from "../../GlobalState/getCoreState";
-const clone = require("rfdc")();
+import calcSumSquares from './2calcSumSquares';
+import doVarimaxRotations from './2doVarimaxRotations';
+import transposeMatrix from '../../../Utils/transposeMatrix';
+import calculateCommunalities from './2calculateCommunalities';
+import calcuateSigCriterionValues from './2calculateSigCriterionValues';
+import calcStandardizedFactorMatrix from './2calcStandardizedFactorMatrix';
+import loadingsTableDataPrep from '../../Loadings/LoadingsTable/loadingsTableDataPrep';
+import doVarimaxHeywoodCheck from './doVarimaxHeywoodCheck';
+import i18n from 'i18next';
+import loadingState from '../../GlobalState/loadingState';
+import rotationState from '../../GlobalState/rotationState';
+import factorState from '../../GlobalState/factorState';
+import projectHistoryState from '../../GlobalState/projectHistoryState';
+import outputState from '../../GlobalState/outputState';
+import coreState from '../../GlobalState/coreState';
+import { cloneDeep } from 'lodash/cloneDeep';
 
-const varimaxDispatch = function() {
+const varimaxDispatch = function () {
   // archive loadings for use with undo functionality
   // archiveFactorScoreStateMatrixAndDatatable();
 
   // getState - retrieve and clone factor data
-  const factorsForRotation = getFactorState("factorMatrix");
-  const numFactorsKeptForRot = getRotationState("numFactorsKeptForRot");
+  const factorsForRotation = factorState.getState().factorMatrix;
+  const numFactorsKeptForRot = rotationState.getState().numFactorsKeptForRot;
 
   factorsForRotation.length = numFactorsKeptForRot;
 
-  const projectHistoryArray = getProjectHistoryState("projectHistoryArray");
+  const projectHistoryArray = projectHistoryState.getState().projectHistoryArray;
 
   // do varimax prep work
   const sumSquares = calcSumSquares(factorsForRotation); // ok, same
-  const standardizedFactorMatrix = calcStandardizedFactorMatrix(
-    sumSquares,
-    factorsForRotation
-  ); // ok, same
+  const standardizedFactorMatrix = calcStandardizedFactorMatrix(sumSquares, factorsForRotation); // ok, same
 
   // calculate rotations
-  const rotatedResults = doVarimaxRotations(
-    standardizedFactorMatrix,
-    sumSquares
-  );
+  const rotatedResults = doVarimaxRotations(standardizedFactorMatrix, sumSquares);
 
-  const numFactors = getRotationState("numFactorsKeptForRot");
+  const numFactors = rotationState.getState().numFactorsKeptForRot;
 
   // transposedRotatedResults in Lipset is now each factor = row, 9 cols, 7 rows
   const transposedRotatedResults = transposeMatrix(rotatedResults);
-  const transposedRotatedResults2 = clone(transposedRotatedResults);
+  const transposedRotatedResults2 = cloneDeep(transposedRotatedResults);
 
   // newRotatedResults in Lipset is now each factor as rows => 9 cols (participants), 7-8 rows
 
-  const newRotatedResults = clone(rotatedResults);
+  const newRotatedResults = cloneDeep(rotatedResults);
 
   // Varimax Heywood Adjustments (when factor loading > 1.0 after varimax rot)
-  const respondentNames = getCoreState("respondentNames");
+  const respondentNames = coreState.getState().respondentNames;
   const needsVarimaxHeywoodAdjustment = false;
   const adjValArray = [];
   const adjValPqmArray = [];
@@ -68,65 +59,62 @@ const varimaxDispatch = function() {
     over1ParticipantsArray
   );
 
-  rotationState.adjValArray = varimaxHeywoodCheck.adjValArray;
-  rotationState.adjValPqmArray = varimaxHeywoodCheck.adjValPqmArray;
+  rotationState.setState({ adjValArray: varimaxHeywoodCheck.adjValArray });
+  rotationState.setState({ adjValPqmArray: varimaxHeywoodCheck.adjValPqmArray });
 
   // branch on varimax heywood check
   if (varimaxHeywoodCheck.needsVarimaxHeywoodAdjustment) {
-    rotationState.varimaxHeywoodWarningParticipants = varimaxHeywoodCheck.over1ParticipantsArray.join(
-      ", "
-    );
+    rotationState.setState({
+      varimaxHeywoodWarningParticipants: varimaxHeywoodCheck.over1ParticipantsArray.join(', '),
+    });
     // display dialogue
-    rotationState.showVarimaxHeywoodWarning = true;
+    rotationState.setState({ showVarimaxHeywoodWarning: true });
     // save temp vars
-    rotationState.tempVarHeyTransposedRotatedResults2 = transposedRotatedResults2;
-    rotationState.tempVarHeyProjectHistoryArray = projectHistoryArray;
-    rotationState.tempVarHeyNewRotatedResults = newRotatedResults;
-    rotationState.tempVarHeyNumFactors = numFactors;
+    rotationState.setState({ tempVarHeyTransposedRotatedResults2: transposedRotatedResults2 });
+    rotationState.setState({ tempVarHeyProjectHistoryArray: projectHistoryArray });
+    rotationState.setState({ tempVarHeyNewRotatedResults: newRotatedResults });
+    rotationState.setState({ tempVarHeyNumFactors: numFactors });
   } else {
     const logMessageObj = {
-      logMessage: i18n.t("Varimax rotation applied"),
-      logType: "Varimax"
+      logMessage: i18n.t('Varimax rotation applied'),
+      logType: 'Varimax',
     };
 
     projectHistoryArray.push(logMessageObj);
 
-    factorState.factorMatrix = transposedRotatedResults2;
-    projectHistoryState.projectHistoryArray = projectHistoryArray;
-    rotationState.isCalculatingVarimax = false;
-    rotationState.varimaxButtonDisabled = true;
-    rotationState.varimaxButtonText = i18n.t("Varimax Applied");
+    factorState.setState({ factorMatrix: transposedRotatedResults2 });
+    projectHistoryState.setState({ projectHistoryArray: projectHistoryArray });
+    rotationState.setState({ isCalculatingVarimax: false });
+    rotationState.setState({ varimaxButtonDisabled: true });
+    rotationState.setState({ varimaxButtonText: i18n.t('Varimax Applied') });
     // hide section 6
-    outputState.showOutputFactorSelection = false;
-    outputState.shouldDisplayFactorVizOptions = false;
-    outputState.userSelectedFactors = [];
-    outputState.showFactorCorrelationsTable = false;
-    outputState.showStandardErrorsDifferences = false;
-    outputState.showFactorCharacteristicsTable = false;
-    outputState.showDownloadOutputButtons = false;
-    outputState.showDocxOptions = false;
-    outputState.displayFactorVisualizations = false;
-    loadingState.sendDataToOutputButtonColor = "#d6dbe0";
+    outputState.setState({ showOutputFactorSelection: false });
+    outputState.setState({ shouldDisplayFactorVizOptions: false });
+    outputState.setState({ userSelectedFactors: [] });
+    outputState.setState({ showFactorCorrelationsTable: false });
+    outputState.setState({ showStandardErrorsDifferences: false });
+    outputState.setState({ showFactorCharacteristicsTable: false });
+    outputState.setState({ showDownloadOutputButtons: false });
+    outputState.setState({ showDocxOptions: false });
+    outputState.setState({ displayFactorVisualizations: false });
+    loadingState.setState({ sendDataToOutputButtonColor: '#d6dbe0' });
 
     // remember - calc commun must be a matrix in table format
     calculateCommunalities(newRotatedResults);
 
     // get new signficance values
-    calcuateSigCriterionValues("noFlag");
+    calcuateSigCriterionValues('noFlag');
 
     // re-draw table
     loadingsTableDataPrep(numFactors);
 
     // archive values for undo function (ProjectHistory component)
-    let archiveCounter = getRotationState("archiveCounter");
+    let archiveCounter = rotationState.getState().archiveCounter;
     archiveCounter += 1;
     const archiveName = `facMatrixArc${archiveCounter}`;
-    rotationState.archiveCounter = archiveCounter;
+    rotationState.setState({ archiveCounter: archiveCounter });
 
-    sessionStorage.setItem(
-      archiveName,
-      JSON.stringify(transposedRotatedResults2)
-    );
+    sessionStorage.setItem(archiveName, JSON.stringify(transposedRotatedResults2));
   }
 };
 

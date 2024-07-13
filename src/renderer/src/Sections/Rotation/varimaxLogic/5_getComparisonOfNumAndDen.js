@@ -1,6 +1,6 @@
-import evenRound from "../../../Utils/evenRound";
+import evenRound from '../../../Utils/evenRound';
 
-const getComparisonOfNumAndDen = function(T, B) {
+const getComparisonOfNumAndDen = function (T, B) {
   let TAN4T, SINP, COSP, COS4T, SIN4T, CTN4T;
   let COS2T, SIN2T, COST, SINT;
   let shouldSkipRotation = false;
@@ -11,25 +11,22 @@ const getComparisonOfNumAndDen = function(T, B) {
       if (B >= 0) {
         shouldSkipRotation = true;
         return [SINP, COSP, shouldSkipRotation];
-      } 
-        SINP = 0.7071066;
-        COSP = 0.7071066;
-        return [SINP, COSP, shouldSkipRotation];
-      
-    } 
-      // variables cascade to below
-      COS4T = evenRound(1.0 / evenRound(Math.sqrt(1.0 + TAN4T * TAN4T), 8), 8);
-      SIN4T = evenRound(TAN4T * COS4T, 8);
-    
+      }
+      SINP = 0.7071066;
+      COSP = 0.7071066;
+      return [SINP, COSP, shouldSkipRotation];
+    }
+    // variables cascade to below
+    COS4T = evenRound(1.0 / evenRound(Math.sqrt(1.0 + TAN4T * TAN4T), 8), 8);
+    SIN4T = evenRound(TAN4T * COS4T, 8);
   } else if (T === B) {
     if (T + B < 0.00116) {
       shouldSkipRotation = true;
       return [SINP, COSP, shouldSkipRotation];
-    } 
-      // variables cascade to below
-      COS4T = 0.7071066;
-      SIN4T = 0.7071066;
-    
+    }
+    // variables cascade to below
+    COS4T = 0.7071066;
+    SIN4T = 0.7071066;
   } else {
     // case (T > B)
     CTN4T = evenRound(Math.abs(T / B), 5);

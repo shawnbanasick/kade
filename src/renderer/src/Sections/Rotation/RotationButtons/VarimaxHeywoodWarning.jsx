@@ -1,63 +1,71 @@
 import React from 'react';
-
 import styled from 'styled-components';
 import GeneralButton from '../../../Utils/GeneralButton';
-import rotationState from '../../GlobalState/rotationState';
 import { useTranslation } from 'react-i18next';
 import doContinueAnalysis from '../VarimaxHeywoodAdjust/doContinueAnalysis';
 import doAdjustValue from '../VarimaxHeywoodAdjust/doAdjustValue';
 import doAdjustValuePqmethod from '../VarimaxHeywoodAdjust/doAdjustValuePqmethod';
-import getLoadingState from '../../GlobalState/getLoadingState';
-import getRotationState from '../../GlobalState/getRotationState';
+import loadingState from '../../GlobalState/loadingState';
+import rotationState from '../../GlobalState/rotationState';
 
 const RotationButtonGroup = () => {
   const { t } = useTranslation();
+  const updateVariContinueButtonActive = rotationState((state) => state.variContinueButtonActive);
+  const updateVariContinueButtonDisabled = rotationState(
+    (state) => state.variContinueButtonDisabled
+  );
+  const updateVariAdjustButtonActive = rotationState((state) => state.variAdjustButtonActive);
+  const updateVariAdjustButtonDisabled = rotationState((state) => state.variAdjustButtonDisabled);
+  const updateVariPqmAdjustButtonActive = rotationState((state) => state.variPqmAdjustButtonActive);
+  const updateVariPqmAdjustButtonDisabled = rotationState(
+    (state) => state.variPqmAdjustButtonDisabled
+  );
+  const varimaxHeywoodWarningParticipants = rotationState(
+    (state) => state.varimaxHeywoodWarningParticipants
+  );
 
-  const onVariContClick = (event) => {
+  const onVariContClick = () => {
     doContinueAnalysis();
-    rotationState.variContinueButtonActive = true;
-    rotationState.variContinueButtonDisabled = true;
-    rotationState.variAdjustButtonActive = false;
-    rotationState.variAdjustButtonDisabled = true;
-    rotationState.variPqmAdjustButtonActive = false;
-    rotationState.variPqmAdjustButtonDisabled = true;
+    updateVariContinueButtonActive(true);
+    updateVariContinueButtonDisabled(true);
+    updateVariAdjustButtonActive(false);
+    updateVariAdjustButtonDisabled(true);
+    updateVariPqmAdjustButtonActive(false);
+    updateVariPqmAdjustButtonDisabled(true);
     return;
   };
 
-  const onVariAdjustClick = (event) => {
+  const onVariAdjustClick = () => {
     doAdjustValue();
-    rotationState.variContinueButtonActive = false;
-    rotationState.variContinueButtonDisabled = true;
-    rotationState.variAdjustButtonActive = true;
-    rotationState.variAdjustButtonDisabled = true;
-    rotationState.variPqmAdjustButtonActive = false;
-    rotationState.variPqmAdjustButtonDisabled = true;
+    updateVariContinueButtonActive(false);
+    updateVariContinueButtonDisabled(true);
+    updateVariAdjustButtonActive(true);
+    updateVariAdjustButtonDisabled(true);
+    updateVariPqmAdjustButtonActive(false);
+    updateVariPqmAdjustButtonDisabled(true);
     return;
   };
 
-  const onVariPqmAdjustClick = (event) => {
+  const onVariPqmAdjustClick = () => {
     doAdjustValuePqmethod();
-    rotationState.variContinueButtonActive = false;
-    rotationState.variContinueButtonDisabled = true;
-    rotationState.variAdjustButtonActive = false;
-    rotationState.variAdjustButtonDisabled = true;
-    rotationState.variPqmAdjustButtonActive = true;
-    rotationState.variPqmAdjustButtonDisabled = true;
+    updateVariContinueButtonActive(false);
+    updateVariContinueButtonDisabled(true);
+    updateVariAdjustButtonActive(false);
+    updateVariAdjustButtonDisabled(true);
+    updateVariPqmAdjustButtonActive(true);
+    updateVariPqmAdjustButtonDisabled(true);
     return;
   };
 
-  const shouldDisplay = getRotationState('showVarimaxHeywoodWarning');
-  // const varimaxButtonActive = getRotationState("varimaxButtonActive");
-  let varimaxButtonDisabled = getRotationState('varimaxButtonDisabled');
-  const isDisabled = getLoadingState('bipolarDisabled');
-
-  const variContinueButtonActive = getRotationState('variContinueButtonActive');
-  const variContinueButtonDisabled = getRotationState('variContinueButtonDisabled');
-  const variAdjustButtonActive = getRotationState('variAdjustButtonActive');
-  const variAdjustButtonDisabled = getRotationState('variAdjustButtonDisabled');
-  const variPqmAdjustButtonActive = getRotationState('variPqmAdjustButtonActive');
-  const variPqmAdjustButtonDisabled = getRotationState('variPqmAdjustButtonDisabled');
-  const varimaxHeywoodWarningParticipants = rotationState.varimaxHeywoodWarningParticipants;
+  const shouldDisplay = rotationState((state) => state.showVarimaxHeywoodWarning);
+  let varimaxButtonDisabled = rotationState((state) => state.varimaxButtonDisabled);
+  const isDisabled = loadingState((state) => state.bipolarDisabled);
+  const variContinueButtonActive = rotationState((state) => state.variContinueButtonActive);
+  const variContinueButtonDisabled = rotationState((state) => state.variContinueButtonDisabled);
+  const variAdjustButtonActive = rotationState((state) => state.variAdjustButtonActive);
+  const variAdjustButtonDisabled = rotationState((state) => state.variAdjustButtonDisabled);
+  const variPqmAdjustButtonActive = rotationState((state) => state.variPqmAdjustButtonActive);
+  const variPqmAdjustButtonDisabled = rotationState((state) => state.variPqmAdjustButtonDisabled);
 
   if (varimaxButtonDisabled === true || isDisabled === true) {
     varimaxButtonDisabled = true;

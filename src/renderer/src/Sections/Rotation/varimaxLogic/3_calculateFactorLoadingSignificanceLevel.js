@@ -1,14 +1,11 @@
-import evenRound from "../../../Utils/evenRound";
-import getLoadingState from "../../GlobalState/getLoadingState";
+import evenRound from '../../../Utils/evenRound';
+import loadingState from '../../GlobalState/loadingState';
 
-const calculateFactorLoadingSignificanceLevel = function(totalStatements) {
-  const userSelectedSigLevel = getLoadingState("userSelectedSigLevel");
+const calculateFactorLoadingSignificanceLevel = function (totalStatements) {
+  const userSelectedSigLevel = loadingState.getState().userSelectedSigLevel;
 
   // var totalStatements = QAV.getState("qavOriginalSortSize");
-  const significanceLevel = evenRound(
-    userSelectedSigLevel * (1 / Math.sqrt(totalStatements)),
-    5
-  );
+  const significanceLevel = evenRound(userSelectedSigLevel * (1 / Math.sqrt(totalStatements)), 5);
   return significanceLevel;
 };
 

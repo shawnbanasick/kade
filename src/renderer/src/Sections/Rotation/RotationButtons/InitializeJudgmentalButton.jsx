@@ -1,32 +1,31 @@
-import React from 'react';
-
-import rotationState from '../../GlobalState/rotationState';
-import getRotationState from '../../GlobalState/getRotationState';
 import GeneralButton from '../../../Utils/GeneralButton';
 import { useTranslation } from 'react-i18next';
-import getLoadingState from '../../GlobalState/getLoadingState';
+import rotationState from '../../GlobalState/rotationState';
+import loadingState from '../../GlobalState/loadingState';
 
 const RotationButtonGroup = () => {
   const { t } = useTranslation();
 
-  const onJudgeClick = (event) => {
-    const shouldShowDiv = getRotationState('shouldShowJudgeRotDiv');
+  // getState and initialize judgment rot button
+  const shouldShowDiv = rotationState((state) => state.shouldShowJudgeRotDiv);
+  const updateShouldShowJudgeRotDiv = rotationState((state) => state.shouldShowJudgeRotDiv);
+  const updateJudgeButtonActive = rotationState((state) => state.judgeButtonActive);
+  const shouldDisplay = rotationState((state) => state.shouldDisplayFacKept);
+  const judgeButtonActive = rotationState((state) => state.judgeButtonActive);
+  let varimaxButtonDisabled = rotationState((state) => state.varimaxButtonDisabled);
+  const isDisabled = loadingState((state) => state.bipolarDisabled);
+  const shouldShowJudgeRotDiv = rotationState((state) => state.shouldShowJudgeRotDiv);
+  const showInitializeButton = !shouldShowJudgeRotDiv;
+
+  const onJudgeClick = () => {
     if (shouldShowDiv === false) {
-      rotationState.shouldShowJudgeRotDiv = true;
-      rotationState.judgeButtonActive = true;
+      updateShouldShowJudgeRotDiv(true);
+      updateJudgeButtonActive(true);
     } else {
-      rotationState.shouldShowJudgeRotDiv = false;
-      rotationState.judgeButtonActive = false;
+      updateShouldShowJudgeRotDiv(false);
+      updateJudgeButtonActive(false);
     }
   };
-
-  // getState and initialize judgment rot button
-  const shouldDisplay = getRotationState('shouldDisplayFacKept');
-  const judgeButtonActive = getRotationState('judgeButtonActive');
-  let varimaxButtonDisabled = getRotationState('varimaxButtonDisabled');
-  const isDisabled = getLoadingState('bipolarDisabled');
-  const shouldShowJudgeRotDiv = getRotationState('shouldShowJudgeRotDiv');
-  const showInitializeButton = !shouldShowJudgeRotDiv;
 
   if (varimaxButtonDisabled === true || isDisabled === true) {
     varimaxButtonDisabled = true;

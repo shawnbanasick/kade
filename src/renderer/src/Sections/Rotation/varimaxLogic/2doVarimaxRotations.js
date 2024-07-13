@@ -1,7 +1,7 @@
-import evenRound from "../../../Utils/evenRound";
-import sumArrayValues from "../../../Utils/sumArrayValues";
-import varimaxIteration from "./3_varimaxIteration";
-import unStandardize from "./3_unStandardize";
+import evenRound from '../../../Utils/evenRound';
+import sumArrayValues from '../../../Utils/sumArrayValues';
+import varimaxIteration from './3_varimaxIteration';
+import unStandardize from './3_unStandardize';
 
 const doVarimaxRotations = (factorMatrix, sumSquares) => {
   // also calls and loops factor adjustment function varimaxIteration

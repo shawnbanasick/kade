@@ -5,6 +5,8 @@ import { useTranslation } from 'react-i18next';
 import appState from '../GlobalState/appState';
 const ipc = window.electron.ipcRenderer;
 
+// todo - update ipcRenderer to use electron 30
+
 const UpdateModal = () => {
   const [modalOpen, setModalOpen] = useState(false);
 

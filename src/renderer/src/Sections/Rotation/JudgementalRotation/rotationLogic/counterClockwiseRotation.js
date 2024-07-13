@@ -8,7 +8,7 @@ const counterCockwiseRotation = (calculateRotationsArray, rotationByDegree) => {
   const transposedArray = transposeMatrix(calculateRotationsArray);
   const sinDegreesValue = calcSinDegrees(rotationByDegree);
   const cosDegreesValue = calcCosDegrees(rotationByDegree);
-  let rotationDegrees = getRotationState('rotationDegrees');
+  let rotationDegrees = rotationState.getState().rotationDegrees;
   rotationDegrees -= rotationByDegree;
   rotationState.rotationDegrees = rotationDegrees;
 

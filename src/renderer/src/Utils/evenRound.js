@@ -7,7 +7,7 @@ const evenRound = (value, precision) => {
   // } else {
   //     return number;
   // }
-  let mode = "default";
+  let mode = 'default';
 
   var m, f, isHalf, sgn; // helper variables
   // making sure precision is integer
@@ -20,15 +20,15 @@ const evenRound = (value, precision) => {
   f = Math.floor(value);
   if (isHalf) {
     switch (mode) {
-      case "PHP_ROUND_HALF_DOWN":
+      case 'PHP_ROUND_HALF_DOWN':
         // rounds .5 toward zero
         value = f + (sgn < 0);
         break;
-      case "PHP_ROUND_HALF_EVEN":
+      case 'PHP_ROUND_HALF_EVEN':
         // rouds .5 towards the next even integer
         value = f + (f % 2) * sgn;
         break;
-      case "PHP_ROUND_HALF_ODD":
+      case 'PHP_ROUND_HALF_ODD':
         // rounds .5 towards the next odd integer
         value = f + !(f % 2);
         break;

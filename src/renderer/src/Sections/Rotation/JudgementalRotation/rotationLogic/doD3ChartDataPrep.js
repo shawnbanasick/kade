@@ -1,17 +1,17 @@
-import getRotationState from "../../../GlobalState/getRotationState";
-import getCoreState from "../../../GlobalState/getCoreState";
-const clone = require("rfdc")();
+import rotationState from '../../../GlobalState/rotationState';
+import coreState from '../../../GlobalState/coreState';
+import cloneDeep from 'lodash/cloneDeep';
 
-const doD3ChartDataPrep = rotFacStateArray => {
+const doD3ChartDataPrep = (rotFacStateArray) => {
   // getState
-  const abFactors = getRotationState("abFactors");
+  const abFactors = rotationState.getState().abFactors;
   const rotationFactorA = Math.min(...abFactors);
   const rotationFactorB = Math.max(...abFactors);
 
-  const step4 = getCoreState("respondentNames");
-  const fSigCriterionResults = getRotationState("fSigCriterionResults");
+  const step4 = coreState.getState().respondentNames;
+  const fSigCriterionResults = rotationState.getState().fSigCriterionResults;
 
-  const chartData = clone(rotFacStateArray);
+  const chartData = cloneDeep(rotFacStateArray);
 
   const dataValuesArray = [];
   const initialTwoFactorTableArray = [];
@@ -31,13 +31,13 @@ const doD3ChartDataPrep = rotFacStateArray => {
       factor1: step1[rotationFactorA - 1],
       factor1Sig: step3[rotationFactorA - 1],
       factor2: step1[rotationFactorB - 1],
-      factor2Sig: step3[rotationFactorB - 1]
+      factor2Sig: step3[rotationFactorB - 1],
     };
     dataValuesArray.push(tempObj);
   }
 
   const factorNameArrayFrag = [];
-  const respondent2 = "";
+  const respondent2 = '';
   const factor1c = `Factor ${rotationFactorA}`;
   const factor2c = `Factor ${rotationFactorB}`;
 

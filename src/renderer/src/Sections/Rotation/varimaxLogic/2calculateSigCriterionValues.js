@@ -1,19 +1,16 @@
-import pullAt from "lodash/pullAt";
-import evenRound from "../../../Utils/evenRound";
-import calculateFactorLoadingSignificanceLevel from "./3_calculateFactorLoadingSignificanceLevel";
-import getRotationState from "../../GlobalState/getRotationState";
-import rotationState from "../../GlobalState/rotationState";
-import getLoadingState from "../../GlobalState/getLoadingState";
-import getCoreState from "../../GlobalState/getCoreState";
-const clone = require("rfdc")();
+import pullAt from 'lodash/pullAt';
+import evenRound from '../../../Utils/evenRound';
+import calculateFactorLoadingSignificanceLevel from './3_calculateFactorLoadingSignificanceLevel';
+import rotationState from '../../GlobalState/rotationState';
+import loadingState from '../../GlobalState/loadingState';
+import coreState from '../../GlobalState/coreState';
+import { cloneDeep } from 'lodash/cloneDeep';
 
 const getAutoflagBoolean = (addFlag, sigLevel2, testValue, othersValue) => {
   // getState
-  const requireMajorityCommonVariance = getLoadingState(
-    "requireMajorityCommonVariance"
-  );
+  const requireMajorityCommonVariance = loadingState.getState().requireMajorityCommonVariance;
 
-  if (addFlag === "flag") {
+  if (addFlag === 'flag') {
     // if is the common variance only case
     if (isNaN(sigLevel2)) {
       if (testValue > othersValue) {
@@ -45,10 +42,10 @@ const getAutoflagBoolean = (addFlag, sigLevel2, testValue, othersValue) => {
   return false;
 };
 
-const calculatefSigCriterionValues = function(addFlag) {
+const calculatefSigCriterionValues = function (addFlag) {
   // getState
-  const fSigCriterionArray = getRotationState("fSigCriterion");
-  const totalStatements = getCoreState("numStatements");
+  const fSigCriterionArray = rotationState.getState().fSigCriterion;
+  const totalStatements = coreState.getState().numStatements;
   const sigLevel2 = calculateFactorLoadingSignificanceLevel(totalStatements);
   const arrayLength = fSigCriterionArray.length;
   const arrayLength2 = fSigCriterionArray[0].length;
@@ -60,7 +57,7 @@ const calculatefSigCriterionValues = function(addFlag) {
     temp1 = fSigCriterionArray[i];
     tempArray = [];
     for (j = 0; j < arrayLength2; j++) {
-      array = clone(temp1);
+      array = cloneDeep(temp1);
       // adjust for single factor extraction case
       if (arrayLength2 > 1) {
         testValue = pullAt(array, j);
@@ -71,12 +68,7 @@ const calculatefSigCriterionValues = function(addFlag) {
         othersValue = 0;
       }
 
-      const significant = getAutoflagBoolean(
-        addFlag,
-        sigLevel2,
-        testValue[0],
-        othersValue
-      );
+      const significant = getAutoflagBoolean(addFlag, sigLevel2, testValue[0], othersValue);
 
       tempArray.push(significant);
     }
@@ -84,7 +76,7 @@ const calculatefSigCriterionValues = function(addFlag) {
   }
 
   // should be display style -  for example - Lipset - 7 cols, 9 rows
-  rotationState.fSigCriterionResults = fSigCriterionResults;
+  rotationState.setState({ fSigCriterionResults: fSigCriterionResults });
 };
 
 export default calculatefSigCriterionValues;

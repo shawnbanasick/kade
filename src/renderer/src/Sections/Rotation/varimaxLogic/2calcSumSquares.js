@@ -1,4 +1,4 @@
-import evenRound from "../../../Utils/evenRound";
+import evenRound from '../../../Utils/evenRound';
 
 const calcSumSquares = function calcSumSquares(factorsForRotation) {
   // (3709 - 3714)

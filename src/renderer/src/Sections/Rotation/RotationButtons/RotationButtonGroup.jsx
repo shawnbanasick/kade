@@ -1,5 +1,4 @@
 import React from "react";
- 
 import { Button } from "semantic-ui-react";
 import varimaxDispatch from "../varimaxLogic/varimaxDispatch";
 import state from "../../../store";

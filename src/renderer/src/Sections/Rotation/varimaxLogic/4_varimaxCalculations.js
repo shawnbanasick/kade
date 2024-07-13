@@ -1,9 +1,9 @@
-import sumArrayValues from "../../../Utils/sumArrayValues";
-import evenRound from "../../../Utils/evenRound";
-import getComparisonOfNumAndDen from "./5_getComparisonOfNumAndDen";
-import doFactorRotations from "./5_doFactorRotations";
+import sumArrayValues from '../../../Utils/sumArrayValues';
+import evenRound from '../../../Utils/evenRound';
+import getComparisonOfNumAndDen from './5_getComparisonOfNumAndDen';
+import doFactorRotations from './5_doFactorRotations';
 
-const varimaxCalculations = function(factorA, factorB) {
+const varimaxCalculations = function (factorA, factorB) {
   let AA = 0.0;
   let BB = 0.0;
   let CC = 0.0;
@@ -43,10 +43,7 @@ const varimaxCalculations = function(factorA, factorB) {
   BB = evenRound(sumArrayValues(tArray), 17);
 
   // (3784-3785)
-  const T = evenRound(
-    DD - evenRound(2 * AA * evenRound(BB / factorALength, 17), 17),
-    17
-  );
+  const T = evenRound(DD - evenRound(2 * AA * evenRound(BB / factorALength, 17), 17), 17);
   const B = evenRound(CC - evenRound((AA * AA - BB * BB) / factorALength, 8), 8);
 
   const CospAndSinp = getComparisonOfNumAndDen(T, B);

@@ -1,9 +1,7 @@
-import React from 'react';
 import { AgGridReact } from '@ag-grid-community/react';
 import { AllCommunityModules } from '@ag-grid-community/all-modules';
-
 import { useTranslation } from 'react-i18next';
-import getCorrelationState from '../../../GlobalState/getCorrelationState';
+import correlationState from '../../../GlobalState/correlationState';
 
 const RotationTable = (props) => {
   const { t } = useTranslation();
@@ -14,7 +12,7 @@ const RotationTable = (props) => {
   // };
 
   // getState
-  const colMaxWidth = getCorrelationState('colMaxWidth');
+  const colMaxWidth = correlationState((state) => state.colMaxWidth);
   const rowData = props.rowData;
   const colDefs = props.colDefs;
   const maxHeight = props.maxHeight;

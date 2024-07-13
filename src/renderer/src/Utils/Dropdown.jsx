@@ -1,6 +1,7 @@
 import React from 'react';
-import { view, store } from '@risingstack/react-easy-state';
 import styled from 'styled-components';
+
+// todo - delete unused component
 
 const localStore = store({
   expanded: false,

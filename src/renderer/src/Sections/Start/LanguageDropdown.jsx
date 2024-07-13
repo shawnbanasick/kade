@@ -1,5 +1,3 @@
-import React from 'react';
-// import { toast } from "react-toastify";
 import { Dropdown } from 'semantic-ui-react';
 
 import i18n from 'i18next';
@@ -42,7 +40,7 @@ const options = [
   },
 ];
 
-const languageDropdown = (props) => {
+const languageDropdown = () => {
   const changeLanguage = (event, data) => {
     console.log(data.value);
     i18n.changeLanguage(data.value);

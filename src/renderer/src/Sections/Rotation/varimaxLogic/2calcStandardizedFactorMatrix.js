@@ -1,6 +1,6 @@
-import evenRound from "../../../Utils/evenRound";
+import evenRound from '../../../Utils/evenRound';
 
-const calcStandardizedFactorMatrix = function(sumSquares, factorMatrix) {
+const calcStandardizedFactorMatrix = function (sumSquares, factorMatrix) {
   // (3722-3727)
   const standarizedFactorMatrix = [];
   let arrayFrag1;

@@ -1,8 +1,5 @@
 import { Tab } from 'semantic-ui-react';
-import React from 'react';
-
 import styled, { keyframes } from 'styled-components';
-import rotationState from '../GlobalState/rotationState';
 import FactorsKeptNotification from './FactorKeepSelection/FactorsKeptNotification';
 import JudgementalRotationContainer from './JudgementalRotation/JudgementalRotationContainer';
 import FireVarimaxButton from './RotationButtons/FireVarimaxButton';
@@ -11,7 +8,7 @@ import FactorSelectButtons from './FactorKeepSelection/FactorSelectButtons';
 import FactorSelectButtonModal from './FactorKeepSelection/FactorSelectButtonModal';
 import { useTranslation } from 'react-i18next';
 import VarimaxHeywoodWarning from './RotationButtons/VarimaxHeywoodWarning';
-import getRotationState from '../GlobalState/getRotationState';
+import rotationState from '../GlobalState/rotationState';
 
 let showKeepFacForRotButton;
 
@@ -86,13 +83,12 @@ const Rotation = () => {
   );
 
   const handleTabChange = (e, { activeIndex }) => {
-    rotationState.rotationActiveTabIndex = activeIndex;
+    rotationState.setState({ rotationActiveTabIndex: activeIndex });
   };
 
   // getState
-  const rotationActiveTabIndex = getRotationState('rotationActiveTabIndex');
-  showKeepFacForRotButton = getRotationState('showKeepFacForRotButton');
-
+  const rotationActiveTabIndex = rotationState.getState().rotationActiveTabIndex;
+  showKeepFacForRotButton = rotationState.getState().showKeepFacForRotButton;
   return (
     <MainContent>
       <Tab

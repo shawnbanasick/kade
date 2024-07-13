@@ -1,10 +1,9 @@
-import evenRound from "../../../../Utils/evenRound";
-import getRotationState from "../../../GlobalState/getRotationState";
-import rotationState from "../../../GlobalState/rotationState";
-import getCorrelationState from "../../../GlobalState/getCorrelationState";
+import evenRound from '../../../../Utils/evenRound';
+import rotationState from '../../../GlobalState/rotationState';
+import correlationState from '../../../GlobalState/correlationState';
 
 const rotationTablePrep = (d3RotChartData, baselineData) => {
-  const abFactors = getRotationState("abFactors");
+  const abFactors = rotationState.getState().abFactors;
 
   const minFac = Math.min(...abFactors);
   const maxFac = Math.max(...abFactors);
@@ -13,34 +12,34 @@ const rotationTablePrep = (d3RotChartData, baselineData) => {
   const factorAchng = `Chg. ${minFac}`;
   const factorBchng = `Chg. ${maxFac}`;
 
-  const colMaxWidth = getCorrelationState("colMaxWidth");
+  const colMaxWidth = correlationState.getState().colMaxWidth;
 
   const rotColDefsFactorTable = [
     {
-      headerName: "N.",
-      field: "resNum",
+      headerName: 'N.',
+      field: 'resNum',
       pinned: true,
       editable: false,
       sortable: true,
       width: 50,
       cellStyle: {
-        textAlign: "center"
-      }
+        textAlign: 'center',
+      },
     },
     {
-      headerName: "Part.",
-      field: "respondent",
+      headerName: 'Part.',
+      field: 'respondent',
       pinned: true,
       editable: false,
       sortable: true,
       width: colMaxWidth,
       cellStyle: {
-        textAlign: "center"
-      }
+        textAlign: 'center',
+      },
     },
     {
       headerName: factorA,
-      field: "factor1",
+      field: 'factor1',
       pinned: false,
       sortable: true,
       editable: false,
@@ -49,29 +48,29 @@ const rotationTablePrep = (d3RotChartData, baselineData) => {
         const sig = params.node.data.factor1Sig;
         if (sig) {
           return {
-            textAlign: "center",
-            background: "#b4dffe" // "aquamarine"
+            textAlign: 'center',
+            background: '#b4dffe', // "aquamarine"
           };
         }
         return {
-          textAlign: "center"
+          textAlign: 'center',
         };
-      }
+      },
     },
     {
       headerName: factorAchng,
-      field: "change1",
+      field: 'change1',
       pinned: false,
       sortable: true,
       editable: false,
       width: 80,
       cellStyle: {
-        textAlign: "center"
-      }
+        textAlign: 'center',
+      },
     },
     {
       headerName: factorB,
-      field: "factor2",
+      field: 'factor2',
       pinned: false,
       sortable: true,
       editable: false,
@@ -80,44 +79,44 @@ const rotationTablePrep = (d3RotChartData, baselineData) => {
         const sig = params.node.data.factor2Sig;
         if (sig) {
           return {
-            textAlign: "center",
-            background: "#ffe4b2"
+            textAlign: 'center',
+            background: '#ffe4b2',
           };
         }
         return {
-          textAlign: "center"
+          textAlign: 'center',
         };
-      }
+      },
     },
     {
       headerName: factorBchng,
-      field: "change2",
+      field: 'change2',
       pinned: false,
       sortable: true,
       editable: false,
       width: 80,
       cellStyle: {
-        textAlign: "center"
-      }
+        textAlign: 'center',
+      },
     },
     {
-      headerName: "factor1Sig",
-      field: "factor1Sig",
+      headerName: 'factor1Sig',
+      field: 'factor1Sig',
       pinned: false,
       sortable: true,
       editable: false,
       hide: true,
-      width: 0
+      width: 0,
     },
     {
-      headerName: "factor2Sig",
-      field: "change2",
+      headerName: 'factor2Sig',
+      field: 'change2',
       pinned: false,
       sortable: true,
       editable: false,
       hide: true,
-      width: 0
-    }
+      width: 0,
+    },
   ];
 
   const rotRowDataFactorTable = [];
@@ -143,8 +142,8 @@ const rotationTablePrep = (d3RotChartData, baselineData) => {
     rotRowDataFactorTable.push(tempObj);
   }
 
-  rotationState.rotColDefsFactorTable = rotColDefsFactorTable;
-  rotationState.rotRowDataFactorTable = rotRowDataFactorTable;
+  rotationState.setState({ rotColDefsFactorTable: rotColDefsFactorTable });
+  rotationState.setState({ rotRowDataFactorTable: rotRowDataFactorTable });
 };
 
 export default rotationTablePrep;
