@@ -1,11 +1,11 @@
 import { useEffect } from 'react';
 import styled from 'styled-components';
 import { AgGridReact } from 'ag-grid-react';
-import { useTranslation } from 'react-i18next';
 import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
 import coreState from '../../GlobalState/coreState';
 import correlationState from '../../GlobalState/correlationState';
+import { useTranslation } from 'react-i18next';
 
 // HELPER FUNCTION
 function getWidth(numQsorts, width1, width2) {

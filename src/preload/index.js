@@ -12,6 +12,7 @@ if (process.contextIsolated) {
       openZipFile: () => ipcRenderer.send('dialog:openZipFile'),
       openTxtFile: () => ipcRenderer.send('dialog:openTxtFile'),
       openJsonFile: () => ipcRenderer.send('dialog:openJsonFile'),
+      saveSvgFile: () => ipcRenderer.send('dialog:saveSvgFile'),
     });
     contextBridge.exposeInMainWorld('languageChange', {
       language: (callback) =>
@@ -39,6 +40,11 @@ if (process.contextIsolated) {
       jsonData: (content) => {
         ipcRenderer.on('jsonData', content);
       },
+      saveSvgData: (content) => {
+        ipcRenderer.on('saveSvgData', content);
+      },
+      getPath: () => ipcRenderer.invoke('getPath'),
+      writeFile: (filepath, blob) => ipcRenderer.invoke('writeFile', filepath, blob),
     });
   } catch (error) {
     console.error('Error: ', error);

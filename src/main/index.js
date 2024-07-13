@@ -10,6 +10,7 @@ import openExcelFile from './openExcelFile';
 import openZipFile from './openZipFile';
 import openTxtFile from './openTxtFile';
 import openJsonFile from './openJsonFile';
+import saveSvgFile from './saveSvgFile';
 
 // import fs from 'fs';
 // import i18nextBackend from 'i18next-electron-fs-backend';
@@ -112,6 +113,20 @@ app.whenReady().then(() => {
   ipcMain.on('dialog:openZipFile', openZipFile);
   ipcMain.on('dialog:openTxtFile', openTxtFile);
   ipcMain.on('dialog:openJsonFile', openJsonFile);
+
+  ipcMain.handle('writeFile', (event, filepath, blob) => {
+    var message = {};
+    fs.writeFile(filepath, blob, (err) => {
+      if (err) {
+        message.text = err;
+        message.title = 'Error Saving Table';
+      } else {
+        message.text = filepath;
+        message.title = 'Table saved to';
+      }
+    });
+    return message;
+  });
 
   createWindow();
 

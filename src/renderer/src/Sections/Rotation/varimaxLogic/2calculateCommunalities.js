@@ -1,6 +1,6 @@
 import evenRound from '../../../Utils/evenRound';
 import rotationState from '../../GlobalState/rotationState';
-import { cloneDeep } from 'lodash/cloneDeep';
+import cloneDeep from 'lodash/cloneDeep';
 
 // todo - change function to accept factors as rows format and eliminate need to transpose factorMatrix
 const calculateCommunalities = function (currentFactorData) {

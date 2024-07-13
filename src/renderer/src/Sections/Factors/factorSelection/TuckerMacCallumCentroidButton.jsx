@@ -62,7 +62,7 @@ const TuckerMacCallumCentroidButton = () => {
   return (
     <TuckerButton
       id="tuckerButton"
-      isActive={isActive}
+      $isActive={isActive}
       disabled={isDisabled}
       onClick={handleOnclick}
     >

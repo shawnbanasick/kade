@@ -1,7 +1,7 @@
-import projectHistoryState from "./projectHistoryState";
-const clone = require("rfdc")();
+import projectHistoryState from './projectHistoryState';
+import cloneDeep from 'lodash/cloneDeep';
 
-const getProjectHistoryState = key => {
+const getProjectHistoryState = (key) => {
   try {
     const stateValue = projectHistoryState[key];
 
@@ -9,14 +9,14 @@ const getProjectHistoryState = key => {
       throw new Error(`null or undefined value: ${key}`);
     }
 
-    const returnValue = clone(stateValue);
+    const returnValue = cloneDeep(stateValue);
 
     return returnValue;
   } catch (error) {
-    const spacing = "5px";
+    const spacing = '5px';
     const styles = `padding: ${spacing}; background-color: darkblue; color: white; font-style: 
      italic; border: ${spacing} solid crimson; font-size: 2em;`;
-    console.error("%cError", styles, error.message);
+    console.error('%cError', styles, error.message);
   }
 };
 

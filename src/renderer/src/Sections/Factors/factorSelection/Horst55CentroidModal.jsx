@@ -38,7 +38,7 @@ const Horst55CentroidModal = () => {
     <HorstButton
       as={GeneralButton}
       id="noFacSelectedModalButton"
-      isActive={isActive}
+      $isActive={isActive}
       disabled={isDisabled}
       onClick={handleOnclick}
     >

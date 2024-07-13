@@ -29,7 +29,7 @@ const TraditionalCentroidButton = () => {
     <TradButton
       as={GeneralButton}
       id="traditionalCentroidButton"
-      isActive={isActive}
+      $isActive={isActive}
       disabled={isDisabled}
       onClick={handleOnclick}
     >

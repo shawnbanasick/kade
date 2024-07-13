@@ -1,5 +1,5 @@
 import appState from './appState';
-import { cloneDeep } from 'lodash/cloneDeep';
+import cloneDeep from 'lodash/cloneDeep';
 
 const getAppState = (key) => {
   try {

@@ -26,7 +26,7 @@ const CsvDataErrorCheckButton = (props) => {
       <TradButton
         as={GeneralButton}
         id="csvDataErrorCheckButton"
-        isActive={isActive}
+        $isActive={isActive}
         onClick={handleOnclick}
       >
         {t('Check for Errors')}

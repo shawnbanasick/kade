@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 import HorstNumberInput from './HorstNumberInput';
 import factorState from '../../GlobalState/factorState';
-import { stat } from 'original-fs';
 
 const InputHorstCutoffsNoLimit = () => {
   const { t } = useTranslation();

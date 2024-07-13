@@ -1,9 +1,6 @@
 import currentDate from '../../../Utils/currentDate1';
 import currentTime from '../../../Utils/currentTime1';
-
-import getCoreState from '../../GlobalState/getCoreState';
-
-const { dialog } = require('electron').remote;
+import coreState from '../../GlobalState/coreState';
 
 function saveSvg(svgEl, name) {
   svgEl.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
@@ -24,7 +21,7 @@ function saveSvg(svgEl, name) {
 function downloadSvgImage() {
   try {
     // getState - coreState
-    const projectName = getCoreState('projectName');
+    const projectName = coreState.getState().projectName;
     const date = currentDate();
     const time = currentTime();
     const dateTime = `${date} ${time}`;
@@ -33,7 +30,8 @@ function downloadSvgImage() {
 
     saveSvg(svg, completeFileName);
   } catch (error) {
-    dialog.showErrorBox('File Save Error', error.message);
+    console.log('Error: ', error.message);
+    // dialog.showErrorBox('File Save Error', error.message);
   }
 }
 

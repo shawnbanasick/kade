@@ -88,7 +88,7 @@ const FactorSelectButtonModal = () => {
             <GeneralFacSelectButton
               as={GeneralButton}
               id="factorsKeptSubmitButton"
-              isActive={isActive}
+              $isActive={isActive}
               disabled={isFacSelectDisabled}
               onClick={handleOpen}
             >

@@ -39,7 +39,7 @@ const PCAButton = () => {
     <div>
       <GeneralButton
         id="extractPrinCompButton"
-        isActive={isActive}
+        $isActive={isActive}
         disabled={isDisabled}
         onClick={handleClick}
       >

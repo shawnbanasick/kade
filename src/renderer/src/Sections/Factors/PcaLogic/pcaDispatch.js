@@ -18,6 +18,9 @@ import correlationState from '../../GlobalState/correlationState';
 const pcaDispatch = () => {
   // getState
   const projectHistoryArray = projectHistoryState.getState().projectHistoryArray;
+
+  console.log('project history array', projectHistoryArray);
+
   const X = correlationState.getState().correlation5Calcs;
 
   const m = X.length;
@@ -90,7 +93,7 @@ const pcaDispatch = () => {
   factorState.setState({ screePlotData: screeData });
   factorState.setState({ eigensPercentExpVar: formattedEigenPer });
   factorState.setState({ cumulEigenPerVar: formattedEigenCum });
-  factorState.numFacsForTableWidth = 8;
+  factorState.setState({ numFacsForTableWidth: 8 });
   // do not delete - so that the scree plot data circles have the correct number
   factorState.setState({ numCentroidFactors: 8 });
   projectHistoryState.setState({ projectHistoryArray: projectHistoryArray });

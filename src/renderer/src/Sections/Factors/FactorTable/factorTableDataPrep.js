@@ -1,10 +1,9 @@
 import evenRound from '../../../Utils/evenRound';
-
-const clone = require('rfdc')();
+import cloneDeep from 'lodash/cloneDeep';
 
 const factorTableDataPrep = (numFactors, factorMatrix, respondentNames, translationsText) => {
   // clone matrix
-  const factorMatrix1 = clone(factorMatrix);
+  const factorMatrix1 = cloneDeep(factorMatrix);
 
   const gridColDefsFactorTable = [
     {

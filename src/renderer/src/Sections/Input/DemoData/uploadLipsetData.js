@@ -19,7 +19,6 @@ export default function uploadLipsetData() {
   // // update input state
   // const updateAreQsortsLoaded = inputState((state) => state.updateAreQsortsLoaded);
   // const updateAreStatementsLoaded = inputState((state) => state.updateAreStatementsLoaded);
-  // const updateIsQsortPatternLoaded = inputState((state) => state.updateIsQsortPatternLoaded);
 
   coreState.setState({ projectName: 'Lipset Demo' });
 
@@ -28,7 +27,7 @@ export default function uploadLipsetData() {
     logType: 'lipsetInput',
   };
 
-  projectHistoryState.setState({ projectHistoryArray: logMessageObj1 });
+  projectHistoryState.setState({ projectHistoryArray: [logMessageObj1] });
 
   coreState.setState({
     statements: [

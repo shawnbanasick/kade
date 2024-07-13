@@ -38,6 +38,8 @@ const factorState = create(
     gridColDefsFacTableEigen: [],
     gridRowDataFacTableEigen: [],
 
+    heywoodAdjustButtonActive: false,
+    heywoodContinueButtonActive: false,
     heywoodButtonDisabled: false,
     heywoodParticipantsCommunalityArray: [],
 
@@ -70,6 +72,7 @@ const factorState = create(
     showEigenvaluesTable: false,
     showHeywoodCaseNotifications: false,
     showHorstIterationLimit: false,
+    showHorstIterationSetup: false,
     showScreePlot: false,
     showUnrotatedFactorTable: false,
     showUseHorstLimit: false,
@@ -79,6 +82,10 @@ const factorState = create(
     useHeywoodAdjustment: false,
     unrotatedFactorMatrixOutput: [],
 
+    updateShowHorstIterationSetup: (inputValue) => set({ showUseHorstIterationSetup: inputValue }),
+    updateHeywoodAdjustButtonActive: (inputValue) => set({ heywoodAdjustButtonActive: inputValue }),
+    updateHeywoodContinueButtonActive: (inputValue) =>
+      set({ heywoodContinueButtonActive: inputValue }),
     updateActiveCentroidRevealButton: (inputValue) =>
       set({ activeCentroidRevealButton: inputValue }),
     updateActiveTraditionalCentroidFactorButton: (inputValue) =>

@@ -27,7 +27,7 @@ const RevealCentroidTypeSelectionButton = () => {
     <div>
       <GeneralButton
         id="displayCentroidTypes"
-        isActive={isActive}
+        $isActive={isActive}
         disabled={isDisabled}
         onClick={handleClick}
       >

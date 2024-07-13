@@ -11,17 +11,19 @@ const UseHorstAutoStop = () => {
   const { t } = useTranslation();
 
   // getState
-  const showUseHorstIterationSetup = factorState('showUseHorstIterationSetup');
-  const horstExtractActive = factorState('horstExtractActive');
-  const horstExtractDisabled = factorState('horstExtractDisabled');
-  const horstIterations = factorState('horstIterations');
-  const horstThresholdLevel = factorState('horstThresholdLevel');
-  const updateShowCentroidSpinner = factorState('updateShowCentroidSpinner');
-  const updateShowUnrotatedFactorTable = factorState('updateShowUnrotatedFactorTable');
-  const updateShowEigenvaluesTable = factorState('updateShowEigenvaluesTable');
-  const updateShowScreePlot = factorState('updateShowScreePlot');
-  const updateHrstExtractActive = factorState('updateHrstExtractActive');
-  const updateHorstExtractDisabled = factorState('updateHorstExtractDisabled');
+  const showUseHorstIterationSetup = factorState((state) => state.showUseHorstIterationSetup);
+  const horstExtractActive = factorState((state) => state.horstExtractActive);
+  const horstExtractDisabled = factorState((state) => state.horstExtractDisabled);
+  const horstIterations = factorState((state) => state.horstIterations);
+  const horstThresholdLevel = factorState((state) => state.horstThresholdLevel);
+  const updateShowCentroidSpinner = factorState((state) => state.updateShowCentroidSpinner);
+  const updateShowUnrotatedFactorTable = factorState(
+    (state) => state.updateShowUnrotatedFactorTable
+  );
+  const updateShowEigenvaluesTable = factorState((state) => state.updateShowEigenvaluesTable);
+  const updateShowScreePlot = factorState((state) => state.updateShowScreePlot);
+  const updateHrstExtractActive = factorState((state) => state.updateHrstExtractActive);
+  const updateHorstExtractDisabled = factorState((state) => state.updateHorstExtractDisabled);
   const updateIsFactorsButtonGreen = appState((state) => state.updateIsFactorsButtonGreen);
   const updateShowKeepFacForRotButton = factorState((state) => state.updateShowKeepFacForRotButton);
 
