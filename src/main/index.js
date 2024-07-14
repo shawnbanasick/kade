@@ -138,8 +138,6 @@ app.whenReady().then(() => {
   });
 
   ipcMain.handle('show-save-dialog', async (event, defaultPath) => {
-    console.log(defaultPath);
-
     const result = await dialog.showSaveDialog({
       title: 'Save SVG',
       defaultPath: defaultPath || 'untitled.svg',

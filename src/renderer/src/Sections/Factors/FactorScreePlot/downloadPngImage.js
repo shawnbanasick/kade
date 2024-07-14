@@ -1,11 +1,11 @@
 import { saveSvgAsPng } from 'save-svg-as-png';
 import currentDate from '../../../Utils/currentDate1';
 import currentTime from '../../../Utils/currentTime1';
-import getCoreState from '../../GlobalState/getCoreState';
+import coreState from '../../GlobalState/coreState';
 
 const downloadPngImage = () => {
   // getState
-  const projectName = getCoreState('projectName');
+  const projectName = coreState.getState().projectName;
   const date = currentDate();
   const time = currentTime();
   const dateTime = `${date} ${time}`;

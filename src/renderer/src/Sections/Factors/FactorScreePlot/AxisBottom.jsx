@@ -2,9 +2,10 @@ import React from 'react';
 import * as d3 from 'd3';
 import factorState from '../../GlobalState/factorState';
 
+const numCentroidFactors = factorState.getState().numCentroidFactors;
 export default class AxisBottom extends React.Component {
   componentDidMount() {
-    let facNum = Number(factorState.numCentroidFactors) + 1;
+    let facNum = Number(numCentroidFactors) + 1;
     if (facNum > 8) {
       facNum = 8;
     }
@@ -12,7 +13,7 @@ export default class AxisBottom extends React.Component {
   }
 
   componentDidUpdate() {
-    let facNum = Number(factorState.numCentroidFactors) + 1;
+    let facNum = Number(numCentroidFactors) + 1;
     if (facNum > 8) {
       facNum = 8;
     }
