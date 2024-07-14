@@ -19,24 +19,37 @@ const FactorSelectButtonModal = () => {
   });
 
   const handleOpen = () => {
-    // getState and confirm that the number of factors has been selected
+    // getState
     const numFactorsKept = rotationState((state) => state.numFactorsKeptForRot);
-    if (isNaN(numFactorsKept)) {
-      setLocalStore({ modalOpenSelect: false });
-    } else {
-      setLocalStore({ isActive: true });
+    const projectHistoryArray = projectHistoryState((state) => state.projectHistoryArray);
+    let splitFactorsArray = loadingState((state) => state.splitFactorsArray);
+    const updateSplitFactorsArray = loadingState((state) => state.updateSplitFactorsArray);
+    const updateSplitFactorsArrayArchive = loadingState(
+      (state) => state.updateSplitFactorsArrayArchive
+    );
+    const updateProjectHistoryArray = projectHistoryState(
+      (state) => state.updateProjectHistoryArray
+    );
+    const updateIsLoadingFactorsKept = loadingState((state) => state.updateIsLoadingFactorsKept);
+    const updateIsFacSelectDisabled = rotationState((state) => state.updateIsFacSelectDisabled);
+    const updateShouldDisplayFacKept = rotationState((state) => state.updateShouldDisplayFacKept);
+    const updateShowLoadingsTable = loadingState((state) => state.updateShowLoadingsTable);
+    const updateArchiveCounter = rotationState((state) => state.updateArchiveCounter);
 
-      let splitFactorsArray = loadingState((state) => state.splitFactorsArray);
+    if (isNaN(numFactorsKept)) {
+      setLocalStore({ ...localStore, modalOpenSelect: false });
+    } else {
+      setLocalStore({ ...localStore, isActive: true });
+
       splitFactorsArray.length = +numFactorsKept;
-      loadingState.splitFactorsArray = [...splitFactorsArray];
-      loadingState.splitFactorsArrayArchive = [...splitFactorsArray];
+      updateSplitFactorsArray([...splitFactorsArray]);
+      updateSplitFactorsArrayArchive([...splitFactorsArray]);
 
       // update project history in dom and state
       const projectHistoryText = `${i18n.t(
         'Number of factors selected for rotation'
       )}: ${numFactorsKept}`;
 
-      const projectHistoryArray = projectHistoryState((state) => state.projectHistoryArray);
       // a shortcut to remove history when selecting a second time - truncate array
       projectHistoryArray.length = 2;
 
@@ -48,34 +61,35 @@ const FactorSelectButtonModal = () => {
       projectHistoryArray.push(logMessageObj);
 
       // update state
-      projectHistoryState.projectHistoryArray = projectHistoryArray;
+      updateProjectHistoryArray(projectHistoryArray);
 
-      loadingState.isLoadingFactorsKept = true;
+      updateIsLoadingFactorsKept(true);
+
       setTimeout(() => {
         loadingsTableDataPrep(numFactorsKept);
       }, 10);
 
       // show loadings table
-      rotationState.isFacSelectDisabled = true;
-      rotationState.shouldDisplayFacKept = true;
-      loadingState.showLoadingsTable = true;
+      updateIsFacSelectDisabled(true);
+      updateShouldDisplayFacKept(true);
+      updateShowLoadingsTable(true);
+      updateArchiveCounter(archiveCounter);
 
       // getState - archive values for undo function (ProjectHistory component)
       let archiveCounter = rotationState((state) => state.archiveCounter);
       const factorMatrix = factorState((state) => state.factorMatrix);
       archiveCounter += 1;
       const archiveName = `facMatrixArc${archiveCounter}`;
-      rotationState.archiveCounter = archiveCounter;
       sessionStorage.setItem(archiveName, JSON.stringify(factorMatrix));
     }
   };
 
   const handleClose = () => {
-    localStore.modalOpenSelect = false;
+    setLocalStore({ ...localStore, modalOpenSelect: false });
   };
 
   const isFacSelectDisabled = rotationState((state) => state.isFacSelectDisabled);
-  localStore.isActive = isFacSelectDisabled;
+  // setLocalStore({ ...localStore, isActive: isFacSelectDisabled });
   const isActive = localStore.isActive;
   const showKeepFacForRotButton = rotationState((state) => state.showKeepFacForRotButton);
 

@@ -1,29 +1,30 @@
 import React from 'react';
 import styled from 'styled-components';
+import GeneralButton from '../../../Utils/GeneralButton';
 import rotationState from '../../GlobalState/rotationState';
-import getRotationState from '../../GlobalState/getRotationState';
 import loadingState from '../../GlobalState/loadingState';
 import appState from '../../GlobalState/appState';
-import getFactorState from '../../GlobalState/getFactorState';
 import outputState from '../../GlobalState/outputState';
-import getCoreState from '../../GlobalState/getCoreState';
-import GeneralButton from '../../../Utils/GeneralButton';
+import factorState from '../../GlobalState/factorState';
+import coreState from '../../GlobalState/coreState';
+
+//todo - convert to functional component
 
 const clearAllButtons = () => {
-  rotationState.factor1Active = false;
-  rotationState.factor2Active = false;
-  rotationState.factor3Active = false;
-  rotationState.factor4Active = false;
-  rotationState.factor5Active = false;
-  rotationState.factor6Active = false;
-  rotationState.factor7Active = false;
-  rotationState.factor8Active = false;
+  rotationState.setState({ factor1Active: false });
+  rotationState.setState({ factor2Active: false });
+  rotationState.setState({ factor3Active: false });
+  rotationState.setState({ factor4Active: false });
+  rotationState.setState({ factor5Active: false });
+  rotationState.setState({ factor6Active: false });
+  rotationState.setState({ factor7Active: false });
+  rotationState.setState({ factor8Active: false });
 };
 
 class FactorSelectionForOutputButtons extends React.Component {
   componentWillUnmount() {
     // getState
-    const isFacSelectDisabled = getRotationState('isFacSelectDisabled');
+    const isFacSelectDisabled = rotationState.getState().isFacSelectDisabled;
     if (!isFacSelectDisabled) {
       clearAllButtons();
     }
@@ -33,66 +34,66 @@ class FactorSelectionForOutputButtons extends React.Component {
     const value = event.target.value;
     const factor = event.target.id;
     clearAllButtons();
-    rotationState[`${factor}Active`] = true;
+    rotationState.setState({ [`${factor}Active`]: true });
 
     const userSelectedRotFactors = [];
     const abFactors = [];
 
-    rotationState.numFactorsKeptForRot = value;
-    rotationState.shouldDisplayFacKept = false;
+    rotationState.setState({ numFactorsKeptForRot: value });
+    rotationState.setState({ shouldDisplayFacKept: false });
     // hide section 5
-    loadingState.showLoadingsTable = false;
+    loadingState.setState({ showLoadingsTable: false });
     // hide section 6
-    outputState.showOutputFactorSelection = false;
-    outputState.shouldDisplayFactorVizOptions = false;
-    outputState.showFactorCorrelationsTable = false;
-    outputState.showStandardErrorsDifferences = false;
-    outputState.showFactorCharacteristicsTable = false;
-    outputState.showDownloadOutputButtons = false;
-    outputState.displayFactorVisualizations = false;
-    outputState.showDocxOptions = false;
-    outputState.userSelectedFactors = [];
+    outputState.setState({ showOutputFactorSelection: false });
+    outputState.setState({ shouldDisplayFactorVizOptions: false });
+    outputState.setState({ showFactorCorrelationsTable: false });
+    outputState.setState({ showStandardErrorsDifferences: false });
+    outputState.setState({ showFactorCharacteristicsTable: false });
+    outputState.setState({ showDownloadOutputButtons: false });
+    outputState.setState({ displayFactorVisualizations: false });
+    outputState.setState({ showDocxOptions: false });
+    outputState.setState({ userSelectedFactors: [] });
     // reset bipolar
-    loadingState.bipolarDisabled = false;
-    loadingState.bipolarSplitCount = 0;
+    loadingState.setState({ bipolarDisabled: false });
+    loadingState.setState({ bipolarSplitCount: 0 });
     // reset manual rotation
-    rotationState.shouldShowJudgeRotDiv = false;
-    rotationState.judgeButtonActive = false;
-    rotationState.showScatterPlotTableDiv = false;
-    rotationState.abFactors = abFactors;
-    rotationState.highlightRotfactor1 = false;
-    rotationState.highlightRotfactor2 = false;
-    rotationState.highlightRotfactor3 = false;
-    rotationState.highlightRotfactor4 = false;
-    rotationState.highlightRotfactor5 = false;
-    rotationState.highlightRotfactor6 = false;
-    rotationState.highlightRotfactor7 = false;
-    rotationState.highlightRotfactor8 = false;
-    rotationState.userSelectedRotFactors = userSelectedRotFactors;
+    rotationState.setState({ shouldShowJudgeRotDiv: false });
+    rotationState.setState({ judgeButtonActive: false });
+    rotationState.setState({ showScatterPlotTableDiv: false });
+    rotationState.setState({ abFactors: abFactors });
+    rotationState.setState({ highlightRotfactor1: false });
+    rotationState.setState({ highlightRotfactor2: false });
+    rotationState.setState({ highlightRotfactor3: false });
+    rotationState.setState({ highlightRotfactor4: false });
+    rotationState.setState({ highlightRotfactor5: false });
+    rotationState.setState({ highlightRotfactor6: false });
+    rotationState.setState({ highlightRotfactor7: false });
+    rotationState.setState({ highlightRotfactor8: false });
+    rotationState.setState({ userSelectedRotFactors: userSelectedRotFactors });
     // reset varimax
-    rotationState.varimaxButtonDisabled = false;
-    rotationState.varimaxButtonText = 'Varimax Rotation';
-    rotationState.varimaxButtonActive = false;
-    appState.isRotationButtonGreen = true;
+    rotationState.setState({ varimaxButtonDisabled: false });
+    rotationState.setState({ varimaxButtonText: 'Varimax Rotation' });
+    rotationState.setState({ varimaxButtonActive: false });
+    appState.setState({ isRotationButtonGreen: true });
   }
 
   render() {
-    const minNumFactors = getCoreState('numQsorts');
+    const minNumFactors = coreState.getState().numQsorts;
     const btnId = [1, 2, 3, 4, 5, 6, 7, 8];
     if (minNumFactors < btnId.length) {
       btnId.length = minNumFactors;
     }
 
     // getState
-    const isCentroid = getFactorState('activeCentroidRevealButton');
-    const isFacSelectDisabled = getRotationState('isFacSelectDisabled');
+    const isCentroid = factorState.getState().activeCentroidRevealButton;
+    const isFacSelectDisabled = rotationState.getState().isFacSelectDisabled;
 
     if (isCentroid) {
-      const numCentroidFactors = getFactorState('numCentroidFactors');
+      const numCentroidFactors = factorState.getState().numCentroidFactors;
       btnId.length = +numCentroidFactors;
     }
 
-    const showKeepFacForRotButton = getRotationState('showKeepFacForRotButton');
+    const showKeepFacForRotButton = rotationState.getState().showKeepFacForRotButton;
     if (showKeepFacForRotButton) {
       return (
         <React.Fragment>
@@ -101,7 +102,7 @@ class FactorSelectionForOutputButtons extends React.Component {
               as={GeneralButton}
               key={`f${item}`}
               value={item}
-              isActive={rotationState[`factor${item}Active`]}
+              $isActive={rotationState.getState()[`factor${item}Active`]}
               disabled={isFacSelectDisabled}
               onClick={this.handleOnclick.bind(this)}
               id={`factor${item}`}

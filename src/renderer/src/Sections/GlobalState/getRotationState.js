@@ -1,7 +1,7 @@
-import rotationState from "./rotationState";
-const clone = require("rfdc")();
+import rotationState from './rotationState';
+import cloneDeep from 'lodash.clonedeep';
 
-const getRotationState = key => {
+const getRotationState = (key) => {
   try {
     const stateValue = rotationState[key];
 
@@ -9,14 +9,14 @@ const getRotationState = key => {
       throw new Error(`null or undefined value: ${key}`);
     }
 
-    const returnValue = clone(stateValue);
+    const returnValue = cloneDeep(stateValue);
 
     return returnValue;
   } catch (error) {
-    const spacing = "5px";
+    const spacing = '5px';
     const styles = `padding: ${spacing}; background-color: darkblue; color: white; font-style: 
      italic; border: ${spacing} solid crimson; font-size: 2em;`;
-    console.error("%cError", styles, error.message);
+    console.error('%cError', styles, error.message);
   }
 };
 

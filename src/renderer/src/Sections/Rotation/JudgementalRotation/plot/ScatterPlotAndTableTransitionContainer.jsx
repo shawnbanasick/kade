@@ -1,6 +1,5 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { view, store } from '@risingstack/react-easy-state';
 import ScatterPlot from './ScatterPlot';
 import ParticipantPopUp from './ParticipantPopUp';
 import ClockwiseButtons from './ClockwiseButtons';
@@ -10,7 +9,6 @@ import SaveRotationButton from '../FactorSelect/SaveRotationButton';
 import rotationState from '../../../GlobalState/rotationState';
 import GeneralButton from '../../../../Utils/GeneralButton';
 import { useTranslation } from 'react-i18next';
-import getRotationState from '../../../GlobalState/getRotationState';
 
 // sets scatterplot width and height
 function getWidthHeight() {
@@ -26,11 +24,6 @@ function getWidthHeight() {
   return windowWidth;
 }
 
-const localStore = store({
-  width: getWidthHeight(),
-  height: getWidthHeight(),
-});
-
 const scatterPlotStyles = {
   padding: 30,
   marginBottom: 10,
@@ -39,33 +32,35 @@ const scatterPlotStyles = {
 const ScatterPlotAndTableTransitionContainer = (props) => {
   const { t } = useTranslation();
 
+  const [localStore, setLocalStore] = useState({
+    width: getWidthHeight(),
+    height: getWidthHeight(),
+  });
+
   // don't delete - needed for first render on reload
   const size = getWidthHeight();
-  localStore.width = size;
-  localStore.height = size;
+  setLocalStore({ width: size, height: size });
 
   useEffect(() => {
     window.addEventListener('resize', () => {
       const size = getWidthHeight();
-      localStore.width = size;
-      localStore.height = size;
+      setLocalStore({ width: size, height: size });
     });
 
     return () => {
       window.removeEventListener('resize', () => {
         const size = getWidthHeight();
-        localStore.width = size;
-        localStore.height = size;
+        setLocalStore({ width: size, height: size });
       });
     };
   }, []);
 
-  const showScatterPlotTableDiv = getRotationState('showScatterPlotTableDiv');
+  const showScatterPlotTableDiv = rotationState((state) => state.showScatterPlotTableDiv);
   const degreesText = `${rotationState.rotationDegrees}\u00B0`;
-  const data = getRotationState('newRotationVectors');
   const leftContWidth = getWidthHeight();
-  const colDefs = getRotationState('rotColDefsFactorTable');
-  const rowData = getRotationState('rotRowDataFactorTable');
+  const data = rotationState((state) => state.newRotationVectors);
+  const colDefs = rotationState((state) => state.rotColDefsFactorTable);
+  const rowData = rotationState((state) => state.rotRowDataFactorTable);
   const maxTableHeight = window.innerHeight - 300;
 
   if (showScatterPlotTableDiv) {

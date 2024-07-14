@@ -1,7 +1,6 @@
-import factorState from "./factorState";
-const clone = require("rfdc")();
+import factorState from './factorState';
 
-const getFactorState = key => {
+const getFactorState = (key) => {
   try {
     const stateValue = factorState[key];
 
@@ -9,14 +8,14 @@ const getFactorState = key => {
       throw new Error(`null or undefined value: ${key}`);
     }
 
-    const returnValue = clone(stateValue);
+    const returnValue = stateValue;
 
     return returnValue;
   } catch (error) {
-    const spacing = "5px";
+    const spacing = '5px';
     const styles = `padding: ${spacing}; background-color: darkblue; color: white; font-style: 
      italic; border: ${spacing} solid crimson; font-size: 1.2em;`;
-    console.error("%cError", styles, error.message);
+    console.error('%cError', styles, error.message);
   }
 };
 
