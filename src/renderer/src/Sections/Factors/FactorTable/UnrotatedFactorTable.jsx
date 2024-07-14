@@ -10,7 +10,6 @@ function getWidth(numFacsForTableWidth, width1, width2) {
   let widthVal = width1 + 10 + width2 * numFacsForTableWidth;
   let x = window.innerWidth - 265;
 
-  console.log('x', x);
   if (x < widthVal) {
     x += 'px';
     return x;
@@ -19,8 +18,6 @@ function getWidth(numFacsForTableWidth, width1, width2) {
   if (widthVal > 985) {
     widthVal = 985;
   }
-
-  console.log('widthVal', widthVal);
 
   widthVal += 'px';
   return widthVal;
@@ -51,9 +48,7 @@ const UnrotatedFactorTable = () => {
   // getState
   let numFacsForTableWidth = factorState((state) => state.numFacsForTableWidth);
   const gridColDefsFactorTable = factorState((state) => state.gridColDefsFactorTable);
-  console.log(JSON.stringify(gridColDefsFactorTable));
   const gridRowDataFactorTable = factorState((state) => state.gridRowDataFactorTable);
-  console.log(JSON.stringify(gridRowDataFactorTable));
   const numQsorts = coreState((state) => state.numQsorts);
 
   // const onGridReady = (params) => {

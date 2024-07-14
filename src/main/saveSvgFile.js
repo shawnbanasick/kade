@@ -1,7 +1,6 @@
 import { BrowserWindow, dialog } from 'electron';
-import fs from 'fs';
 
-async function saveSvgFile(blob) {
+async function saveSvgFile() {
   const options = {
     //   // const files = await dialog.showOpenDialog(mainWindow, {
     properties: ['saveSvgFile'],
@@ -14,7 +13,7 @@ async function saveSvgFile(blob) {
     ],
   };
   const window = BrowserWindow.getFocusedWindow();
-  dialog.showSaveDialog(window, blob);
+  dialog.showSaveDialog(window, options);
   //     .then((result) => {
   //       if (!result.canceled) {
   //         let paths = result.filePaths;

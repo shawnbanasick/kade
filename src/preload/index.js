@@ -12,8 +12,15 @@ if (process.contextIsolated) {
       openZipFile: () => ipcRenderer.send('dialog:openZipFile'),
       openTxtFile: () => ipcRenderer.send('dialog:openTxtFile'),
       openJsonFile: () => ipcRenderer.send('dialog:openJsonFile'),
-      saveSvgFile: () => ipcRenderer.send('dialog:saveSvgFile'),
+      saveSvgFile: () => ipcRenderer.send('showSaveDialogSync'),
+      saveSVG: (svgContent, filePath) => ipcRenderer.invoke('save-svg', svgContent, filePath),
+      showSaveDialog: (defaultPath) => ipcRenderer.invoke('show-save-dialog', defaultPath),
     });
+
+    contextBridge.exposeInMainWorld('nodeAPI', {
+      createBuffer: (data) => Buffer.from(data),
+    });
+
     contextBridge.exposeInMainWorld('languageChange', {
       language: (callback) =>
         ipcRenderer.on('languageSignal', (_event, value) => {
@@ -40,9 +47,7 @@ if (process.contextIsolated) {
       jsonData: (content) => {
         ipcRenderer.on('jsonData', content);
       },
-      saveSvgData: (content) => {
-        ipcRenderer.on('saveSvgData', content);
-      },
+      openDialog: (method, params) => ipcRenderer.invoke(method, params),
       getPath: () => ipcRenderer.invoke('getPath'),
       writeFile: (filepath, blob) => ipcRenderer.invoke('writeFile', filepath, blob),
     });

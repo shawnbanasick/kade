@@ -9,7 +9,6 @@ function getWidth(numFacsForTableWidth, width1, width2) {
   let widthVal = width1 + 10 + width2 * numFacsForTableWidth;
   let x = window.innerWidth - 265;
 
-  console.log('x', x);
   if (x < widthVal) {
     x += 'px';
     return x;
@@ -18,8 +17,6 @@ function getWidth(numFacsForTableWidth, width1, width2) {
   if (widthVal > 1010) {
     widthVal = 1010;
   }
-
-  console.log('widthVal', widthVal);
 
   widthVal += 'px';
   return widthVal;
@@ -51,9 +48,7 @@ const EigenTable = () => {
   const numFacsForTableWidth = factorState((state) => state.numFacsForTableWidth);
   // getState
   const gridColDefsFacTableEigen = factorState((state) => state.gridColDefsFacTableEigen);
-  console.log(JSON.stringify(gridColDefsFacTableEigen));
   const gridRowDataFacTableEigen = factorState((state) => state.gridRowDataFacTableEigen);
-  console.log(JSON.stringify(gridRowDataFacTableEigen));
 
   useEffect(() => {
     window.addEventListener('resize', () => {

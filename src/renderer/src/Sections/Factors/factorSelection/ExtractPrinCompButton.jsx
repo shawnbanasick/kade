@@ -20,6 +20,7 @@ const PCAButton = () => {
   const updateShowKeepFacForRotButton = rotationState(
     (state) => state.updateShowKeepFacForRotButton
   );
+  const updateIsFactorsButtonGreen = appState((state) => state.updateIsFactorsButtonGreen);
 
   function handleClick() {
     updateCalculatingPca(true);
@@ -32,7 +33,7 @@ const PCAButton = () => {
     setTimeout(() => {
       pcaDispatch();
     }, 10);
-    appState.isFactorsButtonGreen = true;
+    updateIsFactorsButtonGreen(true);
   }
 
   return (

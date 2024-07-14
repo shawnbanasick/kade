@@ -12,6 +12,8 @@ import openTxtFile from './openTxtFile';
 import openJsonFile from './openJsonFile';
 import saveSvgFile from './saveSvgFile';
 
+const fs = require('fs');
+
 // import fs from 'fs';
 // import i18nextBackend from 'i18next-electron-fs-backend';
 //import installExtension, { REACT_DEVELOPER_TOOLS } from 'electron-devtools-installer';
@@ -107,6 +109,7 @@ app.whenReady().then(() => {
   // IPC test
   ipcMain.on('ping', () => console.log('pong'));
 
+  // Open Files
   ipcMain.on('dialog:openStaFile', openStaFile);
   ipcMain.on('dialog:openDatFile', openDatFile);
   ipcMain.on('dialog:openExcelFile', openExcelFile);
@@ -114,15 +117,47 @@ app.whenReady().then(() => {
   ipcMain.on('dialog:openTxtFile', openTxtFile);
   ipcMain.on('dialog:openJsonFile', openJsonFile);
 
+  // Path
+  ipcMain.handle('getPath', () => {
+    app.getPath('documents');
+  });
+
+  // Save Files
+
+  ipcMain.handle('save-svg', async (event, arrayBuffer, filePath) => {
+    const svgContent = Buffer.from(arrayBuffer).toString('utf-8');
+    return new Promise((resolve, reject) => {
+      fs.writeFile(filePath, svgContent, (err) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve('File saved successfully');
+        }
+      });
+    });
+  });
+
+  ipcMain.handle('show-save-dialog', async (event, defaultPath) => {
+    console.log(defaultPath);
+
+    const result = await dialog.showSaveDialog({
+      title: 'Save SVG',
+      defaultPath: defaultPath || 'untitled.svg',
+      filters: [{ name: 'SVG Files', extensions: ['svg'] }],
+    });
+    return result.filePath;
+  });
+
+  ipcMain.on('showSaveDialogSync', saveSvgFile);
   ipcMain.handle('writeFile', (event, filepath, blob) => {
     var message = {};
     fs.writeFile(filepath, blob, (err) => {
       if (err) {
         message.text = err;
-        message.title = 'Error Saving Table';
+        message.title = 'Error Saving File';
       } else {
         message.text = filepath;
-        message.title = 'Table saved to';
+        message.title = 'File saved to';
       }
     });
     return message;
