@@ -13,7 +13,7 @@ import factorState from '../../GlobalState/factorState';
 import projectHistoryState from '../../GlobalState/projectHistoryState';
 import outputState from '../../GlobalState/outputState';
 import coreState from '../../GlobalState/coreState';
-import { cloneDeep } from 'lodash/cloneDeep';
+import cloneDeep from 'lodash/cloneDeep';
 
 const varimaxDispatch = function () {
   // archive loadings for use with undo functionality

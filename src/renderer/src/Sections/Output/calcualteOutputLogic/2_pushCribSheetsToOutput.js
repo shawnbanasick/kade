@@ -1,7 +1,7 @@
 import { countBy } from 'lodash/countBy';
 import { flatten } from 'lodash/flatten';
 import { identity } from 'lodash/identity';
-import { cloneDeep } from 'lodash/cloneDeep';
+import cloneDeep from 'lodash/cloneDeep';
 import calcState from '../../GlobalState/calcState';
 import outputState from '../../GlobalState/outputState';
 import coreState from '../../GlobalState/coreState';

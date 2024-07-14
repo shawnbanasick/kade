@@ -22,19 +22,15 @@ const PCAButton = () => {
   );
   const updateIsFactorsButtonGreen = appState((state) => state.updateIsFactorsButtonGreen);
 
-  function handleClick() {
-    updateCalculatingPca(true);
-    updateActivePcaButton(true);
-    updateIsCentroidRevealButtonDisabled(true);
-    updateIsPcaButtonDisabled(true);
-    updateShowKeepFacForRotButton(true);
-
-    // to allow time for the spinner to display
-    setTimeout(() => {
-      pcaDispatch();
-    }, 10);
-    updateIsFactorsButtonGreen(true);
-  }
+  const handleClick = async () => {
+    await updateCalculatingPca(true);
+    await updateActivePcaButton(true);
+    await updateIsPcaButtonDisabled(true);
+    await updateShowKeepFacForRotButton(true);
+    await updateIsCentroidRevealButtonDisabled(true);
+    await pcaDispatch();
+    await updateIsFactorsButtonGreen(true);
+  };
 
   return (
     <div>

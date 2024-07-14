@@ -1,5 +1,5 @@
 import checkIfDistinguishingOrConsensus from './3_checkIfDistinguishingOrConsensus';
-import { cloneDeep } from 'lodash/cloneDeep';
+import cloneDeep from 'lodash/cloneDeep';
 
 const getCribSheetsRankedHigherThanOtherFactors = (
   j,

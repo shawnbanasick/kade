@@ -6,8 +6,8 @@ const GeneralButton = styled.button`
   justify-items: center;
   box-shadow: none;
   min-height: 40px;
-  height: auto;
-  width: auto;
+  height: ${(props) => props.height || 'auto'};
+  width: ${(props) => props.width || 'auto'};
   text-align: center;
   font-size: 16px;
   font-family: Helvetica, sans-serif;
@@ -34,7 +34,7 @@ const GeneralButton = styled.button`
   background-color: ${(props) => (props.$isActive ? 'var(--main-theme-color)' : '#d6dbe0')};
 
   box-shadow: ${(props) =>
-    props.isActive
+    props.$isActive
       ? 'inset 0 0 0 2px #666, 0 0 1px transparent'
       : 'inset 0 0 0 0px #666, 0 0 0px transparent'};
 

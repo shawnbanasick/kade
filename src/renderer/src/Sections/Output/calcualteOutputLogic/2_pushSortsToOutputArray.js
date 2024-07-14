@@ -4,7 +4,7 @@ import standardDeviation from '../../../Utils/standardDeviation';
 import calcState from '../../GlobalState/calcState';
 import coreState from '../../GlobalState/coreState';
 import i18n from 'i18next';
-import { cloneDeep } from 'lodash/cloneDeep';
+import cloneDeep from 'lodash/cloneDeep';
 
 const pushSortsToOutputArray = function (outputData, sheetNamesXlsx, colSizes) {
   // get translations

@@ -1,6 +1,6 @@
 import calcState from '../../GlobalState/calcState';
 import coreState from '../../GlobalState/coreState';
-import { cloneDeep } from 'lodash/cloneDeep';
+import cloneDeep from 'lodash/cloneDeep';
 
 function assignFactorScores(zScoreArray) {
   // getState

@@ -10,60 +10,6 @@ import { useTranslation } from 'react-i18next';
 import VarimaxHeywoodWarning from './RotationButtons/VarimaxHeywoodWarning';
 import rotationState from '../GlobalState/rotationState';
 
-let showKeepFacForRotButton;
-
-const getPanes = (
-  optionsTrans,
-  varimaxTrans,
-  judgmentalTrans,
-  numberFactorsKeepTrans,
-  extractFactorsFirstTrans
-) => {
-  return [
-    {
-      menuItem: optionsTrans,
-      render: () => (
-        <Tab.Pane>
-          <DataWindow1>
-            {showKeepFacForRotButton ? (
-              <DropdownText>{numberFactorsKeepTrans} </DropdownText>
-            ) : (
-              <DropdownText>{extractFactorsFirstTrans}</DropdownText>
-            )}
-            <ButtonBar>
-              <FactorSelectButtons />
-              <FactorSelectButtonModal />
-            </ButtonBar>
-            <FactorsKeptNotification />
-          </DataWindow1>
-        </Tab.Pane>
-      ),
-    },
-    {
-      menuItem: varimaxTrans,
-      render: () => (
-        <Tab.Pane>
-          <DataWindow2>
-            <FireVarimaxButton />
-            <VarimaxHeywoodWarning />
-          </DataWindow2>
-        </Tab.Pane>
-      ),
-    },
-    {
-      menuItem: judgmentalTrans,
-      render: () => (
-        <Tab.Pane>
-          <DataWindow2>
-            <InitializeJudgementalButton />
-            <JudgementalRotationContainer />
-          </DataWindow2>
-        </Tab.Pane>
-      ),
-    },
-  ];
-};
-
 const Rotation = () => {
   const { t } = useTranslation();
 
@@ -73,6 +19,61 @@ const Rotation = () => {
   const judgmentalTrans = t('Judgmental');
   const numberFactorsKeepTrans = t('Number of factors to keep for rotation');
   const extractFactorsFirstTrans = t('Extract factors first');
+  const updateRotationActiveTabIndex = rotationState((state) => state.updateRotationActiveTabIndex);
+  const rotationActiveTabIndex = rotationState((state) => state.rotationActiveTabIndex);
+  const showKeepFacForRotButton = rotationState((state) => state.showKeepFacForRotButton);
+
+  const getPanes = (
+    optionsTrans,
+    varimaxTrans,
+    judgmentalTrans,
+    numberFactorsKeepTrans,
+    extractFactorsFirstTrans
+  ) => {
+    return [
+      {
+        menuItem: optionsTrans,
+        render: () => (
+          <Tab.Pane>
+            <DataWindow1>
+              {showKeepFacForRotButton ? (
+                <DropdownText>{numberFactorsKeepTrans} </DropdownText>
+              ) : (
+                <DropdownText>{extractFactorsFirstTrans}</DropdownText>
+              )}
+              <ButtonBar>
+                <FactorSelectButtons />
+                <FactorSelectButtonModal />
+              </ButtonBar>
+              <FactorsKeptNotification />
+            </DataWindow1>
+          </Tab.Pane>
+        ),
+      },
+      {
+        menuItem: varimaxTrans,
+        render: () => (
+          <Tab.Pane>
+            <DataWindow2>
+              <FireVarimaxButton />
+              <VarimaxHeywoodWarning />
+            </DataWindow2>
+          </Tab.Pane>
+        ),
+      },
+      {
+        menuItem: judgmentalTrans,
+        render: () => (
+          <Tab.Pane>
+            <DataWindow2>
+              <InitializeJudgementalButton />
+              <JudgementalRotationContainer />
+            </DataWindow2>
+          </Tab.Pane>
+        ),
+      },
+    ];
+  };
 
   const panes = getPanes(
     optionsTrans,
@@ -83,12 +84,10 @@ const Rotation = () => {
   );
 
   const handleTabChange = (e, { activeIndex }) => {
-    rotationState.setState({ rotationActiveTabIndex: activeIndex });
+    updateRotationActiveTabIndex(activeIndex);
   };
 
   // getState
-  const rotationActiveTabIndex = rotationState.getState().rotationActiveTabIndex;
-  showKeepFacForRotButton = rotationState.getState().showKeepFacForRotButton;
   return (
     <MainContent>
       <Tab

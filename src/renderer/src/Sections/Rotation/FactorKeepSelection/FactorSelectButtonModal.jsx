@@ -12,6 +12,22 @@ import factorState from '../../GlobalState/factorState';
 
 const FactorSelectButtonModal = () => {
   const { t } = useTranslation();
+  // getState
+  const numFactorsKept = rotationState((state) => state.numFactorsKeptForRot);
+  const projectHistoryArray = projectHistoryState((state) => state.projectHistoryArray);
+  let splitFactorsArray = loadingState((state) => state.splitFactorsArray);
+  const updateSplitFactorsArray = loadingState((state) => state.updateSplitFactorsArray);
+  const updateSplitFactorsArrayArchive = loadingState(
+    (state) => state.updateSplitFactorsArrayArchive
+  );
+  const updateProjectHistoryArray = projectHistoryState((state) => state.updateProjectHistoryArray);
+  const updateIsLoadingFactorsKept = loadingState((state) => state.updateIsLoadingFactorsKept);
+  const updateIsFacSelectDisabled = rotationState((state) => state.updateIsFacSelectDisabled);
+  const updateShouldDisplayFacKept = rotationState((state) => state.updateShouldDisplayFacKept);
+  const updateShowLoadingsTable = loadingState((state) => state.updateShowLoadingsTable);
+  const updateArchiveCounter = rotationState((state) => state.updateArchiveCounter);
+  let archiveCounter = rotationState((state) => state.archiveCounter);
+  const factorMatrix = factorState((state) => state.factorMatrix);
 
   const [localStore, setLocalStore] = useState({
     isActive: false,
@@ -19,22 +35,7 @@ const FactorSelectButtonModal = () => {
   });
 
   const handleOpen = () => {
-    // getState
-    const numFactorsKept = rotationState((state) => state.numFactorsKeptForRot);
-    const projectHistoryArray = projectHistoryState((state) => state.projectHistoryArray);
-    let splitFactorsArray = loadingState((state) => state.splitFactorsArray);
-    const updateSplitFactorsArray = loadingState((state) => state.updateSplitFactorsArray);
-    const updateSplitFactorsArrayArchive = loadingState(
-      (state) => state.updateSplitFactorsArrayArchive
-    );
-    const updateProjectHistoryArray = projectHistoryState(
-      (state) => state.updateProjectHistoryArray
-    );
-    const updateIsLoadingFactorsKept = loadingState((state) => state.updateIsLoadingFactorsKept);
-    const updateIsFacSelectDisabled = rotationState((state) => state.updateIsFacSelectDisabled);
-    const updateShouldDisplayFacKept = rotationState((state) => state.updateShouldDisplayFacKept);
-    const updateShowLoadingsTable = loadingState((state) => state.updateShowLoadingsTable);
-    const updateArchiveCounter = rotationState((state) => state.updateArchiveCounter);
+    console.log('clicked');
 
     if (isNaN(numFactorsKept)) {
       setLocalStore({ ...localStore, modalOpenSelect: false });
@@ -66,7 +67,7 @@ const FactorSelectButtonModal = () => {
       updateIsLoadingFactorsKept(true);
 
       setTimeout(() => {
-        loadingsTableDataPrep(numFactorsKept);
+        // loadingsTableDataPrep(numFactorsKept);
       }, 10);
 
       // show loadings table
@@ -76,8 +77,7 @@ const FactorSelectButtonModal = () => {
       updateArchiveCounter(archiveCounter);
 
       // getState - archive values for undo function (ProjectHistory component)
-      let archiveCounter = rotationState((state) => state.archiveCounter);
-      const factorMatrix = factorState((state) => state.factorMatrix);
+
       archiveCounter += 1;
       const archiveName = `facMatrixArc${archiveCounter}`;
       sessionStorage.setItem(archiveName, JSON.stringify(factorMatrix));

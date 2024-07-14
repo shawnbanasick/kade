@@ -1,6 +1,4 @@
-import React from 'react';
 import styled from 'styled-components';
-
 import GeneralButton from '../../../Utils/GeneralButton';
 import { useTranslation } from 'react-i18next';
 import doHeywoodAdjustment from '../centroidLogic/horst55Logic/doHeywoodAdjustment';
@@ -39,6 +37,15 @@ const HeywoodCaseNotification = () => {
   const updateShowHeywoodCaseNotifications = factorState(
     (state) => state.updateShowHeywoodCaseNotifications
   );
+  const projectHistoryArray = projectHistoryState((state) => state.projectHistoryArray);
+  const heywoodParticipantsTextJoin = factorState((state) => state.heywoodParticipantsTextJoin);
+  const heywoodContinueButtonActive = factorState((state) => state.heywoodContinueButtonActive);
+  const heywoodAdjustButtonActive = factorState((state) => state.heywoodAdjustButtonActive);
+  const heywoodButtonDisabled = factorState((state) => state.heywoodButtonDisabled);
+  const showHeywoodCaseNotifications = factorState((state) => state.showHeywoodCaseNotifications);
+  const heywoodParticipantsCommunalities = factorState(
+    (state) => state.heywoodParticipantsCommunalityArray
+  );
 
   // set default state on first load
   updateHeywoodAdjustButtonActive(false);
@@ -49,7 +56,6 @@ const HeywoodCaseNotification = () => {
     updateIsCentroidExtractButtonDisabled(false);
 
     // remove previous log entry
-    const projectHistoryArray = projectHistoryState((state) => state.projectHistoryArray);
     projectHistoryArray.pop();
     updateProjectHistoryArray(projectHistoryArray);
 
@@ -61,9 +67,6 @@ const HeywoodCaseNotification = () => {
   };
 
   const handleContinueClick = () => {
-    const projectHistoryArray = projectHistoryState((state) => state.projectHistoryArray);
-    const heywoodParticipantsTextJoin = factorState((state) => state.heywoodParticipantsTextJoin);
-
     const projectLogText3 = `${i18n.t(
       'Heywood Case Participants'
     )}: ${heywoodParticipantsTextJoin}. ${i18n.t('Factor Loadings not adjusted')}.`;
@@ -97,13 +100,6 @@ const HeywoodCaseNotification = () => {
     updateHeywoodAdjustButtonActive(true);
   };
 
-  const heywoodContinueButtonActive = factorState((state) => state.heywoodContinueButtonActive);
-  const heywoodAdjustButtonActive = factorState((state) => state.heywoodAdjustButtonActive);
-  const heywoodButtonDisabled = factorState((state) => state.heywoodButtonDisabled);
-  const showHeywoodCaseNotifications = factorState((state) => state.showHeywoodCaseNotifications);
-  const heywoodParticipantsCommunalities = factorState(
-    (state) => state.heywoodParticipantsCommunalityArray
-  );
   const heywoodReselectButtonActive = false;
 
   if (showHeywoodCaseNotifications) {

@@ -8,8 +8,8 @@ const RotationButtonGroup = () => {
 
   // getState and initialize judgment rot button
   const shouldShowDiv = rotationState((state) => state.shouldShowJudgeRotDiv);
-  const updateShouldShowJudgeRotDiv = rotationState((state) => state.shouldShowJudgeRotDiv);
-  const updateJudgeButtonActive = rotationState((state) => state.judgeButtonActive);
+  const updateShouldShowJudgeRotDiv = rotationState((state) => state.updateShouldShowJudgeRotDiv);
+  const updateJudgeButtonActive = rotationState((state) => state.updateJudgeButtonActive);
   const shouldDisplay = rotationState((state) => state.shouldDisplayFacKept);
   const judgeButtonActive = rotationState((state) => state.judgeButtonActive);
   let varimaxButtonDisabled = rotationState((state) => state.varimaxButtonDisabled);
@@ -37,7 +37,7 @@ const RotationButtonGroup = () => {
         <div>
           <GeneralButton
             id="judgementalRotationButton"
-            isAactive={judgeButtonActive}
+            $isActive={judgeButtonActive}
             disabled={isDisabled}
             onClick={onJudgeClick}
           >

@@ -4,7 +4,7 @@ import calculateFactorLoadingSignificanceLevel from './3_calculateFactorLoadingS
 import rotationState from '../../GlobalState/rotationState';
 import loadingState from '../../GlobalState/loadingState';
 import coreState from '../../GlobalState/coreState';
-import { cloneDeep } from 'lodash/cloneDeep';
+import cloneDeep from 'lodash/cloneDeep';
 
 const getAutoflagBoolean = (addFlag, sigLevel2, testValue, othersValue) => {
   // getState
