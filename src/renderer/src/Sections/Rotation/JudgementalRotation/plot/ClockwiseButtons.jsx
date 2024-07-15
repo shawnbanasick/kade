@@ -4,11 +4,11 @@ import GeneralButton from '../../../../Utils/GeneralButton';
 import rotationState from '../../../GlobalState/rotationState';
 
 const ClockwiseButtons = (props) => {
+  const rotateByDegrees = rotationState((state) => state.rotateByDegrees);
+
   const handleClick = (event, baselineData) => {
     const direction = event.target.id;
     event.stopPropagation();
-    // get current setting of rotation degrees
-    const rotateByDegrees = rotationState((state) => state.rotateByDegrees);
     // call rotation
     calculateRotatedFactors(direction, rotateByDegrees, baselineData);
   };

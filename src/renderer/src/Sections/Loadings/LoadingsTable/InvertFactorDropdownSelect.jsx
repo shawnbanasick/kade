@@ -1,5 +1,5 @@
 import { Dropdown } from 'semantic-ui-react';
-import rotationState from '../../GlobalState/getRotationState';
+import rotationState from '../../GlobalState/rotationState';
 import loadingState from '../../GlobalState/loadingState';
 import { useTranslation } from 'react-i18next';
 

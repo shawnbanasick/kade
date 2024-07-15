@@ -83,7 +83,7 @@ const RotationButtonGroup = () => {
         <ContainerDiv>
           <VarHeywoodButton
             id="VariContinueButton"
-            isActive={variContinueButtonActive}
+            $isActive={variContinueButtonActive}
             disabled={variContinueButtonDisabled}
             onClick={onVariContClick}
           >
@@ -91,7 +91,7 @@ const RotationButtonGroup = () => {
           </VarHeywoodButton>
           <VarHeywoodButton
             id="VariAdjustButton"
-            isActive={variAdjustButtonActive}
+            $isActive={variAdjustButtonActive}
             disabled={variAdjustButtonDisabled}
             onClick={onVariAdjustClick}
           >
@@ -99,7 +99,7 @@ const RotationButtonGroup = () => {
           </VarHeywoodButton>
           <VarHeywoodButton
             id="VariPqmAdjustButton"
-            isActive={variPqmAdjustButtonActive}
+            $isActive={variPqmAdjustButtonActive}
             disabled={variPqmAdjustButtonDisabled}
             onClick={onVariPqmAdjustClick}
           >

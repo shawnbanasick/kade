@@ -1,5 +1,5 @@
-import React from 'react';
 import rotationState from '../../../GlobalState/rotationState';
+import { v4 as uuidv4 } from 'uuid';
 
 const styles = {
   stroke: 'black',
@@ -10,13 +10,15 @@ const styles = {
 };
 
 const showPopUp = (info) => {
-  rotationState.participantDataObject = info;
+  rotationState.setState({ participantDataObject: info });
 };
 
 const closePopUp = () => {
-  rotationState.participantDataObject = false;
+  rotationState.setState({ participantDataObject: false });
 };
 
+// todo - fix structure for eslint
+// eslint-disable-next-line
 const renderCircleText = (props) => (coords, index) => {
   const circleProps = {
     x: props.xScale(props.data[index].factor2),
@@ -27,6 +29,7 @@ const renderCircleText = (props) => (coords, index) => {
   };
   return (
     <text
+      key={uuidv4()}
       onMouseOver={() => showPopUp(props.data[index])}
       onMouseOut={() => closePopUp()}
       {...styles}
@@ -38,4 +41,6 @@ const renderCircleText = (props) => (coords, index) => {
   );
 };
 
-export default (props) => <g>{props.data.map(renderCircleText(props))}</g>;
+const CircleTextJudge = (props) => <g>{props.data.map(renderCircleText(props))}</g>;
+
+export default CircleTextJudge;

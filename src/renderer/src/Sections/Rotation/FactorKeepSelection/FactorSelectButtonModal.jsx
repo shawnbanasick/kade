@@ -67,7 +67,7 @@ const FactorSelectButtonModal = () => {
       updateIsLoadingFactorsKept(true);
 
       setTimeout(() => {
-        // loadingsTableDataPrep(numFactorsKept);
+        loadingsTableDataPrep(numFactorsKept);
       }, 10);
 
       // show loadings table

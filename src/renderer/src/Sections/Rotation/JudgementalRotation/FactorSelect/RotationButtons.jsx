@@ -3,27 +3,26 @@ import styled from 'styled-components';
 import RotationDegreeInput from './RotationDegreeInput';
 import GeneralButton from '../../../../Utils/GeneralButton';
 import rotationState from '../../../GlobalState/rotationState';
-import getRotationState from '../../../GlobalState/getRotationState';
 
 const RotationButtons = () => {
   // getState
-  const shouldDisplayDegreeButtonButtons = getRotationState('shouldShowJudgeRotDiv');
-  const highlightDegreeInputButton = getRotationState('highlightDegreeInputButton');
-  const updateHighlightDegreeInputButton = rotationState(
-    (state) => state.highlightDegreeInputButton
-  );
+  const shouldDisplayDegreeButtonButtons = rotationState((state) => state.shouldShowJudgeRotDiv);
+  const highlightDegreeInputButton = rotationState((state) => state.highlightDegreeInputButton);
 
   const highlightDegreeButton1 = rotationState((state) => state.highlightDegreeButton1);
   const highlightDegreeButton3 = rotationState((state) => state.highlightDegreeButton3);
   const highlightDegreeButton4 = rotationState((state) => state.highlightDegreeButton4);
   const highlightDegreeButton5 = rotationState((state) => state.highlightDegreeButton5);
 
-  const updateHighlightDegreeButton1 = rotationState((state) => state.highlightDegreeButton1);
-  const updateHighlightDegreeButton2 = rotationState((state) => state.highlightDegreeButton2);
-  const updateHighlightDegreeButton3 = rotationState((state) => state.highlightDegreeButton3);
-  const updateHighlightDegreeButton4 = rotationState((state) => state.highlightDegreeButton4);
-  const updateHighlightDegreeButton5 = rotationState((state) => state.highlightDegreeButton5);
-  const updateRotateByDegrees = rotationState((state) => state.rotateByDegrees);
+  const updateHighlightDegreeInputButton = rotationState(
+    (state) => state.updateHighlightDegreeInputButton
+  );
+  const updateHighlightDegreeButton1 = rotationState((state) => state.updateHighlightDegreeButton1);
+  const updateHighlightDegreeButton2 = rotationState((state) => state.updateHighlightDegreeButton2);
+  const updateHighlightDegreeButton3 = rotationState((state) => state.updateHighlightDegreeButton3);
+  const updateHighlightDegreeButton4 = rotationState((state) => state.updateHighlightDegreeButton4);
+  const updateHighlightDegreeButton5 = rotationState((state) => state.updateHighlightDegreeButton5);
+  const updateRotateByDegrees = rotationState((state) => state.updateRotateByDegrees);
 
   const [localStore, setLocalStore] = useState({
     rotationDegreeInput: '',
@@ -95,47 +94,46 @@ const RotationButtons = () => {
   if (shouldDisplayDegreeButtonButtons) {
     return (
       <ButtonsContainer>
-        <GenButton
-          as={GeneralButton}
+        <GeneralButton
           id={'Button1Degree'}
           $isActive={highlightDegreeButton1}
+          width="50px"
           onClick={handleOnclick}
           key={'f1'}
         >
           {`${1}\u00B0`}
-        </GenButton>
-        <GenButton
-          as={GeneralButton}
+        </GeneralButton>
+        <GeneralButton
           id={'Button5Degrees'}
+          width="50px"
           $isActive={highlightDegreeButton3}
           onClick={handleOnclick}
           key={'f3'}
         >
           {`${5}\u00B0`}
-        </GenButton>
-        <GenButton
-          as={GeneralButton}
+        </GeneralButton>
+        <GeneralButton
           id={'Button10Degrees'}
           $isActive={highlightDegreeButton4}
+          width="50px"
           onClick={handleOnclick}
           key={'f4'}
         >
           {`${10}\u00B0`}
-        </GenButton>
-        <GenButton
-          as={GeneralButton}
+        </GeneralButton>
+        <GeneralButton
           id={'Button90Degrees'}
           $isActive={highlightDegreeButton5}
+          width="50px"
           onClick={handleOnclick}
           key={'f5'}
         >
           {`${90}\u00B0`}
-        </GenButton>
+        </GeneralButton>
         <RotationDegreeInput
           name="rotationDegrees"
           value={localStore.rotationDegreeInput}
-          pressed={localStore.pressed}
-          $isActive={highlightDegreeInputButton}
+          active={highlightDegreeInputButton}
           onChangeCallback={getRotationDegreeFromUI}
         />
       </ButtonsContainer>
@@ -149,8 +147,4 @@ export default RotationButtons;
 const ButtonsContainer = styled.div`
   display: flex;
   flex-direction: row;
-`;
-
-const GenButton = styled.div`
-  width: 50px;
 `;

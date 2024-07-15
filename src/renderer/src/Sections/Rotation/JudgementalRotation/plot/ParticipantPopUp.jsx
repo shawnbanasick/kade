@@ -4,12 +4,12 @@ import rotationState from '../../../GlobalState/rotationState';
 
 const ParticipantPopUp = () => {
   const { t } = useTranslation();
+  // getState
+  const participantDataObject = rotationState((state) => state.participantDataObject);
 
   let respondent;
   let factor1Value;
   let factor2Value;
-  // getState
-  const participantDataObject = rotationState((state) => state.participantDataObject);
   if (participantDataObject !== false) {
     respondent = participantDataObject.respondent;
     factor1Value = participantDataObject.factor1;

@@ -5,6 +5,8 @@ const styles = {
   stroke: 'black',
   strokeWidth: 1.5,
 };
+
+// todo - fix structure for eslint
 // eslint-disable-next-line
 const renderCircles = (props) => (coords, index) => {
   const circleProps = {

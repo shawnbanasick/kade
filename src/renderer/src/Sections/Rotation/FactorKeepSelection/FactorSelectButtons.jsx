@@ -1,16 +1,15 @@
 import React from 'react';
-import styled from 'styled-components';
 import GeneralButton from '../../../Utils/GeneralButton';
-import rotationState from '../../GlobalState/rotationState';
-import loadingState from '../../GlobalState/loadingState';
-import appState from '../../GlobalState/appState';
-// import outputState from '../../GlobalState/outputState';
-import factorState from '../../GlobalState/factorState';
-import coreState from '../../GlobalState/coreState';
 import resetSection6 from '../../../Utils/resetSection6';
 import resetManualRotation from '../../../Utils/resetManualRotation';
 import resetBipolarFactors from '../../../Utils/resetBipolarFactors';
 import resetVarimax from '../../../Utils/resetVarimax';
+import rotationState from '../../GlobalState/rotationState';
+import loadingState from '../../GlobalState/loadingState';
+import appState from '../../GlobalState/appState';
+import factorState from '../../GlobalState/factorState';
+import coreState from '../../GlobalState/coreState';
+import outputState from '../../GlobalState/outputState';
 
 //todo - convert to functional component
 
@@ -54,6 +53,7 @@ const FactorSelectionForOutputButtons = () => {
   const numCentroidFactors = factorState((state) => state.numCentroidFactors);
   const showKeepFacForRotButton = rotationState((state) => state.showKeepFacForRotButton);
   const minNumFactors = coreState((state) => state.numQsorts);
+  const updateUserSelectedFactors = outputState((state) => state.updateUserSelectedFactors);
 
   const clearAllButtons = () => {
     updateFactor1Active(false);
@@ -101,6 +101,8 @@ const FactorSelectionForOutputButtons = () => {
     updateNumFactorsKeptForRot(value);
     updateShouldDisplayFacKept(false);
     updateShowLoadingsTable(false);
+
+    updateUserSelectedFactors([]);
 
     // hide section 6
     resetSection6();
@@ -235,8 +237,3 @@ const FactorSelectionForOutputButtons = () => {
   return null;
 };
 export default FactorSelectionForOutputButtons;
-
-const GeneralFacNumButton = styled.div`
-  height: 40px;
-  width: 50px;
-`;

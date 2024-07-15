@@ -1,4 +1,5 @@
 import rotationState from '../../../GlobalState/rotationState';
+import { v4 as uuidv4 } from 'uuid';
 
 const styles = {
   // fill: "white",
@@ -18,13 +19,15 @@ const getFillColor = (data) => {
 };
 
 const showPopUp = function (info) {
-  rotationState.participantDataObject = info;
+  rotationState.setState({ participantDataObject: info });
 };
 
 const closePopUp = function () {
-  rotationState.participantDataObject = false;
+  rotationState.setState({ participantDataObject: false });
 };
 
+// todo - fix structure for eslint
+// eslint-disable-next-line
 const renderCircles = (props) => (coords, index) => {
   const circleProps = {
     cx: props.xScale(props.data[index].factor2),
@@ -35,8 +38,10 @@ const renderCircles = (props) => (coords, index) => {
     text: props.data[index].num,
     // on:("mouseover", showPopUp())
   };
+
   return (
     <circle
+      key={uuidv4()}
       onMouseOver={() => showPopUp(props.data[index])}
       onMouseOut={() => closePopUp()}
       {...styles}
@@ -45,4 +50,6 @@ const renderCircles = (props) => (coords, index) => {
   );
 };
 
-export default (props) => <g>{props.data.map(renderCircles(props))}</g>;
+const dataCirclesJudge = (props) => <g>{props.data.map(renderCircles(props))}</g>;
+
+export default dataCirclesJudge;

@@ -6,7 +6,7 @@ const RotationDegreeInput = (props) => {
   };
 
   return (
-    <InputColumn isActive={props.isActive} pressed={props.pressed}>
+    <InputColumn active={props.active}>
       <StyledInput
         type="text"
         name={props.name}
@@ -29,13 +29,13 @@ const InputColumn = styled.div`
   height: 40px;
   border: none;
   padding-right: 1px;
-  background-color: ${(props) => (props.isActive ? 'var(--main-theme-color)' : '#d6dbe0')};
+  background-color: ${(props) => (props.active ? 'var(--main-theme-color)' : '#d6dbe0')};
 
   transition-duration: 0.3s;
   transition-property: box-shadow;
   transform: translateZ(0);
   box-shadow:
-    inset 0 0 0 4px ${(props) => (props.isActive ? 'var(--main-theme-color)' : '#d6dbe0')},
+    inset 0 0 0 4px ${(props) => (props.active ? 'var(--main-theme-color)' : '#d6dbe0')},
     0 0 1px 0.6;
 
   &:hover {

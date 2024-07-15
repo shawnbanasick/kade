@@ -9,15 +9,18 @@ import factorState from '../../../GlobalState/factorState';
 
 const JudgementalTitleDiv = () => {
   const { t } = useTranslation();
-
   const factorMatrix = factorState((state) => state.factorMatrix);
-  const baselineData = transposeMatrix(factorMatrix);
   const notifyForSavedRotation = rotationState((state) => state.notifyForSavedRotation);
+  const updateNotifyForSavedRotation = rotationState((state) => state.updateNotifyForSavedRotation);
+
+  const notify = async () => {
+    await updateNotifyForSavedRotation(false);
+    await toast.success(t('Rotation Data Saved to Loadings Table'), { autoClose: 5000 });
+  };
+
+  const baselineData = transposeMatrix(factorMatrix);
   if (notifyForSavedRotation) {
-    toast.success(t('Rotation Data Saved to Loadings Table'), {
-      autoClose: 5000,
-    });
-    rotationState.notifyForSavedRotation = false;
+    notify();
   }
 
   return (

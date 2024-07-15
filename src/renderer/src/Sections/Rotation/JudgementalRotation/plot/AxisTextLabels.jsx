@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import getRotationState from '../../../GlobalState/getRotationState';
+import { Component } from 'react';
+import rotationState from '../../../GlobalState/rotationState';
 import i18n from 'i18next';
 
 const styles = {
@@ -18,7 +18,7 @@ class AxisTextLables extends Component {
   render() {
     const size = this.props.width - this.props.padding;
     // getState
-    const abFactors = getRotationState('abFactors');
+    const abFactors = rotationState.getState().abFactors;
 
     const factorA = `${i18n.t('Factor')} ${abFactors[0]}`;
     const factorB = `${i18n.t('Factor')} ${abFactors[1]}`;

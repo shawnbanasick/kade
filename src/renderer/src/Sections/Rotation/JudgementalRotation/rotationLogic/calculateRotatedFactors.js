@@ -50,7 +50,7 @@ const calculateRotatedFactors = (direction, rotateByDegrees, baselineData) => {
 
   // returns dataValuesArray for D3 chart
   const d3Prep = doD3ChartDataPrep(arrayWithCommunalities);
-  rotationState.d3RotChartData = d3Prep;
+  rotationState.setState({ d3RotChartData: d3Prep });
 
   rotationTablePrep(d3Prep, baselineData);
 

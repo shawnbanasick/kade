@@ -10,7 +10,7 @@ const counterCockwiseRotation = (calculateRotationsArray, rotationByDegree) => {
   const cosDegreesValue = calcCosDegrees(rotationByDegree);
   let rotationDegrees = rotationState.getState().rotationDegrees;
   rotationDegrees -= rotationByDegree;
-  rotationState.rotationDegrees = rotationDegrees;
+  rotationState.setState({ rotationDegrees: rotationDegrees });
 
   let valueA;
   let valueB;

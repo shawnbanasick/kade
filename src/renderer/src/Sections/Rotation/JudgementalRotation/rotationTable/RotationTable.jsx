@@ -1,15 +1,11 @@
-import { AgGridReact } from '@ag-grid-community/react';
-import { AllCommunityModules } from '@ag-grid-community/all-modules';
+import { AgGridReact } from 'ag-grid-react';
+import 'ag-grid-community/styles/ag-grid.css';
+import 'ag-grid-community/styles/ag-theme-alpine.css';
 import { useTranslation } from 'react-i18next';
 import correlationState from '../../../GlobalState/correlationState';
 
 const RotationTable = (props) => {
   const { t } = useTranslation();
-
-  // const onGridReady = params => {
-  //   gridApi = params.api;
-  //   columnApi = params.columnApi;
-  // };
 
   // getState
   const colMaxWidth = correlationState((state) => state.colMaxWidth);
@@ -21,6 +17,12 @@ const RotationTable = (props) => {
   if (heightVal > maxHeight) {
     heightVal = maxHeight;
   }
+
+  let gridOptions = {
+    suppressRowHoverHighlight: false,
+    columnHoverHighlight: true,
+    enableSorting: true,
+  };
 
   const containerStyle = {
     marginTop: 10,
@@ -34,7 +36,13 @@ const RotationTable = (props) => {
         {t('Highlighting levels are set by the flagging options in Section 6 Loadings')}{' '}
       </p>
       <div style={containerStyle} className="ag-theme-fresh">
-        <AgGridReact columnDefs={colDefs} rowData={rowData} modules={AllCommunityModules} />
+        <AgGridReact
+          columnDefs={colDefs}
+          rowData={rowData}
+          gridOptions={gridOptions}
+          animateRows={true}
+          enableBrowserTooltips={true}
+        />
       </div>
     </div>
   );

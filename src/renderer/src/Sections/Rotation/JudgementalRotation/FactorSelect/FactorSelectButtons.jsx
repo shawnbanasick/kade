@@ -11,22 +11,57 @@ import transposeMatrix from '../../../../Utils/transposeMatrix';
 import GeneralButton from '../../../../Utils/GeneralButton';
 import { useTranslation } from 'react-i18next';
 import rotationState from '../../../GlobalState/rotationState';
-import getRotationState from '../../../GlobalState/getRotationState';
-import getFactorState from '../../../GlobalState/getFactorState';
+import factorState from '../../../GlobalState/factorState';
 
 const FactorSelectButtons = (props) => {
   const { t } = useTranslation();
+  // getState
+  let userSelectedRotFactors = rotationState((state) => state.userSelectedRotFactors);
+  let abFactors = rotationState((state) => state.abFactors);
+  const factorMatrix1 = factorState((state) => state.factorMatrix);
+  const shouldDisplayRotFactorButtons = rotationState((state) => state.shouldShowJudgeRotDiv);
+  const numFactorsKeptForRotation = rotationState((state) => state.numFactorsKeptForRot);
+  const showRotFactorSelectWarning = rotationState((state) => state.showRotFactorSelectWarning);
+
+  const updateHighlightRotfactor1 = rotationState((state) => state.updateHighlightRotfactor1);
+  const updateHighlightRotfactor2 = rotationState((state) => state.updateHighlightRotfactor2);
+  const updateHighlightRotfactor3 = rotationState((state) => state.updateHighlightRotfactor3);
+  const updateHighlightRotfactor4 = rotationState((state) => state.updateHighlightRotfactor4);
+  const updateHighlightRotfactor5 = rotationState((state) => state.updateHighlightRotfactor5);
+  const updateHighlightRotfactor6 = rotationState((state) => state.updateHighlightRotfactor6);
+  const updateHighlightRotfactor7 = rotationState((state) => state.updateHighlightRotfactor7);
+  const updateHighlightRotfactor8 = rotationState((state) => state.updateHighlightRotfactor8);
+
+  const highlightRotfactor1 = rotationState((state) => state.highlightRotfactor1);
+  const highlightRotfactor2 = rotationState((state) => state.highlightRotfactor2);
+  const highlightRotfactor3 = rotationState((state) => state.highlightRotfactor3);
+  const highlightRotfactor4 = rotationState((state) => state.highlightRotfactor4);
+  const highlightRotfactor5 = rotationState((state) => state.highlightRotfactor5);
+  const highlightRotfactor6 = rotationState((state) => state.highlightRotfactor6);
+  const highlightRotfactor7 = rotationState((state) => state.highlightRotfactor7);
+  const highlightRotfactor8 = rotationState((state) => state.highlightRotfactor8);
+
+  const updateUserSelectedRotFactors = rotationState((state) => state.updateUserSelectedRotFactors);
+  const updateAbFactors = rotationState((state) => state.updateAbFactors);
+  const updateShowScatterPlotTableDiv = rotationState(
+    (state) => state.updateShowScatterPlotTableDiv
+  );
+  const updateD3RotChartData = rotationState((state) => state.updateD3RotChartData);
+  const updateTempRotFacStateArray = rotationState((state) => state.updateTempRotFacStateArray);
+  const updateRotationDegrees = rotationState((state) => state.updateRotationDegrees);
+  const updateShowRotFactorSelectWarning = rotationState(
+    (state) => state.updateShowRotFactorSelectWarning
+  );
 
   const handleSubmit = () => {
     // getState - if only 1 factor selected show modal
-    rotationState.rotationDegrees = 0;
-    const userSelectedRotFactors = getRotationState('userSelectedRotFactors');
+    updateRotationDegrees(0);
     if (userSelectedRotFactors.length < 2) {
-      rotationState.showRotFactorSelectWarning = true;
+      updateShowRotFactorSelectWarning(true);
     } else {
       // show scatter plot and table
-      rotationState.showRotFactorSelectWarning = false;
-      rotationState.showScatterPlotTableDiv = true;
+      updateShowRotFactorSelectWarning(false);
+      updateShowScatterPlotTableDiv(true);
     }
   };
 
@@ -34,25 +69,23 @@ const FactorSelectButtons = (props) => {
   const handleClick = (event, baselineData) => {
     const factor = event.target.id;
     // getState
-    let userSelectedRotFactors = getRotationState('userSelectedRotFactors');
-    let abFactors = getRotationState('abFactors');
 
     // clear all buttons
     if (factor === 'clearAllRotFacs') {
-      rotationState.rotationDegrees = 0;
-      userSelectedRotFactors = [];
-      abFactors = [];
-      rotationState.highlightRotfactor1 = false;
-      rotationState.highlightRotfactor2 = false;
-      rotationState.highlightRotfactor3 = false;
-      rotationState.highlightRotfactor4 = false;
-      rotationState.highlightRotfactor5 = false;
-      rotationState.highlightRotfactor6 = false;
-      rotationState.highlightRotfactor7 = false;
-      rotationState.highlightRotfactor8 = false;
-      rotationState.userSelectedRotFactors = userSelectedRotFactors;
-      rotationState.abFactors = abFactors;
-      rotationState.showScatterPlotTableDiv = false;
+      updateRotationDegrees(0);
+      // userSelectedRotFactors = [];
+      // abFactors = [];
+      updateHighlightRotfactor1(false);
+      updateHighlightRotfactor2(false);
+      updateHighlightRotfactor3(false);
+      updateHighlightRotfactor4(false);
+      updateHighlightRotfactor5(false);
+      updateHighlightRotfactor6(false);
+      updateHighlightRotfactor7(false);
+      updateHighlightRotfactor8(false);
+      updateUserSelectedRotFactors([]);
+      updateAbFactors([]);
+      updateShowScatterPlotTableDiv(false);
     } else {
       // if the button hasn't already been selected
       if (!includes(userSelectedRotFactors, factor)) {
@@ -69,14 +102,38 @@ const FactorSelectButtons = (props) => {
           const factor2 = factor.replace(' ', '');
           // const newFactorId = `highlightRot${  factor2}`;
           const newFactorId = `highlightRot${factor2}`;
-          rotationState[newFactorId] = true;
-          rotationState.userSelectedRotFactors = userSelectedRotFactors;
-          rotationState.abFactors = abFactors;
+
+          if (newFactorId === 'highlightRotfactor1') {
+            updateHighlightRotfactor1(true);
+          }
+          if (newFactorId === 'highlightRotfactor2') {
+            updateHighlightRotfactor2(true);
+          }
+          if (newFactorId === 'highlightRotfactor3') {
+            updateHighlightRotfactor3(true);
+          }
+          if (newFactorId === 'highlightRotfactor4') {
+            updateHighlightRotfactor4(true);
+          }
+          if (newFactorId === 'highlightRotfactor5') {
+            updateHighlightRotfactor5(true);
+          }
+          if (newFactorId === 'highlightRotfactor6') {
+            updateHighlightRotfactor6(true);
+          }
+          if (newFactorId === 'highlightRotfactor7') {
+            updateHighlightRotfactor7(true);
+          }
+          if (newFactorId === 'highlightRotfactor8') {
+            updateHighlightRotfactor8(true);
+          }
+
+          updateUserSelectedRotFactors(userSelectedRotFactors);
+          updateAbFactors(abFactors);
         }
         // if length = 2, fire calculations
         if (userSelectedRotFactors.length === 2) {
           // matrix in factor  format
-          const factorMatrix1 = getFactorState('factorMatrix');
 
           // transpose matrix to table display format
           const factorMatrixTransposed = transposeMatrix(factorMatrix1);
@@ -92,8 +149,8 @@ const FactorSelectButtons = (props) => {
           const d3Prep = doD3ChartDataPrep(arrayWithCommunalities);
 
           // mutate state
-          rotationState.d3RotChartData = d3Prep;
-          rotationState.tempRotFacStateArray = factorMatrixTransposed;
+          updateD3RotChartData(d3Prep);
+          updateTempRotFacStateArray(factorMatrixTransposed);
 
           // format table data and paint 2-factor table
           rotationTablePrep(d3Prep, baselineData);
@@ -106,10 +163,6 @@ const FactorSelectButtons = (props) => {
     }
   };
 
-  // getState
-  const shouldDisplayRotFactorButtons = getRotationState('shouldShowJudgeRotDiv');
-  const numFactorsKeptForRotation = getRotationState('numFactorsKeptForRot');
-  const showRotFactorSelectWarning = getRotationState('showRotFactorSelectWarning');
   const buttonsToRenderArray = [];
   const baselineData = props.baselineData;
   for (let i = 0; i < 8; i++) {
@@ -132,92 +185,92 @@ const FactorSelectButtons = (props) => {
     return (
       <React.Fragment>
         {show1 && (
-          <GenButton
-            as={GeneralButton}
+          <GeneralButton
             id={'factor 1'}
-            isActive={rotationState.highlightRotfactor1}
+            $isActive={highlightRotfactor1}
+            width={'50px'}
             onClick={(e) => handleClick(e, baselineData)}
             key={'f1'}
           >
             1
-          </GenButton>
+          </GeneralButton>
         )}
         {show2 && (
-          <GenButton
-            as={GeneralButton}
+          <GeneralButton
             id={'factor 2'}
-            isActive={rotationState.highlightRotfactor2}
+            $isActive={highlightRotfactor2}
+            width={'50px'}
             onClick={(e) => handleClick(e, baselineData)}
             key={'f2'}
           >
             2
-          </GenButton>
+          </GeneralButton>
         )}
         {show3 && (
-          <GenButton
-            as={GeneralButton}
+          <GeneralButton
             id={'factor 3'}
-            isActive={rotationState.highlightRotfactor3}
+            $isActive={highlightRotfactor3}
+            width={'50px'}
             onClick={(e) => handleClick(e, baselineData)}
             key={'f3'}
           >
             3
-          </GenButton>
+          </GeneralButton>
         )}
         {show4 && (
-          <GenButton
-            as={GeneralButton}
+          <GeneralButton
             id={'factor 4'}
-            isActive={rotationState.highlightRotfactor4}
+            width={'50px'}
+            $isActive={highlightRotfactor4}
             onClick={(e) => handleClick(e, baselineData)}
             key={'f4'}
           >
             4
-          </GenButton>
+          </GeneralButton>
         )}
         {show5 && (
-          <GenButton
-            as={GeneralButton}
+          <GeneralButton
             id={'factor 5'}
-            isActive={rotationState.highlightRotfactor5}
+            $isActive={highlightRotfactor5}
+            width={'50px'}
             onClick={(e) => handleClick(e, baselineData)}
             key={'f5'}
           >
             5
-          </GenButton>
+          </GeneralButton>
         )}
         {show6 && (
-          <GenButton
-            as={GeneralButton}
+          <GeneralButton
             id={'factor 6'}
-            isActive={rotationState.highlightRotfactor6}
+            $isActive={highlightRotfactor6}
+            width={'50px'}
             onClick={(e) => handleClick(e, baselineData)}
             key={'f6'}
           >
             6
-          </GenButton>
+          </GeneralButton>
         )}
         {show7 && (
-          <GenButton
-            as={GeneralButton}
+          <GeneralButton
             id={'factor 7'}
-            isActive={rotationState.highlightRotfactor7}
+            $isActive={highlightRotfactor7}
+            width={'50px'}
             onClick={(e) => handleClick(e, baselineData)}
             key={'f7'}
           >
             7
-          </GenButton>
+          </GeneralButton>
         )}
         {show8 && (
-          <GenButton
-            as={GeneralButton}
+          <GeneralButton
             id={'factor 8'}
-            isActive={rotationState.highlightRotfactor8}
+            $isActive={highlightRotfactor8}
+            width={'50px'}
             onClick={(e) => handleClick(e, baselineData)} // e => this.handleClick(e, baselineData)
             key={'f8'}
           >
             8
-          </GenButton>
+          </GeneralButton>
         )}
         <GeneralButton className="wrapper1" id="clearAllRotFacs" onClick={handleClick}>
           {t('Clear')}
