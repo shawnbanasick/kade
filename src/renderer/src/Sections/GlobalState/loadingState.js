@@ -78,9 +78,14 @@ const loadingState = create(
         value: 8,
       },
     ],
-
     userSelectedSigLevel: 1.96,
+    temp_gridColDefsLoadingsTable: [],
+    temp_gridRowDataLoadingsTable: [],
 
+    updateTempGridColDefsLoadingsTable: (inputValue) =>
+      set({ temp_gridColDefsLoadingsTable: inputValue }),
+    updateTempGridRowDataLoadingsTable: (inputValue) =>
+      set({ temp_gridRowDataLoadingsTable: inputValue }),
     updateAutoflagButtonColor: (inputValue) => set({ autoflagButtonColor: inputValue }),
     updateAutoFlagHistory: (inputValue) => set({ autoFlagHistory: inputValue }),
     updateBipolarDisabled: (inputValue) => set({ bipolarDisabled: inputValue }),
