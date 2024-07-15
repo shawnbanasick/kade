@@ -63,20 +63,16 @@ const SigLevelDropdown = () => {
   const updateAutoflagButtonColor = loadingState((state) => state.updateAutoflagButtonColor);
 
   const handleChange = (e, { value }) => {
-    let tempObj = {};
-    tempObj.value = value;
-    setLocalStore(tempObj);
+    setLocalStore({ value: value });
     updateUserSelectedSigLevel(value);
     updateAutoflagButtonColor('orange');
   };
-
-  const value = localStore.value;
 
   return (
     <Dropdown
       className="autoflagDropdown"
       onChange={handleChange}
-      defaultValue={value}
+      defaultValue={localStore.value}
       openOnFocus
       button
       simple

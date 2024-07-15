@@ -26,7 +26,7 @@ const RotationButtons = () => {
 
   const [localStore, setLocalStore] = useState({
     rotationDegreeInput: '',
-    pressed: false,
+    pressed: +false,
   });
 
   const getRotationDegreeFromUI = (event) => {
@@ -39,7 +39,7 @@ const RotationButtons = () => {
       setLocalStore({ ...localStore, rotationDegreeInput: '' });
       return;
     }
-    setLocalStore({ pressed: true, rotationDegreeInput: +value });
+    setLocalStore({ pressed: +true, rotationDegreeInput: +value });
 
     updateHighlightDegreeInputButton(true);
 
@@ -63,28 +63,28 @@ const RotationButtons = () => {
     updateHighlightDegreeButton5(false);
 
     if (buttonId === 'Button1Degree') {
-      setLocalStore({ pressed: false, rotationDegreeInput: '' });
+      setLocalStore({ pressed: +false, rotationDegreeInput: '' });
       updateHighlightDegreeInputButton(false);
       updateHighlightDegreeButton1(true);
       updateRotateByDegrees(1);
     }
 
     if (buttonId === 'Button5Degrees') {
-      setLocalStore({ pressed: false, rotationDegreeInput: '' });
+      setLocalStore({ pressed: +false, rotationDegreeInput: '' });
       updateHighlightDegreeInputButton(false);
       updateHighlightDegreeButton3(true);
       updateRotateByDegrees(5);
     }
 
     if (buttonId === 'Button10Degrees') {
-      setLocalStore({ pressed: false, rotationDegreeInput: '' });
+      setLocalStore({ pressed: +false, rotationDegreeInput: '' });
       updateHighlightDegreeInputButton(false);
       updateHighlightDegreeButton4(true);
       updateRotateByDegrees(10);
     }
 
     if (buttonId === 'Button90Degrees') {
-      setLocalStore({ pressed: false, rotationDegreeInput: '' });
+      setLocalStore({ pressed: +false, rotationDegreeInput: '' });
       updateHighlightDegreeInputButton(false);
       updateHighlightDegreeButton5(true);
       updateRotateByDegrees(90);

@@ -10,6 +10,7 @@ const resetSection6 = () => {
   outputState.setState({ showDownloadOutputButtons: false });
   outputState.setState({ displayFactorVisualizations: false });
   outputState.setState({ showDocxOptions: false });
+  outputState.setState({ userSelectedFactors: [] });
   return;
 };
 

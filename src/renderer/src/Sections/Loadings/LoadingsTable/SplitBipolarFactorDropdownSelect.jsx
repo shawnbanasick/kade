@@ -1,22 +1,22 @@
 import { Dropdown } from 'semantic-ui-react';
-import loadingState from '../../GlobalState/loadingState';
 import { useTranslation } from 'react-i18next';
-
-const saveDropdownValueToState = (event, data) => {
-  if (data === null || data === undefined) {
-    return;
-  }
-  const factorToSplit = data.value;
-  loadingState.factorToSplit = factorToSplit;
-};
+import loadingState from '../../GlobalState/loadingState';
 
 const InvertFactorDropdownSelect = () => {
   const { t } = useTranslation();
+  let splitFactorsArray = loadingState((state) => state.splitFactorsArray);
+  let bipolarFactorsArray = loadingState((state) => state.bipolarFactorsArray);
+  const updateFactorToSplit = loadingState((state) => state.updateFactorToSplit);
+
+  const saveDropdownValueToState = (event, data) => {
+    if (data === null || data === undefined) {
+      return;
+    }
+    const factorToSplit = data.value;
+    updateFactorToSplit(factorToSplit);
+  };
 
   const getOptions = () => {
-    let splitFactorsArray = loadingState((state) => state.splitFactorsArray);
-    let bipolarFactorsArray = loadingState((state) => state.bipolarFactorsArray);
-
     if (bipolarFactorsArray.length > 0) {
       bipolarFactorsArray.forEach((item) => {
         splitFactorsArray = splitFactorsArray.filter((object) => object.value !== item);

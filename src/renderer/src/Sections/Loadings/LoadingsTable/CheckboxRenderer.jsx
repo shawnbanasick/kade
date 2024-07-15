@@ -1,7 +1,4 @@
 import React from 'react';
-// import { Checkbox } from "semantic-ui-react";
-// import outputState from "../../GlobalState/outputState";
-// import loadingState from "../../GlobalState/loadingState";
 import styled from 'styled-components';
 
 class CheckboxRenderer extends React.Component {
@@ -13,7 +10,7 @@ class CheckboxRenderer extends React.Component {
     this.handleCheckboxChange = this.handleCheckboxChange.bind(this);
   }
 
-  handleCheckboxChange(event) {
+  handleCheckboxChange() {
     this.props.data[this.props.colDef.field] = !this.props.data[this.props.colDef.field];
     this.setState({
       value: this.props.data[this.props.colDef.field],

@@ -1,8 +1,8 @@
 import { Button, Header, Modal } from 'semantic-ui-react';
 import splitBipolarFactor from '../loadingsLogic/splitBipolarFactor';
 import SplitBipolarFactorDropdownSelect from './SplitBipolarFactorDropdownSelect';
-import loadingState from '../../GlobalState/loadingState';
 import { useTranslation } from 'react-i18next';
+import loadingState from '../../GlobalState/loadingState';
 
 const SplitBipolarFactorButtonModal = () => {
   const { t } = useTranslation();

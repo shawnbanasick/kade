@@ -10,35 +10,54 @@ import outputState from '../../GlobalState/outputState';
 import loadingState from '../../GlobalState/loadingState';
 import factorState from '../../GlobalState/factorState';
 import projectHistoryState from '../../GlobalState/projectHistoryState';
+import resetSection6 from '../../../Utils/resetSection6';
+import resetManualRotation from '../../../Utils/resetManualRotation';
+import resetVarimax from '../../../Utils/resetVarimax';
 
 const ProjectHistory = () => {
   const { t } = useTranslation();
 
+  const updateSendDataToOutputButtonColor = loadingState(
+    (state) => state.updateSendDataToOutputButtonColor
+  );
+
+  let archiveCounter = rotationState((state) => state.archiveCounter);
+  const projectHistoryArray = projectHistoryState((state) => state.projectHistoryArray);
+  const numFactors = rotationState((state) => state.numFactorsKeptForRot);
+  let bipolarSplitCount = loadingState((state) => state.bipolarSplitCount);
+  let splitFactorsArray = loadingState((state) => state.splitFactorsArrayArchive);
+
+  const updateBipolarFactorsArray = loadingState((state) => state.updateBipolarFactorsArray);
+  updateBipolarFactorsArray([]);
+  const updateSplitFactorsArray = loadingState((state) => state.updateSplitFactorsArray);
+  updateSplitFactorsArray([...splitFactorsArray]);
+  const updateArchiveCounter = rotationState((state) => state.updateArchiveCounter);
+  const updateProjectHistoryArray = projectHistoryState((state) => state.updateProjectHistoryArray);
+  const updateShouldDisplayFacKept = rotationState((state) => state.updateShouldDisplayFacKept);
+  const updateVarimaxButtonDisabled = rotationState((state) => state.updateVarimaxButtonDisabled);
+  const updateBipolarSplitCount = loadingState((state) => state.updateBipolarSplitCount);
+  const updateUserSelectedFactors = outputState((state) => state.updateUserSelectedFactors);
+  const updateShowLoadingsTable = loadingState((state) => state.updateShowLoadingsTable);
+  const updateBipolarDisabled = loadingState((state) => state.updateBipolarDisabled);
+  const updateBipolarIndexArray = loadingState((state) => state.updateBipolarIndexArray);
+
   const handleUndo = () => {
     // getState - get counter and adjust value
-    let archiveCounter = rotationState((state) => state.archiveCounter);
 
     archiveCounter -= 1;
     const previousFacMatrixArchive = `facMatrixArc${archiveCounter}`;
 
     // getState - remove entry from project history
-    const projectHistoryArray = projectHistoryState((state) => state.projectHistoryArray);
     const typeOfUndo3 = projectHistoryArray.pop();
     const typeOfUndo = typeOfUndo3.logType;
 
     // get the previous matrix from archive
     let previousFacMatrix = JSON.parse(sessionStorage.getItem(previousFacMatrixArchive));
 
-    // State
-    const numFactors = rotationState((state) => state.numFactorsKeptForRot);
-    // see if there are other bipolar splits
-    let bipolarSplitCount = loadingState((state) => state.bipolarSplitCount);
-
     if (typeOfUndo === 'Bipolar') {
       previousFacMatrix = JSON.parse(sessionStorage.getItem('undoAllBipolarMatrix'));
 
       // let bipolarFactorsArray = getLoadingState("bipolarFactorsArray");
-      let splitFactorsArray = loadingState((state) => state.splitFactorsArrayArchive);
 
       // bipolarFactorsArray.pop();
 
@@ -51,11 +70,6 @@ const ProjectHistory = () => {
         });
       }
       */
-
-      const updateBipolarFactorsArray = loadingState((state) => state.updateBipolarFactorsArray);
-      updateBipolarFactorsArray([]);
-      const updateSplitFactorsArray = loadingState((state) => state.updateSplitFactorsArray);
-      updateSplitFactorsArray([...splitFactorsArray]);
 
       const projectHistoryArrayLength = JSON.parse(
         sessionStorage.getItem('projectHistoryArrayLength')
@@ -99,98 +113,54 @@ const ProjectHistory = () => {
       updateVarimaxButtonDisabled(false);
 
       // hide section 6
-      outputState.showOutputFactorSelection = false;
-      outputState.userSelectedFactors = [];
-      outputState.shouldDisplayFactorVizOptions = false;
-      outputState.showFactorCorrelationsTable = false;
-      outputState.showStandardErrorsDifferences = false;
-      outputState.showFactorCharacteristicsTable = false;
-      outputState.showDownloadOutputButtons = false;
-      outputState.displayFactorVisualizations = false;
-      outputState.showDocxOptions = false;
-      loadingState.sendDataToOutputButtonColor = '#d6dbe0';
+      resetSection6();
+
+      updateSendDataToOutputButtonColor('#d6dbe0');
+      updateUserSelectedFactors([]);
+
       // reset manual rotation
-      rotationState.shouldShowJudgeRotDiv = false;
-      rotationState.judgeButtonActive = false;
-      rotationState.showScatterPlotTableDiv = false;
-      rotationState.abFactors = [];
-      rotationState.highlightRotfactor1 = false;
-      rotationState.highlightRotfactor2 = false;
-      rotationState.highlightRotfactor3 = false;
-      rotationState.highlightRotfactor4 = false;
-      rotationState.highlightRotfactor5 = false;
-      rotationState.highlightRotfactor6 = false;
-      rotationState.highlightRotfactor7 = false;
-      rotationState.highlightRotfactor8 = false;
-      rotationState.userSelectedRotFactors = [];
-      rotationState.showVarimaxHeywoodWarning = false;
-      rotationState.variContinueButtonActive = false;
-      rotationState.variContinueButtonDisabled = false;
-      rotationState.variAdjustButtonActive = false;
-      rotationState.variAdjustButtonDisabled = false;
-      rotationState.variPqmAdjustButtonActive = false;
-      rotationState.variPqmAdjustButtonDisabled = false;
+      resetManualRotation();
+
+      // reset varimax
+      resetVarimax();
       return; // early return varimax undo
     }
 
     if (typeOfUndo === 'Selected') {
-      rotationState.archiveCounter = archiveCounter;
-      projectHistoryState.projectHistoryArray = projectHistoryArray;
+      updateArchiveCounter(archiveCounter);
+      updateProjectHistoryArray(projectHistoryArray);
+
       // hide section 4
-      rotationState.shouldDisplayFacKept = false;
-      rotationState.varimaxButtonDisabled = false;
+      updateShouldDisplayFacKept(false);
+      updateVarimaxButtonDisabled(false);
+
       // reset manual rotation
-      rotationState.shouldShowJudgeRotDiv = false;
-      rotationState.judgeButtonActive = false;
-      rotationState.showScatterPlotTableDiv = false;
-      rotationState.abFactors = [];
-      rotationState.highlightRotfactor1 = false;
-      rotationState.highlightRotfactor2 = false;
-      rotationState.highlightRotfactor3 = false;
-      rotationState.highlightRotfactor4 = false;
-      rotationState.highlightRotfactor5 = false;
-      rotationState.highlightRotfactor6 = false;
-      rotationState.highlightRotfactor7 = false;
-      rotationState.highlightRotfactor8 = false;
-      rotationState.userSelectedRotFactors = [];
+      resetManualRotation();
+
       // hide section 5
-      loadingState.showLoadingsTable = false;
+      updateShowLoadingsTable(false);
+
       // hide section 6
-      outputState.showOutputFactorSelection = false;
-      outputState.shouldDisplayFactorVizOptions = false;
-      outputState.userSelectedFactors = [];
-      outputState.showFactorCorrelationsTable = false;
-      outputState.showStandardErrorsDifferences = false;
-      outputState.showFactorCharacteristicsTable = false;
-      outputState.showDownloadOutputButtons = false;
-      outputState.showDocxOptions = false;
-      outputState.displayFactorVisualizations = false;
-      loadingState.sendDataToOutputButtonColor = '#d6dbe0';
+      resetSection6();
+
+      // reset send data button (loading state)
+      updateSendDataToOutputButtonColor('#d6dbe0');
       return;
     }
 
     // default undo
-    rotationState.archiveCounter = archiveCounter;
-    loadingState.bipolarSplitCount = bipolarSplitCount;
-    projectHistoryState.projectHistoryArray = projectHistoryArray;
+    updateArchiveCounter(archiveCounter);
+    updateBipolarSplitCount(bipolarSplitCount);
+    updateProjectHistoryArray(projectHistoryArray);
+
     // hide section 6
-    outputState.userSelectedFactors = [];
-    outputState.showOutputFactorSelection = false;
-    outputState.shouldDisplayFactorVizOptions = false;
-    outputState.showFactorCorrelationsTable = false;
-    outputState.showStandardErrorsDifferences = false;
-    outputState.showFactorCharacteristicsTable = false;
-    outputState.showDownloadOutputButtons = false;
-    outputState.showDocxOptions = false;
-    outputState.displayFactorVisualizations = false;
-    loadingState.sendDataToOutputButtonColor = '#d6dbe0';
-    loadingState.bipolarDisabled = false;
-    loadingState.bipolarIndexArray = [];
+    resetSection6();
+
+    updateSendDataToOutputButtonColor('#d6dbe0');
+    updateBipolarDisabled(false);
+    updateBipolarIndexArray([]);
     // normal return
   };
-
-  // getState
-  const projectHistoryArray = getProjectHistoryState('projectHistoryArray');
 
   const shouldDisplayUndoButton = projectHistoryArray.length > 3;
   let mapCounter = 1;
@@ -212,14 +182,6 @@ const ProjectHistory = () => {
 };
 
 export default ProjectHistory;
-
-// const ContentWrapper = styled.div`
-//   /* width: calc(100vw - 250px);
-//   height: calc(100vh - 100px); */
-//   margin-top: 30px;
-//   user-select: "none";
-//   border: 2px solid red;
-// `;
 
 const UndoButton = styled.div`
   margin-left: 40px;

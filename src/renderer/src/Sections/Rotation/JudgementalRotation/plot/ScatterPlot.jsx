@@ -3,6 +3,7 @@ import XYAxis from './XyAxis';
 import CircleText from './CircleText';
 import DataCircles from './DataCircles';
 import AxisTextLabels from './AxisTextLabels';
+import { v4 as uuidv4 } from 'uuid';
 
 const styles = {
   container: {
@@ -46,8 +47,8 @@ const ScatterPlot = (props) => {
         <XYAxis {...props} {...scales} {...styles.XYAxis} />
         <AxisTextLabels {...props} />
         <g>
-          <DataCircles {...props} {...scales} />
-          <CircleText {...props} {...scales} />
+          <DataCircles key={uuidv4()} {...props} {...scales} />
+          <CircleText key={uuidv4()} {...props} {...scales} />
         </g>
       </svg>
     </div>

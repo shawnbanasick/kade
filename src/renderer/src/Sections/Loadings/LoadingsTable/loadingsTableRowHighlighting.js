@@ -1,9 +1,11 @@
-import state from "../../../store";
+import state from '../../../store';
 
 function loadingsTableRowHighlighting(highlighting) {
   let rowClassRulesLoadingsTable;
 
-  if (highlighting === "grays") {
+  // todo - remove dead code like this
+
+  if (highlighting === 'grays') {
     rowClassRulesLoadingsTable = {
       factor1bw(params) {
         const factorGroupColorIndicator = +params.data.factorGroup.slice(1, 2);
@@ -36,11 +38,11 @@ function loadingsTableRowHighlighting(highlighting) {
       factor8bw(params) {
         const factorGroupColorIndicator = +params.data.factorGroup.slice(1, 2);
         return factorGroupColorIndicator === 8;
-      }
+      },
     };
   }
 
-  if (highlighting === "colors") {
+  if (highlighting === 'colors') {
     rowClassRulesLoadingsTable = {
       factor1clr(params) {
         const factorGroupColorIndicator = +params.data.factorGroup.slice(1, 2);
@@ -73,14 +75,14 @@ function loadingsTableRowHighlighting(highlighting) {
       factor8clr(params) {
         const factorGroupColorIndicator = +params.data.factorGroup.slice(1, 2);
         return factorGroupColorIndicator === 8;
-      }
+      },
     };
   }
-  if (highlighting === "none") {
+  if (highlighting === 'none') {
     rowClassRulesLoadingsTable = {};
   }
   state.setState({
-    rowClassRulesLoadingsTable
+    rowClassRulesLoadingsTable,
   });
 
   return rowClassRulesLoadingsTable;

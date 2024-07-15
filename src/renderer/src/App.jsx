@@ -6,7 +6,7 @@ import Data from './Sections/Data/Data';
 import Correlations from './Sections/Correlations/Correlations';
 import Factors from './Sections/Factors/Factors';
 import Rotation from './Sections/Rotation/Rotation';
-// import Loadings from './Sections/Loadings/Loadings';
+import Loadings from './Sections/Loadings/Loadings';
 // import Output from './Sections/Output/Output';
 // import ProjectHistory from './Sections/ProjectHistory/ProjectHistory';
 // import Help from './Sections/Help/Help';
@@ -269,6 +269,7 @@ const App = () => {
             {viewCorrelations && <Correlations view={viewCorrelations} />}
             {viewFactors && <Factors view={viewFactors} />}
             {viewRotation && <Rotation view={viewRotation} />}
+            {viewLoadings && <Loadings view={viewLoadings} />}
 
             {viewLicense && <License view={viewLicense} />}
           </ActionWindow>
@@ -280,7 +281,6 @@ const App = () => {
 
 export default App;
 
-// {viewLoadings && <Loadings view={viewLoadings} />}
 // {viewOutput && <Output view={viewOutput} />}
 // {viewClearProject && <ClearProject view={viewClearProject} />}
 // {viewProjectHistory && <ProjectHistory view={viewProjectHistory} />}
