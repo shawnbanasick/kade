@@ -9,8 +9,8 @@ import outputState from '../../GlobalState/outputState';
 import factorState from '../../GlobalState/factorState';
 
 const autoFlagFactors = () => {
-  loadingState.isLoadingAutoflag = true;
-  loadingState.autoflagButtonColor = '#dbdbe0';
+  loadingState.setState({ isLoadingAutoflag: true });
+  loadingState.setState({ autoflagButtonColor: '#dbdbe0' });
 
   // should produce for Lipset calc style matrix - 9 cols by 7 rows
 

@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Dropdown } from 'semantic-ui-react';
 import loadingState from '../../GlobalState/loadingState';
+import styled from 'styled-components';
 
 // stateOptions = [ { key: 'AL', value: 'AL', text: 'Alabama' }, ...  ]
 const sigOptions = [
@@ -69,20 +70,28 @@ const SigLevelDropdown = () => {
   };
 
   return (
-    <Dropdown
-      className="autoflagDropdown"
-      onChange={handleChange}
-      defaultValue={localStore.value}
-      openOnFocus
-      button
-      simple
-      item
-      options={sigOptions}
-    />
+    <Container>
+      <Dropdown
+        className="autoflagDropdown"
+        style={{ border: '3px solid red', fontSize: '14px', height: '50px', color: '#000' }}
+        onChange={handleChange}
+        defaultValue={localStore.value}
+        openOnFocus={true}
+        button={true}
+        simple={true}
+        item={true}
+        options={sigOptions}
+      />
+    </Container>
   );
 };
 
 export default SigLevelDropdown;
+
+const Container = styled.div`
+  color: red;
+  font-size: 12px;
+`;
 
 /*
 'Significance Threshold'

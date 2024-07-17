@@ -4,7 +4,7 @@ import { AgGridReact } from 'ag-grid-react';
 import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
 import { ToastContainer, toast, Zoom } from 'react-toastify';
-import SigLevelDropdown from './SigLevelDropdown';
+import SigLevelDropdown2 from './SigLevelDropdownSelect2';
 import InvertFactorButton from './InvertFactorButton';
 import autoFlagFactors from '../loadingsLogic/autoFlagFactors';
 import SplitBipolarFactorModal from './SplitBipolarFactorModal';
@@ -355,7 +355,7 @@ const LoadingsTable = (props) => {
 
           <RowColorsContainer>
             <GeneralButton
-              buttoncolor={autoflagButtonColor}
+              $buttoncolor={autoflagButtonColor}
               id="autoflagButton"
               onClick={autoFlagFactors}
               disabled={isDisabled}
@@ -365,7 +365,7 @@ const LoadingsTable = (props) => {
             </GeneralButton>
 
             <span style={atStyle}>{props.childTrans.at}</span>
-            <SigLevelDropdown data={'allData'} />
+            <SigLevelDropdown2 data={'allData'} />
             <GeneralButton style={allButtonStyle} disabled={isDisabled} onClick={flagAllQsorts}>
               {props.childTrans.all}
             </GeneralButton>
@@ -407,7 +407,7 @@ const LoadingsTable = (props) => {
         </div>
         <ButtonBarBottom>
           <DataToOutputButton
-            buttonColor={sendDataToOutputButtonColor}
+            $buttonColor={sendDataToOutputButtonColor}
             id="generateOutputButton"
             onClick={generateOutput}
           >
