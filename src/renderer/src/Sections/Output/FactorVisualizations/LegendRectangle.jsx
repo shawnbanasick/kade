@@ -1,22 +1,19 @@
-import React from "react";
-import getVizState from "../../GlobalState/getVizState";
+import React from 'react';
+import vizState from '../../GlobalState/vizState';
 
 const styles = {
-  fill: "white",
-  stroke: "black",
+  fill: 'white',
+  stroke: 'black',
   strokeWidth: 0.5,
-  zindex: 99
+  zindex: 99,
 };
 
-const getHeight = props => {
+const getHeight = (props) => {
   let legendBoxHeight = 50;
   // get state from props
-  const shouldDisplayConsensus =
-    props.factorVizOptions.willDisplayConsensusStates;
-  const willIndicateDistinguishing =
-    props.factorVizOptions.willIndicateDistinguishing;
-  const willDisplayDistingCompareSymbols =
-    props.factorVizOptions.willDisplayDistingCompareSymbols;
+  const shouldDisplayConsensus = props.factorVizOptions.willDisplayConsensusStates;
+  const willIndicateDistinguishing = props.factorVizOptions.willIndicateDistinguishing;
+  const willDisplayDistingCompareSymbols = props.factorVizOptions.willDisplayDistingCompareSymbols;
 
   // make adjustments to box size
   if (willIndicateDistinguishing === true) {
@@ -34,20 +31,18 @@ const getHeight = props => {
   return legendBoxHeight;
 };
 
-const getXCoords = props => {
+const getXCoords = (props) => {
   let totalWidth = props.positionData.instances.length * 110;
   if (props.factorVizOptions.willAdjustCardWidth === true) {
-    totalWidth =
-      props.positionData.instances.length *
-      props.factorVizOptions.willAdjustCardWidthBy;
+    totalWidth = props.positionData.instances.length * props.factorVizOptions.willAdjustCardWidthBy;
   }
   const halfWidth = totalWidth / 2;
   const xCoord = halfWidth - 300;
   return xCoord;
 };
 
-let yValue = props => {
-  const maxColumnHeight = getVizState("maxColumnHeight");
+let yValue = (props) => {
+  const maxColumnHeight = vizState((state) => state.maxColumnHeight);
   const defaultHeight = maxColumnHeight * 110 + 100;
 
   const shouldAdjustHeight = props.factorVizOptions.willAdjustCardHeight;
@@ -71,7 +66,7 @@ class LegendRectangle extends React.Component {
       x: getXCoords(props),
       y: yValue(props),
       width: 600,
-      height: getHeight(props)
+      height: getHeight(props),
     };
     return <rect {...styles} {...legendProps} />;
   }

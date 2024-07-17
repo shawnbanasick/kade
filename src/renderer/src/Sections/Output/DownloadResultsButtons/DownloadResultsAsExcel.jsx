@@ -1,36 +1,34 @@
-import React from 'react';
+import { useState } from 'react';
 import styled from 'styled-components';
-import { view, store } from '@risingstack/react-easy-state';
 import { Button, Header, Modal } from 'semantic-ui-react';
 import downloadExcelDispatch from '../downloadExcelLogic/1_downloadExcelDispatch';
 import GeneralButton from '../../../Utils/GeneralButton';
 import { useTranslation } from 'react-i18next';
-import getOutputState from '../../GlobalState/getOutputState';
 import outputState from '../../GlobalState/outputState';
 import XlsxIcon from '../../images/XLSX_Icon2.svg';
 
-const localStore = store({
-  modalOpen: false,
-});
-
-const handleOpen = () => {
-  const userSelectedFactors = getOutputState('userSelectedFactors');
-
-  if (userSelectedFactors.length === 0) {
-    localStore.modalOpen = true;
-  } else {
-    outputState.showDocxOptions = false;
-    outputState.downloadDocxButtonActive = false;
-    downloadExcelDispatch();
-  }
-};
-
-const handleClose = () => {
-  localStore.modalOpen = false;
-};
-
 const DownloadResultsAsExcel = () => {
   const { t } = useTranslation();
+
+  const [localStore, setLocalStore] = useState({
+    modalOpen: false,
+  });
+
+  const handleOpen = () => {
+    const userSelectedFactors = outputState((state) => state.userSelectedFactors);
+
+    if (userSelectedFactors.length === 0) {
+      localStore.modalOpen = true;
+    } else {
+      outputState.showDocxOptions = false;
+      outputState.downloadDocxButtonActive = false;
+      downloadExcelDispatch();
+    }
+  };
+
+  const handleClose = () => {
+    localStore.modalOpen = false;
+  };
 
   const { active } = localStore;
   return (
@@ -40,7 +38,7 @@ const DownloadResultsAsExcel = () => {
         <ExcelButton
           as={GeneralButton}
           id="downloadResultsAsExcelButton"
-          isActive={active}
+          $isActive={active}
           onClick={handleOpen}
         >
           <LineContainer>

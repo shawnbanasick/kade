@@ -17,29 +17,32 @@ import FactorSelectionForOutputButtons from './FactorSelectionForOutput/FactorSe
 import DistStateSigLevelDrop1 from './FactorSelectionForOutput/DistStateSigLevelDrop1';
 import DistStateSigLevelDrop2 from './FactorSelectionForOutput/DistStateSigLevelDrop2';
 import DistinguishingStatementsList from './DistinguishingStatementsDisplay/DistingishingStatementsList';
-import outputState from '../GlobalState/outputState';
 import { useTranslation } from 'react-i18next';
-import getOutputState from '../GlobalState/getOutputState';
-import getVizState from '../GlobalState/getVizState';
 import DownloadDocxOptionsBox from './DownloadResultsButtons/DownloadDocxOptionsBox';
 import DocxFormatButtons from './DownloadResultsButtons/DocxFormatButtons';
 import DocxIncludeDataOption from './DownloadResultsButtons/DocxIncludeDataOption';
 import DownloadResultsAsDocx from './DownloadResultsButtons/DownloadResultsAsDocx';
+import vizState from '../GlobalState/vizState';
+import outputState from '../GlobalState/outputState';
 
 let showTableDataNotSentWarning;
 
-function notify() {
-  toast.error('Error >>> Reset threshold levels', {
-    className: 'outputToast',
-    progressClassName: 'outputToastProgress',
-    bodyClassName: 'outputToastBody',
-  });
-  outputState.notifyOutputDistStateError = false;
-}
-
 const Output = () => {
   const { t } = useTranslation();
-  let displayState = outputState.showDocxOptions;
+  let displayState = outputState((state) => state.showDocxOptions);
+
+  const updateNotifyOutputDistStateError = outputState(
+    (state) => state.updateNotifyOutputDistStateError
+  );
+
+  const notify = async () => {
+    await toast.error('Error >>> Reset threshold levels', {
+      className: 'outputToast',
+      progressClassName: 'outputToastProgress',
+      bodyClassName: 'outputToastBody',
+    });
+    await updateNotifyOutputDistStateError(false);
+  };
 
   const panes = [
     {
@@ -62,7 +65,6 @@ const Output = () => {
                 </RightColDiv>
               </OptionsContainer>
             )}
-
             <NoLoadingsFlaggedWarningModal />
             <MultipleFactorsFlaggedWarningModal />
           </OutputDataWindow1>
@@ -130,14 +132,16 @@ const Output = () => {
     outputState.outputActiveTabIndex = activeIndex;
   }
 
-  const activeIndex = getOutputState('outputActiveTabIndex');
-  showTableDataNotSentWarning = getOutputState('showTableDataNotSentWarning');
-  const facVizContainerHeight = getVizState('facVizContainerHeight');
-  const facVizContainerWidth = getVizState('facVizContainerWidth');
-  const showNotification = getOutputState('notifyOutputDistStateError');
+  const activeIndex = outputState((state) => state.outputActiveTabIndex);
+  showTableDataNotSentWarning = outputState((state) => state.showTableDataNotSentWarning);
+  const facVizContainerHeight = vizState((state) => state.facVizContainerHeight);
+  const facVizContainerWidth = vizState((state) => state.facVizContainerWidth);
+  const showNotification = outputState((state) => state.notifyOutputDistStateError);
+
   if (showNotification) {
     notify();
   }
+
   return (
     <OutputMainContent>
       <Tab

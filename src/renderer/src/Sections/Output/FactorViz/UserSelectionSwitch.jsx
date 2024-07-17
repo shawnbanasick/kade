@@ -1,7 +1,5 @@
-import React, { useState } from 'react';
-
+import { useState } from 'react';
 import vizState from '../../GlobalState/vizState';
-import getVizState from '../../GlobalState/getVizState';
 import './UserSelectionSwitch.css';
 import Toggle from 'react-toggle';
 import BatsuMark from './batsuMark';
@@ -14,7 +12,7 @@ const UserSelectionSwitch = (props) => {
     e.stopPropagation();
     const oldValue = toggle;
     const newValue = !oldValue;
-    const factorVizOptionsHolder = getVizState('factorVizOptionsHolder');
+    const factorVizOptionsHolder = vizState((state) => state.factorVizOptionsHolder);
     const key = props.value;
     factorVizOptionsHolder[key] = newValue;
     setToggle(newValue);

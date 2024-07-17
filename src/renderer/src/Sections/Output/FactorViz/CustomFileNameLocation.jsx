@@ -1,10 +1,8 @@
-import React from 'react';
+import { useState } from 'react';
 import { Form, Radio } from 'semantic-ui-react';
-import { view, store } from '@risingstack/react-easy-state';
 import styled from 'styled-components';
-import vizState from '../../GlobalState/vizState';
-import getVizState from '../../GlobalState/getVizState';
 import { useTranslation } from 'react-i18next';
+import vizState from '../../GlobalState/vizState';
 
 const styles = {
   display: 'flex',
@@ -13,19 +11,20 @@ const styles = {
   userSelect: 'none',
 };
 
-const localStore = store({ customFileNameLocation: '' });
-
-function handleChange(e, { value }) {
-  const factorVizOptionsHolder = getVizState('factorVizOptionsHolder');
-  localStore.customFileNameLocation = value;
-  factorVizOptionsHolder.customFileNameLocation = value;
-  vizState.factorVizOptionsHolder = factorVizOptionsHolder;
-  vizState.updateFactorVisualizationsButtonColor = 'orange';
-}
-
 const CustomFileNameLocation = () => {
   const { t } = useTranslation();
+  const factorVizOptionsHolder = vizState((state) => state.factorVizOptionsHolder);
 
+  const [localStore, setLocalStore] = useState({ customFileNameLocation: '' });
+
+  function handleChange(e, { value }) {
+    localStore.customFileNameLocation = value;
+    factorVizOptionsHolder.customFileNameLocation = value;
+    vizState.factorVizOptionsHolder = factorVizOptionsHolder;
+    vizState.updateFactorVisualizationsButtonColor = 'orange';
+  }
+
+  // todo - fix this checked setting
   return (
     <HolderDiv>
       <Form style={styles}>

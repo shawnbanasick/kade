@@ -1,36 +1,8 @@
-import React from 'react';
-
 import { Button, Header, Modal } from 'semantic-ui-react';
 import outputState from '../GlobalState/outputState';
 import appState from '../GlobalState/appState';
 import i18n from 'i18next';
-import getOutputState from '../GlobalState/getOutputState';
-
-function handleClose() {
-  outputState.shouldDisplayFactorVizOptions = false;
-  outputState.showOutputFactorSelection = false;
-  outputState.showFactorCorrelationsTable = false;
-  outputState.showStandardErrorsDifferences = false;
-  outputState.showFactorCharacteristicsTable = false;
-  outputState.showDownloadOutputButtons = false;
-  outputState.showDocxOptions = false;
-  outputState.userSelectedFactors = [];
-  outputState.displayFactorVisualizations = false;
-  outputState.showMultipleFactorsFlaggedWarningModal = false;
-  outputState.shouldDisplayFactorVizOptions = false;
-
-  // to clear active state from output buttons
-  const btnId = getOutputState('outputButtonsArray');
-  for (let i = 0; i < btnId.length; i += 1) {
-    outputState[`highlightfactor${btnId[i]}`] = false;
-  }
-  appState.isOutputButtonGreen = false;
-  outputState.showTableDataNotSentWarning = true;
-}
-
-function handleContinue() {
-  outputState.showMultipleFactorsFlaggedWarningModal = false;
-}
+import resetSection6 from '../../Utils/resetSection6';
 
 const style1 = { display: 'flex', marginLeft: 140 };
 const style2 = { alignSelf: 'flexStart' };
@@ -38,7 +10,30 @@ const style3 = { alignSelf: 'flexEnd', marginLeft: 300 };
 
 const UnforcedWarningModal = () => {
   const showMultipleFactorsFlaggedWarningModal = outputState.showMultipleFactorsFlaggedWarningModal;
-  const sortsFlaggedOnTwoFactors = getOutputState('sortsFlaggedOnTwoFactors');
+  const sortsFlaggedOnTwoFactors = outputState((state) => state.sortsFlaggedOnTwoFactors);
+  const updateShowMultipleFactorsFlaggedWarningModal = outputState(
+    (state) => state.updateShowMultipleFactorsFlaggedWarningModal
+  );
+  const btnId = outputState((state) => state.outputButtonsArray);
+
+  function handleClose() {
+    // hide section 6
+    resetSection6();
+
+    updateShowMultipleFactorsFlaggedWarningModal(false);
+
+    // to clear active state from output buttons
+    for (let i = 0; i < btnId.length; i += 1) {
+      outputState[`highlightfactor${btnId[i]}`] = false;
+    }
+    appState.isOutputButtonGreen = false;
+    outputState.showTableDataNotSentWarning = true;
+  }
+
+  function handleContinue() {
+    outputState.showMultipleFactorsFlaggedWarningModal = false;
+  }
+
   if (showMultipleFactorsFlaggedWarningModal) {
     return (
       <Modal

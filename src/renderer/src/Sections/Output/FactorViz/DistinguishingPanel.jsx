@@ -1,13 +1,11 @@
+import { useState } from 'react';
 import styled from 'styled-components';
-import React from 'react';
-import { view, store } from '@risingstack/react-easy-state';
 import { Form, Radio } from 'semantic-ui-react';
 import UserNumberInput from './UserNumberInput';
 import ColorSelector from './ColorSelector2';
 import UserSelectionSwitch from './UserSelectionSwitch';
-import vizState from '../../GlobalState/vizState';
 import { useTranslation } from 'react-i18next';
-import getVizState from '../../GlobalState/getVizState';
+import vizState from '../../GlobalState/vizState';
 
 const styles = {
   width: 150,
@@ -22,21 +20,21 @@ const styles2 = {
   textAlign: 'center',
 };
 
-const localStore = store({ showDistinguishingAs: 'symbol' });
-
-function handleChange(e, { value }) {
-  // getState
-  const factorVizOptionsHolder = getVizState('factorVizOptionsHolder');
-
-  localStore.showDistinguishingAs = value;
-  factorVizOptionsHolder.showDistinguishingAs = value;
-  vizState.factorVizOptionsHolder = factorVizOptionsHolder;
-  vizState.updateFactorVisualizationsButtonColor = 'orange';
-}
-
 const DistinguishingPanel = () => {
   const { t } = useTranslation();
   const colorTrans = `${t('Color')} - 05:`;
+
+  const [localStore, setLocalStore] = useState({ showDistinguishingAs: 'symbol' });
+
+  function handleChange(e, { value }) {
+    // getState
+    const factorVizOptionsHolder = vizState((state) => state.factorVizOptionsHolder);
+
+    localStore.showDistinguishingAs = value;
+    factorVizOptionsHolder.showDistinguishingAs = value;
+    vizState.factorVizOptionsHolder = factorVizOptionsHolder;
+    vizState.updateFactorVisualizationsButtonColor = 'orange';
+  }
 
   return (
     <div style={{ marginTop: 30 }}>

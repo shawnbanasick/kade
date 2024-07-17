@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Button, Header, Modal } from 'semantic-ui-react';
 import GeneralButton from '../../Utils/GeneralButton';
 import { useTranslation } from 'react-i18next';

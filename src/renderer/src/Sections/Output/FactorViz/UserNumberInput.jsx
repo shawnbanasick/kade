@@ -1,8 +1,6 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import styled from 'styled-components';
-
 import vizState from '../../GlobalState/vizState';
-import getVizState from '../../GlobalState/getVizState';
 import { useTranslation } from 'react-i18next';
 
 const UserNumberInput = (props) => {
@@ -12,7 +10,7 @@ const UserNumberInput = (props) => {
   const [showWarning, setShowWarning] = useState(false);
 
   const handleChange = (e) => {
-    const factorVizOptionsHolder = getVizState('factorVizOptionsHolder');
+    const factorVizOptionsHolder = vizState((state) => state.factorVizOptionsHolder);
     let value = e.target.value;
     if (isNaN(value)) {
       return null;

@@ -1,14 +1,13 @@
-import React from "react";
-import getVizState from "../../GlobalState/getVizState";
+import vizState from '../../GlobalState/vizState';
 
 const styles = {
-  stroke: "none",
+  stroke: 'none',
   zindex: 99,
-  fontFamily: "Arial, sans-serif",
-  fill: "black"
+  fontFamily: 'Arial, sans-serif',
+  fill: 'black',
 };
 
-const widthValue = props => {
+const widthValue = (props) => {
   const shouldAdjustWidth = props.factorVizOptions.willAdjustCardWidth;
   if (shouldAdjustWidth === true) {
     const cardWidth = props.factorVizOptions.willAdjustCardWidthBy;
@@ -19,7 +18,7 @@ const widthValue = props => {
 
 // const headerHeight = () => {return 20};
 
-const heightValue = props => {
+const heightValue = (props) => {
   const shouldAdjustHeight = props.factorVizOptions.willAdjustCardHeight;
   if (shouldAdjustHeight === true) {
     let cardHeight = props.factorVizOptions.willAdjustCardHeightBy;
@@ -31,7 +30,7 @@ const heightValue = props => {
   return 110;
 };
 
-const topMarginValue = props => {
+const topMarginValue = (props) => {
   const willAdjustTopMargin = props.factorVizOptions.willAdjustTopMargin;
   if (willAdjustTopMargin === true) {
     const newMargin = +props.factorVizOptions.willAdjustTopMarginBy;
@@ -39,8 +38,6 @@ const topMarginValue = props => {
   }
   return 15;
 };
-
-const titleHeight = getVizState("titleHeight");
 
 const wordwrap = (text, max, factorVizOptions) => {
   let lines = [];
@@ -50,9 +47,9 @@ const wordwrap = (text, max, factorVizOptions) => {
   // special adjustments for asian text because no spaces between words
   if (factorVizOptions.willAdjustWidthAsian === true) {
     const newMax = factorVizOptions.willAdjustWidthAsianBy;
-    lines = text.match(new RegExp(`.{1,${newMax}}`, "g"));
+    lines = text.match(new RegExp(`.{1,${newMax}}`, 'g'));
   } else {
-    const regex = new RegExp(`.{0,${max}}(?:\\s|$)`, "g");
+    const regex = new RegExp(`.{0,${max}}(?:\\s|$)`, 'g');
     do {
       line = regex.exec(text);
       lines.push(...line);
@@ -70,7 +67,7 @@ const wordwrap = (text, max, factorVizOptions) => {
 
 function statementList(texts, xCoord, factorVizOptions) {
   // default value
-  let dyValue = "1.4em";
+  let dyValue = '1.4em';
   // user set custom value for line spacing
   const shouldUseCustomDyValue = factorVizOptions.willAdjustLineSpacing;
   if (shouldUseCustomDyValue === true) {
@@ -79,15 +76,17 @@ function statementList(texts, xCoord, factorVizOptions) {
   }
   // map out locations for multi-line text
   let mapcounter = 1;
-  const textItems = texts.map(text => (
-    <tspan key={mapcounter++} dy={dyValue} x={xCoord} textAnchor={"middle"}>
+  const textItems = texts.map((text) => (
+    <tspan key={mapcounter++} dy={dyValue} x={xCoord} textAnchor={'middle'}>
       {text}
     </tspan>
   ));
   return textItems;
 }
 
-const renderRectangleText = props => {
+const renderRectangleText = (props) => {
+  const titleHeight = vizState((state) => state.titleHeight);
+
   // set default size
   let fontSize = 13;
   // set custom fontSize by user selection
@@ -104,16 +103,11 @@ const renderRectangleText = props => {
       maxLineLength = props.factorVizOptions.willAdjustStatementWidthBy;
     }
     // check if sentences or statement numbers only
-    const willDisplayOnlyStateNums =
-      props.factorVizOptions.willDisplayOnlyStateNums;
+    const willDisplayOnlyStateNums = props.factorVizOptions.willDisplayOnlyStateNums;
     const willPrependStateNums = props.factorVizOptions.willPrependStateNums;
 
     if (willDisplayOnlyStateNums === true) {
-      texts = wordwrap(
-        props.data[index].statement,
-        maxLineLength,
-        props.factorVizOptions
-      );
+      texts = wordwrap(props.data[index].statement, maxLineLength, props.factorVizOptions);
     } else if (willPrependStateNums === true) {
       texts = wordwrap(
         props.data[index].sortStatementAndNums,
@@ -121,21 +115,13 @@ const renderRectangleText = props => {
         props.factorVizOptions
       );
     } else {
-      texts = wordwrap(
-        props.data[index].sortStatement,
-        maxLineLength,
-        props.factorVizOptions
-      );
+      texts = wordwrap(props.data[index].sortStatement, maxLineLength, props.factorVizOptions);
     }
 
-    const xCoord =
-      props.positionData.xPosLoop[index] * widthValue(props) +
-      widthValue(props) / 2;
+    const xCoord = props.positionData.xPosLoop[index] * widthValue(props) + widthValue(props) / 2;
     // set up statement object
     const textProps = {
-      x:
-        props.positionData.xPosLoop[index] * widthValue(props) +
-        widthValue(props) / 2, // (index * widthValue()) + (widthValue() / 2),
+      x: props.positionData.xPosLoop[index] * widthValue(props) + widthValue(props) / 2, // (index * widthValue()) + (widthValue() / 2),
       y:
         props.positionData.yPosLoop[index] * heightValue(props) +
         20 +
@@ -143,8 +129,8 @@ const renderRectangleText = props => {
         titleHeight,
       key: props.positionData.numRectsArray[index],
       text: statementList(texts, xCoord, props.factorVizOptions),
-      textAnchor: "left",
-      fontSize
+      textAnchor: 'left',
+      fontSize,
     };
     return (
       <text {...styles} {...textProps}>
@@ -154,4 +140,4 @@ const renderRectangleText = props => {
   };
 };
 
-export default props => <g>{props.data.map(renderRectangleText(props))}</g>;
+export default (props) => <g>{props.data.map(renderRectangleText(props))}</g>;

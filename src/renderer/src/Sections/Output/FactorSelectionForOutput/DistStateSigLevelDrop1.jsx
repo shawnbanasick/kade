@@ -4,62 +4,61 @@ import { Dropdown } from 'semantic-ui-react';
 import outputState from '../../GlobalState/outputState';
 import calcState from '../../GlobalState/calcState';
 import { useTranslation } from 'react-i18next';
-import outputState from '../../GlobalState/outputState';
-
-// stateOptions = [ { key: 'AL', value: 'AL', text: 'Alabama' }, ...  ]
-const sigOptions = [
-  {
-    key: '99.99',
-    value: 3.891,
-    slice: 0,
-    text: 'p < 0.0001', // text: "99.99%"
-  },
-  {
-    key: '99.95',
-    value: 3.481,
-    text: 'p < 0.0005', // text: "99.95%"
-  },
-  {
-    key: '99.9',
-    value: 3.291,
-    text: 'p < 0.001', // text: "99.9%"
-  },
-  {
-    key: '99.5',
-    value: 2.807,
-    text: 'p < 0.005', // text: "99.5%"
-  },
-  {
-    key: '99',
-    value: 2.575,
-    text: 'p < 0.01', // text: "99%"
-  },
-  {
-    key: '95',
-    value: 1.96,
-    text: 'p < 0.05', // text: "95%"
-  },
-  {
-    key: '90',
-    value: 1.645,
-    text: 'p < 0.1', // text: "90%"
-  },
-  {
-    key: '85',
-    value: 1.44,
-    text: 'p < 0.15', // text: "90%"
-  },
-];
 
 const SigLevelDropdown = () => {
   const { t } = useTranslation();
+
+  // stateOptions = [ { key: 'AL', value: 'AL', text: 'Alabama' }, ...  ]
+  const sigOptions = [
+    {
+      key: '99.99',
+      value: 3.891,
+      slice: 0,
+      text: 'p < 0.0001', // text: "99.99%"
+    },
+    {
+      key: '99.95',
+      value: 3.481,
+      text: 'p < 0.0005', // text: "99.95%"
+    },
+    {
+      key: '99.9',
+      value: 3.291,
+      text: 'p < 0.001', // text: "99.9%"
+    },
+    {
+      key: '99.5',
+      value: 2.807,
+      text: 'p < 0.005', // text: "99.5%"
+    },
+    {
+      key: '99',
+      value: 2.575,
+      text: 'p < 0.01', // text: "99%"
+    },
+    {
+      key: '95',
+      value: 1.96,
+      text: 'p < 0.05', // text: "95%"
+    },
+    {
+      key: '90',
+      value: 1.645,
+      text: 'p < 0.1', // text: "90%"
+    },
+    {
+      key: '85',
+      value: 1.44,
+      text: 'p < 0.15', // text: "90%"
+    },
+  ];
 
   const [localStore, setLocalStore] = useState({
     value: 2.575,
   });
 
   const handleChange = (e, { value }) => {
-    const btnId = getOutputState('outputButtonsArray');
+    const btnId = outputState((state) => state.outputButtonsArray);
     setLocalStore({ value: value });
     const lookupArray = [3.891, 3.481, 3.291, 2.807, 2.575, 1.96, 1.645, 1.44];
     const pValuesTextArray = [

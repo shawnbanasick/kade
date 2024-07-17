@@ -1,12 +1,9 @@
-import React from 'react';
-
 import styled from 'styled-components';
 import vizState from '../../GlobalState/vizState';
-import getVizState from '../../GlobalState/getVizState';
 
 const UserTextInput = (props) => {
   const handleChange = (e) => {
-    const factorVizOptionsHolder = getVizState('factorVizOptionsHolder');
+    const factorVizOptionsHolder = vizState((state) => state.factorVizOptionsHolder);
     const key = props.name;
     factorVizOptionsHolder[key] = e.target.value;
     vizState.factorVizOptionsHolder = factorVizOptionsHolder;

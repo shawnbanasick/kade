@@ -1,11 +1,11 @@
-import getOutputState from "../../GlobalState/getOutputState";
+import outputState from '../../GlobalState/outputState';
 
 const data = () => {
   // getState - if first time -> get data from output function
-  let outputForDataViz = getOutputState("outputForDataViz2");
+  let outputForDataViz = outputState((state) => state.outputForDataViz2);
 
   if (outputForDataViz.length === 0) {
-    outputForDataViz = getOutputState("outputForDataViz");
+    outputForDataViz = outputState((state) => state.outputForDataViz);
   }
 
   for (let j = 0; j < outputForDataViz.length; j += 1) {

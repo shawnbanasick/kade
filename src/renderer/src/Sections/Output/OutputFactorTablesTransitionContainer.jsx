@@ -1,18 +1,16 @@
-import React from 'react';
-
 import { Transition } from 'semantic-ui-react';
 import FactorCorrelationsTable from './Factor Info/FactorCorrelationsTable';
 import FactorCharacteristicsTable from './Factor Info/FactorCharacteristicsTable';
 import StandardErrorsDifferencesTable from './Factor Info/StandardErrorsDifferencesTable';
 import { useTranslation } from 'react-i18next';
-import getOutputState from '../GlobalState/getOutputState';
+import outputState from '../GlobalState/outputState';
 
 // import './OutputFactorTablesTransitionContainer.css';
 
-const OutputFactorTablesTranstionContainer = () => {
+const OutputFactorTablesTransitionContainer = () => {
   const { t } = useTranslation();
 
-  const showFactorCorrelationsTable = getOutputState('showFactorCorrelationsTable');
+  const showFactorCorrelationsTable = outputState((state) => state.showFactorCorrelationsTable);
 
   if (showFactorCorrelationsTable) {
     return (
@@ -48,7 +46,7 @@ const OutputFactorTablesTranstionContainer = () => {
   );
 };
 
-export default OutputFactorTablesTranstionContainer;
+export default OutputFactorTablesTransitionContainer;
 
 /*
 .outputFactorTables {

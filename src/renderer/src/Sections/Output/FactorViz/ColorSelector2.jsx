@@ -1,24 +1,28 @@
-import React from 'react';
-import { view, store } from '@risingstack/react-easy-state';
+import { useState } from 'react';
 import vizState from '../../GlobalState/vizState';
-import getVizState from '../../GlobalState/getVizState';
-
-const localStore = store({
-  color: '#d9effe',
-});
-
-function handleChange(e) {
-  // getState
-  const factorVizOptionsHolder = getVizState('factorVizOptionsHolder');
-
-  localStore.color = e.target.value;
-  const colorProperty = e.target.id;
-  factorVizOptionsHolder[colorProperty] = e.target.value;
-  vizState.factorVizOptionsHolder = factorVizOptionsHolder;
-  vizState.updateFactorVisualizationsButtonColor = 'orange';
-}
 
 const ColorSelector = (props) => {
+  const [localStore, setLocalStore] = useState({
+    color: '#d9effe',
+  });
+
+  // todo - check this - use localStore? for color value
+  function handleChange(e) {
+    // getState
+    const factorVizOptionsHolder = vizState((state) => state.factorVizOptionsHolder);
+    const updateFactorVizOptionsHolder = vizState((state) => state.updateFactorVizOptionsHolder);
+    const updateUpdateFactorVisualizationsButtonColor = vizState(
+      (state) => state.updateUpdateFactorVisualizationsButtonColor
+    );
+
+    setLocalStore({ color: e.target.value });
+
+    const colorProperty = e.target.id;
+    factorVizOptionsHolder[colorProperty] = e.target.value;
+    updateFactorVizOptionsHolder(factorVizOptionsHolder);
+    updateUpdateFactorVisualizationsButtonColor('orange');
+  }
+
   return (
     <input id={props.id} type="color" defaultValue={props.defaultColor} onChange={handleChange} />
   );

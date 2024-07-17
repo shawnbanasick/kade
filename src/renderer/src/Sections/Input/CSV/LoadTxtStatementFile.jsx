@@ -1,5 +1,3 @@
-import React from 'react';
-
 import revertLoadButtonsColors from '../DemoData/revertLoadButtonsColors';
 import throwNoStatementsInputErrorModal from '../throwNoStatementsInputErrorModal.js';
 import inputState from '../../GlobalState/inputState';

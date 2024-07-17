@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import styled from 'styled-components';
 import { useEffect } from 'react';
 import { AgGridReact } from '@ag-grid-community/react';
@@ -74,7 +75,7 @@ function getGridRowDataFacTable(data2, headerRow) {
   return gridRowDataFacTable;
 }
 
-const localStore = store({
+const [localStore, setLocalStore] = useState({
   numFactors: 0,
   numStatements: 0,
 });
@@ -135,11 +136,11 @@ const FactorsTable = () => {
     };
   }, []);
 
-  const showFactorsTable = getOutputState('showFactorCorrelationsTable');
+  const showFactorsTable = outputState((state) => state.showFactorCorrelationsTable);
 
   // return [headerRow, colWidthVals, alignmentVals, pinnedVals];
   // getState
-  const userSelectedFactors = getOutputState('userSelectedFactors');
+  const userSelectedFactors = outputState((state) => state.userSelectedFactors);
   const numFacs = userSelectedFactors.length;
 
   const arrayValues = getArrayValues(userSelectedFactors);
@@ -148,10 +149,12 @@ const FactorsTable = () => {
 
   const numFactors = currentData[1];
 
-  const numStatements = getCoreState('numStatements');
+  const numStatements = coreState((state) => state.numStatements);
 
-  localStore.numFactors = numFactors;
-  localStore.numStatements = numStatements;
+  setLocalStore({
+    numFactors: numFactors,
+    numStatements: numStatements,
+  });
 
   const gridColDefsFacTable = getGridColDefsFacTable(
     currentData[1], // numFacs

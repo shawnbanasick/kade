@@ -1,20 +1,17 @@
-import React from 'react';
 import styled from 'styled-components';
-
 import { Transition } from 'semantic-ui-react';
-import vizState from '../../GlobalState/vizState';
-import getVizState from '../../GlobalState/getVizState';
 import GeneralButton from '../../../Utils/GeneralButton';
 import { useTranslation } from 'react-i18next';
-import getOutputState from '../../GlobalState/getOutputState';
+import vizState from '../../GlobalState/vizState';
+import outputState from '../../GlobalState/outputState';
 
 const RefreshFactorVizButton = (props) => {
   const { t } = useTranslation();
 
   const refresh = () => {
     // getState
-    const factorVizOptions = getVizState('factorVizOptions');
-    const factorVizOptionsHolder = getVizState('factorVizOptionsHolder');
+    const factorVizOptions = vizState((state) => state.factorVizOptions);
+    const factorVizOptionsHolder = vizState((state) => state.factorVizOptionsHolder);
     const updateKeys = Object.keys(factorVizOptionsHolder);
 
     for (let i = 0; i < updateKeys.length; i += 1) {
@@ -28,9 +25,9 @@ const RefreshFactorVizButton = (props) => {
   };
 
   // getState
-  const shouldDisplayFactorVizOptions = getOutputState('shouldDisplayFactorVizOptions');
-  const updateFactorVisualizationsButtonColor = getVizState(
-    'updateFactorVisualizationsButtonColor'
+  const shouldDisplayFactorVizOptions = outputState((state) => state.shouldDisplayFactorVizOptions);
+  const updateFactorVisualizationsButtonColor = vizState(
+    (state) => state.updateFactorVisualizationsButtonColor
   );
 
   return (

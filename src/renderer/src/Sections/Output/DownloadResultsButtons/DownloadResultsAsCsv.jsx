@@ -4,9 +4,8 @@ import { Button, Header, Modal } from 'semantic-ui-react';
 import downloadResultsAsCsv from '../downloadCsvLogic/downloadCsvOutputFile';
 import GeneralButton from '../../../Utils/GeneralButton';
 import { useTranslation } from 'react-i18next';
-import getOutputState from '../../GlobalState/getOutputState';
-import outputState from '../../GlobalState/outputState';
 import CsvIcon from '../../images/CSV_Icon2.svg';
+import outputState from '../../GlobalState/outputState';
 
 const DownloadResultsAsCsv1 = () => {
   const { t } = useTranslation();
@@ -17,7 +16,7 @@ const DownloadResultsAsCsv1 = () => {
 
   const handleOpen = () => {
     // getState
-    const userSelectedFactors = getOutputState('userSelectedFactors');
+    const userSelectedFactors = outputState((state) => state.userSelectedFactors);
     if (userSelectedFactors.length === 0) {
       setLocalStore({ modalOpen: true });
     } else {

@@ -1,4 +1,3 @@
-import React from 'react';
 import includes from 'lodash/includes';
 import styled from 'styled-components';
 import { Transition } from 'semantic-ui-react';
@@ -14,9 +13,9 @@ const FactorSelectionForOutputButtons = () => {
 
   const handleSubmit = () => {
     // getState
-    const userSelectedFactors = getOutputState('userSelectedFactors');
-    const sigLevel1 = getCalcState('userSelectedDistStateSigLevel1');
-    const sigLevel2 = getCalcState('userSelectedDistStateSigLevel2');
+    const userSelectedFactors = outputState((state) => state.userSelectedFactors);
+    const sigLevel1 = calcState((state) => state.userSelectedDistStateSigLevel1);
+    const sigLevel2 = calcState((state) => state.userSelectedDistStateSigLevel2);
     if (sigLevel1 <= sigLevel2) {
       outputState.notifyOutputDistStateError = true;
       return;
@@ -35,8 +34,8 @@ const FactorSelectionForOutputButtons = () => {
   const handleOnclick = (event) => {
     const factor = event.target.id;
     // getState
-    let userSelectedFactors = getOutputState('userSelectedFactors');
-    const btnId = getOutputState('outputButtonsArray');
+    let userSelectedFactors = outputState((state) => state.userSelectedFactors);
+    const btnId = outputState((state) => state.outputButtonsArray);
 
     // select all
     if (factor === 'selectAllFacs') {
@@ -78,7 +77,7 @@ const FactorSelectionForOutputButtons = () => {
       outputState.outputForDataViz2 = [];
     } else {
       // getState - select individual factors
-      const selectAllClicked = getOutputState('selectAllClicked');
+      const selectAllClicked = outputState((state) => state.selectAllClicked);
       // select all factors
       if (selectAllClicked) {
         outputState.userSelectedFactors = [];
@@ -114,9 +113,9 @@ const FactorSelectionForOutputButtons = () => {
   };
 
   // getState
-  const btnId = getOutputState('outputButtonsArray');
-  const showOutputFactorSelection = getOutputState('showOutputFactorSelection');
-  const areDisabled = getOutputState('outputFactorSelectButtonsDisabled');
+  const btnId = outputState((state) => state.outputButtonsArray);
+  const showOutputFactorSelection = outputState((state) => state.showOutputFactorSelection);
+  const areDisabled = outputState((state) => state.outputFactorSelectButtonsDisabled);
 
   if (showOutputFactorSelection) {
     return (

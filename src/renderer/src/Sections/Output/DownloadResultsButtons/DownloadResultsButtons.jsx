@@ -1,18 +1,15 @@
-import React from 'react';
 import styled from 'styled-components';
-
 import { Transition } from 'semantic-ui-react';
 import DownloadResultsAsExcel from './DownloadResultsAsExcel';
 import DownloadResultsAsCsv from './DownloadResultsAsCsv';
-// import DownloadResultsAsDocx from "./DownloadResultsAsDocx";
 import { useTranslation } from 'react-i18next';
-import getOutputState from '../../GlobalState/getOutputState';
+import outputState from '../../GlobalState/outputState';
 import DownloadDocxFile from './DownloadDocxFile';
 
 const DownloadResultsButtons = () => {
   const { t } = useTranslation();
 
-  const showDownloadOutputButtons = getOutputState('showDownloadOutputButtons');
+  const showDownloadOutputButtons = outputState((state) => state.showDownloadOutputButtons);
 
   return (
     <Transition visible={showDownloadOutputButtons} animation="fade" duration={1000}>

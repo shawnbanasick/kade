@@ -63,8 +63,8 @@ const DropdownJSON = (props) => {
         mainDataObjectArray.forEach((item, index) => {
           item.name = names[index];
         });
-        coreState.mainDataObject = [...mainDataObjectArray];
-        coreState.respondentNames = [...names];
+        updateMainDataObject([...mainDataObjectArray]);
+        updateRespondentNames([...names]);
       }
       if (value === 'urlUsercode') {
         let names2b = inputState((state) => state.csvUrlUsercodeArray);
