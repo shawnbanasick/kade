@@ -17,7 +17,7 @@ import appState from '../../GlobalState/appState';
 import outputState from '../../GlobalState/outputState';
 import rotationState from '../../GlobalState/rotationState';
 import coreState from '../../GlobalState/coreState';
-import resetSection6 from '../../GlobalState/resetSection6';
+import resetSection6 from '../../../Utils/resetSection6';
 
 // helper function for filtering btnId when table loads => output buttons
 const filterArray = (item) => {
@@ -87,6 +87,7 @@ const LoadingsTable = (props) => {
   const updateSendDataToOutputButtonColor = loadingState(
     (state) => state.sendDataToOutputButtonColor
   );
+  const updateHighlighting = loadingState((state) => state.updateHighlighting);
 
   // notification of table data sent to output
   function notify() {
@@ -153,7 +154,7 @@ const LoadingsTable = (props) => {
   };
 
   const changeOutputButtonColor = () => {
-    loadingState.sendDataToOutputButtonColor = 'orange';
+    updateSendDataToOutputButtonColor('orange');
   };
 
   const generateOutput = () => {
@@ -189,8 +190,8 @@ const LoadingsTable = (props) => {
       currentLoadingsTable2.push(rowNode.data);
     }
     gridApi.current.redrawRows(currentLoadingsTable2);
-    loadingState.gridRowDataLoadingsTable = currentLoadingsTable2;
-    loadingState.highlighting = highlightType;
+    updateGridRowDataLoadingsTable(currentLoadingsTable2);
+    updateHighlighting(highlightType);
   };
 
   const flagAllQsorts = () => {
@@ -396,7 +397,7 @@ const LoadingsTable = (props) => {
   );
 };
 
-export default view(LoadingsTable);
+export default LoadingsTable;
 
 const ColumnSortText = styled.p`
   font-size: 12px;
