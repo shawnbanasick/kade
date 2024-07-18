@@ -10,9 +10,10 @@ const SigLevelDropdownSelect2 = () => {
   const updateUserSelectedSigLevel = loadingState((state) => state.updateUserSelectedSigLevel);
   const updateAutoflagButtonColor = loadingState((state) => state.updateAutoflagButtonColor);
 
-  const handleChange = (e, { value }) => {
-    setLocalStore({ value: +value });
-    updateUserSelectedSigLevel(+value);
+  const handleChange = (e) => {
+    console.log('SigLevelDropdownSelect2 handleChange value:', e.target.value);
+    setLocalStore({ value: +e.target.value });
+    updateUserSelectedSigLevel(+e.target.value);
     updateAutoflagButtonColor('orange');
   };
 
