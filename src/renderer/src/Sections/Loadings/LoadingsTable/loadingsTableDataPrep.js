@@ -101,8 +101,8 @@ const loadingsTableDataPrep = (numFactors) => {
       },
       {
         headerName: `F${facNumber}`,
-        field: `boolean`,
-        // field: `check${facNumber}`,
+        // field: `boolean`,
+        field: `check${facNumber}`,
         pinned: false,
         editable: true,
         sortable: true,

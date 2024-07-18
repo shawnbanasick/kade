@@ -67,42 +67,57 @@ const LoadingsTable = (props) => {
   });
 
   // inline styles
+  const gridColDefsLoadingsTable = loadingState((state) => state.gridColDefsLoadingsTable);
+  const gridRowDataLoadingsTable = loadingState((state) => state.gridRowDataLoadingsTable);
+  const isLoadingsTableInitialRender = loadingState((state) => state.isLoadingsTableInitialRender);
+  const bipolarSplitCount1 = loadingState((state) => state.bipolarSplitCount);
+  const sendDataToOutputButtonColor = loadingState((state) => state.sendDataToOutputButtonColor);
+  const autoflagButtonColor = loadingState((state) => state.autoflagButtonColor);
+  const isDisabled = loadingState((state) => state.bipolarDisabled);
+  const numQsorts = coreState((state) => state.numQsorts);
   const highlightingAndFlaggingStyle = { marginRight: 255 };
   const grayHighlightButtonStyle = { marginRight: 150 };
   const autoFlagButtonStyle = { marginLeft: 10 };
   const atStyle = { marginLeft: 5, marginRight: 10, marginTop: 15 };
   const allButtonStyle = { marginLeft: '40px', width: 60 };
   const noneButtonStyle = { marginLeft: '40px' };
-  const updateNotifyDataSentToOutputSuccess = loadingState(
-    (state) => state.notifyDataSentToOutputSuccess
-  );
-  const updateIsLoadingsButtonGreen = appState((state) => state.isLoadingsButtonGreen);
-  const updateIsLoadingsTableInitialRender = loadingState(
-    (state) => state.isLoadingsTableInitialRender
-  );
-  const updateCurrentLoadingsTable = loadingState((state) => state.currentLoadingsTable);
-  const updateShowSplitFactorModal = loadingState((state) => state.showSplitFactorModal);
   let numFacsForTableWidth = Number(rotationState((state) => state.numFactorsKeptForRot));
-  const updateGridRowDataLoadingsTable = loadingState((state) => state.gridRowDataLoadingsTable);
   const updateSendDataToOutputButtonColor = loadingState(
-    (state) => state.sendDataToOutputButtonColor
+    (state) => state.updateSendDataToOutputButtonColor
+  );
+
+  const updateNotifyDataSentToOutputSuccess = loadingState(
+    (state) => state.updateNotifyDataSentToOutputSuccess
+  );
+  const updateIsLoadingsButtonGreen = appState((state) => state.updateIsLoadingsButtonGreen);
+  const updateIsLoadingsTableInitialRender = loadingState(
+    (state) => state.updateIsLoadingsTableInitialRender
+  );
+  const updateCurrentLoadingsTable = loadingState((state) => state.updateCurrentLoadingsTable);
+  const updateShowSplitFactorModal = loadingState((state) => state.updateShowSplitFactorModal);
+  const updateGridRowDataLoadingsTable = loadingState(
+    (state) => state.updateGridRowDataLoadingsTable
   );
   const updateHighlighting = loadingState((state) => state.updateHighlighting);
+  // getState - pull headers and data from states
+  const updateOutputButtonsArray = outputState((state) => state.updateOutputButtonsArray);
+
+  const gridRef = useRef();
 
   // notification of table data sent to output
-  function notify() {
-    toast.success(i18n.t('Data sent to Output'), {
+  const notify = async () => {
+    await toast.success(i18n.t('Data sent to Output'), {
       autoClose: 1500,
     });
-    updateNotifyDataSentToOutputSuccess(false);
-    updateIsLoadingsButtonGreen(true);
-  }
+    await updateNotifyDataSentToOutputSuccess(false);
+    await updateIsLoadingsButtonGreen(true);
+  };
 
   function resetWidthAndHeight() {
     const table = document.querySelector('#loadingsTableContainer');
     if (table !== null) {
-      table.style.width = getWidth(localStore.numFacsForTableWidth);
-      table.style.height = getHeight(localStore.numQsorts);
+      table.style.width = getWidth(numFacsForTableWidth);
+      table.style.height = getHeight(numQsorts);
     }
   }
 
@@ -122,12 +137,10 @@ const LoadingsTable = (props) => {
     };
   }, []);
 
-  const gridApi = useRef();
-
-  const onGridReady = (params) => {
-    gridApi.current = params.api;
-    // gridApi.current.sizeColumnsToFit();
-  };
+  // const onGridReady = (params) => {
+  //   gridApi.current = params.api;
+  //   // gridApi.current.sizeColumnsToFit();
+  // };
 
   let gridOptions = {
     suppressRowHoverHighlight: false,
@@ -137,10 +150,10 @@ const LoadingsTable = (props) => {
 
   const grabTableLocalState = () => {
     // grab current table data (including user-added flags)
-    const count = gridApi.current.getDisplayedRowCount();
+    const count = gridRef.current.api.getDisplayedRowCount();
     const currentLoadingsTable = [];
     for (let i = 0; i < count; i += 1) {
-      const rowNode = gridApi.current.getDisplayedRowAtIndex(i);
+      const rowNode = gridRef.current.api.getDisplayedRowAtIndex(i);
       currentLoadingsTable.push(rowNode.data);
     }
     return currentLoadingsTable;
@@ -149,7 +162,7 @@ const LoadingsTable = (props) => {
   // todo - fix this hack - button color shifted to different listener
   const updateTableLocalState = () => {
     const currentLoadingsTable = grabTableLocalState();
-    localStore.temp_gridRowDataLoadingsTable = currentLoadingsTable;
+    // localStore.temp_gridRowDataLoadingsTable = currentLoadingsTable;
     resetSection6();
   };
 
@@ -161,7 +174,7 @@ const LoadingsTable = (props) => {
     // grab current table data
     const currentLoadingsTable = grabTableLocalState();
     // send current to local state
-    localStore.temp_gridRowDataLoadingsTable = currentLoadingsTable;
+    // localStore.temp_gridRowDataLoadingsTable = currentLoadingsTable;
     generateOutputFromLoadingTable(currentLoadingsTable);
     notify();
   };
@@ -180,17 +193,17 @@ const LoadingsTable = (props) => {
 
   const highlightRows = (highlightType) => {
     const currentLoadingsTable2 = [];
-    const count = gridApi.current.getDisplayedRowCount();
+    const count = gridRef.current.api.getDisplayedRowCount();
     for (let i = 0; i < count; i += 1) {
-      const rowNode = gridApi.current.getDisplayedRowAtIndex(i);
+      const rowNode = gridRef.current.api.getDisplayedRowAtIndex(i);
       const holder = rowNode.data.highlightingClass;
       const holder2 = holder.slice(0, 2);
       const holder3 = `${holder2}${highlightType}`;
       rowNode.data.highlightingClass = holder3;
       currentLoadingsTable2.push(rowNode.data);
     }
-    gridApi.current.redrawRows(currentLoadingsTable2);
-    updateGridRowDataLoadingsTable(currentLoadingsTable2);
+    gridRef.current.api.redrawRows(currentLoadingsTable2);
+    // updateGridRowDataLoadingsTable(currentLoadingsTable2);
     updateHighlighting(highlightType);
   };
 
@@ -209,9 +222,13 @@ const LoadingsTable = (props) => {
         }
       }
     }
-    gridApi.current.redrawRows(currentLoadingsTable);
-    setLocalStore({ temp_gridRowDataLoadingsTable: currentLoadingsTable });
-    updateGridRowDataLoadingsTable(currentLoadingsTable);
+    console.log(JSON.stringify(currentLoadingsTable));
+    gridRef.current.api.redrawRows(currentLoadingsTable);
+    // setLocalStore({ temp_gridRowDataLoadingsTable: currentLoadingsTable });
+    // updateGridRowDataLoadingsTable(currentLoadingsTable);
+
+    // gridRef.current.api.redrawRows();
+
     updateSendDataToOutputButtonColor('orange');
   };
 
@@ -223,62 +240,52 @@ const LoadingsTable = (props) => {
         currentLoadingsTable[i][index] = false;
       }
     }
-    gridApi.current.redrawRows(currentLoadingsTable);
-    localStore.temp_gridRowDataLoadingsTable = currentLoadingsTable;
-    loadingState.gridRowDataLoadingsTable = currentLoadingsTable;
-    loadingState.sendDataToOutputButtonColor = '#d6dbe0';
+    gridRef.current.api.redrawRows(currentLoadingsTable);
+    // setLocalStore({ temp_gridRowDataLoadingsTable: currentLoadingsTable });
+    // updateGridRowDataLoadingsTable(currentLoadingsTable);
+    updateSendDataToOutputButtonColor('#d6dbe0');
   };
 
-  // getState - pull headers and data from states
-  const gridColDefsLoadingsTable = loadingState((state) => state.gridColDefsLoadingsTable);
-  const gridRowDataLoadingsTable = loadingState((state) => state.gridRowDataLoadingsTable);
-
   // push headers and data to preserve local state for remount after unmount
-  localStore.gridColDefsLoadingsTable = gridColDefsLoadingsTable;
-  localStore.gridRowDataLoadingsTable = gridRowDataLoadingsTable;
+  // localStore.gridColDefsLoadingsTable = gridColDefsLoadingsTable;
+  // localStore.gridRowDataLoadingsTable = gridRowDataLoadingsTable;
 
-  // getState - push data on initial render so if user unmounts without doing anything, will still remount properly
-  const isLoadingsTableInitialRender = loadingState.isLoadingsTableInitialRender;
   if (isLoadingsTableInitialRender) {
     setLocalStore({ temp_gridColDefsLoadingsTable: gridColDefsLoadingsTable });
     setLocalStore({ temp_gridRowDataLoadingsTable: gridRowDataLoadingsTable });
     updateIsLoadingsTableInitialRender(false);
   }
 
+  console.log(JSON.stringify(gridRowDataLoadingsTable));
+
   // getState - pull number Q sorts for table height calcs
-  const numQsorts = coreState((state) => state.numQsorts);
-  localStore.numQsorts = numQsorts;
+  // setLocalStore({ numQsorts: numQsorts });
 
   // todo - create output buttons array here to stay in sync, but do performance check
   const outputButtonsArray2 = gridColDefsLoadingsTable.map((item) => item.field);
   const outputButtonsArray3 = outputButtonsArray2.filter(filterArray);
   outputButtonsArray3.shift();
-  const outputButtonsArray = outputButtonsArray3.map((item) => item.slice(6));
+  const outputButtonsArray4 = outputButtonsArray3.map((item) => item.slice(6));
   // delay to avoid react update error - can't update while rendering
   setTimeout(function () {
-    outputState.outputButtonsArray = outputButtonsArray;
+    updateOutputButtonsArray(outputButtonsArray4);
   }, 100);
 
   // increase height / width when bipolar split present
-  const bipolarSplitCount1 = loadingState((state) => state.bipolarSplitCount);
   const bipolarSplitCount = Number(bipolarSplitCount1);
 
   // communication with user - has data been sent to output section?
-  const sendDataToOutputButtonColor = loadingState((state) => state.sendDataToOutputButtonColor);
-
-  const autoflagButtonColor = loadingState((state) => state.autoflagButtonColor);
 
   // disable buttons after bipolar split
-  const isDisabled = loadingState((state) => state.bipolarDisabled);
 
   // increase width if bipolar present
   if (bipolarSplitCount > 0) {
     numFacsForTableWidth += bipolarSplitCount;
   }
 
-  localStore.numFacsForTableWidth = numFacsForTableWidth;
-  localStore.sendDataToOutputButtonColor = sendDataToOutputButtonColor;
-  localStore.autoflagButtonColor = autoflagButtonColor;
+  // setLocalStore({ numFacsForTableWidth: numFacsForTableWidth });
+  // setLocalStore({ sendDataToOutputButtonColor: sendDataToOutputButtonColor });
+  // setLocalStore({ autoflagButtonColor: autoflagButtonColor });
 
   const loadingsTableContainerStyle = {
     marginTop: 2,
@@ -326,7 +333,7 @@ const LoadingsTable = (props) => {
 
           <RowColorsContainer>
             <GeneralButton
-              buttoncolor={localStore.autoflagButtonColor}
+              $buttoncolor={localStore.autoflagButtonColor}
               id="autoflagButton"
               onClick={autoFlagFactors}
               disabled={isDisabled}
@@ -362,12 +369,12 @@ const LoadingsTable = (props) => {
             className="ag-theme-fresh"
           >
             <AgGridReact
+              ref={gridRef}
               id="loadingsTable"
-              ref={gridApi}
-              columnDefs={localStore.gridColDefsLoadingsTable}
-              rowData={localStore.gridRowDataLoadingsTable}
+              columnDefs={gridColDefsLoadingsTable}
+              rowData={gridRowDataLoadingsTable}
               getRowClass={(params) => params.data.highlightingClass}
-              onGridReady={onGridReady}
+              // onGridReady={onGridReady}
               onCellClicked={updateTableLocalState}
               onCellFocused={changeOutputButtonColor}
               gridOptions={gridOptions}
@@ -377,7 +384,7 @@ const LoadingsTable = (props) => {
         </div>
         <ButtonBarBottom>
           <DataToOutputButton
-            buttonColor={localStore.sendDataToOutputButtonColor}
+            $buttonColor={localStore.sendDataToOutputButtonColor}
             id="generateOutputButton"
             onClick={generateOutput}
           >

@@ -24,8 +24,8 @@ function Input() {
   // put here to be able to use React hook for t
   const notify = async () => {
     await new Promise((resolve) => setTimeout(resolve, 50));
-    toast.success(t('File Load Success'));
-    updateNotifyDataUploadSuccess(false);
+    await toast.success(t('File Load Success'));
+    await updateNotifyDataUploadSuccess(false);
   };
 
   const { t } = useTranslation();
