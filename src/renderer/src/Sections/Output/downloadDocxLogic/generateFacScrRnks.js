@@ -9,8 +9,8 @@ import {
   VerticalAlign,
   AlignmentType,
   convertInchesToTwip,
-  InternalHyperlink
-} from "docx";
+  InternalHyperlink,
+} from 'docx';
 
 const generateUnrotFacMatrix = (matrixData, useHyperlinks) => {
   matrixData.shift();
@@ -51,7 +51,7 @@ const generateUnrotFacMatrix = (matrixData, useHyperlinks) => {
 
     // Table 2 shifts
     if (j === 1) {
-      headerText = "Factor Scores with Corresponding Ranks   (Cont.)";
+      headerText = 'Factor Scores with Corresponding Ranks   (Cont.)';
       headerIter = [...headerIte2];
       varIter = [...varIter2];
       numFactorColumns = numFactorColumns - 4;
@@ -69,16 +69,16 @@ const generateUnrotFacMatrix = (matrixData, useHyperlinks) => {
         children: [
           new TextRun({
             text: headerText,
-            bold: true
-          })
+            bold: true,
+          }),
         ],
         heading: HeadingLevel.HEADING_1,
         thematicBreak: true,
         pageBreakBefore: true,
         spacing: {
-          after: spacingAfter
-        }
-      })
+          after: spacingAfter,
+        },
+      }),
     ];
 
     if (useHyperlinks === true) {
@@ -88,17 +88,17 @@ const generateUnrotFacMatrix = (matrixData, useHyperlinks) => {
             new InternalHyperlink({
               children: [
                 new TextRun({
-                  text: "Return to TOC",
-                  style: "Hyperlink"
-                })
+                  text: 'Return to TOC',
+                  style: 'Hyperlink',
+                }),
               ],
-              anchor: "anchorForTableOfContents"
-            })
+              anchor: 'anchorForTableOfContents',
+            }),
           ],
           alignment: AlignmentType.RIGHT,
           spacing: {
-            after: 200
-          }
+            after: 200,
+          },
         })
       );
     }
@@ -108,14 +108,14 @@ const generateUnrotFacMatrix = (matrixData, useHyperlinks) => {
       new TableCell({
         children: [
           new Paragraph({
-            style: "tableStyle1",
+            style: 'tableStyle1',
             text: matrixData[1][1],
-            alignment: AlignmentType.CENTER
-          })
+            alignment: AlignmentType.CENTER,
+          }),
         ],
         verticalAlign: VerticalAlign.CENTER,
-        columnSpan: 2
-      })
+        columnSpan: 2,
+      }),
     ];
     // push remaining header array 1 according to # factors
     for (let k = 0; k < numColWidths; k++) {
@@ -123,13 +123,13 @@ const generateUnrotFacMatrix = (matrixData, useHyperlinks) => {
         new TableCell({
           children: [
             new Paragraph({
-              style: "tableStyle1",
+              style: 'tableStyle1',
               text: matrixData[0][headerIter[k]].toString(),
-              alignment: AlignmentType.CENTER
-            })
+              alignment: AlignmentType.CENTER,
+            }),
           ],
           columnSpan: 2,
-          verticalAlign: VerticalAlign.CENTER
+          verticalAlign: VerticalAlign.CENTER,
         })
       );
     }
@@ -139,23 +139,23 @@ const generateUnrotFacMatrix = (matrixData, useHyperlinks) => {
       new TableCell({
         children: [
           new Paragraph({
-            style: "tableStyle1",
+            style: 'tableStyle1',
             text: matrixData[0][1],
-            alignment: AlignmentType.CENTER
-          })
+            alignment: AlignmentType.CENTER,
+          }),
         ],
-        verticalAlign: VerticalAlign.CENTER
+        verticalAlign: VerticalAlign.CENTER,
       }),
       new TableCell({
         children: [
           new Paragraph({
-            style: "tableStyle1",
-            text: "state. num.",
-            alignment: AlignmentType.CENTER
-          })
+            style: 'tableStyle1',
+            text: 'state. num.',
+            alignment: AlignmentType.CENTER,
+          }),
         ],
-        verticalAlign: VerticalAlign.CENTER
-      })
+        verticalAlign: VerticalAlign.CENTER,
+      }),
     ];
 
     let mShift = 3;
@@ -166,22 +166,22 @@ const generateUnrotFacMatrix = (matrixData, useHyperlinks) => {
         new TableCell({
           children: [
             new Paragraph({
-              style: "tableStyle1",
+              style: 'tableStyle1',
               text: matrixData[1][mShift].toString(),
-              alignment: AlignmentType.CENTER
-            })
+              alignment: AlignmentType.CENTER,
+            }),
           ],
-          verticalAlign: VerticalAlign.CENTER
+          verticalAlign: VerticalAlign.CENTER,
         }),
         new TableCell({
           children: [
             new Paragraph({
-              style: "tableStyle1",
+              style: 'tableStyle1',
               text: matrixData[1][mShift2].toString(),
-              alignment: AlignmentType.CENTER
-            })
+              alignment: AlignmentType.CENTER,
+            }),
           ],
-          verticalAlign: VerticalAlign.CENTER
+          verticalAlign: VerticalAlign.CENTER,
         })
       );
       mShift = mShift + 2;
@@ -190,13 +190,13 @@ const generateUnrotFacMatrix = (matrixData, useHyperlinks) => {
     rowArray = [
       new TableRow({
         tableHeader: true,
-        children: [...childRowHeader1]
+        children: [...childRowHeader1],
       }),
 
       new TableRow({
         tableHeader: true,
-        children: [...childRowHeader2]
-      }) // end table row // end table row
+        children: [...childRowHeader2],
+      }), // end table row // end table row
     ];
 
     // setup DATA ROWS
@@ -212,28 +212,28 @@ const generateUnrotFacMatrix = (matrixData, useHyperlinks) => {
           new TableCell({
             children: [
               new Paragraph({
-                style: "tableStyle1",
-                text: item[varIter[0]]
-              })
+                style: 'tableStyle1',
+                text: item[varIter[0]],
+              }),
             ],
             margins: {
               top: convertInchesToTwip(0.01),
               bottom: convertInchesToTwip(0.01),
               left: convertInchesToTwip(0.01),
-              right: convertInchesToTwip(0.015)
-            }
+              right: convertInchesToTwip(0.015),
+            },
           }),
           // statement number
           new TableCell({
             children: [
               new Paragraph({
-                style: "tableStyle1",
+                style: 'tableStyle1',
                 text: item[varIter[1]].toString(),
-                alignment: AlignmentType.CENTER
-              })
+                alignment: AlignmentType.CENTER,
+              }),
             ],
-            verticalAlign: VerticalAlign.CENTER
-          })
+            verticalAlign: VerticalAlign.CENTER,
+          }),
         ];
 
         let pShift = 2;
@@ -245,29 +245,29 @@ const generateUnrotFacMatrix = (matrixData, useHyperlinks) => {
             new TableCell({
               children: [
                 new Paragraph({
-                  style: "tableStyle1",
+                  style: 'tableStyle1',
                   text: item[varIter[pShift]].toString(),
-                  alignment: AlignmentType.END
-                })
+                  alignment: AlignmentType.END,
+                }),
               ],
               margins: {
                 top: convertInchesToTwip(0.01),
                 bottom: convertInchesToTwip(0.01),
                 left: convertInchesToTwip(0.01),
-                right: convertInchesToTwip(0.015)
+                right: convertInchesToTwip(0.015),
               },
-              verticalAlign: VerticalAlign.CENTER
+              verticalAlign: VerticalAlign.CENTER,
             }),
             // factor 1 Rank
             new TableCell({
               children: [
                 new Paragraph({
-                  style: "tableStyle1",
+                  style: 'tableStyle1',
                   text: item[varIter[pShift1]].toString(),
-                  alignment: AlignmentType.CENTER
-                })
+                  alignment: AlignmentType.CENTER,
+                }),
               ],
-              verticalAlign: VerticalAlign.CENTER
+              verticalAlign: VerticalAlign.CENTER,
             })
           );
 
@@ -276,7 +276,7 @@ const generateUnrotFacMatrix = (matrixData, useHyperlinks) => {
 
         let tempRow = new TableRow({
           cantSplit: true,
-          children: [...dataRow]
+          children: [...dataRow],
         });
         rowArray.push(tempRow);
       }
@@ -286,14 +286,14 @@ const generateUnrotFacMatrix = (matrixData, useHyperlinks) => {
     const table = new Table({
       width: {
         size: 9900,
-        type: WidthType.DXA
+        type: WidthType.DXA,
       },
       indent: {
         size: 0,
-        type: WidthType.DXA
+        type: WidthType.DXA,
       },
       columnWidths: colWidthArray,
-      rows: [...rowArray] // end of rows array
+      rows: [...rowArray], // end of rows array
     });
 
     matrix.push(table);

@@ -18,9 +18,8 @@ const widthValue = (props) => {
   return 110;
 };
 
-const titleHeight = vizState((state) => state.titleHeight);
-
 const renderBaseRectangles = (props) => (coords, index) => {
+  const titleHeight = vizState((state) => state.titleHeight);
   const textProps = {
     x: index * widthValue(props) + widthValue(props) / 2,
     y: 20 + titleHeight,

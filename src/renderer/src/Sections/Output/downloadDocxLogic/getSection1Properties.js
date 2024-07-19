@@ -1,4 +1,4 @@
-import { NumberFormat } from "docx";
+import { NumberFormat } from 'docx';
 
 const getSection1Properties = () => {
   const section1Properties = {
@@ -7,13 +7,13 @@ const getSection1Properties = () => {
         top: 1200,
         right: 1000,
         bottom: 1000,
-        left: 1000
+        left: 1000,
       },
       pageNumbers: {
         start: 1,
-        formatType: NumberFormat.DECIMAL
-      }
-    }
+        formatType: NumberFormat.DECIMAL,
+      },
+    },
   };
 
   return section1Properties;

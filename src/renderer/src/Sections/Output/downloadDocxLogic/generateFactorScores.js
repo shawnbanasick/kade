@@ -9,10 +9,9 @@ import {
   VerticalAlign,
   AlignmentType,
   convertInchesToTwip,
-  TABLE_HEADER_FILL,
-  InternalHyperlink
-} from "docx";
-import chunk from "lodash/chunk";
+  InternalHyperlink,
+} from 'docx';
+import chunk from 'lodash/chunk';
 
 const generateUnrotFacMatrix = (
   matrixData,
@@ -34,22 +33,28 @@ const generateUnrotFacMatrix = (
     spacingAfter = 0;
   }
 
+  const headerStyle = {
+    shading: {
+      fill: '#d3d3d3', // Gray background color (replace with appropriate color code)
+    },
+  };
+
   // chunk MATRIX 2
   let chunkedMatrix = [];
   let namesArray = [...matrixData2[0]];
-  matrixData2.forEach(item => {
+  matrixData2.forEach((item) => {
     let temp1 = chunk(item, 12);
     chunkedMatrix.push(temp1);
   });
 
   let chunkedMatrix3 = [];
-  matrixData3.forEach(item => {
+  matrixData3.forEach((item) => {
     let temp1 = chunk(item, 12);
     chunkedMatrix3.push(temp1);
   });
 
   let headerText = headerRow[1];
-  headerText = headerText.replace(/  +/g, " ");
+  headerText = headerText.replace(/  +/g, ' ');
 
   // PAGE Header Text
   let matrix = [
@@ -57,16 +62,16 @@ const generateUnrotFacMatrix = (
       children: [
         new TextRun({
           text: `${headerText}`,
-          bold: true
-        })
+          bold: true,
+        }),
       ],
       heading: HeadingLevel.HEADING_1,
       thematicBreak: true,
       pageBreakBefore: true,
       spacing: {
-        after: spacingAfter
-      }
-    })
+        after: spacingAfter,
+      },
+    }),
   ];
 
   if (useHyperlinks === true) {
@@ -76,17 +81,17 @@ const generateUnrotFacMatrix = (
           new InternalHyperlink({
             children: [
               new TextRun({
-                text: "Return to TOC",
-                style: "Hyperlink"
-              })
+                text: 'Return to TOC',
+                style: 'Hyperlink',
+              }),
             ],
-            anchor: "anchorForTableOfContents"
-          })
+            anchor: 'anchorForTableOfContents',
+          }),
         ],
         alignment: AlignmentType.RIGHT,
         spacing: {
-          after: 200
-        }
+          after: 200,
+        },
       })
     );
   }
@@ -101,11 +106,11 @@ const generateUnrotFacMatrix = (
     new Paragraph({
       children: [
         new TextRun({
-          text: `${translatedTextObj["contributingText"]} - ${translatedTextObj["relativeWeightsText"]}`,
-          bold: true
-        })
+          text: `${translatedTextObj['contributingText']} - ${translatedTextObj['relativeWeightsText']}`,
+          bold: true,
+        }),
       ],
-      style: "tableStyle2"
+      style: 'tableStyle2',
     })
   );
 
@@ -129,46 +134,46 @@ const generateUnrotFacMatrix = (
         new TableCell({
           children: [
             new Paragraph({
-              style: "tableStyle2",
+              style: 'tableStyle2',
               alignment: location,
               children: [
                 new TextRun({
                   text: item[1].toString(),
-                  bold: isBold
-                })
-              ]
-            })
+                  bold: isBold,
+                }),
+              ],
+            }),
           ],
           verticalAlign: VerticalAlign.CENTER,
           margins: {
             top: convertInchesToTwip(0.01),
             bottom: convertInchesToTwip(0.01),
             left: convertInchesToTwip(0.01),
-            right: convertInchesToTwip(0.01)
-          }
+            right: convertInchesToTwip(0.01),
+          },
         }),
         new TableCell({
           children: [
             new Paragraph({
-              style: "tableStyle1",
+              style: 'tableStyle1',
               children: [
                 new TextRun({
                   text: value,
-                  bold: isBold
-                })
+                  bold: isBold,
+                }),
               ],
-              alignment: AlignmentType.CENTER
-            })
+              alignment: AlignmentType.CENTER,
+            }),
           ],
           verticalAlign: VerticalAlign.CENTER,
           margins: {
             top: convertInchesToTwip(0.001),
             bottom: convertInchesToTwip(0.001),
             left: convertInchesToTwip(0.001),
-            right: convertInchesToTwip(0.001)
-          }
-        })
-      ] // end tableRow children
+            right: convertInchesToTwip(0.001),
+          },
+        }),
+      ], // end tableRow children
     }); // end tableRow
     rowArray.push(tempRow);
   });
@@ -176,14 +181,14 @@ const generateUnrotFacMatrix = (
   const contributorsTable = new Table({
     width: {
       size: 4100,
-      type: WidthType.DXA
+      type: WidthType.DXA,
     },
     indent: {
       size: 0,
-      type: WidthType.DXA
+      type: WidthType.DXA,
     },
     columnWidths: [1500, 585],
-    rows: [...rowArray] // end of rows array
+    rows: [...rowArray], // end of rows array
   });
 
   matrix.push(contributorsTable);
@@ -200,9 +205,9 @@ const generateUnrotFacMatrix = (
   let titleText;
   for (let i = 0; i < chunkedMatrix[0].length; i++) {
     if (i === 0) {
-      titleText = `${translatedTextObj["contributingText"]} - ${translatedTextObj["correlationMatrixTxt"]}`;
+      titleText = `${translatedTextObj['contributingText']} - ${translatedTextObj['correlationMatrixTxt']}`;
     } else {
-      titleText = `${translatedTextObj["contributingText"]} - ${translatedTextObj["correlationMatrixTxt"]} - (${translatedTextObj["contTxt"]}.)`;
+      titleText = `${translatedTextObj['contributingText']} - ${translatedTextObj['correlationMatrixTxt']} - (${translatedTextObj['contTxt']}.)`;
     }
 
     matrix.push(
@@ -210,30 +215,17 @@ const generateUnrotFacMatrix = (
         children: [
           new TextRun({
             text: titleText,
-            bold: true
-          })
+            bold: true,
+          }),
         ],
-        style: "tableStyle2",
+        style: 'tableStyle2',
         spacing: {
-          before: 500
-        }
+          before: 500,
+        },
       })
     );
 
-    let columnWidthArray = [
-      1100,
-      300,
-      300,
-      300,
-      300,
-      300,
-      300,
-      300,
-      300,
-      300,
-      300,
-      300
-    ];
+    let columnWidthArray = [1100, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300, 300];
 
     // CORRELATION TABLE
     let rowItemsArray = [];
@@ -254,24 +246,22 @@ const generateUnrotFacMatrix = (
           new TableCell({
             children: [
               new Paragraph({
-                style: "tableStyle1",
+                style: 'tableStyle1',
                 alignment: AlignmentType.START,
                 children: [
                   new TextRun({
                     text: namesArray[index].toString(),
-                    bold: isBold
-                  })
-                ]
-              })
+                    bold: isBold,
+                  }),
+                ],
+              }),
             ],
             verticalAlign: VerticalAlign.CENTER,
             width: {
               size: 1500,
-              type: WidthType.DXA
+              type: WidthType.DXA,
             },
-            shading: {
-              fill: TABLE_HEADER_FILL
-            }
+            shading: headerStyle.shading,
           })
         ); // end corrlsRowArray
       }
@@ -310,24 +300,22 @@ const generateUnrotFacMatrix = (
           new TableCell({
             children: [
               new Paragraph({
-                style: "tableStyle1",
+                style: 'tableStyle1',
                 alignment: position,
                 children: [
                   new TextRun({
                     text: entry.toString(),
-                    bold: isBold
-                  })
-                ]
-              })
+                    bold: isBold,
+                  }),
+                ],
+              }),
             ],
             verticalAlign: VerticalAlign.CENTER,
             width: {
               size: size,
-              type: WidthType.DXA
+              type: WidthType.DXA,
             },
-            shading: {
-              fill: TABLE_HEADER_FILL
-            }
+            shading: headerStyle.shading,
           })
         ); // end corrlsRowArray push
       });
@@ -335,7 +323,7 @@ const generateUnrotFacMatrix = (
         new TableRow({
           children: corrlsRowArray,
           tableHeader: isHeader,
-          cantSplit: true
+          cantSplit: true,
         })
       );
     }); // end correlations table for each
@@ -343,14 +331,14 @@ const generateUnrotFacMatrix = (
     const correlsTable = new Table({
       width: {
         size: 9800, // tableWidth,
-        type: WidthType.DXA
+        type: WidthType.DXA,
       },
       indent: {
         size: 0,
-        type: WidthType.DXA
+        type: WidthType.DXA,
       },
       columnWidths: columnWidthArray,
-      rows: [...rowItemsArray] // end of rows array
+      rows: [...rowItemsArray], // end of rows array
     });
 
     matrix.push(correlsTable);
@@ -367,9 +355,9 @@ const generateUnrotFacMatrix = (
   let titleText2;
   for (let i = 0; i < chunkedMatrix3[0].length; i++) {
     if (i === 0) {
-      titleText2 = translatedTextObj["factorZScoresTxt"];
+      titleText2 = translatedTextObj['factorZScoresTxt'];
     } else {
-      titleText2 = `${translatedTextObj["factorZScoresTxt"]} - (${translatedTextObj["contTxt"]}.)`;
+      titleText2 = `${translatedTextObj['factorZScoresTxt']} - (${translatedTextObj['contTxt']}.)`;
     }
 
     matrix.push(
@@ -377,30 +365,17 @@ const generateUnrotFacMatrix = (
         children: [
           new TextRun({
             text: titleText2,
-            bold: true
-          })
+            bold: true,
+          }),
         ],
-        style: "tableStyle2",
+        style: 'tableStyle2',
         spacing: {
-          before: 500
-        }
+          before: 500,
+        },
       })
     );
 
-    let columnWidthArray = [
-      300,
-      1500,
-      500,
-      300,
-      300,
-      300,
-      300,
-      300,
-      300,
-      300,
-      300,
-      300
-    ];
+    let columnWidthArray = [300, 1500, 500, 300, 300, 300, 300, 300, 300, 300, 300, 300];
 
     // FACTORS TABLE
     let rowItemsArray = [];
@@ -420,52 +395,48 @@ const generateUnrotFacMatrix = (
       if (i > 0) {
         let newText = item[0][0].toString();
         if (index === 0) {
-          newText = newText.replace("Statement Number", "Num");
+          newText = newText.replace('Statement Number', 'Num');
         }
         corrlsRowArray.push(
           new TableCell({
             children: [
               new Paragraph({
-                style: "tableStyle1",
+                style: 'tableStyle1',
                 alignment: AlignmentType.CENTER,
                 children: [
                   new TextRun({
                     text: newText,
-                    bold: isBold
-                  })
-                ]
-              })
+                    bold: isBold,
+                  }),
+                ],
+              }),
             ],
             verticalAlign: VerticalAlign.CENTER,
             width: {
               size: 300,
-              type: WidthType.DXA
+              type: WidthType.DXA,
             },
-            shading: {
-              fill: TABLE_HEADER_FILL
-            }
+            shading: headerStyle.shading,
           }),
           new TableCell({
             children: [
               new Paragraph({
-                style: "tableStyle1",
+                style: 'tableStyle1',
                 alignment: location3,
                 children: [
                   new TextRun({
                     text: item[0][1].toString(),
-                    bold: isBold
-                  })
-                ]
-              })
+                    bold: isBold,
+                  }),
+                ],
+              }),
             ],
             verticalAlign: VerticalAlign.CENTER,
             width: {
               size: 1500,
-              type: WidthType.DXA
+              type: WidthType.DXA,
             },
-            shading: {
-              fill: TABLE_HEADER_FILL
-            }
+            shading: headerStyle.shading,
           })
         ); // end corrlsRowArray
       }
@@ -473,9 +444,7 @@ const generateUnrotFacMatrix = (
       // first iteration items
       item[i].forEach((entry, entryIndex) => {
         if (index === 0) {
-          entry = entry
-            .replace("Raw Sort ", "")
-            .replace("Statement Number", "Num");
+          entry = entry.replace('Raw Sort ', '').replace('Statement Number', 'Num');
         }
         if (i > 0) {
           columnWidthArray.length = item[i].length + 2;
@@ -506,32 +475,30 @@ const generateUnrotFacMatrix = (
         }
 
         if (i === 0 && index === 0 && entryIndex > 3) {
-          entry = entry.toString().replace(/(.{8})/g, "$1 ");
+          entry = entry.toString().replace(/(.{8})/g, '$1 ');
         }
 
         corrlsRowArray.push(
           new TableCell({
             children: [
               new Paragraph({
-                style: "tableStyle1",
+                style: 'tableStyle1',
                 alignment: position,
                 children: [
                   new TextRun({
                     // this is the text for entire table
                     text: entry.toString(),
-                    bold: isBold
-                  })
-                ]
-              })
+                    bold: isBold,
+                  }),
+                ],
+              }),
             ],
             verticalAlign: VerticalAlign.CENTER,
             width: {
               size: size,
-              type: WidthType.DXA
+              type: WidthType.DXA,
             },
-            shading: {
-              fill: TABLE_HEADER_FILL
-            }
+            shading: headerStyle.shading,
           })
         ); // end corrlsRowArray push
       });
@@ -539,7 +506,7 @@ const generateUnrotFacMatrix = (
         new TableRow({
           children: corrlsRowArray,
           tableHeader: isHeader,
-          cantSplit: true
+          cantSplit: true,
         })
       );
     }); // end correlations table for each
@@ -547,14 +514,14 @@ const generateUnrotFacMatrix = (
     const correlsTable = new Table({
       width: {
         size: 9900,
-        type: WidthType.DXA
+        type: WidthType.DXA,
       },
       indent: {
         size: 0,
-        type: WidthType.DXA
+        type: WidthType.DXA,
       },
       columnWidths: columnWidthArray,
-      rows: [...rowItemsArray] // end of rows array
+      rows: [...rowItemsArray], // end of rows array
     });
 
     matrix.push(correlsTable);

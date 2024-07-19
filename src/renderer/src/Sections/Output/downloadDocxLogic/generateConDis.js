@@ -9,8 +9,8 @@ import {
   VerticalAlign,
   AlignmentType,
   convertInchesToTwip,
-  InternalHyperlink
-} from "docx";
+  InternalHyperlink,
+} from 'docx';
 
 const generateConDis = (data, useHyperlinks) => {
   data.shift();
@@ -29,16 +29,16 @@ const generateConDis = (data, useHyperlinks) => {
       children: [
         new TextRun({
           text: headerText[0],
-          bold: true
-        })
+          bold: true,
+        }),
       ],
       heading: HeadingLevel.HEADING_1,
       thematicBreak: true,
       pageBreakBefore: true,
       spacing: {
-        after: spacingAfter
-      }
-    })
+        after: spacingAfter,
+      },
+    }),
   ];
 
   let hyperlink = new Paragraph({
@@ -46,17 +46,17 @@ const generateConDis = (data, useHyperlinks) => {
       new InternalHyperlink({
         children: [
           new TextRun({
-            text: "Return to TOC",
-            style: "Hyperlink"
-          })
+            text: 'Return to TOC',
+            style: 'Hyperlink',
+          }),
         ],
-        anchor: "anchorForTableOfContents"
-      })
+        anchor: 'anchorForTableOfContents',
+      }),
     ],
     alignment: AlignmentType.RIGHT,
     spacing: {
-      after: 200
-    }
+      after: 200,
+    },
   });
 
   if (useHyperlinks === true) {
@@ -84,40 +84,40 @@ const generateConDis = (data, useHyperlinks) => {
         verticalAlign: VerticalAlign.CENTER,
         children: [
           new Paragraph({
-            style: "tableStyle2",
+            style: 'tableStyle2',
             alignment: AlignmentType.CENTER,
             children: [
               new TextRun({
                 text: item[0].toString(),
-                bold: isBold
-              })
-            ]
-          })
+                bold: isBold,
+              }),
+            ],
+          }),
         ],
         // reduce inside gap between cell contents and cell borders
         margins: {
           top: convertInchesToTwip(0.02),
           bottom: convertInchesToTwip(0.02),
           left: convertInchesToTwip(0.02),
-          right: convertInchesToTwip(0.02)
-        }
+          right: convertInchesToTwip(0.02),
+        },
       }),
       // STATEMENT
       new TableCell({
         children: [
           new Paragraph({
-            style: "tableStyle2",
+            style: 'tableStyle2',
             alignment: location,
             children: [
               new TextRun({
                 text: item[1].toString(),
-                bold: isBold
-              })
-            ]
-          })
+                bold: isBold,
+              }),
+            ],
+          }),
         ],
-        verticalAlign: VerticalAlign.CENTER
-      })
+        verticalAlign: VerticalAlign.CENTER,
+      }),
     ];
 
     item.forEach((entry, entryIndex) => {
@@ -131,17 +131,17 @@ const generateConDis = (data, useHyperlinks) => {
           new TableCell({
             children: [
               new Paragraph({
-                style: "tableStyle2",
+                style: 'tableStyle2',
                 alignment: AlignmentType.CENTER,
                 children: [
                   new TextRun({
                     text: entry.toString(),
-                    bold: isBold
-                  })
-                ]
-              })
+                    bold: isBold,
+                  }),
+                ],
+              }),
             ],
-            verticalAlign: VerticalAlign.CENTER
+            verticalAlign: VerticalAlign.CENTER,
           })
         ); // end push
       }
@@ -150,7 +150,7 @@ const generateConDis = (data, useHyperlinks) => {
     let tempRow = new TableRow({
       tableHeader: isHeader,
       cantSplit: true,
-      children: [...entryArray] // end tableRow children
+      children: [...entryArray], // end tableRow children
     }); // end tableRow
     rowArray.push(tempRow);
   }); // end for each
@@ -163,14 +163,14 @@ const generateConDis = (data, useHyperlinks) => {
   const contributorsTable = new Table({
     width: {
       size: 9900,
-      type: WidthType.DXA
+      type: WidthType.DXA,
     },
     indent: {
       size: 0,
-      type: WidthType.DXA
+      type: WidthType.DXA,
     },
     columnWidths: [...columnWidthArray],
-    rows: [...rowArray] // end of rows array
+    rows: [...rowArray], // end of rows array
   });
 
   matrix.push(contributorsTable);

@@ -42,7 +42,7 @@ import saveDocumentToZip from './saveDocumentToZip';
 // let filetype = "plainText";
 
 const generateOutputDoc = (translatedTextObj) => {
-  let saveAsZip = outputState.willIncludeDataFiles;
+  let saveAsZip = outputState.getState().willIncludeDataFiles;
 
   //let data = dataSource();
   const data = calcState.getState().outputData;

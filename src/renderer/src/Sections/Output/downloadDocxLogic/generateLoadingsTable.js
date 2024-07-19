@@ -4,15 +4,10 @@ import {
   HeadingLevel,
   ShadingType,
   AlignmentType,
-  InternalHyperlink
-} from "docx";
+  InternalHyperlink,
+} from 'docx';
 
-const generateLoadingsTable = (
-  matrixData,
-  useHyperlinks,
-  useZebra,
-  translatedTextObj
-) => {
+const generateLoadingsTable = (matrixData, useHyperlinks, useZebra, translatedTextObj) => {
   matrixData.shift();
   matrixData.shift();
   let headerText = matrixData.shift();
@@ -23,16 +18,16 @@ const generateLoadingsTable = (
       children: [
         new TextRun({
           text: headerText[0],
-          bold: true
-        })
+          bold: true,
+        }),
       ],
       heading: HeadingLevel.HEADING_1,
       thematicBreak: true,
       pageBreakBefore: true,
       spacing: {
-        after: 0
-      }
-    })
+        after: 0,
+      },
+    }),
   ];
 
   if (useHyperlinks === true) {
@@ -42,30 +37,30 @@ const generateLoadingsTable = (
           new InternalHyperlink({
             children: [
               new TextRun({
-                text: "Return to TOC",
-                style: "Hyperlink"
-              })
+                text: 'Return to TOC',
+                style: 'Hyperlink',
+              }),
             ],
-            anchor: "anchorForTableOfContents"
-          })
+            anchor: 'anchorForTableOfContents',
+          }),
         ],
         alignment: AlignmentType.RIGHT,
         spacing: {
-          after: 200
-        }
+          after: 200,
+        },
       })
     );
   }
 
   matrix.push(
     new Paragraph({
-      style: "bodyStyle1",
+      style: 'bodyStyle1',
       children: [
         new TextRun({
-          text: translatedTextObj["flaggedFactorLoadingsText"],
-          bold: true
-        })
-      ]
+          text: translatedTextObj['flaggedFactorLoadingsText'],
+          bold: true,
+        }),
+      ],
     })
   );
 
@@ -78,15 +73,12 @@ const generateLoadingsTable = (
       // push header 1
       childrenLines.push(
         new TextRun({
-          text: item[0]
-            .toString()
-            .substring(0, 3)
-            .trim(),
-          bold: true
+          text: item[0].toString().substring(0, 3).trim(),
+          bold: true,
         }),
         new TextRun({
-          text: item[1].toString().padStart(10, " "),
-          bold: true
+          text: item[1].toString().padStart(10, ' '),
+          bold: true,
         })
       );
       item.forEach((entry, entryIndex) => {
@@ -95,22 +87,19 @@ const generateLoadingsTable = (
             // if is "Factor Group"
             childrenLines.push(
               new TextRun({
-                text: `FG`.padStart(5, " "),
-                bold: true
+                text: `FG`.padStart(5, ' '),
+                bold: true,
               })
             );
           } else if (entryIndex % 2 !== 0) {
             // skip unneeded entries
-          } else if (entry !== "") {
+          } else if (entry !== '') {
             // push headers all
-            let facNumber = entry
-              .toString()
-              .slice(-3)
-              .trim();
+            let facNumber = entry.toString().slice(-3).trim();
             childrenLines.push(
               new TextRun({
-                text: `${facNumber}`.padStart(8, " "),
-                bold: true
+                text: `${facNumber}`.padStart(8, ' '),
+                bold: true,
               })
             );
           }
@@ -132,11 +121,11 @@ const generateLoadingsTable = (
                   .toString()
                   .substring(0, colSpace[entryIndex] - 1)
                   .trim()
-                  .padStart(colSpace[entryIndex], " ")}`,
+                  .padStart(colSpace[entryIndex], ' ')}`,
                 shading: {
                   type: ShadingType.SOLID,
-                  color: "E2E2E2"
-                }
+                  color: 'E2E2E2',
+                },
               })
             );
           } else {
@@ -146,27 +135,24 @@ const generateLoadingsTable = (
                   .toString()
                   .substring(0, colSpace[entryIndex] - 1)
                   .trim()
-                  .padStart(colSpace[entryIndex], " ")}`
+                  .padStart(colSpace[entryIndex], ' ')}`,
               })
             );
           }
         } else {
           let highlight = false;
-          if (
-            isNaN(item[entryIndex + 1]) &&
-            item[entryIndex + 1] !== undefined
-          ) {
+          if (isNaN(item[entryIndex + 1]) && item[entryIndex + 1] !== undefined) {
             highlight = true;
           }
           // push numeric values
-          if (isNaN(entry) || entry === "") {
+          if (isNaN(entry) || entry === '') {
             // catch multilingual error
           } else {
             let entryString = entry.toString();
             if (+entry < 0 && entryString.length < 7) {
-              newEntry = entryString + "0";
+              newEntry = entryString + '0';
             } else if (+entry > 0 && entryString.length < 6) {
-              newEntry = entryString + "0";
+              newEntry = entryString + '0';
             } else {
               newEntry = entryString;
             }
@@ -174,29 +160,29 @@ const generateLoadingsTable = (
             if (highlight) {
               childrenLines.push(
                 new TextRun({
-                  text: `${newEntry.padStart(8, " ")}`,
+                  text: `${newEntry.padStart(8, ' ')}`,
                   bold: true,
                   shading: {
                     type: ShadingType.SOLID,
-                    color: "ffdc9d"
-                  }
+                    color: 'ffdc9d',
+                  },
                 })
               ); // end push
             } else {
               if (index > 0 && index % 2 === 0 && useZebra === true) {
                 childrenLines.push(
                   new TextRun({
-                    text: `${newEntry.padStart(8, " ")}`,
+                    text: `${newEntry.padStart(8, ' ')}`,
                     shading: {
                       type: ShadingType.SOLID,
-                      color: "E2E2E2"
-                    }
+                      color: 'E2E2E2',
+                    },
                   })
                 ); // end push
               } else {
                 childrenLines.push(
                   new TextRun({
-                    text: `${newEntry.padStart(8, " ")}`
+                    text: `${newEntry.padStart(8, ' ')}`,
                   })
                 ); // end push
               }
@@ -208,12 +194,12 @@ const generateLoadingsTable = (
 
     matrix.push(
       new Paragraph({
-        style: "ptQsorts",
+        style: 'ptQsorts',
         children: [...childrenLines],
         spacing: {
           before: 0,
-          after: 0
-        }
+          after: 0,
+        },
       })
     );
   });

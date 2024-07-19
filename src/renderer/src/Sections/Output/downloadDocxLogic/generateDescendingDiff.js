@@ -9,8 +9,8 @@ import {
   VerticalAlign,
   AlignmentType,
   convertInchesToTwip,
-  InternalHyperlink
-} from "docx";
+  InternalHyperlink,
+} from 'docx';
 
 const generateDescendingDiff = (data, useHyperlinks) => {
   data.shift();
@@ -29,16 +29,16 @@ const generateDescendingDiff = (data, useHyperlinks) => {
       children: [
         new TextRun({
           text: headerText[0],
-          bold: true
-        })
+          bold: true,
+        }),
       ],
       heading: HeadingLevel.HEADING_1,
       thematicBreak: true,
       pageBreakBefore: true,
       spacing: {
-        after: spacingAfter
-      }
-    })
+        after: spacingAfter,
+      },
+    }),
   ];
 
   if (useHyperlinks === true) {
@@ -48,17 +48,17 @@ const generateDescendingDiff = (data, useHyperlinks) => {
           new InternalHyperlink({
             children: [
               new TextRun({
-                text: "Return to TOC",
-                style: "Hyperlink"
-              })
+                text: 'Return to TOC',
+                style: 'Hyperlink',
+              }),
             ],
-            anchor: "anchorForTableOfContents"
-          })
+            anchor: 'anchorForTableOfContents',
+          }),
         ],
         alignment: AlignmentType.RIGHT,
         spacing: {
-          after: 200
-        }
+          after: 200,
+        },
       })
     );
   }
@@ -84,112 +84,112 @@ const generateDescendingDiff = (data, useHyperlinks) => {
           verticalAlign: VerticalAlign.CENTER,
           children: [
             new Paragraph({
-              style: "tableStyle2",
+              style: 'tableStyle2',
               alignment: AlignmentType.CENTER,
               children: [
                 new TextRun({
                   text: item[0].toString(),
-                  bold: isBold
-                })
-              ]
-            })
+                  bold: isBold,
+                }),
+              ],
+            }),
           ],
           width: {
             size: 964,
-            type: WidthType.DXA
+            type: WidthType.DXA,
           },
           margins: {
             top: convertInchesToTwip(0.015),
             bottom: convertInchesToTwip(0.015),
             left: convertInchesToTwip(0.015),
-            right: convertInchesToTwip(0.015)
-          }
+            right: convertInchesToTwip(0.015),
+          },
         }),
         // STATEMENT
         new TableCell({
           children: [
             new Paragraph({
-              style: "tableStyle2",
+              style: 'tableStyle2',
               alignment: location,
               children: [
                 new TextRun({
                   text: item[1].toString(),
-                  bold: isBold
-                })
-              ]
-            })
+                  bold: isBold,
+                }),
+              ],
+            }),
           ],
           width: {
             size: 5348,
-            type: WidthType.DXA
+            type: WidthType.DXA,
           },
-          verticalAlign: VerticalAlign.CENTER
+          verticalAlign: VerticalAlign.CENTER,
         }),
         // First FACTOR
         new TableCell({
           children: [
             new Paragraph({
-              style: "tableStyle2",
+              style: 'tableStyle2',
               alignment: AlignmentType.CENTER,
               children: [
                 new TextRun({
                   text: item[2].toString(),
-                  bold: isBold
-                })
-              ]
-            })
+                  bold: isBold,
+                }),
+              ],
+            }),
           ],
           width: {
             size: 1200,
-            type: WidthType.DXA
+            type: WidthType.DXA,
           },
-          verticalAlign: VerticalAlign.CENTER
+          verticalAlign: VerticalAlign.CENTER,
         }),
         // Second FACTOR
         new TableCell({
           children: [
             new Paragraph({
-              style: "tableStyle2",
+              style: 'tableStyle2',
               alignment: AlignmentType.CENTER,
               children: [
                 new TextRun({
                   text: item[3].toString(),
-                  bold: isBold
-                })
-              ]
-            })
+                  bold: isBold,
+                }),
+              ],
+            }),
           ],
           width: {
             size: 1200,
-            type: WidthType.DXA
+            type: WidthType.DXA,
           },
-          verticalAlign: VerticalAlign.CENTER
+          verticalAlign: VerticalAlign.CENTER,
         }),
         // DIFF
         new TableCell({
           children: [
             new Paragraph({
-              style: "tableStyle2",
+              style: 'tableStyle2',
               alignment: AlignmentType.CENTER,
               children: [
                 new TextRun({
                   text: item[4].toString(),
-                  bold: isBold
-                })
+                  bold: isBold,
+                }),
               ],
               width: {
                 size: 15,
-                type: WidthType.PERCENTAGE
-              }
-            })
+                type: WidthType.PERCENTAGE,
+              },
+            }),
           ],
           width: {
             size: 1200,
-            type: WidthType.DXA
+            type: WidthType.DXA,
           },
-          verticalAlign: VerticalAlign.CENTER
-        })
-      ] // end tableRow children
+          verticalAlign: VerticalAlign.CENTER,
+        }),
+      ], // end tableRow children
     }); // end tableRow
     rowArray.push(tempRow);
   }); // end for each
@@ -198,10 +198,10 @@ const generateDescendingDiff = (data, useHyperlinks) => {
     columns: 5,
     indent: {
       size: 0,
-      type: WidthType.DXA
+      type: WidthType.DXA,
     },
     columnWidths: [964, 5348, 1200, 1200, 1200],
-    rows: [...rowArray] // end of rows array
+    rows: [...rowArray], // end of rows array
   });
 
   matrix.push(contributorsTable);

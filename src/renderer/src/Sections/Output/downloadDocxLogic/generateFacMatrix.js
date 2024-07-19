@@ -4,15 +4,10 @@ import {
   HeadingLevel,
   ShadingType,
   InternalHyperlink,
-  AlignmentType
-} from "docx";
+  AlignmentType,
+} from 'docx';
 
-const generateUnrotFacMatrix = (
-  matrixData,
-  useHyperlinks,
-  useZebra,
-  translatedTextObj
-) => {
+const generateUnrotFacMatrix = (matrixData, useHyperlinks, useZebra, translatedTextObj) => {
   let expVar = matrixData.pop();
   matrixData.shift();
   matrixData.shift();
@@ -24,16 +19,16 @@ const generateUnrotFacMatrix = (
       children: [
         new TextRun({
           text: headerText[0],
-          bold: true
-        })
+          bold: true,
+        }),
       ],
       heading: HeadingLevel.HEADING_1,
       thematicBreak: true,
       pageBreakBefore: true,
       spacing: {
-        after: 0
-      }
-    })
+        after: 0,
+      },
+    }),
   ];
 
   if (useHyperlinks === true) {
@@ -43,35 +38,35 @@ const generateUnrotFacMatrix = (
           new InternalHyperlink({
             children: [
               new TextRun({
-                text: "Return to TOC",
-                style: "Hyperlink"
-              })
+                text: 'Return to TOC',
+                style: 'Hyperlink',
+              }),
             ],
-            anchor: "anchorForTableOfContents"
-          })
+            anchor: 'anchorForTableOfContents',
+          }),
         ],
         alignment: AlignmentType.RIGHT,
         spacing: {
-          after: 200
-        }
+          after: 200,
+        },
       })
     );
   }
 
   matrix.push(
     new Paragraph({
-      style: "dist4",
+      style: 'dist4',
       children: [
         new TextRun({
-          text: translatedTextObj["flaggedFactorLoadingsText"],
-          bold: true
-        })
+          text: translatedTextObj['flaggedFactorLoadingsText'],
+          bold: true,
+        }),
       ],
       spacing: {
         before: 200,
         line: 260,
-        after: 200
-      }
+        after: 200,
+      },
     })
   );
 
@@ -83,31 +78,25 @@ const generateUnrotFacMatrix = (
       // push header 1
       childrenLines.push(
         new TextRun({
-          text: item[0]
-            .toString()
-            .substring(0, 3)
-            .padStart(3, " "),
-          bold: true
+          text: item[0].toString().substring(0, 3).padStart(3, ' '),
+          bold: true,
         })
       );
       childrenLines.push(
         new TextRun({
-          text: item[1]
-            .toString()
-            .substring(0, 11)
-            .padStart(12, " "),
-          bold: true
+          text: item[1].toString().substring(0, 11).padStart(12, ' '),
+          bold: true,
         })
       );
       item.forEach((entry, entryIndex) => {
         if (entryIndex > 1) {
-          if (entry !== "") {
+          if (entry !== '') {
             // push headers all
             let facNumber = entry.slice(-2).trim();
             childrenLines.push(
               new TextRun({
-                text: ` F${facNumber}`.padStart(8, " "),
-                bold: true
+                text: ` F${facNumber}`.padStart(8, ' '),
+                bold: true,
               })
             );
           }
@@ -122,17 +111,17 @@ const generateUnrotFacMatrix = (
           if (index > 0 && index % 2 === 0 && useZebra === true) {
             childrenLines.push(
               new TextRun({
-                text: `${entry.toString().padStart(3, " ")} `,
+                text: `${entry.toString().padStart(3, ' ')} `,
                 shading: {
                   type: ShadingType.SOLID,
-                  color: "E2E2E2"
-                }
+                  color: 'E2E2E2',
+                },
               })
             );
           } else {
             childrenLines.push(
               new TextRun({
-                text: `${entry.toString().padStart(3, " ")} `
+                text: `${entry.toString().padStart(3, ' ')} `,
               })
             );
           }
@@ -143,73 +132,64 @@ const generateUnrotFacMatrix = (
           if (index > 0 && index % 2 === 0 && useZebra === true) {
             childrenLines.push(
               new TextRun({
-                text: `${shortPartName
-                  .toString()
-                  .substring(0, 13)
-                  .padStart(13, " ")}`,
+                text: `${shortPartName.toString().substring(0, 13).padStart(13, ' ')}`,
                 shading: {
                   type: ShadingType.SOLID,
-                  color: "E2E2E2"
-                }
+                  color: 'E2E2E2',
+                },
               })
             );
           } else {
             childrenLines.push(
               new TextRun({
-                text: `${shortPartName
-                  .toString()
-                  .substring(0, 13)
-                  .padStart(13, " ")}`
+                text: `${shortPartName.toString().substring(0, 13).padStart(13, ' ')}`,
               })
             );
           }
         } else {
           let highlight = false;
-          if (
-            isNaN(item[entryIndex + 1]) &&
-            item[entryIndex + 1] !== undefined
-          ) {
+          if (isNaN(item[entryIndex + 1]) && item[entryIndex + 1] !== undefined) {
             highlight = true;
           }
 
           // push numeric values
-          if (isNaN(entry) || entry === "") {
+          if (isNaN(entry) || entry === '') {
             // catch errors
           } else {
             let entryString = entry.toString();
             if (+entry < 0 && entryString.length < 7) {
-              newEntry = entryString + "0";
+              newEntry = entryString + '0';
             } else if (+entry > 0 && entryString.length < 6) {
-              newEntry = entryString + "0";
+              newEntry = entryString + '0';
             } else {
               newEntry = entryString;
             }
             if (highlight) {
               childrenLines.push(
                 new TextRun({
-                  text: `${newEntry.padStart(8, " ")}`,
+                  text: `${newEntry.padStart(8, ' ')}`,
                   bold: true,
                   shading: {
                     type: ShadingType.SOLID,
-                    color: "ffdc9d"
-                  }
+                    color: 'ffdc9d',
+                  },
                 })
               ); // end push
             } else {
               if (index > 0 && index % 2 === 0 && useZebra === true) {
                 childrenLines.push(
                   new TextRun({
-                    text: `${newEntry.padStart(8, " ")}`,
+                    text: `${newEntry.padStart(8, ' ')}`,
                     shading: {
                       type: ShadingType.SOLID,
-                      color: "E2E2E2"
-                    }
+                      color: 'E2E2E2',
+                    },
                   })
                 ); // end push
               } else {
                 childrenLines.push(
                   new TextRun({
-                    text: `${newEntry.padStart(8, " ")}`
+                    text: `${newEntry.padStart(8, ' ')}`,
                   })
                 ); // end push
               }
@@ -221,12 +201,12 @@ const generateUnrotFacMatrix = (
 
     matrix.push(
       new Paragraph({
-        style: "dist4",
+        style: 'dist4',
         children: [...childrenLines],
         spacing: {
           before: 0,
-          after: 0
-        }
+          after: 0,
+        },
       })
     );
   });
@@ -239,25 +219,25 @@ const generateUnrotFacMatrix = (
       expArray.push(
         new TextRun({
           text: `% Explained Var`, // item,
-          bold: isBold
+          bold: isBold,
         })
       );
     } else {
       expArray.push(
         new TextRun({
-          text: `${item.toString().padStart(4, " ")}`,
-          bold: isBold
+          text: `${item.toString().padStart(4, ' ')}`,
+          bold: isBold,
         })
       );
     }
   });
   matrix.push(
     new Paragraph({
-      style: "dist4",
+      style: 'dist4',
       children: [...expArray],
       spacing: {
-        before: 300
-      }
+        before: 300,
+      },
     })
   );
 

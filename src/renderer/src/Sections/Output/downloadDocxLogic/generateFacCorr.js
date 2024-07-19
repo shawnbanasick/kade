@@ -4,8 +4,8 @@ import {
   HeadingLevel,
   AlignmentType,
   InternalHyperlink,
-  ShadingType
-} from "docx";
+  ShadingType,
+} from 'docx';
 
 const generateFacCorr = (corlData, useHyperlinks, useZebra) => {
   corlData.shift();
@@ -16,7 +16,7 @@ const generateFacCorr = (corlData, useHyperlinks, useZebra) => {
   let factorList = [...corlData[0]];
   factorList.shift();
 
-  let headerLine = " ".padEnd(11, " ");
+  let headerLine = ' '.padEnd(11, ' ');
   // const matrixSize = corlData.length - 5;
 
   let spacingAfter = 250;
@@ -26,11 +26,8 @@ const generateFacCorr = (corlData, useHyperlinks, useZebra) => {
 
   // create HEADER LINE
   for (let i = 0; i < factorList.length; i++) {
-    let partNum = `F${factorList[i]
-      .toString()
-      .slice(-3)
-      .trim()}`;
-    let stringPartNum = partNum.padStart(8, " ");
+    let partNum = `F${factorList[i].toString().slice(-3).trim()}`;
+    let stringPartNum = partNum.padStart(8, ' ');
     headerLine = headerLine + stringPartNum;
   }
 
@@ -40,16 +37,16 @@ const generateFacCorr = (corlData, useHyperlinks, useZebra) => {
       children: [
         new TextRun({
           text: headerText[0],
-          bold: true
-        })
+          bold: true,
+        }),
       ],
       heading: HeadingLevel.HEADING_1,
       thematicBreak: true,
       pageBreakBefore: true,
       spacing: {
-        after: 0
-      }
-    })
+        after: 0,
+      },
+    }),
   ];
 
   if (useHyperlinks === true) {
@@ -59,29 +56,29 @@ const generateFacCorr = (corlData, useHyperlinks, useZebra) => {
           new InternalHyperlink({
             children: [
               new TextRun({
-                text: "Return to TOC",
-                style: "Hyperlink"
-              })
+                text: 'Return to TOC',
+                style: 'Hyperlink',
+              }),
             ],
-            anchor: "anchorForTableOfContents"
-          })
+            anchor: 'anchorForTableOfContents',
+          }),
         ],
         alignment: AlignmentType.RIGHT,
         spacing: {
-          after: spacingAfter
-        }
+          after: spacingAfter,
+        },
       })
     );
   }
 
   corrlsList.push(
     new Paragraph({
-      style: "bodyStyle1",
+      style: 'bodyStyle1',
       children: [
         new TextRun({
-          text: headerLine
-        })
-      ]
+          text: headerLine,
+        }),
+      ],
     })
   );
 
@@ -93,32 +90,30 @@ const generateFacCorr = (corlData, useHyperlinks, useZebra) => {
         if (entryIndex === 0) {
           childrenLines.push(
             new TextRun({
-              text: `${index}. ${entry.replace("  ", " ").padEnd(10, " ")}`
+              text: `${index}. ${entry.replace('  ', ' ').padEnd(10, ' ')}`,
             })
           );
         } else {
           if (index > 0 && index % 2 !== 0 && useZebra === true) {
             childrenLines.push(
               new TextRun({
-                text: entry.toString().padStart(8, " "),
+                text: entry.toString().padStart(8, ' '),
                 shading: {
                   type: ShadingType.SOLID,
-                  color: "E2E2E2"
-                }
+                  color: 'E2E2E2',
+                },
               })
             );
           } else {
-            childrenLines.push(
-              new TextRun({ text: entry.toString().padStart(8, " ") })
-            );
+            childrenLines.push(new TextRun({ text: entry.toString().padStart(8, ' ') }));
           }
         }
       });
 
       corrlsList.push(
         new Paragraph({
-          style: "bodyStyle1",
-          children: [...childrenLines]
+          style: 'bodyStyle1',
+          children: [...childrenLines],
         })
       );
     }

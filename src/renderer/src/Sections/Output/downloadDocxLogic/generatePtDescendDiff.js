@@ -4,8 +4,8 @@ import {
   HeadingLevel,
   AlignmentType,
   InternalHyperlink,
-  ShadingType
-} from "docx";
+  ShadingType,
+} from 'docx';
 
 const generateDescendingDiff = (data, useHyperlinks, useZebra) => {
   data.shift();
@@ -24,16 +24,16 @@ const generateDescendingDiff = (data, useHyperlinks, useZebra) => {
       children: [
         new TextRun({
           text: headerText[0],
-          bold: true
-        })
+          bold: true,
+        }),
       ],
       heading: HeadingLevel.HEADING_1,
       thematicBreak: true,
       pageBreakBefore: true,
       spacing: {
-        after: spacingAfter
-      }
-    })
+        after: spacingAfter,
+      },
+    }),
   ];
 
   if (useHyperlinks === true) {
@@ -43,17 +43,17 @@ const generateDescendingDiff = (data, useHyperlinks, useZebra) => {
           new InternalHyperlink({
             children: [
               new TextRun({
-                text: "Return to TOC",
-                style: "Hyperlink"
-              })
+                text: 'Return to TOC',
+                style: 'Hyperlink',
+              }),
             ],
-            anchor: "anchorForTableOfContents"
-          })
+            anchor: 'anchorForTableOfContents',
+          }),
         ],
         alignment: AlignmentType.RIGHT,
         spacing: {
-          after: 200
-        }
+          after: 200,
+        },
       })
     );
   }
@@ -63,103 +63,103 @@ const generateDescendingDiff = (data, useHyperlinks, useZebra) => {
     let isBold = false;
     if (index === 0) {
       isBold = true;
-      item[0] = "Nm";
-      item[4] = "Diff";
+      item[0] = 'Nm';
+      item[4] = 'Diff';
     }
 
     let tempRow;
     if (index > 0 && index % 2 === 0 && useZebra === true) {
       tempRow = [
         new TextRun({
-          text: item[0].toString().padStart(4, " "),
+          text: item[0].toString().padStart(4, ' '),
           bold: isBold,
           shading: {
             type: ShadingType.SOLID,
-            color: "E2E2E2"
-          }
+            color: 'E2E2E2',
+          },
         }),
 
         // STATEMENT
         new TextRun({
-          text: item[1].toString().substring(0, 45).padStart(46, " "),
+          text: item[1].toString().substring(0, 45).padStart(46, ' '),
           bold: isBold,
           shading: {
             type: ShadingType.SOLID,
-            color: "E2E2E2"
-          }
+            color: 'E2E2E2',
+          },
         }),
 
         // First FACTOR
         new TextRun({
-          text: item[2].toString().padStart(9, " "),
+          text: item[2].toString().padStart(9, ' '),
           bold: isBold,
           shading: {
             type: ShadingType.SOLID,
-            color: "E2E2E2"
-          }
+            color: 'E2E2E2',
+          },
         }),
 
         // Second FACTOR
         new TextRun({
-          text: item[3].toString().padStart(8, " "),
+          text: item[3].toString().padStart(8, ' '),
           bold: isBold,
           shading: {
             type: ShadingType.SOLID,
-            color: "E2E2E2"
-          }
+            color: 'E2E2E2',
+          },
         }),
 
         // DIFF
         new TextRun({
-          text: item[4].toString().padStart(8, " "),
+          text: item[4].toString().padStart(8, ' '),
           bold: isBold,
           shading: {
             type: ShadingType.SOLID,
-            color: "E2E2E2"
-          }
-        })
+            color: 'E2E2E2',
+          },
+        }),
       ];
     } else {
       tempRow = [
         new TextRun({
-          text: item[0].toString().padStart(4, " "),
-          bold: isBold
+          text: item[0].toString().padStart(4, ' '),
+          bold: isBold,
         }),
 
         // STATEMENT
         new TextRun({
-          text: item[1].toString().substring(0, 45).padStart(46, " "),
-          bold: isBold
+          text: item[1].toString().substring(0, 45).padStart(46, ' '),
+          bold: isBold,
         }),
 
         // First FACTOR
         new TextRun({
-          text: item[2].toString().padStart(9, " "),
-          bold: isBold
+          text: item[2].toString().padStart(9, ' '),
+          bold: isBold,
         }),
 
         // Second FACTOR
         new TextRun({
-          text: item[3].toString().padStart(8, " "),
-          bold: isBold
+          text: item[3].toString().padStart(8, ' '),
+          bold: isBold,
         }),
 
         // DIFF
         new TextRun({
-          text: item[4].toString().padStart(8, " "),
-          bold: isBold
-        })
+          text: item[4].toString().padStart(8, ' '),
+          bold: isBold,
+        }),
       ];
     }
     matrix.push(
       new Paragraph({
         children: tempRow,
-        style: "bodyStyle1",
+        style: 'bodyStyle1',
         spacing: {
           before: 0,
           line: 260,
-          after: 0
-        }
+          after: 0,
+        },
       })
     );
   }); // end for each

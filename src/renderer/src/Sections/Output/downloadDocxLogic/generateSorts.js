@@ -9,9 +9,9 @@ import {
   WidthType,
   Table,
   TableLayoutType,
-  InternalHyperlink
-} from "docx";
-import chunk from "lodash/chunk";
+  InternalHyperlink,
+} from 'docx';
+import chunk from 'lodash/chunk';
 
 const generateSorts = (sortsData, useHyperlinks) => {
   sortsData.shift();
@@ -25,63 +25,63 @@ const generateSorts = (sortsData, useHyperlinks) => {
   }
 
   const partNumArray = [
-    "1 - 10",
-    "11 - 20",
-    "21 - 30",
-    "31 - 40",
-    "41 - 50",
-    "51 - 60",
-    "61 - 70",
-    "71 - 80",
-    "81 - 90",
-    "91 - 100",
-    "101 - 110",
-    "111 - 120",
-    "121 - 130",
-    "131 - 140",
-    "141 - 150",
-    "151 - 160",
-    "161 - 170",
-    "171 - 180",
-    "181 - 190",
-    "191 - 200",
-    "201 - 210",
-    "211 - 220",
-    "221 - 230",
-    "231 - 240",
-    "241 - 250",
-    "251 - 260",
-    "261 - 270",
-    "271 - 280",
-    "281 - 290",
-    "291 - 300",
-    "301 - 310",
-    "311 - 320",
-    "321 - 330",
-    "331 - 340",
-    "341 - 350",
-    "351 - 360",
-    "361 - 370",
-    "371 - 380",
-    "381 - 390",
-    "391 - 400",
-    "401 - 410",
-    "411 - 420",
-    "421 - 430",
-    "431 - 440",
-    "441 - 450",
-    "451 - 460",
-    "461 - 470",
-    "471 - 480",
-    "481 - 490",
-    "491 - 500"
+    '1 - 10',
+    '11 - 20',
+    '21 - 30',
+    '31 - 40',
+    '41 - 50',
+    '51 - 60',
+    '61 - 70',
+    '71 - 80',
+    '81 - 90',
+    '91 - 100',
+    '101 - 110',
+    '111 - 120',
+    '121 - 130',
+    '131 - 140',
+    '141 - 150',
+    '151 - 160',
+    '161 - 170',
+    '171 - 180',
+    '181 - 190',
+    '191 - 200',
+    '201 - 210',
+    '211 - 220',
+    '221 - 230',
+    '231 - 240',
+    '241 - 250',
+    '251 - 260',
+    '261 - 270',
+    '271 - 280',
+    '281 - 290',
+    '291 - 300',
+    '301 - 310',
+    '311 - 320',
+    '321 - 330',
+    '331 - 340',
+    '341 - 350',
+    '351 - 360',
+    '361 - 370',
+    '371 - 380',
+    '381 - 390',
+    '391 - 400',
+    '401 - 410',
+    '411 - 420',
+    '421 - 430',
+    '431 - 440',
+    '441 - 450',
+    '451 - 460',
+    '461 - 470',
+    '471 - 480',
+    '481 - 490',
+    '491 - 500',
   ];
 
   let numParts = sortsData.length - 1;
   let firstRow = sortsData.shift();
   // POP OFF last row and prep for re-insertion
   firstRow.pop();
-  firstRow.push("Std. Dev.");
+  firstRow.push('Std. Dev.');
 
   let chunkedArray = chunk(sortsData, 10);
   let chunkedArrayLocation = chunkedArray.length - 1;
@@ -96,7 +96,7 @@ const generateSorts = (sortsData, useHyperlinks) => {
   for (let i = 0; i < chunkedArray.length; i++) {
     // INVERT MATRIX
     let newMatrix = chunkedArray[i][0].map((_, colIndex) =>
-      chunkedArray[i].map(row => row[colIndex])
+      chunkedArray[i].map((row) => row[colIndex])
     );
 
     // 2505 total width?
@@ -112,16 +112,16 @@ const generateSorts = (sortsData, useHyperlinks) => {
         children: [
           new TextRun({
             text: `${headerText[0]}  ${partNumArray[i]}`,
-            bold: true
-          })
+            bold: true,
+          }),
         ],
         heading: HeadingLevel.HEADING_1,
         thematicBreak: true,
         pageBreakBefore: true,
         spacing: {
-          after: spacingAfter
-        }
-      })
+          after: spacingAfter,
+        },
+      }),
     ];
 
     if (useHyperlinks === true) {
@@ -131,17 +131,17 @@ const generateSorts = (sortsData, useHyperlinks) => {
             new InternalHyperlink({
               children: [
                 new TextRun({
-                  text: "Return to TOC",
-                  style: "Hyperlink"
-                })
+                  text: 'Return to TOC',
+                  style: 'Hyperlink',
+                }),
               ],
-              anchor: "anchorForTableOfContents"
-            })
+              anchor: 'anchorForTableOfContents',
+            }),
           ],
           alignment: AlignmentType.RIGHT,
           spacing: {
-            after: 200
-          }
+            after: 200,
+          },
         })
       );
     }
@@ -154,39 +154,39 @@ const generateSorts = (sortsData, useHyperlinks) => {
         new TableCell({
           children: [
             new Paragraph({
-              style: "tableStyle1",
+              style: 'tableStyle1',
               text: firstRow[index].toString(),
               alignment: AlignmentType.CENTER,
               width: {
                 size: 9.09,
-                type: WidthType.PERCENTAGE
+                type: WidthType.PERCENTAGE,
               },
-              layout: TableLayoutType.FIXED
-            })
+              layout: TableLayoutType.FIXED,
+            }),
           ],
-          verticalAlign: VerticalAlign.CENTER
-        })
+          verticalAlign: VerticalAlign.CENTER,
+        }),
       ];
       // rest of the row items
       item.forEach((entry, entryIndex) => {
         if (index === 0) {
-          entry = entry.toString().replace(/(.{8})/g, "$1 ");
+          entry = entry.toString().replace(/(.{8})/g, '$1 ');
         }
 
         tempArray.push(
           new TableCell({
             children: [
               new Paragraph({
-                style: "tableStyle1",
+                style: 'tableStyle1',
                 text: entry.toString(),
                 alignment: AlignmentType.CENTER,
                 width: {
-                  size: 9.09
+                  size: 9.09,
                 },
-                layout: TableLayoutType.FIXED
-              })
+                layout: TableLayoutType.FIXED,
+              }),
             ],
-            verticalAlign: VerticalAlign.CENTER
+            verticalAlign: VerticalAlign.CENTER,
           })
         ); // end push
       }); // end forEach
@@ -196,14 +196,14 @@ const generateSorts = (sortsData, useHyperlinks) => {
           new TableRow({
             children: [...tempArray],
             cantSplit: true,
-            tableHeader: true
+            tableHeader: true,
           })
         );
       } else {
         rowArray.push(
           new TableRow({
             children: [...tempArray],
-            cantSplit: true
+            cantSplit: true,
           })
         );
       }
@@ -212,15 +212,15 @@ const generateSorts = (sortsData, useHyperlinks) => {
     const table = new Table({
       width: {
         size: 9900,
-        type: WidthType.DXA
+        type: WidthType.DXA,
       },
 
       indent: {
         size: 0,
-        type: WidthType.DXA
+        type: WidthType.DXA,
       },
       // columnWidths: columnWidthsArray,
-      rows: [...rowArray] // end of rows array
+      rows: [...rowArray], // end of rows array
     });
 
     sortsList.push(table);

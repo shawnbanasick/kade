@@ -75,11 +75,6 @@ function getGridRowDataFacTable(data2, headerRow) {
   return gridRowDataFacTable;
 }
 
-const [localStore, setLocalStore] = useState({
-  numFactors: 0,
-  numStatements: 0,
-});
-
 function getWidth(numFactors) {
   let widthVal = 383 + 200 * numFactors;
   let x = window.innerWidth - 40 - 152;
@@ -103,19 +98,24 @@ function getHeight(numStatements) {
   return heightVal;
 }
 
-function resetWidthAndHeight() {
-  // this.gridApi.setGridAutoHeight(false);
-  const numFactors = localStore.numFactors;
-  const numStatements = localStore.numStatements;
-  const table = document.querySelector('#innerContainerFactors');
-  if (table !== null) {
-    table.style.height = getHeight(numStatements);
-    table.style.width = getWidth(numFactors);
-  }
-}
-
 const FactorsTable = () => {
   const { t } = useTranslation();
+
+  const [localStore, setLocalStore] = useState({
+    numFactors: 0,
+    numStatements: 0,
+  });
+
+  function resetWidthAndHeight() {
+    // this.gridApi.setGridAutoHeight(false);
+    const numFactors = localStore.numFactors;
+    const numStatements = localStore.numStatements;
+    const table = document.querySelector('#innerContainerFactors');
+    if (table !== null) {
+      table.style.height = getHeight(numStatements);
+      table.style.width = getWidth(numFactors);
+    }
+  }
 
   const getCurrentData = (headerRow, numFacs) => {
     const data = calcState((state) => state.factorScoreRanksArray);

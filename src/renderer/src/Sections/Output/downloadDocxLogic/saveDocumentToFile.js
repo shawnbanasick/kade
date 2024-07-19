@@ -1,23 +1,23 @@
-import { Packer } from "docx";
+import { Packer } from 'docx';
 // import { saveAs } from "file-saver";
-import currentDate1 from "../../../Utils/currentDate1";
-import currentTime1 from "../../../Utils/currentTime1";
-import getCoreState from "../../GlobalState/getCoreState";
-import getCalcState from "../../GlobalState/getCalcState";
+import currentDate1 from '../../../Utils/currentDate1';
+import currentTime1 from '../../../Utils/currentTime1';
+import coreState from '../../GlobalState/coreState';
+import calcState from '../../GlobalState/calcState';
 
-const { remote } = require("electron");
+const { remote } = require('electron');
 const mainWindow = remote.getCurrentWindow();
-const { dialog } = require("electron").remote;
-let fs = require("fs");
+const { dialog } = require('electron').remote;
+let fs = require('fs');
 
 const saveDocumentToFile = async (doc, fileName) => {
   // Create new instance of Packer for the docx module
 
   const timeStamp = `${currentDate1()}_${currentTime1()}`;
-  const projectName = getCoreState("projectName");
+  const projectName = coreState((state) => state.projectName);
 
   // to create option for no timestamp - useful for automated testing
-  const shouldIncludeTimestamp = getCalcState("shouldIncludeTimestamp");
+  const shouldIncludeTimestamp = calcState((state) => state.shouldIncludeTimestamp);
 
   let nameFile;
   if (shouldIncludeTimestamp === true) {
@@ -27,14 +27,14 @@ const saveDocumentToFile = async (doc, fileName) => {
   }
 
   const path = await dialog.showSaveDialog(mainWindow, {
-    title: "Save file as",
+    title: 'Save file as',
     defaultPath: `*/${nameFile}`,
     filters: [
       {
-        name: "docx",
-        extensions: ["docx"]
-      }
-    ]
+        name: 'docx',
+        extensions: ['docx'],
+      },
+    ],
   });
 
   // error catch for dialog box cancel
@@ -44,19 +44,19 @@ const saveDocumentToFile = async (doc, fileName) => {
     const mimeType =
       "application/vnd.openxmlformats-officedocument.wordprocessingml.document";
     */
-    Packer.toBuffer(doc).then(doc => {
+    Packer.toBuffer(doc).then((doc) => {
       // const docblob = blob.slice(0, blob.size, mimeType);
       // Save the file using saveAs from the file-saver package
-      fs.writeFileSync(filePath, doc, err => {
+      fs.writeFileSync(filePath, doc, (err) => {
         if (err) throw err;
-        console.log("Unexpected file save error!");
+        console.log('Unexpected file save error!');
       });
     });
 
     dialog.showMessageBox(mainWindow, {
       message: `File saved to:`,
       detail: `${filePath}`,
-      buttons: ["OK"]
+      buttons: ['OK'],
     });
   }
   /*

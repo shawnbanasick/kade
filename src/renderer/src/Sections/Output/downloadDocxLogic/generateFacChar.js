@@ -4,16 +4,10 @@ import {
   HeadingLevel,
   AlignmentType,
   InternalHyperlink,
-  ShadingType
-} from "docx";
+  ShadingType,
+} from 'docx';
 
-const generateFacChar = (
-  data,
-  data2,
-  useHyperlinks,
-  useZebra,
-  translatedTextObj
-) => {
+const generateFacChar = (data, data2, useHyperlinks, useZebra, translatedTextObj) => {
   data.shift();
   data.shift();
   let pageHeader = data.shift();
@@ -34,16 +28,16 @@ const generateFacChar = (
       children: [
         new TextRun({
           text: pageHeader[0],
-          bold: true
-        })
+          bold: true,
+        }),
       ],
       heading: HeadingLevel.HEADING_1,
       thematicBreak: true,
       pageBreakBefore: true,
       spacing: {
-        after: spacingAfter
-      }
-    })
+        after: spacingAfter,
+      },
+    }),
   ];
 
   if (useHyperlinks === true) {
@@ -53,33 +47,33 @@ const generateFacChar = (
           new InternalHyperlink({
             children: [
               new TextRun({
-                text: "Return to TOC",
-                style: "Hyperlink"
-              })
+                text: 'Return to TOC',
+                style: 'Hyperlink',
+              }),
             ],
-            anchor: "anchorForTableOfContents"
-          })
+            anchor: 'anchorForTableOfContents',
+          }),
         ],
         alignment: AlignmentType.RIGHT,
         spacing: {
-          after: 200
-        }
+          after: 200,
+        },
       })
     );
   }
 
   matrix.push(
     new Paragraph({
-      style: "dist4",
+      style: 'dist4',
       children: [
         new TextRun({
-          text: `Factors`.padStart(37, " "),
-          bold: true
-        })
+          text: `Factors`.padStart(37, ' '),
+          bold: true,
+        }),
       ],
       spacing: {
-        before: 500
-      }
+        before: 500,
+      },
     })
   );
 
@@ -89,14 +83,11 @@ const generateFacChar = (
     if (index === 0) {
       item.shift();
       item.forEach((entry, entryIndex) => {
-        entry = `F${entry
-          .toString()
-          .slice(-2)
-          .trim()}`;
+        entry = `F${entry.toString().slice(-2).trim()}`;
         tempArray.push(
           new TextRun({
-            text: entry.padStart(index0PaddingArray[entryIndex], " "),
-            bold: true
+            text: entry.padStart(index0PaddingArray[entryIndex], ' '),
+            bold: true,
           })
         );
       });
@@ -104,14 +95,9 @@ const generateFacChar = (
     if (index > 0) {
       item.forEach((entry, entryIndex) => {
         if (entryIndex === 0) {
-          entry = entry
-            .toString()
-            .trim()
-            .padEnd(26, " ");
+          entry = entry.toString().trim().padEnd(26, ' ');
         } else {
-          entry = entry
-            .toString()
-            .padStart(index0PaddingArray[entryIndex], " ");
+          entry = entry.toString().padStart(index0PaddingArray[entryIndex], ' ');
         }
 
         let tempText;
@@ -120,12 +106,12 @@ const generateFacChar = (
             text: entry,
             shading: {
               type: ShadingType.SOLID,
-              color: "E2E2E2"
-            }
+              color: 'E2E2E2',
+            },
           });
         } else {
           tempText = new TextRun({
-            text: entry
+            text: entry,
           });
         }
         tempArray.push(tempText);
@@ -133,8 +119,8 @@ const generateFacChar = (
     }
     matrix.push(
       new Paragraph({
-        style: "dist4",
-        children: tempArray
+        style: 'dist4',
+        children: tempArray,
       })
     );
   });
@@ -142,25 +128,25 @@ const generateFacChar = (
   // STANDARD ERRORS TEXT
   matrix.push(
     new Paragraph({
-      style: "dist4",
+      style: 'dist4',
       children: [
         new TextRun({
           text: sectionHeader[0],
-          bold: true
-        })
+          bold: true,
+        }),
       ],
       spacing: {
-        before: 800
-      }
+        before: 800,
+      },
     }),
     new Paragraph({
-      style: "dist4",
+      style: 'dist4',
       children: [
         new TextRun({
-          text: `(${translatedTextObj["diagonalText"]})`,
-          bold: false
-        })
-      ]
+          text: `(${translatedTextObj['diagonalText']})`,
+          bold: false,
+        }),
+      ],
     })
   );
 
@@ -170,14 +156,11 @@ const generateFacChar = (
     if (index === 0) {
       item.shift();
       item.forEach((entry, entryIndex) => {
-        entry = `F${entry
-          .toString()
-          .slice(-2)
-          .trim()}`;
+        entry = `F${entry.toString().slice(-2).trim()}`;
         tempArray.push(
           new TextRun({
-            text: entry.padStart(data2PaddingArray[entryIndex], " "),
-            bold: true
+            text: entry.padStart(data2PaddingArray[entryIndex], ' '),
+            bold: true,
           })
         );
       });
@@ -185,14 +168,14 @@ const generateFacChar = (
     if (index > 0) {
       item.forEach((entry, entryIndex) => {
         if (entryIndex === 0) {
-          entry = entry.toString().padEnd(10, " ");
+          entry = entry.toString().padEnd(10, ' ');
           entry = entry.replace(`  `, ` `);
         } else {
           entry = entry.toString();
           if (entry.length < 5) {
-            entry = entry + "0";
+            entry = entry + '0';
           }
-          entry = entry.padStart(data2PaddingArray[entryIndex], " ");
+          entry = entry.padStart(data2PaddingArray[entryIndex], ' ');
         }
 
         let tempText2;
@@ -201,12 +184,12 @@ const generateFacChar = (
             text: entry,
             shading: {
               type: ShadingType.SOLID,
-              color: "E2E2E2"
-            }
+              color: 'E2E2E2',
+            },
           });
         } else {
           tempText2 = new TextRun({
-            text: entry
+            text: entry,
           });
         }
         tempArray.push(tempText2);
@@ -214,8 +197,8 @@ const generateFacChar = (
     }
     matrix.push(
       new Paragraph({
-        style: "dist4",
-        children: tempArray
+        style: 'dist4',
+        children: tempArray,
       })
     );
   });

@@ -4,8 +4,8 @@ import {
   HeadingLevel,
   AlignmentType,
   InternalHyperlink,
-  ShadingType
-} from "docx";
+  ShadingType,
+} from 'docx';
 
 const generateUnrotFacMatrix = (matrixData, useHyperlinks, useZebra) => {
   let expVar = matrixData.pop();
@@ -29,16 +29,16 @@ const generateUnrotFacMatrix = (matrixData, useHyperlinks, useZebra) => {
       children: [
         new TextRun({
           text: headerText[0],
-          bold: true
-        })
+          bold: true,
+        }),
       ],
       heading: HeadingLevel.HEADING_1,
       thematicBreak: true,
       pageBreakBefore: true,
       spacing: {
-        after: spacingAfter
-      }
-    })
+        after: spacingAfter,
+      },
+    }),
   ];
 
   if (useHyperlinks === true) {
@@ -48,17 +48,17 @@ const generateUnrotFacMatrix = (matrixData, useHyperlinks, useZebra) => {
           new InternalHyperlink({
             children: [
               new TextRun({
-                text: "Return to TOC",
-                style: "Hyperlink"
-              })
+                text: 'Return to TOC',
+                style: 'Hyperlink',
+              }),
             ],
-            anchor: "anchorForTableOfContents"
-          })
+            anchor: 'anchorForTableOfContents',
+          }),
         ],
         alignment: AlignmentType.RIGHT,
         spacing: {
-          after: 200
-        }
+          after: 200,
+        },
       })
     );
   }
@@ -72,15 +72,15 @@ const generateUnrotFacMatrix = (matrixData, useHyperlinks, useZebra) => {
       // push header 1
       childrenLines.push(
         new TextRun({
-          text: item[0].toString().padStart(colSpacing[0], " "),
-          bold: true
+          text: item[0].toString().padStart(colSpacing[0], ' '),
+          bold: true,
         }),
         new TextRun({
           text: item[1]
             .toString()
             .substring(0, colSpacing[1] - 1)
-            .padStart(colSpacing[1], " "),
-          bold: true
+            .padStart(colSpacing[1], ' '),
+          bold: true,
         })
       );
 
@@ -89,11 +89,11 @@ const generateUnrotFacMatrix = (matrixData, useHyperlinks, useZebra) => {
         if (entryIndex > 1) {
           childrenLines.push(
             new TextRun({
-              text: `Fac. ${entry
-                .toString()
-                .slice(-2)
-                .trim()}`.padStart(colSpacing[entryIndex + 2], " "),
-              bold: true
+              text: `Fac. ${entry.toString().slice(-2).trim()}`.padStart(
+                colSpacing[entryIndex + 2],
+                ' '
+              ),
+              bold: true,
             })
           );
         }
@@ -104,7 +104,7 @@ const generateUnrotFacMatrix = (matrixData, useHyperlinks, useZebra) => {
         // push numeric values
         let entryString = entry.toString();
         if (+entry > 0 && entryString.length < 6 && entryIndex > 1) {
-          newEntry = entryString.padEnd(6, "0");
+          newEntry = entryString.padEnd(6, '0');
         } else {
           newEntry = entryString;
         }
@@ -112,17 +112,17 @@ const generateUnrotFacMatrix = (matrixData, useHyperlinks, useZebra) => {
         if (index > 0 && index % 2 === 0 && useZebra === true) {
           childrenLines.push(
             new TextRun({
-              text: `${newEntry.padStart(colSpacing[entryIndex], " ")}`,
+              text: `${newEntry.padStart(colSpacing[entryIndex], ' ')}`,
               shading: {
                 type: ShadingType.SOLID,
-                color: "E2E2E2"
-              }
+                color: 'E2E2E2',
+              },
             })
           );
         } else {
           childrenLines.push(
             new TextRun({
-              text: `${newEntry.padStart(colSpacing[entryIndex], " ")}`
+              text: `${newEntry.padStart(colSpacing[entryIndex], ' ')}`,
             })
           );
         }
@@ -131,12 +131,12 @@ const generateUnrotFacMatrix = (matrixData, useHyperlinks, useZebra) => {
 
     matrix.push(
       new Paragraph({
-        style: "dist4",
+        style: 'dist4',
         children: [...childrenLines],
         spacing: {
           before: 0,
-          after: 0
-        }
+          after: 0,
+        },
       })
     );
   });
@@ -147,25 +147,25 @@ const generateUnrotFacMatrix = (matrixData, useHyperlinks, useZebra) => {
 
   let expVarText = new TextRun({
     text: `     cumul % expl`,
-    bold: true
+    bold: true,
   });
   let expArray = [expVarText];
   expVar.forEach((item, index) => {
     if (index > 1) {
       expArray.push(
         new TextRun({
-          text: `${item.toString().padStart(8, " ")}`
+          text: `${item.toString().padStart(8, ' ')}`,
         })
       );
     }
   });
   matrix.push(
     new Paragraph({
-      style: "dist4",
+      style: 'dist4',
       children: [...expArray],
       spacing: {
-        before: 150
-      }
+        before: 150,
+      },
     })
   );
 

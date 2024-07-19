@@ -1,4 +1,4 @@
-import { AlignmentType, TextRun, Footer, Paragraph } from "docx";
+import { AlignmentType, TextRun, Footer, Paragraph } from 'docx';
 
 const getSection1Footers = (dateTime, version) => {
   const section1Footers = {
@@ -6,14 +6,14 @@ const getSection1Footers = (dateTime, version) => {
       children: [
         new Paragraph({
           alignment: AlignmentType.CENTER,
-          style: "bodyStyle1",
+          style: 'bodyStyle1',
           children: [
-            new TextRun(`KADE version ${version}`.padEnd(25, " ")),
-            new TextRun(`${dateTime}`)
-          ]
-        })
-      ]
-    })
+            new TextRun(`KADE version ${version}`.padEnd(25, ' ')),
+            new TextRun(`${dateTime}`),
+          ],
+        }),
+      ],
+    }),
   };
 
   return section1Footers;

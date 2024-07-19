@@ -8,8 +8,8 @@ import {
   WidthType,
   VerticalAlign,
   AlignmentType,
-  InternalHyperlink
-} from "docx";
+  InternalHyperlink,
+} from 'docx';
 
 const generateRelRanks = (data, useHyperlinks) => {
   data.shift();
@@ -27,7 +27,7 @@ const generateRelRanks = (data, useHyperlinks) => {
   let tempArray = [];
   let maxLen = data.length - 1;
   data.forEach((item, index) => {
-    if (item[0] === "" && item[1] === "") {
+    if (item[0] === '' && item[1] === '') {
       array1.push(tempArray);
       tempArray = [];
     } else {
@@ -46,16 +46,16 @@ const generateRelRanks = (data, useHyperlinks) => {
       children: [
         new TextRun({
           text: pageHeader[1],
-          bold: true
-        })
+          bold: true,
+        }),
       ],
       heading: HeadingLevel.HEADING_1,
       thematicBreak: true,
       pageBreakBefore: true,
       spacing: {
-        after: spacingAfter
-      }
-    })
+        after: spacingAfter,
+      },
+    }),
   ];
 
   if (useHyperlinks === true) {
@@ -65,34 +65,22 @@ const generateRelRanks = (data, useHyperlinks) => {
           new InternalHyperlink({
             children: [
               new TextRun({
-                text: "Return to TOC",
-                style: "Hyperlink"
-              })
+                text: 'Return to TOC',
+                style: 'Hyperlink',
+              }),
             ],
-            anchor: "anchorForTableOfContents"
-          })
+            anchor: 'anchorForTableOfContents',
+          }),
         ],
         alignment: AlignmentType.RIGHT,
         spacing: {
-          after: 200
-        }
+          after: 200,
+        },
       })
     );
   }
 
-  let columnWidthArray = [
-    188,
-    1080,
-    278,
-    278,
-    278,
-    278,
-    278,
-    278,
-    278,
-    278,
-    278
-  ];
+  let columnWidthArray = [188, 1080, 278, 278, 278, 278, 278, 278, 278, 278, 278];
 
   // trim array
   const arrayLength = highestArray[1].length;
@@ -110,9 +98,9 @@ const generateRelRanks = (data, useHyperlinks) => {
       let afterSpacing = 0;
       let columnSpanNum = 1;
 
-      let dynamicParagraphStyle = "tableStyle2";
+      let dynamicParagraphStyle = 'tableStyle2';
       if (data[0].length > 13) {
-        dynamicParagraphStyle = "tableStyle8";
+        dynamicParagraphStyle = 'tableStyle8';
       }
 
       if (rowIndex === 0 || rowIndex === 1) {
@@ -151,17 +139,17 @@ const generateRelRanks = (data, useHyperlinks) => {
                 children: [
                   new TextRun({
                     text: entry.toString(),
-                    bold: isBold
-                  })
+                    bold: isBold,
+                  }),
                 ],
                 spacing: {
                   before: beforeSpacing,
-                  after: afterSpacing
-                }
-              })
+                  after: afterSpacing,
+                },
+              }),
             ],
             verticalAlign: VerticalAlign.CENTER,
-            columnSpan: columnSpanNum
+            columnSpan: columnSpanNum,
           })
         ); // end corrlsRowArray push
       });
@@ -170,7 +158,7 @@ const generateRelRanks = (data, useHyperlinks) => {
         new TableRow({
           children: corrlsRowArray,
           tableHeader: isHeader,
-          cantSplit: true
+          cantSplit: true,
         })
       );
     }); // end correlations table for each
@@ -178,26 +166,26 @@ const generateRelRanks = (data, useHyperlinks) => {
     let correlsTable = new Table({
       width: {
         size: 9800, // tableWidth,
-        type: WidthType.DXA
+        type: WidthType.DXA,
       },
       indent: {
         size: 0,
-        type: WidthType.DXA
+        type: WidthType.DXA,
       },
       columnWidths: columnWidthArray,
-      rows: [...rowItemsArray] // end of rows array
+      rows: [...rowItemsArray], // end of rows array
     });
 
     matrix.push(correlsTable);
     matrix.push(
       new Paragraph({
-        style: "bodyStyle1",
+        style: 'bodyStyle1',
         children: [
           new TextRun({
-            text: " ",
-            bold: false
-          })
-        ]
+            text: ' ',
+            bold: false,
+          }),
+        ],
       })
     );
   });

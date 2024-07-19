@@ -4,9 +4,9 @@ import {
   HeadingLevel,
   ShadingType,
   InternalHyperlink,
-  AlignmentType
-} from "docx";
-import chunk from "lodash/chunk";
+  AlignmentType,
+} from 'docx';
+import chunk from 'lodash/chunk';
 
 const generatePtSorts = (sortsData, useHyperlinks, useZebra) => {
   sortsData.shift();
@@ -20,63 +20,63 @@ const generatePtSorts = (sortsData, useHyperlinks, useZebra) => {
   }
 
   const partNumArray = [
-    "1 - 10",
-    "11 - 20",
-    "21 - 30",
-    "31 - 40",
-    "41 - 50",
-    "51 - 60",
-    "61 - 70",
-    "71 - 80",
-    "81 - 90",
-    "91 - 100",
-    "101 - 110",
-    "111 - 120",
-    "121 - 130",
-    "131 - 140",
-    "141 - 150",
-    "151 - 160",
-    "161 - 170",
-    "171 - 180",
-    "181 - 190",
-    "191 - 200",
-    "201 - 210",
-    "211 - 220",
-    "221 - 230",
-    "231 - 240",
-    "241 - 250",
-    "251 - 260",
-    "261 - 270",
-    "271 - 280",
-    "281 - 290",
-    "291 - 300",
-    "301 - 310",
-    "311 - 320",
-    "321 - 330",
-    "331 - 340",
-    "341 - 350",
-    "351 - 360",
-    "361 - 370",
-    "371 - 380",
-    "381 - 390",
-    "391 - 400",
-    "401 - 410",
-    "411 - 420",
-    "421 - 430",
-    "431 - 440",
-    "441 - 450",
-    "451 - 460",
-    "461 - 470",
-    "471 - 480",
-    "481 - 490",
-    "491 - 500"
+    '1 - 10',
+    '11 - 20',
+    '21 - 30',
+    '31 - 40',
+    '41 - 50',
+    '51 - 60',
+    '61 - 70',
+    '71 - 80',
+    '81 - 90',
+    '91 - 100',
+    '101 - 110',
+    '111 - 120',
+    '121 - 130',
+    '131 - 140',
+    '141 - 150',
+    '151 - 160',
+    '161 - 170',
+    '171 - 180',
+    '181 - 190',
+    '191 - 200',
+    '201 - 210',
+    '211 - 220',
+    '221 - 230',
+    '231 - 240',
+    '241 - 250',
+    '251 - 260',
+    '261 - 270',
+    '271 - 280',
+    '281 - 290',
+    '291 - 300',
+    '301 - 310',
+    '311 - 320',
+    '321 - 330',
+    '331 - 340',
+    '341 - 350',
+    '351 - 360',
+    '361 - 370',
+    '371 - 380',
+    '381 - 390',
+    '391 - 400',
+    '401 - 410',
+    '411 - 420',
+    '421 - 430',
+    '431 - 440',
+    '441 - 450',
+    '451 - 460',
+    '461 - 470',
+    '471 - 480',
+    '481 - 490',
+    '491 - 500',
   ];
 
   let numParts = sortsData.length - 1;
   let firstRow = sortsData.shift();
   // POP OFF last row and prep for re-insertion
   firstRow.pop();
-  firstRow.push("StDv");
+  firstRow.push('StDv');
 
   // chunk and set last part. number
   let chunkedArray = chunk(sortsData, 10);
@@ -95,7 +95,7 @@ const generatePtSorts = (sortsData, useHyperlinks, useZebra) => {
   for (let i = 0; i < chunkedArray.length; i++) {
     // INVERT MATRIX
     let newMatrix = chunkedArray[i][0].map((_, colIndex) =>
-      chunkedArray[i].map(row => row[colIndex])
+      chunkedArray[i].map((row) => row[colIndex])
     );
 
     let length = newMatrix.length - 2;
@@ -106,16 +106,16 @@ const generatePtSorts = (sortsData, useHyperlinks, useZebra) => {
         children: [
           new TextRun({
             text: `${headerText[0]}  ${partNumArray[i]}`,
-            bold: true
-          })
+            bold: true,
+          }),
         ],
         heading: HeadingLevel.HEADING_1,
         thematicBreak: true,
         pageBreakBefore: true,
         spacing: {
-          after: spacingAfter
-        }
-      })
+          after: spacingAfter,
+        },
+      }),
     ];
 
     if (useHyperlinks === true) {
@@ -125,17 +125,17 @@ const generatePtSorts = (sortsData, useHyperlinks, useZebra) => {
             new InternalHyperlink({
               children: [
                 new TextRun({
-                  text: "Return to TOC",
-                  style: "Hyperlink"
-                })
+                  text: 'Return to TOC',
+                  style: 'Hyperlink',
+                }),
               ],
-              anchor: "anchorForTableOfContents"
-            })
+              anchor: 'anchorForTableOfContents',
+            }),
           ],
           alignment: AlignmentType.RIGHT,
           spacing: {
-            after: 200
-          }
+            after: 200,
+          },
         })
       );
     }
@@ -156,17 +156,13 @@ const generatePtSorts = (sortsData, useHyperlinks, useZebra) => {
         //  first column row item (statement number)
         tempArray = [
           new TextRun({
-            text: firstRow[index]
-              .toString()
-              .substring(0, 4)
-              .trim()
-              .padEnd(4, " "),
+            text: firstRow[index].toString().substring(0, 4).trim().padEnd(4, ' '),
             bold: isBold,
             shading: {
               type: ShadingType.SOLID,
-              color: "E2E2E2"
-            }
-          })
+              color: 'E2E2E2',
+            },
+          }),
         ];
         // rest of the row items
         item.forEach((entry, entryIndex) => {
@@ -175,16 +171,12 @@ const generatePtSorts = (sortsData, useHyperlinks, useZebra) => {
           }
           tempArray.push(
             new TextRun({
-              text: entry
-                .toString()
-                .substring(0, 7)
-                .trim()
-                .padStart(8, " "),
+              text: entry.toString().substring(0, 7).trim().padStart(8, ' '),
               bold: isBold,
               shading: {
                 type: ShadingType.SOLID,
-                color: "E2E2E2"
-              }
+                color: 'E2E2E2',
+              },
             })
           ); // end push
         }); // end forEach
@@ -192,13 +184,9 @@ const generatePtSorts = (sortsData, useHyperlinks, useZebra) => {
         //  first column row item (statement number)
         tempArray = [
           new TextRun({
-            text: firstRow[index]
-              .toString()
-              .substring(0, 4)
-              .trim()
-              .padEnd(4, " "),
-            bold: isBold
-          })
+            text: firstRow[index].toString().substring(0, 4).trim().padEnd(4, ' '),
+            bold: isBold,
+          }),
         ];
         // rest of the row items
         item.forEach((entry, entryIndex) => {
@@ -207,12 +195,8 @@ const generatePtSorts = (sortsData, useHyperlinks, useZebra) => {
           }
           tempArray.push(
             new TextRun({
-              text: entry
-                .toString()
-                .substring(0, 7)
-                .trim()
-                .padStart(8, " "),
-              bold: isBold
+              text: entry.toString().substring(0, 7).trim().padStart(8, ' '),
+              bold: isBold,
             })
           ); // end push
         }); // end forEach
@@ -220,13 +204,13 @@ const generatePtSorts = (sortsData, useHyperlinks, useZebra) => {
 
       sortsList.push(
         new Paragraph({
-          style: "ptQsorts",
+          style: 'ptQsorts',
           children: [...tempArray],
           spacing: {
             before: 0,
             line: 260,
-            after: 0
-          }
+            after: 0,
+          },
         })
       );
     }); // end forEach

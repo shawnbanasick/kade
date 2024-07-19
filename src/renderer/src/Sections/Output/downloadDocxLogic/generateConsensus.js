@@ -8,9 +8,8 @@ import {
   WidthType,
   VerticalAlign,
   AlignmentType,
-  TABLE_HEADER_FILL,
-  InternalHyperlink
-} from "docx";
+  InternalHyperlink,
+} from 'docx';
 
 const generateConsensus = (data, useHyperlinks) => {
   data.shift();
@@ -33,16 +32,16 @@ const generateConsensus = (data, useHyperlinks) => {
       children: [
         new TextRun({
           text: pageHeader[0],
-          bold: true
-        })
+          bold: true,
+        }),
       ],
       heading: HeadingLevel.HEADING_1,
       thematicBreak: true,
       pageBreakBefore: true,
       spacing: {
-        after: spacingAfter
-      }
-    })
+        after: spacingAfter,
+      },
+    }),
   ];
 
   if (useHyperlinks === true) {
@@ -52,64 +51,47 @@ const generateConsensus = (data, useHyperlinks) => {
           new InternalHyperlink({
             children: [
               new TextRun({
-                text: "Return to TOC",
-                style: "Hyperlink"
-              })
+                text: 'Return to TOC',
+                style: 'Hyperlink',
+              }),
             ],
-            anchor: "anchorForTableOfContents"
-          })
+            anchor: 'anchorForTableOfContents',
+          }),
         ],
         alignment: AlignmentType.RIGHT,
         spacing: {
-          after: 200
-        }
+          after: 200,
+        },
       })
     );
   }
   if (data.length >= 3) {
     matrix.push(
       new Paragraph({
-        style: "bodyStyle1",
+        style: 'bodyStyle1',
         children: [
           new TextRun({
             text: topText[0].toString(),
-            bold: false
-          })
-        ]
+            bold: false,
+          }),
+        ],
       })
     );
     matrix.push(
       new Paragraph({
-        style: "bodyStyle1",
+        style: 'bodyStyle1',
         children: [
           new TextRun({
             text: topText2[0].toString(),
-            bold: false
-          })
-        ]
+            bold: false,
+          }),
+        ],
       })
     );
   }
 
   let columnWidthArray = [
-    1100,
-    180,
-    180,
-    320,
-    200,
-    320,
-    200,
-    320,
-    200,
-    320,
-    200,
-    320,
-    200,
-    320,
-    200,
-    320,
-    200,
-    320
+    1100, 180, 180, 320, 200, 320, 200, 320, 200, 320, 200, 320, 200, 320, 200, 320, 200, 320,
   ];
 
   // trim array
@@ -130,13 +112,13 @@ const generateConsensus = (data, useHyperlinks) => {
       isHeader = true;
       isBold = true;
     }
-    if (item[0] === "*") {
+    if (item[0] === '*') {
       isSignificant = true;
     }
 
-    let dynamicParagraphStyle = "tableStyle2";
+    let dynamicParagraphStyle = 'tableStyle2';
     if (data[0].length > 13) {
-      dynamicParagraphStyle = "tableStyle8";
+      dynamicParagraphStyle = 'tableStyle8';
     }
 
     if (index === 0) {
@@ -159,17 +141,17 @@ const generateConsensus = (data, useHyperlinks) => {
                   children: [
                     new TextRun({
                       text: entry0.toString(),
-                      bold: isBold
-                    })
-                  ]
-                })
+                      bold: isBold,
+                    }),
+                  ],
+                }),
               ],
               verticalAlign: VerticalAlign.CENTER,
               columnSpan: 2,
               width: {
                 size: size,
-                type: WidthType.DXA
-              }
+                type: WidthType.DXA,
+              },
             })
           ); // end corrlsRowArray push
         }
@@ -189,7 +171,7 @@ const generateConsensus = (data, useHyperlinks) => {
             size = 1500;
             if (isSignificant) {
               isBold = true;
-              entry = "* " + entry.toString();
+              entry = '* ' + entry.toString();
             }
           } else {
             position = AlignmentType.CENTER;
@@ -200,6 +182,12 @@ const generateConsensus = (data, useHyperlinks) => {
             position = AlignmentType.CENTER;
           }
 
+          const headerStyle = {
+            shading: {
+              fill: '#d3d3d3', // Gray background color (replace with appropriate color code)
+            },
+          };
+
           corrlsRowArray.push(
             new TableCell({
               children: [
@@ -209,19 +197,17 @@ const generateConsensus = (data, useHyperlinks) => {
                   children: [
                     new TextRun({
                       text: entry.toString(),
-                      bold: isBold
-                    })
-                  ]
-                })
+                      bold: isBold,
+                    }),
+                  ],
+                }),
               ],
               verticalAlign: VerticalAlign.CENTER,
               width: {
                 size: size,
-                type: WidthType.DXA
+                type: WidthType.DXA,
               },
-              shading: {
-                fill: TABLE_HEADER_FILL
-              }
+              shading: headerStyle.shading,
             })
           ); // end corrlsRowArray push
         }
@@ -232,7 +218,7 @@ const generateConsensus = (data, useHyperlinks) => {
       new TableRow({
         children: corrlsRowArray,
         tableHeader: isHeader,
-        cantSplit: true
+        cantSplit: true,
       })
     );
   }); // end correlations table for each
@@ -240,14 +226,14 @@ const generateConsensus = (data, useHyperlinks) => {
   const correlsTable = new Table({
     width: {
       size: 9800, // tableWidth,
-      type: WidthType.DXA
+      type: WidthType.DXA,
     },
     indent: {
       size: 0,
-      type: WidthType.DXA
+      type: WidthType.DXA,
     },
     columnWidths: columnWidthArray,
-    rows: [...rowItemsArray] // end of rows array
+    rows: [...rowItemsArray], // end of rows array
   });
 
   if (data.length >= 3) {
@@ -257,16 +243,16 @@ const generateConsensus = (data, useHyperlinks) => {
   if (data.length < 3) {
     matrix.push(
       new Paragraph({
-        style: "bodyStyle1",
+        style: 'bodyStyle1',
         children: [
           new TextRun({
-            text: "There were no Consensus Statements",
-            bold: false
-          })
+            text: 'There were no Consensus Statements',
+            bold: false,
+          }),
         ],
         spacing: {
-          before: 500
-        }
+          before: 500,
+        },
       })
     );
   }

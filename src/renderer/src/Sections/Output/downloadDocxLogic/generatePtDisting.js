@@ -4,8 +4,8 @@ import {
   HeadingLevel,
   AlignmentType,
   ShadingType,
-  InternalHyperlink
-} from "docx";
+  InternalHyperlink,
+} from 'docx';
 
 const generateDisting = (data, useHyperlinks, useZebra, translatedTextObj) => {
   data.shift();
@@ -19,15 +19,15 @@ const generateDisting = (data, useHyperlinks, useZebra, translatedTextObj) => {
   data.shift();
   data.shift();
 
-  let fontSizeStyle = "dist8";
+  let fontSizeStyle = 'dist8';
   let colSpace = [10, 4, 4, 7, 4, 7, 4, 7, 4, 7, 4, 7, 4, 7, 4, 7, 4, 7];
 
   if (data[0].length < 27) {
-    fontSizeStyle = "dist6";
+    fontSizeStyle = 'dist6';
     colSpace = [10, 4, 4, 7, 4, 7, 4, 7, 4, 7, 4, 7, 4, 7, 4, 7, 4, 7];
   }
   if (data[0].length < 21) {
-    fontSizeStyle = "dist4";
+    fontSizeStyle = 'dist4';
     colSpace = [30, 4, 4, 7, 4, 7, 4, 7, 4, 7, 4, 7, 4, 7, 4, 7, 4, 7];
   }
 
@@ -41,16 +41,16 @@ const generateDisting = (data, useHyperlinks, useZebra, translatedTextObj) => {
       children: [
         new TextRun({
           text: pageHeader[0],
-          bold: true
-        })
+          bold: true,
+        }),
       ],
       heading: HeadingLevel.HEADING_1,
       thematicBreak: true,
       pageBreakBefore: true,
       spacing: {
-        after: spacingAfter
-      }
-    })
+        after: spacingAfter,
+      },
+    }),
   ];
 
   if (useHyperlinks === true) {
@@ -60,17 +60,17 @@ const generateDisting = (data, useHyperlinks, useZebra, translatedTextObj) => {
           new InternalHyperlink({
             children: [
               new TextRun({
-                text: "Return to TOC",
-                style: "Hyperlink"
-              })
+                text: 'Return to TOC',
+                style: 'Hyperlink',
+              }),
             ],
-            anchor: "anchorForTableOfContents"
-          })
+            anchor: 'anchorForTableOfContents',
+          }),
         ],
         alignment: AlignmentType.RIGHT,
         spacing: {
-          after: 200
-        }
+          after: 200,
+        },
       })
     );
   }
@@ -81,9 +81,9 @@ const generateDisting = (data, useHyperlinks, useZebra, translatedTextObj) => {
       children: [
         new TextRun({
           text: topText[0].toString(),
-          bold: false
-        })
-      ]
+          bold: false,
+        }),
+      ],
     })
   );
   matrix.push(
@@ -92,9 +92,9 @@ const generateDisting = (data, useHyperlinks, useZebra, translatedTextObj) => {
       children: [
         new TextRun({
           text: topText2[0].toString(),
-          bold: false
-        })
-      ]
+          bold: false,
+        }),
+      ],
     })
   );
 
@@ -105,9 +105,8 @@ const generateDisting = (data, useHyperlinks, useZebra, translatedTextObj) => {
     item.shift();
     item.forEach((entry, entryIndex) => {
       if (entryIndex > 2) {
-        if (entry === "*") {
-          tempArray[entryIndex - 1] =
-            tempArray[entryIndex - 1].toString() + "*";
+        if (entry === '*') {
+          tempArray[entryIndex - 1] = tempArray[entryIndex - 1].toString() + '*';
         }
       }
       tempArray.push(entry);
@@ -171,8 +170,8 @@ const generateDisting = (data, useHyperlinks, useZebra, translatedTextObj) => {
             text: entry0
               .toString()
               .substring(0, colSpace[entryIndex0] - 1)
-              .padStart(colSpace[entryIndex0], " "),
-            bold: isBold
+              .padStart(colSpace[entryIndex0], ' '),
+            bold: isBold,
           })
         ); // end corrlsRowArray push
         // }
@@ -185,7 +184,7 @@ const generateDisting = (data, useHyperlinks, useZebra, translatedTextObj) => {
         if (entryIndex > 2) {
           testVal = entry.toString().slice(-1);
         }
-        if (index === 0 || index === 1 || testVal === "*") {
+        if (index === 0 || index === 1 || testVal === '*') {
           isBold = true;
         } else {
           isBold = false;
@@ -197,12 +196,12 @@ const generateDisting = (data, useHyperlinks, useZebra, translatedTextObj) => {
               text: entry
                 .toString()
                 .substring(0, colSpace[entryIndex] - 1)
-                .padStart(colSpace[entryIndex], " "),
+                .padStart(colSpace[entryIndex], ' '),
               bold: isBold,
               shading: {
                 type: ShadingType.SOLID,
-                color: "E2E2E2"
-              }
+                color: 'E2E2E2',
+              },
             })
           ); // end corrlsRowArray push
         } else {
@@ -211,8 +210,8 @@ const generateDisting = (data, useHyperlinks, useZebra, translatedTextObj) => {
               text: entry
                 .toString()
                 .substring(0, colSpace[entryIndex] - 1)
-                .padStart(colSpace[entryIndex], " "),
-              bold: isBold
+                .padStart(colSpace[entryIndex], ' '),
+              bold: isBold,
             })
           ); // end corrlsRowArray push
         }
@@ -220,8 +219,8 @@ const generateDisting = (data, useHyperlinks, useZebra, translatedTextObj) => {
           corrlsRowArray = [
             new TextRun({
               text: translatedTextObj.noDistinguishingText,
-              bold: true
-            })
+              bold: true,
+            }),
           ];
         }
       });
@@ -234,8 +233,8 @@ const generateDisting = (data, useHyperlinks, useZebra, translatedTextObj) => {
           style: fontSizeStyle,
           spacing: {
             before: 0,
-            after: 0
-          }
+            after: 0,
+          },
         })
       );
     } else {
@@ -245,8 +244,8 @@ const generateDisting = (data, useHyperlinks, useZebra, translatedTextObj) => {
           style: fontSizeStyle,
           spacing: {
             before: 200,
-            after: 0
-          }
+            after: 0,
+          },
         })
       );
     }

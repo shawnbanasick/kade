@@ -4,8 +4,8 @@ import {
   HeadingLevel,
   ShadingType,
   AlignmentType,
-  InternalHyperlink
-} from "docx";
+  InternalHyperlink,
+} from 'docx';
 
 const generateConDis = (data, useHyperlinks, useZebra) => {
   data.shift();
@@ -24,16 +24,16 @@ const generateConDis = (data, useHyperlinks, useZebra) => {
       children: [
         new TextRun({
           text: headerText[0],
-          bold: true
-        })
+          bold: true,
+        }),
       ],
       heading: HeadingLevel.HEADING_1,
       thematicBreak: true,
       pageBreakBefore: true,
       spacing: {
-        after: spacingAfter
-      }
-    })
+        after: spacingAfter,
+      },
+    }),
   ];
 
   if (useHyperlinks === true) {
@@ -43,17 +43,17 @@ const generateConDis = (data, useHyperlinks, useZebra) => {
           new InternalHyperlink({
             children: [
               new TextRun({
-                text: "Return to TOC",
-                style: "Hyperlink"
-              })
+                text: 'Return to TOC',
+                style: 'Hyperlink',
+              }),
             ],
-            anchor: "anchorForTableOfContents"
-          })
+            anchor: 'anchorForTableOfContents',
+          }),
         ],
         alignment: AlignmentType.RIGHT,
         spacing: {
-          after: 200
-        }
+          after: 200,
+        },
       })
     );
   }
@@ -77,12 +77,12 @@ const generateConDis = (data, useHyperlinks, useZebra) => {
       entryArray = [
         // STATEMENT NUMBER
         new TextRun({
-          text: item[0].toString().padStart(3, " "),
+          text: item[0].toString().padStart(3, ' '),
           bold: isBold,
           shading: {
             type: ShadingType.SOLID,
-            color: "E2E2E2"
-          }
+            color: 'E2E2E2',
+          },
         }),
 
         // STATEMENT
@@ -90,18 +90,18 @@ const generateConDis = (data, useHyperlinks, useZebra) => {
           text: statement
             .toString()
             .substring(0, spacingState - 1)
-            .padStart(spacingState, " "),
+            .padStart(spacingState, ' '),
           bold: isBold,
           shading: {
             type: ShadingType.SOLID,
-            color: "E2E2E2"
-          }
-        })
+            color: 'E2E2E2',
+          },
+        }),
       ];
 
       item.forEach((entry, entryIndex) => {
         let spacing = 7;
-        entry = entry.toString().replace("Ranking", "");
+        entry = entry.toString().replace('Ranking', '');
 
         if (index === 0 && entryIndex < item.length - 1) {
           let frag = entry.slice(-3).trim();
@@ -114,12 +114,12 @@ const generateConDis = (data, useHyperlinks, useZebra) => {
         if (entryIndex > 1) {
           entryArray.push(
             new TextRun({
-              text: entry.toString().padStart(spacing, " "),
+              text: entry.toString().padStart(spacing, ' '),
               bold: isBold,
               shading: {
                 type: ShadingType.SOLID,
-                color: "E2E2E2"
-              }
+                color: 'E2E2E2',
+              },
             })
           );
         }
@@ -128,8 +128,8 @@ const generateConDis = (data, useHyperlinks, useZebra) => {
       entryArray = [
         // STATEMENT NUMBER
         new TextRun({
-          text: item[0].toString().padStart(3, " "),
-          bold: isBold
+          text: item[0].toString().padStart(3, ' '),
+          bold: isBold,
         }),
 
         // STATEMENT
@@ -137,14 +137,14 @@ const generateConDis = (data, useHyperlinks, useZebra) => {
           text: statement
             .toString()
             .substring(0, spacingState - 1)
-            .padStart(spacingState, " "),
-          bold: isBold
-        })
+            .padStart(spacingState, ' '),
+          bold: isBold,
+        }),
       ];
 
       item.forEach((entry, entryIndex) => {
         let spacing = 7;
-        entry = entry.toString().replace("Ranking var.", "var");
+        entry = entry.toString().replace('Ranking var.', 'var');
 
         if (index === 0 && entryIndex < item.length - 1) {
           let frag = entry.slice(-3).trim();
@@ -157,8 +157,8 @@ const generateConDis = (data, useHyperlinks, useZebra) => {
         if (entryIndex > 1) {
           entryArray.push(
             new TextRun({
-              text: entry.toString().padStart(spacing, " "),
-              bold: isBold
+              text: entry.toString().padStart(spacing, ' '),
+              bold: isBold,
             })
           );
         }
@@ -168,12 +168,12 @@ const generateConDis = (data, useHyperlinks, useZebra) => {
     matrix.push(
       new Paragraph({
         children: entryArray,
-        style: "bodyStyle1",
+        style: 'bodyStyle1',
         spacing: {
           before: 0,
           line: 260,
-          after: 0
-        }
+          after: 0,
+        },
       })
     );
   }); // end for each

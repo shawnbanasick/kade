@@ -1,6 +1,5 @@
 import includes from 'lodash/includes';
 import calcState from '../../GlobalState/calcState';
-import getCalcState from '../../GlobalState/getCalcState';
 
 const checkIfDistinguishingOrConsensus = function (statementNumber, loopNumber) {
   // getState

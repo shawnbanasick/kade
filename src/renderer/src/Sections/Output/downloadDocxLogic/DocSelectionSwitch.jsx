@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
-import outputState from '../../GlobalState/outputState';
+import { useState } from 'react';
 import './UserSelectionSwitch.css';
 import Toggle from 'react-toggle';
 import BatsuMark from '../FactorViz/batsuMark';
 import CheckMark from '../FactorViz/checkMark';
+import outputState from '../../GlobalState/outputState';
 
 const UserSelectionSwitch = (props) => {
   const [toggle, setToggle] = useState(props.toggle);

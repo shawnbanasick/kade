@@ -1,14 +1,9 @@
-import { Paragraph, HeadingLevel, TextRun } from "docx";
+import { Paragraph, HeadingLevel, TextRun } from 'docx';
 
-const generateFrontMatter = (
-  dataFrag,
-  datetime,
-  filetype,
-  translatedTextObj
-) => {
+const generateFrontMatter = (dataFrag, datetime, filetype, translatedTextObj) => {
   // let projectName = dataFrag[2][1];
   let hasPageBreak = true;
-  if (filetype !== "tableCompat") {
+  if (filetype !== 'tableCompat') {
     hasPageBreak = false;
   }
   //let dataFrag = [...data[0]];
@@ -29,8 +24,8 @@ const generateFrontMatter = (
     let tempText = new Paragraph({
       text: `${tempText1}`,
       spacing: {
-        after: 100
-      }
+        after: 100,
+      },
     });
     projectLogArray.push(tempText);
   }
@@ -39,26 +34,26 @@ const generateFrontMatter = (
     new Paragraph({
       children: [
         new TextRun({
-          text: translatedTextObj["projectOverTxt"],
-          bold: true
-        })
+          text: translatedTextObj['projectOverTxt'],
+          bold: true,
+        }),
       ],
       heading: HeadingLevel.HEADING_1,
       thematicBreak: true,
       pageBreakBefore: hasPageBreak,
       spacing: {
         after: 200,
-        before: 500
-      }
+        before: 500,
+      },
     }),
 
     // downloaded on datetime
     new Paragraph({
-      text: `${translatedTextObj["downloadTxt"]}: ${datetime}`,
+      text: `${translatedTextObj['downloadTxt']}: ${datetime}`,
       spacing: {
         before: 100,
-        after: 300
-      }
+        after: 300,
+      },
     }),
 
     // Statements and Participants
@@ -69,11 +64,11 @@ const generateFrontMatter = (
       text: `${qSortPatternText}: ${qSortPattern}`,
       indent: {
         start: 500,
-        hanging: 500
+        hanging: 500,
       },
       spacing: {
-        before: 300
-      }
+        before: 300,
+      },
     }),
 
     // p value 1
@@ -81,11 +76,11 @@ const generateFrontMatter = (
       text: `${dataFrag[11][0]}${dataFrag[11][1]}`,
       indent: {
         start: 500,
-        hanging: 500
+        hanging: 500,
       },
       spacing: {
-        before: 300
-      }
+        before: 300,
+      },
     }),
 
     // p value 2
@@ -93,11 +88,11 @@ const generateFrontMatter = (
       text: `${dataFrag[13][0]}${dataFrag[13][1]}`,
       indent: {
         start: 500,
-        hanging: 500
+        hanging: 500,
       },
       spacing: {
-        before: 300
-      }
+        before: 300,
+      },
     }),
 
     // autoflag p value 1
@@ -105,20 +100,20 @@ const generateFrontMatter = (
       text: `${dataFrag[17][0]}${dataFrag[17][1]}`,
       indent: {
         start: 500,
-        hanging: 500
+        hanging: 500,
       },
       spacing: {
-        before: 300
-      }
+        before: 300,
+      },
     }),
 
     // Project Log Header
     new Paragraph({
       children: [
         new TextRun({
-          text: translatedTextObj["projectLogTxt"],
-          bold: true
-        })
+          text: translatedTextObj['projectLogTxt'],
+          bold: true,
+        }),
       ],
 
       // Project Log Items
@@ -126,10 +121,10 @@ const generateFrontMatter = (
       thematicBreak: true,
       spacing: {
         after: 200,
-        before: 1500
-      }
+        before: 1500,
+      },
     }),
-    ...projectLogArray
+    ...projectLogArray,
   ];
 };
 

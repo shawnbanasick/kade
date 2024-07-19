@@ -4,8 +4,8 @@ import {
   HeadingLevel,
   AlignmentType,
   InternalHyperlink,
-  ShadingType
-} from "docx";
+  ShadingType,
+} from 'docx';
 
 const generatePtFacScrRnks = (matrixData, useHyperlinks, useZebra) => {
   matrixData.shift();
@@ -64,16 +64,16 @@ const generatePtFacScrRnks = (matrixData, useHyperlinks, useZebra) => {
         children: [
           new TextRun({
             text: headerText,
-            bold: true
-          })
+            bold: true,
+          }),
         ],
         heading: HeadingLevel.HEADING_1,
         thematicBreak: true,
         pageBreakBefore: true,
         spacing: {
-          after: spacingAfter
-        }
-      })
+          after: spacingAfter,
+        },
+      }),
     ];
 
     if (useHyperlinks === true) {
@@ -83,17 +83,17 @@ const generatePtFacScrRnks = (matrixData, useHyperlinks, useZebra) => {
             new InternalHyperlink({
               children: [
                 new TextRun({
-                  text: "Return to TOC",
-                  style: "Hyperlink"
-                })
+                  text: 'Return to TOC',
+                  style: 'Hyperlink',
+                }),
               ],
-              anchor: "anchorForTableOfContents"
-            })
+              anchor: 'anchorForTableOfContents',
+            }),
           ],
           alignment: AlignmentType.RIGHT,
           spacing: {
-            after: 200
-          }
+            after: 200,
+          },
         })
       );
     }
@@ -102,21 +102,21 @@ const generatePtFacScrRnks = (matrixData, useHyperlinks, useZebra) => {
     let childRowHeader1 = [
       // first column spacing
       new TextRun({
-        text: matrixData[1][1].toString().padEnd(39, " "),
-        bold: true
-      })
+        text: matrixData[1][1].toString().padEnd(39, ' '),
+        bold: true,
+      }),
     ];
     // push remaining header array 1 according to # factors
     for (let k = 0; k < numColWidths; k++) {
       let entry = `F${matrixData[0][headerIter[k]].slice(-3).trim()}`;
       childRowHeader1.push(
         new TextRun({
-          text: entry.padStart(5, " "),
-          bold: true
+          text: entry.padStart(5, ' '),
+          bold: true,
         }),
         new TextRun({
-          text: entry.padStart(5, " "),
-          bold: true
+          text: entry.padStart(5, ' '),
+          bold: true,
         })
       );
     }
@@ -124,33 +124,27 @@ const generatePtFacScrRnks = (matrixData, useHyperlinks, useZebra) => {
     // setup table header array 2
     let childRowHeader2 = [
       new TextRun({
-        text: matrixData[0][1]
-          .toString()
-          .trim()
-          .padStart(22, " "),
-        bold: true
+        text: matrixData[0][1].toString().trim().padStart(22, ' '),
+        bold: true,
       }),
 
       new TextRun({
-        text: "Nm"
-          .toString()
-          .trim()
-          .padStart(17, " "),
-        bold: true
-      })
+        text: 'Nm'.toString().trim().padStart(17, ' '),
+        bold: true,
+      }),
     ];
 
     let mShift = 3;
     for (let m = 0; m < numColWidths; m++) {
       childRowHeader2.push(
         new TextRun({
-          text: `Zscr`.padStart(6, " "),
-          bold: true
+          text: `Zscr`.padStart(6, ' '),
+          bold: true,
         }),
 
         new TextRun({
-          text: `Rnk`.padStart(4, " "),
-          bold: true
+          text: `Rnk`.padStart(4, ' '),
+          bold: true,
         })
       );
       mShift = mShift + 2;
@@ -158,22 +152,22 @@ const generatePtFacScrRnks = (matrixData, useHyperlinks, useZebra) => {
 
     rowArray = [
       new Paragraph({
-        style: "dist4",
+        style: 'dist4',
         children: [...childRowHeader1],
         spacing: {
           after: 0,
-          line: 260
-        }
+          line: 260,
+        },
       }),
 
       new Paragraph({
-        style: "dist4",
+        style: 'dist4',
         children: [...childRowHeader2],
         spacing: {
           before: 0,
-          line: 260
-        }
-      })
+          line: 260,
+        },
+      }),
     ];
 
     // setup DATA ROWS
@@ -187,19 +181,11 @@ const generatePtFacScrRnks = (matrixData, useHyperlinks, useZebra) => {
         let dataRow = [
           // statements
           new TextRun({
-            text: item[varIter[0]]
-              .toString()
-              .substring(0, 35)
-              .trim()
-              .padEnd(36, " ")
+            text: item[varIter[0]].toString().substring(0, 35).trim().padEnd(36, ' '),
           }),
           new TextRun({
-            text: item[varIter[1]]
-              .toString()
-              .substring(0, 4)
-              .trim()
-              .padStart(3, " ")
-          })
+            text: item[varIter[1]].toString().substring(0, 4).trim().padStart(3, ' '),
+          }),
         ];
 
         let pShift = 2;
@@ -209,18 +195,12 @@ const generatePtFacScrRnks = (matrixData, useHyperlinks, useZebra) => {
           dataRow.push(
             // factor 1 Z-score
             new TextRun({
-              text: item[varIter[pShift]]
-                .toString()
-                .trim()
-                .padStart(6, " ")
+              text: item[varIter[pShift]].toString().trim().padStart(6, ' '),
             }),
 
             // factor 1 Rank
             new TextRun({
-              text: item[varIter[pShift1]]
-                .toString()
-                .trim()
-                .padStart(4, " ")
+              text: item[varIter[pShift1]].toString().trim().padStart(4, ' '),
             })
           );
           pShift = pShift + 2;
@@ -229,27 +209,27 @@ const generatePtFacScrRnks = (matrixData, useHyperlinks, useZebra) => {
         if (index > 0 && index % 2 === 0 && useZebra === true) {
           rowArray.push(
             new Paragraph({
-              style: "dist4",
+              style: 'dist4',
               children: [...dataRow],
               shading: {
                 type: ShadingType.SOLID,
-                color: "E2E2E2"
+                color: 'E2E2E2',
               },
               spacing: {
                 before: 0,
-                after: 0
-              }
+                after: 0,
+              },
             })
           );
         } else {
           rowArray.push(
             new Paragraph({
-              style: "dist4",
+              style: 'dist4',
               children: [...dataRow],
               spacing: {
                 before: 0,
-                after: 0
-              }
+                after: 0,
+              },
             })
           );
         }

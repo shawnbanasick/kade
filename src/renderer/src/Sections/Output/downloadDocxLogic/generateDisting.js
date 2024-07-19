@@ -8,9 +8,8 @@ import {
   WidthType,
   VerticalAlign,
   AlignmentType,
-  TABLE_HEADER_FILL,
-  InternalHyperlink
-} from "docx";
+  InternalHyperlink,
+} from 'docx';
 
 const generateDisting = (data, useHyperlinks, translatedTextObj) => {
   data.shift();
@@ -34,16 +33,16 @@ const generateDisting = (data, useHyperlinks, translatedTextObj) => {
       children: [
         new TextRun({
           text: pageHeader[0],
-          bold: true
-        })
+          bold: true,
+        }),
       ],
       heading: HeadingLevel.HEADING_1,
       thematicBreak: true,
       pageBreakBefore: true,
       spacing: {
-        after: spacingAfter
-      }
-    })
+        after: spacingAfter,
+      },
+    }),
   ];
 
   if (useHyperlinks === true) {
@@ -53,41 +52,41 @@ const generateDisting = (data, useHyperlinks, translatedTextObj) => {
           new InternalHyperlink({
             children: [
               new TextRun({
-                text: "Return to TOC",
-                style: "Hyperlink"
-              })
+                text: 'Return to TOC',
+                style: 'Hyperlink',
+              }),
             ],
-            anchor: "anchorForTableOfContents"
-          })
+            anchor: 'anchorForTableOfContents',
+          }),
         ],
         alignment: AlignmentType.RIGHT,
         spacing: {
-          after: 200
-        }
+          after: 200,
+        },
       })
     );
   }
 
   matrix.push(
     new Paragraph({
-      style: "bodyStyle1",
+      style: 'bodyStyle1',
       children: [
         new TextRun({
           text: topText[0].toString(),
-          bold: false
-        })
-      ]
+          bold: false,
+        }),
+      ],
     })
   );
   matrix.push(
     new Paragraph({
-      style: "bodyStyle1",
+      style: 'bodyStyle1',
       children: [
         new TextRun({
           text: topText2[0].toString(),
-          bold: false
-        })
-      ]
+          bold: false,
+        }),
+      ],
     })
   );
 
@@ -98,9 +97,8 @@ const generateDisting = (data, useHyperlinks, translatedTextObj) => {
     item.shift();
     item.forEach((entry, entryIndex) => {
       if (entryIndex > 2) {
-        if (entry === "*") {
-          tempArray[entryIndex - 1] =
-            tempArray[entryIndex - 1].toString() + "*";
+        if (entry === '*') {
+          tempArray[entryIndex - 1] = tempArray[entryIndex - 1].toString() + '*';
         }
       }
       tempArray.push(entry);
@@ -130,24 +128,7 @@ const generateDisting = (data, useHyperlinks, translatedTextObj) => {
   });
 
   let columnWidthArray = [
-    1100,
-    200,
-    200,
-    320,
-    200,
-    320,
-    200,
-    320,
-    200,
-    320,
-    200,
-    320,
-    200,
-    320,
-    200,
-    320,
-    200,
-    320
+    1100, 200, 200, 320, 200, 320, 200, 320, 200, 320, 200, 320, 200, 320, 200, 320, 200, 320,
   ];
 
   // trim array
@@ -172,9 +153,9 @@ const generateDisting = (data, useHyperlinks, translatedTextObj) => {
       isBold = true;
     }
 
-    let dynamicParagraphStyle = "tableStyle2";
+    let dynamicParagraphStyle = 'tableStyle2';
     if (newData[0].length > 13) {
-      dynamicParagraphStyle = "tableStyle8";
+      dynamicParagraphStyle = 'tableStyle8';
     }
 
     if (index === 0) {
@@ -197,17 +178,17 @@ const generateDisting = (data, useHyperlinks, translatedTextObj) => {
                   children: [
                     new TextRun({
                       text: entry0.toString(),
-                      bold: isBold
-                    })
-                  ]
-                })
+                      bold: isBold,
+                    }),
+                  ],
+                }),
               ],
               verticalAlign: VerticalAlign.CENTER,
               columnSpan: 2,
               width: {
                 size: size,
-                type: WidthType.DXA
-              }
+                type: WidthType.DXA,
+              },
             })
           ); // end corrlsRowArray push
         }
@@ -219,7 +200,7 @@ const generateDisting = (data, useHyperlinks, translatedTextObj) => {
         if (entryIndex > 2) {
           testVal = entry.toString().slice(-1);
         }
-        if (index === 0 || index === 1 || testVal === "*") {
+        if (index === 0 || index === 1 || testVal === '*') {
           isBold = true;
         } else {
           isBold = false;
@@ -236,6 +217,11 @@ const generateDisting = (data, useHyperlinks, translatedTextObj) => {
           position = AlignmentType.CENTER;
         }
 
+        const headerStyle = {
+          shading: {
+            fill: '#d3d3d3', // Gray background color
+          },
+        };
         corrlsRowArray.push(
           new TableCell({
             children: [
@@ -245,19 +231,17 @@ const generateDisting = (data, useHyperlinks, translatedTextObj) => {
                 children: [
                   new TextRun({
                     text: entry.toString(),
-                    bold: isBold
-                  })
-                ]
-              })
+                    bold: isBold,
+                  }),
+                ],
+              }),
             ],
             verticalAlign: VerticalAlign.CENTER,
             width: {
               size: size,
-              type: WidthType.DXA
+              type: WidthType.DXA,
             },
-            shading: {
-              fill: TABLE_HEADER_FILL
-            }
+            shading: headerStyle.shading,
           })
         ); // end corrlsRowArray push
       });
@@ -267,7 +251,7 @@ const generateDisting = (data, useHyperlinks, translatedTextObj) => {
       new TableRow({
         children: corrlsRowArray,
         tableHeader: isHeader,
-        cantSplit: true
+        cantSplit: true,
       })
     );
   }); // end correlations table for each
@@ -276,14 +260,14 @@ const generateDisting = (data, useHyperlinks, translatedTextObj) => {
     const correlsTable = new Table({
       width: {
         size: 9800, // tableWidth,
-        type: WidthType.DXA
+        type: WidthType.DXA,
       },
       indent: {
         size: 0,
-        type: WidthType.DXA
+        type: WidthType.DXA,
       },
       columnWidths: columnWidthArray,
-      rows: [...rowItemsArray] // end of rows array
+      rows: [...rowItemsArray], // end of rows array
     });
 
     matrix.push(correlsTable);
@@ -291,25 +275,25 @@ const generateDisting = (data, useHyperlinks, translatedTextObj) => {
     const correlsTable = new Table({
       width: {
         size: 9800, // tableWidth,
-        type: WidthType.DXA
+        type: WidthType.DXA,
       },
       indent: {
         size: 0,
-        type: WidthType.DXA
+        type: WidthType.DXA,
       },
       columnWidths: columnWidthArray,
-      rows: [...rowItemsArray] // end of rows array
+      rows: [...rowItemsArray], // end of rows array
     });
 
     matrix.push(
       correlsTable,
       new Paragraph({
         text: translatedTextObj.noDistinguishingText,
-        style: "bodyStyle1",
+        style: 'bodyStyle1',
         spacing: {
           before: 200,
-          after: 0
-        }
+          after: 0,
+        },
       })
     );
   }

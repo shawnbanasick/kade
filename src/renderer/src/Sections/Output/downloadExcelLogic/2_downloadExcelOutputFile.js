@@ -2,13 +2,14 @@ import * as XLSX from 'xlsx';
 // import { saveAs } from "filesaver.js-npm";
 import currentDate1 from '../../../Utils/currentDate1';
 import currentTime1 from '../../../Utils/currentTime1';
-import getCoreState from '../../GlobalState/getCoreState';
-import getCalcState from '../../GlobalState/getCalcState';
-const { remote } = require('electron');
-const mainWindow = remote.getCurrentWindow();
+import coreState from '../../GlobalState/coreState';
+import calcState from '../../GlobalState/calcState';
+
+// const { remote } = require('electron');
+// const mainWindow = remote.getCurrentWindow();
 
 // const fs = require("fs");
-const { dialog } = require('electron').remote;
+// const { dialog } = require('electron').remote;
 
 var datenum = function (v, date1904) {
   if (date1904) {
@@ -83,10 +84,10 @@ const downloadExcelOutputFile = async (dataXlsx, sheetNamesXlsx, colSizes) => {
   }
 
   const timeStamp = `${currentDate1()}_${currentTime1()}`;
-  const projectName = getCoreState('projectName');
+  const projectName = coreState.getState().projectName;
 
   // to create option for no timestamp - useful for automated testing
-  const shouldIncludeTimestamp = getCalcState('shouldIncludeTimestamp');
+  const shouldIncludeTimestamp = calcState.getState().shouldIncludeTimestamp;
 
   let nameFile;
   if (shouldIncludeTimestamp === true) {

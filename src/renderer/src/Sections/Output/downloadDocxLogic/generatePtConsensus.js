@@ -4,8 +4,8 @@ import {
   HeadingLevel,
   AlignmentType,
   InternalHyperlink,
-  ShadingType
-} from "docx";
+  ShadingType,
+} from 'docx';
 
 const generateConsensus = (data, useHyperlinks, useZebra) => {
   data.shift();
@@ -18,19 +18,19 @@ const generateConsensus = (data, useHyperlinks, useZebra) => {
   data.shift();
   data.shift();
 
-  let fontSizeStyle = "dist8";
+  let fontSizeStyle = 'dist8';
   let colSpace = [10, 4, 4, 7, 4, 7, 4, 7, 4, 7, 4, 7, 4, 7, 4, 7, 4, 7];
 
   if (data[0].length < 20) {
-    fontSizeStyle = "dist6";
+    fontSizeStyle = 'dist6';
     colSpace = [10, 4, 4, 7, 4, 7, 4, 7, 4, 7, 4, 7, 4, 7, 4, 7, 4, 7];
   }
   if (data[0].length < 16) {
-    fontSizeStyle = "dist4";
+    fontSizeStyle = 'dist4';
     colSpace = [30, 4, 4, 7, 4, 7, 4, 7, 4, 7, 4, 7, 4, 7, 4, 7, 4, 7];
   }
 
-  let topText3 = topText[0].replace("Those", "Statements");
+  let topText3 = topText[0].replace('Those', 'Statements');
 
   let spacingAfter = 250;
   if (useHyperlinks === true) {
@@ -42,16 +42,16 @@ const generateConsensus = (data, useHyperlinks, useZebra) => {
       children: [
         new TextRun({
           text: pageHeader[0],
-          bold: true
-        })
+          bold: true,
+        }),
       ],
       heading: HeadingLevel.HEADING_1,
       thematicBreak: true,
       pageBreakBefore: true,
       spacing: {
-        after: spacingAfter
-      }
-    })
+        after: spacingAfter,
+      },
+    }),
   ];
 
   if (useHyperlinks === true) {
@@ -61,17 +61,17 @@ const generateConsensus = (data, useHyperlinks, useZebra) => {
           new InternalHyperlink({
             children: [
               new TextRun({
-                text: "Return to TOC",
-                style: "Hyperlink"
-              })
+                text: 'Return to TOC',
+                style: 'Hyperlink',
+              }),
             ],
-            anchor: "anchorForTableOfContents"
-          })
+            anchor: 'anchorForTableOfContents',
+          }),
         ],
         alignment: AlignmentType.RIGHT,
         spacing: {
-          after: 200
-        }
+          after: 200,
+        },
       })
     );
   }
@@ -83,9 +83,9 @@ const generateConsensus = (data, useHyperlinks, useZebra) => {
         children: [
           new TextRun({
             text: topText3,
-            bold: false
-          })
-        ]
+            bold: false,
+          }),
+        ],
       })
     );
     matrix.push(
@@ -94,9 +94,9 @@ const generateConsensus = (data, useHyperlinks, useZebra) => {
         children: [
           new TextRun({
             text: topText2[0].toString(),
-            bold: false
-          })
-        ]
+            bold: false,
+          }),
+        ],
       })
     );
   }
@@ -115,7 +115,7 @@ const generateConsensus = (data, useHyperlinks, useZebra) => {
     if (index === 0) {
       isBold = true;
     }
-    if (item[0] === "*") {
+    if (item[0] === '*') {
       isSignificant = true;
     }
 
@@ -134,9 +134,9 @@ const generateConsensus = (data, useHyperlinks, useZebra) => {
               text: entry0
                 .toString()
                 .substring(0, colSpace[entryIndex0] - 1)
-                .padStart(colSpace[entryIndex0], " "),
+                .padStart(colSpace[entryIndex0], ' '),
 
-              bold: isBold
+              bold: isBold,
             })
           ); // end corrlsRowArray push
         }
@@ -151,7 +151,7 @@ const generateConsensus = (data, useHyperlinks, useZebra) => {
         }
 
         if (index === 1) {
-          entry = entry.replace("Q-SV", "QSV").replace("Z-score", "Zscr");
+          entry = entry.replace('Q-SV', 'QSV').replace('Z-score', 'Zscr');
           isBold = true;
         }
 
@@ -159,7 +159,7 @@ const generateConsensus = (data, useHyperlinks, useZebra) => {
           if (entryIndex === 1) {
             if (isSignificant) {
               isBold = true;
-              entry = "* " + entry.toString();
+              entry = '* ' + entry.toString();
             }
           }
 
@@ -170,12 +170,12 @@ const generateConsensus = (data, useHyperlinks, useZebra) => {
                   text: entry
                     .toString()
                     .substring(0, colSpace[entryIndex - 1] - 1)
-                    .padStart(colSpace[entryIndex - 1], " "),
+                    .padStart(colSpace[entryIndex - 1], ' '),
                   bold: isBold,
                   shading: {
                     type: ShadingType.SOLID,
-                    color: "E2E2E2"
-                  }
+                    color: 'E2E2E2',
+                  },
                 })
               ); // end corrlsRowArray push
             } else {
@@ -184,8 +184,8 @@ const generateConsensus = (data, useHyperlinks, useZebra) => {
                   text: entry
                     .toString()
                     .substring(0, colSpace[entryIndex - 1] - 1)
-                    .padStart(colSpace[entryIndex - 1], " "),
-                  bold: isBold
+                    .padStart(colSpace[entryIndex - 1], ' '),
+                  bold: isBold,
                 })
               ); // end corrlsRowArray push
             }
@@ -200,8 +200,8 @@ const generateConsensus = (data, useHyperlinks, useZebra) => {
         style: fontSizeStyle,
         spacing: {
           before: 0,
-          after: 0
-        }
+          after: 0,
+        },
       })
     );
   }); // end correlations table for each
@@ -212,13 +212,13 @@ const generateConsensus = (data, useHyperlinks, useZebra) => {
         style: fontSizeStyle,
         children: [
           new TextRun({
-            text: "There were no Consensus Statements",
-            bold: false
-          })
+            text: 'There were no Consensus Statements',
+            bold: false,
+          }),
         ],
         spacing: {
-          before: 500
-        }
+          before: 500,
+        },
       })
     );
   }

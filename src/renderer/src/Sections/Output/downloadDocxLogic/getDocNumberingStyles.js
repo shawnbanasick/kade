@@ -1,4 +1,4 @@
-import { convertInchesToTwip, AlignmentType, LevelFormat } from "docx";
+import { convertInchesToTwip, AlignmentType, LevelFormat } from 'docx';
 
 const getDocNumberingStyles = () => {
   const numberingStyles = {
@@ -8,59 +8,59 @@ const getDocNumberingStyles = () => {
           {
             level: 0,
             format: LevelFormat.UPPER_ROMAN,
-            text: "%1",
+            text: '%1',
             alignment: AlignmentType.START,
             style: {
               paragraph: {
                 indent: {
                   left: convertInchesToTwip(0.5),
-                  hanging: convertInchesToTwip(0.18)
-                }
-              }
-            }
-          }
+                  hanging: convertInchesToTwip(0.18),
+                },
+              },
+            },
+          },
         ],
-        reference: "my-crazy-reference"
+        reference: 'my-crazy-reference',
       },
       {
         levels: [
           {
             level: 0,
             format: LevelFormat.DECIMAL,
-            text: "%1",
+            text: '%1',
             alignment: AlignmentType.START,
             style: {
               paragraph: {
                 indent: {
                   left: convertInchesToTwip(0.3),
-                  hanging: convertInchesToTwip(0.3)
-                }
-              }
-            }
-          }
+                  hanging: convertInchesToTwip(0.3),
+                },
+              },
+            },
+          },
         ],
-        reference: "my-number-numbering-reference"
+        reference: 'my-number-numbering-reference',
       },
       {
         levels: [
           {
             level: 0,
             format: LevelFormat.DECIMAL_ZERO,
-            text: "[%1]",
+            text: '[%1]',
             alignment: AlignmentType.START,
             style: {
               paragraph: {
                 indent: {
                   left: convertInchesToTwip(0.5),
-                  hanging: convertInchesToTwip(0.18)
-                }
-              }
-            }
-          }
+                  hanging: convertInchesToTwip(0.18),
+                },
+              },
+            },
+          },
         ],
-        reference: "padded-numbering-reference"
-      }
-    ]
+        reference: 'padded-numbering-reference',
+      },
+    ],
   };
 
   return numberingStyles;

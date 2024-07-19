@@ -9,8 +9,6 @@ const styles = {
 
 const heightValue = () => 26;
 
-const titleHeight = vizState((state) => state.titleHeight);
-
 const widthValue = (props) => {
   const shouldAdjustWidth = props.factorVizOptions.willAdjustCardWidth;
   if (shouldAdjustWidth === true) {
@@ -21,6 +19,8 @@ const widthValue = (props) => {
 };
 
 const renderBaseRectangles = (props) => (coords, index) => {
+  const titleHeight = vizState((state) => state.titleHeight);
+
   const rectangleProps = {
     x: index * widthValue(props),
     y: 0 + titleHeight,
@@ -28,7 +28,12 @@ const renderBaseRectangles = (props) => (coords, index) => {
     height: heightValue(),
     key: props.positionData.numRectsArray[index],
   };
+
   return <rect {...styles} {...rectangleProps} />;
 };
 
-export default (props) => <g>{props.positionData.uniques.map(renderBaseRectangles(props))}</g>;
+const HeaderRectangles1 = (props) => (
+  <g>{props.positionData.uniques.map(renderBaseRectangles(props))}</g>
+);
+
+export default HeaderRectangles1;

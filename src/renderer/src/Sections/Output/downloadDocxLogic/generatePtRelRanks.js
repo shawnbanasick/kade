@@ -4,8 +4,8 @@ import {
   HeadingLevel,
   AlignmentType,
   InternalHyperlink,
-  ShadingType
-} from "docx";
+  ShadingType,
+} from 'docx';
 
 const generateRelRanks = (data, useHyperlinks, useZebra) => {
   data.shift();
@@ -24,7 +24,7 @@ const generateRelRanks = (data, useHyperlinks, useZebra) => {
   let maxLen = data.length - 1;
 
   data.forEach((item, index) => {
-    if (item[0] === "" && item[1] === "") {
+    if (item[0] === '' && item[1] === '') {
       array1.push(tempArray);
       tempArray = [];
     } else {
@@ -41,16 +41,16 @@ const generateRelRanks = (data, useHyperlinks, useZebra) => {
       children: [
         new TextRun({
           text: pageHeader[1],
-          bold: true
-        })
+          bold: true,
+        }),
       ],
       heading: HeadingLevel.HEADING_1,
       thematicBreak: true,
       pageBreakBefore: true,
       spacing: {
-        after: spacingAfter
-      }
-    })
+        after: spacingAfter,
+      },
+    }),
   ];
 
   if (useHyperlinks === true) {
@@ -60,17 +60,17 @@ const generateRelRanks = (data, useHyperlinks, useZebra) => {
           new InternalHyperlink({
             children: [
               new TextRun({
-                text: "Return to TOC",
-                style: "Hyperlink"
-              })
+                text: 'Return to TOC',
+                style: 'Hyperlink',
+              }),
             ],
-            anchor: "anchorForTableOfContents"
-          })
+            anchor: 'anchorForTableOfContents',
+          }),
         ],
         alignment: AlignmentType.RIGHT,
         spacing: {
-          after: 200
-        }
+          after: 200,
+        },
       })
     );
   }
@@ -102,10 +102,10 @@ const generateRelRanks = (data, useHyperlinks, useZebra) => {
       row.forEach((entry, entryIndex) => {
         // iterate row items
         if (rowIndex === 0) {
-          entry = entry.toString().trim().replace("  ", " ");
+          entry = entry.toString().trim().replace('  ', ' ');
         } else if (rowIndex === 1) {
           if (entryIndex === 2 || entryIndex > 3) {
-            entry = `F${entry.slice(-2).trim()}`.padStart(4, " ");
+            entry = `F${entry.slice(-2).trim()}`.padStart(4, ' ');
           } else if (entryIndex === 3) {
             entry = ` C/D`;
           } else {
@@ -113,14 +113,14 @@ const generateRelRanks = (data, useHyperlinks, useZebra) => {
               .toString()
               .trim()
               .substring(0, colSpace[entryIndex] - 1)
-              .padStart(colSpace[entryIndex], " ");
+              .padStart(colSpace[entryIndex], ' ');
           }
         } else {
           entry = entry
             .toString()
             .trim()
             .substring(0, colSpace[entryIndex] - 1)
-            .padStart(colSpace[entryIndex], " ");
+            .padStart(colSpace[entryIndex], ' ');
         }
 
         if (rowIndex > 1 && rowIndex % 2 !== 0 && useZebra === true) {
@@ -130,15 +130,15 @@ const generateRelRanks = (data, useHyperlinks, useZebra) => {
               bold: isBold,
               shading: {
                 type: ShadingType.SOLID,
-                color: "E2E2E2"
-              }
+                color: 'E2E2E2',
+              },
             })
           ); // end corrlsRowArray push
         } else {
           corrlsRowArray.push(
             new TextRun({
               text: entry,
-              bold: isBold
+              bold: isBold,
             })
           ); // end corrlsRowArray push
         }
@@ -146,29 +146,29 @@ const generateRelRanks = (data, useHyperlinks, useZebra) => {
 
       matrix.push(
         new Paragraph({
-          style: "bodyStyle1",
+          style: 'bodyStyle1',
           children: corrlsRowArray,
           spacing: {
             before: 0,
-            after: 0
-          }
+            after: 0,
+          },
         })
       );
     }); // end correlations table for each
 
     matrix.push(
       new Paragraph({
-        style: "bodyStyle1",
+        style: 'bodyStyle1',
         children: [
           new TextRun({
-            text: " ",
-            bold: false
-          })
+            text: ' ',
+            bold: false,
+          }),
         ],
         spacing: {
           before: 0,
-          after: 0
-        }
+          after: 0,
+        },
       })
     );
   });

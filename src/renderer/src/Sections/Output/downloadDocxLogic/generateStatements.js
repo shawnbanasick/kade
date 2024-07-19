@@ -1,10 +1,4 @@
-import {
-  TextRun,
-  Paragraph,
-  HeadingLevel,
-  AlignmentType,
-  InternalHyperlink
-} from "docx";
+import { TextRun, Paragraph, HeadingLevel, AlignmentType, InternalHyperlink } from 'docx';
 
 const generateStatements = (statements, useHyperlinks) => {
   let spacingAfter = 250;
@@ -19,16 +13,16 @@ const generateStatements = (statements, useHyperlinks) => {
       children: [
         new TextRun({
           text: statementsText,
-          bold: true
-        })
+          bold: true,
+        }),
       ],
       heading: HeadingLevel.HEADING_1,
       thematicBreak: true,
       pageBreakBefore: true,
       spacing: {
-        after: spacingAfter
-      }
-    })
+        after: spacingAfter,
+      },
+    }),
   ];
 
   if (useHyperlinks === true) {
@@ -38,17 +32,17 @@ const generateStatements = (statements, useHyperlinks) => {
           new InternalHyperlink({
             children: [
               new TextRun({
-                text: "Return to TOC",
-                style: "Hyperlink"
-              })
+                text: 'Return to TOC',
+                style: 'Hyperlink',
+              }),
             ],
-            anchor: "anchorForTableOfContents"
-          })
+            anchor: 'anchorForTableOfContents',
+          }),
         ],
         alignment: AlignmentType.RIGHT,
         spacing: {
-          after: 200
-        }
+          after: 200,
+        },
       })
     );
   }
@@ -56,13 +50,13 @@ const generateStatements = (statements, useHyperlinks) => {
   for (let i = 3; i < statements.length; i++) {
     let text;
     let tempText = statements[i][1];
-    if (tempText !== "") {
+    if (tempText !== '') {
       text = new Paragraph({
         text: statements[i][1].trim(),
         numbering: {
-          reference: "my-number-numbering-reference",
-          level: 0
-        }
+          reference: 'my-number-numbering-reference',
+          level: 0,
+        },
       });
       statementsList.push(text);
     }
