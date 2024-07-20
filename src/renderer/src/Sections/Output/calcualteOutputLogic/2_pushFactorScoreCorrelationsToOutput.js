@@ -98,13 +98,13 @@ const pushFactorScoreCorrelationsToOutput = function (outputData, sheetNamesXlsx
   }
   correlationTableArray.unshift(tempArray3);
 
-  calcState.correlationTableArrayHolder = correlationTableArray;
+  calcState.setState({ correlationTableArrayHolder: correlationTableArray });
 
   correlationTableArray.unshift(['scoreCorr', ''], ['', ''], [appendText1], ['', '']);
 
   outputData.push(correlationTableArray);
 
-  calcState.factorCorrelationsTableData = correlationTableArray;
+  calcState.setState({ factorCorrelationsTableData: correlationTableArray });
 
   console.log('dispatch - 11 - pushFactorScoreCorrelations complete');
   return [analysisOutput, outputData, sheetNamesXlsx, colSizes];

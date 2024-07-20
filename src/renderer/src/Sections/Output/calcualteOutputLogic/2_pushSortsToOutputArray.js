@@ -35,8 +35,8 @@ const pushSortsToOutputArray = function (outputData, sheetNamesXlsx, colSizes) {
 
   const sortsAsNumbers1 = cloneDeep(sortsAsNumbers);
 
-  calcState.posShiftSortArray = posShiftSort;
-  calcState.sortsAsNumbers = sortsAsNumbers1;
+  calcState.setState({ posShiftSortArray: posShiftSort });
+  calcState.setState({ sortsAsNumbers: sortsAsNumbers1 });
 
   // set up column widths
   const columns = [

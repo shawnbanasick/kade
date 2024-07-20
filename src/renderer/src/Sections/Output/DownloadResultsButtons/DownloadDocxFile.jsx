@@ -23,7 +23,7 @@ const DistStateListSortByButtons = () => {
       <StyledWrapper>
         <SortButton
           id={'DownloadDocxFile'}
-          isActive={downloadDocxButtonActive}
+          $isActive={downloadDocxButtonActive}
           onClick={handleOnclick}
           key={'f1'}
         >

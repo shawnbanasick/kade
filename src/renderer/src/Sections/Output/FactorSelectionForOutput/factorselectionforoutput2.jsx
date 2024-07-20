@@ -32,31 +32,31 @@ const handleOnclick = (event) => {
     ];
     userSelectedFactors.length = numFactorsKeptForRotation;
     state.setState({
-      highlightfactor1: true,
-      highlightfactor2: true,
-      highlightfactor3: true,
-      highlightfactor4: true,
-      highlightfactor5: true,
-      highlightfactor6: true,
-      highlightfactor7: true,
-      highlightfactor8: true,
-      userSelectedFactors,
-      selectAllClicked: true,
+      // highlightfactor1: true,
+      // highlightfactor2: true,
+      // highlightfactor3: true,
+      // highlightfactor4: true,
+      // highlightfactor5: true,
+      // highlightfactor6: true,
+      // highlightfactor7: true,
+      // highlightfactor8: true,
+      // userSelectedFactors,
+      // selectAllClicked: true,
     });
 
     // clear all
   } else if (factor === 'clearAllFacsButton') {
     userSelectedFactors = [];
     state.setState({
-      highlightfactor1: false,
-      highlightfactor2: false,
-      highlightfactor3: false,
-      highlightfactor4: false,
-      highlightfactor5: false,
-      highlightfactor6: false,
-      highlightfactor7: false,
-      highlightfactor8: false,
-      userSelectedFactors,
+      // highlightfactor1: false,
+      // highlightfactor2: false,
+      // highlightfactor3: false,
+      // highlightfactor4: false,
+      // highlightfactor5: false,
+      // highlightfactor6: false,
+      // highlightfactor7: false,
+      // highlightfactor8: false,
+      // userSelectedFactors,
     });
   } else {
     // select individual factors
@@ -64,23 +64,23 @@ const handleOnclick = (event) => {
     if (selectAllClicked) {
       userSelectedFactors = [];
       state.setState({
-        highlightfactor1: false,
-        highlightfactor2: false,
-        highlightfactor3: false,
-        highlightfactor4: false,
-        highlightfactor5: false,
-        highlightfactor6: false,
-        highlightfactor7: false,
-        highlightfactor8: false,
-        userSelectedFactors,
-        selectAllClicked: false,
+        // highlightfactor1: false,
+        // highlightfactor2: false,
+        // highlightfactor3: false,
+        // highlightfactor4: false,
+        // highlightfactor5: false,
+        // highlightfactor6: false,
+        // highlightfactor7: false,
+        // highlightfactor8: false,
+        // userSelectedFactors,
+        // selectAllClicked: false,
       });
     }
     if (!includes(userSelectedFactors, factor)) {
       userSelectedFactors.push(factor);
       state.setState({ userSelectedFactors });
       const newFactorId = `highlight${factor.replace(' ', '')}`;
-      store[newFactorId] = true;
+      // store[newFactorId] = true;
     }
   }
 };

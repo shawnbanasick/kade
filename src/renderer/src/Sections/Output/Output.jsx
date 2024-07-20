@@ -30,6 +30,7 @@ let showTableDataNotSentWarning;
 const Output = () => {
   const { t } = useTranslation();
   let displayState = outputState((state) => state.showDocxOptions);
+  const updateOutputActiveTabIndex = outputState((state) => state.updateOutputActiveTabIndex);
 
   const updateNotifyOutputDistStateError = outputState(
     (state) => state.updateNotifyOutputDistStateError
@@ -129,7 +130,8 @@ const Output = () => {
   ];
 
   function handleTabChange(e, { activeIndex }) {
-    outputState.outputActiveTabIndex = activeIndex;
+    console.log('activeIndex', activeIndex);
+    updateOutputActiveTabIndex(activeIndex);
   }
 
   const activeIndex = outputState((state) => state.outputActiveTabIndex);

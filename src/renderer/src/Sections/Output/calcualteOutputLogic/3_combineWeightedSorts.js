@@ -6,6 +6,7 @@ import calcState from '../../GlobalState/calcState';
 const combineWeightedSorts = function (weightedSorts) {
   // returns ["factor 1", "factor 2", etc... ]
   const sigFactorNumbersArray1 = calcState.getState().sigFactorNumbersArray;
+  console.log(JSON.stringify(sigFactorNumbersArray1));
   const sigFactorNumbersArray = sigFactorNumbersArray1.sort();
   let tempArray2, summedWeightedSorts;
 

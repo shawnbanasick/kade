@@ -12,6 +12,15 @@ const outputState = create(
 
     notifyOutputDistStateError: false,
 
+    highlightFactor1: false,
+    highlightFactor2: false,
+    highlightFactor3: false,
+    highlightFactor4: false,
+    highlightFactor5: false,
+    highlightFactor6: false,
+    highlightFactor7: false,
+    highlightFactor8: false,
+
     outputActiveTabIndex: 0,
     outputButtonsArray: [],
     outputFactorSelectButtonsDisabled: false,
@@ -114,6 +123,15 @@ const outputState = create(
       '481 - 495',
       '496 - 510',
     ],
+
+    updateHighlightFactor1: (inputValue) => set({ highlightFactor1: inputValue }),
+    updateHighlightFactor2: (inputValue) => set({ highlightFactor2: inputValue }),
+    updateHighlightFactor3: (inputValue) => set({ highlightFactor3: inputValue }),
+    updateHighlightFactor4: (inputValue) => set({ highlightFactor4: inputValue }),
+    updateHighlightFactor5: (inputValue) => set({ highlightFactor5: inputValue }),
+    updateHighlightFactor6: (inputValue) => set({ highlightFactor6: inputValue }),
+    updateHighlightFactor7: (inputValue) => set({ highlightFactor7: inputValue }),
+    updateHighlightFactor8: (inputValue) => set({ highlightFactor8: inputValue }),
 
     updateDisplayFactorVisualizations: (inputValue) =>
       set({ displayFactorVisualizations: inputValue }),

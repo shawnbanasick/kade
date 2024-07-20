@@ -356,8 +356,12 @@ const pushDistinguishingStatementsToOutput = function (
     outputData.push(formattedDistingStatements[1]);
   } // end of J loop
 
-  calcState.masterDistingStatementNumbersArray01 = masterDistingStatementNumbersArray01;
-  calcState.masterDistingStatementNumbersArray05 = masterDistingStatementNumbersArray05;
+  calcState.setState({
+    masterDistingStatementNumbersArray01: masterDistingStatementNumbersArray01,
+  });
+  calcState.setState({
+    masterDistingStatementNumbersArray05: masterDistingStatementNumbersArray05,
+  });
 
   // ******
   // develop consensus statement data
@@ -376,8 +380,8 @@ const pushDistinguishingStatementsToOutput = function (
 
   const consensus01 = xor(consensus05, consensusStatementComparisonArray01b);
 
-  calcState.consensus05Statements = consensus05;
-  calcState.consensus01Statements = consensus01;
+  calcState.setState({ consensus05Statements: consensus05 });
+  calcState.setState({ consensus01Statements: consensus01 });
 
   sheetNamesXlsx.push(chartText2);
 

@@ -1,4 +1,3 @@
-import React from 'react';
 import styled from 'styled-components';
 import downloadDistStates from './downloadDistStates';
 import outputState from '../../GlobalState/outputState';
@@ -68,7 +67,7 @@ const DistStateListSortByButtons = () => {
         <TextLabel>{t('Sort By')}</TextLabel>
         <SortButton
           id={'thresholdButton'}
-          isActive={thresholdButtonActive}
+          $isActive={thresholdButtonActive}
           onClick={handleOnclick}
           key={'f1'}
         >
@@ -76,7 +75,7 @@ const DistStateListSortByButtons = () => {
         </SortButton>
         <SortButton
           id={'qSortValueButton'}
-          isActive={qSortValueButtonActive}
+          $isActive={qSortValueButtonActive}
           onClick={handleOnclick}
           key={'f2'}
         >
@@ -84,7 +83,7 @@ const DistStateListSortByButtons = () => {
         </SortButton>
         <SortButton
           id={'statementNumButton'}
-          isActive={statementNumButtonActive}
+          $isActive={statementNumButtonActive}
           onClick={handleOnclick}
           key={'f3'}
         >
@@ -92,7 +91,7 @@ const DistStateListSortByButtons = () => {
         </SortButton>
         <SortButton
           id={'zScoreButton'}
-          isActive={zScoreButtonActive}
+          $isActive={zScoreButtonActive}
           onClick={handleOnclick}
           key={'f4'}
         >

@@ -27,30 +27,32 @@ class ErrorBoundary extends Component {
           <br />
           {i18n.t('In the top menu click View Force Reload to restart the application')}
         </ErrorText>
-        {!this.state.showError && (
-          <button
-            onClick={() =>
-              this.setState({
-                showError: true,
-              })
-            }
-          >
-            Show error →
-          </button>
-        )}
-        {this.state.showError && (
-          <pre>
-            <code>{this.state.error}</code>
-          </pre>
-        )}
-        <br />
-        <br />
-        <br />
-        {this.state.showError && (
-          <pre>
-            <code>{this.state.errorMessage}</code>
-          </pre>
-        )}
+        <ErrorContainer>
+          {!this.state.showError && (
+            <button
+              onClick={() =>
+                this.setState({
+                  showError: true,
+                })
+              }
+            >
+              Show error →
+            </button>
+          )}
+          {this.state.showError && (
+            <pre>
+              <code>{this.state.error}</code>
+            </pre>
+          )}
+          <br />
+          <br />
+          <br />
+          {this.state.showError && (
+            <pre>
+              <code>{this.state.errorMessage}</code>
+            </pre>
+          )}
+        </ErrorContainer>
       </ErrorBoundaryDiv>
     ) : (
       this.props.children
@@ -69,4 +71,15 @@ const ErrorText = styled.div`
   line-height: 1.8em;
   margin-top: 15px;
   margin-bottom: 15px;
+`;
+
+const ErrorContainer = styled.div`
+  background-color: white;
+
+  pre {
+    color: orange;
+    font-size: 16px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+  }
 `;

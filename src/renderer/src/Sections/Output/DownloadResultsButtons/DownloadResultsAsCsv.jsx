@@ -38,7 +38,7 @@ const DownloadResultsAsCsv1 = () => {
         <CsvButton
           as={GeneralButton}
           id="downloadResultsAsCsvButton"
-          isActive={active}
+          $isActive={active}
           onClick={handleOpen}
         >
           <LineContainer>

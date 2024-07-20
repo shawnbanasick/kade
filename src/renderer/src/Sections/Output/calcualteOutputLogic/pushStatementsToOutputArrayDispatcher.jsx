@@ -21,7 +21,7 @@ const pushStatementsToOutputArrayDispatcher = (outputData, sheetNamesXlsx, colSi
   );
 
   // set maxStatementLength;
-  calcState.maxStatementLength = pushStatements[1];
+  calcState.setState({ maxStatementLength: pushStatements[1] });
 
   console.log('dispatch - 2 - pushStatements complete');
   return pushStatements[0];

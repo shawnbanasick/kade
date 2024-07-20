@@ -77,7 +77,7 @@ const pushFactorScoreComparisonRanksTableToOutput = function (
   }
 
   // get Array from state
-  const compositeFactorMasterArray = cloneDeep(calcState.compositeFactorMasterArray);
+  const compositeFactorMasterArray = cloneDeep(calcState.getState().compositeFactorMasterArray);
   const factorScoreRanksArray = [];
 
   // sort by statement number and push num and statement and num into ranks array

@@ -75,7 +75,7 @@ const DownloadResultsAsDocx = () => {
         <DocxButton
           as={GeneralButton}
           id="downloadResultsAsDocxButton"
-          isActive={active}
+          $isActive={active}
           onClick={handleOpen}
         >
           {buttonText}

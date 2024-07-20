@@ -13,12 +13,15 @@ import coreState from '../../GlobalState/coreState';
 import correlationState from '../../GlobalState/correlationState';
 import i18n from 'i18next';
 import cloneDeep from 'lodash/cloneDeep';
+import { result } from 'lodash';
 
 const pushFactorsToOutputArray = (outputData, sheetNamesXlsx, colSizes) => {
   // pulls array - ["factor 1", "factor 2", "factor 3", "factor 4", "factor 5", "factor 6", "factor 7", "factor 8"]
   let userSelectedFactors = outputState.getState().userSelectedFactors;
+  console.log(JSON.stringify(userSelectedFactors));
   const numFactorsSelectedForOutput = userSelectedFactors.length;
   const results = loadingState.getState().currentLoadingsTable;
+  console.log(JSON.stringify(result));
 
   // strip spaces from userSelectedFactors
   // create check array of userSelectedFactors
@@ -184,9 +187,9 @@ const pushFactorsToOutputArray = (outputData, sheetNamesXlsx, colSizes) => {
     temp1.header = true;
     sheetNamesHolder3.push(temp1);
   }
-  calcState.sheetNamesHolder1 = sheetNamesHolder1;
-  calcState.sheetNamesHolder2 = sheetNamesHolder2;
-  calcState.sheetNamesHolder3 = sheetNamesHolder3;
+  calcState.setState({ sheetNamesHolder1: sheetNamesHolder1 });
+  calcState.setState({ sheetNamesHolder2: sheetNamesHolder2 });
+  calcState.setState({ sheetNamesHolder3: sheetNamesHolder3 });
 
   // pull raw sorts for factor tables
   const rawSorts = [];
@@ -200,6 +203,8 @@ const pushFactorsToOutputArray = (outputData, sheetNamesXlsx, colSizes) => {
     }
     rawSorts.push(tempArray);
   }
+
+  console.log(JSON.stringify('rawSorts', rawSorts));
 
   // for each factor check get a sigSort (if another remains)
   // get the raw sort for that specific sigSort
@@ -296,6 +301,9 @@ const pushFactorsToOutputArray = (outputData, sheetNamesXlsx, colSizes) => {
         analysisOutput[j][m].zScore,
         analysisOutput[j][m].sortValue
       );
+
+      console.log(JSON.stringify(rawSorts[j]));
+      console.log(JSON.stringify(sigSortsArray[j]));
 
       const sLen = rawSorts[j].length;
       for (let s = 0; s < sLen; s += 1) {

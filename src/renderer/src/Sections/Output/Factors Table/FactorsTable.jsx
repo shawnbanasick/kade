@@ -100,10 +100,11 @@ function getHeight(numStatements) {
 
 const FactorsTable = () => {
   const { t } = useTranslation();
+  const numStatements = coreState((state) => state.numStatements);
 
   const [localStore, setLocalStore] = useState({
     numFactors: 0,
-    numStatements: 0,
+    numStatements: numStatements,
   });
 
   function resetWidthAndHeight() {
@@ -149,12 +150,13 @@ const FactorsTable = () => {
 
   const numFactors = currentData[1];
 
-  const numStatements = coreState((state) => state.numStatements);
-
-  setLocalStore({
-    numFactors: numFactors,
-    numStatements: numStatements,
-  });
+  // setLocalStore((preState) => {
+  //   return {
+  //     ...preState,
+  //     numFactors: numFactors,
+  //     numStatements: numStatements,
+  //   };
+  // });
 
   const gridColDefsFacTable = getGridColDefsFacTable(
     currentData[1], // numFacs

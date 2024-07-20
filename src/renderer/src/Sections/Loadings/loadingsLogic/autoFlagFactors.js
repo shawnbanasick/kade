@@ -10,7 +10,8 @@ import factorState from '../../GlobalState/factorState';
 
 const autoFlagFactors = () => {
   loadingState.setState({ isLoadingAutoflag: true });
-  loadingState.setState({ autoflagButtonColor: '#dbdbe0' });
+  // loadingState.setState({ autoflagButtonColor: '#dbdbe0' });
+  loadingState.setState({ autoflagButtonColor: 'var(--main-theme-color)' });
 
   // should produce for Lipset calc style matrix - 9 cols by 7 rows
 

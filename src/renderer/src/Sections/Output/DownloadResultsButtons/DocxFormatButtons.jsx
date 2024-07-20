@@ -71,7 +71,7 @@ const DistStateListSortByButtons = () => {
         <StyledWrapper>
           <SortButton
             id={'ContentUseTables'}
-            isActive={useTablesButtonActive}
+            $isActive={useTablesButtonActive}
             onClick={handleOnclick}
             key={'f1'}
           >
@@ -79,7 +79,7 @@ const DistStateListSortByButtons = () => {
           </SortButton>
           <SortButton
             id={'ContentUseClipped'}
-            isActive={useClippedButtonActive}
+            $isActive={useClippedButtonActive}
             onClick={handleOnclick}
             key={'f2'}
           >

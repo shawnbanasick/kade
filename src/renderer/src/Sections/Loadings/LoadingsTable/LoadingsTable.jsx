@@ -99,7 +99,6 @@ const LoadingsTable = (props) => {
     (state) => state.updateGridRowDataLoadingsTable
   );
   const updateHighlighting = loadingState((state) => state.updateHighlighting);
-  // getState - pull headers and data from states
   const updateOutputButtonsArray = outputState((state) => state.updateOutputButtonsArray);
 
   const gridRef = useRef();
@@ -148,14 +147,19 @@ const LoadingsTable = (props) => {
     columnHoverHighlight: true,
   };
 
+  // *** GRAB TABLE DATA *** //
   const grabTableLocalState = () => {
     // grab current table data (including user-added flags)
-    const count = gridRef.current.api.getDisplayedRowCount();
+    // const nodeArray = gridRef.current.api.getDisplayedRowCount();
     const currentLoadingsTable = [];
-    for (let i = 0; i < count; i += 1) {
-      const rowNode = gridRef.current.api.getDisplayedRowAtIndex(i);
-      currentLoadingsTable.push(rowNode.data);
+    const nodeArray = gridRef.current.api.getRenderedNodes();
+    for (let i = 0; i < nodeArray.length; i += 1) {
+      // const rowNode = gridRef.current.api.getDisplayedRowAtIndex(i);
+      currentLoadingsTable.push(nodeArray[i].data);
     }
+    // currentLoadingsTable.push(rowNode.data);
+
+    // return rowData;
     return currentLoadingsTable;
   };
 
@@ -170,12 +174,15 @@ const LoadingsTable = (props) => {
     updateSendDataToOutputButtonColor('orange');
   };
 
-  const generateOutput = () => {
+  //*** OUTPUT FUNCTION  ***//
+  const generateOutput = async () => {
     // grab current table data
     const currentLoadingsTable = grabTableLocalState();
+    console.log(currentLoadingsTable);
     // send current to local state
     // localStore.temp_gridRowDataLoadingsTable = currentLoadingsTable;
-    generateOutputFromLoadingTable(currentLoadingsTable);
+    await updateCurrentLoadingsTable(currentLoadingsTable);
+    await generateOutputFromLoadingTable(currentLoadingsTable);
     notify();
   };
 
@@ -207,6 +214,7 @@ const LoadingsTable = (props) => {
     updateHighlighting(highlightType);
   };
 
+  // *** FLAG ALL FUNCTION *** //
   const flagAllQsorts = () => {
     const currentLoadingsTable = grabTableLocalState();
     const factorGroupArray = ['F1', 'F2', 'F3', 'F4', 'F5', 'F6', 'F7', 'F8'];
@@ -232,6 +240,7 @@ const LoadingsTable = (props) => {
     updateSendDataToOutputButtonColor('orange');
   };
 
+  // *** CLEAR ALL CHECKBOXES *** //
   const clearAllCheckboxes = () => {
     const currentLoadingsTable = grabTableLocalState();
     for (let i = 0; i < currentLoadingsTable.length; i += 1) {
@@ -246,10 +255,6 @@ const LoadingsTable = (props) => {
     updateSendDataToOutputButtonColor('#d6dbe0');
   };
 
-  // push headers and data to preserve local state for remount after unmount
-  // localStore.gridColDefsLoadingsTable = gridColDefsLoadingsTable;
-  // localStore.gridRowDataLoadingsTable = gridRowDataLoadingsTable;
-
   if (isLoadingsTableInitialRender) {
     setLocalStore({ temp_gridColDefsLoadingsTable: gridColDefsLoadingsTable });
     setLocalStore({ temp_gridRowDataLoadingsTable: gridRowDataLoadingsTable });
@@ -257,9 +262,6 @@ const LoadingsTable = (props) => {
   }
 
   console.log(JSON.stringify(gridRowDataLoadingsTable));
-
-  // getState - pull number Q sorts for table height calcs
-  // setLocalStore({ numQsorts: numQsorts });
 
   // todo - create output buttons array here to stay in sync, but do performance check
   const outputButtonsArray2 = gridColDefsLoadingsTable.map((item) => item.field);
@@ -274,18 +276,10 @@ const LoadingsTable = (props) => {
   // increase height / width when bipolar split present
   const bipolarSplitCount = Number(bipolarSplitCount1);
 
-  // communication with user - has data been sent to output section?
-
-  // disable buttons after bipolar split
-
   // increase width if bipolar present
   if (bipolarSplitCount > 0) {
     numFacsForTableWidth += bipolarSplitCount;
   }
-
-  // setLocalStore({ numFacsForTableWidth: numFacsForTableWidth });
-  // setLocalStore({ sendDataToOutputButtonColor: sendDataToOutputButtonColor });
-  // setLocalStore({ autoflagButtonColor: autoflagButtonColor });
 
   const loadingsTableContainerStyle = {
     marginTop: 2,
@@ -333,7 +327,7 @@ const LoadingsTable = (props) => {
 
           <RowColorsContainer>
             <GeneralButton
-              $buttoncolor={localStore.autoflagButtonColor}
+              $buttoncolor={autoflagButtonColor}
               id="autoflagButton"
               onClick={autoFlagFactors}
               disabled={isDisabled}
@@ -384,7 +378,7 @@ const LoadingsTable = (props) => {
         </div>
         <ButtonBarBottom>
           <DataToOutputButton
-            $buttonColor={localStore.sendDataToOutputButtonColor}
+            $buttonColor={sendDataToOutputButtonColor}
             id="generateOutputButton"
             onClick={generateOutput}
           >
@@ -449,7 +443,7 @@ const ButtonBarBottom = styled.div`
 `;
 
 const DataToOutputButton = styled(GeneralButton)`
-  background-color: ${(props) => props.buttonColor};
+  background-color: ${(props) => props.$buttonColor};
   transition: background-color 0.3s ease;
 `;
 
