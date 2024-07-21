@@ -19,8 +19,8 @@ const pushSortsToOutputArray = function (outputData, sheetNamesXlsx, colSizes) {
   sheetNamesXlsx.push('Q sorts');
 
   // getState
-  const mainDataObject = coreState.getState().mainDataObject;
-  const respondentNames = coreState.getState().respondentNames;
+  const mainDataObject = cloneDeep(coreState.getState().mainDataObject);
+  const respondentNames = cloneDeep(coreState.getState().respondentNames);
   const dataArray = [];
 
   // pull sorts from mainDataObject

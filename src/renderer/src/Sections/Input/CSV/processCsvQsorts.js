@@ -1,15 +1,15 @@
-import coreState from "../../GlobalState/coreState";
-import appState from "../../GlobalState/appState";
-import Papa from "papaparse";
-import inputState from "../../GlobalState/inputState";
-import getInputState from "../../GlobalState/getInputState";
-import sortsDisplayText from "../logic/sortsDisplayText";
-import revertLoadButtonsColors from "../DemoData/revertLoadButtonsColors";
-import throwErrorTemplate from "../throwErrorTemplate";
-import filterLines from "./filterLines";
-import createMainDataObjectArray from "./createMainDataObjectArray";
+import coreState from '../../GlobalState/coreState';
+import appState from '../../GlobalState/appState';
+import Papa from 'papaparse';
+import inputState from '../../GlobalState/inputState';
+import getInputState from '../../GlobalState/getInputState';
+import sortsDisplayText from '../logic/sortsDisplayText';
+import revertLoadButtonsColors from '../DemoData/revertLoadButtonsColors';
+import throwErrorTemplate from '../throwErrorTemplate';
+import filterLines from './filterLines';
+import createMainDataObjectArray from './createMainDataObjectArray';
 
-const processBlob = data => {
+const processBlob = (data) => {
   // todo - integrate this properly
   const hasInputError = false;
 
@@ -27,7 +27,7 @@ const processBlob = data => {
     inputState.errorMessage = "Can't find any Q sorts in the file!";
     inputState.errorStackTrace = "Error in 'processCsvQsorts' function.";
     inputState.extendedErrorMessage =
-      "KADE was unable to find any Q sorts listed in the selected file. Please check the file and try again.";
+      'KADE was unable to find any Q sorts listed in the selected file. Please check the file and try again.';
     return;
   }
 
@@ -43,7 +43,7 @@ const processBlob = data => {
   let maxLength;
   if (lines2.length < 1) {
     throwErrorTemplate(
-      "unable to load file data",
+      'unable to load file data',
       "Couldn't find sorts data - confirm that data begins in row 1, column 1",
       "error in 'processCsvQsorts'"
     );
@@ -61,9 +61,9 @@ const processBlob = data => {
   const sortsDisplayTextArray = sortsDisplayText(mainDataObject);
 
   if (hasInputError === false) {
-    revertLoadButtonsColors("csv");
+    revertLoadButtonsColors('csv');
 
-    inputState.dataOrigin = "csv";
+    inputState.dataOrigin = 'csv';
     coreState.numQsorts = numberSorts;
     coreState.respondentNames = respondentNames;
     coreState.mainDataObject = mainDataObject;
@@ -71,8 +71,8 @@ const processBlob = data => {
     inputState.notifyDataUploadSuccess = true;
     inputState.areQsortsLoaded = true;
     inputState.isLoadCsvQsortsButtonGreen = true;
-    appState.isInputButtonGreen = getInputState("areStatementsLoaded");
-    appState.isDataButtonGreen = getInputState("areStatementsLoaded");
+    appState.isInputButtonGreen = getInputState('areStatementsLoaded');
+    appState.isDataButtonGreen = getInputState('areStatementsLoaded');
   }
 };
 

@@ -12,16 +12,16 @@ import i18n from 'i18next';
 import factorState from '../../GlobalState/factorState';
 import projectHistoryState from '../../GlobalState/projectHistoryState';
 import coreState from '../../GlobalState/coreState';
-import cloneDeep from 'lodash/cloneDeep';
 import correlationState from '../../GlobalState/correlationState';
+import cloneDeep from 'lodash/cloneDeep';
 
 const pcaDispatch = () => {
   // getState
-  const projectHistoryArray = projectHistoryState.getState().projectHistoryArray;
-
+  const projectHistoryArray = cloneDeep(projectHistoryState.getState().projectHistoryArray);
+  const respondentNames = cloneDeep(coreState.getState().respondentNames);
+  const X = cloneDeep(correlationState.getState().correlation5Calcs);
+  const numQsorts = coreState.getState().numQsorts;
   console.log('project history array', projectHistoryArray);
-
-  const X = correlationState.getState().correlation5Calcs;
 
   const m = X.length;
   const numberOfSorts = m;
@@ -56,7 +56,6 @@ const pcaDispatch = () => {
 
   // truncate arrays
   let limit = 8;
-  const numQsorts = coreState.getState().numQsorts;
   if (numQsorts < limit) {
     limit = numQsorts;
   }
@@ -100,7 +99,6 @@ const pcaDispatch = () => {
 
   const eigenvaluesArray = [eigenValuesSorted, eigenValuesAsPercents, eigenValuesCumulPercentArray];
   // draw extracted factors table
-  const respondentNames = coreState.getState().respondentNames;
   const participantTrans = i18n.t('Participant');
   const factorTrans = i18n.t('Factor');
   const nmTrans = i18n.t('Nm');

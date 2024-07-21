@@ -339,9 +339,9 @@ const NumButtons = styled.div`
   height: ${(props) => props.height || 'auto'};
   width: ${(props) => props.width || 'auto'};
   text-align: center;
-  font-size: 16px;
+  font-size: 18px;
   font-family: Helvetica, sans-serif;
-  font-weight: normal;
+  font-weight: semibold;
   border: none;
   border-radius: 4px;
   margin-right: 3px;
@@ -390,6 +390,7 @@ const SelectButtons = styled.div`
 
 const Container1 = styled.div`
   // outline: 2px solid red;
+  margin-top: 3px;
   height: 100px;
   width: 800px;
 `;

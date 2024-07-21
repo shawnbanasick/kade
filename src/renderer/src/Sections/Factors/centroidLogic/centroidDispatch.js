@@ -9,10 +9,8 @@ import calculateCommunalities from '../../Rotation/varimaxLogic/2calculateCommun
 import doHeywoodCheck from '../centroidLogic/horst55Logic/doHeywoodCheck';
 import i18n from 'i18next';
 import cloneDeep from 'lodash/cloneDeep';
-
 import projectHistoryState from '../../GlobalState/projectHistoryState';
-import getProjectHistoryState from '../../GlobalState/getProjectHistoryState';
-import getCorrelationState from '../../GlobalState/getCorrelationState';
+import correlationState from '../../GlobalState/correlationState';
 import factorState from '../../GlobalState/factorState';
 import coreState from '../../GlobalState/coreState';
 
@@ -23,11 +21,11 @@ const centroidDispatch = (numFactors) => {
   // ************************************
   // GET STATE
   // ************************************
-  let dataArray = getCorrelationState('correlation5Calcs');
-  let projectHistoryArray = getProjectHistoryState('projectHistoryArray');
-  let numCentroidFactors = factorState.getState().numCentroidFactors;
-  const numQsorts = coreState.getState().numQsorts;
-  const respondentNames = coreState.getState().respondentNames;
+  let dataArray = cloneDeep(correlationState.getState().correlation5Calcs);
+  let projectHistoryArray = cloneDeep(projectHistoryState.getState().projectHistoryArray);
+  let numCentroidFactors = cloneDeep(factorState.getState().numCentroidFactors);
+  const numQsorts = cloneDeep(coreState.getState().numQsorts);
+  const respondentNames = cloneDeep(coreState.getState().respondentNames);
 
   // ************************************
   // CALC LOADINGS

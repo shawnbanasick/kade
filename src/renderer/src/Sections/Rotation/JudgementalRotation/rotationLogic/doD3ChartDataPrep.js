@@ -4,13 +4,12 @@ import cloneDeep from 'lodash/cloneDeep';
 
 const doD3ChartDataPrep = (rotFacStateArray) => {
   // getState
-  const abFactors = rotationState.getState().abFactors;
+  const abFactors = cloneDeep(rotationState.getState().abFactors);
+  const step4 = cloneDeep(coreState.getState().respondentNames);
+  const fSigCriterionResults = cloneDeep(rotationState.getState().fSigCriterionResults);
+
   const rotationFactorA = Math.min(...abFactors);
   const rotationFactorB = Math.max(...abFactors);
-
-  const step4 = coreState.getState().respondentNames;
-  const fSigCriterionResults = rotationState.getState().fSigCriterionResults;
-
   const chartData = cloneDeep(rotFacStateArray);
 
   const dataValuesArray = [];

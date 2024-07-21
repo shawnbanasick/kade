@@ -1,12 +1,13 @@
 import coreState from '../../GlobalState/coreState';
 import correlationState from '../../GlobalState/correlationState';
 import i18n from 'i18next';
+import cloneDeep from 'lodash/cloneDeep';
 
 const pushCorrelationArray = function (outputData, sheetNamesXlsx, colSizes) {
   sheetNamesXlsx.push(i18n.t('Correlation Matrix'));
   // getState
-  const correlationMatrix = correlationState.getState().correlationTableArray;
-  const respondentNames = coreState.getState().respondentNames;
+  const correlationMatrix = cloneDeep(correlationState.getState().correlationTableArray);
+  const respondentNames = cloneDeep(coreState.getState().respondentNames);
 
   // to add respondent names to matrix
   for (let i = 0, iLen = correlationMatrix.length; i < iLen; i++) {

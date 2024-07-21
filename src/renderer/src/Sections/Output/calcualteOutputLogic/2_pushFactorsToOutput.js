@@ -13,15 +13,13 @@ import coreState from '../../GlobalState/coreState';
 import correlationState from '../../GlobalState/correlationState';
 import i18n from 'i18next';
 import cloneDeep from 'lodash/cloneDeep';
-import { result } from 'lodash';
 
 const pushFactorsToOutputArray = (outputData, sheetNamesXlsx, colSizes) => {
   // pulls array - ["factor 1", "factor 2", "factor 3", "factor 4", "factor 5", "factor 6", "factor 7", "factor 8"]
-  let userSelectedFactors = outputState.getState().userSelectedFactors;
+  let userSelectedFactors = cloneDeep(outputState.getState().userSelectedFactors);
   console.log(JSON.stringify(userSelectedFactors));
   const numFactorsSelectedForOutput = userSelectedFactors.length;
-  const results = loadingState.getState().currentLoadingsTable;
-  console.log(JSON.stringify(result));
+  const results = cloneDeep(loadingState.getState().currentLoadingsTable);
 
   // strip spaces from userSelectedFactors
   // create check array of userSelectedFactors
@@ -121,13 +119,14 @@ const pushFactorsToOutputArray = (outputData, sheetNamesXlsx, colSizes) => {
 
   // CONTINUE HERE!
 
-  const analysisOutput2 = calcState.getState().analysisOutput;
+  const analysisOutput2 = cloneDeep(calcState.getState().analysisOutput);
   const analysisOutput = cloneDeep(analysisOutput2);
-  const sigSortsArray = calcState.getState().sigSortsArray;
-  const sortsAsNumbers = calcState.getState().sortsAsNumbers;
-  const qavRespondentNames = coreState.getState().respondentNames;
-  const correlationTableArray = correlationState.getState().correlationTableArray;
+  const sigSortsArray = cloneDeep(calcState.getState().sigSortsArray);
+  console.log(JSON.stringify(sigSortsArray));
+  const sortsAsNumbers = cloneDeep(calcState.getState().sortsAsNumbers);
+  const qavRespondentNames = cloneDeep(coreState.getState().respondentNames);
   const tableHeader = cloneDeep(qavRespondentNames);
+  const correlationTableArray = cloneDeep(correlationState.getState().correlationTableArray);
   tableHeader.unshift('');
   correlationTableArray.unshift(tableHeader);
   for (let z = 1; z < correlationTableArray.length; z += 1) {
@@ -136,7 +135,7 @@ const pushFactorsToOutputArray = (outputData, sheetNamesXlsx, colSizes) => {
   const correlationTableArrayFormatted2 = correlationTableArray;
 
   // const userSelectedFactors = state.getState("userSelectedFactors");
-  const sortWeights = calcState.getState().sortWeights;
+  const sortWeights = cloneDeep(calcState.getState().sortWeights);
 
   // to hold data in STATE until later insertion into output results - to match PQMethod order
   const factorWeightFactorArrayHolder = [];
@@ -191,6 +190,7 @@ const pushFactorsToOutputArray = (outputData, sheetNamesXlsx, colSizes) => {
   calcState.setState({ sheetNamesHolder2: sheetNamesHolder2 });
   calcState.setState({ sheetNamesHolder3: sheetNamesHolder3 });
 
+  console.log('sigSortsArray: ', JSON.stringify(sigSortsArray));
   // pull raw sorts for factor tables
   const rawSorts = [];
   for (let p = 0; p < sigSortsArray.length; p += 1) {
@@ -204,7 +204,7 @@ const pushFactorsToOutputArray = (outputData, sheetNamesXlsx, colSizes) => {
     rawSorts.push(tempArray);
   }
 
-  console.log(JSON.stringify('rawSorts', rawSorts));
+  console.log('rawSorts', JSON.stringify(rawSorts));
 
   // for each factor check get a sigSort (if another remains)
   // get the raw sort for that specific sigSort
@@ -275,6 +275,8 @@ const pushFactorsToOutputArray = (outputData, sheetNamesXlsx, colSizes) => {
     const synFactorArray = [];
     const matchCountArray = [];
     const compositeFactorArray = [];
+
+    // console.log(JSON.stringify(analysisOutput[0]));
 
     // simul calc two md arrays - one for tables, one for match counts
     for (let m = 0, mLen = analysisOutput[0].length; m < mLen; m += 1) {

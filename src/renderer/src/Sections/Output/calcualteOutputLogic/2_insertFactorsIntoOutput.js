@@ -1,6 +1,7 @@
 import i18n from 'i18next';
 import calcState from '../../GlobalState/calcState';
 import outputState from '../../GlobalState/outputState';
+import { cloneDeep } from 'lodash';
 
 const insertFactorsIntoOutput = function (analysisOutput, outputData, sheetNamesXlsx, colSizes) {
   const appendText1 = i18n.t('Sorts Weight');
@@ -12,20 +13,17 @@ const insertFactorsIntoOutput = function (analysisOutput, outputData, sheetNames
   const appendText9 = i18n.t('Sorts Correlations');
   const appendText10 = i18n.t('Factor Scores for');
 
-  const sheetNamesHolder1 = calcState.getState().sheetNamesHolder1;
-  const sheetNamesHolder2 = calcState.getState().sheetNamesHolder2;
-  const sheetNamesHolder3 = calcState.getState().sheetNamesHolder3;
+  const sheetNamesHolder1 = cloneDeep(calcState.getState().sheetNamesHolder1);
+  const sheetNamesHolder2 = cloneDeep(calcState.getState().sheetNamesHolder2);
+  const sheetNamesHolder3 = cloneDeep(calcState.getState().sheetNamesHolder3);
+  const factorWeightFactorArray = cloneDeep(calcState.getState().factorWeightFactorArrayHolder);
+  const miniCorrelationArray = cloneDeep(calcState.getState().miniCorrelationArrayHolder);
+  const compositeFactorMasterArray = cloneDeep(calcState.getState().compositeFactorMasterArray);
+  const userSelectedFactors = cloneDeep(outputState.getState().userSelectedFactors);
+  const sigSortsArray = cloneDeep(calcState.getState().sigSortsArray);
+  const maxStatementLength = cloneDeep(calcState.getState().maxStatementLength);
 
-  const factorWeightFactorArray = calcState.getState().factorWeightFactorArrayHolder;
-  const miniCorrelationArray = calcState.getState().miniCorrelationArrayHolder;
-  const compositeFactorMasterArray = calcState.getState('compositeFactorMasterArray');
-
-  const userSelectedFactors = outputState.getState().userSelectedFactors;
-
-  const sigSortsArray = calcState.getState().sigSortsArray;
-  const maxStatementLength = calcState.getState().maxStatementLength;
   const spacer = ['', ''];
-
   for (let ii = 0, iiLen = userSelectedFactors.length; ii < iiLen; ii++) {
     const sheetHeaderArrayPartial = [appendText3, appendText4, appendText5, appendText8];
 

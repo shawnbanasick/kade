@@ -7,6 +7,7 @@ import loadingState from '../../GlobalState/loadingState';
 import factorState from '../../GlobalState/factorState';
 import coreState from '../../GlobalState/coreState';
 import rotationState from '../../GlobalState/rotationState';
+import cloneDeep from 'lodash/cloneDeep';
 
 // todo - re-organize factor groupings and sorts to optimize number of required loops
 const loadingsTableDataPrep = (numFactors) => {
@@ -15,11 +16,11 @@ const loadingsTableDataPrep = (numFactors) => {
   const factorTrans = i18n.t('Factor');
 
   // factorMatrix should be factors as rows - in Lipset => 9 cols, 7 -8 rows
-  const factorMatrix1 = factorState.getState().factorMatrix;
-  const respondentNames = coreState.getState().respondentNames;
+  const factorMatrix1 = cloneDeep(factorState.getState().factorMatrix);
+  const respondentNames = cloneDeep(coreState.getState().respondentNames);
 
   // get matrix autoflag booleans
-  const fSigCriterionResults = rotationState.getState().fSigCriterionResults;
+  const fSigCriterionResults = cloneDeep(rotationState.getState().fSigCriterionResults);
 
   // calculate the factor groupings so they can be assigned in col defs
   const highlighting = loadingState.getState().highlighting;

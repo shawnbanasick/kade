@@ -21,6 +21,9 @@ const outputState = create(
     highlightFactor7: false,
     highlightFactor8: false,
 
+    sigDropdownValue1: '2.575',
+    sigDropdownValue2: '1.96',
+
     outputActiveTabIndex: 0,
     outputButtonsArray: [],
     outputFactorSelectButtonsDisabled: false,
@@ -124,6 +127,8 @@ const outputState = create(
       '496 - 510',
     ],
 
+    updateSigDropdownValue1: (inputValue) => set({ sigDropdownValue1: inputValue }),
+    updateSigDropdownValue2: (inputValue) => set({ sigDropdownValue2: inputValue }),
     updateHighlightFactor1: (inputValue) => set({ highlightFactor1: inputValue }),
     updateHighlightFactor2: (inputValue) => set({ highlightFactor2: inputValue }),
     updateHighlightFactor3: (inputValue) => set({ highlightFactor3: inputValue }),

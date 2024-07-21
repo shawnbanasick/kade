@@ -20,12 +20,14 @@ const varimaxDispatch = function () {
   // archiveFactorScoreStateMatrixAndDatatable();
 
   // getState - retrieve and clone factor data
-  const factorsForRotation = factorState.getState().factorMatrix;
-  const numFactorsKeptForRot = rotationState.getState().numFactorsKeptForRot;
+  const factorsForRotation = cloneDeep(factorState.getState().factorMatrix);
+  const numFactorsKeptForRot = cloneDeep(rotationState.getState().numFactorsKeptForRot);
+  const respondentNames = cloneDeep(coreState.getState().respondentNames);
+  const projectHistoryArray = cloneDeep(projectHistoryState.getState().projectHistoryArray);
+  const numFactors = rotationState.getState().numFactorsKeptForRot;
+  let archiveCounter = rotationState.getState().archiveCounter;
 
   factorsForRotation.length = numFactorsKeptForRot;
-
-  const projectHistoryArray = projectHistoryState.getState().projectHistoryArray;
 
   // do varimax prep work
   const sumSquares = calcSumSquares(factorsForRotation); // ok, same
@@ -33,8 +35,6 @@ const varimaxDispatch = function () {
 
   // calculate rotations
   const rotatedResults = doVarimaxRotations(standardizedFactorMatrix, sumSquares);
-
-  const numFactors = rotationState.getState().numFactorsKeptForRot;
 
   // transposedRotatedResults in Lipset is now each factor = row, 9 cols, 7 rows
   const transposedRotatedResults = transposeMatrix(rotatedResults);
@@ -45,7 +45,6 @@ const varimaxDispatch = function () {
   const newRotatedResults = cloneDeep(rotatedResults);
 
   // Varimax Heywood Adjustments (when factor loading > 1.0 after varimax rot)
-  const respondentNames = coreState.getState().respondentNames;
   const needsVarimaxHeywoodAdjustment = false;
   const adjValArray = [];
   const adjValPqmArray = [];
@@ -109,7 +108,6 @@ const varimaxDispatch = function () {
     loadingsTableDataPrep(numFactors);
 
     // archive values for undo function (ProjectHistory component)
-    let archiveCounter = rotationState.getState().archiveCounter;
     archiveCounter += 1;
     const archiveName = `facMatrixArc${archiveCounter}`;
     rotationState.setState({ archiveCounter: archiveCounter });

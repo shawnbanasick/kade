@@ -10,17 +10,23 @@ import projectHistoryState from '../../../GlobalState/projectHistoryState';
 import factorState from '../../../GlobalState/factorState';
 import rotationState from '../../../GlobalState/rotationState';
 import coreState from '../../../GlobalState/coreState';
-
 import cloneDeep from 'lodash/cloneDeep';
 
 const doHeywoodAdjustment = () => {
   // getState - pull in settings and data
-  let fMatrix = factorState.getState().heywoodAdjustedMatrix;
+  let fMatrix = cloneDeep(factorState.getState().heywoodAdjustedMatrix);
   // undo heywood check transpose
   fMatrix = transposeMatrix(fMatrix);
-  const respondentNames = coreState.getState().respondentNames;
-  const projectHistoryArray = projectHistoryState.getState().projectHistoryArray;
+  const respondentNames = cloneDeep(coreState.getState().respondentNames);
+  const projectHistoryArray = cloneDeep(projectHistoryState.getState().projectHistoryArray);
+
   let numCentroidFactors = factorState.getState().numCentroidFactors;
+  const showHorstMessage = factorState.getState().didNotConverge;
+  const horstAutoStopYesActive = factorState.getState('horstAutoStopYesActive');
+  const horstIterations = factorState.getState().horstIterations;
+  const brown = factorState((state) => state.activeTraditionalCentroidFactorButton);
+  const horst = factorState((state) => state.activeHorst55CentroidButton);
+
   const updateNumFacsForTableWidth = factorState((state) => state.updateNumFacsForTableWidth);
   const updateFactorMatrix = factorState((state) => state.updateFactorMatrix);
   const updateEigenvalues = factorState((state) => state.updateEigenvalues);
@@ -34,11 +40,6 @@ const doHeywoodAdjustment = () => {
     (state) => state.updateShowKeepFacForRotButton
   );
   const updateIsCentroidLoading = factorState((state) => state.updateIsCentroidLoading);
-  const showHorstMessage = factorState.getState().didNotConverge;
-  const horstAutoStopYesActive = factorState.getState('horstAutoStopYesActive');
-  const horstIterations = factorState.getState().horstIterations;
-  const brown = factorState((state) => state.activeTraditionalCentroidFactorButton);
-  const horst = factorState((state) => state.activeHorst55CentroidButton);
 
   const numQsorts = fMatrix[0].length;
 
@@ -85,9 +86,9 @@ const doHeywoodAdjustment = () => {
     translationsText
   );
 
-  factorState.gridColDefsFactorTable = factorTableData.gridColDefsFactorTable;
-  factorState.gridRowDataFactorTable = factorTableData.gridRowDataFactorTable;
-  factorState.unrotatedFactorMatrixOutput = factorTableData.unrotatedFactorArray;
+  factorState.setState({ gridColDefsFactorTable: factorTableData.gridColDefsFactorTable });
+  factorState.setState({ gridRowDataFactorTable: factorTableData.gridRowDataFactorTable });
+  factorState.setState({ unrotatedFactorMatrixOutput: factorTableData.unrotatedFactorArray });
 
   // ************************************
   // PREP EIGENS TABLE
@@ -108,8 +109,8 @@ const doHeywoodAdjustment = () => {
     [explainVarandEigens[0], ...percentEigenVal],
     eigensTranslations
   );
-  factorState.gridColDefsFacTableEigen = factorTableEigenData.gridColDefsFacTableEigen;
-  factorState.gridRowDataFacTableEigen = factorTableEigenData.gridRowDataFacTableEigen;
+  factorState.setState({ gridColDefsFacTableEigen: factorTableEigenData.gridColDefsFacTableEigen });
+  factorState.setState({ gridRowDataFacTableEigen: factorTableEigenData.gridRowDataFacTableEigen });
 
   // after eigen table data prep to prevent double labelling
   let eigenText = i18n.t('Eigenvalues');

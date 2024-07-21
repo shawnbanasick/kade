@@ -2,12 +2,15 @@ import evenRound from '../../../Utils/evenRound';
 import average from '../../../Utils/average';
 import standardDeviation from '../../../Utils/standardDeviation';
 import calcState from '../../GlobalState/calcState';
+import cloneDeep from 'lodash/cloneDeep';
 
 const combineWeightedSorts = function (weightedSorts) {
+  console.log('weightedSorts', JSON.stringify(weightedSorts));
   // returns ["factor 1", "factor 2", etc... ]
-  const sigFactorNumbersArray1 = calcState.getState().sigFactorNumbersArray;
-  console.log(JSON.stringify(sigFactorNumbersArray1));
+  const sigFactorNumbersArray1 = cloneDeep(calcState.getState().sigFactorNumbersArray);
+  // console.log('sigfacnumarray', JSON.stringify(sigFactorNumbersArray1));
   const sigFactorNumbersArray = sigFactorNumbersArray1.sort();
+  // console.log('sigFactorNumbersArray', JSON.stringify(sigFactorNumbersArray));
   let tempArray2, summedWeightedSorts;
 
   summedWeightedSorts = [];
@@ -21,9 +24,12 @@ const combineWeightedSorts = function (weightedSorts) {
     tempArray2 = [];
     const tempObj2 = {};
 
+    // console.log('weightedSorts', JSON.stringify(weightedSorts));
     // loop through all data for all factors and pull data for only for selected factors
     for (let j = 0, jLen = weightedSorts.length; j < jLen; j++) {
       const temp2 = weightedSorts[j][0]; // gives number 1 or 2 or 3 etc...
+      // console.log('temp2:', temp2);
+      // console.log('factor:', factor);
       if (temp2 === factor) {
         tempArray1.push(weightedSorts[j][2]); // pushes weight for each statement
         tempArray2.push(weightedSorts[j][1]); // pushes flagged sort respondent name
@@ -60,6 +66,7 @@ const combineWeightedSorts = function (weightedSorts) {
     tempArray4.push(tempArray3a);
     summedWeightedSorts.push(tempArray4);
   }
+  // console.log('sigSortArray', JSON.stringify(sigSortsArray));
   calcState.setState({ sigSortsArray: sigSortsArray });
   return summedWeightedSorts;
 };

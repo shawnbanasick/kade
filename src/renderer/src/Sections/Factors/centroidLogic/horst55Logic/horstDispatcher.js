@@ -9,16 +9,16 @@ import doHeywoodCheck from './doHeywoodCheck';
 import calcEigenValues from './calcEigenValues';
 import i18n from 'i18next';
 import cloneDeep from 'lodash/cloneDeep';
-import projectHistoryState from '../../../GlobalState/projectHistoryState';
 import factorState from '../../../GlobalState/factorState';
 import correlationState from '../../../GlobalState/correlationState';
 import coreState from '../../../GlobalState/coreState';
+import projectHistoryState from '../../../GlobalState/projectHistoryState';
 
 const horstDispatcher = (shouldUseHorstLimit) => {
   // STATE
-  const respondentNames = coreState.getState().respondentNames;
-  const dataArray = correlationState.getState().correlation5Calcs;
-  const projectHistoryArray = projectHistoryState.getState().projectHistoryArray;
+  const respondentNames = cloneDeep(coreState.getState().respondentNames);
+  const dataArray = cloneDeep(correlationState.getState().correlation5Calcs);
+  const projectHistoryArray = cloneDeep(projectHistoryState.getState().projectHistoryArray);
   let numCentroidFactors = factorState.getState().numCentroidFactors;
 
   // ************************************
@@ -27,8 +27,8 @@ const horstDispatcher = (shouldUseHorstLimit) => {
   const STPCRT = shouldUseHorstLimit;
 
   const numState = coreState.getState().numStatements;
-  const NL = factorState.getState().horstIterations;
-  const P = factorState.getState().horstThresholdLevel;
+  const NL = cloneDeep(factorState.getState().horstIterations);
+  const P = cloneDeep(factorState.getState().horstThresholdLevel);
 
   const horstCalculations2 = horstMain(numCentroidFactors, STPCRT, dataArray, numState, NL, P);
 
@@ -112,9 +112,9 @@ const horstDispatcher = (shouldUseHorstLimit) => {
     [explainVarandEigens[0], ...percentEigenVal],
     eigensTranslations
   );
-  factorState.didNotConverge = horstCalculations2.didNotConverge;
-  factorState.gridColDefsFacTableEigen = factorTableEigenData.gridColDefsFacTableEigen;
-  factorState.gridRowDataFacTableEigen = factorTableEigenData.gridRowDataFacTableEigen;
+  factorState.setState({ didNotConverge: horstCalculations2.didNotConverge });
+  factorState.setState({ gridColDefsFacTableEigen: factorTableEigenData.gridColDefsFacTableEigen });
+  factorState.setState({ gridRowDataFacTableEigen: factorTableEigenData.gridRowDataFacTableEigen });
 
   // after eigen table data prep to prevent double labelling
   let eigenText = i18n.t('Eigenvalues');

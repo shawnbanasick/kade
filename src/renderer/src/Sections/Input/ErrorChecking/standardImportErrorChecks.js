@@ -15,12 +15,13 @@ import checkForOutOfRangeValues2 from './checkForOutOfRangeValues2';
 import checkForIncorrectLengths from './checkForIncorrectLengths';
 import checkForIncorrectQsortPattern from './checkForIncorrectQsortPattern';
 import checkForNan from './checkForNan';
+import { cloneDeep } from 'lodash/cloneDeep';
 
 const standardImportErrorChecks = () => {
-  const mainDataObject = coreState.getState().mainDataObject;
-  const numStatements = coreState.getState().numStatements;
-  const qSortPattern = coreState.getState().qSortPattern;
-  const respondentNames = coreState.getState().respondentNames;
+  const mainDataObject = cloneDeep(coreState.getState().mainDataObject);
+  const numStatements = cloneDeep(coreState.getState().numStatements);
+  const qSortPattern = cloneDeep(coreState.getState().qSortPattern);
+  const respondentNames = cloneDeep(coreState.getState().respondentNames);
   // const multiplierArray = getCoreState("multiplierArray");
   // const multiplierArray = getCoreState("multiplierArray");
   // const unforcedRadioButtonState = getInputState("unforcedRadioButtonState");

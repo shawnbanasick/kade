@@ -1,6 +1,6 @@
-const cleanRespondentNames = names => {
+const cleanRespondentNames = (names) => {
   let newNames = names.map((item, index) => {
-    let entry = item.replace(/\./g, "\\.");
+    let entry = item.replace(/\./g, '\\.');
     return entry;
   });
   return newNames;

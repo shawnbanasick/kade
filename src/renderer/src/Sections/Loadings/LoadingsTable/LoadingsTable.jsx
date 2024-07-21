@@ -175,14 +175,14 @@ const LoadingsTable = (props) => {
   };
 
   //*** OUTPUT FUNCTION  ***//
-  const generateOutput = async () => {
+  const generateOutput = () => {
     // grab current table data
     const currentLoadingsTable = grabTableLocalState();
-    console.log(currentLoadingsTable);
+    console.log(JSON.stringify(currentLoadingsTable));
     // send current to local state
     // localStore.temp_gridRowDataLoadingsTable = currentLoadingsTable;
-    await updateCurrentLoadingsTable(currentLoadingsTable);
-    await generateOutputFromLoadingTable(currentLoadingsTable);
+    updateCurrentLoadingsTable(currentLoadingsTable);
+    generateOutputFromLoadingTable(currentLoadingsTable);
     notify();
   };
 
@@ -260,8 +260,6 @@ const LoadingsTable = (props) => {
     setLocalStore({ temp_gridRowDataLoadingsTable: gridRowDataLoadingsTable });
     updateIsLoadingsTableInitialRender(false);
   }
-
-  console.log(JSON.stringify(gridRowDataLoadingsTable));
 
   // todo - create output buttons array here to stay in sync, but do performance check
   const outputButtonsArray2 = gridColDefsLoadingsTable.map((item) => item.field);

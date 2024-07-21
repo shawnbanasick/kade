@@ -4,11 +4,17 @@ import average from '../../../Utils/average';
 import evenRound from '../../../Utils/evenRound';
 import standardDeviation from '../../../Utils/standardDeviation';
 import coreState from '../../GlobalState/coreState';
+import cloneDeep from 'lodash/cloneDeep';
 
 function weightRawSorts(significantFactors) {
   // getState - produces MD array with factor number, flagged respondent, weighted values for each statement (for each flagged respondent)
-  const respondentNames = coreState.getState().respondentNames;
-  const mainDataObject = coreState.getState().mainDataObject;
+  const respondentNames = cloneDeep(coreState.getState().respondentNames);
+  const mainDataObject = cloneDeep(coreState.getState().mainDataObject);
+
+  console.log(JSON.stringify(significantFactors));
+  console.log(JSON.stringify(respondentNames));
+  console.log(JSON.stringify(mainDataObject));
+
   // pos shifted
   const rawSorts = [];
   for (let k = 0, kLen = mainDataObject.length; k < kLen; k += 1) {

@@ -1,66 +1,66 @@
-import { useState } from 'react';
 import styled from 'styled-components';
-import { Dropdown } from 'semantic-ui-react';
 import outputState from '../../GlobalState/outputState';
 import calcState from '../../GlobalState/calcState';
 import { useTranslation } from 'react-i18next';
+import resetSection6 from '../../../Utils/resetSection6';
 
 // stateOptions = [ { key: 'AL', value: 'AL', text: 'Alabama' }, ...  ]
-const sigOptions = [
-  {
-    key: '99.95',
-    value: 3.481,
-    text: 'p < 0.0005', // text: "99.995%"
-  },
-  {
-    key: '99.9',
-    value: 3.291,
-    text: 'p < 0.001', // text: "99.9%"
-  },
-  {
-    key: '99.5',
-    value: 2.807,
-    text: 'p < 0.005', // text: "99.5%"
-  },
-  {
-    key: '99',
-    value: 2.575,
-    text: 'p < 0.01', // text: "99%"
-  },
-  {
-    key: '95',
-    value: 1.96,
-    text: 'p < 0.05', // text: "95%"
-  },
-  {
-    key: '90',
-    value: 1.645,
-    text: 'p < 0.1', // text: "90%"
-  },
-  {
-    key: '85',
-    value: 1.44,
-    text: 'p < 0.15', // text: "90%"
-  },
-  {
-    key: '80',
-    value: 1.28,
-    text: 'p < 0.2', // text: "90%"
-  },
-];
 
 const SigLevelDropdown2 = () => {
   const { t } = useTranslation();
+  const sigDropdownValue2 = outputState((state) => state.sigDropdownValue2);
+  const updateSigDropdownValue2 = outputState((state) => state.updateSigDropdownValue2);
+  const updateHighlightFactor1 = outputState((state) => state.updateHighlightFactor1);
+  const updateHighlightFactor2 = outputState((state) => state.updateHighlightFactor2);
+  const updateHighlightFactor3 = outputState((state) => state.updateHighlightFactor3);
+  const updateHighlightFactor4 = outputState((state) => state.updateHighlightFactor4);
+  const updateHighlightFactor5 = outputState((state) => state.updateHighlightFactor5);
+  const updateHighlightFactor6 = outputState((state) => state.updateHighlightFactor6);
+  const updateHighlightFactor7 = outputState((state) => state.updateHighlightFactor7);
+  const updateHighlightFactor8 = outputState((state) => state.updateHighlightFactor8);
+  const updateOutputForDataViz2 = outputState((state) => state.updateOutputForDataViz2);
+  const updateDistStateLowerValueText = outputState((state) => state.updateDistStateLowerValueText);
+  const updateUserSelectedDistStateSigLevel2 = calcState(
+    (state) => state.updateUserSelectedDistStateSigLevel2
+  );
+  const showOutputFactorSelection = outputState((state) => state.showOutputFactorSelection);
+  const sliceValueDistStateSigLevelDrop1 = outputState(
+    (state) => state.sliceValueDistStateSigLevelDrop1
+  );
 
-  const [localStore, setLocalStore] = useState({
-    value: 1.96,
-  });
+  const sigOptions = [
+    <option key="3.891" value="3.891">
+      P &lt; 0.0001
+    </option>,
+    <option key="3.481" value="3.481">
+      P &lt; 0.0005
+    </option>,
+    <option key="3.291" value="3.291">
+      P &lt; 0.001
+    </option>,
+    <option key="2.807" value="2.807">
+      P &lt; 0.005
+    </option>,
+    <option key="2.575" value="2.575">
+      P &lt; 0.01
+    </option>,
+    <option key="1.96" value="1.96">
+      P &lt; 0.05
+    </option>,
+    <option key="1.645" value="1.645">
+      P &lt; 0.1
+    </option>,
+    <option key="1.44" value="1.44">
+      P &lt; 0.15
+    </option>,
+    <option key="1.28" value="1.28">
+      P &lt; 0.2
+    </option>,
+  ];
 
-  const handleChange = (e, { value }) => {
-    const btnId = outputState((state) => state.outputButtonsArray);
-
-    setLocalStore({ value: value });
-
+  const handleChange = (e) => {
+    updateSigDropdownValue2(e.target.value);
+    const value = +e.target.value;
     const lookupArray = [3.481, 3.291, 2.807, 2.575, 1.96, 1.645, 1.44, 1.28];
     const pValuesTextArray = [
       'P < 0.0005',
@@ -75,61 +75,21 @@ const SigLevelDropdown2 = () => {
     const sliceValue = lookupArray.indexOf(value);
     const distStateLowerValueText = pValuesTextArray[sliceValue];
 
-    // clear the select factor buttons on change
-    for (let i = 0; i < btnId.length; i += 1) {
-      outputState[`highlightfactor${btnId[i]}`] = false;
-    }
-    const updateUserSelectedFactors = outputState((state) => state.updateUserSelectedFactors);
-    const updateShowFactorCorrelationsTable = outputState(
-      (state) => state.updateShowFactorCorrelationsTable
-    );
-    const updateShowFactorCharacteristicsTable = outputState(
-      (state) => state.updateShowFactorCharacteristicsTable
-    );
-    const updateShowStandardErrorsDifferences = outputState(
-      (state) => state.updateShowStandardErrorsDifferences
-    );
-    const updateShowDownloadOutputButtons = outputState(
-      (state) => state.updateShowDownloadOutputButtons
-    );
-    const updateDisplayFactorVisualizations = outputState(
-      (state) => state.updateDisplayFactorVisualizations
-    );
-    const updateShouldDisplayFactorVizOptions = outputState(
-      (state) => state.updateShouldDisplayFactorVizOptions
-    );
-    const updateOutputFactorSelectButtonsDisabled = outputState(
-      (state) => state.updateOutputFactorSelectButtonsDisabled
-    );
-    const updateShowDocxOptions = outputState((state) => state.updateShowDocxOptions);
-    const updateOutputForDataViz2 = outputState((state) => state.updateOutputForDataViz2);
-    const updateDistStateLowerValueText = outputState(
-      (state) => state.updateDistStateLowerValueText
-    );
-    const updateUserSelectedDistStateSigLevel2 = calcState(
-      (state) => state.updateDistStateLowerValueText
-    );
+    updateHighlightFactor1(false);
+    updateHighlightFactor2(false);
+    updateHighlightFactor3(false);
+    updateHighlightFactor4(false);
+    updateHighlightFactor5(false);
+    updateHighlightFactor6(false);
+    updateHighlightFactor7(false);
+    updateHighlightFactor8(false);
 
-    updateUserSelectedFactors([]);
-    updateShowFactorCorrelationsTable(false);
-    updateShowFactorCharacteristicsTable(false);
-    updateShowStandardErrorsDifferences(false);
-    updateShowDownloadOutputButtons(false);
-    updateDisplayFactorVisualizations(false);
-    updateShouldDisplayFactorVizOptions(false);
-    updateOutputFactorSelectButtonsDisabled(false);
-    updateShowDocxOptions(false);
+    resetSection6('output');
     // reset cache of factor viz data
     updateOutputForDataViz2([]);
     updateDistStateLowerValueText(distStateLowerValueText);
     updateUserSelectedDistStateSigLevel2(value);
   };
-
-  const value = localStore.value;
-  const showOutputFactorSelection = outputState((state) => state.showOutputFactorSelection);
-  const sliceValueDistStateSigLevelDrop1 = outputState(
-    (state) => state.sliceValueDistStateSigLevelDrop1
-  );
 
   const sigOptionsSliced = sigOptions.slice(sliceValueDistStateSigLevelDrop1);
 
@@ -137,16 +97,9 @@ const SigLevelDropdown2 = () => {
     return (
       <DropdownRow>
         <span>{`${t('Set distinguishing statements threshold 2')}:`}</span>
-        <Dropdown
-          style={{ border: '1px solid black', height: 36 }}
-          onChange={handleChange}
-          defaultValue={value}
-          openOnFocus
-          button
-          simple
-          item
-          options={sigOptionsSliced}
-        />
+        <select onChange={handleChange} defaultValue={sigDropdownValue2}>
+          {sigOptionsSliced}
+        </select>
       </DropdownRow>
     );
   }
@@ -163,6 +116,16 @@ const DropdownRow = styled.div`
   span {
     font-size: 25px;
     margin-right: 5px;
+  }
+
+  select {
+    font-size: 24px;
+    height: 36px;
+    width: 160px;
+    border: 1px solid #d6dbe0;
+    padding-left: 15px;
+    background-color: #d6dbe0;
+    border-radius: 4px;
   }
 `;
 

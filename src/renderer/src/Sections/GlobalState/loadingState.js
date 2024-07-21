@@ -24,6 +24,8 @@ const loadingState = create(
     isLoadingAutoflag: false,
     isLoadingsTableInitialRender: true,
 
+    loadingSigDropdownValue: '1.96',
+
     notifyDataSentToOutputSuccess: false,
 
     respondentNamesMaxLength: 20,
@@ -82,6 +84,7 @@ const loadingState = create(
     temp_gridColDefsLoadingsTable: [],
     temp_gridRowDataLoadingsTable: [],
 
+    updateLoadingSigDropdownValue: (inputValue) => set({ loadingSigDropdownValue: inputValue }),
     updateTempGridColDefsLoadingsTable: (inputValue) =>
       set({ temp_gridColDefsLoadingsTable: inputValue }),
     updateTempGridRowDataLoadingsTable: (inputValue) =>
