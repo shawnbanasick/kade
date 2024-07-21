@@ -34,7 +34,8 @@ import generatePtConsensus from './generatePtConsensus';
 import generatePtRelRanks from './generatePtRelRanks';
 import outputState from '../../GlobalState/outputState';
 import calcState from '../../GlobalState/calcState';
-import saveDocumentToZip from './saveDocumentToZip';
+import cloneDeep from 'lodash/cloneDeep';
+// import saveDocumentToZip from './saveDocumentToZip';
 
 // tableCompat = MS Word, LibreOffice Writer
 // padCompat = Google Docs, Apple Pages
@@ -43,16 +44,40 @@ import saveDocumentToZip from './saveDocumentToZip';
 
 const generateOutputDoc = (translatedTextObj) => {
   let saveAsZip = outputState.getState().willIncludeDataFiles;
+  const willUseHyperlinks = outputState.getState().willUseHyperlinks;
+  const willIncludeOverview = outputState.getState().willIncludeOverview;
+  const willIncludeStatements = outputState.getState().willIncludeStatements;
+  const willIncludeQsorts = outputState.getState().willIncludeQsorts;
+  const useTables = outputState.getState().useTables;
+  const useZebra = outputState.getState().useZebra;
+  const willIncludeCorrMatrix = outputState.getState().willIncludeCorrMatrix;
+  const willIncludeThreshold = outputState.getState().willIncludeThreshold;
+  const correlationThreshold = outputState.getState().correlationThreshold;
+  const useHyperlinks = outputState.getState().useHyperlinks;
+  const willIncludeUnrotFacMatrix = outputState.getState().willIncludeUnrotFacMatrix;
+  const willIncludeCumulComm = outputState.getState().willIncludeCumulComm;
+  const willIncludeFacLoadings = outputState.getState().willIncludeFacLoadings;
+  const willIncludeFacLoadingsTable = outputState.getState().willIncludeFacLoadingsTable;
+  const willIncludeFreeDist = outputState.getState().willIncludeFreeDist;
+  const willIncludeFacScoreRanks = outputState.getState().willIncludeFacScoreRanks;
+  const willIncludeFacScoreCorr = outputState.getState().willIncludeFacScoreCorr;
+  const willIncludeFactors = outputState.getState().willIncludeFactors;
+  const willIncludeFacDiffs = outputState.getState().willIncludeFacDiffs;
+  const willIncludeConDis = outputState.getState().willIncludeConDis;
+  const willIncludeFacChar = outputState.getState().willIncludeFacChar;
+  const willIncludeDist = outputState.getState().willIncludeDist;
+  const willIncludeConsensus = outputState.getState().willIncludeConsensus;
+  const willIncludeRelRanks = outputState.getState().willIncludeRelRanks;
 
   //let data = dataSource();
-  const data = calcState.getState().outputData;
+  const data = cloneDeep(calcState.getState().outputData);
 
   let projectName = data[0][2][1];
   let version = data[0][19][1];
   let dateTime = getDateTime();
 
   let updateLinksBool = false;
-  if (outputState.willUseHyperlinks === true) {
+  if (willUseHyperlinks === true) {
     updateLinksBool = true;
   }
 
@@ -60,7 +85,7 @@ const generateOutputDoc = (translatedTextObj) => {
 
   let childrenArray = [];
 
-  if (outputState.willUseHyperlinks === true) {
+  if (willUseHyperlinks === true) {
     childrenArray.push(
       new Paragraph({
         heading: HeadingLevel.TITLE,
@@ -94,102 +119,87 @@ const generateOutputDoc = (translatedTextObj) => {
   data.forEach((item, index) => {
     let value = item[0][0];
 
-    if (value === 'overview' && outputState.willIncludeOverview === true) {
-      let text1 = generateFrontMatter(
-        item,
-        dateTime,
-        outputState.willUseHyperlinks,
-        translatedTextObj
-      );
+    if (value === 'overview' && willIncludeOverview === true) {
+      let text1 = generateFrontMatter(item, dateTime, willUseHyperlinks, translatedTextObj);
       childrenArray.push(...text1);
     }
 
-    if (value === 'statements' && outputState.willIncludeStatements === true) {
-      let text2 = generateStatements(item, outputState.willUseHyperlinks);
+    if (value === 'statements' && willIncludeStatements === true) {
+      let text2 = generateStatements(item, willUseHyperlinks);
       childrenArray.push(...text2);
     }
 
-    if (value === 'sorts' && outputState.willIncludeQsorts === true) {
+    if (value === 'sorts' && willIncludeQsorts === true) {
       let text3;
-      if (outputState.useTables === true) {
-        text3 = generateSorts(item, outputState.willUseHyperlinks);
+      if (useTables === true) {
+        text3 = generateSorts(item, willUseHyperlinks);
       } else {
-        text3 = generatePtSorts(item, outputState.willUseHyperlinks, outputState.useZebra);
+        text3 = generatePtSorts(item, willUseHyperlinks, useZebra);
       }
       text3.forEach((item) => {
         childrenArray.push(...item);
       });
     }
 
-    if (value === 'correlations' && outputState.willIncludeCorrMatrix === true) {
+    if (value === 'correlations' && willIncludeCorrMatrix === true) {
       let text3b = generateCorrelations(
         item,
-        outputState.useHyperlinks,
-        outputState.useZebra,
-        outputState.willIncludeThreshold,
-        outputState.correlationThreshold
+        useHyperlinks,
+        useZebra,
+        willIncludeThreshold,
+        correlationThreshold
       );
       text3b.forEach((item) => {
         childrenArray.push(...item);
       });
     }
-    if (value === 'unrotated' && outputState.willIncludeUnrotFacMatrix === true) {
-      let text4 = generateUnrotFacMatrix(item, outputState.willUseHyperlinks, outputState.useZebra);
+    if (value === 'unrotated' && willIncludeUnrotFacMatrix === true) {
+      let text4 = generateUnrotFacMatrix(item, willUseHyperlinks, useZebra);
       childrenArray.push(...text4);
     }
 
-    if (value === 'cumulative' && outputState.willIncludeCumulComm === true) {
-      let text5 = generateComMatrix(item, outputState.willUseHyperlinks, outputState.useZebra);
+    if (value === 'cumulative' && willIncludeCumulComm === true) {
+      let text5 = generateComMatrix(item, willUseHyperlinks, useZebra);
       childrenArray.push(...text5);
     }
 
-    if (value === 'matrix' && outputState.willIncludeFacLoadings === true) {
-      let text6 = generateFacMatrix(
-        item,
-        outputState.willUseHyperlinks,
-        outputState.useZebra,
-        translatedTextObj
-      );
+    if (value === 'matrix' && willIncludeFacLoadings === true) {
+      let text6 = generateFacMatrix(item, willUseHyperlinks, useZebra, translatedTextObj);
       childrenArray.push(...text6);
     }
-    if (value === 'loadingsTable' && outputState.willIncludeFacLoadingsTable === true) {
-      let text7 = generateLoadingsTable(
-        item,
-        outputState.willUseHyperlinks,
-        outputState.useZebra,
-        translatedTextObj
-      );
+    if (value === 'loadingsTable' && willIncludeFacLoadingsTable === true) {
+      let text7 = generateLoadingsTable(item, willUseHyperlinks, useZebra, translatedTextObj);
       childrenArray.push(...text7);
     }
 
-    if (value === 'free' && outputState.willIncludeFreeDist === true) {
-      let text8 = generateFreeDist(item, outputState.willUseHyperlinks, outputState.useZebra);
+    if (value === 'free' && willIncludeFreeDist === true) {
+      let text8 = generateFreeDist(item, willUseHyperlinks, useZebra);
       childrenArray.push(...text8);
     }
 
-    if (value === 'ranks' && outputState.willIncludeFacScoreRanks === true) {
+    if (value === 'ranks' && willIncludeFacScoreRanks === true) {
       let text9;
-      if (outputState.useTables === true) {
-        text9 = generateFacScrRnks(item, outputState.willUseHyperlinks);
+      if (useTables === true) {
+        text9 = generateFacScrRnks(item, willUseHyperlinks);
       } else {
-        text9 = generatePtFacScrRnks(item, outputState.willUseHyperlinks, outputState.useZebra);
+        text9 = generatePtFacScrRnks(item, willUseHyperlinks, useZebra);
       }
       text9.forEach((item) => childrenArray.push(...item));
     }
 
-    if (value === 'scoreCorr' && outputState.willIncludeFacScoreCorr === true) {
-      let text10 = generateFacCorr(item, outputState.willUseHyperlinks, outputState.useZebra);
+    if (value === 'scoreCorr' && willIncludeFacScoreCorr === true) {
+      let text10 = generateFacCorr(item, willUseHyperlinks, useZebra);
       childrenArray.push(...text10);
     }
 
-    if (value === 'weights' && outputState.willIncludeFactors === true) {
+    if (value === 'weights' && willIncludeFactors === true) {
       let text11;
-      if (outputState.useTables === true) {
+      if (useTables === true) {
         text11 = generateFactorScores(
           item,
           data[index + 1],
           data[index + 2],
-          outputState.willUseHyperlinks,
+          willUseHyperlinks,
           translatedTextObj
         );
       } else {
@@ -197,76 +207,71 @@ const generateOutputDoc = (translatedTextObj) => {
           item,
           data[index + 1],
           data[index + 2],
-          outputState.willUseHyperlinks,
-          outputState.useZebra,
+          willUseHyperlinks,
+          useZebra,
           translatedTextObj
         );
       }
       childrenArray.push(...text11);
     }
 
-    if (value === 'descend' && outputState.willIncludeFacDiffs === true) {
+    if (value === 'descend' && willIncludeFacDiffs === true) {
       let text12;
-      if (outputState.useTables === true) {
-        text12 = generateDescendingDiff(item, outputState.willUseHyperlinks);
+      if (useTables === true) {
+        text12 = generateDescendingDiff(item, willUseHyperlinks);
       } else {
-        text12 = generatePtDescendDiff(item, outputState.willUseHyperlinks, outputState.useZebra);
+        text12 = generatePtDescendDiff(item, willUseHyperlinks, useZebra);
       }
       childrenArray.push(...text12);
     }
 
-    if (value === 'con-dis' && outputState.willIncludeConDis === true) {
+    if (value === 'con-dis' && willIncludeConDis === true) {
       let text13;
-      if (outputState.useTables === true) {
-        text13 = generateConDis(item, outputState.willUseHyperlinks);
+      if (useTables === true) {
+        text13 = generateConDis(item, willUseHyperlinks);
       } else {
-        text13 = generatePtConDis(item, outputState.willUseHyperlinks, outputState.useZebra);
+        text13 = generatePtConDis(item, willUseHyperlinks, useZebra);
       }
       childrenArray.push(...text13);
     }
 
-    if (value === 'facChar' && outputState.willIncludeFacChar === true) {
+    if (value === 'facChar' && willIncludeFacChar === true) {
       let text14 = generateFacChar(
         item,
         data[index + 1],
-        outputState.willUseHyperlinks,
-        outputState.useZebra,
+        willUseHyperlinks,
+        useZebra,
         translatedTextObj
       );
       childrenArray.push(...text14);
     }
 
-    if (value === 'distinguishing' && outputState.willIncludeDist === true) {
+    if (value === 'distinguishing' && willIncludeDist === true) {
       let text15;
-      if (outputState.useTables === true) {
-        text15 = generateDisting(item, outputState.willUseHyperlinks, translatedTextObj);
+      if (useTables === true) {
+        text15 = generateDisting(item, willUseHyperlinks, translatedTextObj);
       } else {
-        text15 = generatePtDisting(
-          item,
-          outputState.willUseHyperlinks,
-          outputState.useZebra,
-          translatedTextObj
-        );
+        text15 = generatePtDisting(item, willUseHyperlinks, useZebra, translatedTextObj);
       }
       childrenArray.push(...text15);
     }
 
-    if (value === 'consensus' && outputState.willIncludeConsensus === true) {
+    if (value === 'consensus' && willIncludeConsensus === true) {
       let text16;
-      if (outputState.useTables === true) {
-        text16 = generateConsensus(item, outputState.willUseHyperlinks);
+      if (useTables === true) {
+        text16 = generateConsensus(item, willUseHyperlinks);
       } else {
-        text16 = generatePtConsensus(item, outputState.willUseHyperlinks, outputState.useZebra);
+        text16 = generatePtConsensus(item, willUseHyperlinks, useZebra);
       }
       childrenArray.push(...text16);
     }
 
-    if (value === 'relRanks' && outputState.willIncludeRelRanks === true) {
+    if (value === 'relRanks' && willIncludeRelRanks === true) {
       let text17;
-      if (outputState.useTables === true) {
-        text17 = generateRelRanks(item, outputState.willUseHyperlinks);
+      if (useTables === true) {
+        text17 = generateRelRanks(item, willUseHyperlinks);
       } else {
-        text17 = generatePtRelRanks(item, outputState.willUseHyperlinks, outputState.useZebra);
+        text17 = generatePtRelRanks(item, willUseHyperlinks, useZebra);
       }
       childrenArray.push(...text17);
     }
@@ -307,7 +312,7 @@ const generateOutputDoc = (translatedTextObj) => {
     ],
   });
   if (saveAsZip === true) {
-    saveDocumentToZip(doc, 'KADE_output_file.zip');
+    // saveDocumentToZip(doc, 'KADE_output_file.zip');
   } else {
     saveDocumentToFile(doc, 'KADE_output_file.docx');
   }

@@ -14,6 +14,7 @@ if (process.contextIsolated) {
       openJsonFile: () => ipcRenderer.send('dialog:openJsonFile'),
       saveSvgFile: () => ipcRenderer.send('showSaveDialogSync'),
       saveSVG: (svgContent, filePath) => ipcRenderer.invoke('save-svg', svgContent, filePath),
+      saveDocx: (doc, filePath) => ipcRenderer.invoke('save-docx', doc, filePath),
       showSaveDialog: (defaultPath) => ipcRenderer.invoke('show-save-dialog', defaultPath),
     });
 

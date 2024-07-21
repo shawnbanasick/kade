@@ -5,19 +5,19 @@ import currentTime1 from '../../../Utils/currentTime1';
 import coreState from '../../GlobalState/coreState';
 import calcState from '../../GlobalState/calcState';
 
-const { remote } = require('electron');
-const mainWindow = remote.getCurrentWindow();
-const { dialog } = require('electron').remote;
-let fs = require('fs');
+// const { remote } = require('electron');
+// const mainWindow = remote.getCurrentWindow();
+// const { dialog } = require('electron').remote;
+// let fs = require('fs');
 
 const saveDocumentToFile = async (doc, fileName) => {
   // Create new instance of Packer for the docx module
 
   const timeStamp = `${currentDate1()}_${currentTime1()}`;
-  const projectName = coreState((state) => state.projectName);
+  const projectName = coreState.getState().projectName;
 
   // to create option for no timestamp - useful for automated testing
-  const shouldIncludeTimestamp = calcState((state) => state.shouldIncludeTimestamp);
+  const shouldIncludeTimestamp = calcState.getState().shouldIncludeTimestamp;
 
   let nameFile;
   if (shouldIncludeTimestamp === true) {
@@ -26,40 +26,51 @@ const saveDocumentToFile = async (doc, fileName) => {
     nameFile = `KADE_results_${projectName}.docx`;
   }
 
-  const path = await dialog.showSaveDialog(mainWindow, {
-    title: 'Save file as',
-    defaultPath: `*/${nameFile}`,
-    filters: [
-      {
-        name: 'docx',
-        extensions: ['docx'],
-      },
-    ],
-  });
+  // const path = await dialog.showSaveDialog(mainWindow, {
+  //   title: 'Save file as',
+  //   defaultPath: `*/${nameFile}`,
+  //   filters: [
+  //     {
+  //       name: 'docx',
+  //       extensions: ['docx'],
+  //     },
+  //   ],
+  // });
 
   // error catch for dialog box cancel
-  const filePath = path.filePath;
-  if (filePath) {
+  // const filePath = path.filePath;
+  const defaultPath = `${nameFile}.docx`;
+  const filepath = await window.electronAPI.showSaveDialog(defaultPath);
+  if (!filepath) {
+    alert('Save operation was canceled.');
+    return;
+  } else {
     /*
     const mimeType =
       "application/vnd.openxmlformats-officedocument.wordprocessingml.document";
-    */
-    Packer.toBuffer(doc).then((doc) => {
-      // const docblob = blob.slice(0, blob.size, mimeType);
-      // Save the file using saveAs from the file-saver package
-      fs.writeFileSync(filePath, doc, (err) => {
-        if (err) throw err;
-        console.log('Unexpected file save error!');
-      });
-    });
+      */
 
-    dialog.showMessageBox(mainWindow, {
-      message: `File saved to:`,
-      detail: `${filePath}`,
-      buttons: ['OK'],
-    });
-  }
-  /*
+    try {
+      Packer.toBuffer(doc).then((doc) => {
+        window.electronAPI.saveSVG(doc, filepath);
+
+        // const docblob = blob.slice(0, blob.size, mimeType);
+        // Save the file using saveAs from the file-saver package
+        // fs.writeFileSync(filePath, doc, (err) => {
+        //   if (err) throw err;
+        //   console.log('Unexpected file save error!');
+        // });
+      });
+    } catch (error) {
+      console.error('Failed to save file:', error);
+    } finally {
+      // dialog.showMessageBox(mainWindow, {
+      //   message: `File saved to:`,
+      //   detail: `${filePath}`,
+      //   buttons: ['OK'],
+      // });
+    }
+    /*
   // Create a mime type that will associate the new file with Microsoft Word
   const mimeType =
     "application/vnd.openxmlformats-officedocument.wordprocessingml.document";
@@ -70,6 +81,7 @@ const saveDocumentToFile = async (doc, fileName) => {
     saveAs(docblob, fileName);
   });
   */
+  }
 };
 
 export default saveDocumentToFile;

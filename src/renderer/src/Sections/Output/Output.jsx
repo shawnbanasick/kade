@@ -21,7 +21,7 @@ import { useTranslation } from 'react-i18next';
 import DownloadDocxOptionsBox from './DownloadResultsButtons/DownloadDocxOptionsBox';
 import DocxFormatButtons from './DownloadResultsButtons/DocxFormatButtons';
 import DocxIncludeDataOption from './DownloadResultsButtons/DocxIncludeDataOption';
-// import DownloadResultsAsDocx from './DownloadResultsButtons/DownloadResultsAsDocx';
+import DownloadResultsAsDocx from './DownloadResultsButtons/DownloadResultsAsDocx';
 import vizState from '../GlobalState/vizState';
 import outputState from '../GlobalState/outputState';
 
@@ -62,7 +62,7 @@ const Output = () => {
                 <RightColDiv>
                   <DocxFormatButtons />
                   <DocxIncludeDataOption />
-                  {/* <DownloadResultsAsDocx /> */}
+                  <DownloadResultsAsDocx />
                 </RightColDiv>
               </OptionsContainer>
             )}

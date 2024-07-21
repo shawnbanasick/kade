@@ -7,7 +7,6 @@ import calcState from '../../GlobalState/calcState';
 const { remote } = require('electron');
 const mainWindow = remote.getCurrentWindow();
 const { dialog } = require('electron').remote;
-let fs = require('fs');
 let JsZip = require('jszip');
 
 const saveZipToFile = async (doc, fileName) => {

@@ -137,6 +137,19 @@ app.whenReady().then(() => {
     });
   });
 
+  ipcMain.handle('save-docx', async (event, arrayBuffer, filePath) => {
+    const docxContent = Buffer.from(arrayBuffer);
+    return new Promise((resolve, reject) => {
+      fs.writeFile(filePath, docxContent, (err) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve('File saved successfully');
+        }
+      });
+    });
+  });
+
   ipcMain.handle('show-save-dialog', async (event, defaultPath) => {
     const result = await dialog.showSaveDialog({
       title: 'Save SVG',
