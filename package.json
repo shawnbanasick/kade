@@ -44,6 +44,8 @@
     "a11y-react-tabs": "^0.1.2",
     "ag-grid-community": "^31.3.1",
     "ag-grid-react": "^31.3.1",
+    "blob-to-buffer": "^1.2.9",
+    "buffer": "^6.0.3",
     "d3": "^7.9.0",
     "docx": "^8.5.0",
     "dotenv": "^16.4.5",

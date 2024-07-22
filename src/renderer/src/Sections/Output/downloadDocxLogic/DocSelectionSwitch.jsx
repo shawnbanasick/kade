@@ -13,8 +13,10 @@ const UserSelectionSwitch = (props) => {
     const oldValue = toggle;
     const newValue = !oldValue;
     const key = props.value;
+    console.log(key, newValue, oldValue);
     setToggle(newValue);
-    outputState[key] = newValue;
+    // outputState[key] = newValue;
+    outputState.setState({ [key]: newValue });
   };
 
   return (

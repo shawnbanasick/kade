@@ -15,7 +15,8 @@ if (process.contextIsolated) {
       saveSvgFile: () => ipcRenderer.send('showSaveDialogSync'),
       saveSVG: (svgContent, filePath) => ipcRenderer.invoke('save-svg', svgContent, filePath),
       saveDocx: (doc, filePath) => ipcRenderer.invoke('save-docx', doc, filePath),
-      showSaveDialog: (defaultPath) => ipcRenderer.invoke('show-save-dialog', defaultPath),
+      showSaveSvgDialog: (defaultPath) => ipcRenderer.invoke('show-saveSvg-dialog', defaultPath),
+      showSaveDocxDialog: (defaultPath) => ipcRenderer.invoke('show-saveDocx-dialog', defaultPath),
     });
 
     contextBridge.exposeInMainWorld('nodeAPI', {

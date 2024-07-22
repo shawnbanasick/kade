@@ -6,12 +6,16 @@ import GeneralButton from '../../../Utils/GeneralButton';
 import { useTranslation } from 'react-i18next';
 import createOutputDoc from '../downloadDocxLogic/createOutputDoc';
 import outputState from '../../GlobalState/outputState';
+import cloneDeep from 'lodash/cloneDeep';
 
 const DownloadResultsAsDocx = () => {
   const { t } = useTranslation();
   const [localStore, setLocalStore] = useState({
     modalOpen: false,
   });
+
+  const userSelectedFactors = cloneDeep(outputState((state) => state.userSelectedFactors));
+  const useZip = outputState((state) => state.willIncludeDataFiles);
 
   const handleClose = () => {
     setLocalStore({ modalOpen: false });
@@ -47,7 +51,6 @@ const DownloadResultsAsDocx = () => {
 
   const handleOpen = () => {
     // getState
-    const userSelectedFactors = outputState((state) => state.userSelectedFactors);
     if (userSelectedFactors.length === 0) {
       setLocalStore({ modalOpen: true });
     } else {
@@ -56,7 +59,6 @@ const DownloadResultsAsDocx = () => {
     }
   };
 
-  const useZip = outputState((state) => state.willIncludeDataFiles);
   let buttonText;
   const buttonTextDocx = t('Download DOCX File');
   const buttonTextZip = t('Download KADE ZIP File');

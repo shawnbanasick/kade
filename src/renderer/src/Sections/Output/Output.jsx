@@ -25,12 +25,11 @@ import DownloadResultsAsDocx from './DownloadResultsButtons/DownloadResultsAsDoc
 import vizState from '../GlobalState/vizState';
 import outputState from '../GlobalState/outputState';
 
-let showTableDataNotSentWarning;
-
 const Output = () => {
   const { t } = useTranslation();
   let displayState = outputState((state) => state.showDocxOptions);
   const updateOutputActiveTabIndex = outputState((state) => state.updateOutputActiveTabIndex);
+  let showTableDataNotSentWarning;
 
   const updateNotifyOutputDistStateError = outputState(
     (state) => state.updateNotifyOutputDistStateError

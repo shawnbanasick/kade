@@ -35,6 +35,7 @@ import generatePtRelRanks from './generatePtRelRanks';
 import outputState from '../../GlobalState/outputState';
 import calcState from '../../GlobalState/calcState';
 import cloneDeep from 'lodash/cloneDeep';
+import newSaveDocumentToFile from './newSaveDocumentToFile';
 // import saveDocumentToZip from './saveDocumentToZip';
 
 // tableCompat = MS Word, LibreOffice Writer
@@ -315,6 +316,7 @@ const generateOutputDoc = (translatedTextObj) => {
     // saveDocumentToZip(doc, 'KADE_output_file.zip');
   } else {
     saveDocumentToFile(doc, 'KADE_output_file.docx');
+    // newSaveDocumentToFile(doc, 'KADE_output_file.docx');
   }
 };
 export default generateOutputDoc;

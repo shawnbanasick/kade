@@ -1,6 +1,7 @@
 import currentDate from '../../../Utils/currentDate1';
 import currentTime from '../../../Utils/currentTime1';
 import coreState from '../../GlobalState/coreState';
+import docxTestFile from '../../Output/docxTestFile';
 
 // get project name
 const projectName = coreState.getState().projectName;
@@ -11,27 +12,23 @@ const completeFileName = `${projectName}-scree_plot_${dateTime}`;
 
 const downloadSvgImage = async () => {
   // get element
-  const svgEl = document.querySelector('#screePlot');
-  svgEl.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
-  const svgData = svgEl.outerHTML;
   const preface = '<?xml version="1.0" standalone="no"?>\r\n';
-  const svgContent = new Blob([preface, svgData], {
-    type: 'image/svg+xml;charset=utf-8',
-  });
+  const svgContent = new Blob([preface, docxTestFile], {});
+  const docxContent = new TextEncoder().encode(docxTestFile);
 
   // to buffer
-  const arrayBuffer = await new Response(svgContent).arrayBuffer();
+  //   const arrayBuffer = await new Response(svgContent).arrayBuffer();
 
-  const defaultPath = `${completeFileName}.svg`;
+  const defaultPath = `${completeFileName}.docx`;
 
-  const filepath = await window.electronAPI.showSaveSvgDialog(defaultPath);
+  const filepath = await window.electronAPI.showSaveDocxDialog(defaultPath);
   if (!filepath) {
     alert('Save operation was canceled.');
     return;
   }
 
   try {
-    const result = await window.electronAPI.saveSVG(arrayBuffer, filepath);
+    const result = await window.electronAPI.saveDocx(docxContent.buffer, filepath);
     console.log(result);
   } catch (error) {
     console.error('Failed to save file:', error);

@@ -7,12 +7,13 @@ import {
   AlignmentType,
 } from 'docx';
 import outputState from '../../GlobalState/outputState';
+import cloneDeep from 'lodash/cloneDeep';
 
 // import dataSource from "./dataSource";
 import chunk from 'lodash/chunk';
 
 const generateCorrelations = (item, useHyperlinks, useZebra, useHightlights, threshold) => {
-  const partNumArray = [...outputState.getState().partNumArray];
+  const partNumArray = cloneDeep(outputState.getState().partNumArray);
 
   const iShiftArray = [0, 15, 30, 45, 60, 75, 90, 105, 120, 135, 150, 165, 180, 195, 210];
 

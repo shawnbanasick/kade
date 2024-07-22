@@ -4,6 +4,12 @@ import currentDate1 from '../../../Utils/currentDate1';
 import currentTime1 from '../../../Utils/currentTime1';
 import coreState from '../../GlobalState/coreState';
 import calcState from '../../GlobalState/calcState';
+// import FileReader from 'filereader';
+import cloneDeep from 'lodash/cloneDeep';
+import { Buffer } from 'buffer';
+import { toBuffer } from 'blob-to-buffer';
+import docxTestFile from '../docxTestFile';
+import { json } from 'd3';
 
 // const { remote } = require('electron');
 // const mainWindow = remote.getCurrentWindow();
@@ -12,6 +18,10 @@ import calcState from '../../GlobalState/calcState';
 
 const saveDocumentToFile = async (doc, fileName) => {
   // Create new instance of Packer for the docx module
+  // console.log(doc);
+
+  const testDoc = docxTestFile();
+  console.log(JSON.stringify(testDoc));
 
   const timeStamp = `${currentDate1()}_${currentTime1()}`;
   const projectName = coreState.getState().projectName;
@@ -25,6 +35,8 @@ const saveDocumentToFile = async (doc, fileName) => {
   } else {
     nameFile = `KADE_results_${projectName}.docx`;
   }
+
+  const docxContent = new Blob(testDoc);
 
   // const path = await dialog.showSaveDialog(mainWindow, {
   //   title: 'Save file as',
@@ -40,27 +52,48 @@ const saveDocumentToFile = async (doc, fileName) => {
   // error catch for dialog box cancel
   // const filePath = path.filePath;
   const defaultPath = `${nameFile}.docx`;
-  const filepath = await window.electronAPI.showSaveDialog(defaultPath);
+  const filepath = await window.electronAPI.showSaveDocxDialog(defaultPath);
   if (!filepath) {
     alert('Save operation was canceled.');
     return;
   } else {
-    /*
-    const mimeType =
-      "application/vnd.openxmlformats-officedocument.wordprocessingml.document";
-      */
+    const mimeType = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document';
 
     try {
-      Packer.toBuffer(doc).then((doc) => {
-        window.electronAPI.saveSVG(doc, filepath);
+      // const arrayBuffer = await new Response(doc).arrayBuffer();
 
-        // const docblob = blob.slice(0, blob.size, mimeType);
-        // Save the file using saveAs from the file-saver package
-        // fs.writeFileSync(filePath, doc, (err) => {
-        //   if (err) throw err;
-        //   console.log('Unexpected file save error!');
-        // });
-      });
+      // const blob = await new Blob([doc], {
+      //   type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+      // });
+
+      console.log(JSON.stringify(testDoc));
+
+      // const byteArray = new TextEncoder().encode(doc);
+
+      const arrayBuffer = await new Response(docxContent).arrayBuffer();
+
+      const result = await window.electronAPI.saveDocx(arrayBuffer, filepath);
+
+      console.log(result);
+      // Packer.toBuffer(doc).then((buffer) => {
+      // window.electronAPI.saveDocx(buffer, filepath);
+      // });
+
+      // saveBlob(blob);
+
+      // Packer.toBuffer(doc).then((doc) => {
+      // toBuffer(blob, (err, buffer) => {
+      //   window.bridge.writeFile(filepath, buffer);
+      //   if (err) {
+      //     console.error('Failed to save file:', err);
+      //   }
+      // });
+      // const docblob = blob.slice(0, blob.size, mimeType);
+      // Save the file using saveAs from the file-saver package
+      // fs.writeFileSync(filePath, doc, (err) => {
+      //   if (err) throw err;
+      //   console.log('Unexpected file save error!');
+      // });
     } catch (error) {
       console.error('Failed to save file:', error);
     } finally {
