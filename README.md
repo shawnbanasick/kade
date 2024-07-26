@@ -164,6 +164,15 @@ The application is packaged as an "AppImage" so it can be installed on most of t
 <br/>
 <br/>
 
+#### Alternative installation
+
+1. Donwload zip file from the code.
+2. Extract zip file.
+3. Open the terminal under the extracted folder.
+4. Run a command "npm install"
+(Also run audit command if instructed so by the alart message.)
+5. Run "mpm start"
+
 ## Updates
 
 I have not integrated automatic updating functions into the application. To update you need to uninstall the old version, then download and install the new version.
