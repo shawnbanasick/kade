@@ -4,9 +4,10 @@ import loadingState from '../../GlobalState/loadingState';
 import outputState from '../../GlobalState/outputState';
 import coreState from '../../GlobalState/coreState';
 import factorState from '../../GlobalState/factorState';
+import cloneDeep from 'lodash/cloneDeep';
 
 const pushRotFactorsArrayToOutput = function (outputData, sheetNamesXlsx, colSizes) {
-  const results = loadingState.getState().currentLoadingsTable;
+  const results = cloneDeep(loadingState.getState().currentLoadingsTable);
 
   // add worksheet name
   sheetNamesXlsx.push(i18n.t('Factor Loadings'));
@@ -18,7 +19,7 @@ const pushRotFactorsArrayToOutput = function (outputData, sheetNamesXlsx, colSiz
 
   // populate header row
   // getState - pulls array - ["factor 1", "factor 2", "factor 3", "factor 4", "factor 5", "factor 6", "factor 7", "factor 8"]
-  let userSelectedFactors = outputState.getState().userSelectedFactors;
+  let userSelectedFactors = cloneDeep(outputState.getState().userSelectedFactors);
   const jLoopLen = userSelectedFactors.length;
   const iLoopLen = results.length;
 
@@ -68,7 +69,7 @@ const pushRotFactorsArrayToOutput = function (outputData, sheetNamesXlsx, colSiz
   } // end i loop
 
   // getState - calc and output percent explained variance for rotated factors
-  const factorMatrix = factorState.getState().factorMatrix;
+  const factorMatrix = cloneDeep(factorState.getState().factorMatrix);
   const numQsorts = coreState.getState().numQsorts;
   const eigensCalc = calcEigenValues(factorMatrix, numQsorts);
   const expVarArray = [i18n.t('percent explained variance'), ''];

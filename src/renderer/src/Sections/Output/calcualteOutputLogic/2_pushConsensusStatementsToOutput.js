@@ -3,6 +3,7 @@ import variance from '../../../Utils/variance';
 import i18n from 'i18next';
 import outputState from '../../GlobalState/outputState';
 import calcState from '../../GlobalState/calcState';
+import cloneDeep from 'lodash/cloneDeep';
 
 const pushConsensusStatementsToOutput = function (
   analysisOutput,
@@ -19,9 +20,9 @@ const pushConsensusStatementsToOutput = function (
     'Factor Qsort Values for Statements sorted by Consensus vs Disagreement'
   );
 
-  const sigFactorNumbersArray = calcState.getState().sigFactorNumbersArray;
-  const userSelectedFactors = outputState.getState().userSelectedFactors;
-  const maxStatementLength = calcState.getState().maxStatementLength;
+  const sigFactorNumbersArray = cloneDeep(calcState.getState().sigFactorNumbersArray);
+  const userSelectedFactors = cloneDeep(outputState.getState().userSelectedFactors);
+  const maxStatementLength = cloneDeep(calcState.getState().maxStatementLength);
   const spacer = ['', ''];
 
   // add translations to user selected factors

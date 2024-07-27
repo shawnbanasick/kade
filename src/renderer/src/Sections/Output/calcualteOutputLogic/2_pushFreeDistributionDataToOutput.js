@@ -1,5 +1,6 @@
 import calcState from '../../GlobalState/calcState';
 import i18n from 'i18next';
+import cloneDeep from 'lodash/cloneDeep';
 
 const pushFreeDistributionDataToOutput = function (outputData, sheetNamesXlsx, colSizes) {
   sheetNamesXlsx.push(i18n.t('Free Dist'));
@@ -20,7 +21,7 @@ const pushFreeDistributionDataToOutput = function (outputData, sheetNamesXlsx, c
   ];
   colSizes.push(columns);
 
-  const freeDistributionArray = calcState.getState().freeDistributionArray;
+  const freeDistributionArray = cloneDeep(calcState.getState().freeDistributionArray);
 
   freeDistributionArray.unshift(
     ['free', ''],

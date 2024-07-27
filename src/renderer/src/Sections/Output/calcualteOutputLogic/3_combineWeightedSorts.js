@@ -5,7 +5,7 @@ import calcState from '../../GlobalState/calcState';
 import cloneDeep from 'lodash/cloneDeep';
 
 const combineWeightedSorts = function (weightedSorts) {
-  console.log('weightedSorts', JSON.stringify(weightedSorts));
+  // console.log('weightedSorts', JSON.stringify(weightedSorts));
   // returns ["factor 1", "factor 2", etc... ]
   const sigFactorNumbersArray1 = cloneDeep(calcState.getState().sigFactorNumbersArray);
   // console.log('sigfacnumarray', JSON.stringify(sigFactorNumbersArray1));

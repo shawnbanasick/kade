@@ -2,6 +2,7 @@ import evenRound from '../../../Utils/evenRound';
 import calcState from '../../GlobalState/calcState';
 import outputState from '../../GlobalState/outputState';
 import i18n from 'i18next';
+import cloneDeep from 'lodash/cloneDeep';
 
 const pushStandardErrorsDifferencesToOutput = function (
   stndErrorArray,
@@ -19,8 +20,8 @@ const pushStandardErrorsDifferencesToOutput = function (
   const chartText2 = i18n.t('Standard Errors for Differences in Factor Z scores');
 
   // State
-  const sigSortsArray = calcState.getState().sigSortsArray;
-  const userSelectedFactors = outputState.getState().userSelectedFactors;
+  const sigSortsArray = cloneDeep(calcState.getState().sigSortsArray);
+  const userSelectedFactors = cloneDeep(outputState.getState().userSelectedFactors);
   const spacer = ['', ''];
 
   sheetNamesXlsx.push(chartText1);

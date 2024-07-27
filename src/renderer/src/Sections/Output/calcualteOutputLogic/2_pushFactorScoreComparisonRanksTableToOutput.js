@@ -20,7 +20,7 @@ const pushFactorScoreComparisonRanksTableToOutput = function (
 ) {
   // getState
   const synFactorArray1 = calcState.getState().synFactorArray1Holder;
-  const userSelectedFactors = outputState.getState().userSelectedFactors;
+  const userSelectedFactors = cloneDeep(outputState.getState().userSelectedFactors);
   let tempArray1;
   let rankValue;
   let rankingTempArray;

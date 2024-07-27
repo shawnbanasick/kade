@@ -1,12 +1,13 @@
 import evenRound from '../../../Utils/evenRound';
 import coreState from '../../GlobalState/coreState';
 import calcState from '../../GlobalState/calcState';
+import cloneDeep from 'lodash/cloneDeep';
 
 const calculateZScores = function (summedWeightedSorts) {
   // changing format from MD array to array of objects
   // getState add in statements
-  const statements = coreState.getState().statements;
-  const sigFactorNumbersArray = calcState.getState().sigFactorNumbersArray;
+  const statements = cloneDeep(coreState.getState().statements);
+  const sigFactorNumbersArray = cloneDeep(calcState.getState().sigFactorNumbersArray);
   // so that the diff 2 factors output is correct
   sigFactorNumbersArray.sort();
   const length = summedWeightedSorts.length;

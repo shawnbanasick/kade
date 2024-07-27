@@ -1,11 +1,13 @@
 import factorState from '../../GlobalState/factorState';
 import i18n from 'i18next';
+import cloneDeep from 'lodash/cloneDeep';
 
 const pushUnrotatedFactorsTableToOutputArray = function (outputData, sheetNamesXlsx, colSizes) {
   // getState
-  const unrotFactorMatrix = factorState.getState().unrotatedFactorMatrixOutput;
-  const eigenvals = factorState.getState().eigenvalues; // "eigenValuesSorted;
-  const expVar = factorState.getState().eigensPercentExpVar;
+  const unrotFactorMatrix = cloneDeep(factorState.getState().unrotatedFactorMatrixOutput);
+
+  const eigenvals = cloneDeep(factorState.getState().eigenvalues); // "eigenValuesSorted;
+  const expVar = cloneDeep(factorState.getState().eigensPercentExpVar);
 
   sheetNamesXlsx.push(i18n.t('Unrotated Factor Matrix'));
 
@@ -38,7 +40,6 @@ const pushUnrotatedFactorsTableToOutputArray = function (outputData, sheetNamesX
     ['', '']
   );
 
-  console.log(JSON.stringify(unrotFactorMatrix));
   outputData.push(unrotFactorMatrix);
 
   console.log('dispatch - 5 - pushUnrotatedFactorsTable complete');

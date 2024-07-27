@@ -1,7 +1,7 @@
 import i18n from 'i18next';
 import calcState from '../../GlobalState/calcState';
 import outputState from '../../GlobalState/outputState';
-import { cloneDeep } from 'lodash';
+import cloneDeep from 'lodash/cloneDeep';
 
 const insertFactorsIntoOutput = function (analysisOutput, outputData, sheetNamesXlsx, colSizes) {
   const appendText1 = i18n.t('Sorts Weight');

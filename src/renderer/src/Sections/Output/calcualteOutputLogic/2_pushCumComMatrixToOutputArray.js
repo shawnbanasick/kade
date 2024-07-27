@@ -1,12 +1,13 @@
 import evenRound from '../../../Utils/evenRound';
 import i18n from 'i18next';
 import factorState from '../../GlobalState/factorState';
+import cloneDeep from 'lodash/cloneDeep';
 
 const pushCumComMaxtrixToOutputArray = function (outputData, sheetNamesXlsx, colSizes) {
   sheetNamesXlsx.push(i18n.t('Cumul Comm Matrix'));
 
   // isolate data
-  const cumulCommMatrix9 = factorState.getState().unrotatedFactorMatrixOutput;
+  const cumulCommMatrix9 = cloneDeep(factorState.getState().unrotatedFactorMatrixOutput);
 
   // set excel column widths
   const columns = [

@@ -11,9 +11,9 @@ function weightRawSorts(significantFactors) {
   const respondentNames = cloneDeep(coreState.getState().respondentNames);
   const mainDataObject = cloneDeep(coreState.getState().mainDataObject);
 
-  console.log(JSON.stringify(significantFactors));
-  console.log(JSON.stringify(respondentNames));
-  console.log(JSON.stringify(mainDataObject));
+  // console.log(JSON.stringify(significantFactors));
+  // console.log(JSON.stringify(respondentNames));
+  // console.log(JSON.stringify(mainDataObject));
 
   // pos shifted
   const rawSorts = [];

@@ -32,10 +32,10 @@ const pushCribSheetsToOutput = function (outputData, sheetNamesXlsx, colSizes) {
   const appendTextHeader4 = i18n.t('Lowest Ranked Statements');
 
   // State
-  const statementRankingArray = calcState.getState().statementRankingArray;
-  const userSelectedFactors = outputState.getState().userSelectedFactors;
-  const sortTriangleShape = coreState.getState().qSortPattern;
-  const synFactorArray1Holder = calcState.getState().synFactorArray1Holder;
+  const statementRankingArray = cloneDeep(calcState.getState().statementRankingArray);
+  const userSelectedFactors = cloneDeep(outputState.getState().userSelectedFactors);
+  const sortTriangleShape = cloneDeep(coreState.getState().qSortPattern);
+  const synFactorArray1Holder = cloneDeep(calcState.getState().synFactorArray1Holder);
 
   // initialize variables
   let cribArray2 = [];

@@ -5,6 +5,7 @@ import loadingState from '../../GlobalState/loadingState';
 import appState from '../../GlobalState/appState';
 import projectHistoryState from '../../GlobalState/projectHistoryState';
 import outputState from '../../GlobalState/outputState';
+import cloneDeep from 'lodash/cloneDeep';
 
 const pushProjectOverviewToOutputArrayDispatcher = () => {
   // State
@@ -19,7 +20,7 @@ const pushProjectOverviewToOutputArrayDispatcher = () => {
   const totalSorts1 = coreState.getState().numQsorts;
   const totalSorts = totalSorts1.toString();
 
-  const list = projectHistoryState.getState().projectHistoryArray;
+  const list = cloneDeep(projectHistoryState.getState().projectHistoryArray);
   const distStateUpperValueText = outputState.getState().distStateUpperValueText;
   const distStateLowerValueText = outputState.getState().distStateLowerValueText;
 

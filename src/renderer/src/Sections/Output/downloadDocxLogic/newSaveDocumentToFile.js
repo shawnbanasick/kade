@@ -1,10 +1,10 @@
-import currentDate from '../../../Utils/currentDate1';
-import currentTime from '../../../Utils/currentTime1';
-import coreState from '../../GlobalState/coreState';
-import docxTestFile from '../../Output/docxTestFile';
+// import currentDate from '../../../Utils/currentDate1';
+// import currentTime from '../../../Utils/currentTime1';
+// import coreState from '../../GlobalState/coreState';
+// import docxTestFile from '../../Output/docxTestFile';
 import calcState from '../../GlobalState/calcState';
-import cloneDeep from 'lodash/cloneDeep';
-import outputState from '../../GlobalState/outputState';
+// import cloneDeep from 'lodash/cloneDeep';
+// import outputState from '../../GlobalState/outputState';
 
 // get project name
 // const date = currentDate();
@@ -14,11 +14,6 @@ import outputState from '../../GlobalState/outputState';
 
 const downloadSvgImage = async (docOptions, translatedTextObj) => {
   const data = calcState.getState().outputData;
-  const projectName = coreState.getState().projectName;
-  // const data = JSON.stringify([1, [2, 2], 3]);
-
-  const partNumArray = outputState.getState().partNumArray;
-
   const conObj = {
     docOptions,
     translatedTextObj,

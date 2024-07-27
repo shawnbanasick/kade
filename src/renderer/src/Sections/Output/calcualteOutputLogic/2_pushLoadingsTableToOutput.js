@@ -1,13 +1,14 @@
 import loadingState from '../../GlobalState/loadingState';
 import i18n from 'i18next';
+import cloneDeep from 'lodash/cloneDeep';
 
 const pushLoadingsTableToOutput = function (outputData, sheetNamesXlsx, colSizes) {
-  const gridColDefsLoadingsTable = loadingState.getState().gridColDefsLoadingsTable;
+  const gridColDefsLoadingsTable = cloneDeep(loadingState.getState().gridColDefsLoadingsTable);
 
   // add worksheet name
   sheetNamesXlsx.push(i18n.t('Factor Loadings Table'));
 
-  const tableData = loadingState.getState().currentLoadingsTable;
+  const tableData = cloneDeep(loadingState.getState().currentLoadingsTable);
   // confirm proper sort by factor group
   const results = tableData.slice().sort((a, b) => a.defaultSort - b.defaultSort);
 

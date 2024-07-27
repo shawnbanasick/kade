@@ -55,41 +55,11 @@ import { dialog } from 'electron';
 // let filetype = "plainText";
 
 const generateOutputDoc = async (conObj) => {
-  /*
-  let saveAsZip = outputState.getState().willIncludeDataFiles;
-  const willUseHyperlinks = outputState.getState().willUseHyperlinks;
-  const willIncludeOverview = outputState.getState().willIncludeOverview;
-  const willIncludeStatements = outputState.getState().willIncludeStatements;
-  const willIncludeQsorts = outputState.getState().willIncludeQsorts;
-  const useTables = outputState.getState().useTables;
-  const useZebra = outputState.getState().useZebra;
-  const willIncludeCorrMatrix = outputState.getState().willIncludeCorrMatrix;
-  const willIncludeThreshold = outputState.getState().willIncludeThreshold;
-  const correlationThreshold = outputState.getState().correlationThreshold;
-  const useHyperlinks = outputState.getState().useHyperlinks;
-  const willIncludeUnrotFacMatrix = outputState.getState().willIncludeUnrotFacMatrix;
-  const willIncludeCumulComm = outputState.getState().willIncludeCumulComm;
-  const willIncludeFacLoadings = outputState.getState().willIncludeFacLoadings;
-  const willIncludeFacLoadingsTable = outputState.getState().willIncludeFacLoadingsTable;
-  const willIncludeFreeDist = outputState.getState().willIncludeFreeDist;
-  const willIncludeFacScoreRanks = outputState.getState().willIncludeFacScoreRanks;
-  const willIncludeFacScoreCorr = outputState.getState().willIncludeFacScoreCorr;
-  const willIncludeFactors = outputState.getState().willIncludeFactors;
-  const willIncludeFacDiffs = outputState.getState().willIncludeFacDiffs;
-  const willIncludeConDis = outputState.getState().willIncludeConDis;
-  const willIncludeFacChar = outputState.getState().willIncludeFacChar;
-  const willIncludeDist = outputState.getState().willIncludeDist;
-  const willIncludeConsensus = outputState.getState().willIncludeConsensus;
-  const willIncludeRelRanks = outputState.getState().willIncludeRelRanks;
-  */
-  //let data = dataSource();
   const data = conObj.data; // cloneDeep(calcState.getState().outputData);
 
-  // console.log(JSON.stringify(data, null, 2));
-
-  let projectName = 'lipset';
-  let projectName2 = data[0][2][1];
-  console.log(projectName2);
+  // let projectName = 'lipset';
+  let projectName = data[0][2][1];
+  console.log(projectName);
   let version = data[0][19][1];
   let dateTime = getDateTime();
   const docOptions = conObj.docOptions;
@@ -203,6 +173,7 @@ const generateOutputDoc = async (conObj) => {
       });
     }
     if (value === 'unrotated' && willIncludeUnrotFacMatrix === true) {
+      console.log(JSON.stringify(item));
       let text4 = generateUnrotFacMatrix(item, willUseHyperlinks, useZebra);
       childrenArray.push(...text4);
     }

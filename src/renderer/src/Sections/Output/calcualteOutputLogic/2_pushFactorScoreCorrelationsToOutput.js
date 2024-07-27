@@ -15,8 +15,8 @@ const pushFactorScoreCorrelationsToOutput = function (outputData, sheetNamesXlsx
 
   sheetNamesXlsx.push(appendText1);
 
-  const analysisOutput = calcState.getState().analysisOutput;
-  const userSelectedFactors = outputState.getState().userSelectedFactors;
+  const analysisOutput = cloneDeep(calcState.getState().analysisOutput);
+  const userSelectedFactors = cloneDeep(outputState.getState().userSelectedFactors);
   const analysisOutput2 = cloneDeep(analysisOutput);
   const factorScoresCorrelationArray2 = [];
   let temp1, tempArray;

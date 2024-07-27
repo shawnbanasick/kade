@@ -178,7 +178,7 @@ const LoadingsTable = (props) => {
   const generateOutput = () => {
     // grab current table data
     const currentLoadingsTable = grabTableLocalState();
-    console.log(JSON.stringify(currentLoadingsTable));
+    // console.log(JSON.stringify(currentLoadingsTable));
     // send current to local state
     // localStore.temp_gridRowDataLoadingsTable = currentLoadingsTable;
     updateCurrentLoadingsTable(currentLoadingsTable);

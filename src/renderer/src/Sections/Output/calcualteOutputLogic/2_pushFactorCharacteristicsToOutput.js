@@ -2,6 +2,7 @@ import evenRound from '../../../Utils/evenRound';
 import calcState from '../../GlobalState/calcState';
 import outputState from '../../GlobalState/outputState';
 import i18n from 'i18next';
+import cloneDeep from 'lodash/cloneDeep';
 
 const pushFactorCharacteristicsToOutput = function (
   analysisOutput,
@@ -21,8 +22,8 @@ const pushFactorCharacteristicsToOutput = function (
   const chartText5 = i18n.t('Composite Reliability');
   const chartText6 = i18n.t('S E of Factor Zscores');
 
-  const userSelectedFactors = outputState.getState().userSelectedFactors;
-  const sigSortsArray = calcState.getState().sigSortsArray;
+  const userSelectedFactors = cloneDeep(outputState.getState().userSelectedFactors);
+  const sigSortsArray = cloneDeep(calcState.getState().sigSortsArray);
 
   const spacer = ['', ''];
 

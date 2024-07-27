@@ -4,7 +4,7 @@ import cloneDeep from 'lodash/cloneDeep';
 
 function assignFactorScores(zScoreArray) {
   // getState
-  const qavSortTriangleShape = coreState.getState().qSortPattern;
+  const qavSortTriangleShape = cloneDeep(coreState.getState().qSortPattern);
 
   const sortedZScoreArray = [];
   for (let i = 0; i < zScoreArray.length; i++) {

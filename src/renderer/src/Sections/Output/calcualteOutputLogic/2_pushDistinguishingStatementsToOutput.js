@@ -30,7 +30,7 @@ const pushDistinguishingStatementsToOutput = function (
   const maxStatementLength = calcState.getState().maxStatementLength;
 
   // const userSelectedFactors = clone(outputState.userSelectedFactors);
-  const userSelectedFactors = outputState.getState().userSelectedFactors;
+  const userSelectedFactors = cloneDeep(outputState.getState().userSelectedFactors);
 
   // const userSelectedDistStateSigLevel1 =
   //   calcState.userSelectedDistStateSigLevel1; // upper level
