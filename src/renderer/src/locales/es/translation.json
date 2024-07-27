@@ -552,5 +552,6 @@
   "Check the spreadsheet type": "Verifique el tipo de hoja de cálculo",
   "Participant data and Q sort data do not match": "Los datos de los participantes y los datos del ordenamiento Q no coinciden",
   "One or more participants have a different number of Q sorts values than the project design": "Uno o más participantes tienen un número diferente de valores de ordenamientos Q que el diseño del proyecto",
-  "The 'version' tab is missing from the spreadsheet": "La pestaña 'version' falta en la hoja de cálculo"
+  "The 'version' tab is missing from the spreadsheet": "La pestaña 'version' falta en la hoja de cálculo",
+  "Sort Values": "Valores de ordenamiento"
 }

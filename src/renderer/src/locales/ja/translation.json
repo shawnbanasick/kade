@@ -553,5 +553,6 @@
   "Check the spreadsheet type": "スプレッドシートタイプを確認してください",
   "Participant data and Q sort data do not match": "参加者データとQ-sortデータが一致しません",
   "One or more participants have a different number of Q sorts values than the project design": "1人以上の参加者が、プロジェクト設計と異なる数のQ-sort値を持っています",
-  "The 'version' tab is missing from the spreadsheet": "スプレッドシートに「バージョン」タブがありません"
+  "The 'version' tab is missing from the spreadsheet": "スプレッドシートに「バージョン」タブがありません",
+  "Sort Values": "ソート値"
 }

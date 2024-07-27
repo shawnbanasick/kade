@@ -543,5 +543,6 @@
   "Check the spreadsheet type": "Kontrollera kalkylbladstypen",
   "Participant data and Q sort data do not match": "Deltagardata och Q-sorteringsdata matchar inte",
   "One or more participants have a different number of Q sorts values than the project design": "En eller flera deltagare har ett annat antal Q-sorteringsvärden än projektets design",
-  "The 'version' tab is missing from the spreadsheet": "Fliken 'version' saknas i kalkylarket"
+  "The 'version' tab is missing from the spreadsheet": "Fliken 'version' saknas i kalkylarket",
+  "Sort Values": "Sorteringsvärden"
 }

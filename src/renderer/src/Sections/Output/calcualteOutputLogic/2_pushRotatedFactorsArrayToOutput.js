@@ -27,7 +27,7 @@ const pushRotFactorsArrayToOutput = function (outputData, sheetNamesXlsx, colSiz
   // create check array of userSelectedFactors
   // add to header array
 
-  const headerRow = [i18n.t('Nm'), i18n.t('Q-sort')];
+  const headerRow = [i18n.t('Nm'), i18n.t('Q sort')];
   const userSelectedFactorsArray = [...userSelectedFactors];
   const newUserSelectedFactorsArray = [];
   const userSelectedFactorsCheckArray = [];

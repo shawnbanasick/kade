@@ -14,7 +14,7 @@ const pushLoadingsTableToOutput = function (outputData, sheetNamesXlsx, colSizes
 
   const formattedResults = [];
 
-  const headerRow = [i18n.t('Nm'), i18n.t('Q-sort'), i18n.t('Factor Group')];
+  const headerRow = [i18n.t('Nm'), i18n.t('Q sort'), i18n.t('Factor Group')];
 
   const key1Array = [];
   const key2Array = [];

@@ -123,12 +123,8 @@ const FactorSelectionForOutputButtons = () => {
       updateOutputForDataViz2([]);
     } else {
       if (!includes(userSelectedFactors, factor)) {
-        console.log('clicked factor: ', factor);
         userSelectedFactors.push(factor);
-        console.log(JSON.stringify(userSelectedFactors));
         userSelectedFactors.sort();
-        console.log(JSON.stringify(userSelectedFactors));
-
         if (factor === 'factor 1') {
           updateHighlightFactor1(true);
         }
@@ -183,14 +179,10 @@ const FactorSelectionForOutputButtons = () => {
         if (factor === 'factor 8') {
           updateHighlightFactor8(false);
         }
-
-        console.log('un-Clicked factor: ', factor);
         updateUserSelectedFactors(filteredArray);
       }
     }
   };
-
-  console.log(JSON.stringify(userSelectedFactors));
 
   if (showOutputFactorSelection) {
     return (

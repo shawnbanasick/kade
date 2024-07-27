@@ -543,5 +543,6 @@
   "Check the spreadsheet type": "Verificar o tipo de folha de cálculo",
   "Participant data and Q sort data do not match": "Os dados do participante e os dados de ordenação Q não correspondem",
   "One or more participants have a different number of Q sorts values than the project design": "Um ou mais participantes têm um número diferente de valores de ordenação Q do que o design do projeto",
-  "The 'version' tab is missing from the spreadsheet": "O separador 'versão' está em falta na folha de cálculo"
+  "The 'version' tab is missing from the spreadsheet": "O separador 'versão' está em falta na folha de cálculo",
+  "Sort Values": "Valores de ordenação"
 }

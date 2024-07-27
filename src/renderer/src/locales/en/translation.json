@@ -546,5 +546,6 @@
   "Check the spreadsheet type": "Check the spreadsheet type",
   "Participant data and Q sort data do not match": "Participant data and Q sort data do not match",
   "One or more participants have a different number of Q sorts values than the project design": "One or more participants have a different number of Q sorts values than the project design",
-  "The 'version' tab is missing from the spreadsheet": "The 'version' tab is missing from the spreadsheet"
+  "The 'version' tab is missing from the spreadsheet": "The 'version' tab is missing from the spreadsheet",
+  "Sort Values": "Sort Values"
 }

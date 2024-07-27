@@ -554,5 +554,6 @@
   "Check the spreadsheet type": "스프레드시트 유형을 확인하세요",
   "Participant data and Q sort data do not match": "참가자 데이터와 Q-정렬 데이터가 일치하지 않습니다",
   "One or more participants have a different number of Q sorts values than the project design": "하나 이상의 참가자가 프로젝트 디자인과 다른 수의 Q-정렬 값을 가지고 있습니다",
-  "The 'version' tab is missing from the spreadsheet": "스프레드시트에 '버전' 탭이 누락되었습니다"
+  "The 'version' tab is missing from the spreadsheet": "스프레드시트에 '버전' 탭이 누락되었습니다",
+  "Sort Values": "정렬 값"
 }

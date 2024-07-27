@@ -553,5 +553,6 @@
   "Check the spreadsheet type": "检查电子表格类型",
   "Participant data and Q sort data do not match": "参与者数据和Q排序数据不匹配",
   "One or more participants have a different number of Q sorts values than the project design": "一个或多个参与者的Q排序值数量与项目设计不同",
-  "The 'version' tab is missing from the spreadsheet": "电子表格中缺少“版本”选项卡"
+  "The 'version' tab is missing from the spreadsheet": "电子表格中缺少“版本”选项卡",
+  "Sort Values": "排序值"
 }

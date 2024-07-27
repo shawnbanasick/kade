@@ -19,7 +19,7 @@ const pushFactorScoreComparisonRanksTableToOutput = function (
   colSizes
 ) {
   // getState
-  const synFactorArray1 = calcState.getState().synFactorArray1Holder;
+  const synFactorArray1 = cloneDeep(calcState.getState().synFactorArray1Holder);
   const userSelectedFactors = cloneDeep(outputState.getState().userSelectedFactors);
   let tempArray1;
   let rankValue;
@@ -149,7 +149,7 @@ const pushFactorScoreComparisonRanksTableToOutput = function (
     // tempArrayHeader2.push(userSelectedFactors[yy], userSelectedFactors[yy]);
     const factorName = `${i18n.t('Factor')} ${factorNum}`;
     tempArrayHeader2.push(factorName, factorName);
-    tempSubHeader.push(i18n.t('Z-score'), i18n.t('Rank'));
+    tempSubHeader.push(i18n.t('Z score'), i18n.t('Rank'));
   }
 
   factorScoreRanksArray.unshift(

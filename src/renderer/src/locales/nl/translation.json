@@ -543,5 +543,6 @@
   "Check the spreadsheet type": "Controleer het spreadsheettype",
   "Participant data and Q sort data do not match": "Deelnemersgegevens en Q-sorteergegevens komen niet overeen",
   "One or more participants have a different number of Q sorts values than the project design": "Een of meer deelnemers hebben een ander aantal Q-sorteerwaarden dan het projectontwerp",
-  "The 'version' tab is missing from the spreadsheet": "Het tabblad 'versie' ontbreekt in het spreadsheet"
+  "The 'version' tab is missing from the spreadsheet": "Het tabblad 'versie' ontbreekt in het spreadsheet",
+  "Sort Values": "Sorteerwaarden"
 }

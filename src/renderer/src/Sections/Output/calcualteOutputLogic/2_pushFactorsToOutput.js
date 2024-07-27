@@ -214,7 +214,7 @@ const pushFactorsToOutputArray = (outputData, sheetNamesXlsx, colSizes) => {
   //  FOR EACH FACTOR LOOP
   for (let j = 0; j < analysisOutput.length; j += 1) {
     // FACTOR WEIGHTS TABLES STARTS FROM HERE
-    const factorWeightFactorArray = [[i18n.t('Nm'), i18n.t('Q-Sort'), i18n.t('Weight')]];
+    const factorWeightFactorArray = [[i18n.t('Nm'), i18n.t('Q sort'), i18n.t('Weight')]];
     const factorWeightName = userSelectedFactors[j];
     for (let w = 0; w < sortWeights.length; w += 1) {
       const factorWeightTempArray = [];
@@ -240,7 +240,7 @@ const pushFactorsToOutputArray = (outputData, sheetNamesXlsx, colSizes) => {
 
     // pull correlations from table
     const miniCorrelationArray = [];
-    const miniCorrelationHeaderArray = [i18n.t('Q-Sort')];
+    const miniCorrelationHeaderArray = [i18n.t('Q sort')];
     const miniCorrelationHeaderIndex = correlationTableArrayFormatted2[0];
 
     // loop through all sig Sorts

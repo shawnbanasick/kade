@@ -555,5 +555,6 @@
   "Check the spreadsheet type": "Vérifiez le type de feuille de calcul",
   "Participant data and Q sort data do not match": "Les données des participants et les données de tri Q ne correspondent pas",
   "One or more participants have a different number of Q sorts values than the project design": "Un ou plusieurs participants ont un nombre de valeurs de tri Q différent de la conception du projet",
-  "The 'version' tab is missing from the spreadsheet": "L'onglet 'version' est manquant dans la feuille de calcul"
+  "The 'version' tab is missing from the spreadsheet": "L'onglet 'version' est manquant dans la feuille de calcul",
+  "Sort Values": "Valeurs de tri"
 }

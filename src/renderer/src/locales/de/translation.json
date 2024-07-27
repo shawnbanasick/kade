@@ -553,5 +553,6 @@
   "Check the spreadsheet type": "Überprüfen Sie den Tabellentyp",
   "Participant data and Q sort data do not match": "Teilnehmerdaten und Q-Sort-Daten stimmen nicht überein",
   "One or more participants have a different number of Q sorts values than the project design": "Ein oder mehrere Teilnehmer haben eine andere Anzahl von Q-Sort-Werten als das Projekt-Design",
-  "The 'version' tab is missing from the spreadsheet": "Das Tabellenblatt 'Version' fehlt in der Tabelle"
+  "The 'version' tab is missing from the spreadsheet": "Das Tabellenblatt 'Version' fehlt in der Tabelle",
+  "Sort Values": "Sortierwerte"
 }
