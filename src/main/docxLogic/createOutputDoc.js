@@ -44,8 +44,7 @@ import newSaveDocumentToFile from './newSaveDocumentToFile';
 // let filetype = "plainText";
 
 const generateOutputDoc = (translatedTextObj) => {
-  /*
-    let saveAsZip = outputState.getState().willIncludeDataFiles;
+  let saveAsZip = outputState.getState().willIncludeDataFiles;
   const willUseHyperlinks = outputState.getState().willUseHyperlinks;
   const willIncludeOverview = outputState.getState().willIncludeOverview;
   const willIncludeStatements = outputState.getState().willIncludeStatements;
@@ -70,43 +69,13 @@ const generateOutputDoc = (translatedTextObj) => {
   const willIncludeDist = outputState.getState().willIncludeDist;
   const willIncludeConsensus = outputState.getState().willIncludeConsensus;
   const willIncludeRelRanks = outputState.getState().willIncludeRelRanks;
-*/
-
-  const docOptions = {
-    saveAsZip: outputState.getState().willIncludeDataFiles,
-    willUseHyperlinks: outputState.getState().willUseHyperlinks,
-    willIncludeOverview: outputState.getState().willIncludeOverview,
-    willIncludeStatements: outputState.getState().willIncludeStatements,
-    willIncludeQsorts: outputState.getState().willIncludeQsorts,
-    useTables: outputState.getState().useTables,
-    useZebra: outputState.getState().useZebra,
-    willIncludeCorrMatrix: outputState.getState().willIncludeCorrMatrix,
-    willIncludeThreshold: outputState.getState().willIncludeThreshold,
-    correlationThreshold: outputState.getState().correlationThreshold,
-    useHyperlinks: outputState.getState().useHyperlinks,
-    willIncludeUnrotFacMatrix: outputState.getState().willIncludeUnrotFacMatrix,
-    willIncludeCumulComm: outputState.getState().willIncludeCumulComm,
-    willIncludeFacLoadings: outputState.getState().willIncludeFacLoadings,
-    willIncludeFacLoadingsTable: outputState.getState().willIncludeFacLoadingsTable,
-    willIncludeFreeDist: outputState.getState().willIncludeFreeDist,
-    willIncludeFacScoreRanks: outputState.getState().willIncludeFacScoreRanks,
-    willIncludeFacScoreCorr: outputState.getState().willIncludeFacScoreCorr,
-    willIncludeFactors: outputState.getState().willIncludeFactors,
-    willIncludeFacDiffs: outputState.getState().willIncludeFacDiffs,
-    willIncludeConDis: outputState.getState().willIncludeConDis,
-    willIncludeFacChar: outputState.getState().willIncludeFacChar,
-    willIncludeDist: outputState.getState().willIncludeDist,
-    willIncludeConsensus: outputState.getState().willIncludeConsensus,
-    willIncludeRelRanks: outputState.getState().willIncludeRelRanks,
-    dateTime: getDateTime(),
-  };
 
   //let data = dataSource();
   const data = cloneDeep(calcState.getState().outputData);
 
-  // let projectName = data[0][2][1];
-  // let version = data[0][19][1];
-  // let dateTime = getDateTime();
+  let projectName = data[0][2][1];
+  let version = data[0][19][1];
+  let dateTime = getDateTime();
 
   let updateLinksBool = false;
   if (willUseHyperlinks === true) {

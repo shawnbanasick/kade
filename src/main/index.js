@@ -156,6 +156,12 @@ app.whenReady().then(() => {
     // });
   });
 
+  ipcMain.handle('large-data', async (event, arrayBuffer, path) => {
+    const docxContent = JSON.parse(Buffer.from(arrayBuffer).toString('utf-8'));
+
+    // console.log('Received large data array:', docxContent);
+  });
+
   ipcMain.handle('show-saveSvg-dialog', async (event, defaultPath) => {
     const result = await dialog.showSaveDialog({
       title: 'Save SVG',

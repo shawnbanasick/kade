@@ -31,6 +31,12 @@ if (process.contextIsolated) {
         }),
     });
     contextBridge.exposeInMainWorld('bridge', {
+      sendLargeData: (channel, data, path) => {
+        ipcRenderer.invoke(channel, data, path);
+        // const validChannels = ['large-data'];
+        // if (validChannels.includes(channel)) {
+        // }
+      },
       staData: (content) => {
         ipcRenderer.on('staData', content);
       },
