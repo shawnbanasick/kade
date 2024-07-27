@@ -12,6 +12,7 @@ import openTxtFile from './openTxtFile';
 import openJsonFile from './openJsonFile';
 import saveSvgFile from './saveSvgFile';
 import createResultsDocx from './createResultsDocx';
+import createOutputDoc from './docxLogic/createOutputDoc';
 
 const fs = require('fs');
 
@@ -143,7 +144,7 @@ app.whenReady().then(() => {
     // const docxContent = Buffer.from(arrayBuffer).toString('utf-8');
     // const docxContent = new TextDecoder().decode(arrayBuffer);
     console.log(JSON.stringify(arrayBuffer));
-    createResultsDocx(filePath);
+    createResultsDocx(JSON.stringify(arrayBuffer));
     // let file2 = file[0];
     // return new Promise((resolve, reject) => {
     //   fs.writeFile(filePath, file2, (err) => {
@@ -158,7 +159,7 @@ app.whenReady().then(() => {
 
   ipcMain.handle('large-data', async (event, arrayBuffer, path) => {
     const docxContent = JSON.parse(Buffer.from(arrayBuffer).toString('utf-8'));
-
+    createOutputDoc(docxContent);
     // console.log('Received large data array:', docxContent);
   });
 

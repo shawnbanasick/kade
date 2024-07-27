@@ -38,6 +38,7 @@ const pushUnrotatedFactorsTableToOutputArray = function (outputData, sheetNamesX
     ['', '']
   );
 
+  console.log(JSON.stringify(unrotFactorMatrix));
   outputData.push(unrotFactorMatrix);
 
   console.log('dispatch - 5 - pushUnrotatedFactorsTable complete');

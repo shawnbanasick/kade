@@ -4,23 +4,33 @@ import coreState from '../../GlobalState/coreState';
 import docxTestFile from '../../Output/docxTestFile';
 import calcState from '../../GlobalState/calcState';
 import cloneDeep from 'lodash/cloneDeep';
-
-const data = JSON.stringify(calcState.getState().outputData);
+import outputState from '../../GlobalState/outputState';
 
 // get project name
-const projectName = coreState.getState().projectName;
-const date = currentDate();
-const time = currentTime();
-const dateTime = `${date}_${time}`;
-const completeFileName = `${projectName}-scree_plot_${dateTime}`;
+// const date = currentDate();
+// const time = currentTime();
+// const dateTime = `${date}_${time}`;
+// const completeFileName = `${projectName}-scree_plot_${dateTime}`;
 
-const downloadSvgImage = async () => {
+const downloadSvgImage = async (docOptions, translatedTextObj) => {
+  const data = calcState.getState().outputData;
+  const projectName = coreState.getState().projectName;
   // const data = JSON.stringify([1, [2, 2], 3]);
-  const newBlob = await new Blob([data], { type: 'text/plain' });
+
+  const partNumArray = outputState.getState().partNumArray;
+
+  const conObj = {
+    docOptions,
+    translatedTextObj,
+    data: [...data],
+  };
+
+  // console.log(JSON.stringify(conObj, null, 2));
+  const newBlob = await new Blob([JSON.stringify(conObj)], { type: 'text/plain' });
   const arrayBuffer = await new Response(newBlob).arrayBuffer();
 
   // get element
-  const preface = '<?xml version="1.0" standalone="no"?>\r\n';
+  // const preface = '<?xml version="1.0" standalone="no"?>\r\n';
   // const svgContent = new Blob([preface, docxTestFile], {});
   // const docxContent = new TextEncoder().encode(docxTestFile);
 

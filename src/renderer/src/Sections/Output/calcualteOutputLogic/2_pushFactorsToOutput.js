@@ -17,7 +17,7 @@ import cloneDeep from 'lodash/cloneDeep';
 const pushFactorsToOutputArray = (outputData, sheetNamesXlsx, colSizes) => {
   // pulls array - ["factor 1", "factor 2", "factor 3", "factor 4", "factor 5", "factor 6", "factor 7", "factor 8"]
   let userSelectedFactors = cloneDeep(outputState.getState().userSelectedFactors);
-  console.log(JSON.stringify(userSelectedFactors));
+  // console.log(JSON.stringify(userSelectedFactors));
   const numFactorsSelectedForOutput = userSelectedFactors.length;
   const results = cloneDeep(loadingState.getState().currentLoadingsTable);
 
@@ -122,7 +122,7 @@ const pushFactorsToOutputArray = (outputData, sheetNamesXlsx, colSizes) => {
   const analysisOutput2 = cloneDeep(calcState.getState().analysisOutput);
   const analysisOutput = cloneDeep(analysisOutput2);
   const sigSortsArray = cloneDeep(calcState.getState().sigSortsArray);
-  console.log(JSON.stringify(sigSortsArray));
+  // console.log(JSON.stringify(sigSortsArray));
   const sortsAsNumbers = cloneDeep(calcState.getState().sortsAsNumbers);
   const qavRespondentNames = cloneDeep(coreState.getState().respondentNames);
   const tableHeader = cloneDeep(qavRespondentNames);
@@ -190,7 +190,7 @@ const pushFactorsToOutputArray = (outputData, sheetNamesXlsx, colSizes) => {
   calcState.setState({ sheetNamesHolder2: sheetNamesHolder2 });
   calcState.setState({ sheetNamesHolder3: sheetNamesHolder3 });
 
-  console.log('sigSortsArray: ', JSON.stringify(sigSortsArray));
+  // console.log('sigSortsArray: ', JSON.stringify(sigSortsArray));
   // pull raw sorts for factor tables
   const rawSorts = [];
   for (let p = 0; p < sigSortsArray.length; p += 1) {
@@ -204,7 +204,7 @@ const pushFactorsToOutputArray = (outputData, sheetNamesXlsx, colSizes) => {
     rawSorts.push(tempArray);
   }
 
-  console.log('rawSorts', JSON.stringify(rawSorts));
+  // console.log('rawSorts', JSON.stringify(rawSorts));
 
   // for each factor check get a sigSort (if another remains)
   // get the raw sort for that specific sigSort
@@ -304,8 +304,8 @@ const pushFactorsToOutputArray = (outputData, sheetNamesXlsx, colSizes) => {
         analysisOutput[j][m].sortValue
       );
 
-      console.log(JSON.stringify(rawSorts[j]));
-      console.log(JSON.stringify(sigSortsArray[j]));
+      // console.log(JSON.stringify(rawSorts[j]));
+      // console.log(JSON.stringify(sigSortsArray[j]));
 
       const sLen = rawSorts[j].length;
       for (let s = 0; s < sLen; s += 1) {

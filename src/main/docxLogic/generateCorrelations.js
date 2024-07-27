@@ -6,17 +6,50 @@ import {
   InternalHyperlink,
   AlignmentType,
 } from 'docx';
-import outputState from '../../GlobalState/outputState';
+// import outputState from '../../GlobalState/outputState';
 import cloneDeep from 'lodash/cloneDeep';
 
 // import dataSource from "./dataSource";
 import chunk from 'lodash/chunk';
 
 const generateCorrelations = (item, useHyperlinks, useZebra, useHightlights, threshold) => {
-  const partNumArray = cloneDeep(outputState.getState().partNumArray);
-
   const iShiftArray = [0, 15, 30, 45, 60, 75, 90, 105, 120, 135, 150, 165, 180, 195, 210];
-
+  const partNumArray = [
+    '1 - 15',
+    '16 - 30',
+    '31 - 45',
+    '46 - 60',
+    '61 - 75',
+    '76 - 90',
+    '91 - 105',
+    '106 - 120',
+    '121 - 135',
+    '136 - 150',
+    '151 - 165',
+    '166 - 180',
+    '181 - 195',
+    '196 - 210',
+    '211 - 225',
+    '226 - 240',
+    '241 - 255',
+    '256 - 270',
+    '271 - 285',
+    '286 - 300',
+    '301 - 315',
+    '316 - 330',
+    '331 - 345',
+    '346 - 360',
+    '361 - 375',
+    '376 - 390',
+    '391 - 405',
+    '406 - 420',
+    '421 - 435',
+    '436 - 450',
+    '451 - 465',
+    '466 - 480',
+    '481 - 495',
+    '496 - 510',
+  ];
   const threshold2 = threshold;
   const posColor = '77de51';
   // const posColor2 = posColor;

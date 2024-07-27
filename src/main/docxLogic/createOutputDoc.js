@@ -1,11 +1,19 @@
-import { Document, TextRun, Paragraph, TableOfContents, Bookmark, HeadingLevel } from 'docx';
+import {
+  Document,
+  Packer,
+  TextRun,
+  Paragraph,
+  TableOfContents,
+  Bookmark,
+  HeadingLevel,
+} from 'docx';
 import getDocParagraphStyles from './getDocParagraphStyles';
 import getDocNumberingStyles from './getDocNumberingStyles';
 import getSection1Headers from './getSection1Headers';
 import getSection1Footers from './getSectionFooters';
 import getSection1Properties from './getSection1Properties';
 import getDateTime from './getDateTime';
-import saveDocumentToFile from './saveDocumentToFile';
+// import saveDocumentToFile from './saveDocumentToFile';
 import generateFrontMatter from './generateFrontMatter';
 import generateStatements from './generateStatements';
 import generateCorrelations from './generateCorrelations';
@@ -32,10 +40,13 @@ import generatePtConDis from './generatePtConDis';
 import generatePtDisting from './generatePtDisting';
 import generatePtConsensus from './generatePtConsensus';
 import generatePtRelRanks from './generatePtRelRanks';
-import outputState from '../../GlobalState/outputState';
-import calcState from '../../GlobalState/calcState';
-import cloneDeep from 'lodash/cloneDeep';
-import newSaveDocumentToFile from './newSaveDocumentToFile';
+import fs from 'fs';
+import { dialog } from 'electron';
+
+// import outputState from '../../GlobalState/outputState';
+// import calcState from '../../GlobalState/calcState';
+// import cloneDeep from 'lodash/cloneDeep';
+// import newSaveDocumentToFile from './newSaveDocumentToFile';
 // import saveDocumentToZip from './saveDocumentToZip';
 
 // tableCompat = MS Word, LibreOffice Writer
@@ -43,7 +54,8 @@ import newSaveDocumentToFile from './newSaveDocumentToFile';
 // let filetype = "tableCompat";
 // let filetype = "plainText";
 
-const generateOutputDoc = (translatedTextObj) => {
+const generateOutputDoc = async (conObj) => {
+  /*
   let saveAsZip = outputState.getState().willIncludeDataFiles;
   const willUseHyperlinks = outputState.getState().willUseHyperlinks;
   const willIncludeOverview = outputState.getState().willIncludeOverview;
@@ -69,13 +81,48 @@ const generateOutputDoc = (translatedTextObj) => {
   const willIncludeDist = outputState.getState().willIncludeDist;
   const willIncludeConsensus = outputState.getState().willIncludeConsensus;
   const willIncludeRelRanks = outputState.getState().willIncludeRelRanks;
-
+  */
   //let data = dataSource();
-  const data = cloneDeep(calcState.getState().outputData);
+  const data = conObj.data; // cloneDeep(calcState.getState().outputData);
 
-  let projectName = data[0][2][1];
+  // console.log(JSON.stringify(data, null, 2));
+
+  let projectName = 'lipset';
+  let projectName2 = data[0][2][1];
+  console.log(projectName2);
   let version = data[0][19][1];
   let dateTime = getDateTime();
+  const docOptions = conObj.docOptions;
+  const translatedTextObj = { ...conObj.translatedTextObj };
+  const {
+    saveAsZip,
+    willUseHyperlinks,
+    willIncludeOverview,
+    willIncludeStatements,
+    willIncludeQsorts,
+    useTables,
+    useZebra,
+    willIncludeCorrMatrix,
+    willIncludeThreshold,
+    correlationThreshold,
+    useHyperlinks,
+    willIncludeUnrotFacMatrix,
+    willIncludeCumulComm,
+    willIncludeFacLoadings,
+    willIncludeFacLoadingsTable,
+    willIncludeFreeDist,
+    willIncludeFacScoreRanks,
+    willIncludeFacScoreCorr,
+    willIncludeFactors,
+    willIncludeFacDiffs,
+    willIncludeConDis,
+    willIncludeFacChar,
+    willIncludeDist,
+    willIncludeConsensus,
+    willIncludeRelRanks,
+  } = docOptions;
+
+  console.log(willIncludeStatements);
 
   let updateLinksBool = false;
   if (willUseHyperlinks === true) {
@@ -93,7 +140,7 @@ const generateOutputDoc = (translatedTextObj) => {
         children: [
           new Bookmark({
             id: 'anchorForTableOfContents',
-            children: [new TextRun(projectName.toString())],
+            children: [new TextRun(projectName)],
           }),
         ],
         spacing: {
@@ -109,7 +156,7 @@ const generateOutputDoc = (translatedTextObj) => {
     childrenArray.push(
       new Paragraph({
         heading: HeadingLevel.TITLE,
-        children: [new TextRun(projectName.toString())],
+        children: [new TextRun(projectName)],
         spacing: {
           after: 300,
         },
@@ -148,7 +195,8 @@ const generateOutputDoc = (translatedTextObj) => {
         useHyperlinks,
         useZebra,
         willIncludeThreshold,
-        correlationThreshold
+        correlationThreshold,
+        conObj.partNumArray
       );
       text3b.forEach((item) => {
         childrenArray.push(...item);
@@ -316,7 +364,22 @@ const generateOutputDoc = (translatedTextObj) => {
     // saveDocumentToZip(doc, 'KADE_output_file.zip');
   } else {
     // saveDocumentToFile(doc, 'KADE_output_file.docx');
-    newSaveDocumentToFile(doc, 'KADE_output_file.docx');
+    // newSaveDocumentToFile(doc, 'KADE_output_file.docx');
+    Packer.toBuffer(doc).then(async (doc) => {
+      const { canceled, filePath } = await dialog.showSaveDialog({
+        defaultPath: 'test.docx',
+      });
+
+      if (!canceled && filePath) {
+        fs.writeFileSync(filePath, doc, (err) => {
+          if (err) {
+            console.error('Error saving file:', err);
+          } else {
+            console.log('File saved successfully:', filePath);
+          }
+        });
+      }
+    });
   }
 };
 export default generateOutputDoc;

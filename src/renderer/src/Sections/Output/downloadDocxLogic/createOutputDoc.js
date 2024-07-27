@@ -102,12 +102,13 @@ const generateOutputDoc = (translatedTextObj) => {
   };
 
   //let data = dataSource();
-  const data = cloneDeep(calcState.getState().outputData);
+  // const data = cloneDeep(calcState.getState().outputData);
 
   // let projectName = data[0][2][1];
   // let version = data[0][19][1];
   // let dateTime = getDateTime();
 
+  /*
   let updateLinksBool = false;
   if (willUseHyperlinks === true) {
     updateLinksBool = true;
@@ -349,5 +350,7 @@ const generateOutputDoc = (translatedTextObj) => {
     // saveDocumentToFile(doc, 'KADE_output_file.docx');
     newSaveDocumentToFile(doc, 'KADE_output_file.docx');
   }
+  */
+  newSaveDocumentToFile(docOptions, translatedTextObj);
 };
 export default generateOutputDoc;
