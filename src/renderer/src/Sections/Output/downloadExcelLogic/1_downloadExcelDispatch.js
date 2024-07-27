@@ -9,7 +9,8 @@ const downloadExcelDispatch = () => {
   const sheetNamesXlsx = calcState.getState().sheetNamesXlsx;
 
   // needs dataXlsx, sheetNamesXlsx, colSizes from store
-  downloadExcelOutputFile(dataXlsx, sheetNamesXlsx, colSizes);
+  console.log(JSON.stringify(dataXlsx));
+  // downloadExcelOutputFile(dataXlsx, sheetNamesXlsx, colSizes);
 };
 
 export default downloadExcelDispatch;

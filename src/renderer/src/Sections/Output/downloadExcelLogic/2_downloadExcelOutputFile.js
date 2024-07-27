@@ -96,27 +96,27 @@ const downloadExcelOutputFile = async (dataXlsx, sheetNamesXlsx, colSizes) => {
     nameFile = `KADE_results_${projectName}.xlsx`;
   }
 
-  const path = await dialog.showSaveDialog(mainWindow, {
-    title: 'Save file as',
-    defaultPath: `*/${nameFile}`,
-    filters: [
-      {
-        name: 'xlsx',
-        extensions: ['xlsx'],
-      },
-    ],
-  });
+  // const path = await dialog.showSaveDialog(mainWindow, {
+  //   title: 'Save file as',
+  //   defaultPath: `*/${nameFile}`,
+  //   filters: [
+  //     {
+  //       name: 'xlsx',
+  //       extensions: ['xlsx'],
+  //     },
+  //   ],
+  // });
 
-  // error catch for dialog box cancel
-  const filePath = path.filePath;
-  if (filePath) {
-    XLSX.writeFile(wb, filePath);
-    dialog.showMessageBox(mainWindow, {
-      message: `File saved to:`,
-      detail: `${filePath}`,
-      buttons: ['OK'],
-    });
-  }
+  // // error catch for dialog box cancel
+  // const filePath = path.filePath;
+  // if (filePath) {
+  //   XLSX.writeFile(wb, filePath);
+  //   dialog.showMessageBox(mainWindow, {
+  //     message: `File saved to:`,
+  //     detail: `${filePath}`,
+  //     buttons: ['OK'],
+  //   });
+  // }
 };
 
 export default downloadExcelOutputFile;

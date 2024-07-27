@@ -13,10 +13,11 @@ import openJsonFile from './openJsonFile';
 import saveSvgFile from './saveSvgFile';
 import createResultsDocx from './createResultsDocx';
 import createOutputDoc from './docxLogic/createOutputDoc';
+import { windowStateKeeper } from './windowStateKeeper';
+import settings from 'electron-settings';
 
 const fs = require('fs');
 
-// import fs from 'fs';
 // import i18nextBackend from 'i18next-electron-fs-backend';
 //import installExtension, { REACT_DEVELOPER_TOOLS } from 'electron-devtools-installer';
 
@@ -25,11 +26,15 @@ const fs = require('fs');
 let win;
 let menuBuilder;
 
-function createWindow() {
+async function createWindow() {
+  const mainWindowStateKeeper = await windowStateKeeper('main');
+
   // Create the browser window.
   const mainWindow = new BrowserWindow({
-    width: 1000,
-    height: 900,
+    x: mainWindowStateKeeper.x,
+    y: mainWindowStateKeeper.y,
+    width: mainWindowStateKeeper.width,
+    height: mainWindowStateKeeper.height,
     show: false,
     autoHideMenuBar: false,
     ...(process.platform === 'linux' ? { icon } : {}),
@@ -43,7 +48,11 @@ function createWindow() {
       enableRemoteModule: false,
     },
   });
+  if (mainWindowStateKeeper.isMaximized === true) {
+    mainWindow.maximize();
+  }
 
+  mainWindowStateKeeper.track(mainWindow);
   // Sets up main.js bindings for our i18next backend
   // i18nextBackend.mainBindings(ipcMain, win, fs);
 
@@ -70,7 +79,7 @@ function createWindow() {
 
   // Set up necessary bindings to update the menu items
   // based on the current language selected
-  i18nextMainBackend.on('initialized', (loaded) => {
+  i18nextMainBackend.on('initialized', () => {
     i18nextMainBackend.changeLanguage('en');
     i18nextMainBackend.off('initialized'); // Remove listener to this event as it's not needed anymore
   });
@@ -84,6 +93,7 @@ function createWindow() {
   i18nextMainBackend.on('languageChanged', (lng) => {
     if (i18nextMainBackend.isInitialized) {
       console.log('Language changed to', lng);
+      settings.set('currentLanguage', lng);
       menuBuilder.buildMenu(i18nextMainBackend);
       mainWindow.webContents.send('languageSignal', lng);
     }
@@ -128,7 +138,6 @@ app.whenReady().then(() => {
 
   ipcMain.handle('save-svg', async (event, arrayBuffer, filePath) => {
     const svgContent = Buffer.from(arrayBuffer).toString('utf-8');
-    console.log(JSON.stringify(svgContent));
     return new Promise((resolve, reject) => {
       fs.writeFile(filePath, svgContent, (err) => {
         if (err) {
@@ -141,26 +150,12 @@ app.whenReady().then(() => {
   });
 
   ipcMain.handle('save-docx', async (event, arrayBuffer, filePath) => {
-    // const docxContent = Buffer.from(arrayBuffer).toString('utf-8');
-    // const docxContent = new TextDecoder().decode(arrayBuffer);
-    console.log(JSON.stringify(arrayBuffer));
     createResultsDocx(JSON.stringify(arrayBuffer));
-    // let file2 = file[0];
-    // return new Promise((resolve, reject) => {
-    //   fs.writeFile(filePath, file2, (err) => {
-    //     if (err) {
-    //       reject(err);
-    //     } else {
-    //       resolve('File saved successfully');
-    //     }
-    //   });
-    // });
   });
 
   ipcMain.handle('large-data', async (event, arrayBuffer, path) => {
     const docxContent = JSON.parse(Buffer.from(arrayBuffer).toString('utf-8'));
     createOutputDoc(docxContent);
-    // console.log('Received large data array:', docxContent);
   });
 
   ipcMain.handle('show-saveSvg-dialog', async (event, defaultPath) => {

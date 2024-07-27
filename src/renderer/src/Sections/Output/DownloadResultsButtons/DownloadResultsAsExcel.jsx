@@ -4,33 +4,38 @@ import { Button, Header, Modal } from 'semantic-ui-react';
 import downloadExcelDispatch from '../downloadExcelLogic/1_downloadExcelDispatch';
 import GeneralButton from '../../../Utils/GeneralButton';
 import { useTranslation } from 'react-i18next';
-import outputState from '../../GlobalState/outputState';
 import XlsxIcon from '../../images/XLSX_Icon2.svg';
+import outputState from '../../GlobalState/outputState';
 
 const DownloadResultsAsExcel = () => {
   const { t } = useTranslation();
+  const updateShowDocxOptions = outputState((state) => state.updateShowDocxOptions);
+  const updateDownloadDocxButtonActive = outputState(
+    (state) => state.updateDownloadDocxButtonActive
+  );
+  const userSelectedFactors = outputState((state) => state.userSelectedFactors);
 
   const [localStore, setLocalStore] = useState({
     modalOpen: false,
+    active: false,
   });
 
   const handleOpen = () => {
-    const userSelectedFactors = outputState((state) => state.userSelectedFactors);
-
     if (userSelectedFactors.length === 0) {
-      localStore.modalOpen = true;
+      setLocalStore({ modalOpen: true, active: false });
     } else {
-      outputState.showDocxOptions = false;
-      outputState.downloadDocxButtonActive = false;
+      updateShowDocxOptions(false);
+      updateDownloadDocxButtonActive(false);
       downloadExcelDispatch();
+      setLocalStore({ modalOpen: false, active: true });
     }
   };
 
   const handleClose = () => {
-    localStore.modalOpen = false;
+    setLocalStore({ modalOpen: false, active: false });
   };
 
-  const { active } = localStore;
+  const active = localStore.active;
   return (
     <Modal
       dimmer={'blurring'}
