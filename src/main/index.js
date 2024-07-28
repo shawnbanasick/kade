@@ -136,14 +136,40 @@ app.whenReady().then(() => {
 
   // Save Files
 
-  ipcMain.handle('save-svg', async (event, arrayBuffer, filePath) => {
-    const svgContent = Buffer.from(arrayBuffer).toString('utf-8');
+  ipcMain.handle('save-img', async (event, arrayBuffer, filePath) => {
+    const imgContent = Buffer.from(arrayBuffer).toString('utf-8');
     return new Promise((resolve, reject) => {
-      fs.writeFile(filePath, svgContent, (err) => {
+      fs.writeFile(filePath, imgContent, (err) => {
         if (err) {
           reject(err);
         } else {
           resolve('File saved successfully');
+          dialog.showMessageBoxSync({
+            title: 'KADE',
+            type: 'info',
+            message: `File saved to:`,
+            detail: `${filePath}`,
+            buttons: ['OK'],
+          });
+        }
+      });
+    });
+  });
+
+  ipcMain.handle('save-png', async (event, imgContent, filePath) => {
+    return new Promise((resolve, reject) => {
+      fs.writeFile(filePath, imgContent, 'base64', (err) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve('File saved successfully');
+          dialog.showMessageBoxSync({
+            title: 'KADE',
+            type: 'info',
+            message: `File saved to:`,
+            detail: `${filePath}`,
+            buttons: ['OK'],
+          });
         }
       });
     });
@@ -164,6 +190,15 @@ app.whenReady().then(() => {
       title: 'Save SVG',
       defaultPath: defaultPath || 'untitled.svg',
       filters: [{ name: 'SVG Files', extensions: ['svg'] }],
+    });
+    return result.filePath;
+  });
+
+  ipcMain.handle('show-savePng-dialog', async (event, defaultPath) => {
+    const result = await dialog.showSaveDialog({
+      title: 'Save PNG',
+      defaultPath: defaultPath || 'untitled.png',
+      filters: [{ name: 'PNG Files', extensions: ['png'] }],
     });
     return result.filePath;
   });

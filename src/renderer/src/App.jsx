@@ -8,10 +8,10 @@ import Factors from './Sections/Factors/Factors';
 import Rotation from './Sections/Rotation/Rotation';
 import Loadings from './Sections/Loadings/Loadings';
 import Output from './Sections/Output/Output';
-// import ProjectHistory from './Sections/ProjectHistory/ProjectHistory';
-// import Help from './Sections/Help/Help';
+import ProjectHistory from './Sections/ProjectHistory/ProjectHistory';
+import Help from './Sections/Help/Help';
 import License from './Sections/License/License';
-// import ClearProject from './Sections//ClearProject/ClearProject';
+import ClearProject from './Sections//ClearProject/ClearProject';
 // import getInputState from "./Sections/GlobalState/getInputState";
 import UpdateModal from './Sections/Start/UpdateModal';
 import ErrorBoundary from './Utils/ErrorBoundary';
@@ -271,7 +271,10 @@ const App = () => {
             {viewRotation && <Rotation view={viewRotation} />}
             {viewLoadings && <Loadings view={viewLoadings} />}
             {viewOutput && <Output view={viewOutput} />}
+            {viewProjectHistory && <ProjectHistory view={viewProjectHistory} />}
             {viewLicense && <License view={viewLicense} />}
+            {viewClearProject && <ClearProject view={viewClearProject} />}
+            {viewHelp && <Help view={viewHelp} />}
           </ActionWindow>
         </Split>
       </ErrorBoundary>
@@ -280,10 +283,6 @@ const App = () => {
 };
 
 export default App;
-
-// {viewClearProject && <ClearProject view={viewClearProject} />}
-// {viewProjectHistory && <ProjectHistory view={viewProjectHistory} />}
-// {viewHelp && <Help view={viewHelp} />}
 
 const Header = styled.header`
   box-sizing: border-box;

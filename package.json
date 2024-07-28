@@ -47,6 +47,7 @@
     "blob-to-buffer": "^1.2.9",
     "buffer": "^6.0.3",
     "d3": "^7.9.0",
+    "d3-svg-to-png": "^0.3.1",
     "docx": "^8.5.0",
     "dotenv": "^16.4.5",
     "electron-fetch": "^1.9.1",

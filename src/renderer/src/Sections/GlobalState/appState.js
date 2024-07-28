@@ -28,7 +28,7 @@ const appState = create(
 
     updateVersion: '',
 
-    version: '1.3.0',
+    version: '1.4.0',
     viewAttribution: false,
     viewData: false,
     viewClearProject: false,

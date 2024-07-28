@@ -1,5 +1,4 @@
-import React from 'react';
-import { view, store } from '@risingstack/react-easy-state';
+import React, { useState } from 'react';
 import { Button, Header, Modal } from 'semantic-ui-react';
 import { ToastContainer, toast, Zoom } from 'react-toastify';
 import initializeAppState from '../GlobalState/initializeAppState';
@@ -17,40 +16,40 @@ import initializeDataDisplayState from '../GlobalState/initializeDataDisplayStat
 import GeneralButton from '../../Utils/GeneralButton';
 import { useTranslation } from 'react-i18next';
 
-const localStore = store({
-  modalOpen: false,
-});
-
-const handleOpen = () => {
-  localStore.modalOpen = true;
-};
-
-const handleClose = () => {
-  localStore.modalOpen = false;
-};
-
-const clearAnalysis = (projectClearedTrans) => {
-  localStore.modalOpen = false;
-  notify(projectClearedTrans);
-  initializeInputState();
-  initializeAppState();
-  initializeCorrelationState();
-  initializeDataDisplayState();
-  initializeFactorState();
-  initializeRotationState();
-  initializeLoadingState();
-  initializeOutPutState();
-  initializeProjectHistoryState();
-  initializeVizState();
-  initializeCalcState();
-  initializeCoreState();
-};
-
-function notify(projectClearedTrans) {
-  toast.success(projectClearedTrans);
-}
-
 const ClearProjectModal = () => {
+  const [localStore, setLocalStore] = useState({
+    modalOpen: false,
+  });
+
+  const handleOpen = () => {
+    setLocalStore({ modalOpen: true });
+  };
+
+  const handleClose = () => {
+    setLocalStore({ modalOpen: false });
+  };
+
+  const clearAnalysis = (projectClearedTrans) => {
+    setLocalStore({ modalOpen: false });
+    notify(projectClearedTrans);
+    initializeInputState();
+    initializeAppState();
+    initializeCorrelationState();
+    initializeDataDisplayState();
+    initializeFactorState();
+    initializeRotationState();
+    initializeLoadingState();
+    initializeOutPutState();
+    initializeProjectHistoryState();
+    initializeVizState();
+    initializeCalcState();
+    initializeCoreState();
+  };
+
+  async function notify(projectClearedTrans) {
+    toast.success(projectClearedTrans);
+  }
+
   const { t } = useTranslation();
   const projectClearedTrans = t('Project Cleared');
 

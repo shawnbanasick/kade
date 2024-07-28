@@ -31,7 +31,7 @@ const downloadSvgImage = async () => {
   }
 
   try {
-    const result = await window.electronAPI.saveSVG(arrayBuffer, filepath);
+    const result = await window.electronAPI.saveIMG(arrayBuffer, filepath);
     console.log(result);
   } catch (error) {
     console.error('Failed to save file:', error);

@@ -12,10 +12,12 @@ if (process.contextIsolated) {
       openZipFile: () => ipcRenderer.send('dialog:openZipFile'),
       openTxtFile: () => ipcRenderer.send('dialog:openTxtFile'),
       openJsonFile: () => ipcRenderer.send('dialog:openJsonFile'),
-      saveSvgFile: () => ipcRenderer.send('showSaveDialogSync'),
-      saveSVG: (svgContent, filePath) => ipcRenderer.invoke('save-svg', svgContent, filePath),
+      saveImgFile: () => ipcRenderer.send('showSaveDialogSync'),
+      saveIMG: (imgContent, filePath) => ipcRenderer.invoke('save-img', imgContent, filePath),
+      savePNG: (imgContent, filePath) => ipcRenderer.invoke('save-png', imgContent, filePath),
       saveDocx: (doc, filePath) => ipcRenderer.invoke('save-docx', doc, filePath),
       showSaveSvgDialog: (defaultPath) => ipcRenderer.invoke('show-saveSvg-dialog', defaultPath),
+      showSavePngDialog: (defaultPath) => ipcRenderer.invoke('show-savePng-dialog', defaultPath),
       showSaveDocxDialog: (defaultPath) => ipcRenderer.invoke('show-saveDocx-dialog', defaultPath),
     });
 
