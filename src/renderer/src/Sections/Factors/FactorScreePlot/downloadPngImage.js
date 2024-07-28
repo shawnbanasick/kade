@@ -1,4 +1,3 @@
-import { saveSvgAsPng } from 'save-svg-as-png';
 import currentDate from '../../../Utils/currentDate1';
 import currentTime from '../../../Utils/currentTime1';
 import coreState from '../../GlobalState/coreState';
@@ -20,17 +19,8 @@ const downloadPngImage = () => {
     download: false,
     quality: 1,
   }).then(async (fileData) => {
-    console.log(JSON.stringify(fileData));
-    // const pngContent = new Blob(fileData, {
-    //   type: 'image/png;charset=utf-8',
-    // });
-
-    // const pngContent = Buffer.from(fileData.toString('utf-8'), 'base64');
-
-    // const arrayBuffer = new Response(pngContent).arrayBuffer();
     const buffer = fileData.split(',')[1];
     const defaultPath = `${filename}.png`;
-
     const filepath = await window.electronAPI.showSavePngDialog(defaultPath);
     if (!filepath) {
       alert('Save operation was canceled.');

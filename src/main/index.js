@@ -136,7 +136,7 @@ app.whenReady().then(() => {
 
   // Save Files
 
-  ipcMain.handle('save-img', async (event, arrayBuffer, filePath) => {
+  ipcMain.handle('save-svg', async (event, arrayBuffer, filePath) => {
     const imgContent = Buffer.from(arrayBuffer).toString('utf-8');
     return new Promise((resolve, reject) => {
       fs.writeFile(filePath, imgContent, (err) => {

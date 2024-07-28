@@ -21,7 +21,6 @@ const downloadSvgImage = async () => {
 
   // to buffer
   const arrayBuffer = await new Response(svgContent).arrayBuffer();
-
   const defaultPath = `${completeFileName}.svg`;
 
   const filepath = await window.electronAPI.showSaveSvgDialog(defaultPath);
@@ -31,7 +30,7 @@ const downloadSvgImage = async () => {
   }
 
   try {
-    const result = await window.electronAPI.saveIMG(arrayBuffer, filepath);
+    const result = await window.electronAPI.saveSVG(arrayBuffer, filepath);
     console.log(result);
   } catch (error) {
     console.error('Failed to save file:', error);
