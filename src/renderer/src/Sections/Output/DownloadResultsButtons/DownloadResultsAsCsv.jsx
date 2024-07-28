@@ -9,6 +9,11 @@ import outputState from '../../GlobalState/outputState';
 
 const DownloadResultsAsCsv1 = () => {
   const { t } = useTranslation();
+  const updateShowDocxOptions = outputState((state) => state.updateShowDocxOptions);
+  const updateDownloadDocxButtonActive = outputState(
+    (state) => state.updateDownloadDocxButtonActive
+  );
+  const userSelectedFactors = outputState((state) => state.userSelectedFactors);
 
   const [localStore, setLocalStore] = useState({
     modalOpen: false,
@@ -16,21 +21,20 @@ const DownloadResultsAsCsv1 = () => {
 
   const handleOpen = () => {
     // getState
-    const userSelectedFactors = outputState((state) => state.userSelectedFactors);
     if (userSelectedFactors.length === 0) {
-      setLocalStore({ modalOpen: true });
+      setLocalStore({ modalOpen: true, active: false });
     } else {
-      outputState.showDocxOptions = false;
-      outputState.downloadDocxButtonActive = false;
+      updateShowDocxOptions(false);
+      updateDownloadDocxButtonActive(false);
       downloadResultsAsCsv();
     }
   };
 
   const handleClose = () => {
-    localStore.modalOpen = false;
+    setLocalStore({ modalOpen: false, active: false });
   };
 
-  const { active } = localStore;
+  const active = localStore.active;
   return (
     <Modal
       dimmer={'blurring'}

@@ -4,17 +4,18 @@ import { electronApp, optimizer, is } from '@electron-toolkit/utils';
 import icon from '../../resources/icon.png?asset';
 import MenuFactory from './menu';
 import i18nextMainBackend from '../../app/localization/i18n.mainconfig';
-import openStaFile from './openStaFile';
-import openDatFile from './openDatFile';
-import openExcelFile from './openExcelFile';
-import openZipFile from './openZipFile';
-import openTxtFile from './openTxtFile';
-import openJsonFile from './openJsonFile';
-import saveSvgFile from './saveSvgFile';
+import openStaFile from './openFileLogic/openStaFile';
+import openDatFile from './openFileLogic/openDatFile';
+import openExcelFile from './openFileLogic/openExcelFile';
+import openZipFile from './openFileLogic/openZipFile';
+import openTxtFile from './openFileLogic/openTxtFile';
+import openJsonFile from './openFileLogic/openJsonFile';
+import saveSvgFile from './openFileLogic/saveSvgFile';
 import exportDocx from './docxLogic/exportDocx';
 import { windowStateKeeper } from './windowStateKeeper';
 import settings from 'electron-settings';
 import createXlsxFile from './excelLogic/createXlsxFile';
+import createCsvFile from './csvLogic/createCsvFile';
 
 const fs = require('fs');
 
@@ -177,11 +178,15 @@ app.whenReady().then(() => {
 
   ipcMain.handle('large-data', async (event, arrayBuffer, path) => {
     const dataContent = JSON.parse(Buffer.from(arrayBuffer).toString('utf-8'));
+
     if (dataContent.type === 'docx') {
       exportDocx(dataContent);
     }
     if (dataContent.type === 'xlsx') {
       createXlsxFile(dataContent);
+    }
+    if (dataContent.type === 'csv') {
+      createCsvFile(dataContent);
     }
   });
 
