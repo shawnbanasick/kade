@@ -42,6 +42,8 @@ import generatePtConsensus from './generatePtConsensus';
 import generatePtRelRanks from './generatePtRelRanks';
 import fs from 'fs';
 import { dialog } from 'electron';
+import currentDate1 from '../../renderer/src/Utils/currentDate1';
+import currentTime1 from '../../renderer/src/Utils/currentTime1';
 
 // import outputState from '../../GlobalState/outputState';
 // import calcState from '../../GlobalState/calcState';
@@ -54,16 +56,15 @@ import { dialog } from 'electron';
 // let filetype = "tableCompat";
 // let filetype = "plainText";
 
-const generateOutputDoc = async (conObj) => {
-  const data = conObj.data; // cloneDeep(calcState.getState().outputData);
+const generateOutputDoc = async (dataContent) => {
+  const data = dataContent.data; // cloneDeep(calcState.getState().outputData);
 
   // let projectName = 'lipset';
   let projectName = data[0][2][1];
-  console.log(projectName);
   let version = data[0][19][1];
   let dateTime = getDateTime();
-  const docOptions = conObj.docOptions;
-  const translatedTextObj = { ...conObj.translatedTextObj };
+  const docOptions = dataContent.docOptions;
+  const translatedTextObj = { ...dataContent.translatedTextObj };
   const {
     saveAsZip,
     willUseHyperlinks,
@@ -91,8 +92,6 @@ const generateOutputDoc = async (conObj) => {
     willIncludeConsensus,
     willIncludeRelRanks,
   } = docOptions;
-
-  console.log(willIncludeStatements);
 
   let updateLinksBool = false;
   if (willUseHyperlinks === true) {
@@ -166,14 +165,13 @@ const generateOutputDoc = async (conObj) => {
         useZebra,
         willIncludeThreshold,
         correlationThreshold,
-        conObj.partNumArray
+        dataContent.partNumArray
       );
       text3b.forEach((item) => {
         childrenArray.push(...item);
       });
     }
     if (value === 'unrotated' && willIncludeUnrotFacMatrix === true) {
-      console.log(JSON.stringify(item));
       let text4 = generateUnrotFacMatrix(item, willUseHyperlinks, useZebra);
       childrenArray.push(...text4);
     }
@@ -334,21 +332,33 @@ const generateOutputDoc = async (conObj) => {
   if (saveAsZip === true) {
     // saveDocumentToZip(doc, 'KADE_output_file.zip');
   } else {
-    // saveDocumentToFile(doc, 'KADE_output_file.docx');
-    // newSaveDocumentToFile(doc, 'KADE_output_file.docx');
+    const timeStamp = `${currentDate1()}_${currentTime1()}`;
+    let nameFile = `KADE_results_${projectName}_${timeStamp}.docx`;
+
     Packer.toBuffer(doc).then(async (doc) => {
       const { canceled, filePath } = await dialog.showSaveDialog({
-        defaultPath: 'test.docx',
+        defaultPath: nameFile,
       });
 
       if (!canceled && filePath) {
-        fs.writeFileSync(filePath, doc, (err) => {
-          if (err) {
-            console.error('Error saving file:', err);
-          } else {
-            console.log('File saved successfully:', filePath);
-          }
-        });
+        try {
+          fs.writeFileSync(filePath, doc, (err) => {
+            if (err) {
+              console.error('Error saving file:', err);
+            } else {
+              console.log('File saved successfully');
+            }
+          });
+          dialog.showMessageBoxSync({
+            title: 'KADE',
+            type: 'info',
+            message: `File saved to:`,
+            detail: `${filePath}`,
+            buttons: ['OK'],
+          });
+        } catch (err) {
+          console.error('Error saving file:', err);
+        }
       }
     });
   }

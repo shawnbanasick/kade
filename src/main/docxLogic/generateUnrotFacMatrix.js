@@ -8,7 +8,6 @@ import {
 } from 'docx';
 
 const generateUnrotFacMatrix = (matrixData, useHyperlinks, useZebra) => {
-  console.log('generateUnrotFacMatrix', matrixData, useHyperlinks, useZebra);
   try {
     matrixData.shift();
     matrixData.shift();

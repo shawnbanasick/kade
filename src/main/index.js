@@ -11,10 +11,10 @@ import openZipFile from './openZipFile';
 import openTxtFile from './openTxtFile';
 import openJsonFile from './openJsonFile';
 import saveSvgFile from './saveSvgFile';
-import createResultsDocx from './createResultsDocx';
-import createOutputDoc from './docxLogic/createOutputDoc';
+import exportDocx from './docxLogic/exportDocx';
 import { windowStateKeeper } from './windowStateKeeper';
 import settings from 'electron-settings';
+import createXlsxFile from './excelLogic/createXlsxFile';
 
 const fs = require('fs');
 
@@ -149,13 +149,14 @@ app.whenReady().then(() => {
     });
   });
 
-  ipcMain.handle('save-docx', async (event, arrayBuffer, filePath) => {
-    createResultsDocx(JSON.stringify(arrayBuffer));
-  });
-
   ipcMain.handle('large-data', async (event, arrayBuffer, path) => {
-    const docxContent = JSON.parse(Buffer.from(arrayBuffer).toString('utf-8'));
-    createOutputDoc(docxContent);
+    const dataContent = JSON.parse(Buffer.from(arrayBuffer).toString('utf-8'));
+    if (dataContent.type === 'docx') {
+      exportDocx(dataContent);
+    }
+    if (dataContent.type === 'xlsx') {
+      createXlsxFile(dataContent);
+    }
   });
 
   ipcMain.handle('show-saveSvg-dialog', async (event, defaultPath) => {
