@@ -7,7 +7,7 @@ import LegendRectangle from './LegendRectangle';
 import FactorTitleText from './FactorTitleText';
 import HeaderRectangles from './HeaderRectangles';
 import HeaderColNumbers from './HeaderColNumbers';
-import DownloadFactorVizButtons from './DownloadFactorVizButtons';
+// import DownloadFactorVizButtons from './DownloadFactorVizButtons';
 
 const getStyles = (props) => {
   // DYNAMIC height and width from prefs to set CONTAINER size
@@ -88,7 +88,7 @@ const FactorViz = (props) => {
           {shouldDisplayLegend && <LegendText {...props} />}
         </g>
       </svg>
-      <DownloadFactorVizButtons {...props} />
+      {/* <DownloadFactorVizButtons {...props} /> */}
     </VizContainer>
   );
 };

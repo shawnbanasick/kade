@@ -21,7 +21,7 @@ const getInstances = function () {
 
   // set max column height to use with factor viz
   const maxColumnHeight = Math.max(...instances);
-  vizState.maxColumnHeight = maxColumnHeight;
+  vizState.setState({ maxColumnHeight: maxColumnHeight });
 
   // get x position
   const xPosLoop = [];

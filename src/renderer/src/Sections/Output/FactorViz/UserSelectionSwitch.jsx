@@ -7,18 +7,21 @@ import CheckMark from './checkMark';
 
 const UserSelectionSwitch = (props) => {
   const [toggle, setToggle] = useState(props.toggle);
+  const factorVizOptionsHolder = vizState((state) => state.factorVizOptionsHolder);
+  const updateFactorVizOptionsHolder = vizState((state) => state.updateFactorVizOptionsHolder);
+  const updateFactorVisualizationsButtonColor = vizState(
+    (state) => state.updateFactorVisualizationsButtonColor
+  );
 
   const clickToggle = (e) => {
     e.stopPropagation();
     const oldValue = toggle;
     const newValue = !oldValue;
-    const factorVizOptionsHolder = vizState((state) => state.factorVizOptionsHolder);
     const key = props.value;
     factorVizOptionsHolder[key] = newValue;
     setToggle(newValue);
-
-    vizState.factorVizOptionsHolder = factorVizOptionsHolder;
-    vizState.updateFactorVisualizationsButtonColor = 'orange';
+    updateFactorVizOptionsHolder(factorVizOptionsHolder);
+    updateFactorVisualizationsButtonColor('orange');
   };
 
   return (

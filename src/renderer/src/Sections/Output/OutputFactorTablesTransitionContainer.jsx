@@ -24,7 +24,7 @@ const OutputFactorTablesTransitionContainer = () => {
           </div>
           <div className="outputFactorTables">
             <span className="outputFactorTablesSpan3">{t('Factor Characteristics')}</span>
-            {/* <FactorCharacteristicsTable /> */}
+            <FactorCharacteristicsTable />
           </div>
           <div className="outputFactorTables">
             <span className="outputFactorTablesSpan3">
@@ -33,7 +33,7 @@ const OutputFactorTablesTransitionContainer = () => {
             <span className="outputFactorTablesSpan2">
               {t('Diagonal Entries Are S E Within Factors')}
             </span>
-            {/* <StandardErrorsDifferencesTable /> */}
+            <StandardErrorsDifferencesTable />
           </div>
         </div>
       </Transition>

@@ -20,7 +20,7 @@ const vizState = create(
 
     titleHeight: 30,
 
-    updateFactorVisualizationsButtonColor: '',
+    factorVisualizationsButtonColor: '',
 
     willAddCustomNames: false,
 
@@ -115,8 +115,8 @@ const vizState = create(
     updatePositionData: (inputValue) => set({ positionData: inputValue }),
     updateStateFrag: (inputValue) => set({ stateFrag: inputValue }),
     updateTitleHeight: (inputValue) => set({ titleHeight: inputValue }),
-    updateUpdateFactorVisualizationsButtonColor: (inputValue) =>
-      set({ updateFactorVisualizationsButtonColor: inputValue }),
+    updateFactorVisualizationsButtonColor: (inputValue) =>
+      set({ factorVisualizationsButtonColor: inputValue }),
     updateWillAddCustomNames: (inputValue) => set({ willAddCustomNames: inputValue }),
     updateWillAdjustCardFontSize: (inputValue) => set({ willAdjustCardFontSize: inputValue }),
     updateWillAdjustCardFontSizeBy: (inputValue) => set({ willAdjustCardFontSizeBy: inputValue }),

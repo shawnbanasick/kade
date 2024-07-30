@@ -23,17 +23,19 @@ const styles2 = {
 const DistinguishingPanel = () => {
   const { t } = useTranslation();
   const colorTrans = `${t('Color')} - 05:`;
+  const factorVizOptionsHolder = vizState((state) => state.factorVizOptionsHolder);
+  const updateFactorVizOptionsHolder = vizState((state) => state.updateFactorVizOptionsHolder);
+  const updateFactorVisualizationsButtonColor = vizState(
+    (state) => state.updateFactorVisualizationsButtonColor
+  );
 
   const [localStore, setLocalStore] = useState({ showDistinguishingAs: 'symbol' });
 
   function handleChange(e, { value }) {
-    // getState
-    const factorVizOptionsHolder = vizState((state) => state.factorVizOptionsHolder);
-
     localStore.showDistinguishingAs = value;
     factorVizOptionsHolder.showDistinguishingAs = value;
-    vizState.factorVizOptionsHolder = factorVizOptionsHolder;
-    vizState.updateFactorVisualizationsButtonColor = 'orange';
+    updateFactorVizOptionsHolder(factorVizOptionsHolder);
+    updateFactorVisualizationsButtonColor('orange');
   }
 
   return (

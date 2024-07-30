@@ -11,7 +11,6 @@ const styles = {
 };
 
 // todo - need to calculate dynamic height here for styles
-
 const FactorVizDispatch = (props) => {
   // getState
   const factorVizOptions = vizState((state) => state.factorVizOptions);

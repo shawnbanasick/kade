@@ -1,6 +1,4 @@
 import styled from 'styled-components';
-
-import React from 'react';
 import UserNumberInput from './UserNumberInput';
 import UserSelectionSwitch from './UserSelectionSwitch';
 import { useTranslation } from 'react-i18next';

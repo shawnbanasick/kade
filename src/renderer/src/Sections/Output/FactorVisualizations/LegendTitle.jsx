@@ -1,24 +1,23 @@
-import React from "react";
-import i18n from "i18next";
+import i18n from 'i18next';
 
 const styles = {
   fontSize: 22,
   // fill: "white",
-  stroke: "black",
+  stroke: 'black',
   // width: 50,
   // strokeWidth: 1,
   zindex: 99,
-  fontFamily: "Verdana, sans-serif"
+  fontFamily: 'Verdana, sans-serif',
 };
 
 const textProps = {
   x: 300,
   y: 20,
-  textAnchor: "left"
+  textAnchor: 'left',
 };
 
-const legendText = i18n.t("Legend");
-
+const legendText = i18n.t('Legend');
+// eslint-disable-next-line
 export default () => {
   return (
     <g>

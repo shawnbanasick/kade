@@ -4,10 +4,14 @@ import vizState from '../../GlobalState/vizState';
 const UserTextInput = (props) => {
   const handleChange = (e) => {
     const factorVizOptionsHolder = vizState((state) => state.factorVizOptionsHolder);
+    const updateFactorVisualizationsButtonColor = vizState(
+      (state) => state.updateFactorVisualizationsButtonColor
+    );
+    const updateFactorVizOptionsHolder = vizState((state) => state.updateFactorVizOptionsHolder);
     const key = props.name;
     factorVizOptionsHolder[key] = e.target.value;
-    vizState.factorVizOptionsHolder = factorVizOptionsHolder;
-    vizState.updateFactorVisualizationsButtonColor = 'orange';
+    updateFactorVizOptionsHolder(factorVizOptionsHolder);
+    updateFactorVisualizationsButtonColor('orange');
   };
 
   return (

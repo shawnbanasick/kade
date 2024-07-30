@@ -1,12 +1,9 @@
-import React from 'react';
-
 import { Transition } from 'semantic-ui-react';
 import DownloadsPanel from './DownloadsPanel';
 import CardSettingsPanel from './CardSettingsPanel';
 import DistinguishingPanel from './DistinguishingPanel';
 import GeneralOptionsPanel from './GeneralOptionsPanel';
 import StatementsSettingsPanel from './StatementsSettingsPanel';
-
 import outputState from '../../GlobalState/outputState';
 
 const styles = {
@@ -19,7 +16,7 @@ const styles = {
 };
 
 const FactorVizOptions = () => {
-  const shouldDisplayFactorVizOptions = outputState.shouldDisplayFactorVizOptions;
+  const shouldDisplayFactorVizOptions = outputState((state) => state.shouldDisplayFactorVizOptions);
   return (
     <Transition visible={shouldDisplayFactorVizOptions} animation="fade" duration={1000}>
       <div style={styles} className="FactorVizDiv">

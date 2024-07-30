@@ -1,7 +1,7 @@
-import getCoreState from "../../GlobalState/getCoreState";
+import coreState from '../../GlobalState/coreState';
 
-const sortTriangleShape = function() {
-  const qSortPattern = getCoreState("qSortPattern");
+const sortTriangleShape = function () {
+  const qSortPattern = coreState.getState().qSortPattern;
   // const qSortPattern = [
   //     -4,
   //     -4,

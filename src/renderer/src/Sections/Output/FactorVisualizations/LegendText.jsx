@@ -1,32 +1,33 @@
 import { useTranslation } from 'react-i18next';
 import vizState from '../../GlobalState/vizState';
 
-function getXCoords(props) {
-  let totalWidth = props.positionData.instances.length * 110;
-  if (props.factorVizOptions.willAdjustCardWidth === true) {
-    totalWidth = props.positionData.instances.length * props.factorVizOptions.willAdjustCardWidthBy;
-  }
-  const halfWidth = totalWidth / 2;
-  const xCoord = halfWidth;
-  return xCoord;
-}
-
-function getYValue(props) {
-  const maxColumnHeight = vizState((state) => state.maxColumnHeight);
-  const defaultHeight = maxColumnHeight * 110 + 100;
-
-  const shouldAdjustHeight = props.factorVizOptions.willAdjustCardHeight;
-
-  if (shouldAdjustHeight === true) {
-    const cardHeight = props.factorVizOptions.willAdjustCardHeightBy;
-    const yValue = maxColumnHeight * cardHeight + 100;
-    return yValue;
-  }
-  return defaultHeight;
-}
-
 const LegendText = (props) => {
   const { t } = useTranslation();
+  const maxColumnHeight = vizState((state) => state.maxColumnHeight);
+
+  function getXCoords(props) {
+    let totalWidth = props.positionData.instances.length * 110;
+    if (props.factorVizOptions.willAdjustCardWidth === true) {
+      totalWidth =
+        props.positionData.instances.length * props.factorVizOptions.willAdjustCardWidthBy;
+    }
+    const halfWidth = totalWidth / 2;
+    const xCoord = halfWidth;
+    return xCoord;
+  }
+
+  function getYValue(props) {
+    const defaultHeight = maxColumnHeight * 110 + 100;
+
+    const shouldAdjustHeight = props.factorVizOptions.willAdjustCardHeight;
+
+    if (shouldAdjustHeight === true) {
+      const cardHeight = props.factorVizOptions.willAdjustCardHeightBy;
+      const yValue = maxColumnHeight * cardHeight + 100;
+      return yValue;
+    }
+    return defaultHeight;
+  }
 
   const renderLegendRectangleText = (props) => {
     const displayColor = props.factorVizOptions.consensusIndicator;

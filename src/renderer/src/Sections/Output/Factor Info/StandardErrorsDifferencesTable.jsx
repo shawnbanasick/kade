@@ -10,6 +10,7 @@ const StandardErrorsDifferencesTable = () => {
   const data = calcState((state) => state.standardErrorDiffSheetArray);
   data.shift();
   const userSelectedFacs = outputState((state) => state.userSelectedFactors);
+  const numFacs = userSelectedFacs.length;
 
   const gridApi = useRef();
   let gridOptions = {
@@ -52,10 +53,10 @@ const StandardErrorsDifferencesTable = () => {
   const getGridRowDataFacCorrTable = (data, headerRow) => {
     let gridRowDataFacCorrTable = [];
 
-    for (let j = 4; j < data.length; j += 1) {
+    for (let j = 3; j < data.length; j += 1) {
       // let responNum = j + 1;
       const tempObj = {};
-      let iterator = j - 3;
+      let iterator = j - 2;
       // tempObj.factorList = data[j][0];
       tempObj.factorList = headerRow[iterator];
 
@@ -68,14 +69,8 @@ const StandardErrorsDifferencesTable = () => {
     return gridRowDataFacCorrTable;
   };
 
-  const numFacs = userSelectedFacs.length;
-  console.log(numFacs);
-  // pull out header row
-  const headerRow = data[3];
-  console.log(headerRow);
-
   // new header row to include translation
-  let newHeaderRow = [''];
+  let newHeaderRow = [];
   userSelectedFacs.forEach((element) => {
     let factorText = i18n.t('Factor');
     let factorNum = element.charAt(element.length - 1);
@@ -86,14 +81,14 @@ const StandardErrorsDifferencesTable = () => {
   });
   newHeaderRow.unshift('');
 
-  const onGridReady = (params) => {
-    gridApi.current = params.api;
-    gridApi.current.sizeColumnsToFit();
-  };
+  // const onGridReady = (params) => {
+  //   gridApi.current = params.api;
+  //   gridApi.current.sizeColumnsToFit();
+  // };
 
   const currentData = [data, numFacs, newHeaderRow];
 
-  let widthVal = 182 + 90 * currentData[1];
+  let widthVal = 184 + 90 * currentData[1];
   if (widthVal > window.innerWidth - 100) {
     widthVal = window.innerWidth - 100;
   }

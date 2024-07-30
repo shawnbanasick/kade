@@ -1,6 +1,4 @@
-import React from "react";
-
-const widthValue = props => {
+const widthValue = (props) => {
   const shouldAdjustWidth = props.factorVizOptions.willAdjustCardWidth;
   if (shouldAdjustWidth === true) {
     const newCardWidth = props.factorVizOptions.willAdjustCardWidthBy;
@@ -11,7 +9,7 @@ const widthValue = props => {
 
 const headerHeight = () => 26;
 
-const heightValue = props => {
+const heightValue = (props) => {
   const shouldAdjustHeight = props.factorVizOptions.willAdjustCardHeight;
   if (shouldAdjustHeight === true) {
     let cardHeight = props.factorVizOptions.willAdjustCardHeightBy;
@@ -24,21 +22,20 @@ const heightValue = props => {
 };
 
 const styles = {
-  stroke: "none",
+  stroke: 'none',
   zindex: 9999,
-  fill: "black"
+  fill: 'black',
 };
 
-const renderSigSortsIndicators = props => {
+const renderSigSortsIndicators = (props) => {
   const shouldUseUnicode = true; // props.factorVizOptions.shouldUseUnicode;
-  const willDisplayDistingCompareSymbols =
-    props.factorVizOptions.willDisplayDistingCompareSymbols;
-  const willAdjustIndicatorSizeBy =
-    props.factorVizOptions.willAdjustDistIndicatorSizeBy;
+  const willDisplayDistingCompareSymbols = props.factorVizOptions.willDisplayDistingCompareSymbols;
+  const willAdjustIndicatorSizeBy = props.factorVizOptions.willAdjustDistIndicatorSizeBy;
 
   const width = widthValue(props);
   const height = heightValue(props);
   const headerHeight1 = headerHeight();
+  // eslint-disable-next-line
   return (coords, index) => {
     let text;
     let arrow;
@@ -70,8 +67,8 @@ const renderSigSortsIndicators = props => {
         1.7 * willAdjustIndicatorSizeBy,
       key: props.positionData.numRectsArray[index + 1],
       symbol,
-      textAnchor: "left",
-      fontSize: willAdjustIndicatorSizeBy + 10
+      textAnchor: 'left',
+      fontSize: willAdjustIndicatorSizeBy + 10,
     };
 
     const sigSymbolProps2 = {
@@ -83,8 +80,8 @@ const renderSigSortsIndicators = props => {
         1.7 * willAdjustIndicatorSizeBy,
       key: props.positionData.numRectsArray[index],
       arrow,
-      textAnchor: "left",
-      fontSize: willAdjustIndicatorSizeBy
+      textAnchor: 'left',
+      fontSize: willAdjustIndicatorSizeBy,
     };
     return (
       <text {...styles} {...sigSymbolProps} {...sigSymbolProps2}>
@@ -94,6 +91,5 @@ const renderSigSortsIndicators = props => {
   };
 };
 
-export default props => (
-  <g>{props.data.map(renderSigSortsIndicators(props))}</g>
-);
+// eslint-disable-next-line
+export default (props) => <g>{props.data.map(renderSigSortsIndicators(props))}</g>;

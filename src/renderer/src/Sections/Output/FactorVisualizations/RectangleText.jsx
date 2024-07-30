@@ -95,6 +95,7 @@ const renderRectangleText = (props) => {
   }
 
   // return a function that returns a props object
+  // eslint-disable-next-line
   return (coords, index) => {
     let texts;
     let maxLineLength = 15;
@@ -139,5 +140,5 @@ const renderRectangleText = (props) => {
     );
   };
 };
-
+// eslint-disable-next-line
 export default (props) => <g>{props.data.map(renderRectangleText(props))}</g>;

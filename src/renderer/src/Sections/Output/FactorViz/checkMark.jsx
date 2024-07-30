@@ -1,5 +1,6 @@
-import React from "react";
+import React from 'react';
 
+// eslint disable-next-line
 export default () => (
   <svg width="14" height="11" viewBox="0 0 14 11">
     <path

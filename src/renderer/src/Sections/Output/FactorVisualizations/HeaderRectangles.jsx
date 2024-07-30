@@ -18,6 +18,7 @@ const widthValue = (props) => {
   return 110;
 };
 
+// eslint-disable-next-line
 const renderBaseRectangles = (props) => (coords, index) => {
   const titleHeight = vizState((state) => state.titleHeight);
 

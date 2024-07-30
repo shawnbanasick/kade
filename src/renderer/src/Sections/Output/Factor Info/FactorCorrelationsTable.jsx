@@ -10,18 +10,9 @@ import cloneDeep from 'lodash/cloneDeep';
 const FactorCorrelationsTable = () => {
   const data = cloneDeep(calcState((state) => state.factorCorrelationsTableData));
   data.shift();
-  console.log(JSON.stringify(data));
   const userSelectedFacs = outputState((state) => state.userSelectedFactors);
-  console.log(JSON.stringify(userSelectedFacs));
   const gridApi = useRef();
-
-  // remove unnecessary label at top
-
   const numFacs = userSelectedFacs.length;
-  console.log(numFacs);
-  // pull out header row
-  const headerRow = data[3];
-  console.log(headerRow);
 
   // new header row to include translation
   let newHeaderRow = [];
@@ -34,26 +25,11 @@ const FactorCorrelationsTable = () => {
     newHeaderRow.push(`${factorText} ${factorNum}`);
   });
   newHeaderRow.unshift('');
-  // for (let k = 1; k < headerRow.length; k += 1) {
-  //   console.log(headerRow[k]);
-  //   let factorText = i18n.t('Factor');
-  //   let factorNum = headerRow[k].charAt(headerRow[k].length - 1);
-  //   // for bipolar split - catch "1a" as factor number
-  //   if (isNaN(+factorNum)) {
-  //     factorNum = `${headerRow[k].charAt(headerRow[k].length - 2)}${factorNum}`;
-  //   }
-  //   newHeaderRow[k] = `${factorText} ${factorNum}`;
-  // }
-
-  console.log(JSON.stringify(data), numFacs, JSON.stringify(newHeaderRow));
-
-  // return [data, numFacs, newHeaderRow];
 
   let gridRowDataFacCorrTable = [];
   let gridColDefsFacCorrTable = [];
 
   const getGridColDefsFacCorrTable = (data, numFacs, headerRow) => {
-    console.log(JSON.stringify(data, null, 2), numFacs, JSON.stringify(headerRow));
     gridColDefsFacCorrTable = [
       {
         headerName: '',
@@ -80,12 +56,10 @@ const FactorCorrelationsTable = () => {
         },
       }); // end push
     } // end loop
-    console.log(JSON.stringify(gridColDefsFacCorrTable, null, 2));
     return gridColDefsFacCorrTable;
   };
 
   const getGridRowDataFacCorrTable = (data, headerRow) => {
-    console.log(JSON.stringify(data, null, 2), JSON.stringify(headerRow));
     data.shift();
     gridRowDataFacCorrTable = [];
 
@@ -101,7 +75,6 @@ const FactorCorrelationsTable = () => {
       }
       gridRowDataFacCorrTable.push(tempObj);
     }
-    console.log(JSON.stringify(gridRowDataFacCorrTable, null, 2));
     return gridRowDataFacCorrTable;
   };
 
@@ -113,7 +86,7 @@ const FactorCorrelationsTable = () => {
 
   const currentData = [data, numFacs, newHeaderRow];
 
-  let widthVal = 182 + 91 * currentData[1];
+  let widthVal = 184 + 90 * currentData[1];
   if (widthVal > window.innerWidth - 100) {
     widthVal = window.innerWidth - 100;
   }

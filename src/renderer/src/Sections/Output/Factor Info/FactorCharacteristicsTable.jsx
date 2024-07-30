@@ -5,19 +5,28 @@ import 'ag-grid-community/styles/ag-theme-alpine.css';
 import i18n from 'i18next';
 import calcState from '../../GlobalState/calcState';
 import outputState from '../../GlobalState/outputState';
+import cloneDeep from 'lodash/cloneDeep';
 
 const FactorCharacteristicsTable = () => {
-  const data = calcState((state) => state.FactorCharacteristicsArray);
-  const userSelectedFacs = outputState((state) => state.userSelectedFactors);
-
+  const data = cloneDeep(calcState((state) => state.factorCharacteristicsArray));
+  data.shift();
+  const userSelectedFacs = cloneDeep(outputState((state) => state.userSelectedFactors));
+  const gridApi = useRef();
   let gridRowDataFacCorrTable = [];
   let gridColDefsFacCorrTable = [];
+  const numFacs = userSelectedFacs.length;
 
-  let gridOptions = {
-    suppressRowHoverHighlight: false,
-    columnHoverHighlight: true,
-    enableSorting: true,
-  };
+  // new header row to include translation
+  let newHeaderRow = [];
+  userSelectedFacs.forEach((element) => {
+    let factorText = i18n.t('Factor');
+    let factorNum = element.charAt(element.length - 1);
+    if (isNaN(+factorNum)) {
+      factorNum = `${element.charAt(element.length - 2)}${factorNum}`;
+    }
+    newHeaderRow.push(`${factorText} ${factorNum}`);
+  });
+  newHeaderRow.unshift('');
 
   const getGridColDefsFacCorrTable = (data, numFacs, headerRow) => {
     let gridColDefsFacCorrTable = [
@@ -52,42 +61,17 @@ const FactorCharacteristicsTable = () => {
 
   const getGridRowDataFacCorrTable = (data, headerRow, characteristicsArray) => {
     let gridRowDataFacCorrTable = [];
-
     for (let j = 4; j < data.length; j += 1) {
       // let responNum = j + 1;
       const tempObj = {};
       tempObj.factorList = characteristicsArray[j - 4];
-
       for (let k = 1; k < headerRow.length; k += 1) {
         tempObj[headerRow[k]] = data[j][k];
       }
       gridRowDataFacCorrTable.push(tempObj);
     }
-
     return gridRowDataFacCorrTable;
   };
-
-  // getState
-  data.shift();
-
-  const numFacs = userSelectedFacs.length;
-  console.log(numFacs);
-  // pull out header row
-  const headerRow = data[3];
-  console.log(headerRow);
-
-  // new header row to include translation
-  let newHeaderRow = [''];
-  userSelectedFacs.forEach((element) => {
-    let factorText = i18n.t('Factor');
-    let factorNum = element.charAt(element.length - 1);
-    if (isNaN(+factorNum)) {
-      factorNum = `${element.charAt(element.length - 2)}${factorNum}`;
-    }
-    newHeaderRow.push(`${factorText} ${factorNum}`);
-  });
-  newHeaderRow.unshift('');
-  const gridApi = useRef();
 
   const onGridReady = (params) => {
     gridApi.current = params.api;
@@ -103,11 +87,17 @@ const FactorCharacteristicsTable = () => {
 
   const currentData = [data, numFacs, newHeaderRow];
 
-  let widthVal = 182 + 90 * currentData[1];
+  let widthVal = 180 + 93 * currentData[1];
   if (widthVal > window.innerWidth - 100) {
     widthVal = window.innerWidth - 100;
   }
   widthVal += 'px';
+
+  let gridOptions = {
+    suppressRowHoverHighlight: false,
+    columnHoverHighlight: true,
+    enableSorting: true,
+  };
 
   gridColDefsFacCorrTable = getGridColDefsFacCorrTable(...currentData); // state.getState("gridColDefsFacTableEigen");
   gridRowDataFacCorrTable = getGridRowDataFacCorrTable(

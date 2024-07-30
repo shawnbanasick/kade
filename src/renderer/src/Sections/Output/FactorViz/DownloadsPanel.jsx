@@ -1,6 +1,4 @@
 import styled from 'styled-components';
-
-import React from 'react';
 import UserTextInput from './UserTextInput';
 import UserSelectionSwitch from './UserSelectionSwitch';
 import CustomFileNameLocation from './CustomFileNameLocation';

@@ -1,5 +1,5 @@
-import React from "react";
-import state from "../../../store";
+import React from 'react';
+import state from '../../../store';
 // import "./UserSelectionSwitch.css";
 
 class UserSelectionSwitch extends React.Component {
@@ -7,7 +7,7 @@ class UserSelectionSwitch extends React.Component {
     super(props);
 
     this.state = {
-      toggle: this.props.toggle
+      toggle: this.props.toggle,
     };
 
     this.toggle = this.toggle.bind(this);
@@ -16,7 +16,7 @@ class UserSelectionSwitch extends React.Component {
   toggle(e) {
     e.stopPropagation();
     this.setState({
-      toggle: !this.state.toggle
+      toggle: !this.state.toggle,
     });
     const stateFrag = {};
     const key = this.props.value;
@@ -33,7 +33,7 @@ class UserSelectionSwitch extends React.Component {
             type="checkbox"
             name={this.props.name}
             defaultChecked={this.state.toggle}
-            onChange={e => this.toggle(e)}
+            onChange={(e) => this.toggle(e)}
           />
           <span key={this.props.name} style={{ width: 100, marginTop: 6 }}>
             <span>No</span>

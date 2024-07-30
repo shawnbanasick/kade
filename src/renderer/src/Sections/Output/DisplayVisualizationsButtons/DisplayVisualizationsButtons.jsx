@@ -9,6 +9,9 @@ const DisplayVisualizationsButtons = () => {
   const userSelectedFactors = outputState((state) => state.userSelectedFactors);
   const displayFactorVisualizations = outputState((state) => state.displayFactorVisualizations);
   const showDownloadOutputButtons = outputState((state) => state.showDownloadOutputButtons);
+  const updateDisplayFactorVisualizations = outputState(
+    (state) => state.updateDisplayFactorVisualizations
+  );
 
   let shouldDisplay = true;
   if (userSelectedFactors.length < 2) {
@@ -18,7 +21,7 @@ const DisplayVisualizationsButtons = () => {
   const handleDisplayViz = () => {
     // getState
     const shouldShow = !displayFactorVisualizations;
-    outputState.displayFactorVisualizations = shouldShow;
+    updateDisplayFactorVisualizations(shouldShow);
   };
 
   // getState

@@ -42,7 +42,7 @@ const getXCoords = (props) => {
 };
 
 let yValue = (props) => {
-  const maxColumnHeight = vizState((state) => state.maxColumnHeight);
+  const maxColumnHeight = vizState.getState().maxColumnHeight;
   const defaultHeight = maxColumnHeight * 110 + 100;
 
   const shouldAdjustHeight = props.factorVizOptions.willAdjustCardHeight;

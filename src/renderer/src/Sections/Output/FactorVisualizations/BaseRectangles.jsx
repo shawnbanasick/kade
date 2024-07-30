@@ -34,6 +34,7 @@ const heightValue = (props) => {
 // getState
 const titleHeight = vizState.getState().titleHeight;
 
+// eslint-disable-next-line
 const renderBaseRectangles = (props) => (coords, index) => {
   const factorVizOptions = vizState.getState().factorVizOptions;
   const shouldUseColor = factorVizOptions.willDisplayConsensusStates;
@@ -74,7 +75,7 @@ const renderBaseRectangles = (props) => (coords, index) => {
   };
   return <rect {...styles} {...rectangleProps} />;
 };
-
+// eslint-disable-next-line
 export default (props) => (
   <g>{props.positionData.numRectsArray.map(renderBaseRectangles(props))}</g>
 );

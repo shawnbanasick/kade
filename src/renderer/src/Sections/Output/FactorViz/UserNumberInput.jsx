@@ -1,16 +1,20 @@
 import { useState } from 'react';
 import styled from 'styled-components';
-import vizState from '../../GlobalState/vizState';
 import { useTranslation } from 'react-i18next';
+import vizState from '../../GlobalState/vizState';
 
 const UserNumberInput = (props) => {
   const { t } = useTranslation();
+  const factorVizOptionsHolder = vizState((state) => state.factorVizOptionsHolder);
+  const updateFactorVizOptionsHolder = vizState((state) => state.updateFactorVizOptionsHolder);
+  const updateFactorVisualizationsButtonColor = vizState(
+    (state) => state.updateUpdateFactorVisualizationsButtonColor
+  );
 
   const [value, setValue] = useState(props.value);
   const [showWarning, setShowWarning] = useState(false);
 
   const handleChange = (e) => {
-    const factorVizOptionsHolder = vizState((state) => state.factorVizOptionsHolder);
     let value = e.target.value;
     if (isNaN(value)) {
       return null;
@@ -25,8 +29,8 @@ const UserNumberInput = (props) => {
     } else {
       setValue(value);
       factorVizOptionsHolder[key] = value;
-      vizState.factorVizOptionsHolder = factorVizOptionsHolder;
-      vizState.updateFactorVisualizationsButtonColor = 'orange';
+      updateFactorVizOptionsHolder(factorVizOptionsHolder);
+      updateFactorVisualizationsButtonColor('orange');
     }
   };
 

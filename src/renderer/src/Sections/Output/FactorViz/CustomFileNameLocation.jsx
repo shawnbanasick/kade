@@ -14,14 +14,17 @@ const styles = {
 const CustomFileNameLocation = () => {
   const { t } = useTranslation();
   const factorVizOptionsHolder = vizState((state) => state.factorVizOptionsHolder);
-
+  const updateFactorVizOptionsHolder = vizState((state) => state.updateFactorVizOptionsHolder);
+  const updateFactorVisualizationsButtonColor = vizState(
+    (state) => state.updateFactorVisualizationsButtonColor
+  );
   const [localStore, setLocalStore] = useState({ customFileNameLocation: '' });
 
   function handleChange(e, { value }) {
-    localStore.customFileNameLocation = value;
+    setLocalStore({ customFileNameLocation: value });
     factorVizOptionsHolder.customFileNameLocation = value;
-    vizState.factorVizOptionsHolder = factorVizOptionsHolder;
-    vizState.updateFactorVisualizationsButtonColor = 'orange';
+    updateFactorVizOptionsHolder(factorVizOptionsHolder);
+    updateFactorVisualizationsButtonColor('orange');
   }
 
   // todo - fix this checked setting
