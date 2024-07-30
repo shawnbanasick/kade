@@ -1,87 +1,92 @@
 import { useRef } from 'react';
-import { AgGridReact } from '@ag-grid-community/react';
-import { AllCommunityModules } from '@ag-grid-community/all-modules';
+import { AgGridReact } from 'ag-grid-react';
+import 'ag-grid-community/styles/ag-grid.css';
+import 'ag-grid-community/styles/ag-theme-alpine.css';
 import i18n from 'i18next';
 import calcState from '../../GlobalState/calcState';
 import outputState from '../../GlobalState/outputState';
 
-const getGridColDefsFacCorrTable = (data, numFacs, headerRow) => {
-  let gridColDefsFacCorrTable = [
-    {
-      headerName: '',
-      field: 'factorList',
-      pinned: true,
-      editable: false,
-      width: 180,
-      cellStyle: {
-        textAlign: 'center',
-      },
-    },
-  ];
+const FactorCharacteristicsTable = () => {
+  const data = calcState((state) => state.FactorCharacteristicsArray);
+  const userSelectedFacs = outputState((state) => state.userSelectedFactors);
 
-  for (let i = 1; i < numFacs + 1; i += 1) {
-    gridColDefsFacCorrTable.push({
-      headerName: headerRow[i],
-      field: headerRow[i],
-      pinned: false,
-      editable: false,
-      sortable: true,
-      width: 90,
-      cellStyle: {
-        textAlign: 'center',
-      },
-    }); // end push
-  } // end loop
-
-  return gridColDefsFacCorrTable;
-};
-
-const getGridRowDataFacCorrTable = (data, headerRow, characteristicsArray) => {
-  let gridRowDataFacCorrTable = [];
-
-  for (let j = 4; j < data.length; j += 1) {
-    // let responNum = j + 1;
-    const tempObj = {};
-    tempObj.factorList = characteristicsArray[j - 4];
-
-    for (let k = 1; k < headerRow.length; k += 1) {
-      tempObj[headerRow[k]] = data[j][k];
-    }
-    gridRowDataFacCorrTable.push(tempObj);
-  }
-
-  return gridRowDataFacCorrTable;
-};
-
-const FactorCorrelationsTable = () => {
   let gridRowDataFacCorrTable = [];
   let gridColDefsFacCorrTable = [];
 
-  const getCurrentData = () => {
-    // getState
-    const data = calcState((state) => state.FactorCharacteristicsArray);
-    data.shift();
-    const numFacs2 = outputState((state) => state.userSelectedFactors);
-
-    const numFacs = numFacs2.length;
-
-    // pull out header row
-    const headerRow = data[3];
-
-    // mutate header row to include translation
-    for (let k = 1; k < headerRow.length; k += 1) {
-      let factorText = i18n.t('Factor');
-      let factorNum = headerRow[k].charAt(headerRow[k].length - 1);
-      // for bipolar split - catch "1a" as factor number
-      if (isNaN(+factorNum)) {
-        factorNum = `${headerRow[k].charAt(headerRow[k].length - 2)}${factorNum}`;
-      }
-      headerRow[k] = `${factorText} ${factorNum}`;
-    }
-
-    return [data, numFacs, headerRow];
+  let gridOptions = {
+    suppressRowHoverHighlight: false,
+    columnHoverHighlight: true,
+    enableSorting: true,
   };
 
+  const getGridColDefsFacCorrTable = (data, numFacs, headerRow) => {
+    let gridColDefsFacCorrTable = [
+      {
+        headerName: '',
+        field: 'factorList',
+        pinned: true,
+        editable: false,
+        width: 180,
+        cellStyle: {
+          textAlign: 'center',
+        },
+      },
+    ];
+
+    for (let i = 1; i < numFacs + 1; i += 1) {
+      gridColDefsFacCorrTable.push({
+        headerName: headerRow[i],
+        field: headerRow[i],
+        pinned: false,
+        editable: false,
+        sortable: true,
+        width: 90,
+        cellStyle: {
+          textAlign: 'center',
+        },
+      }); // end push
+    } // end loop
+
+    return gridColDefsFacCorrTable;
+  };
+
+  const getGridRowDataFacCorrTable = (data, headerRow, characteristicsArray) => {
+    let gridRowDataFacCorrTable = [];
+
+    for (let j = 4; j < data.length; j += 1) {
+      // let responNum = j + 1;
+      const tempObj = {};
+      tempObj.factorList = characteristicsArray[j - 4];
+
+      for (let k = 1; k < headerRow.length; k += 1) {
+        tempObj[headerRow[k]] = data[j][k];
+      }
+      gridRowDataFacCorrTable.push(tempObj);
+    }
+
+    return gridRowDataFacCorrTable;
+  };
+
+  // getState
+  data.shift();
+
+  const numFacs = userSelectedFacs.length;
+  console.log(numFacs);
+  // pull out header row
+  const headerRow = data[3];
+  console.log(headerRow);
+
+  // new header row to include translation
+  let newHeaderRow = [''];
+  userSelectedFacs.forEach((element) => {
+    let factorText = i18n.t('Factor');
+    let factorNum = element.charAt(element.length - 1);
+    if (isNaN(+factorNum)) {
+      factorNum = `${element.charAt(element.length - 2)}${factorNum}`;
+    }
+    newHeaderRow.push(`${factorText} ${factorNum}`);
+  });
+  newHeaderRow.unshift('');
   const gridApi = useRef();
 
   const onGridReady = (params) => {
@@ -96,7 +101,7 @@ const FactorCorrelationsTable = () => {
     i18n.t('S E of Factor Zscores'),
   ];
 
-  const currentData = getCurrentData();
+  const currentData = [data, numFacs, newHeaderRow];
 
   let widthVal = 182 + 90 * currentData[1];
   if (widthVal > window.innerWidth - 100) {
@@ -118,8 +123,8 @@ const FactorCorrelationsTable = () => {
           ref={gridApi}
           columnDefs={gridColDefsFacCorrTable}
           rowData={gridRowDataFacCorrTable}
+          gridOptions={gridOptions}
           onGridReady={onGridReady}
-          modules={AllCommunityModules}
           domLayout={'autoHeight'}
         />
       </div>
@@ -127,4 +132,4 @@ const FactorCorrelationsTable = () => {
   );
 };
 
-export default FactorCorrelationsTable;
+export default FactorCharacteristicsTable;

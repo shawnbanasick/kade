@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import styled from 'styled-components';
 import { useEffect } from 'react';
-import { AgGridReact } from '@ag-grid-community/react';
-import { AllCommunityModules } from '@ag-grid-community/all-modules';
+import { AgGridReact } from 'ag-grid-react';
+import 'ag-grid-community/styles/ag-grid.css';
+import 'ag-grid-community/styles/ag-theme-alpine.css';
 import { useTranslation } from 'react-i18next';
 import i18n from 'i18next';
 import calcState from '../../GlobalState/calcState';
@@ -102,6 +103,12 @@ const FactorsTable = () => {
   const { t } = useTranslation();
   const numStatements = coreState((state) => state.numStatements);
 
+  let gridOptions = {
+    suppressRowHoverHighlight: false,
+    columnHoverHighlight: true,
+    enableSorting: true,
+  };
+
   const [localStore, setLocalStore] = useState({
     numFactors: 0,
     numStatements: numStatements,
@@ -189,7 +196,9 @@ const FactorsTable = () => {
             id="factorsTable"
             columnDefs={gridColDefsFacTable}
             rowData={gridRowDataFacTable}
-            modules={AllCommunityModules}
+            gridOptions={gridOptions}
+            animateRows={true}
+            enableBrowserTooltips={true}
           />
         </div>
       </Container1>

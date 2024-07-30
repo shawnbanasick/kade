@@ -30,8 +30,6 @@ const exportToCsv = async (fileName, rows) => {
     csvFile += processRow(rows[i]);
   }
 
-  console.log(JSON.stringify(csvFile));
-
   // get project name
   const projectName = coreState.getState().projectName;
 

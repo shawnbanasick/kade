@@ -104,6 +104,8 @@ const pushFactorScoreCorrelationsToOutput = function (outputData, sheetNamesXlsx
 
   outputData.push(correlationTableArray);
 
+  console.log(JSON.stringify(correlationTableArray));
+
   calcState.setState({ factorCorrelationsTableData: correlationTableArray });
 
   console.log('dispatch - 11 - pushFactorScoreCorrelations complete');
