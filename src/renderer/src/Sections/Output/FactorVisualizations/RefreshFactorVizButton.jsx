@@ -4,6 +4,7 @@ import GeneralButton from '../../../Utils/GeneralButton';
 import { useTranslation } from 'react-i18next';
 import vizState from '../../GlobalState/vizState';
 import outputState from '../../GlobalState/outputState';
+import createFactorVizDataObjectForProps from './createFactorVizDataObjectForProps';
 
 const RefreshFactorVizButton = () => {
   const { t } = useTranslation();
@@ -26,7 +27,10 @@ const RefreshFactorVizButton = () => {
     for (let i = 0; i < updateKeys.length; i += 1) {
       factorVizOptions[updateKeys[i]] = factorVizOptionsHolder[updateKeys[i]];
     }
-    updateFactorVizOptions(factorVizOptions);
+    console.log('line 30', JSON.stringify(factorVizOptions, null, 2));
+    updateFactorVizOptions({ ...factorVizOptions });
+    // let newData = createFactorVizDataObjectForProps(factorVizOptions);
+    // console.log('newData', JSON.stringify(newData, null, 2));
     updateFactorVizOptionsHolder({});
     updateFactorVisualizationsButtonColor(color);
   };

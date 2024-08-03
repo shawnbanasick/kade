@@ -4,25 +4,25 @@ import vizState from '../../GlobalState/vizState';
 const LegendText = (props) => {
   const { t } = useTranslation();
   const maxColumnHeight = vizState((state) => state.maxColumnHeight);
+  const factorVizOptions = vizState((state) => state.factorVizOptions);
 
-  function getXCoords(props) {
+  function getXCoords() {
     let totalWidth = props.positionData.instances.length * 110;
-    if (props.factorVizOptions.willAdjustCardWidth === true) {
-      totalWidth =
-        props.positionData.instances.length * props.factorVizOptions.willAdjustCardWidthBy;
+    if (factorVizOptions.willAdjustCardWidth === true) {
+      totalWidth = props.positionData.instances.length * factorVizOptions.willAdjustCardWidthBy;
     }
     const halfWidth = totalWidth / 2;
     const xCoord = halfWidth;
     return xCoord;
   }
 
-  function getYValue(props) {
+  function getYValue() {
     const defaultHeight = maxColumnHeight * 110 + 100;
 
-    const shouldAdjustHeight = props.factorVizOptions.willAdjustCardHeight;
+    const shouldAdjustHeight = factorVizOptions.willAdjustCardHeight;
 
     if (shouldAdjustHeight === true) {
-      const cardHeight = props.factorVizOptions.willAdjustCardHeightBy;
+      const cardHeight = factorVizOptions.willAdjustCardHeightBy;
       const yValue = maxColumnHeight * cardHeight + 100;
       return yValue;
     }
@@ -30,18 +30,17 @@ const LegendText = (props) => {
   }
 
   const renderLegendRectangleText = (props) => {
-    const displayColor = props.factorVizOptions.consensusIndicator;
-    const distinguishingIndicator05 = props.factorVizOptions.distinguishingIndicator05;
-    const distinguishingIndicator01 = props.factorVizOptions.distinguishingIndicator01;
+    const displayColor = factorVizOptions.consensusIndicator;
+    const distinguishingIndicator05 = factorVizOptions.distinguishingIndicator05;
+    const distinguishingIndicator01 = factorVizOptions.distinguishingIndicator01;
+    const showDistinguishingAs = factorVizOptions.showDistinguishingAs;
+    const shouldDisplayConsensus = factorVizOptions.willDisplayConsensusStates;
+    const willIndicateDistinguishing = factorVizOptions.willIndicateDistinguishing;
+    let willDisplayDistingCompareSymbols = factorVizOptions.willDisplayDistingCompareSymbols;
 
     const xLocation = getXCoords(props);
     const yLocation = getYValue(props) + 5;
 
-    const showDistinguishingAs = props.factorVizOptions.showDistinguishingAs;
-
-    const shouldDisplayConsensus = props.factorVizOptions.willDisplayConsensusStates;
-    const willIndicateDistinguishing = props.factorVizOptions.willIndicateDistinguishing;
-    let willDisplayDistingCompareSymbols = props.factorVizOptions.willDisplayDistingCompareSymbols;
     // hide the comparison symbols if distinguishing is not displayed
     if (willIndicateDistinguishing === false) {
       willDisplayDistingCompareSymbols = false;
