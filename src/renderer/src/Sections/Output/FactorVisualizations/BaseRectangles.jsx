@@ -1,4 +1,5 @@
 import vizState from '../../GlobalState/vizState';
+import { v4 as uuidv4 } from 'uuid';
 
 const styles = {
   // fill: "white",
@@ -70,10 +71,9 @@ const renderBaseRectangles = (props) => (coords, index) => {
     y: props.positionData.yPosLoop[index] * heightValue(props) + headerHeight() + titleHeight,
     width: widthValue(props),
     height: heightValue(props),
-    key: props.positionData.numRectsArray[index],
     fill: fillColor,
   };
-  return <rect {...styles} {...rectangleProps} />;
+  return <rect {...styles} {...rectangleProps} key={uuidv4()} />;
 };
 // eslint-disable-next-line
 export default (props) => (

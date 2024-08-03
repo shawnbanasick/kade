@@ -8,7 +8,7 @@ const UserNumberInput = (props) => {
   const factorVizOptionsHolder = vizState((state) => state.factorVizOptionsHolder);
   const updateFactorVizOptionsHolder = vizState((state) => state.updateFactorVizOptionsHolder);
   const updateFactorVisualizationsButtonColor = vizState(
-    (state) => state.updateUpdateFactorVisualizationsButtonColor
+    (state) => state.updateFactorVisualizationsButtonColor
   );
 
   const [value, setValue] = useState(props.value);

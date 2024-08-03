@@ -1,4 +1,5 @@
 import vizState from '../../GlobalState/vizState';
+import { v4 as uuidv4 } from 'uuid';
 
 const styles = {
   fill: 'black',
@@ -26,13 +27,12 @@ const renderBaseRectangles = (props) => (coords, index) => {
     y: 20 + titleHeight,
     // width: widthValue(),
     // height: heightValue(),
-    key: props.positionData.uniques[index],
     text: props.positionData.uniques[index],
     textAnchor: 'middle',
   };
 
   return (
-    <text fontFamily="arial" {...styles} {...textProps}>
+    <text fontFamily="arial" {...styles} {...textProps} key={uuidv4()}>
       {textProps.text}
     </text>
   );

@@ -16,11 +16,13 @@ const vizState = create(
 
     positionData: {},
 
+    refreshFactorData: {},
+
     stateFrag: {},
 
     titleHeight: 30,
 
-    factorVisualizationsButtonColor: '',
+    factorVisualizationsButtonColor: '#d6dbe0',
 
     willAddCustomNames: false,
 
@@ -104,6 +106,7 @@ const vizState = create(
       customFileNameLocation: 'append',
     },
 
+    updateRefreshFactorData: (inputValue) => set({ refreshFactorData: inputValue }),
     updateConsensusIndicator: (inputValue) => set({ consensusIndicator: inputValue }),
     updateCustomFactorNames: (inputValue) => set({ customFactorNames: inputValue }),
     updateCustomFileNameLocation: (inputValue) => set({ customFileNameLocation: inputValue }),

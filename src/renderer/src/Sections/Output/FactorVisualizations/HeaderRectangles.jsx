@@ -1,4 +1,5 @@
 import vizState from '../../GlobalState/vizState';
+import { v4 as uuidv4 } from 'uuid';
 
 const styles = {
   fill: 'white',
@@ -27,10 +28,9 @@ const renderBaseRectangles = (props) => (coords, index) => {
     y: 0 + titleHeight,
     width: widthValue(props),
     height: heightValue(),
-    key: props.positionData.numRectsArray[index],
   };
 
-  return <rect {...styles} {...rectangleProps} />;
+  return <rect {...styles} {...rectangleProps} key={uuidv4()} />;
 };
 
 const HeaderRectangles1 = (props) => (

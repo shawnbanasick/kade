@@ -14,11 +14,13 @@ const UserSelectionSwitch = (props) => {
   );
 
   const clickToggle = (e) => {
+    console.log(JSON.stringify(factorVizOptionsHolder));
     e.stopPropagation();
     const oldValue = toggle;
     const newValue = !oldValue;
     const key = props.value;
     factorVizOptionsHolder[key] = newValue;
+    console.log(JSON.stringify(factorVizOptionsHolder));
     setToggle(newValue);
     updateFactorVizOptionsHolder(factorVizOptionsHolder);
     updateFactorVisualizationsButtonColor('orange');

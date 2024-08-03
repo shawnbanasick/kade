@@ -8,15 +8,19 @@ const DisplayVisualizationsButtons = () => {
   const { t } = useTranslation();
   // hide button is only one factor selected
   const userSelectedFactors = outputState((state) => state.userSelectedFactors);
+  const shouldDisplayFactorVizOptions = outputState((state) => state.shouldDisplayFactorVizOptions);
+  const updateShouldDisplayFactorVizOptions = outputState(
+    (state) => state.updateShouldDisplayFactorVizOptions
+  );
+
   let shouldDisplay = true;
   if (userSelectedFactors.length < 2) {
     shouldDisplay = false;
   }
   const handleOpenVizOptions = () => {
     // getState
-    const shouldDisplayFactorVizOptions = outputState.shouldDisplayFactorVizOptions;
     const shouldShow = !shouldDisplayFactorVizOptions;
-    outputState.shouldDisplayFactorVizOptions = shouldShow;
+    updateShouldDisplayFactorVizOptions(shouldShow);
   };
 
   // getState

@@ -1,3 +1,5 @@
+import { v4 as uuidv4 } from 'uuid';
+
 const widthValue = (props) => {
   const shouldAdjustWidth = props.factorVizOptions.willAdjustCardWidth;
   if (shouldAdjustWidth === true) {
@@ -78,13 +80,12 @@ const renderSigSortsIndicators = (props) => {
         headerHeight1 +
         22 +
         1.7 * willAdjustIndicatorSizeBy,
-      key: props.positionData.numRectsArray[index],
       arrow,
       textAnchor: 'left',
       fontSize: willAdjustIndicatorSizeBy,
     };
     return (
-      <text {...styles} {...sigSymbolProps} {...sigSymbolProps2}>
+      <text {...styles} {...sigSymbolProps} {...sigSymbolProps2} key={uuidv4()}>
         {sigSymbolProps.symbol} {sigSymbolProps2.arrow}
       </text>
     );

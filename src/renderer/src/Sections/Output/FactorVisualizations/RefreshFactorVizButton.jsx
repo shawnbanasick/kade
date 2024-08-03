@@ -15,6 +15,10 @@ const RefreshFactorVizButton = () => {
   const updateFactorVisualizationsButtonColor = vizState(
     (state) => state.updateFactorVisualizationsButtonColor
   );
+  const factorVisualizationsButtonColor = vizState(
+    (state) => state.factorVisualizationsButtonColor
+  );
+
   const color = '#a5d6a7';
 
   const refresh = () => {
@@ -34,7 +38,7 @@ const RefreshFactorVizButton = () => {
           as={GeneralButton}
           id="refreshFactorVizButton"
           onClick={refresh}
-          buttonColor={color}
+          $buttonColor={factorVisualizationsButtonColor}
         >
           {t('Update Factor Visualizations')}
         </RefreshButton>
@@ -55,5 +59,5 @@ const RefreshButtonContainerDiv = styled.div`
 `;
 
 const RefreshButton = styled.div`
-  background-color: ${(props) => props.buttonColor};
+  background-color: ${(props) => props.$buttonColor};
 `;

@@ -7,7 +7,9 @@ const capitalizeFirstLetter = (string) => string.charAt(0).toUpperCase() + strin
 
 // exported function
 const createFactorVizDataObjectForProps = (factorVizOptions) => {
+  console.log('line 10', JSON.stringify(factorVizOptions, null, 2));
   const shouldDisplayFactorViz = outputState.getState().displayFactorVisualizations;
+  const userSelectedFactors = outputState.getState().userSelectedFactors;
 
   // early return if no display
   if (shouldDisplayFactorViz === false) {
@@ -17,7 +19,7 @@ const createFactorVizDataObjectForProps = (factorVizOptions) => {
   // create data object for render mapping
   let customFactorNamesArray;
   // getState
-  const userSelectedFactors = outputState.getState().userSelectedFactors;
+  // const userSelectedFactors = outputState.getState().userSelectedFactors;
 
   const positionData = getInstances();
   const numberOfFactors = userSelectedFactors.length;
@@ -59,6 +61,9 @@ const createFactorVizDataObjectForProps = (factorVizOptions) => {
     tempObj.willAdjustIndicatorSizeBy = factorVizOptions.willAdjustIndicatorSizeBy;
     factorData.push(tempObj);
   }
+
+  console.log(JSON.stringify(factorData.factorVizOptions, null, 2));
+
   return factorData;
 };
 

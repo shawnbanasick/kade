@@ -36,6 +36,7 @@ const getStyles = (props) => {
   }
 
   // make legend adjustment for container size?
+  console.log(JSON.stringify(props.factorVizOptions, null, 2));
   const shouldDisplayLegend = props.factorVizOptions.willIncludeLegend;
   if (shouldDisplayLegend === false) {
     containerHeight -= 250;
@@ -49,15 +50,11 @@ const getStyles = (props) => {
     marginBottom: 250,
   };
 
-  // to change output section main content height / width
-  // hidden to avoid react error - can't update while rendering, but not needed?
-  // vizState.facVizContainerHeight = containerHeight;
-  // vizState.facVizContainerWidth = containerWidth;
-
   return container;
 };
 
 const FactorViz = (props) => {
+  console.log(JSON.stringify(props.factorVizOptions, null, 2));
   const willIndicateDistinguishing = props.factorVizOptions.willIndicateDistinguishing;
   const showDistinguishingAs = props.factorVizOptions.showDistinguishingAs;
 

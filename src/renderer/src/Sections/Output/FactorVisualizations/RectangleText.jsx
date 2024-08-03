@@ -1,4 +1,5 @@
 import vizState from '../../GlobalState/vizState';
+import { v4 as uuidv4 } from 'uuid';
 
 const styles = {
   stroke: 'none',
@@ -128,13 +129,12 @@ const renderRectangleText = (props) => {
         20 +
         topMarginValue(props) +
         titleHeight,
-      key: props.positionData.numRectsArray[index],
       text: statementList(texts, xCoord, props.factorVizOptions),
       textAnchor: 'left',
       fontSize,
     };
     return (
-      <text {...styles} {...textProps}>
+      <text {...styles} {...textProps} key={uuidv4()}>
         {textProps.text}
       </text>
     );
