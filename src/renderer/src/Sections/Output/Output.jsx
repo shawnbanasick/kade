@@ -129,7 +129,6 @@ const Output = () => {
   ];
 
   function handleTabChange(e, { activeIndex }) {
-    console.log('activeIndex', activeIndex);
     updateOutputActiveTabIndex(activeIndex);
   }
 

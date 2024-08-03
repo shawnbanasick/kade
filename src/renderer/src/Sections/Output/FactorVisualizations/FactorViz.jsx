@@ -36,7 +36,6 @@ const getStyles = (props) => {
   }
 
   // make legend adjustment for container size?
-  console.log(JSON.stringify(props.factorVizOptions, null, 2));
   const shouldDisplayLegend = props.factorVizOptions.willIncludeLegend;
   if (shouldDisplayLegend === false) {
     containerHeight -= 250;
@@ -54,7 +53,6 @@ const getStyles = (props) => {
 };
 
 const FactorViz = (props) => {
-  console.log(JSON.stringify(props.factorVizOptions, null, 2));
   const willIndicateDistinguishing = props.factorVizOptions.willIndicateDistinguishing;
   const showDistinguishingAs = props.factorVizOptions.showDistinguishingAs;
 

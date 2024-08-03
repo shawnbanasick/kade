@@ -7,7 +7,6 @@ const capitalizeFirstLetter = (string) => string.charAt(0).toUpperCase() + strin
 
 // exported function
 const createFactorVizDataObjectForProps = (factorVizOptions) => {
-  console.log('line 10', JSON.stringify(factorVizOptions, null, 2));
   const shouldDisplayFactorViz = outputState.getState().displayFactorVisualizations;
   const userSelectedFactors = outputState.getState().userSelectedFactors;
 
@@ -61,9 +60,6 @@ const createFactorVizDataObjectForProps = (factorVizOptions) => {
     tempObj.willAdjustIndicatorSizeBy = factorVizOptions.willAdjustIndicatorSizeBy;
     factorData.push(tempObj);
   }
-
-  console.log(JSON.stringify(factorData.factorVizOptions, null, 2));
-
   return factorData;
 };
 

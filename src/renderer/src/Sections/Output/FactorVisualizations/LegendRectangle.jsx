@@ -11,7 +11,7 @@ const styles = {
 const LegendRectangle = (props) => {
   const factorVizOptions = vizState((state) => state.factorVizOptions);
 
-  const getHeight = (props) => {
+  const getHeight = () => {
     let legendBoxHeight = 50;
     // get state from props
     const shouldDisplayConsensus = factorVizOptions.willDisplayConsensusStates;
@@ -44,7 +44,7 @@ const LegendRectangle = (props) => {
     return xCoord;
   };
 
-  let yValue = (props) => {
+  let yValue = () => {
     const maxColumnHeight = vizState.getState().maxColumnHeight;
     const defaultHeight = maxColumnHeight * 110 + 100;
 
