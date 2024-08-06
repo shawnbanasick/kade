@@ -22,6 +22,7 @@ const appState = create(
     isLoadingsButtonGreen: false,
     isRotationButtonGreen: false,
     isOutputButtonGreen: false,
+    isStructureButtonGreen: false,
 
     showErrorMessageBar: false,
     showUpdateModal: false,
@@ -42,7 +43,10 @@ const appState = create(
     viewProjectHistory: false,
     viewRotation: false,
     viewStart: true,
+    viewStructure: false,
 
+    updateIsStructureButtonGreen: (inputValue) => set({ isStructureButtonGreen: inputValue }),
+    updateViewStructure: (inputValue) => set({ viewStructure: inputValue }),
     updateActiveWindow: (inputValue) => set({ activeWindow: inputValue }),
     updateErrorMessage: (inputValue) => set({ errorMessage: inputValue }),
     updateExtendedErrorMessage: (inputValue) => set({ extendedErrorMessage: inputValue }),

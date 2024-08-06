@@ -6,6 +6,7 @@ import Data from './Sections/Data/Data';
 import Correlations from './Sections/Correlations/Correlations';
 import Factors from './Sections/Factors/Factors';
 import Rotation from './Sections/Rotation/Rotation';
+import Structure from './Sections/Structure/Structure';
 import Loadings from './Sections/Loadings/Loadings';
 import Output from './Sections/Output/Output';
 import ProjectHistory from './Sections/ProjectHistory/ProjectHistory';
@@ -76,7 +77,7 @@ const App = () => {
   const viewClearProject = appState((state) => state.viewClearProject);
   const viewHelp = appState((state) => state.viewHelp);
   const viewLicense = appState((state) => state.viewLicense);
-  //const activeWindow = appState((state) => state.activeWindow);
+  const viewStructure = appState((state) => state.viewStructure);
 
   const isDataButtonGreen = appState((state) => state.isDataButtonGreen);
   const hasDataBeenConfirmed = appState((state) => state.hasDataBeenConfirmed);
@@ -87,6 +88,7 @@ const App = () => {
   const isRotationButtonGreen = appState((state) => state.isRotationButtonGreen);
   const isLoadingsButtonGreen = appState((state) => state.isLoadingsButtonGreen);
   const isOutputButtonGreen = appState((state) => state.isOutputButtonGreen);
+  const isStructureButtonGreen = appState((state) => state.isStructureButtonGreen);
 
   const updateViewAttribution = appState((state) => state.updateViewAttribution);
   const updateViewData = appState((state) => state.updateViewData);
@@ -102,6 +104,7 @@ const App = () => {
   const updateViewRotation = appState((state) => state.updateViewRotation);
   const updateViewStart = appState((state) => state.updateViewStart);
   const updateActiveWindow = appState((state) => state.updateActiveWindow);
+  const updateViewStructure = appState((state) => state.updateViewStructure);
 
   // const installedVersion = appState.version;
   // const updateVersion = appState.updateVersion;
@@ -113,6 +116,7 @@ const App = () => {
   const rotationButtonColor = isRotationButtonGreen ? 'var(--main-theme-color)' : '#d6dbe0';
   const loadingsButtonColor = isLoadingsButtonGreen ? 'var(--main-theme-color)' : '#d6dbe0';
   const outputButtonColor = isOutputButtonGreen ? 'var(--main-theme-color)' : '#d6dbe0';
+  const structureButtonColor = isStructureButtonGreen ? 'var(--main-theme-color)' : '#d6dbe0';
 
   const isDataButtonGreenCombined = indicateDataButtonColor(
     isDataButtonGreen,
@@ -133,6 +137,7 @@ const App = () => {
     updateViewProjectHistory(false);
     updateViewRotation(false);
     updateViewStart(false);
+    updateViewStructure(false);
 
     updateActiveWindow(target);
 
@@ -172,6 +177,9 @@ const App = () => {
     if (target === 'viewClearProject') {
       updateViewClearProject(true);
     }
+    if (target === 'viewStructure') {
+      updateViewStructure(true);
+    }
   };
 
   let showTopBar = false;
@@ -210,32 +218,39 @@ const App = () => {
               <p className="title">{`3. ${t('Correlations')}`}</p>
             </FileButton>
             <FileButton
+              $buttoncolor={structureButtonColor}
+              $active={viewStructure}
+              onClick={() => handleClick('viewStructure')}
+            >
+              <p className="title">{`4. ${t('Structure')}`}</p>
+            </FileButton>
+            <FileButton
               $buttoncolor={factorsButtonColor}
               $active={viewFactors}
               onClick={() => handleClick('viewFactors')}
             >
-              <p className="title">{`4. ${t('Factors')}`}</p>
+              <p className="title">{`5. ${t('Factors')}`}</p>
             </FileButton>
             <FileButton
               $buttoncolor={rotationButtonColor}
               $active={viewRotation}
               onClick={() => handleClick('viewRotation')}
             >
-              <p className="title">{`5. ${t('Rotation')}`}</p>
+              <p className="title">{`6. ${t('Rotation')}`}</p>
             </FileButton>
             <FileButton
               $buttoncolor={loadingsButtonColor}
               $active={viewLoadings}
               onClick={() => handleClick('viewLoadings')}
             >
-              <p className="title">{`6. ${t('Loadings')}`}</p>
+              <p className="title">{`7. ${t('Loadings')}`}</p>
             </FileButton>
             <FileButton
               $buttoncolor={outputButtonColor}
               $active={viewOutput}
               onClick={() => handleClick('viewOutput')}
             >
-              <p className="title">{`7. ${t('Output')}`}</p>
+              <p className="title">{`8. ${t('Output')}`}</p>
             </FileButton>
             <FileButton
               $active={viewProjectHistory}
@@ -267,6 +282,7 @@ const App = () => {
             {viewInput && <Input view={viewInput} />}
             {viewData && <Data view={viewData} />}
             {viewCorrelations && <Correlations view={viewCorrelations} />}
+            {viewStructure && <Structure view={viewStructure} />}
             {viewFactors && <Factors view={viewFactors} />}
             {viewRotation && <Rotation view={viewRotation} />}
             {viewLoadings && <Loadings view={viewLoadings} />}
