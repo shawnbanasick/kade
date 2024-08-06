@@ -11,18 +11,7 @@ import factorState from '../../GlobalState/factorState';
 import coreState from '../../GlobalState/coreState';
 import outputState from '../../GlobalState/outputState';
 
-//todo - convert to functional component
-
 const FactorSelectionForOutputButtons = () => {
-  // componentWillUnmount() {
-  //   // getState
-  //   const isFacSelectDisabled = rotationState.getState().isFacSelectDisabled;
-  //   if (!isFacSelectDisabled) {
-  //     clearAllButtons();
-  //   }
-  // }
-
-  // get state
   const updateFactor1Active = rotationState((state) => state.updateFactor1Active);
   const updateFactor2Active = rotationState((state) => state.updateFactor2Active);
   const updateFactor3Active = rotationState((state) => state.updateFactor3Active);
@@ -74,7 +63,6 @@ const FactorSelectionForOutputButtons = () => {
     // highlight selected button
     if (factor === 'factor1') {
       updateFactor1Active(true);
-      console.log('factor1Active', factor1Active);
     }
     if (factor === 'factor2') {
       updateFactor2Active(true);
@@ -117,7 +105,6 @@ const FactorSelectionForOutputButtons = () => {
     resetVarimax();
 
     updateIsRotationButtonGreen(true);
-    console.log(event.target);
   };
 
   const buttonsArray = [];

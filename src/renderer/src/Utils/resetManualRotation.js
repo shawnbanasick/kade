@@ -15,6 +15,16 @@ const resetManualRotation = () => {
   rotationState.setState({ highlightRotfactor7: false });
   rotationState.setState({ highlightRotfactor8: false });
   rotationState.setState({ userSelectedRotFactors: [] });
+
+  rotationState.setState({
+    variContinueButtonActive: false,
+    variContinueButtonDisabled: false,
+    variAdjustButtonActive: false,
+    variAdjustButtonDisabled: false,
+    variPqmAdjustButtonActive: false,
+    variPqmAdjustButtonDisabled: false,
+  });
+
   return;
 };
 

@@ -35,8 +35,6 @@ const FactorSelectButtonModal = () => {
   });
 
   const handleOpen = () => {
-    console.log('clicked');
-
     if (isNaN(numFactorsKept)) {
       setLocalStore({ ...localStore, modalOpenSelect: false });
     } else {

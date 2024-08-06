@@ -116,6 +116,8 @@ const FactorSelectionForOutputButtons = () => {
       updateHighlightFactor7(false);
       updateHighlightFactor8(false);
 
+      updateOutputFactorSelectButtonsDisabled(false);
+
       // clear visualizations
       resetSection6('output');
       // reset cache of factor viz data
