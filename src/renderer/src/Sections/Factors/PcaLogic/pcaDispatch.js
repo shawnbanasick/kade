@@ -53,6 +53,7 @@ const pcaDispatch = () => {
 
   // transpose
   const eigenVecsTransposed = transposeMatrix(eigenVecs);
+  console.log('eigenVecsTransposed', JSON.stringify(eigenVecsTransposed, null, 2));
 
   // truncate arrays
   let limit = 8;
