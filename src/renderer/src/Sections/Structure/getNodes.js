@@ -1,12 +1,12 @@
 const getNodes = (labelObj, widthObj, xObj, paddingTopVal, heightVal) => {
   const rowSpacing = {
-    row12: 75,
-    row23: 150,
-    row34: 225,
-    row45: 300,
-    row56: 375,
-    row67: 450,
-    row78: 525,
+    row12: 100,
+    row23: 225,
+    row34: 350,
+    row45: 475,
+    row56: 600,
+    row67: 725,
+    row78: 850,
   };
 
   console.log(labelObj.label11);

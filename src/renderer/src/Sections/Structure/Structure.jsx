@@ -11,7 +11,7 @@ const Structure = () => {
         <ColorBox />
         <TabList>
           <Tab>Heirarchical Factor Structure</Tab>
-          <Tab>Factor Correlations</Tab>
+          <Tab>Factor Characteristics</Tab>
           <Tab>Influencers</Tab>
         </TabList>
 
@@ -36,6 +36,7 @@ const Container = styled.div`
   width: 100%;
   height: 100%;
   border: 1px solid blue;
+  background-color: lightgray;
 `;
 
 const ColorBox = styled.div`

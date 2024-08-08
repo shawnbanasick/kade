@@ -4,7 +4,7 @@
 
 .react-tabs__tab-list {
   border-bottom: 1px solid #aaa;
-  margin: 0 0 10px;
+  margin: 0 0 0px 3px;
   background-color: lightgray;
   padding: 0;
 }

@@ -7,6 +7,7 @@ import GeneralButton from '../../Utils/GeneralButton';
 import { useTranslation } from 'react-i18next';
 import coreState from '../GlobalState/coreState';
 import appState from '../GlobalState/appState';
+import structureDispatch from '../Structure/structureDispatch';
 
 const CalculateCorrelationsButton = () => {
   const { t } = useTranslation();
@@ -17,11 +18,12 @@ const CalculateCorrelationsButton = () => {
   const updateErrorMessage = inputState((state) => state.updateErrorMessage);
   const isCorrelationsButtonGreen = appState((state) => state.isCorrelationsButtonGreen);
 
-  const handleClick = () => {
+  const handleClick = async () => {
     if (respondentNames) {
       calcMaxRespondentNameLength(respondentNames);
       const rawSortsArray = mainDataObject.map((item) => item.rawSort);
       mainCorrCalcs(respondentNames, rawSortsArray);
+      await structureDispatch();
     } else {
       updateShowErrorMessageBar(true);
       updateErrorMessage(t('No data to calculate correlations'));

@@ -5,6 +5,7 @@ import getNodes from './getNodes';
 import getEdges from './getEdges';
 import styled from 'styled-components';
 import './reactFlow.css';
+import structureState from '../GlobalState/structureState';
 
 const paddingTopVal = 0;
 const heightVal = 20;
@@ -99,9 +100,10 @@ const xObj = {
 
 const initialNodes = getNodes(labelObj, widthObj, xObj, paddingTopVal, heightVal);
 
-const initialEdges = getEdges(markerWidthVal, markerHeightVal, markerStrokeWidthVal);
+// const initialEdges = getEdges(markerWidthVal, markerHeightVal, markerStrokeWidthVal);
 
 function Flow() {
+  const initialEdges = structureState((state) => state.initialEdges);
   const [nodes, setNodes] = useState(initialNodes);
   const [edges, setEdges] = useState(initialEdges);
 
@@ -135,7 +137,8 @@ export default Flow;
 
 const Container = styled.div`
   width: 100%;
-  height: 90%;
+  height: 95%;
+  background-color: white;
   /* display: flex;
   flex-direction: column;
   align-items: center;

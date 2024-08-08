@@ -31,5 +31,6 @@ const Panel = styled.div`
   align-items: center;
   height: 100px;
   width: 100%;
-  background-color: lightgray;
+  border-bottom: 1.5px solid black;
+  background-color: white;
 `;
