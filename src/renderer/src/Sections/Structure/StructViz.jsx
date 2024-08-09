@@ -103,16 +103,18 @@ const initialNodes = getNodes(labelObj, widthObj, xObj, paddingTopVal, heightVal
 // const initialEdges = getEdges(markerWidthVal, markerHeightVal, markerStrokeWidthVal);
 
 function Flow() {
-  const initialEdges = structureState((state) => state.initialEdges);
+  const edges = structureState((state) => state.initialEdges);
+  const updateEdges = structureState((state) => state.updateInitialEdges);
+
   const [nodes, setNodes] = useState(initialNodes);
-  const [edges, setEdges] = useState(initialEdges);
+  // const [edges, setEdges] = useState(initialEdges);
 
   const onNodesChange = useCallback(
     (changes) => setNodes((nds) => applyNodeChanges(changes, nds)),
     []
   );
   const onEdgesChange = useCallback(
-    (changes) => setEdges((eds) => applyEdgeChanges(changes, eds)),
+    (changes) => updateEdges((eds) => applyEdgeChanges(changes, eds)),
     []
   );
 

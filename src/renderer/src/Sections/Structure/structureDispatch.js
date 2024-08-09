@@ -21,7 +21,9 @@ const structureDispatch = () => {
       console.log('response', JSON.stringify(response[0], null, 2));
       console.log('response', JSON.stringify(response[1], null, 2));
 
-      response.forEach((item) => {
+      let data = [...response];
+
+      data.forEach((item) => {
         if (Math.abs(item[3]) > 0.3) {
           let tempObj = {
             id: item[0],
@@ -42,6 +44,7 @@ const structureDispatch = () => {
           };
           initialEdges.push(tempObj);
         }
+        structureState.setState({ responseArray: data });
         structureState.setState({ initialEdges: initialEdges });
       });
     })

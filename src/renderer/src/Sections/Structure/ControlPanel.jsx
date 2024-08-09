@@ -1,15 +1,24 @@
 import { useState } from 'react';
 import styled from 'styled-components';
-import structureDispatch from './structureDispatch';
-import UserNumberInput from '../Output/FactorViz/UserNumberInput';
-import GeneralButton from '../../Utils/GeneralButton';
+import UserNumberInputStructure from './userNumberInputStructure';
+import refreshViz from './refreshViz';
+import structureState from '../GlobalState/structureState';
+// import structureDispatch from './structureDispatch';
+// import GeneralButton from '../../Utils/GeneralButton';
+// import structureState from '../GlobalState/structureState';
 
 const ControlPanel = () => {
-  const handleDisplay = () => {
-    structureDispatch();
-  };
-
   const [selectedValue, setSelectedValue] = useState('variance');
+  const refreshVizButtonColor = structureState((state) => state.refreshVizButtonColor);
+  const updateRefreshVizButtonColor = structureState((state) => state.updateRefreshVizButtonColor);
+
+  const handleRefresh = () => {
+    refreshViz();
+    updateRefreshVizButtonColor(
+      getComputedStyle(document.documentElement).getPropertyValue('--main-theme-color')
+    );
+    // structureDispatch();
+  };
 
   const handleRadioChange = (value) => {
     setSelectedValue(value);
@@ -18,9 +27,15 @@ const ControlPanel = () => {
   return (
     <Panel>
       <PanelRow>
+        <Message>
+          Individual links and boxes can be deleted by left clicking on them with your mouse and
+          then pressing the &quot;Backspace&quot; key.
+        </Message>
+      </PanelRow>
+      <PanelRow>
         <LineDispDiv>
           <LabelSpan>Line Display Cutoff:</LabelSpan>
-          <UserNumberInput
+          <UserNumberInputStructure
             name={'adjustEdgeCutoffTo'}
             step="0.01"
             lowerLimit={0.01}
@@ -60,8 +75,8 @@ const ControlPanel = () => {
       <PanelRow>
         <LineDispDiv2>
           <LabelSpan>Adjust Vertical Spacing:</LabelSpan>
-          <UserNumberInput
-            name={'adjustMinEdgeValueTo'}
+          <UserNumberInputStructure
+            name={'adjustVerticalSpacing'}
             step="0.01"
             lowerLimit={0.01}
             upperLimit={1.0}
@@ -69,7 +84,12 @@ const ControlPanel = () => {
             width={150}
           />
         </LineDispDiv2>
-        <MainButton height={20} width={800}>
+        <MainButton
+          height={20}
+          width={800}
+          onClick={handleRefresh}
+          $buttonColor={refreshVizButtonColor}
+        >
           Refresh Visualization
         </MainButton>
         <MainButton height={20} width={800}>
@@ -87,7 +107,7 @@ const Panel = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 130px;
+  height: 150px;
   width: 100%;
   border-bottom: 1.5px solid black;
   background-color: white;
@@ -149,7 +169,7 @@ const MainButton = styled.button`
   padding-left: 10px;
   padding-right: 10px;
   cursor: pointer;
-  background: #d6dbe0;
+  background-color: ${(props) => props.$buttonColor};
   text-decoration: none;
   color: black;
   transition: all 0.5s ease;
@@ -160,7 +180,7 @@ const MainButton = styled.button`
   box-shadow:
     inset 0 0 0 4px ${(props) => (props.$isActive ? 'var(--main-theme-color)' : '#d6dbe0')},
     0 0 1px 0.6;
-  background-color: ${(props) => (props.$isActive ? 'var(--main-theme-color)' : '#d6dbe0')};
+  /* background-color: ${(props) => (props.$isActive ? 'var(--main-theme-color)' : '#d6dbe0')}; */
 
   box-shadow: ${(props) =>
     props.$isActive
@@ -217,4 +237,9 @@ const RadioLabel = styled.label`
   display: flex;
   margin-left: 8px;
   color: '#333';
+`;
+
+const Message = styled.span`
+  font-size: 16px;
+  width: 1000px;
 `;
