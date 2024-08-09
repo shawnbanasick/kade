@@ -22,7 +22,7 @@ const structureDispatch = () => {
       console.log('response', JSON.stringify(response[1], null, 2));
 
       response.forEach((item) => {
-        if (Math.abs(item[3]) > 0.4) {
+        if (Math.abs(item[3]) > 0.3) {
           let tempObj = {
             id: item[0],
             source: item[1],

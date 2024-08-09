@@ -1,7 +1,7 @@
 import ReactFlow, { MarkerType } from 'reactflow';
 
 const getEdges = (markerWidthVal, markerHeightVal, markerStrokeWidthVal) => {
-  const test = '.65';
+  const test = '.80';
 
   const initialEdges = [
     {

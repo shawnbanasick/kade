@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import vizState from '../../GlobalState/vizState';
 
 const UserNumberInput = (props) => {
+  console.log(JSON.stringify(props, null, 2));
   const { t } = useTranslation();
   const factorVizOptionsHolder = vizState((state) => state.factorVizOptionsHolder);
   const updateFactorVizOptionsHolder = vizState((state) => state.updateFactorVizOptionsHolder);
@@ -92,5 +93,5 @@ const NumberWarningMessage = styled.div`
 const UserNumberContainer = styled.div`
   display: flex;
   flex-direction: row;
-  width: 400px;
+  width: ${(props) => `${props.width}px` || '400px'};
 `;

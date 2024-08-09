@@ -35,12 +35,11 @@ export default Structure;
 const Container = styled.div`
   width: 100%;
   height: 100%;
-  border: 1px solid blue;
-  background-color: lightgray;
+  background-color: #d6dbe0;
 `;
 
 const ColorBox = styled.div`
   width: 100%;
   height: 5px;
-  background-color: lightgray;
+  background-color: #d6dbe0;
 `;

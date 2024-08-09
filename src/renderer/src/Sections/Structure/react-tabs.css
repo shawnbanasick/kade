@@ -5,8 +5,9 @@
 .react-tabs__tab-list {
   border-bottom: 1px solid #aaa;
   margin: 0 0 0px 3px;
-  background-color: lightgray;
-  padding: 0;
+  background-color: #d6dbe0;
+  padding-left: 3px;
+  padding-top: 6px;
 }
 
 .react-tabs__tab {
@@ -47,7 +48,6 @@
 }
 
 .react-tabs__tab-panel {
-  width: 90vw;
   height: 90vh;
   display: none;
 }
