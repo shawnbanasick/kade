@@ -82,7 +82,7 @@ Comparisons of KADE and PQMethod results are available [here.](https://github.co
 
 ## Netlify Data Import
 
-The Netlify data importer is broken. Until I can fix it, this [guide]("https://shawnbanasick.github.io/kade/resources/Netlify%20data%20to%20Excel.pdf") will show how to parse the Netlify data in MS Excel. After parsing the data, copy and paste the participant names ad Q sort data into the Type 2 Excel worksheet import format to load the data into KADE.
+The Netlify data importer is broken. Until I can fix it, this [guide](https://shawnbanasick.github.io/kade/resources/Netlify%20data%20to%20Excel.pdf) will show how to parse the Netlify data in MS Excel. After parsing the data, copy and paste the participant names ad Q sort data into the Type 2 Excel worksheet import format to load the data into KADE.
 
 <br/>
 <br/>
