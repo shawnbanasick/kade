@@ -1,6 +1,6 @@
 import React from 'react';
 
-import throwDataAlreadyLoadedInputErrorModal from '../throwDataAlreadyLoadedInputErrorModal';
+// import throwDataAlreadyLoadedInputErrorModal from '../throwDataAlreadyLoadedInputErrorModal';
 import inputState from '../../GlobalState/inputState';
 import getInputState from '../../GlobalState/getInputState';
 import projectHistoryState from '../../GlobalState/projectHistoryState';

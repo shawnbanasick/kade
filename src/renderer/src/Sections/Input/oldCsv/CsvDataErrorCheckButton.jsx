@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import GeneralButton from './../../../Utils/GeneralButton';
+import GeneralButton from '../../../Utils/GeneralButton';
 import getInputState from '../../GlobalState/getInputState';
 // import standardImportErrorChecks from "../ErrorChecking/standardImportErrorChecks";
 import { useTranslation } from 'react-i18next';

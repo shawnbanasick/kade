@@ -1,6 +1,6 @@
 {
   "message1": "****************************************************************************",
-  "message2": "********** Remember to 'yarn build' after adding new translations! *********",
+  "message2": "********** Remember to 'npm run build' after adding new translations! *********",
   "message3": "****************************************************************************",
 
   "Main Menu": "************************** main menu *************************",
@@ -103,6 +103,7 @@
   "Load iPad Survey": "Load iPad Survey",
   "loaded from demo data": "loaded from demo data",
   "data loaded from XLSX Type 1 file": "data loaded from XLSX Type 1 file",
+  "Netlify": "Netlify",
 
   "Input Panel Errors": "******************* Input Panel Errors ************************",
   "Data are already loaded click Clear Project to restart": "Data are already loaded click \"Clear Project\" to restart",
@@ -160,6 +161,10 @@
   "Click the table headers to re-sort by column": "Click the table headers to re-sort by column",
   "(low-to-high, high-to-low, original sort)": "(low-to-high, high-to-low, original sort)",
   "Correlation": "Correlations",
+
+  "Structure Panel": "************************* Structure Panel *******************",
+  "Structure": "Structure",
+  "Structure Analysis": "Structure Analysis",
 
   "Factors Panel": "**************************** Factors Panel **********************",
   "Factor Extraction": "Factors",

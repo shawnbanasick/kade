@@ -5,7 +5,7 @@ import inputState from '../../GlobalState/inputState';
 import getInputState from '../../GlobalState/getInputState';
 import sortsDisplayText from '../logic/sortsDisplayText';
 import revertLoadButtonsColors from '../DemoData/revertLoadButtonsColors';
-import throwErrorTemplate from '../throwErrorTemplate';
+// import throwErrorTemplate from '../throwErrorTemplate';
 import filterLines from './filterLines';
 import createMainDataObjectArray from './createMainDataObjectArray';
 

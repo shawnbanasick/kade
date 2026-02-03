@@ -5,7 +5,7 @@ import Dropzone, { FileReader } from "react-dropzone";
 import state from "../../../store";
 import { sortsDisplayText } from "../logic/sortsDisplayText";
 import shiftRawSortsPositive from "../logic/shiftRawSortsPositive";
-import calcMultiplierArrayT2 from "../../Input/Excel/excelLogic/calcMultiplierArrayT2";
+import calcMultiplierArrayT2 from "../Excel/excelLogic/calcMultiplierArrayT2";
 import checkUniqueParticipantNames from "../logic/checkUniqueParticipantNames";
 
 const handleDropRejected = (...args) => console.log("reject", args);

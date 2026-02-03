@@ -2,8 +2,8 @@ import React from 'react';
 
 import styled from 'styled-components';
 import CsvQsortsCard from './CsvQsortsCard';
-import ProjectNameInput from './ProjectNameInput';
-import CsvStatementCard from './CsvStatementCard';
+import ProjectNameInput from '../CSV/ProjectNameInput';
+import CsvStatementCard from '../CSV/CsvStatementCard';
 import ForcedUnforcedRadio from './ForcedUnforcedRadio';
 import CsvSuccessfulLoadBar from './CsvSuccessfulLoadBar';
 import QsortDesignInputElement from './QsortDesignInputElement';

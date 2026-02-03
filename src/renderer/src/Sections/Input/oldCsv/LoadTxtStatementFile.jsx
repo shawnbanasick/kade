@@ -1,5 +1,5 @@
 import revertLoadButtonsColors from '../DemoData/revertLoadButtonsColors';
-import throwNoStatementsInputErrorModal from '../throwNoStatementsInputErrorModal.js';
+// import throwNoStatementsInputErrorModal from '../throwNoStatementsInputErrorModal.js';
 import inputState from '../../GlobalState/inputState';
 import getInputState from '../../GlobalState/getInputState';
 import appState from '../../GlobalState/appState';

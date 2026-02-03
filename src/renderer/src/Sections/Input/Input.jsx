@@ -9,11 +9,8 @@ import Excel3Panel from './KandedPanel';
 import PQMethodPanel from './PQMethodPanel';
 import KadeZipPanel from './KadeZipPanel';
 import DemoDataPanel from './DemoDataPanel';
-// import ErrorNotification from './ErrorChecking/ErrorNotification';
-// import WarningNotification from './ErrorChecking/WarningNotification';
+import CsvPanel from './CsvPanel';
 import { useTranslation } from 'react-i18next';
-// import getInputState from '../GlobalState/getInputState';
-// import i18n from "i18next";
 
 function Input() {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -55,6 +52,14 @@ function Input() {
       render: () => (
         <Tab.Pane>
           <KadeZipPanel />
+        </Tab.Pane>
+      ),
+    },
+    {
+      menuItem: 'CSV',
+      render: () => (
+        <Tab.Pane>
+          <CsvPanel />
         </Tab.Pane>
       ),
     },

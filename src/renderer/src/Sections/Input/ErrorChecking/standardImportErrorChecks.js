@@ -1,14 +1,5 @@
 import coreState from '../../GlobalState/coreState';
 import cleanRespondentNames from '../CSV/cleanRespondentNames';
-// import getInputState from "../../GlobalState/getInputState";
-// import setForcedUnforcedErrorContent from "../CSV/setForcedUnforcedErrorContent";
-// import setNonNumericErrorContent from "../CSV/setNonNumericErrorContent";
-// import setBeyondRangeErrorContent from "../CSV/setBeyondRangeErrorContent";
-// import setDuplicatedNamesErrorContent from "../CSV/setDuplicatedNamesErrorContent";
-// import setOverUnderCountErrorContent from "../CSV/setOverUnderCountErrorContent";
-// import checkForcedUnforcedSorts from "../../Data/Databook/checkForcedUnforcedSorts ";
-// NO ZEROS In Qsort Pattern
-//
 import addPosShiftSorts from '../CSV/addPosShiftSorts';
 import standardCheckForUnforcedSorts from './standardCheckForUnforced';
 import checkForOutOfRangeValues2 from './checkForOutOfRangeValues2';

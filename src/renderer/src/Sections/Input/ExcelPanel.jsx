@@ -1,9 +1,7 @@
 import styled from 'styled-components';
 import ExcelT1Card from './Excel/ExcelT1Card';
 import ExcelT2Card from './Excel/ExcelT2Card';
-// import ForcedUnforcedRadio from './CSV/ForcedUnforcedRadio';
 import { useTranslation } from 'react-i18next';
-// import ZipErrorCheckButton from './Zip/ZipErrorCheckButton';
 
 const ExcelPanel = () => {
   const [t] = useTranslation();

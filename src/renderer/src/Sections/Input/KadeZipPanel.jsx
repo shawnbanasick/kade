@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import ZipDataCard from './Zip/ZipDataCard';
 // import ZipErrorCheckButton from './Zip/ZipErrorCheckButton';
 
-const CsvPanel = () => {
+const KadeZipPanel = () => {
   const { t } = useTranslation();
 
   return (
@@ -17,7 +17,7 @@ const CsvPanel = () => {
   );
 };
 
-export default CsvPanel;
+export default KadeZipPanel;
 
 const DataWindow = styled.div`
   background-color: white;
