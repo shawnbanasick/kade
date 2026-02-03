@@ -108,9 +108,9 @@ const MainContent = styled.div`
   transition: visibility 0.5s linear;
   font-family: Helvetica, sans-serif;
   font-size: 18px;
-  width: calc(100vw - 140px);
+  width: calc(100vw - 135px);
   box-sizing: border-box;
-  max-height: calc(100vh - 23px);
+  max-height: 100%;
   overflow: auto;
   user-select: none;
 `;

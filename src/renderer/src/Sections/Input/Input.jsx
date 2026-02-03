@@ -140,7 +140,7 @@ const MainContent = styled.div`
 
   width: calc(100vw - 135px);
   box-sizing: border-box;
-  height: 100vh;
+  height: 90vh;
   overflow: auto;
 
   .ui.attached.tabular.menu {

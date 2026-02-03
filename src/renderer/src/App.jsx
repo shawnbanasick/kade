@@ -23,6 +23,8 @@ import './Utils/ag-theme-fresh.css';
 import './Utils/loadingsTable.css';
 import { useTranslation } from 'react-i18next';
 import i18next from 'i18next';
+import FileButton from './FileButton';
+import './App.css';
 
 // const semverEq = require('semver/functions/eq');
 // const electron = window.require('electron');
@@ -188,14 +190,20 @@ const App = () => {
   // }
 
   return (
-    <AppWrap $active={showTopBar}>
-      {showTopBar ? <Header>KADE</Header> : null}
+    <div id="AppWrap" className="box-border font-sans h-screen w-screen">
       <ErrorBoundary>
-        <Split>
-          <FilesWindow>
-            <StartButton $active={viewStart} onClick={() => handleClick('viewStart')}>
-              <p className="title">KADE v1.4.0</p>
-            </StartButton>
+        <div id="window" className="grid grid-cols-[135px_1fr] h-full">
+          <div
+            id="buttonColumn"
+            className="flex flex-col box-border bg-[#d6dbe0] overflow-hidden border-3 border-red-500"
+          >
+            <button
+              className="mt-10 box-border h-[85px] p-[5px] pr-[25px] w-full border-none text-center transition-all duration-300 ease-[ease] outline-none select-none hover:opacity-100 hover:shadow-[inset_0_0_0_4px_#666,_0_0_1px_transparent]"
+              onClick={() => handleClick('viewStart')}
+            >
+              <p className="title font-bold text-base m-[5px_0_5px] text-black">KADE v1.4.0</p>
+            </button>
+
             <FileButton
               $buttoncolor={inputButtonColor}
               $active={viewInput}
@@ -259,7 +267,11 @@ const App = () => {
               <p className="title">{t('Project Log')}</p>
             </FileButton>
 
-            {showUpdateModal ? <UpdateModal /> : <NoUpdateSpacer />}
+            {showUpdateModal ? (
+              <UpdateModal />
+            ) : (
+              <div className="box-border p-[10px] w-full h-[75px] bg-[#d6dbe0] text-black border-none text-left transition-all duration-300 ease-[ease]" />
+            )}
 
             <FileButton $active={viewClearProject} onClick={() => handleClick('viewClearProject')}>
               <p className="title">{t('Clear Project')}</p>
@@ -276,8 +288,12 @@ const App = () => {
                 {t('Attribution')} <br /> / {t('License')}
               </p>
             </FileButton>
-          </FilesWindow>
-          <ActionWindow>
+          </div>
+
+          <div
+            id="actionWindow"
+            className="bg-white overflow-auto [&_*]:[box-sizing:inherit] [&_*:before]:[box-sizing:inherit] [&_*:after]:[box-sizing:inherit]"
+          >
             {viewStart && <Start view={viewStart} />}
             {viewInput && <Input view={viewInput} />}
             {viewData && <Data view={viewData} />}
@@ -291,172 +307,11 @@ const App = () => {
             {viewLicense && <License view={viewLicense} />}
             {viewClearProject && <ClearProject view={viewClearProject} />}
             {viewHelp && <Help view={viewHelp} />}
-          </ActionWindow>
-        </Split>
+          </div>
+        </div>
       </ErrorBoundary>
-    </AppWrap>
+    </div>
   );
 };
 
 export default App;
-
-const Header = styled.header`
-  box-sizing: border-box;
-  display: grid;
-  background-color: black;
-  font-family: Helvetica;
-  color: #d6dbe0;
-  font-size: 1rem;
-  height: 23px;
-  align-items: center;
-  text-align: center;
-  position: fixed;
-  box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.2);
-  top: 0;
-  left: 0;
-  width: 100%;
-  z-index: 10;
-  -webkit-app-region: drag;
-  user-select: none;
-`;
-
-const AppWrap = styled.div`
-  box-sizing: border-box;
-  font-family: Helvetica;
-  height: 100vh;
-  width: 100vw;
-  margin-top: 80px;
-  ${({ active }) =>
-    active &&
-    css`
-      margin-top: 23px;
-    `};
-`;
-
-const Split = styled.div`
-  box-sizing: border-box;
-  display: flex;
-`;
-
-const FilesWindow = styled.div`
-  box-sizing: border-box;
-  background: #d6dbe0;
-  width: 135px;
-  min-width: 135px;
-  height: 100vh;
-  overflow: hidden;
-`;
-
-const ActionWindow = styled.div`
-  background-color: white;
-  height: 100vh;
-  flex: 1;
-  html {
-    box-sizing: border-box;
-  }
-  *,
-  *:before,
-  *:after {
-    box-sizing: inherit;
-  }
-  overflow: auto;
-`;
-
-// background: #191324;
-
-// hover -> border-left: solid 8px #d6dbe0;
-// active -> border-left: solid 8px #d6dbe0;
-// border-bottom: solid 1px #302b3a;
-// border-bottom: solid 1px gray;
-const FileButton = styled.button`
-  box-sizing: border-box;
-  padding: 10px;
-  padding-bottom: 8px;
-  padding-top: 15px;
-  width: 100%;
-  height: auto;
-  background: ${(props) => props.$buttoncolor || '#d6dbe0'};
-  color: black;
-  border: none;
-  text-align: left;
-  transition: 0.3s ease all;
-  outline: none !important;
-  user-select: none;
-
-  &:hover {
-    opacity: 1;
-    box-shadow:
-      inset 0 0 0 4px #666,
-      0 0 1px transparent;
-  }
-
-  ${({ active }) =>
-    active &&
-    `
-    background-color: white;
-    opacity: 1;
-    `};
-
-  .title {
-    font-weight: bold;
-    font-size: 0.9rem;
-    margin: 0 0 5px;
-    color: black;
-  }
-`;
-
-// border-bottom: solid 1px gray;
-// ${props => props.width};
-
-const StartButton = styled.button`
-  box-sizing: border-box;
-  height: 45px;
-  padding: 5px;
-  padding-right: 25px;
-  width: 100%;
-  background-color: var(--main-theme-color);
-  border: none;
-  text-align: center;
-  transition: 0.3s ease all;
-  outline: none !important;
-  user-select: none;
-
-  .title {
-    font-weight: bold;
-    font-size: 1rem;
-    margin: 5px 0 5px;
-    color: black;
-  }
-
-  &:hover {
-    opacity: 1;
-    box-shadow:
-      inset 0 0 0 4px #666,
-      0 0 1px transparent;
-  }
-
-  ${({ $active }) =>
-    $active &&
-    `
-    background-color: white;
-    opacity: 1;
-    .title {
-    font-weight: bold;
-    font-size: 1.2rem;
-    margin: 5px 0 5px;
-    color: black;
-  } 
-    `};
-`;
-
-const NoUpdateSpacer = styled.button`
-  box-sizing: border-box;
-  padding: 10px;
-  width: 100%;
-  height: 75px;
-  background: #d6dbe0;
-  color: black;
-  border: none;
-  text-align: left;
-  transition: 0.3s ease all;
-`;
