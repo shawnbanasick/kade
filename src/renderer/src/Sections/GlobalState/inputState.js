@@ -70,9 +70,11 @@ const inputState = create(
     sortsLoaded: false,
     sortsPasteTextArea: '',
     statementsLoaded: false,
+    inputActiveTab: 'tab1',
 
     unforcedRadioButtonState: 'forced',
 
+    updateInputActiveTab: (inputValue) => set({ inputActiveTab: inputValue }),
     updateAreStatementsLoaded: (inputValue) => set({ areStatementsLoaded: inputValue }),
     updateAreQsortsLoaded: (inputValue) => set({ areQsortsLoaded: inputValue }),
     updateAreQsortsVerified: (inputValue) => set({ areQsortsVerified: inputValue }),

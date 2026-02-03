@@ -112,18 +112,20 @@ const App = () => {
   // const updateVersion = appState.updateVersion;
 
   // get button colors
-  const inputButtonColor = isInputButtonGreen ? 'var(--main-theme-color)' : '#d6dbe0';
-  const correlationsButtonColor = isCorrelationsButtonGreen ? 'var(--main-theme-color)' : '#d6dbe0';
-  const factorsButtonColor = isFactorsButtonGreen ? 'var(--main-theme-color)' : '#d6dbe0';
-  const rotationButtonColor = isRotationButtonGreen ? 'var(--main-theme-color)' : '#d6dbe0';
-  const loadingsButtonColor = isLoadingsButtonGreen ? 'var(--main-theme-color)' : '#d6dbe0';
-  const outputButtonColor = isOutputButtonGreen ? 'var(--main-theme-color)' : '#d6dbe0';
-  const structureButtonColor = isStructureButtonGreen ? 'var(--main-theme-color)' : '#d6dbe0';
+  const inputButtonColor = isInputButtonGreen ? 'bg-primary-button' : '#d6dbe0';
+  const correlationsButtonColor = isCorrelationsButtonGreen ? 'bg-primary-button' : '#d6dbe0';
+  const factorsButtonColor = isFactorsButtonGreen ? 'bg-primary-button' : '#d6dbe0';
+  const rotationButtonColor = isRotationButtonGreen ? 'bg-primary-button' : '#d6dbe0';
+  const loadingsButtonColor = isLoadingsButtonGreen ? 'bg-primary-button' : '#d6dbe0';
+  const outputButtonColor = isOutputButtonGreen ? 'bg-primary-button' : '#d6dbe0';
+  const structureButtonColor = isStructureButtonGreen ? 'bg-primary-button' : '#d6dbe0';
 
   const isDataButtonGreenCombined = indicateDataButtonColor(
     isDataButtonGreen,
     hasDataBeenConfirmed
   );
+
+  console.log(isDataButtonGreenCombined);
 
   const handleClick = (target) => {
     updateViewAttribution(false);
@@ -185,11 +187,6 @@ const App = () => {
   };
 
   let showTopBar = false;
-  // if (process.platform === "darwin") {
-  //   showTopBar = true;
-  // }
-
-  // h-[calc(100vh-83px)]
 
   return (
     <div id="AppWrap" className="box-border font-sans mt-[50px] h-[100vh] w-[100vw]">
@@ -198,70 +195,70 @@ const App = () => {
           <div id="buttonColumn" className="flex flex-col box-border bg-[#d6dbe0] overflow-hidden">
             <button
               id="startButton"
-              className="box-border h-[100px] p-[5px] pr-[25px] w-full border-none text-center transition-all duration-300 ease-[ease] outline-none select-none hover:opacity-100 hover:shadow-[inset_0_0_0_4px_#666,_0_0_1px_transparent]"
+              className={`box-border h-[100px] p-[5px] pr-[25px] w-full text-center transition-all duration-300 ease-[ease] outline-none select-none hover:opacity-100 hover:shadow-[inset_0_0_0_4px_#666,_0_0_1px_transparent] border-b-1 border-gray-400 ${viewStart ? 'bg-primary-button' : 'bg-primary-button'}`}
               onClick={() => handleClick('viewStart')}
             >
-              <p className="title font-bold text-base m-[5px_0_5px] text-black">KADE v1.4.0</p>
+              <p className="title font-bold text-xl m-[5px_0_5px] text-black">KADE v1.4.0</p>
             </button>
 
             <FileButton
-              $buttoncolor={inputButtonColor}
-              $active={viewInput}
+              className={`${inputButtonColor}`}
+              active={viewInput}
               onClick={() => handleClick('viewInput')}
             >
               <p className="title">{`1. ${t('Input')}`}</p>
             </FileButton>
             <FileButton
-              $buttoncolor={isDataButtonGreenCombined}
-              $active={viewData ? 1 : 0}
+              className={`${isDataButtonGreenCombined}`}
+              active={viewData ? 1 : 0}
               onClick={() => handleClick('viewData')}
             >
               <p className="title">{`2. ${t('Data')}`}</p>
             </FileButton>
             <FileButton
-              $buttoncolor={correlationsButtonColor}
-              $active={viewCorrelations}
+              className={`${correlationsButtonColor}`}
+              active={viewCorrelations}
               onClick={() => handleClick('viewCorrelations')}
             >
               <p className="title">{`3. ${t('Correlations')}`}</p>
             </FileButton>
             <FileButton
-              $buttoncolor={structureButtonColor}
-              $active={viewStructure}
+              className={`${structureButtonColor}`}
+              active={viewStructure}
               onClick={() => handleClick('viewStructure')}
             >
               <p className="title">{`4. ${t('Structure')}`}</p>
             </FileButton>
             <FileButton
-              $buttoncolor={factorsButtonColor}
-              $active={viewFactors}
+              className={`${factorsButtonColor}`}
+              active={viewFactors}
               onClick={() => handleClick('viewFactors')}
             >
               <p className="title">{`5. ${t('Factors')}`}</p>
             </FileButton>
             <FileButton
-              $buttoncolor={rotationButtonColor}
-              $active={viewRotation}
+              className={`${rotationButtonColor}`}
+              active={viewRotation}
               onClick={() => handleClick('viewRotation')}
             >
               <p className="title">{`6. ${t('Rotation')}`}</p>
             </FileButton>
             <FileButton
-              $buttoncolor={loadingsButtonColor}
-              $active={viewLoadings}
+              className={`${loadingsButtonColor}`}
+              active={viewLoadings}
               onClick={() => handleClick('viewLoadings')}
             >
               <p className="title">{`7. ${t('Loadings')}`}</p>
             </FileButton>
             <FileButton
-              $buttoncolor={outputButtonColor}
-              $active={viewOutput}
+              className={`${outputButtonColor}`}
+              active={viewOutput}
               onClick={() => handleClick('viewOutput')}
             >
               <p className="title">{`8. ${t('Output')}`}</p>
             </FileButton>
             <FileButton
-              $active={viewProjectHistory}
+              active={viewProjectHistory}
               onClick={() => handleClick('viewProjectHistory')}
             >
               <p className="title">{t('Project Log')}</p>

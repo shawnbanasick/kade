@@ -1,17 +1,17 @@
 const indicateDataButtonColor = (isDataButtonGreen, hasDataBeenConfirmed) => {
   if (isDataButtonGreen && hasDataBeenConfirmed) {
     // if unforced and data loaded and confirmed
-    return 'var(--main-theme-color)';
+    return 'bg-primary-button';
   }
   if (isDataButtonGreen && !hasDataBeenConfirmed) {
     // if unforced and data loaded but not confirmed
-    return 'orange';
+    return 'bg-orange-button';
   }
   if (!isDataButtonGreen && !hasDataBeenConfirmed) {
     // if unforced and data loaded and confirmed
-    return '#d6dbe0';
+    return 'bg-grey-button';
   }
-  return '#d6dbe0';
+  return 'bg-grey-button';
 };
 
 export default indicateDataButtonColor;

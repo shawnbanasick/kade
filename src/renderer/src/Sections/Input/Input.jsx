@@ -1,6 +1,4 @@
-import { Tab } from 'semantic-ui-react';
-import React, { useState } from 'react';
-import styled, { keyframes } from 'styled-components';
+import React, { useState, useEffect } from 'react';
 import { ToastContainer, toast, Zoom } from 'react-toastify';
 import inputState from '../GlobalState/inputState';
 import JsonPanel from './JsonPanel';
@@ -13,10 +11,10 @@ import CsvPanel from './CsvPanel';
 import { useTranslation } from 'react-i18next';
 
 function Input() {
-  const [activeIndex, setActiveIndex] = useState(0);
-
   const showNotification = inputState((state) => state.notifyDataUploadSuccess);
   const updateNotifyDataUploadSuccess = inputState((state) => state.updateNotifyDataUploadSuccess);
+  const inputActiveTab = inputState((state) => state.inputActiveTab);
+  const updateInputActiveTab = inputState((state) => state.updateInputActiveTab);
 
   // put here to be able to use React hook for t
   const notify = async () => {
@@ -27,140 +25,134 @@ function Input() {
 
   const { t } = useTranslation();
 
-  const panes = [
-    /*
-    
-    */
-    {
-      menuItem: t('XLSX'),
-      render: () => (
-        <Tab.Pane>
-          <ExcelPanel />
-        </Tab.Pane>
-      ),
-    },
-    {
-      menuItem: 'KADE XLSX',
-      render: () => (
-        <Tab.Pane>
-          <Excel3Panel />
-        </Tab.Pane>
-      ),
-    },
-    {
-      menuItem: 'KADE ZIP',
-      render: () => (
-        <Tab.Pane>
-          <KadeZipPanel />
-        </Tab.Pane>
-      ),
-    },
-    {
-      menuItem: 'CSV',
-      render: () => (
-        <Tab.Pane>
-          <CsvPanel />
-        </Tab.Pane>
-      ),
-    },
-    {
-      menuItem: 'EQ Web Sort',
-      render: () => (
-        <Tab.Pane>
-          <JsonPanel />
-        </Tab.Pane>
-      ),
-    },
-    {
-      menuItem: t('PQMethod'),
-      render: () => (
-        <Tab.Pane>
-          <PQMethodPanel />
-        </Tab.Pane>
-      ),
-    },
+  // Handler for tab clicks
+  const handleTabClick = (tabId) => {
+    updateInputActiveTab(tabId);
+  };
 
+  const tabs = [
     {
-      menuItem: t('Demo Data'),
-      render: () => (
-        <Tab.Pane>
-          <DemoDataPanel />
-        </Tab.Pane>
-      ),
+      title: t('XLSX'),
+      content: <ExcelPanel />,
+    },
+    {
+      title: 'KADE XLSX',
+      content: <Excel3Panel />,
+    },
+    {
+      title: 'KADE ZIP',
+      content: <KadeZipPanel />,
+    },
+    {
+      title: 'CSV',
+      content: <CsvPanel />,
+    },
+    {
+      title: 'EQ Web Sort',
+      content: <JsonPanel />,
+    },
+    {
+      title: t('PQMethod'),
+      content: <PQMethodPanel />,
+    },
+    {
+      title: t('Demo Data'),
+      content: <DemoDataPanel />,
     },
   ];
-
-  const handleTabChange = (e, { activeIndex }) => {
-    setActiveIndex(activeIndex);
-  };
 
   if (showNotification) {
     notify();
   }
+
   return (
     <React.Fragment>
       <ToastContainer transition={Zoom} />
-      <MainContent>
-        <Tab panes={panes} activeIndex={activeIndex} onTabChange={handleTabChange} />
-        {/* <ErrorNotification /> */}
-        {/* <WarningNotification /> */}
-      </MainContent>
+      <div
+        className={`
+        bg-white
+        w-[calc(100vw-135px)]
+        box-border
+        h-full
+        overflow-auto
+        transition-[visibility,opacity]
+        duration-500
+      `}
+      >
+        <div className="tabs tabs-box flex bg-[#d6dbe0] h-[100%] rounded-tl-none">
+          <input
+            type="radio"
+            name="my_tabs_6"
+            className={`tab basis-[9vw] hover:shadow-[inset_0_0_0_4px_#666,_0_0_1px_transparent] ${inputActiveTab === 'tab1' ? 'tab-active bg-[#a5d6a7]' : 'bg-[#d6dbe0]'}`}
+            aria-label={tabs[0].title}
+            onClick={() => handleTabClick('tab1')}
+          />
+
+          <div className="tab-content bg-base-100 border-base-300 p-6">{tabs[0].content}</div>
+
+          <input
+            type="radio"
+            name="my_tabs_6"
+            className={`tab basis-[9vw] hover:shadow-[inset_0_0_0_4px_#666,_0_0_1px_transparent] ${inputActiveTab === 'tab2' ? 'tab-active bg-[#a5d6a7]' : 'bg-[#d6dbe0]'}`}
+            aria-label={tabs[1].title}
+            onClick={() => handleTabClick('tab2')}
+          />
+
+          <div className="tab-content bg-base-100 border-base-300 p-6">{tabs[1].content}</div>
+
+          <input
+            type="radio"
+            name="my_tabs_6"
+            className={`tab basis-[9vw] hover:shadow-[inset_0_0_0_4px_#666,_0_0_1px_transparent] ${inputActiveTab === 'tab3' ? 'tab-active bg-[#a5d6a7]' : 'bg-[#d6dbe0]'}`}
+            aria-label={tabs[2].title}
+            onClick={() => handleTabClick('tab3')}
+          />
+
+          <div className="tab-content bg-base-100 border-base-300 p-6">{tabs[2].content}</div>
+
+          <input
+            type="radio"
+            name="my_tabs_6"
+            className={`tab basis-[9vw] hover:shadow-[inset_0_0_0_4px_#666,_0_0_1px_transparent] ${inputActiveTab === 'tab4' ? 'tab-active bg-[#a5d6a7]' : 'bg-[#d6dbe0]'}`}
+            aria-label={tabs[3].title}
+            onClick={() => handleTabClick('tab4')}
+          />
+
+          <div className="tab-content bg-base-100 border-base-300 p-6">{tabs[3].content}</div>
+
+          <input
+            type="radio"
+            name="my_tabs_6"
+            className={`tab basis-[9vw] hover:shadow-[inset_0_0_0_4px_#666,_0_0_1px_transparent] ${inputActiveTab === 'tab5' ? 'tab-active bg-[#a5d6a7]' : 'bg-[#d6dbe0]'}`}
+            aria-label={tabs[4].title}
+            onClick={() => handleTabClick('tab5')}
+          />
+
+          <div className="tab-content bg-base-100 border-base-300 p-6">{tabs[4].content}</div>
+
+          <input
+            type="radio"
+            name="my_tabs_6"
+            className={`tab basis-[9vw] hover:shadow-[inset_0_0_0_4px_#666,_0_0_1px_transparent] ${inputActiveTab === 'tab6' ? 'tab-active bg-[#a5d6a7]' : 'bg-[#d6dbe0]'}`}
+            aria-label={tabs[5].title}
+            onClick={() => handleTabClick('tab6')}
+          />
+
+          <div className="tab-content bg-base-100 border-base-300 p-6">{tabs[5].content}</div>
+
+          <input
+            type="radio"
+            name="my_tabs_6"
+            className={`tab basis-[9vw] hover:shadow-[inset_0_0_0_4px_#666,_0_0_1px_transparent] ${inputActiveTab === 'tab7' ? 'tab-active bg-[#a5d6a7]' : 'bg-[#d6dbe0]'}`}
+            aria-label={tabs[6].title}
+            onClick={() => handleTabClick('tab7')}
+          />
+
+          <div className="tab-content bg-base-100 border-base-300 p-6">{tabs[6].content}</div>
+        </div>
+      </div>
     </React.Fragment>
   );
 }
 
 export default Input;
-
-const fadeIn = keyframes`
-  from {
-    opacity: 0;
-  }
-
-  to {
-    opacity: 1;
-  }
-`;
-
-const fadeOut = keyframes`
-  from {
-    opacity: 1;
-  }
-
-  to {
-    opacity: 0;
-  }
-`;
-
-// #d6dbe0;
-const MainContent = styled.div`
-  background-color: white;
-  visibility: ${(props) => (props.view ? 'hidden' : 'visible')};
-  animation: ${(props) => (props.view ? fadeOut : fadeIn)} 0.5s linear;
-  transition: visibility 0.5s linear;
-
-  width: calc(100vw - 135px);
-  box-sizing: border-box;
-  height: 90vh;
-  overflow: auto;
-
-  .ui.attached.tabular.menu {
-    background-color: #d6dbe0;
-    height: 45px;
-  }
-
-  .ui.bottom.attached.segment.active.tab {
-    border-bottom-color: white;
-    border-left-color: white;
-  }
-`;
-
-/*
-{
-      menuItem: t("CSV"),
-      render: () => (
-        <Tab.Pane>
-          <CsvPanel notify={notify} />
-        </Tab.Pane>
-      )
-    },
-    */

@@ -1,5 +1,11 @@
-/* You can add your own custom styles below */
 @import 'tailwindcss';
+@plugin "daisyui";
+
+@theme {
+  --color-primary-button: #a5d6a7;
+  --color-orange-button: #ffa500;
+  --color-grey-button: #d6dbe0;
+}
 
 /* .App {
   text-align: center;
