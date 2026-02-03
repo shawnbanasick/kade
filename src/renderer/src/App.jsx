@@ -189,16 +189,16 @@ const App = () => {
   //   showTopBar = true;
   // }
 
+  // h-[calc(100vh-83px)]
+
   return (
-    <div id="AppWrap" className="box-border font-sans h-screen w-screen">
+    <div id="AppWrap" className="box-border font-sans mt-[50px] h-[100vh] w-[100vw]">
       <ErrorBoundary>
         <div id="window" className="grid grid-cols-[135px_1fr] h-full">
-          <div
-            id="buttonColumn"
-            className="flex flex-col box-border bg-[#d6dbe0] overflow-hidden border-3 border-red-500"
-          >
+          <div id="buttonColumn" className="flex flex-col box-border bg-[#d6dbe0] overflow-hidden">
             <button
-              className="mt-10 box-border h-[85px] p-[5px] pr-[25px] w-full border-none text-center transition-all duration-300 ease-[ease] outline-none select-none hover:opacity-100 hover:shadow-[inset_0_0_0_4px_#666,_0_0_1px_transparent]"
+              id="startButton"
+              className="box-border h-[100px] p-[5px] pr-[25px] w-full border-none text-center transition-all duration-300 ease-[ease] outline-none select-none hover:opacity-100 hover:shadow-[inset_0_0_0_4px_#666,_0_0_1px_transparent]"
               onClick={() => handleClick('viewStart')}
             >
               <p className="title font-bold text-base m-[5px_0_5px] text-black">KADE v1.4.0</p>
