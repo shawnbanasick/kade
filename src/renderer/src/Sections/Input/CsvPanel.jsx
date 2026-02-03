@@ -1,18 +1,17 @@
 import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
-import LoadCsvStatements from './CSV/LoadCsvStatements';
 import CsvStatementCard from './CSV/CsvStatementCard';
+import CsvSortsCard from './CSV/CsvSortsCard';
 
 const CsvPanel = () => {
   const { t } = useTranslation();
 
   return (
     <DataWindow>
-      <Header>{t('Load Statements File')}</Header>
+      <Header>{t('Load both a statements file and a Q sorts CSV file')}</Header>
       <CardHolder id="kadeZipPanel">
-        <CsvStatementCard>
-          {/* <LoadCsvStatements /> */}
-        </CsvStatementCard>
+        <CsvStatementCard id="csvStatementCard" />
+        <CsvSortsCard id="csvSortsCard" />
       </CardHolder>
     </DataWindow>
   );
