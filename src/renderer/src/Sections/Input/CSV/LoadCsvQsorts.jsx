@@ -46,7 +46,7 @@ const handleClick = async () => {
 const LoadTxtStatementFile = () => {
   const { t } = useTranslation();
 
-  const isLoadCsvQsortsButtonGreen = getInputState('isLoadCsvQsortsButtonGreen');
+  const isLoadCsvQsortsButtonGreen = inputState((state) => state.isLoadCsvQsortsButtonGreen);
 
   return (
     <NewLoadButton isActive={isLoadCsvQsortsButtonGreen} onClick={handleClick}>

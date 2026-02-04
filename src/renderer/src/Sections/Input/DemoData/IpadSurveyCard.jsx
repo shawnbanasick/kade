@@ -1,4 +1,3 @@
-import styled from 'styled-components';
 import LoadIpadSurveyData from './LoadIpadSurveyData';
 import { useTranslation } from 'react-i18next';
 
@@ -6,42 +5,12 @@ const IpadSurveyCard = () => {
   const { t } = useTranslation();
 
   return (
-    <Card>
-      <CardMeta>iPad Survey</CardMeta>
-      <CardLabel>60 {t('Statements')}</CardLabel>
-      <CardSubLabel>80 {t('Participants')}</CardSubLabel>
+    <div className="grid auto-rows-auto justify-items-center items-center bg-white border-2 border-gray-400 h-[250px] w-[280px] rounded-[5px]">
+      <div className="bg-white font-sans text-[28px] font-bold">iPad Survey</div>
+      <div className="font-sans text-lg">60 {t('Statements')}</div>
+      <div className="font-sans text-lg">80 {t('Participants')}</div>
       <LoadIpadSurveyData />
-    </Card>
+    </div>
   );
 };
 export default IpadSurveyCard;
-
-const Card = styled.div`
-  display: grid;
-  grid-auto-flow: row;
-  justify-items: center;
-  align-items: center;
-  background-color: white;
-  border: 2px solid black;
-  height: 250px;
-  width: 280px;
-  border: 2px solid darkgray;
-  border-radius: 5px;
-`;
-
-const CardMeta = styled.div`
-  background-color: white;
-  font-family: Helvetica, sans-serif;
-  font-size: 28px;
-  font-weight: bold;
-`;
-
-const CardLabel = styled.div`
-  font-family: Helvetica, sans-serif;
-  font-size: 18px;
-`;
-
-const CardSubLabel = styled.div`
-  font-family: Helvetica, sans-serif;
-  font-size: 18px;
-`;

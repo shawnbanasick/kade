@@ -7,11 +7,11 @@ import coreState from '../../GlobalState/coreState';
 import inputState from '../../GlobalState/inputState';
 import appState from '../../GlobalState/appState';
 
-const LoadTxtStatementFile = () => {
+const LoadCsvStatements = () => {
   const { t } = useTranslation();
   const isLoadJsonTextButtonGreen = inputState((state) => state.isLoadJsonTextButtonGreen);
   const areQsortsLoaded = inputState((state) => state.areQsortsLoaded);
-  revertLoadButtonsColors('json');
+  // revertLoadButtonsColors('json');
 
   const updateStatements = coreState((state) => state.updateStatements);
   const updateNumStatements = coreState((state) => state.updateNumStatements);
@@ -85,7 +85,7 @@ const LoadTxtStatementFile = () => {
   );
 };
 
-export default LoadTxtStatementFile;
+export default LoadCsvStatements;
 
 const SvgContainer = styled.svg`
   transform: rotate(180deg);
