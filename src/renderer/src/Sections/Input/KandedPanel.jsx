@@ -1,7 +1,7 @@
 import KandedCard from './Kanded/ExcelT3Card';
 import { useTranslation } from 'react-i18next';
 
-const KadePanel = () => {
+const KandedPanel = () => {
   const { t } = useTranslation();
 
   return (
@@ -21,4 +21,4 @@ const KadePanel = () => {
   );
 };
 
-export default KadePanel;
+export default KandedPanel;

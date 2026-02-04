@@ -9,7 +9,7 @@ import revertLoadButtonsColors from '../DemoData/revertLoadButtonsColors';
 import filterLines from './filterLines';
 import createMainDataObjectArray from './createMainDataObjectArray';
 
-const processBlob = (data) => {
+const processCsvQsorts = (data) => {
   // todo - integrate this properly
   const hasInputError = false;
 
@@ -76,4 +76,4 @@ const processBlob = (data) => {
   }
 };
 
-export default processBlob;
+export default processCsvQsorts;

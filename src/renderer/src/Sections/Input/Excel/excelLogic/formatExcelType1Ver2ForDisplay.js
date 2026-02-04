@@ -15,7 +15,7 @@ import projectHistoryState from '../../../GlobalState/projectHistoryState';
 import coreState from '../../../GlobalState/coreState';
 import inputState from '../../../GlobalState/inputState';
 
-const formatExcelType1Ver2 = (dataObject) => {
+const formatExcelType1Ver2ForDisplay = (dataObject) => {
   let outOfRangeError = false;
   let noSortsError = false;
   let noSortPatternError = false;
@@ -167,4 +167,4 @@ const formatExcelType1Ver2 = (dataObject) => {
   ];
 };
 
-export default formatExcelType1Ver2;
+export default formatExcelType1Ver2ForDisplay;

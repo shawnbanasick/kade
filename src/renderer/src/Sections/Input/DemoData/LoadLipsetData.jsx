@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 import i18n from 'i18next';
 // import revertLoadButtonsColors from './revertLoadButtonsColors';
 
-const LipsetButton1 = () => {
+const LoadLipsetData = () => {
   const { t } = useTranslation();
 
   // input state
@@ -67,4 +67,4 @@ const LipsetButton1 = () => {
   );
 };
 
-export default LipsetButton1;
+export default LoadLipsetData;

@@ -6,7 +6,7 @@ import inputState from '../../GlobalState/inputState';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
-const LoadTxtStatementFile = () => {
+const LoadExcelT2 = () => {
   const [t] = useTranslation();
   const isLoadExcelT2ButtonGreen = inputState.getState().isLoadExcelT2ButtonGreen;
 
@@ -55,4 +55,4 @@ const LoadTxtStatementFile = () => {
   );
 };
 
-export default LoadTxtStatementFile;
+export default LoadExcelT2;

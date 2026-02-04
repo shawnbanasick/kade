@@ -4,7 +4,7 @@ import inputState from '../../GlobalState/inputState';
 import standardImportErrorChecks from '../ErrorChecking/standardImportErrorChecks';
 import { useTranslation } from 'react-i18next';
 
-const CsvDataErrorCheckButton = (props) => {
+const ZipErrorCheckButton = (props) => {
   const { t } = useTranslation();
 
   // getState
@@ -60,7 +60,7 @@ const CsvDataErrorCheckButton = (props) => {
   );
 };
 
-export default CsvDataErrorCheckButton;
+export default ZipErrorCheckButton;
 
 const TradButton = styled.div`
   margin-right: 5px;

@@ -13,7 +13,7 @@ import i18n from 'i18next';
 import styled from 'styled-components';
 import cloneDeep from 'lodash/cloneDeep';
 
-const LoadTxtStatementFile = () => {
+const LoadPQMethodData = () => {
   const { t } = useTranslation();
   // getState
   const isLoadPqmethodQsortsButtonGreen = inputState(
@@ -135,7 +135,7 @@ const LoadTxtStatementFile = () => {
   );
 };
 
-export default LoadTxtStatementFile;
+export default LoadPQMethodData;
 
 const SvgContainer = styled.svg`
   transform: rotate(180deg);

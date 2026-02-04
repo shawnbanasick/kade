@@ -6,7 +6,7 @@ import appState from '../../GlobalState/appState';
 import { useTranslation } from 'react-i18next';
 import i18n from 'i18next';
 
-const MotivationalButton1 = () => {
+const LoadMotivationalData = () => {
   const { t } = useTranslation();
   const isLoadMotivationalButtonGreen = inputState((state) => state.isLoadMotivationalButtonGreen);
   const isDataAlreadyLoaded = inputState((state) => state.isDataAlreadyLoaded);
@@ -76,4 +76,4 @@ const MotivationalButton1 = () => {
   );
 };
 
-export default MotivationalButton1;
+export default LoadMotivationalData;

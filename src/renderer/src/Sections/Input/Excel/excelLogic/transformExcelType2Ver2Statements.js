@@ -1,4 +1,4 @@
-const transformExcelType1Ver2Statements = (statementsArray) => {
+const transformExcelType2Ver2Statements = (statementsArray) => {
   let newStatementsArray = [];
   statementsArray[0].forEach((item) => {
     if (typeof item.Statements !== 'undefined') {
@@ -9,4 +9,4 @@ const transformExcelType1Ver2Statements = (statementsArray) => {
   return newStatementsArray;
 };
 
-export default transformExcelType1Ver2Statements;
+export default transformExcelType2Ver2Statements;

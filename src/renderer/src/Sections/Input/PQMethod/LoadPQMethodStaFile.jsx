@@ -7,7 +7,7 @@ import LoadButton from '../DemoData/LoadButton';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
-const LoadTxtStatementFile = () => {
+const LoadPQMethodStaFile = () => {
   const { t } = useTranslation();
   // getState
   const areQsortsLoaded = inputState((state) => state.areQsortsLoaded);
@@ -78,7 +78,7 @@ const LoadTxtStatementFile = () => {
   );
 };
 
-export default LoadTxtStatementFile;
+export default LoadPQMethodStaFile;
 
 const SvgContainer = styled.svg`
   transform: rotate(180deg);

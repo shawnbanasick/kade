@@ -43,7 +43,7 @@ const handleClick = async () => {
   }
 };
 
-const LoadTxtStatementFile = () => {
+const LoadCsvQsorts = () => {
   const { t } = useTranslation();
 
   const isLoadCsvQsortsButtonGreen = inputState((state) => state.isLoadCsvQsortsButtonGreen);
@@ -65,4 +65,4 @@ const LoadTxtStatementFile = () => {
   );
 };
 
-export default LoadTxtStatementFile;
+export default LoadCsvQsorts;

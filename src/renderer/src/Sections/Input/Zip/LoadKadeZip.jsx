@@ -6,7 +6,7 @@ import projectHistoryState from '../../GlobalState/projectHistoryState.js';
 import i18n from 'i18next';
 import { useTranslation } from 'react-i18next';
 
-const LoadTxtStatementFile = () => {
+const LoadKadeZip = () => {
   const { t } = useTranslation();
 
   // getState
@@ -89,4 +89,4 @@ const LoadTxtStatementFile = () => {
   );
 };
 
-export default LoadTxtStatementFile;
+export default LoadKadeZip;

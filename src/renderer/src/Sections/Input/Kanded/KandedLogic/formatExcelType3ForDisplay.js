@@ -8,7 +8,7 @@ import projectHistoryState from '../../../GlobalState/projectHistoryState';
 import coreState from '../../../GlobalState/coreState';
 import inputState from '../../../GlobalState/inputState';
 
-function formatype3ForDisplay(data) {
+function formatExcelType3ForDisplay(data) {
   try {
     // store #1
     let projectName = '';
@@ -101,4 +101,4 @@ function formatype3ForDisplay(data) {
   }
 }
 
-export default formatype3ForDisplay;
+export default formatExcelType3ForDisplay;

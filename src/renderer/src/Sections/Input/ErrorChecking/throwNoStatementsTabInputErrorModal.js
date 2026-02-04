@@ -1,7 +1,7 @@
 import inputState from '../../GlobalState/inputState';
 import i18n from 'i18next';
 
-export default function throwNoStatementsInputErrorModal() {
+export default function throwNoStatementsTabInputErrorModal() {
   // catch input error
   inputState.setState({ showErrorMessageBar: true });
   inputState.setState({ errorMessage: i18n.t('Cant find the statements tab in the Excel File') });

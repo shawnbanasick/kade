@@ -6,7 +6,7 @@ import appState from '../../GlobalState/appState';
 import { useTranslation } from 'react-i18next';
 import i18n from 'i18next';
 
-const BuzzwordButton1 = () => {
+const LoadBuzzwordData = () => {
   const { t } = useTranslation();
 
   const message1 = i18n.t('Data are already loaded click Clear Project to restart');
@@ -73,4 +73,4 @@ const BuzzwordButton1 = () => {
   );
 };
 
-export default BuzzwordButton1;
+export default LoadBuzzwordData;

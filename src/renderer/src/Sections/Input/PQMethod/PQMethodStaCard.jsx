@@ -1,7 +1,7 @@
 import LoadPQMethodStaFile from './LoadPQMethodStaFile';
 import { useTranslation } from 'react-i18next';
 
-const PQMethodStatementCard = () => {
+const PQMethodStaCard = () => {
   const { t } = useTranslation();
 
   return (
@@ -24,4 +24,4 @@ const PQMethodStatementCard = () => {
   );
 };
 
-export default PQMethodStatementCard;
+export default PQMethodStaCard;

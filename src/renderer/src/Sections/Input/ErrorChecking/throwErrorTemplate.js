@@ -2,11 +2,7 @@ import inputState from '../../GlobalState/inputState';
 import appState from '../../GlobalState/appState';
 import i18n from 'i18next';
 
-export default function throwNoSortsInputErrorModal(
-  message,
-  extendedErrorMessage,
-  errorStackTrace
-) {
+export default function throwErrorTemplate(message, extendedErrorMessage, errorStackTrace) {
   let errorMessage;
   if (message) {
     errorMessage = message;

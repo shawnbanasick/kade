@@ -8,7 +8,7 @@ import projectHistoryState from '../../../GlobalState/projectHistoryState';
 import coreState from '../../../GlobalState/coreState';
 import inputState from '../../../GlobalState/inputState';
 
-export default function formatype2ForDisplay(rawStatementsData, rawSortsData) {
+export default function formatExcelType2ForDisplay(rawStatementsData, rawSortsData) {
   let noSortPatternError = false;
   let numStatementsMatchError = false;
 

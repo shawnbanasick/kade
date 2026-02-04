@@ -6,7 +6,7 @@ import appState from '../../GlobalState/appState';
 import { useTranslation } from 'react-i18next';
 import i18n from 'i18next';
 
-const IpadSurveyButton1 = () => {
+const LoadIpadSurveyData = () => {
   const { t } = useTranslation();
 
   const isLoadIpadSurveyButtonGreen = inputState((state) => state.isLoadIpadSurveyButtonGreen);
@@ -72,4 +72,4 @@ const IpadSurveyButton1 = () => {
   );
 };
 
-export default IpadSurveyButton1;
+export default LoadIpadSurveyData;

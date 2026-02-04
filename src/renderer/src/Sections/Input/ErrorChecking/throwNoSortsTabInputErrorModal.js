@@ -2,7 +2,7 @@ import inputState from '../../GlobalState/inputState';
 import appState from '../../GlobalState/appState';
 import i18n from 'i18next';
 
-export default function throwNoStatementsInputErrorModal() {
+export default function throwNoSortsTabInputErrorModal() {
   // catch input error
   inputState.setState({ showErrorMessageBar: true });
   inputState.setState({ errorMessage: i18n.t('Cant find the sorts tab in the XLSX File') });

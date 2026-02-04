@@ -2,7 +2,7 @@ import PQMethodStaCard from './PQMethod/PQMethodStaCard';
 import PQMethodQsortsCard from './PQMethod/PQMethodQsortsCard';
 import { useTranslation } from 'react-i18next';
 
-const CsvPanel = () => {
+const PQMethodPanel = () => {
   const { t } = useTranslation();
 
   return (
@@ -24,4 +24,4 @@ const CsvPanel = () => {
   );
 };
 
-export default CsvPanel;
+export default PQMethodPanel;

@@ -6,7 +6,7 @@ import i18n from 'i18next';
 import calcMultiplierArrayT2 from '../Excel/excelLogic/calcMultiplierArrayT2';
 import inputState from '../../GlobalState/inputState';
 
-const uploadJapaneseData = () => {
+const uploadIpadSurveyData = () => {
   const multiplierArray = calcMultiplierArrayT2([
     -5, -5, -5, -5, -4, -4, -4, -4, -4, -3, -3, -3, -3, -3, -2, -2, -2, -2, -2, -1, -1, -1, -1, -1,
     -1, -1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 4, 4, 4, 4,
@@ -5148,4 +5148,4 @@ const uploadJapaneseData = () => {
   inputState.setState({ isQsortPatternLoaded: true });
 };
 
-export default uploadJapaneseData;
+export default uploadIpadSurveyData;
