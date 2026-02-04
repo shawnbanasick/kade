@@ -1,15 +1,10 @@
 import parseExcelType3 from './KandedLogic/parseExcelType3.js';
 import revertLoadButtonsColors from '../DemoData/revertLoadButtonsColors';
-import LoadButton from '../DemoData/LoadButton';
+import NewLoadButton from '../../../Utils/NewLoadButton';
 import inputState from '../../GlobalState/inputState';
 import appState from '../../GlobalState/appState';
 import { useTranslation } from 'react-i18next';
 import i18n from 'i18next';
-import styled from 'styled-components';
-
-// const { remote } = require('electron');
-// const mainWindow = remote.getCurrentWindow();
-// const { dialog } = require('electron').remote;
 
 const LoadExcelT3 = () => {
   const { t } = useTranslation();
@@ -59,32 +54,23 @@ const LoadExcelT3 = () => {
   };
 
   return (
-    <LoadButton $isActive={isLoadExcelT3ButtonGreen} onClick={() => handleClick()}>
-      <LineContainer>
-        <SvgContainer xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+    <NewLoadButton $isActive={isLoadExcelT3ButtonGreen} onClick={() => handleClick()}>
+      <div
+        id="ExcelT3LineContainer"
+        className="flex flex-row justify-center items-center h-full w-full gap-3"
+      >
+        <svg
+          id="ExcelT3SvgContainer"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 20 20"
+          className="rotate-180 mr-5 h-[17px] w-[17px] fill-current"
+        >
           <path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z" />
-        </SvgContainer>
-        <p>{t('Load KADE XLSX File')}</p>
-      </LineContainer>
-    </LoadButton>
+        </svg>
+        <div className="ml-5 font-sans text-lg font-bold">{t('Load KADE XLSX File')}</div>
+      </div>
+    </NewLoadButton>
   );
 };
 
 export default LoadExcelT3;
-
-const SvgContainer = styled.svg`
-  transform: rotate(180deg);
-  margin-right: 20px;
-  height: 17px;
-  width: 17px;
-  fill: currentColor;
-`;
-
-const LineContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-  width: 100%;
-`;
