@@ -7,57 +7,29 @@ const ExcelT2Card = () => {
   const [t] = useTranslation();
 
   return (
-    <Card>
-      <CardMeta>
-        <CardLabel>{`1. ${t('Type 2 File (Q sorts in rows)')}`}</CardLabel>
-      </CardMeta>
+    <div
+      id="ExcelT2CardContainer"
+      className="grid grid-flow-row justify-items-center items-center bg-white border-2 border-gray-400 h-[340px] w-90 rounded-[5px]"
+    >
+      <div id="ExcelT2CardMeta" className="bg-white font-sans text-lg font-bold">
+        <div
+          id="ExcelT2CardLabel"
+          className="text-[17px] font-bold"
+        >{`2. ${t('Type 2 File (Q sorts in rows)')}`}</div>
+      </div>
       <p style={{ color: 'firebrick', fontSize: 14 }}>
         {t(`See the 'Help' section for information`)}
       </p>
-      <Image>
+      <div id="ExcelT2ImageContainer" className="bg-white">
         <img
-          style={{
-            width: '250px',
-            height: '165px',
-            outline: '1px solid lightgray',
-          }}
+          className="w-[250px] h-[165px] outline-[1px] outline-lightgray"
           alt="Excel Type 2 sample"
           src={excel2}
         />
-      </Image>
+      </div>
       <LoadExcelT2 />
-    </Card>
+    </div>
   );
 };
 
 export default ExcelT2Card;
-
-const Card = styled.div`
-  display: grid;
-  grid-auto-flow: row;
-  justify-items: center;
-  align-items: center;
-  background-color: white;
-  border: 2px solid black;
-  height: 340px;
-  width: 320px;
-  border: 2px solid darkgray;
-  border-radius: 5px;
-`;
-
-const Image = styled.div`
-  background-color: white;
-`;
-
-const CardMeta = styled.div`
-  background-color: white;
-  font-family: Helvetica, sans-serif;
-  font-size: 18px;
-  font-weight: bold;
-`;
-
-const CardLabel = styled.div`
-  font-family: Helvetica, sans-serif;
-  font-size: 17px;
-  font-weight: bold;
-`;

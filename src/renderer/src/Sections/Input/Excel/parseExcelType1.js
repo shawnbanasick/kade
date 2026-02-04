@@ -227,8 +227,6 @@ function parseExcelType1(workbook) {
       setTimeout(() => {
         inputState.setState({ isLoadExcelT1ButtonGreen: true });
       }, 10);
-
-      console.log('isLoadExcelT1ButtonGreen', isLoadExcelT1ButtonGreen);
     }
     // manage error messages
   } catch (error) {
