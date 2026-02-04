@@ -6,7 +6,7 @@ const ExcelPanel = () => {
   const [t] = useTranslation();
 
   return (
-    <div id="DataWindow" className="">
+    <div id="ExcelDataWindow">
       <div
         id="excelPanelHeader"
         className="font-['Helvetica'] text-[1.5vw] font-bold h-[30px] mt-[10px]"

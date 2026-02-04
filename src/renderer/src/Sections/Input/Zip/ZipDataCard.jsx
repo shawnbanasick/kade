@@ -1,4 +1,3 @@
-import styled from 'styled-components';
 import kadeZip from '../../images/kadeZip.png';
 import LoadKadeZip from './LoadKadeZip';
 import { useTranslation } from 'react-i18next';
@@ -7,46 +6,20 @@ const ZipDataCard = () => {
   const { t } = useTranslation();
 
   return (
-    <Card>
-      <CardMeta>
-        <CardLabel>1. {t('KADE Zip File')}</CardLabel>
-      </CardMeta>
-      <Image>
+    <div
+      id="zipDataCard"
+      className="grid grid-flow-row justify-items-center items-center bg-white border-2 border-gray-400 h-[340px] w-90 rounded-[5px]"
+    >
+      <div id="zipDataCardMeta" className="bg-white font-sans text-lg font-bold">
+        <div id="zipDataCardLabel" className="text-[17px] font-bold">
+          1. {t('KADE Zip File')}
+        </div>
+      </div>
+      <div>
         <img style={{ width: '250px', height: '175px' }} alt="KADE Zip File" src={kadeZip} />
-      </Image>
+      </div>
       <LoadKadeZip />
-    </Card>
+    </div>
   );
 };
 export default ZipDataCard;
-
-const Card = styled.div`
-  display: grid;
-  grid-auto-flow: row;
-  justify-items: center;
-  align-items: center;
-  background-color: white;
-  border: 2px solid black;
-  height: 340px;
-  width: 320px;
-  border: 2px solid darkgray;
-  border-radius: 5px;
-  margin-bottom: 50px;
-`;
-
-const Image = styled.div`
-  background-color: white;
-`;
-
-const CardMeta = styled.div`
-  background-color: white;
-  font-family: Helvetica, sans-serif;
-  font-size: 18px;
-  font-weight: bold;
-`;
-
-const CardLabel = styled.div`
-  font-family: Helvetica, sans-serif;
-  font-size: 18px;
-  font-weight: bold;
-`;
