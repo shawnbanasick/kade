@@ -7,7 +7,7 @@ const LoadButton = styled.div`
   height: 60px;
   padding-right: 15px;
   padding-left: 15px;
-  width: fit-content;
+  width: 250px;
   text-align: center;
   font-size: calc() (10px + 1vw);
   font-family: Helvetica, sans-serif;

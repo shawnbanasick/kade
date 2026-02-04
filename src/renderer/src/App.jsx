@@ -112,20 +112,20 @@ const App = () => {
   // const updateVersion = appState.updateVersion;
 
   // get button colors
-  const inputButtonColor = isInputButtonGreen ? 'bg-primary-button' : '#d6dbe0';
-  const correlationsButtonColor = isCorrelationsButtonGreen ? 'bg-primary-button' : '#d6dbe0';
-  const factorsButtonColor = isFactorsButtonGreen ? 'bg-primary-button' : '#d6dbe0';
-  const rotationButtonColor = isRotationButtonGreen ? 'bg-primary-button' : '#d6dbe0';
-  const loadingsButtonColor = isLoadingsButtonGreen ? 'bg-primary-button' : '#d6dbe0';
-  const outputButtonColor = isOutputButtonGreen ? 'bg-primary-button' : '#d6dbe0';
+  const inputButtonColor = isInputButtonGreen ? 'bg-primary-button' : 'bg-grey-button';
+  const correlationsButtonColor = isCorrelationsButtonGreen
+    ? 'bg-primary-button'
+    : 'bg-grey-button';
+  const factorsButtonColor = isFactorsButtonGreen ? 'bg-primary-button' : 'bg-grey-button';
+  const rotationButtonColor = isRotationButtonGreen ? 'bg-primary-button' : 'bg-grey-button';
+  const loadingsButtonColor = isLoadingsButtonGreen ? 'bg-primary-button' : 'bg-grey-button';
+  const outputButtonColor = isOutputButtonGreen ? 'bg-primary-button' : 'bg-grey-button';
   const structureButtonColor = isStructureButtonGreen ? 'bg-primary-button' : '#d6dbe0';
 
   const isDataButtonGreenCombined = indicateDataButtonColor(
     isDataButtonGreen,
     hasDataBeenConfirmed
   );
-
-  console.log(isDataButtonGreenCombined);
 
   const handleClick = (target) => {
     updateViewAttribution(false);

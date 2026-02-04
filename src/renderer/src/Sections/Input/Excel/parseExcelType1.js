@@ -223,9 +223,12 @@ function parseExcelType1(workbook) {
       appState.setState({ isDataButtonGreen: true });
       inputState.setState({ isDataAlreadyLoaded: true });
       // button won't go green without timeout
+
       setTimeout(() => {
         inputState.setState({ isLoadExcelT1ButtonGreen: true });
       }, 10);
+
+      console.log('isLoadExcelT1ButtonGreen', isLoadExcelT1ButtonGreen);
     }
     // manage error messages
   } catch (error) {

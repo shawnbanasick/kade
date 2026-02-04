@@ -1,4 +1,3 @@
-import styled from 'styled-components';
 import ExcelT1Card from './Excel/ExcelT1Card';
 import ExcelT2Card from './Excel/ExcelT2Card';
 import { useTranslation } from 'react-i18next';
@@ -7,36 +6,22 @@ const ExcelPanel = () => {
   const [t] = useTranslation();
 
   return (
-    <DataWindow>
-      <Header>{t('Load a Type 1 OR Type 2 Spreadsheet (XLSX) File')}</Header>
-      <CardHolder id="excelPanelWindow">
+    <div id="DataWindow" className="">
+      <div
+        id="excelPanelHeader"
+        className="font-['Helvetica'] text-[1.5vw] font-bold h-[30px] mt-[10px]"
+      >
+        {t('Load a Type 1 OR Type 2 Spreadsheet (XLSX) File')}
+      </div>
+      <div
+        id="excelPanelWindow"
+        className="grid grid-cols-[350px_350px] grid-rows-[350px_75px_120px_1fr] select-none"
+      >
         <ExcelT1Card />
         <ExcelT2Card />
-        {/* <ForcedUnforcedRadio startingRow={2} number={'2.'} /> */}
-        {/* <ZipErrorCheckButton number={'3.'} gridRow={3} /> */}
-      </CardHolder>
-    </DataWindow>
+      </div>
+    </div>
   );
 };
 
 export default ExcelPanel;
-
-const DataWindow = styled.div`
-  min-height: ${(props) => props.height};
-  width: calc(100vw-135);
-`;
-
-const CardHolder = styled.div`
-  display: grid;
-  grid-template-columns: 350px 350px;
-  grid-template-rows: 350px 75px 120px 1fr;
-  user-select: none;
-`;
-
-const Header = styled.div`
-  font-family: Helvetica;
-  font-size: 1.5vw;
-  font-weight: bold;
-  height: 30px;
-  margin-top: 10px;
-`;
