@@ -16,7 +16,11 @@ const ZipDataCard = () => {
         </div>
       </div>
       <div>
-        <img style={{ width: '250px', height: '175px' }} alt="KADE Zip File" src={kadeZip} />
+        <img
+          className="w-[250px] h-[165px] outline-[1px] outline-lightgray"
+          alt="KADE Zip File"
+          src={kadeZip}
+        />
       </div>
       <LoadKadeZip />
     </div>
