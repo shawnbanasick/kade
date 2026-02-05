@@ -64,8 +64,6 @@ const processCsvQsorts = (data) => {
   const sortsDisplayTextArray = sortsDisplayText(mainDataObject);
 
   if (hasInputError === false) {
-    // revertLoadButtonsColors('csv');
-
     const multiplierArray = calcMultiplierArray([...mainDataObject[0].rawSort]);
     const sampleQsort = [...mainDataObject[0].rawSort];
     const qSortPattern = [...sampleQsort].sort((a, b) => a - b);

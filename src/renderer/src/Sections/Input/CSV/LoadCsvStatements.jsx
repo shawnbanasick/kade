@@ -1,8 +1,7 @@
-import revertLoadButtonsColors from '../DemoData/revertLoadButtonsColors';
+// import revertLoadButtonsColors from '../DemoData/revertLoadButtonsColors';
 import throwNoStatementsInputErrorModal from '../ErrorChecking/throwNoStatementsInputErrorModal';
 import NewLoadButton from '../../../Utils/NewLoadButton';
 import { useTranslation } from 'react-i18next';
-import styled from 'styled-components';
 import coreState from '../../GlobalState/coreState';
 import inputState from '../../GlobalState/inputState';
 import appState from '../../GlobalState/appState';
@@ -25,17 +24,12 @@ const LoadCsvStatements = () => {
   const updateIsDataButtonGreen = appState((state) => state.updateIsDataButtonGreen);
 
   const processBlob = (data) => {
-    console.log(JSON.stringify(data, null, 2));
     // split into lines
     const lines = data.split(/[\r\n]+/g);
     // remove empty strings
     const lines2 = lines.filter((e) => e === 0 || e);
 
     if (lines2.length > 1) {
-      // const updateAreQsortsLoaded = inputState((state) => state.updateAreQsortsLoaded);
-
-      console.log(JSON.stringify(lines2, null, 2));
-
       updateStatements(lines2);
       updateNumStatements(lines2.length);
       updateStatementsLoaded(true);
