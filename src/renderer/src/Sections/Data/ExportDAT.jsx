@@ -1,4 +1,3 @@
-import styled from 'styled-components';
 import GeneralButton from '../../Utils/GeneralButton';
 import { useTranslation } from 'react-i18next';
 import coreState from '../GlobalState/coreState';
@@ -33,37 +32,15 @@ const ExportDatButton = () => {
   };
 
   return (
-    <Button as={GeneralButton} onClick={handleOnClick}>
-      <LineContainer>
-        <SvgContainer>
-          <img src={DatIcon} height="50px" alt="CSV Icon" />
-        </SvgContainer>
+    <button className="min-w-[180px] mr-5 bg-grey-button h-[50px]" onClick={handleOnClick}>
+      <div className="flex flex-row justify-center items-center h-full w-full gap-4">
+        <div className="flex justify-center items-center mr-2.5 ml-0">
+          <img src={DatIcon} className="h-[40px]" alt="CSV Icon" />
+        </div>
         <p>{t('Q sorts')}</p>
-      </LineContainer>
-    </Button>
+      </div>
+    </button>
   );
 };
 
 export default ExportDatButton;
-
-const Button = styled.button`
-  background-color: ${(props) => props.buttonColor};
-  min-width: 180px;
-`;
-
-const LineContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-  width: 100%;
-`;
-
-const SvgContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-right: 10px;
-  margin-left: 10;
-`;

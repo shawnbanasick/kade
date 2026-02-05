@@ -1,5 +1,4 @@
 import React from 'react';
-import styled, { keyframes } from 'styled-components';
 import StatementsList from './StatementsList';
 import QsortsPatternList from './QsortsPatternList';
 import ParticipantsQsortsGrid from './ParticipantQsortsGrid';
@@ -21,7 +20,6 @@ const Data = () => {
   const { t } = useTranslation();
 
   const mainDataObject = coreState((state) => state.mainDataObject);
-  // const sortsDisplayText = coreState((state) => state.sortsDisplayText);
   const statements = coreState((state) => state.statements);
   const projectName = coreState((state) => state.projectName);
   const numQsorts = coreState((state) => state.numQsorts);
@@ -41,8 +39,6 @@ const Data = () => {
   const statementNumArray = statements.map((item, index) => {
     return index + 1;
   });
-
-  // check for unforced participants??
 
   let sortMapsArray = generateDisplaySortMaps(
     qSortPattern,
@@ -64,46 +60,59 @@ const Data = () => {
 
   if (areQsortsLoaded && isQsortPatternLoaded) {
     return (
-      <MainContent>
-        <ProjectTitle>{t('Project Data')}</ProjectTitle>
-        <InformationContainer>
-          <h2>
-            {t('Project Name')}: {projectName}
+      <main className="w-[calc(100vw-135px)] max-h-[calc(100vh-22px)] overflow-auto bg-white p-4 pt-6 pl-6 pb-5 select-none font-sans text-lg animate-fade-in">
+        {/* Project Title */}
+        <h1 className="text-5xl font-bold mb-8">{t('Project Data')}</h1>
+
+        {/* Information Container */}
+        <section className="mb-8 space-y-2">
+          <h2 className="text-2xl font-semibold">
+            {t('Project Name')}: <span className="font-normal">{projectName}</span>
           </h2>
-          <h2>
-            {t('Participants')}: {numQsorts}
+          <h2 className="text-2xl font-semibold">
+            {t('Participants')}: <span className="font-normal">{numQsorts}</span>
           </h2>
-          <h2>{`${t('Number of Statements')}: ${numStatements}`}</h2>
-          {qSortPattern ? (
-            <React.Fragment>
-              <h2>{`${t('Q Sort Pattern')}: `}</h2>
+          <h2 className="text-2xl font-semibold">
+            {t('Number of Statements')}: <span className="font-normal">{numStatements}</span>
+          </h2>
+          {qSortPattern && (
+            <>
+              <h2 className="text-2xl font-semibold">{t('Q Sort Pattern')}:</h2>
               <QsortsPatternList texts={texts} />
-            </React.Fragment>
-          ) : null}
-        </InformationContainer>
-        <StatementListContainer>
-          <h1>{`${t('Statements')}: `}</h1>
+            </>
+          )}
+        </section>
+
+        {/* Statement List Container */}
+        <section className="py-8 mb-12">
+          <h1 className="text-3xl font-bold mb-4">{t('Statements')}:</h1>
           <StatementsList statements={statements} />
-        </StatementListContainer>
-        <UnforcedContainer>
+        </section>
+
+        {/* Unforced Container */}
+        <div className="flex flex-row items-baseline gap-4 min-h-[120px] font-bold mt-4 mb-12">
           {showUnforcedConfirmMessage && (
             <UnforcedSortsDisplay number={numUnforcedParts} display={displayForcedComfirmMessage} />
           )}
           {showExportButtons && (
-            <>
-              <ExportText>{t('Export PQMethod')}</ExportText>
+            <div className="flex flex-row items-center h-[80px] text-center align-center gap-4 ml-12 mb-6 border-2 border-red-500">
+              <div className="text-2xl font-bold self-center align-center pt-2">
+                {t('Export PQMethod')}
+              </div>
               <StaFileButton />
               <DatFileButton />
-            </>
+            </div>
           )}
-        </UnforcedContainer>
-        <SortsListContainer>
-          <ButtonsContainer>
-            <h2>{`${t('Display Participant Q Sorts as')}: `}</h2>
+        </div>
+
+        {/* Sorts List Container */}
+        <section className="min-h-[1000px]">
+          <div className="flex flex-row items-center gap-4 mb-4">
+            <h2 className="text-2xl font-semibold">{t('Display Participant Q Sorts as')}:</h2>
             <DisplayDataQsortsButton />
             <DisplayDataSortsGridButton />
             <DownloadDatabookButton />
-          </ButtonsContainer>
+          </div>
           {showQsortsSpreadsheet && <ParticipantsQsortsGrid data={mainDataObject} />}
           {showQsorts && (
             <SortsDisplayList
@@ -111,123 +120,21 @@ const Data = () => {
               respondentNames={sortMapsArray[1]}
             />
           )}
-        </SortsListContainer>{' '}
-      </MainContent>
+        </section>
+      </main>
     );
   } else {
     return (
-      <NoDataDiv>
-        <h2>{t('No data loaded')}</h2>
-        <p>
+      <div className="m-12 p-8 bg-white rounded-lg shadow-md">
+        <h2 className="text-3xl font-bold mb-4 text-gray-800">{t('No data loaded')}</h2>
+        <p className="text-lg text-gray-600 leading-relaxed">
           {t(
             'Confirm that the statements, Q sorts, and the Q sort pattern have all been entered correctly'
           )}
         </p>
-      </NoDataDiv>
+      </div>
     );
   }
 };
 
 export default Data;
-
-const fadeIn = keyframes`
-  from {
-    opacity: 0;
-  }
-
-  to {
-    opacity: 1;
-  }
-`;
-
-const fadeOut = keyframes`
-  from {
-    opacity: 1;
-  }
-
-  to {
-    opacity: 0;
-  }
-`;
-
-const MainContent = styled.div`
-  display: grid;
-  grid-template-columns: 190px 270px 190px 1fr;
-  grid-template-rows: 100px 1fr 1fr 1fr 1fr;
-  grid-template-areas:
-    'pageTitle pageTitle pageTitle pageTitle'
-    'informationContainer informationContainer informationContainer informationContainer '
-    'statementList statementList statementList statementList'
-    'unforcedContainer unforcedContainer unforcedContainer unforcedContainer'
-    'sortsList sortsList sortsList sortsList'
-    'linkboxRow2 linkboxRow2 linkboxRow2 linkboxRow2';
-  overflow: scroll;
-  padding: 5px;
-  padding-top: 15px;
-  padding-left: 15px;
-  padding-bottom: 5px;
-  visibility: ${(props) => (props.view ? 'hidden' : 'visible')};
-  animation: ${(props) => (props.view ? fadeOut : fadeIn)} 0.5s linear;
-  transition: visibility 0.5s linear;
-
-  font-family: Helvetica, sans-serif;
-  font-size: 18px;
-  background-color: white;
-
-  width: calc(100vw - 135px);
-  max-height: calc(100vh - 22px);
-  box-sizing: border-box;
-  overflow: auto;
-  user-select: none;
-`;
-
-const NoDataDiv = styled.div`
-  margin: 50px;
-`;
-
-const ProjectTitle = styled.h1`
-  grid-area: pageTitle;
-  font-family: Helvetica, sans-serif;
-  font-size: 50px;
-  align-items: center;
-  justify-items: center;
-`;
-
-const StatementListContainer = styled.div`
-  grid-area: statementList;
-  padding-top: 30px;
-  padding-bottom: 50px;
-`;
-
-const SortsListContainer = styled.div`
-  grid-area: sortsList;
-  min-height: 1000px;
-`;
-
-const InformationContainer = styled.div`
-  grid-area: informationContainer;
-`;
-
-const UnforcedContainer = styled.div`
-  grid-area: unforcedContainer;
-  display: flex;
-  flex-direction: row;
-  height: 80px;
-  font-weight: bold;
-  margin-top: 10px;
-  margin-bottom: 50px;
-  align-items: baseline;
-`;
-
-const ExportText = styled.p`
-  font-size: 25px;
-  font-weight: bold;
-  margin-right: 15px;
-  margin-left: 50px;
-`;
-
-const ButtonsContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-  margin-bottom: 10px;
-`;

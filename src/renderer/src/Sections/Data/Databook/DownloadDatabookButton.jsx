@@ -1,4 +1,3 @@
-import styled from 'styled-components';
 import * as docx from 'docx';
 import * as FileSaver from 'file-saver';
 import generateSortMaps from './generateSortMaps';
@@ -206,36 +205,17 @@ const DownloadDatabookButton = () => {
   };
 
   return (
-    <TradButton as={GeneralButton} id="DatabookButton" onClick={handleClick}>
-      <LineContainer>
-        <SvgContainer>
-          <img src={DocxIcon} height="50px" alt="CSV Icon" />
-        </SvgContainer>
-        {t('Download Project Data Book')}
-      </LineContainer>
-    </TradButton>
+    <div className="ml-[150px] mr-[5px]">
+      <GeneralButton id="DatabookButton" onClick={handleClick}>
+        <div className="flex flex-row justify-center items-center h-full w-full gap-4">
+          <div className="flex justify-center items-center mr-[10px] ml-[10px]">
+            <img src={DocxIcon} className="h-[40px]" alt="CSV Icon" />
+          </div>
+          {t('Download Project Data Book')}
+        </div>
+      </GeneralButton>
+    </div>
   );
 };
+
 export default DownloadDatabookButton;
-
-const TradButton = styled.div`
-  margin-left: 150px;
-  margin-right: 5px;
-`;
-
-const LineContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-  width: 100%;
-`;
-
-const SvgContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-right: 10px;
-  margin-left: 10;
-`;
