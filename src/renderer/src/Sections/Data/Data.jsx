@@ -95,8 +95,8 @@ const Data = () => {
             <UnforcedSortsDisplay number={numUnforcedParts} display={displayForcedComfirmMessage} />
           )}
           {showExportButtons && (
-            <div className="flex flex-row items-center h-[80px] text-center align-center gap-4 ml-12 mb-6 border-2 border-red-500">
-              <div className="text-2xl font-bold self-center align-center pt-2">
+            <div className="flex flex-row items-center h-[80px] text-center align-center gap-4">
+              <div className="text-2xl font-bold self-center align-center ">
                 {t('Export PQMethod')}
               </div>
               <StaFileButton />
@@ -107,10 +107,12 @@ const Data = () => {
 
         {/* Sorts List Container */}
         <section className="min-h-[1000px]">
-          <div className="flex flex-row items-center gap-4 mb-4">
-            <h2 className="text-2xl font-semibold">{t('Display Participant Q Sorts as')}:</h2>
-            <DisplayDataQsortsButton />
-            <DisplayDataSortsGridButton />
+          <div className="flex flex-row items-center gap-4">
+            <div className="flex flex-row items-center gap-4">
+              <div className="text-3xl font-bold">{t('Display Participant Q Sorts as')}</div>
+              <DisplayDataQsortsButton />
+              <DisplayDataSortsGridButton />
+            </div>
             <DownloadDatabookButton />
           </div>
           {showQsortsSpreadsheet && <ParticipantsQsortsGrid data={mainDataObject} />}

@@ -1,4 +1,3 @@
-import styled from 'styled-components';
 import dataDisplayState from '../GlobalState/dataDisplayState';
 import { useTranslation } from 'react-i18next';
 
@@ -27,14 +26,12 @@ const DisplayDataSortsGridButton = () => {
   const isActive = dataDisplayState((state) => state.isShowQsortsSpreadsheetButtonGreen);
 
   return (
-    <TradButton as={GeneralButton} id="SortsGridButton" onClick={handleClick} $isActive={isActive}>
-      {t('Spreadsheet')}
-    </TradButton>
+    <div className="mx-[5px]">
+      <GeneralButton id="SortsGridButton" onClick={handleClick} $isActive={isActive}>
+        {t('Spreadsheet')}
+      </GeneralButton>
+    </div>
   );
 };
-export default DisplayDataSortsGridButton;
 
-const TradButton = styled.div`
-  margin-left: 5px;
-  margin-right: 5px;
-`;
+export default DisplayDataSortsGridButton;

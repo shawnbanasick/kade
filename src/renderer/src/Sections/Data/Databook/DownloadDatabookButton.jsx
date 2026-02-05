@@ -205,10 +205,10 @@ const DownloadDatabookButton = () => {
   };
 
   return (
-    <div className="ml-[150px] mr-[5px]">
-      <GeneralButton id="DatabookButton" onClick={handleClick}>
-        <div className="flex flex-row justify-center items-center h-full w-full gap-4">
-          <div className="flex justify-center items-center mr-[10px] ml-[10px]">
+    <div className="ml-[150px] w-[500px] pl-22">
+      <GeneralButton className="" id="DatabookButton" onClick={handleClick}>
+        <div className="flex flex-row justify-center items-center gap-4">
+          <div className="flex justify-center items-center">
             <img src={DocxIcon} className="h-[40px]" alt="CSV Icon" />
           </div>
           {t('Download Project Data Book')}

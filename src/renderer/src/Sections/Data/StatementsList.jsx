@@ -3,7 +3,7 @@ const StatementList = (props) => {
   return (
     <ol>
       {props.statements.map((listValue) => (
-        <li key={mapKey++}>{listValue}</li>
+        <li key={mapKey++}>{`${mapKey}. ${listValue}`}</li>
       ))}
     </ol>
   );

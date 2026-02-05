@@ -1,48 +1,45 @@
 import React from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import styled from 'styled-components';
 
 const SortsList = (props) => {
   return (
-    <ul>
-      {props.sortsDisplayText.map(function (listValue, index) {
-        return (
-          <div key={uuidv4()}>
-            <StyledPartName key={listValue['key']}>{props.respondentNames[index]}</StyledPartName>
-            {listValue['sortArray'].map(function (item, index2) {
-              if (index2 === 0) {
-                return <QitemHeader key={`${listValue['key']}_${index2}`}>{item}</QitemHeader>;
-              } else {
-                return <Qitem key={`${listValue['key']}_${index2}_99`}>{item}</Qitem>;
-              }
-            })}
-            <br />
-            <br />
-          </div>
-        );
-      })}
-    </ul>
+    <div className="pl-8 pt-8">
+      <ul>
+        {props.sortsDisplayText.map(function (listValue, index) {
+          return (
+            <div key={uuidv4()}>
+              <h3 className="font-bold whitespace-pre" key={listValue['key']}>
+                {props.respondentNames[index]}
+              </h3>
+              {listValue['sortArray'].map(function (item, index2) {
+                if (index2 === 0) {
+                  return (
+                    <li
+                      key={`${listValue['key']}_${index2}`}
+                      className="font-bold list-none whitespace-pre font-['Courier_New'] underline"
+                    >
+                      {item}
+                    </li>
+                  );
+                } else {
+                  return (
+                    <li
+                      key={`${listValue['key']}_${index2}_99`}
+                      className="whitespace-pre font-['Courier_New'] font-bold list-none"
+                    >
+                      {item}
+                    </li>
+                  );
+                }
+              })}
+              <br />
+              <br />
+            </div>
+          );
+        })}
+      </ul>
+    </div>
   );
 };
 
 export default SortsList;
-
-const Qitem = styled.li`
-  white-space: pre;
-  font-family: Courier New;
-  font-weight: bold;
-  list-style-type: none;
-`;
-
-const QitemHeader = styled.li`
-  font-weight: bold;
-  list-style-type: none;
-  white-space: pre;
-  font-family: Courier New;
-  text-decoration: underline;
-`;
-
-const StyledPartName = styled.h3`
-  font-weight: bold;
-  white-space: pre;
-`;
