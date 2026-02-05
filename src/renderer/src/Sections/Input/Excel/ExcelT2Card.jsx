@@ -1,4 +1,3 @@
-import styled from 'styled-components';
 import LoadExcelT2 from './LoadExcelT2';
 import { useTranslation } from 'react-i18next';
 import excel2 from '../../images/Excel2.png';

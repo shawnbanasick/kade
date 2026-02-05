@@ -1,6 +1,9 @@
 import { useTranslation } from 'react-i18next';
 import CsvStatementCard from './CSV/CsvStatementCard';
 import CsvSortsCard from './CSV/CsvSortsCard';
+import ProjectNameInput from './CSV/ProjectNameInput';
+import RadioExampleRadioGroup from './CSV/ForcedUnforcedRadio';
+import QsortDesignInputElement from './CSV/QsortDesignInputElement';
 
 const CsvPanel = () => {
   const { t } = useTranslation();
@@ -15,10 +18,13 @@ const CsvPanel = () => {
       </div>
       <div
         id="csvPanelWindow"
-        className="grid grid-cols-[350px_350px] grid-rows-[350px_75px_120px_1fr] select-none"
+        className="grid grid-cols-[350px_350px] grid-rows-[350px_75px_45px_1fr] select-none"
       >
         <CsvStatementCard id="csvStatementCard" />
         <CsvSortsCard id="csvSortsCard" />
+        <ProjectNameInput id="projectNameInput" />
+        <RadioExampleRadioGroup id="forcedUnforcedRadio" />
+        <QsortDesignInputElement id="qsortDesignInputElement" />
       </div>
     </div>
   );

@@ -1,4 +1,3 @@
-import styled from 'styled-components';
 import LoadPQMethodData from './LoadPQMethodData';
 import { useTranslation } from 'react-i18next';
 
@@ -26,35 +25,3 @@ const PQMethodQsortsCard = () => {
 };
 
 export default PQMethodQsortsCard;
-
-const Card = styled.div`
-  display: grid;
-  grid-auto-flow: row;
-  justify-items: center;
-  align-items: center;
-  background-color: white;
-  border: 2px solid black;
-  height: 340px;
-  width: 320px;
-  border: 2px solid darkgray;
-  border-radius: 5px;
-`;
-
-const Image = styled.div`
-  background-color: white;
-  width: 275px;
-  height: 175px;
-`;
-
-const CardMeta = styled.div`
-  background-color: white;
-  font-family: Helvetica, sans-serif;
-  font-size: 18px;
-  font-weight: bold;
-`;
-
-const CardLabel = styled.div`
-  font-family: Helvetica, sans-serif;
-  font-size: 18px;
-  font-weight: bold;
-`;

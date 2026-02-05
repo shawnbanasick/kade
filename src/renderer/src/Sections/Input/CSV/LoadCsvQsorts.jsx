@@ -1,55 +1,36 @@
 import inputState from '../../GlobalState/inputState';
-import getInputState from '../../GlobalState/getInputState';
+// import getInputState from '../../GlobalState/getInputState';
 import NewLoadButton from '../../../Utils/NewLoadButton';
 import { useTranslation } from 'react-i18next';
-
-const handleClick = async () => {
-  // getState - check to see if data loaded and correlations started - true ==> throw error
-  // const isDataAlreadyLoaded = getInputState('isDataAlreadyLoaded');
-  // if (isDataAlreadyLoaded) {
-  //   throwDataAlreadyLoadedInputErrorModal();
-  // } else {
-  try {
-    //     const files = await dialog.showOpenDialog(mainWindow, {
-    //       properties: ['openFile'],
-    //       filters: [
-    //         {
-    //           name: 'CSV',
-    //           extensions: ['csv', 'CSV'],
-    //         },
-    //       ],
-    //     });
-    //     const path = files.filePaths[0];
-    //     // dialog cancelled case
-    //     if (path === undefined) {
-    //       return;
-    //     }
-    //     fs.readFile(path, 'utf8', (error, data) => {
-    //       if (error != null) {
-    //         alert('file open error.');
-    //         return;
-    //       }
-    //       inputState.showErrorMessageBar = false;
-    //       processCsvQsorts(data);
-    //       const logMessageObj1 = {
-    //         logMessage: `Data loaded from CSV file`,
-    //         logType: 'csvInput',
-    //       };
-    //       projectHistoryState.projectHistoryArray = [logMessageObj1];
-    // });
-  } catch (error) {
-    inputState.errorMessage = error.message;
-    inputState.showErrorMessageBar = true;
-  }
-};
+import processCsvQsorts from './processCsvQsorts';
 
 const LoadCsvQsorts = () => {
   const { t } = useTranslation();
-
   const isLoadCsvQsortsButtonGreen = inputState((state) => state.isLoadCsvQsortsButtonGreen);
 
+  const trans1 = t('Data have already been loaded and the analysis has started');
+  const trans2 = t('To clear this analysis and restart the application');
+  const trans3 = t('click the Clear Project button near the bottom of the navigation panel');
+
+  const handleClick = async () => {
+    try {
+      await window.electronAPI.openCsvFile();
+      window.bridge.csvData((event, csvData) => {
+        processCsvQsorts(csvData);
+      });
+    } catch (error) {
+      // inputState.errorMessage = error.message;
+      // inputState.showErrorMessageBar = true;
+    }
+  };
+
+  // console.log('isLoadCsvQsortsButtonGreen', isLoadCsvQsortsButtonGreen);
+
   return (
-    <NewLoadButton isActive={isLoadCsvQsortsButtonGreen} onClick={handleClick}>
+    <NewLoadButton
+      onClick={handleClick}
+      className={`${isLoadCsvQsortsButtonGreen ? 'bg-primary-button' : 'bg-grey-button'}`}
+    >
       <div className="flex flex-row justify-center items-center h-full w-full gap-3">
         <svg
           id="ExcelT1SvgContainer"

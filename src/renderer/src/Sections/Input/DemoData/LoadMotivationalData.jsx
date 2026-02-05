@@ -30,7 +30,6 @@ const LoadMotivationalData = () => {
   const updateIsDataAlreadyLoaded = inputState((state) => state.updateIsDataAlreadyLoaded);
 
   const handleClick = () => {
-    console.log('isDataAlreadyLoaded', isDataAlreadyLoaded);
     if (isDataAlreadyLoaded) {
       updateShowErrorMessageBar(true);
       updateErrorMessage(i18n.t('Data are already loaded click Clear Project to restart'));
@@ -39,7 +38,6 @@ const LoadMotivationalData = () => {
     } else {
       uploadMotivationalData();
       revertLoadButtonsColors();
-      console.log('isDataAlreadyLoaded', isDataAlreadyLoaded);
 
       updateNotifyDataUploadSuccess(true);
       updateAreStatementsLoaded(true);
@@ -50,8 +48,6 @@ const LoadMotivationalData = () => {
       updateIsLoadMotivationalButtonGreen(true);
     }
   };
-
-  console.log('isLoadMotivationalButtonGreen', isLoadMotivationalButtonGreen);
 
   return (
     <div>

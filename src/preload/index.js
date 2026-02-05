@@ -10,6 +10,7 @@ if (process.contextIsolated) {
       openDatFile: () => ipcRenderer.send('dialog:openDatFile'),
       openExcelFile: () => ipcRenderer.send('dialog:openExcelFile'),
       openZipFile: () => ipcRenderer.send('dialog:openZipFile'),
+      openCsvFile: () => ipcRenderer.send('dialog:openCsvFile'),
       openTxtFile: () => ipcRenderer.send('dialog:openTxtFile'),
       openJsonFile: () => ipcRenderer.send('dialog:openJsonFile'),
       saveImgFile: () => ipcRenderer.send('showSaveDialogSync'),
@@ -47,6 +48,9 @@ if (process.contextIsolated) {
       },
       excelData: (content) => {
         ipcRenderer.on('excelData', content);
+      },
+      csvData: (content) => {
+        ipcRenderer.on('csvData', content);
       },
       zipData: (content) => {
         ipcRenderer.on('zipData', content);

@@ -2,16 +2,21 @@ import coreState from '../../GlobalState/coreState';
 import appState from '../../GlobalState/appState';
 import Papa from 'papaparse';
 import inputState from '../../GlobalState/inputState';
-import getInputState from '../../GlobalState/getInputState';
+import projectHistoryState from '../../GlobalState/projectHistoryState';
+// import getInputState from '../../GlobalState/getInputState';
 import sortsDisplayText from '../logic/sortsDisplayText';
 import revertLoadButtonsColors from '../DemoData/revertLoadButtonsColors';
 // import throwErrorTemplate from '../throwErrorTemplate';
 import filterLines from './filterLines';
 import createMainDataObjectArray from './createMainDataObjectArray';
+import calcMultiplierArray from './calcMultiplierArray';
 
 const processCsvQsorts = (data) => {
   // todo - integrate this properly
   const hasInputError = false;
+
+  // check if statements are loaded
+  const areStatementsLoaded = inputState.getState().areStatementsLoaded;
 
   // parse file
   const parsedFile = Papa.parse(data);
@@ -23,18 +28,18 @@ const processCsvQsorts = (data) => {
   // ERROR CHECK 1 - no sorts in file
   if (lines3.length < 2) {
     // throw new Error("Can't find any Q sorts in the file!");
-    inputState.showErrorMessageBar = true;
-    inputState.errorMessage = "Can't find any Q sorts in the file!";
-    inputState.errorStackTrace = "Error in 'processCsvQsorts' function.";
-    inputState.extendedErrorMessage =
-      'KADE was unable to find any Q sorts listed in the selected file. Please check the file and try again.';
+    inputState.setState({ showErrorMessageBar: true });
+    inputState.setState({ errorMessage: "Can't find any Q sorts in the file!" });
+    inputState.setState({ errorStackTrace: "Error in 'processCsvQsorts' function." });
+    inputState.setState({
+      extendedErrorMessage:
+        'KADE was unable to find any Q sorts listed in the selected file. Please check the file and try again.',
+    });
     return;
   }
 
   // remove empty arrays
   const lines2 = filterLines(lines3);
-
-  console.log(JSON.stringify(lines2));
 
   // set default dataset value
   const numberSorts = lines2.length;
@@ -56,23 +61,39 @@ const processCsvQsorts = (data) => {
   let mainDataObject = [...mainDataObjectArray[0]];
   let respondentNames = [...mainDataObjectArray[1]];
 
-  console.log(JSON.stringify(mainDataObjectArray));
-
   const sortsDisplayTextArray = sortsDisplayText(mainDataObject);
 
   if (hasInputError === false) {
-    revertLoadButtonsColors('csv');
+    // revertLoadButtonsColors('csv');
 
-    inputState.dataOrigin = 'csv';
-    coreState.numQsorts = numberSorts;
-    coreState.respondentNames = respondentNames;
-    coreState.mainDataObject = mainDataObject;
-    coreState.sortsDisplayText = sortsDisplayTextArray;
-    inputState.notifyDataUploadSuccess = true;
-    inputState.areQsortsLoaded = true;
-    inputState.isLoadCsvQsortsButtonGreen = true;
-    appState.isInputButtonGreen = getInputState('areStatementsLoaded');
-    appState.isDataButtonGreen = getInputState('areStatementsLoaded');
+    const multiplierArray = calcMultiplierArray([...mainDataObject[0].rawSort]);
+    const sampleQsort = [...mainDataObject[0].rawSort];
+    const qSortPattern = [...sampleQsort].sort((a, b) => a - b);
+    const statementNumArray = Array.from({ length: qSortPattern.length }, (_, i) => i + 1);
+
+    const logMessageObj1 = {
+      logMessage: `${data[1]} data loaded from CSV file`,
+      logType: 'csvInput',
+    };
+
+    // *** SET STATE ***
+    projectHistoryState.setState({ projectHistoryArray: [logMessageObj1] });
+    coreState.setState({ numQsorts: numberSorts });
+    coreState.setState({ qSortPattern: qSortPattern });
+    coreState.setState({ multiplierArray: multiplierArray });
+    coreState.setState({ mainDataObject: mainDataObject });
+    coreState.setState({ sortsDisplayText: sortsDisplayTextArray });
+    coreState.setState({ statementNumArray: statementNumArray });
+    coreState.setState({ respondentNames: respondentNames });
+    inputState.setState({ areQsortsLoaded: true });
+    inputState.setState({ isQsortPatternLoaded: true });
+
+    inputState.setState({ dataOrigin: 'csv' });
+    inputState.setState({ notifyDataUploadSuccess: true });
+    inputState.setState({ isLoadCsvQsortsButtonGreen: true });
+    inputState.setState({ isDataAlreadyLoaded: areStatementsLoaded });
+    appState.setState({ isInputButtonGreen: areStatementsLoaded });
+    appState.setState({ isDataButtonGreen: areStatementsLoaded });
   }
 };
 

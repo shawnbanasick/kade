@@ -1,6 +1,6 @@
 import revertLoadButtonsColors from '../DemoData/revertLoadButtonsColors';
 import throwNoStatementsInputErrorModal from '../ErrorChecking/throwNoStatementsInputErrorModal';
-import LoadButton from '../DemoData/LoadButton';
+import NewLoadButton from '../../../Utils/NewLoadButton';
 import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 import coreState from '../../GlobalState/coreState';
@@ -9,7 +9,7 @@ import appState from '../../GlobalState/appState';
 
 const LoadCsvStatements = () => {
   const { t } = useTranslation();
-  const isLoadJsonTextButtonGreen = inputState((state) => state.isLoadJsonTextButtonGreen);
+  const isLoadCsvTextButtonGreen = inputState((state) => state.isLoadCsvTextButtonGreen);
   const areQsortsLoaded = inputState((state) => state.areQsortsLoaded);
   // revertLoadButtonsColors('json');
 
@@ -18,8 +18,8 @@ const LoadCsvStatements = () => {
   const updateStatementsLoaded = inputState((state) => state.updateStatementsLoaded);
   const updateNotifyDataUploadSuccess = inputState((state) => state.updateNotifyDataUploadSuccess);
   const updateAreStatementsLoaded = inputState((state) => state.updateAreStatementsLoaded);
-  const updateIsLoadJsonTextButtonGreen = inputState(
-    (state) => state.updateIsLoadJsonTextButtonGreen
+  const updateIsLoadCsvTextButtonGreen = inputState(
+    (state) => state.updateIsLoadCsvTextButtonGreen
   );
   const updateIsInputButtonGreen = appState((state) => state.updateIsInputButtonGreen);
   const updateIsDataButtonGreen = appState((state) => state.updateIsDataButtonGreen);
@@ -41,7 +41,7 @@ const LoadCsvStatements = () => {
       updateStatementsLoaded(true);
       updateAreStatementsLoaded(true);
       updateStatementsLoaded(true);
-      updateIsLoadJsonTextButtonGreen(true);
+      updateIsLoadCsvTextButtonGreen(true);
       setTimeout(() => {
         updateNotifyDataUploadSuccess(true);
         updateIsInputButtonGreen(areQsortsLoaded);
@@ -74,32 +74,22 @@ const LoadCsvStatements = () => {
   };
 
   return (
-    <LoadButton $isActive={isLoadJsonTextButtonGreen} onClick={handleClick}>
-      <LineContainer>
-        <SvgContainer xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+    <NewLoadButton
+      onClick={handleClick}
+      className={`${isLoadCsvTextButtonGreen ? 'bg-primary-button' : 'bg-grey-button'}`}
+    >
+      <div className="flex flex-row justify-center items-center h-full w-full gap-3">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 20 20"
+          className="rotate-180 mr-5 h-[17px] w-[17px] fill-current"
+        >
           <path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z" />
-        </SvgContainer>
-        <p>{t('Load TXT File')}</p>
-      </LineContainer>
-    </LoadButton>
+        </svg>
+        <div className="ml-5 font-sans text-lg font-bold">{t('Load TXT File')}</div>
+      </div>
+    </NewLoadButton>
   );
 };
 
 export default LoadCsvStatements;
-
-const SvgContainer = styled.svg`
-  transform: rotate(180deg);
-  margin-right: 20px;
-  height: 17px;
-  width: 17px;
-  fill: currentColor;
-`;
-
-const LineContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-  width: 100%;
-`;

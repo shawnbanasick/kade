@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import styled from 'styled-components';
 import coreState from '../../GlobalState/coreState';
 import inputState from '../../GlobalState/inputState';
 import { useTranslation } from 'react-i18next';
@@ -23,39 +22,18 @@ const ProjectNameInput = () => {
 
   return (
     <React.Fragment>
-      <Container>
+      <div className={`flex flex-row items-center text-[20px] font-bold pl-[5px] mb-[10px] gap-3 `}>
         3.
-        <Input
+        <input
+          className={`text-[20px] h-[30px] w-[355px] p-2 m-[3px] text-black bg-white border border-black rounded-sm`}
           onChange={(e) => handleChange(e)}
           label="Project Name:"
           placeholder={t('Input Project Name')}
           value={projectName}
         />
-      </Container>
+      </div>
     </React.Fragment>
   );
 };
 
 export default ProjectNameInput;
-
-const Input = styled.input`
-  font-size: 20px;
-  height: 30px;
-  width: 355px;
-  padding: 0.5em;
-  margin: 3px;
-  color: black;
-  background: white;
-  border: 1px solid black;
-  border-radius: 3px;
-`;
-
-const Container = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  font-size: 20px;
-  font-weight: bold;
-  padding-left: 5px;
-  margin-bottom: 10px;
-`;

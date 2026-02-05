@@ -8,6 +8,7 @@ import openStaFile from './openFileLogic/openStaFile';
 import openDatFile from './openFileLogic/openDatFile';
 import openExcelFile from './openFileLogic/openExcelFile';
 import openZipFile from './openFileLogic/openZipFile';
+import openCsvFile from './openFileLogic/openCsvFile';
 import openTxtFile from './openFileLogic/openTxtFile';
 import openJsonFile from './openFileLogic/openJsonFile';
 import saveSvgFile from './openFileLogic/saveSvgFile';
@@ -129,6 +130,7 @@ app.whenReady().then(() => {
   ipcMain.on('dialog:openZipFile', openZipFile);
   ipcMain.on('dialog:openTxtFile', openTxtFile);
   ipcMain.on('dialog:openJsonFile', openJsonFile);
+  ipcMain.on('dialog:openCsvFile', openCsvFile);
 
   // Path
   ipcMain.handle('getPath', () => {

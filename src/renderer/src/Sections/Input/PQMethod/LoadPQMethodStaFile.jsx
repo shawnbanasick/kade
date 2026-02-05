@@ -3,9 +3,8 @@ import numStatementsMatchErrorModal from '../ErrorChecking/numStatementsMatchErr
 import coreState from '../../GlobalState/coreState';
 import appState from '../../GlobalState/appState';
 import inputState from '../../GlobalState/inputState';
-import LoadButton from '../DemoData/LoadButton';
+import NewLoadButton from '../../../Utils/NewLoadButton';
 import { useTranslation } from 'react-i18next';
-import styled from 'styled-components';
 
 const LoadPQMethodStaFile = () => {
   const { t } = useTranslation();
@@ -67,32 +66,26 @@ const LoadPQMethodStaFile = () => {
   };
 
   return (
-    <LoadButton $isActive={isLoadPqmethodTextButtonButtonGreen} onClick={() => handleClick()}>
-      <LineContainer>
-        <SvgContainer xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+    <NewLoadButton
+      onClick={() => handleClick()}
+      className={`${isLoadPqmethodTextButtonButtonGreen ? 'bg-primary-button' : 'bg-grey-button'}`}
+    >
+      <div
+        id="PQMethodStaLineContainer"
+        className="flex flex-row justify-center items-center h-full w-full gap-3"
+      >
+        <svg
+          id="PQMethodStaSvgContainer"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 20 20"
+          className="rotate-180 mr-5 h-[17px] w-[17px] fill-current"
+        >
           <path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z" />
-        </SvgContainer>
-        <p>{t('Load STA File')}</p>
-      </LineContainer>
-    </LoadButton>
+        </svg>
+        <div className="ml-5 font-sans text-lg font-bold">{t('Load STA File')}</div>
+      </div>
+    </NewLoadButton>
   );
 };
 
 export default LoadPQMethodStaFile;
-
-const SvgContainer = styled.svg`
-  transform: rotate(180deg);
-  margin-right: 20px;
-  height: 17px;
-  width: 17px;
-  fill: currentColor;
-`;
-
-const LineContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-  width: 100%;
-`;

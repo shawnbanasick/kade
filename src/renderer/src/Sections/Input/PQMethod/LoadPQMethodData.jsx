@@ -7,10 +7,9 @@ import coreState from '../../GlobalState/coreState';
 import projectHistoryState from '../../GlobalState/projectHistoryState';
 import appState from '../../GlobalState/appState';
 import inputState from '../../GlobalState/inputState';
-import LoadButton from '../DemoData/LoadButton';
+import NewLoadButton from '../../../Utils/NewLoadButton';
 import { useTranslation } from 'react-i18next';
 import i18n from 'i18next';
-import styled from 'styled-components';
 import cloneDeep from 'lodash/cloneDeep';
 
 const LoadPQMethodData = () => {
@@ -51,11 +50,12 @@ const LoadPQMethodData = () => {
   const updateCsvErrorMessage1 = inputState((state) => state.updateCsvErrorMessage1);
   const updateShowCsvErrorModal = inputState((state) => state.updateShowCsvErrorModal);
 
+  const trans1 = i18n.t('Data have already been loaded and the analysis has started');
+  const trans2 = i18n.t('To clear this analysis and restart the application');
+  const trans3 = i18n.t('click the Clear Project button near the bottom of the navigation panel');
+
   const handleClick = async () => {
     // check to see if data loaded and correlations started - true ==> throw error
-    const trans1 = i18n.t('Data have already been loaded and the analysis has started');
-    const trans2 = i18n.t('To clear this analysis and restart the application');
-    const trans3 = i18n.t('click the Clear Project button near the bottom of the navigation panel');
     if (isDataAlreadyLoaded) {
       updateShowErrorMessageBar(true);
       updateErrorMessage(i18n.t('Data are already loaded click Clear Project to restart'));
@@ -124,32 +124,25 @@ const LoadPQMethodData = () => {
   };
 
   return (
-    <LoadButton $isActive={isLoadPqmethodQsortsButtonGreen} onClick={() => handleClick()}>
-      <LineContainer>
-        <SvgContainer xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+    <NewLoadButton
+      onClick={() => handleClick()}
+      className={`${isLoadPqmethodQsortsButtonGreen ? 'bg-primary-button' : 'bg-grey-button'}`}
+    >
+      <div
+        id="PQMethodLineContainer"
+        className="flex flex-row justify-center items-center h-full w-full gap-3"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 20 20"
+          className="rotate-180 mr-5 h-[17px] w-[17px] fill-current"
+        >
           <path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z" />
-        </SvgContainer>
-        <p>{t('Load DAT File')}</p>
-      </LineContainer>
-    </LoadButton>
+        </svg>
+        <div className="ml-5 font-sans text-lg font-bold">{t('Load DAT File')}</div>
+      </div>
+    </NewLoadButton>
   );
 };
 
 export default LoadPQMethodData;
-
-const SvgContainer = styled.svg`
-  transform: rotate(180deg);
-  margin-right: 20px;
-  height: 17px;
-  width: 17px;
-  fill: currentColor;
-`;
-
-const LineContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-  width: 100%;
-`;
