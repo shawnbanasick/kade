@@ -25,6 +25,12 @@ import { useTranslation } from 'react-i18next';
 import i18next from 'i18next';
 import FileButton from './FileButton';
 import './App.css';
+import { AllCommunityModule, ModuleRegistry } from 'ag-grid-community';
+
+// Register all Community features
+ModuleRegistry.registerModules([AllCommunityModule]);
+
+
 
 // const semverEq = require('semver/functions/eq');
 // const electron = window.require('electron');
