@@ -75,6 +75,12 @@ const createParticipantParagraphs = (
         new TextRun({
           text: `${partStatementsLangObj.participant} ${participantIndex + 1}. ${participantId}`,
           bold: true,
+          font: {
+            name: 'Arial',
+            hint: 'eastAsia',
+            eastAsia: 'Microsoft YaHei',
+          },
+          size: 20,
         }),
       ],
       heading: HeadingLevel.HEADING_2,
@@ -97,6 +103,12 @@ const createParticipantParagraphs = (
               text: `${partStatementsLangObj.sortValue} ${sortValue}`,
               bold: false,
               underline: {},
+              font: {
+                name: 'Arial',
+                hint: 'eastAsia',
+                eastAsia: 'Microsoft YaHei',
+              },
+              size: 20,
             }),
           ],
           indent: { start: 200 },
@@ -111,10 +123,22 @@ const createParticipantParagraphs = (
               new TextRun({
                 text: `(s${item.stateNum}) `,
                 bold: false,
+                font: {
+                  name: 'Arial',
+                  hint: 'eastAsia',
+                  eastAsia: 'Microsoft YaHei',
+                },
+                size: 20,
               }),
               new TextRun({
                 text: item.statement,
                 bold: false,
+                font: {
+                  name: 'Arial',
+                  hint: 'eastAsia',
+                  eastAsia: 'Microsoft YaHei',
+                },
+                size: 20,
               }),
             ],
             indent: { left: 600, hanging: 200 },

@@ -3,6 +3,7 @@ import * as FileSaver from 'file-saver';
 import generateSortMaps from './generateSortMaps';
 import generateStatementsList from './generateStatementsList';
 import { generateParticipantStatements } from './generateParticipantStatements';
+import { generateStatementAnalysis } from './generateStatementAnalysis';
 import calcRespondentDataArrays from './calcRespondentDataArrays';
 import calcSortHeaders from './calcSortHeaders';
 import {
@@ -33,6 +34,15 @@ const DownloadDatabookButton = () => {
     sortValue: t('SortValue'),
     statementQsortValues: t('StatementQSortValues'),
     participant: t('Participant'),
+    qSortValue: t('QSortValue'),
+    statementNumber: t('StatementNumber'),
+    statementStatistics: t('statementStatistics'),
+    highestToLowestAverage: t('highestToLowestAverage'),
+    qSortValueStability: t('qSortValueStability'),
+    statementsWithAHighCountOfMax: t('statementsWithAHighCountOfMax'),
+    statementsWithAHighCountOfMin: t('statementsWithAHighCountOfMin'),
+    statementsWithAHighCountOfZero: t('statementsWithAHighCountOfZero'),
+    countPercent: t('countPercent'),
   };
 
   const qSortPattern = coreState((state) => state.qSortPattern);
@@ -71,6 +81,13 @@ const DownloadDatabookButton = () => {
       statements,
       projectName,
       respondentNames,
+      translationObject
+    );
+
+    const statementAnalysis = generateStatementAnalysis(
+      respondentDataArrays,
+      statements,
+      sortHeaders,
       translationObject
     );
 
@@ -212,6 +229,19 @@ const DownloadDatabookButton = () => {
             },
           },
           children: participantStatements,
+        },
+        {
+          properties: {
+            page: {
+              margin: {
+                top: 1200,
+                right: 1000,
+                bottom: 1000,
+                left: 1000,
+              },
+            },
+          },
+          children: statementAnalysis,
         },
       ],
     });
