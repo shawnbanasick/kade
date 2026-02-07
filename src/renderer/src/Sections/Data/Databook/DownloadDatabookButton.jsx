@@ -2,6 +2,9 @@ import * as docx from 'docx';
 import * as FileSaver from 'file-saver';
 import generateSortMaps from './generateSortMaps';
 import generateStatementsList from './generateStatementsList';
+import { generateParticipantStatements } from './generateParticipantStatements';
+import calcRespondentDataArrays from './calcRespondentDataArrays';
+import calcSortHeaders from './calcSortHeaders';
 import {
   Document,
   convertInchesToTwip,
@@ -27,6 +30,9 @@ const DownloadDatabookButton = () => {
     downloaded: t('Download'),
     participants: t('Participants'),
     partQsorts: t('Participant Q Sorts'),
+    sortValue: t('SortValue'),
+    statementQsortValues: t('StatementQSortValues'),
+    participant: t('Participant'),
   };
 
   const qSortPattern = coreState((state) => state.qSortPattern);
@@ -40,6 +46,17 @@ const DownloadDatabookButton = () => {
     const statementNumArray = statements.map((item, index) => {
       return index + 1;
     });
+
+    const respondentDataArrays = calcRespondentDataArrays(mainDataObject);
+    const sortHeaders = calcSortHeaders(qSortPattern);
+
+    const participantStatements = generateParticipantStatements(
+      respondentDataArrays,
+      sortHeaders,
+      statements,
+      respondentNames,
+      translationObject
+    );
 
     const generatedString = generateSortMaps(
       qSortPattern,
@@ -182,6 +199,19 @@ const DownloadDatabookButton = () => {
             },
           },
           children: generatedString,
+        },
+        {
+          properties: {
+            page: {
+              margin: {
+                top: 1200,
+                right: 1000,
+                bottom: 1000,
+                left: 1000,
+              },
+            },
+          },
+          children: participantStatements,
         },
       ],
     });

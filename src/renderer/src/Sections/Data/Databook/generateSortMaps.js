@@ -1,9 +1,9 @@
-import uniq from "lodash/uniq";
-import zip from "lodash/zip";
-import { Paragraph, HeadingLevel, UnderlineType, TextRun } from "docx";
-import calcMultiplierArrayT2 from "../../Input/Excel/excelLogic/calcMultiplierArrayT2";
-import isEqual from "lodash/isEqual";
-import i18n from "i18next";
+import uniq from 'lodash/uniq';
+import zip from 'lodash/zip';
+import { Paragraph, HeadingLevel, UnderlineType, TextRun } from 'docx';
+import calcMultiplierArrayT2 from '../../Input/Excel/excelLogic/calcMultiplierArrayT2';
+import isEqual from 'lodash/isEqual';
+import i18n from 'i18next';
 
 const compareSecondColumn = (a, b) => {
   if (a[1] === b[1]) {
@@ -38,28 +38,28 @@ const generateSortMaps = (
       children: [
         new TextRun({
           text: `${translationObject.partQsorts}`,
-          bold: true
-        })
+          bold: true,
+        }),
       ],
       heading: HeadingLevel.HEADING_1,
       thematicBreak: true,
       spacing: {
         before: 400,
-        after: 400
-      }
-    })
+        after: 400,
+      },
+    }),
   ];
 
-  let newString = "";
+  let newString = '';
   const newArray2 = [...newArray];
   for (let r = 0; r < newArray2.length; r++) {
     if (newArray2[r] < 0) {
-      newString = newString + "| " + newArray2[r] + " ";
+      newString = newString + '| ' + newArray2[r] + ' ';
     } else {
-      newString = newString + "|  " + newArray2[r] + " ";
+      newString = newString + '|  ' + newArray2[r] + ' ';
     }
   }
-  newString = newString + "|";
+  newString = newString + '|';
 
   let respondentArray;
   let unforcedParticipantNamesArray = [];
@@ -69,19 +69,15 @@ const generateSortMaps = (
     for (let m = 0; m < mainDataObject.length; m++) {
       respondentArray = mainDataObject[m].rawSort;
 
-      let thisMultiplierArray2 = [...mainDataObject[m].rawSort].sort(
-        (a, b) => a - b
-      );
+      let thisMultiplierArray2 = [...mainDataObject[m].rawSort].sort((a, b) => a - b);
 
       // to deal with unforced Q sorts - triangle shape may vary
-      let thisMultiplierArray = calcMultiplierArrayT2([
-        ...thisMultiplierArray2
-      ]);
+      let thisMultiplierArray = calcMultiplierArrayT2([...thisMultiplierArray2]);
 
       let unforcedTest = isEqual(multiplierArray, thisMultiplierArray);
       let nameString = mainDataObject[m].name;
       if (!unforcedTest) {
-        nameString = `${nameString}     ** ${i18n.t("Unforced Q sort")} **`;
+        nameString = `${nameString}     ** ${i18n.t('Unforced Q sort')} **`;
         unforcedParticipantNamesArray.push(nameString);
       } else {
         unforcedParticipantNamesArray.push(nameString);
@@ -115,14 +111,14 @@ const generateSortMaps = (
                 if (currentArray[1] !== comparisonArray[1]) {
                   if (currentArray[1] > 99) {
                     let string1 = `${currentArray[0]} `;
-                    let string2 = string1.padStart(4, " ");
+                    let string2 = string1.padStart(4, ' ');
                     textString = textString + string2;
                     currentArray[1] = 999;
                     isMidRow = true;
                     columnCheck = true;
                   } else {
                     let string1 = `${currentArray[0]} `;
-                    let string2 = string1.padStart(5, " ");
+                    let string2 = string1.padStart(5, ' ');
                     textString = textString + string2;
                     currentArray[1] = 999;
                     isMidRow = true;
@@ -133,14 +129,14 @@ const generateSortMaps = (
                 // if it is undefined (end of line)
                 if (currentArray[1] > 99) {
                   let string1 = `${currentArray[0]} `;
-                  let string2 = string1.padStart(4, " ");
+                  let string2 = string1.padStart(4, ' ');
                   textString = textString + string2;
                   currentArray[1] = 999;
                   isMidRow = true;
                   columnCheck = true;
                 } else {
                   let string1 = `${currentArray[0]} `;
-                  let string2 = string1.padStart(5, " ");
+                  let string2 = string1.padStart(5, ' ');
                   textString = textString + string2;
                   currentArray[1] = 999;
                   isMidRow = true;
@@ -165,14 +161,14 @@ const generateSortMaps = (
         children: [
           new TextRun({
             text: `${m + 1}. ${unforcedParticipantNamesArray[m]}`,
-            bold: true
-          })
+            bold: true,
+          }),
         ],
         heading: HeadingLevel.HEADING_6,
         spacing: {
           after: 100,
-          before: 500
-        }
+          before: 500,
+        },
       });
 
       // Q sort Paragraphs Header values with underline
@@ -180,9 +176,9 @@ const generateSortMaps = (
         children: [
           new TextRun({
             text: newString,
-            underline: { type: UnderlineType.SINGLE }
-          })
-        ]
+            underline: { type: UnderlineType.SINGLE },
+          }),
+        ],
       });
 
       generatedString.push(p1, p2);
@@ -190,7 +186,7 @@ const generateSortMaps = (
       // Q sort Paragraphs - Sort Values
       for (let m = 0; m < paragraphStrings.length; m++) {
         let text = new Paragraph({
-          text: paragraphStrings[m]
+          text: paragraphStrings[m],
         });
         generatedString.push(text);
       }
@@ -200,12 +196,12 @@ const generateSortMaps = (
         text: `${mainDataObject[m].name}: ${mainDataObject[m].displaySort}`,
         indent: {
           start: 600,
-          hanging: 500
+          hanging: 500,
         },
         spacing: {
           after: 100,
-          before: 500
-        }
+          before: 500,
+        },
       });
       displayStringsArray.push(text);
     }

@@ -156,6 +156,10 @@
   "Participant": "Participant",
   "Number of Statements": "Number of Statements",
   "File Load Success": "File Load Success",
+  "SortValues": "Sort Values",
+  "SortValue": "Sort Value",
+  "StatementQSortValues": "Statement Q Sort Values",
+  "ParticipantQsortValue": "Participant Q Sort Value",
 
   "Correlations Panel": "************************* Correlations Panel *******************",
   "Calculate Correlations": "Calculate Correlations",
