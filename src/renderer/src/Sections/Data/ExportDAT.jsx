@@ -32,14 +32,17 @@ const ExportDatButton = () => {
   };
 
   return (
-    <button className="min-w-[180px] mr-5 bg-grey-button h-[50px]" onClick={handleOnClick}>
+    <GeneralButton
+      className="min-w-[180px] mr-5 bg-grey-button h-[50px] hover:shadow-[inset_0_0_0_4px_#666,0_0_1px_transparent]"
+      onClick={handleOnClick}
+    >
       <div className="flex flex-row justify-center items-center h-full w-full gap-4">
         <div className="flex justify-center items-center mr-2.5 ml-0">
           <img src={DatIcon} className="h-[40px]" alt="CSV Icon" />
         </div>
         <p>{t('Q sorts')}</p>
       </div>
-    </button>
+    </GeneralButton>
   );
 };
 

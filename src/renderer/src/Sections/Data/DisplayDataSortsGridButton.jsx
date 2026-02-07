@@ -26,8 +26,13 @@ const DisplayDataSortsGridButton = () => {
   const isActive = dataDisplayState((state) => state.isShowQsortsSpreadsheetButtonGreen);
 
   return (
-    <div className="mx-[5px]">
-      <GeneralButton id="SortsGridButton" onClick={handleClick} $isActive={isActive}>
+    <div>
+      <GeneralButton
+        className="h-[50px] w-[120px]"
+        id="SortsGridButton"
+        onClick={handleClick}
+        $isActive={isActive}
+      >
         {t('Spreadsheet')}
       </GeneralButton>
     </div>

@@ -90,26 +90,30 @@ const Data = () => {
         </section>
 
         {/* Unforced Container */}
-        <div className="flex flex-row items-baseline justify-between p-4 pl-0 gap-4 h-[120px] font-bold mt-4 mb-12">
+        <div className="flex flex-row items-baseline h-[70px] justify-between gap-4 mt-4 max-w-[60vw] border-2 border-red-500 mb-4">
           {showUnforcedConfirmMessage && (
             <UnforcedSortsDisplay number={numUnforcedParts} display={displayForcedComfirmMessage} />
           )}
           {showExportButtons && (
-            <div className="flex flex-row items-center text-center align-center gap-4">
-              <div className="text-2xl font-bold self-center align-center ">
+            <div className="flex flex-row items-center text-center gap-4">
+              <div className="text-[clamp(1.3rem,1.5vw,1.8rem)] font-bold self-center align-center ">
                 {t('Export PQMethod')}
               </div>
-              <StaFileButton />
-              <DatFileButton />
+              <div className="flex flex-row gap-4 mt-1">
+                <StaFileButton />
+                <DatFileButton />
+              </div>
             </div>
           )}
         </div>
 
         {/* Sorts List Container */}
         <section className="min-h-[1000px]">
-          <div className="flex flex-row items-center gap-4 justify-between">
+          <div className="flex flex-row items-center gap-4 max-w-[60vw] justify-between">
             <div className="flex flex-row items-center gap-4">
-              <div className="text-3xl font-bold">{t('Display Participant Q Sorts as')}</div>
+              <div className="text-[clamp(1.3rem,1.5vw,1.8rem)] font-bold">
+                {t('Display Participant Q Sorts as')}
+              </div>
               <DisplayDataQsortsButton />
               <DisplayDataSortsGridButton />
             </div>

@@ -24,8 +24,13 @@ const DisplayDataQSortsButton = () => {
   };
 
   return (
-    <div className="">
-      <GeneralButton id="qSortsButton" onClick={handleClick} $isActive={isActive}>
+    <div>
+      <GeneralButton
+        className="h-[50px] w-[120px]"
+        id="qSortsButton"
+        onClick={handleClick}
+        $isActive={isActive}
+      >
         {t('Q sorts')}
       </GeneralButton>
     </div>

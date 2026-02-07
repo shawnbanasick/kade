@@ -1,4 +1,3 @@
-import styled from 'styled-components';
 import GeneralButton from '../../Utils/GeneralButton';
 import appState from '../GlobalState/appState';
 import { useTranslation } from 'react-i18next';
@@ -30,32 +29,33 @@ const UnforcedSortsDisplayButton = (props) => {
 
   if (props.number === 0) {
     return (
-      <Button
-        as={GeneralButton}
+      <GeneralButton
         onClick={handleOnClick}
-        $buttonColor={areQsortsVerified ? '#a5d6a7' : 'orange'}
+        className={
+          areQsortsVerified
+            ? 'bg-primary-button h-[50px] w-[120px] text-[clamp(1.3rem,1.5vw,1.8rem)]'
+            : 'bg-[orange] h-[50px] w-[120px] text-[clamp(1.3rem,1.5vw,1.8rem)]'
+        }
       >
-        <p>{t('Click after Verifying Sorts')}.</p>
-      </Button>
+        <div>{t('Sorts Verified')}</div>
+      </GeneralButton>
     );
   } else {
     return (
-      <Button
-        as={GeneralButton}
+      <GeneralButton
         onClick={handleOnClick2}
-        $buttonColor={areQsortsVerified ? '#a5d6a7' : 'orange'}
+        className={
+          areQsortsVerified
+            ? 'bg-primary-button h-[50px] w-[120px] text-[clamp(1.3rem,1.5vw,1.8rem)]'
+            : 'bg-[orange] h-[50px] w-[120px] text-[clamp(1.3rem,1.5vw,1.8rem)]'
+        }
       >
-        <p>
+        <div>
           {t('Click after Verifying Sorts')}. {t('Unforced Q sorts')}:{` ${props.number}`}
-        </p>
-      </Button>
+        </div>
+      </GeneralButton>
     );
   }
 };
 
 export default UnforcedSortsDisplayButton;
-
-const Button = styled.button`
-  background-color: ${(props) => props.$buttonColor};
-  height: 60px;
-`;

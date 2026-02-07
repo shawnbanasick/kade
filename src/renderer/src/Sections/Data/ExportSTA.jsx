@@ -24,8 +24,8 @@ const ExportStaButton = () => {
   };
 
   return (
-    <button
-      className="min-w-[180px] mr-5 bg-grey-button h-[50px] rounded-md"
+    <GeneralButton
+      className="min-w-[180px] mr-5 bg-grey-button h-[50px] hover:shadow-[inset_0_0_0_4px_#666,0_0_1px_transparent]"
       onClick={handleOnClick}
     >
       <div className="flex flex-row justify-center items-center h-full w-full gap-4 ">
@@ -34,7 +34,7 @@ const ExportStaButton = () => {
         </div>
         <p>{t('Statements')}</p>
       </div>
-    </button>
+    </GeneralButton>
   );
 };
 
