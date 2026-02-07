@@ -178,6 +178,11 @@
   "(low-to-high, high-to-low, original sort)": "(low-to-high, high-to-low, original sort)",
   "Correlation": "Correlations",
   "For projects with unforced data you must input the Q Sort Design data": "For projects with unforced data you must input the Q Sort Design data",
+  "Matrix": "Matrix",
+  "Heatmap": "Heatmap",
+  "Force-Directed Graph": "Force-Directed Graph",
+  "Confirm Q Sorts": "Confirm Q Sorts",
+  "Sorts Verified": "Sorts Verified",
 
   "Structure Panel": "************************* Structure Panel *******************",
   "Structure": "Structure",

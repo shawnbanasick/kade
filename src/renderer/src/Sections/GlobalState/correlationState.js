@@ -9,6 +9,8 @@ const correlationState = create(
     correlationTableArray: [],
     correlation5Calcs: [],
 
+    correlationTabActive: 'tab1',
+
     firstColMaxWidth: 0,
 
     gridColDefs: [],
@@ -18,6 +20,7 @@ const correlationState = create(
 
     showCorrelationMatrix: false,
 
+    updateCorrelationTabActive: (inputValue) => set({ correlationTabActive: inputValue }),
     updateActiveStartAnalysisButton: (inputValue) => set({ activeStartAnalysisButton: inputValue }),
     updateColMaxWidth: (inputValue) => set({ colMaxWidth: inputValue }),
     updateCorrelationTableArray: (inputValue) => set({ correlationTableArray: inputValue }),
