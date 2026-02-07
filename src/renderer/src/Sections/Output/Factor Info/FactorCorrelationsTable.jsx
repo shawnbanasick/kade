@@ -82,6 +82,7 @@ const FactorCorrelationsTable = () => {
     suppressRowHoverHighlight: false,
     columnHoverHighlight: true,
     enableSorting: true,
+    theme: 'legacy',
   };
 
   const currentData = [data, numFacs, newHeaderRow];

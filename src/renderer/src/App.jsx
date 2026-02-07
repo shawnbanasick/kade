@@ -13,7 +13,6 @@ import ProjectHistory from './Sections/ProjectHistory/ProjectHistory';
 import Help from './Sections/Help/Help';
 import License from './Sections/License/License';
 import ClearProject from './Sections//ClearProject/ClearProject';
-// import getInputState from "./Sections/GlobalState/getInputState";
 import UpdateModal from './Sections/Start/UpdateModal';
 import ErrorBoundary from './Utils/ErrorBoundary';
 import appState from './Sections/GlobalState/appState';
@@ -29,8 +28,6 @@ import { AllCommunityModule, ModuleRegistry } from 'ag-grid-community';
 
 // Register all Community features
 ModuleRegistry.registerModules([AllCommunityModule]);
-
-
 
 // const semverEq = require('semver/functions/eq');
 // const electron = window.require('electron');

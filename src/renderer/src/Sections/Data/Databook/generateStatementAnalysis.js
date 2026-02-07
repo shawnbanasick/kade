@@ -60,8 +60,6 @@ const generateStatementAnalysis = (
     const statementSortValues = extractStatementAnalysisData([...workingData]);
     const stats = calcStatementAnalysisStats(statementSortValues, max, min);
 
-    console.log('stats', JSON.stringify(stats, null, 2));
-
     const sortStatsByAveragePrep = [...stats];
     const sortStatsByAverage = sortStatsByAveragePrep.sort((a, b) => b.average - a.average);
     const sortStatsByStDvPrep = [...stats];

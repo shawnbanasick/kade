@@ -22,6 +22,7 @@ const RotationTable = (props) => {
     suppressRowHoverHighlight: false,
     columnHoverHighlight: true,
     enableSorting: true,
+    theme: 'legacy',
   };
 
   const containerStyle = {

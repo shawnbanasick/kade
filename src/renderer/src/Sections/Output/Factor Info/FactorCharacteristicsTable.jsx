@@ -97,6 +97,7 @@ const FactorCharacteristicsTable = () => {
     suppressRowHoverHighlight: false,
     columnHoverHighlight: true,
     enableSorting: true,
+    theme: 'legacy',
   };
 
   gridColDefsFacCorrTable = getGridColDefsFacCorrTable(...currentData); // state.getState("gridColDefsFacTableEigen");

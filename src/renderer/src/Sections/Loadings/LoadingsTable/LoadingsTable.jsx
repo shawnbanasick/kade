@@ -145,6 +145,7 @@ const LoadingsTable = (props) => {
     suppressRowHoverHighlight: false,
     // turns ON column hover, it's off by default
     columnHoverHighlight: true,
+    theme: 'legacy',
   };
 
   // *** GRAB TABLE DATA *** //

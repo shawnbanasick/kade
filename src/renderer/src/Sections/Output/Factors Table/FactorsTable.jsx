@@ -107,6 +107,7 @@ const FactorsTable = () => {
     suppressRowHoverHighlight: false,
     columnHoverHighlight: true,
     enableSorting: true,
+    theme: 'legacy',
   };
 
   const [localStore, setLocalStore] = useState({

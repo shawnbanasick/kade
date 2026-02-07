@@ -10,9 +10,7 @@ import coreState from '../GlobalState/coreState';
 const Correlations = () => {
   const { t } = useTranslation();
 
-  const qSortPattern = coreState((state) => state.qSortPattern);
-  console.log(JSON.stringify(qSortPattern));
-
+  // const qSortPattern = coreState((state) => state.qSortPattern);
   const showCorrelationMatrix = correlationState((state) => state.showCorrelationMatrix);
   const hasDataBeenConfirmed = appState((state) => state.hasDataBeenConfirmed);
 

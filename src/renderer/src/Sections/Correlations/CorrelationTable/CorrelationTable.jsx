@@ -54,6 +54,7 @@ const CorrelationTable = () => {
     suppressRowHoverHighlight: false,
     columnHoverHighlight: true,
     enableSorting: true,
+    theme: 'legacy',
   };
 
   useEffect(() => {

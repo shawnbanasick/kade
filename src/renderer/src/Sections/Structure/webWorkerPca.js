@@ -70,8 +70,8 @@ registerPromiseWorker(function (array) {
   // bring in the FUPC values
   rotationResultsArray.unshift([...unrotatedComponents[0]]);
 
-  console.log('rotationResultsArray', JSON.stringify(rotationResultsArray[0], null, 2));
-  console.log('rotationResultsArray', JSON.stringify(rotationResultsArray[1], null, 2));
+  // console.log('rotationResultsArray', JSON.stringify(rotationResultsArray[0], null, 2));
+  // console.log('rotationResultsArray', JSON.stringify(rotationResultsArray[1], null, 2));
 
   // create the edge source array
   for (let j = 0; j < rotationResultsArray.length - 1; j++) {

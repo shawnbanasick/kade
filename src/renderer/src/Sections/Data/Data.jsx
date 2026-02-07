@@ -90,12 +90,12 @@ const Data = () => {
         </section>
 
         {/* Unforced Container */}
-        <div className="flex flex-row items-baseline gap-4 min-h-[120px] font-bold mt-4 mb-12">
+        <div className="flex flex-row items-baseline justify-between p-4 pl-0 gap-4 h-[120px] font-bold mt-4 mb-12">
           {showUnforcedConfirmMessage && (
             <UnforcedSortsDisplay number={numUnforcedParts} display={displayForcedComfirmMessage} />
           )}
           {showExportButtons && (
-            <div className="flex flex-row items-center h-[80px] text-center align-center gap-4">
+            <div className="flex flex-row items-center text-center align-center gap-4">
               <div className="text-2xl font-bold self-center align-center ">
                 {t('Export PQMethod')}
               </div>
@@ -107,7 +107,7 @@ const Data = () => {
 
         {/* Sorts List Container */}
         <section className="min-h-[1000px]">
-          <div className="flex flex-row items-center gap-4">
+          <div className="flex flex-row items-center gap-4 justify-between">
             <div className="flex flex-row items-center gap-4">
               <div className="text-3xl font-bold">{t('Display Participant Q Sorts as')}</div>
               <DisplayDataQsortsButton />

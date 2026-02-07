@@ -60,6 +60,7 @@ const UnrotatedFactorTable = () => {
     suppressRowHoverHighlight: false,
     columnHoverHighlight: true,
     enableSorting: true,
+    theme: 'legacy',
   };
 
   // let widthVal = 80 + 190 + 90 * numFacsForTableWidth;

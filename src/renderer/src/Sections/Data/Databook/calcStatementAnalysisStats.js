@@ -89,10 +89,6 @@ const calculateArrayStatistics = (array, index, maxValue, minValue) => {
  * @returns {Array} Array of statistics objects, one per inner array
  */
 const calcStatementAnalysisStats = (arrays, maxValue, minValue) => {
-  console.log(arrays, 'arrays');
-  console.log(maxValue, 'maxValue');
-  console.log(minValue, 'minValue');
-
   // Validate input
   if (!Array.isArray(arrays) || arrays.length === 0) {
     console.warn('Invalid or empty 2D array');

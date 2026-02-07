@@ -1,8 +1,9 @@
 import { useEffect, useRef } from 'react';
 import { AgGridReact } from 'ag-grid-react';
-import 'ag-grid-community/styles/ag-grid.css';
+// import 'ag-grid-community/styles/ag-grid.css';
 // import 'ag-grid-community/styles/ag-theme-quartz.css';
 import '../../Utils/ag-theme-fresh.css';
+import { themeBalham } from 'ag-grid-community';
 import coreState from '../GlobalState/coreState';
 
 // HELPER FUNCTION
@@ -128,6 +129,7 @@ const ParticipantQsortsGrid = (props) => {
     suppressRowHoverHighlight: false,
     columnHoverHighlight: true,
     enableSorting: true,
+    theme: 'legacy',
   };
 
   let gridColDefsQsorts;
@@ -139,11 +141,11 @@ const ParticipantQsortsGrid = (props) => {
 
   const style1 = {
     width: getWidth(statements.length),
-    height: getHeight(numQsorts),
+    height: getHeight(numQsorts + 1),
   };
 
   return (
-    <div id="participantQsortData" style={style1} className="ag-theme-fresh">
+    <div id="participantQsortData" style={style1} className="ag-theme-fresh pt-4">
       <AgGridReact
         columnDefs={gridColDefsQsorts}
         ref={gridApi}

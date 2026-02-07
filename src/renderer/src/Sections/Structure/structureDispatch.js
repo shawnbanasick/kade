@@ -18,8 +18,8 @@ const structureDispatch = () => {
   promiseWorker
     .postMessage(JSON.stringify([X, numberofPrincipalComps]))
     .then(function (response) {
-      console.log('response', JSON.stringify(response[0], null, 2));
-      console.log('response', JSON.stringify(response[1], null, 2));
+      // console.log('response', JSON.stringify(response[0], null, 2));
+      // console.log('response', JSON.stringify(response[1], null, 2));
 
       let data = [...response];
 

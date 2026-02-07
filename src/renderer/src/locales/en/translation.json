@@ -168,6 +168,7 @@
   "countPercent": "count, percentage",
   "QSortValue": "Q Sort Value",
   "statementStatistics": "Statement Statistics",
+  "StatementNumber": "Statement Number",
 
   "Correlations Panel": "************************* Correlations Panel *******************",
   "Calculate Correlations": "Calculate Correlations",
@@ -176,6 +177,7 @@
   "Click the table headers to re-sort by column": "Click the table headers to re-sort by column",
   "(low-to-high, high-to-low, original sort)": "(low-to-high, high-to-low, original sort)",
   "Correlation": "Correlations",
+  "For projects with unforced data you must input the Q Sort Design data": "For projects with unforced data you must input the Q Sort Design data",
 
   "Structure Panel": "************************* Structure Panel *******************",
   "Structure": "Structure",

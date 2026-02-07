@@ -6,8 +6,6 @@
  * @returns {Array} Array of arrays with values organized by position
  */
 const extractStatementAnalysisData = (data, options = {}) => {
-  console.log(data, 'data');
-
   const { defaultValue = 0 } = options; // Added default value of 0
   // filterInvalid = false,
 
@@ -31,7 +29,7 @@ const extractStatementAnalysisData = (data, options = {}) => {
 
   // If no valid data found
   if (maxLength === 0) {
-    console.warn('No valid r20 data found');
+    console.warn('No valid sorts data found');
     return [];
   }
 
@@ -45,11 +43,6 @@ const extractStatementAnalysisData = (data, options = {}) => {
       const value = position < values.length ? values[position] : defaultValue;
       column.push(value);
     });
-
-    // Filter out columns with all null values if requested
-    // if (filterInvalid && column.every((v) => v === null)) {
-    //   return;
-    // }
 
     result.push(column);
   }

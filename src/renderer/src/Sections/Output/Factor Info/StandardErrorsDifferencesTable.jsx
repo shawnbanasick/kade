@@ -17,6 +17,7 @@ const StandardErrorsDifferencesTable = () => {
     suppressRowHoverHighlight: false,
     columnHoverHighlight: true,
     enableSorting: true,
+    theme: 'legacy',
   };
 
   const getGridColDefsFacCorrTable = (data, numFacs, headerRow) => {
