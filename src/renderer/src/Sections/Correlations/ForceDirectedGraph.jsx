@@ -129,11 +129,13 @@ const ForceGraph = ({
 
     // Update cursor when dragging
     zoomContainer
-      .on('mousedown.zoom', function () {
-        d3.select(this).style('cursor', 'grabbing');
+      .on('mousedown.cursor', function (event) {
+        if (event.target.tagName !== 'circle') {
+          d3.select(this).select('rect').style('cursor', 'grabbing');
+        }
       })
-      .on('mouseup.zoom', function () {
-        d3.select(this).style('cursor', 'grab');
+      .on('mouseup.cursor', function () {
+        d3.select(this).select('rect').style('cursor', 'grab');
       });
 
     // Color scale for countries
