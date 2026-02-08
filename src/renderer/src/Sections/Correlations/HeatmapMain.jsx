@@ -3,8 +3,8 @@ import * as d3 from 'd3';
 import correlationState from '../GlobalState/correlationState';
 
 const Heatmap = ({
-  title = 'Correlation Matrix',
-  subtitle = 'Hover over cells to see correlation values',
+  title = '',
+  subtitle = '',
   width = 600,
   height = 600,
   onDownload, // Optional callback to expose download function to parent
@@ -57,8 +57,8 @@ const Heatmap = ({
     // Clear previous content
     d3.select(svgRef.current).selectAll('*').remove();
 
-    // Set dimensions and margins
-    const margin = { top: 120, right: 25, bottom: 30, left: 60 };
+    // Set heatmap dimensions and margins
+    const margin = { top: 120, right: 25, bottom: 30, left: 150 };
     const chartWidth = width - margin.left - margin.right;
     const chartHeight = height - margin.top - margin.bottom;
 
@@ -99,8 +99,13 @@ const Heatmap = ({
       .attr('class', 'text-sm')
       .attr('transform', `translate(0,0)`)
       .call(d3.axisTop(x).tickSize(0))
-      .select('.domain')
-      .remove();
+      .selectAll('text')
+      .style('text-anchor', 'start')
+      .attr('dx', '0.5em')
+      .attr('dy', '-0.5em')
+      .attr('transform', 'rotate(-45)');
+
+    svg.select('.domain').remove();
 
     // Build Y scale and axis
     const y = d3.scaleBand().range([chartHeight, 0]).domain(reversedRespondents).padding(0.05);
@@ -186,9 +191,9 @@ const Heatmap = ({
     svg
       .append('text')
       .attr('x', 0)
-      .attr('y', -70)
+      .attr('y', -90)
       .attr('text-anchor', 'left')
-      .attr('class', 'text-xl font-semibold')
+      .attr('class', 'text-4xl font-semibold')
       .text(title);
 
     // Add subtitle
@@ -212,7 +217,7 @@ const Heatmap = ({
       </div>
       <button
         onClick={downloadSVG}
-        className="mt-4 px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 transition-colors flex items-center gap-2"
+        className="mt-4 ml-20! mb-[50px]! px-4 py-2 cursor-pointer bg-grey-button text-black rounded-md hover:bg-grey-button-hover transition-colors flex items-center gap-2"
       >
         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path

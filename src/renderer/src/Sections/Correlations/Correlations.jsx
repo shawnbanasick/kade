@@ -4,7 +4,7 @@ import ErrorNotification from '../Input/ErrorChecking/ErrorNotification';
 import { useTranslation } from 'react-i18next';
 import correlationState from '../GlobalState/correlationState';
 import appState from '../GlobalState/appState';
-// import coreState from '../GlobalState/coreState';
+import coreState from '../GlobalState/coreState';
 import HeatmapMain from './HeatmapMain';
 
 const Correlations = () => {
@@ -15,6 +15,7 @@ const Correlations = () => {
   const hasDataBeenConfirmed = appState((state) => state.hasDataBeenConfirmed);
   const correlationTabActive = correlationState((state) => state.correlationTabActive);
   const updateCorrelationTabActive = correlationState((state) => state.updateCorrelationTabActive);
+  const numQsorts = coreState((state) => state.numQsorts);
 
   // Handler for tab clicks
   const handleTabClick = (tabId) => {
@@ -63,8 +64,11 @@ const Correlations = () => {
       title: t('Heatmap'),
       content: (
         <div>
-          {' '}
-          <HeatmapMain />
+          <div className="flex w-[500px] ml-[150px] text-4xl">{`${t('Correlation Heatmap')}`}</div>
+          <HeatmapMain
+            width={numQsorts < 20 ? numQsorts * 60 : numQsorts * 40}
+            height={numQsorts < 20 ? numQsorts * 60 : numQsorts * 40}
+          />
         </div>
       ),
     },
@@ -80,8 +84,8 @@ const Correlations = () => {
         bg-white
         w-[calc(100vw-135px)]
         box-border
-        h-full
         overflow-auto
+        h-[calc(100vh-20px)]
         transition-[visibility,opacity]
         duration-500
       `}
@@ -105,7 +109,9 @@ const Correlations = () => {
           onClick={() => handleTabClick('tab2')}
         />
 
-        <div className="tab-content bg-base-100 border-base-300 p-6">{tabs[1].content}</div>
+        <div className="tab-content box-border overflow-auto bg-base-100 border-base-300 p-6">
+          {tabs[1].content}
+        </div>
 
         <input
           type="radio"
