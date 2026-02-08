@@ -1,5 +1,4 @@
 import { useEffect } from 'react';
-import styled from 'styled-components';
 import { AgGridReact } from 'ag-grid-react';
 import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
@@ -10,7 +9,7 @@ import { useTranslation } from 'react-i18next';
 // HELPER FUNCTION
 function getWidth(numQsorts, width1, width2) {
   let widthVal = width1 + 10 + width2 * numQsorts;
-  let x = window.innerWidth - 40 - 152;
+  let x = window.innerWidth - 250;
 
   if (x < widthVal) {
     x += 'px';
@@ -23,7 +22,7 @@ function getWidth(numQsorts, width1, width2) {
 // HELPER FUNCTION
 function getHeight(numQsorts) {
   let heightVal = 40 + 25 * numQsorts;
-  let y = window.innerHeight - 140;
+  let y = window.innerHeight - 230;
   if (y < heightVal) {
     y += 'px';
     return y;
@@ -73,7 +72,7 @@ const CorrelationTable = () => {
   const style2 = { width: getWidth(numQsorts, width1, width2), height: getHeight(numQsorts) };
 
   return (
-    <TableHolder>
+    <div id="tableHolder">
       <p style={style1}>
         {t('Click the table headers to re-sort by column')}{' '}
         {t('(low-to-high, high-to-low, original sort)')}
@@ -87,10 +86,8 @@ const CorrelationTable = () => {
           enableBrowserTooltips={true}
         />
       </div>
-    </TableHolder>
+    </div>
   );
 };
 
 export default CorrelationTable;
-
-const TableHolder = styled.div``;

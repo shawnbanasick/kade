@@ -6,6 +6,7 @@ import correlationState from '../GlobalState/correlationState';
 import appState from '../GlobalState/appState';
 import coreState from '../GlobalState/coreState';
 import HeatmapMain from './HeatmapMain';
+import ForceGraph from './ForceDirectedGraph';
 
 const Correlations = () => {
   const { t } = useTranslation();
@@ -27,7 +28,7 @@ const Correlations = () => {
   const MainContent = () => {
     return (
       <div
-        className={`grid grid-cols-1 grid-rows-[70px_1fr] pl-5 justify-items-start items-center bg-white w-[calc(100vw-135px)] overflow-auto select-none transition-all duration-500 linear `}
+        className={`grid grid-cols-1 grid-rows-[70px_1fr] pl-5 justify-items-start items-center bg-white   overflow-auto select-none transition-all duration-500 linear `}
         style={{
           gridTemplateAreas: `'header header header' 'main main main' 'footer footer footer'`,
         }}
@@ -58,7 +59,11 @@ const Correlations = () => {
   const tabs = [
     {
       title: t('Matrix'),
-      content: <MainContent />,
+      content: (
+        <div>
+          <MainContent />,
+        </div>
+      ),
     },
     {
       title: t('Heatmap'),
@@ -74,7 +79,12 @@ const Correlations = () => {
     },
     {
       title: t('Force-Directed Graph'),
-      content: <div> Force-Directed Graph</div>,
+      content: (
+        <div>
+          <div className="flex w-[500px] ml-[150px] text-4xl">{`${t('Force-Directed Graph')}`}</div>
+          <ForceGraph />
+        </div>
+      ),
     },
   ];
 
@@ -82,10 +92,10 @@ const Correlations = () => {
     <div
       className={`
         bg-white
-        w-[calc(100vw-135px)]
+        w-full
         box-border
         overflow-auto
-        h-[calc(100vh-20px)]
+        h-full
         transition-[visibility,opacity]
         duration-500
       `}
@@ -121,7 +131,9 @@ const Correlations = () => {
           onClick={() => handleTabClick('tab3')}
         />
 
-        <div className="tab-content bg-base-100 border-base-300 p-6">{tabs[2].content}</div>
+        <div className="tab-content box-border overflow-auto bg-base-100 border-base-300 p-6">
+          {tabs[2].content}
+        </div>
       </div>
     </div>
   );

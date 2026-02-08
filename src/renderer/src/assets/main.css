@@ -10,6 +10,12 @@ body {
   user-select: none;
 }
 
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+
 code {
   font-weight: 600;
   padding: 3px 5px;

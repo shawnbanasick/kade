@@ -192,7 +192,7 @@ const App = () => {
   let showTopBar = false;
 
   return (
-    <div id="AppWrap" className="box-border font-sans mt-[50px] h-[100vh] w-[100vw]">
+    <div id="AppWrap" className="box-border font-sans  h-[100vh] w-[100vw]">
       <ErrorBoundary>
         <div id="window" className="grid grid-cols-[135px_1fr] h-full">
           <div id="buttonColumn" className="flex flex-col box-border bg-[#d6dbe0] overflow-hidden">
