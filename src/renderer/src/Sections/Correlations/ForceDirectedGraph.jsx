@@ -95,8 +95,46 @@ const ForceGraph = ({
       .attr('class', 'text-sm text-gray-500')
       .text(subtitle);
 
+    // Create a group for the graph (so title stays fixed, but graph can zoom/pan)
+    // const container = svg.append('g').attr('transform', `translate(0, 80)`);
+    const zoomContainer = svg.append('g').attr('class', `zoom-container`);
+
     // Create a group for the graph (so title stays fixed)
-    const g = svg.append('g').attr('transform', `translate(0, 80)`);
+    // const g = svg.append('g').attr('transform', `translate(0, 80)`);
+    // Add a transparent rectangle to capture zoom/pan events
+    zoomContainer
+      .append('rect')
+      .attr('width', width)
+      .attr('height', height - 80)
+      .attr('transform', `translate(0, 80)`)
+      .attr('fill', 'transparent')
+      .style('cursor', 'grab');
+
+    // Create the main graph group
+    const g = zoomContainer.append('g').attr('transform', `translate(0, 80)`);
+
+    // Add zoom and pan behavior
+    const zoom = d3
+      .zoom()
+      .scaleExtent([0.1, 10]) // Min and max zoom levels
+      .filter(function (event) {
+        return event.type !== 'mousedown' || event.target.tagName !== 'circle';
+      }) // Disable zoom when shift key is pressed
+      .on('zoom', (event) => {
+        g.attr('transform', `translate(0, 80) ${event.transform}`);
+      });
+
+    // Apply zoom to the container
+    zoomContainer.call(zoom);
+
+    // Update cursor when dragging
+    zoomContainer
+      .on('mousedown.zoom', function () {
+        d3.select(this).style('cursor', 'grabbing');
+      })
+      .on('mouseup.zoom', function () {
+        d3.select(this).style('cursor', 'grab');
+      });
 
     // Color scale for countries
     const colorScale = d3
@@ -242,27 +280,44 @@ const ForceGraph = ({
 
     // Drag functions
     function dragstarted(event, d) {
+      event.sourceEvent.stopPropagation();
       if (!event.active) simulation.alphaTarget(0.3).restart();
       d.fx = d.x;
       d.fy = d.y;
     }
 
     function dragged(event, d) {
+      event.sourceEvent.stopPropagation();
       d.fx = event.x;
       d.fy = event.y;
     }
 
     function dragended(event, d) {
+      event.sourceEvent.stopPropagation();
       if (!event.active) simulation.alphaTarget(0);
       d.fx = null;
       d.fy = null;
     }
+
+    // Add reset zoom button functionality
+    const resetZoom = () => {
+      zoomContainer.transition().duration(750).call(zoom.transform, d3.zoomIdentity);
+    };
+
+    // Store reset function for button access
+    svg.node().resetZoom = resetZoom;
 
     // Cleanup
     return () => {
       simulation.stop();
     };
   }, [correlationData, width, height, title, subtitle, minCorrelation]);
+
+  const resetZoom = () => {
+    if (svgRef.current && svgRef.current.resetZoom) {
+      svgRef.current.resetZoom();
+    }
+  };
 
   return (
     <>
@@ -272,8 +327,15 @@ const ForceGraph = ({
           ref={tooltipRef}
           className="absolute opacity-0 bg-white border-2 border-solid border-gray-800 rounded-md p-3 pointer-events-none shadow-lg text-sm max-w-xs"
         />
+        {/* Zoom controls overlay */}
+        <div className="absolute top-4 right-4 bg-white rounded-md shadow-md p-2 text-xs text-gray-600">
+          <div className="mb-1 font-semibold">Controls:</div>
+          <div>🖱️ Scroll to zoom</div>
+          <div>🖐️ Drag background to pan</div>
+          <div>👆 Drag nodes to move</div>
+        </div>
       </div>
-      <div className="mt-4 flex gap-4 items-center">
+      <div className="mt-4 flex gap-4 items-center flex-wrap">
         <button
           onClick={downloadSVG}
           className="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 transition-colors flex items-center gap-2"
@@ -287,6 +349,20 @@ const ForceGraph = ({
             />
           </svg>
           Download SVG
+        </button>
+        <button
+          onClick={resetZoom}
+          className="px-4 py-2 bg-gray-600 text-white rounded-md hover:bg-gray-700 transition-colors flex items-center gap-2"
+        >
+          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
+            />
+          </svg>
+          Reset View
         </button>
         <div className="flex gap-4 text-sm">
           <div className="flex items-center gap-2">
