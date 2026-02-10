@@ -1,20 +1,26 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, memo } from 'react';
 import * as d3 from 'd3';
-import correlationState from '../GlobalState/correlationState';
+import correlationState from '../../GlobalState/correlationState';
+import { useTranslation } from 'react-i18next';
 
 const ForceGraph = ({
-  title = 'Correlation Network',
-  subtitle = 'Node size represents influence, edge color shows correlation strength',
+  title = '',
+  subtitle = '',
   width = window.innerWidth - 170,
   height = window.innerHeight - 180,
-  minCorrelation = 30, // Only show edges with absolute correlation >= this value
+  data = [],
+  correlationThreshold = 0.5,
 }) => {
   const svgRef = useRef(null);
   const tooltipRef = useRef(null);
 
+  const { t } = useTranslation();
+
+  const minCorrelation = correlationThreshold * 100;
+
   // Get data from Zustand store
-  const correlationData = correlationState((state) => state.gridRowData);
-  //   console.log(JSON.stringify(correlationData, null, 2));
+  //   const correlationData = correlationState((state) => state.gridRowData);
+  let correlationData = data;
 
   // Function to download the graph as SVG
   const downloadSVG = () => {
@@ -332,15 +338,15 @@ const ForceGraph = ({
         {/* Zoom controls overlay */}
         <div className="absolute top-4 right-4 bg-white rounded-md shadow-md p-2 text-xs text-gray-600">
           <div className="mb-1 font-semibold">Controls:</div>
-          <div>🖱️ Scroll to zoom</div>
-          <div>🖐️ Drag background to pan</div>
-          <div>👆 Drag nodes to move</div>
+          <div>🖱️ {t('Scroll to zoom')}</div>
+          <div>🖐️ {t('Drag background to pan')}</div>
+          <div>👆 {t('Drag nodes to move')}</div>
         </div>
       </div>
       <div className="mt-4 flex gap-4 items-center flex-wrap">
         <button
           onClick={downloadSVG}
-          className="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 transition-colors flex items-center gap-2"
+          className="px-4 py-2 bg-grey-button text-black rounded-md hover:bg-indigo-700 transition-colors flex items-center gap-2"
         >
           <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path
@@ -354,7 +360,7 @@ const ForceGraph = ({
         </button>
         <button
           onClick={resetZoom}
-          className="px-4 py-2 bg-gray-600 text-white rounded-md hover:bg-gray-700 transition-colors flex items-center gap-2"
+          className="px-4 py-2 bg-grey-button text-black rounded-md hover:bg-gray-700 transition-colors flex items-center gap-2"
         >
           <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path
@@ -385,4 +391,4 @@ const ForceGraph = ({
   );
 };
 
-export default ForceGraph;
+export default memo(ForceGraph);

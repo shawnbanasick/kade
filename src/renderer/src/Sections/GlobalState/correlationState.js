@@ -16,10 +16,23 @@ const correlationState = create(
     gridColDefs: [],
     gridRowData: [],
 
+    forcedGraphDataAll: [],
+    forcedGraphDataPos: [],
+    forcedGraphDataNeg: [],
+    linkFilter: 'positive',
+    correlationThreshold: 0.5,
+    factorIndices: [],
+
     isLoadingBeginAnalysis: false,
 
     showCorrelationMatrix: false,
 
+    updateFactorIndices: (inputValue) => set({ factorIndices: inputValue }),
+    updateCorrelationThreshold: (inputValue) => set({ correlationThreshold: inputValue }),
+    updateLinkFilter: (inputValue) => set({ linkFilter: inputValue }),
+    updateForcedGraphDataAll: (inputValue) => set({ forcedGraphDataAll: inputValue }),
+    updateForcedGraphDataPos: (inputValue) => set({ forcedGraphDataPos: inputValue }),
+    updateForcedGraphDataNeg: (inputValue) => set({ forcedGraphDataNeg: inputValue }),
     updateCorrelationTabActive: (inputValue) => set({ correlationTabActive: inputValue }),
     updateActiveStartAnalysisButton: (inputValue) => set({ activeStartAnalysisButton: inputValue }),
     updateColMaxWidth: (inputValue) => set({ colMaxWidth: inputValue }),

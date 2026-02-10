@@ -56,6 +56,40 @@ export default function calculateCorrelations(rawSorts, respondentNames) {
     gridRowData.push(tempObj);
   });
 
+  // generate row data for ag-grid corr table
+  const forcedGraphDataAll = [];
+  const forcedGraphDataPos = [];
+  const forcedGraphDataNeg = [];
+  correlationTableArrayFormatted.forEach((element, j) => {
+    const tempObjAll = {};
+    const tempObjPos = {};
+    const tempObjNeg = {};
+    tempObjAll.respondent = `p${j + 1}`;
+    tempObjPos.respondent = `p${j + 1}`;
+    tempObjNeg.respondent = `p${j + 1}`;
+    element.forEach((data, k) => {
+      const key = `p${k + 1}`;
+      tempObjAll[key] = data;
+      if (data > 0) {
+        tempObjPos[key] = data;
+      } else {
+        tempObjPos[key] = 0;
+      }
+      if (data < 0) {
+        tempObjNeg[key] = data;
+      } else {
+        tempObjNeg[key] = 0;
+      }
+    });
+    forcedGraphDataAll.push(tempObjAll);
+    forcedGraphDataPos.push(tempObjPos);
+    forcedGraphDataNeg.push(tempObjNeg);
+  });
+
+  console.log('forcedGraphDataAll', JSON.stringify(forcedGraphDataAll, null, 2));
+  console.log('forcedGraphDataPos', JSON.stringify(forcedGraphDataPos, null, 2));
+  console.log('forcedGraphDataNeg', JSON.stringify(forcedGraphDataNeg, null, 2));
+
   // generate column definitions
   const gridColDefs = [];
   const tempObj2 = {};
@@ -93,6 +127,9 @@ export default function calculateCorrelations(rawSorts, respondentNames) {
   // push data objects to STATE
   correlationState.setState({ gridColDefs: gridColDefs });
   correlationState.setState({ gridRowData: gridRowData });
+  correlationState.setState({ forcedGraphDataAll: forcedGraphDataAll });
+  correlationState.setState({ forcedGraphDataPos: forcedGraphDataPos });
+  correlationState.setState({ forcedGraphDataNeg: forcedGraphDataNeg });
   correlationState.setState({ correlationTableArray: correlationTableArrayFormatted });
   correlationState.setState({ correlation5Calcs: correlationTableArray });
 }

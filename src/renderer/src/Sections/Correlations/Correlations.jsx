@@ -6,7 +6,10 @@ import correlationState from '../GlobalState/correlationState';
 import appState from '../GlobalState/appState';
 import coreState from '../GlobalState/coreState';
 import HeatmapMain from './HeatmapMain';
-import ForceGraph from './ForceDirectedGraph';
+import ForceGraph from './ForceDirectedGraph/ForceDirectedGraph';
+import ForceGraphDataSelectRadio from './ForceDirectedGraph/ForceGraphDataSelectRadio';
+import DebouncedNumberInput from './ForceDirectedGraph/ForceGraphCorrLimitInput';
+import PcaScenarios from './ForceDirectedGraph/PcaScenarios';
 
 const Correlations = () => {
   const { t } = useTranslation();
@@ -17,11 +20,25 @@ const Correlations = () => {
   const correlationTabActive = correlationState((state) => state.correlationTabActive);
   const updateCorrelationTabActive = correlationState((state) => state.updateCorrelationTabActive);
   const numQsorts = coreState((state) => state.numQsorts);
+  const corelationDataPos = correlationState((state) => state.forcedGraphDataPos);
+  const corelationDataNeg = correlationState((state) => state.forcedGraphDataNeg);
+  const corelationDataAll = correlationState((state) => state.forcedGraphDataAll);
+  const linkFilter = correlationState((state) => state.linkFilter);
+  const correlationThreshold = correlationState((state) => state.correlationThreshold);
 
   // Handler for tab clicks
   const handleTabClick = (tabId) => {
     updateCorrelationTabActive(tabId);
   };
+
+  let forcedGraphData;
+  if (linkFilter === 'positive') {
+    forcedGraphData = corelationDataPos;
+  } else if (linkFilter === 'negative') {
+    forcedGraphData = corelationDataNeg;
+  } else {
+    forcedGraphData = corelationDataAll;
+  }
 
   // ${props.view ? 'animate-fade-out' : 'animate-fade-in'}
 
@@ -78,11 +95,22 @@ const Correlations = () => {
       ),
     },
     {
-      title: t('Force-Directed Graph'),
+      title: t('Network'),
       content: (
         <div>
-          <div className="flex w-[500px] ml-[150px] text-4xl">{`${t('Force-Directed Graph')}`}</div>
-          <ForceGraph />
+          <div className="flex w-[calc(85vw-30px)]  text-basis border-2 border-red-300">
+            <DebouncedNumberInput
+              value={correlationThreshold}
+              label="Correlation Threshold"
+              min={0}
+              max={1}
+              step={0.01}
+              debounceMs={500}
+            />
+            <ForceGraphDataSelectRadio />
+            <PcaScenarios />
+          </div>
+          <ForceGraph data={forcedGraphData} correlationThreshold={correlationThreshold} />
         </div>
       ),
     },

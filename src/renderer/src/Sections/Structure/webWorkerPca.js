@@ -70,8 +70,40 @@ registerPromiseWorker(function (array) {
   // bring in the FUPC values
   rotationResultsArray.unshift([...unrotatedComponents[0]]);
 
-  // console.log('rotationResultsArray', JSON.stringify(rotationResultsArray[0], null, 2));
+  console.log('rotationResultsArray', JSON.stringify(rotationResultsArray));
   // console.log('rotationResultsArray', JSON.stringify(rotationResultsArray[1], null, 2));
+
+  const findHighestLoadingPcaFactorIndex = (dataSet) => {
+    return dataSet.map((group) => {
+      // If it's a flat array, there's only one array, so all indices are 1
+      if (!Array.isArray(group[0])) {
+        return new Array(group.length).fill(1);
+      }
+
+      const rowCount = group.length;
+      const colCount = group[0].length;
+
+      const winningIndices = new Array(colCount).fill(1); // Default to the first array (Index 1)
+      const maxAbsValues = new Array(colCount).fill(-Infinity);
+
+      for (let col = 0; col < colCount; col++) {
+        for (let row = 0; row < rowCount; row++) {
+          const currentAbsValue = Math.abs(group[row][col]);
+
+          if (currentAbsValue > maxAbsValues[col]) {
+            maxAbsValues[col] = currentAbsValue;
+            // Store row index + 1 to convert from 0-indexed to 1-indexed
+            winningIndices[col] = row + 1;
+          }
+        }
+      }
+
+      return winningIndices;
+    });
+  };
+
+  const factorIndices = findHighestLoadingPcaFactorIndex(rotationResultsArray);
+  // console.log('winningIndices', winningIndices);
 
   // create the edge source array
   for (let j = 0; j < rotationResultsArray.length - 1; j++) {
@@ -96,5 +128,5 @@ registerPromiseWorker(function (array) {
     }
   }
 
-  return edgeArray;
+  return [edgeArray, factorIndices];
 });

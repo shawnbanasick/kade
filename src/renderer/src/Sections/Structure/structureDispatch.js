@@ -19,9 +19,10 @@ const structureDispatch = () => {
     .postMessage(JSON.stringify([X, numberofPrincipalComps]))
     .then(function (response) {
       // console.log('response', JSON.stringify(response[0], null, 2));
-      // console.log('response', JSON.stringify(response[1], null, 2));
+      // console.log('response', JSON.stringify(response, null, 2));
 
-      let data = [...response];
+      let data = [...response[0]];
+      let factorIndices = [...response[1]];
 
       data.forEach((item) => {
         if (Math.abs(item[3]) > 0.3) {
@@ -46,6 +47,7 @@ const structureDispatch = () => {
         }
         structureState.setState({ responseArray: data });
         structureState.setState({ initialEdges: initialEdges });
+        correlationState.setState({ factorIndices: factorIndices });
       });
     })
     .catch(function (error) {
