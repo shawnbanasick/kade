@@ -55,6 +55,7 @@ const ForceGraph = ({
     // group: d.respondent.match(/[A-Z]+/)[0], // Extract country code (US, JP, CA, UK, FR)
     const nodes = correlationData.map((d) => ({
       id: d.respondent,
+      pca: d.pca || 'pca-1', // Add pca property with fallback
     }));
 
     // Create links from correlation data
@@ -62,7 +63,7 @@ const ForceGraph = ({
     correlationData.forEach((row) => {
       const source = row.respondent;
       Object.keys(row).forEach((col) => {
-        if (col !== 'respondent' && col !== source) {
+        if (col !== 'respondent' && col !== source && col !== 'pca') {
           const value = row[col];
           // Only create links for significant correlations
           if (Math.abs(value) >= minCorrelation) {
@@ -222,9 +223,8 @@ const ForceGraph = ({
     node
       .append('circle')
       .attr('r', 20)
-      .attr('fill', '#fff')
-      .attr('stroke', '#fff')
       .attr('fill', (d) => colorScale(d.pca))
+      .attr('stroke', '#fff')
       .attr('stroke-width', 2)
       .style('cursor', 'pointer');
 
@@ -271,7 +271,7 @@ const ForceGraph = ({
 
         tooltip
           .style('opacity', 1)
-          .html(`<strong>${d.id}</strong><br>Connections:<br>${connections}`)
+          .html(`<strong>${d.id}</strong><br>PCA: ${d.pca}<br>Connections:<br>${connections}`)
           .style('left', `${event.pageX + 10}px`)
           .style('top', `${event.pageY - 10}px`);
       })
