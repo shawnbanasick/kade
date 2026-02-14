@@ -1,15 +1,16 @@
 import React, { useEffect, useRef, memo } from 'react';
 import * as d3 from 'd3';
-import correlationState from '../../GlobalState/correlationState';
+// import correlationState from '../../GlobalState/correlationState';
 import { useTranslation } from 'react-i18next';
 
 const ForceGraph = ({
   title = '',
   subtitle = '',
   width = window.innerWidth - 170,
-  height = window.innerHeight - 180,
+  height = window.innerHeight - 220,
   data = [],
   correlationThreshold = 0.5,
+  factorIndices = [],
 }) => {
   const svgRef = useRef(null);
   const tooltipRef = useRef(null);
@@ -17,6 +18,8 @@ const ForceGraph = ({
   const { t } = useTranslation();
 
   const minCorrelation = correlationThreshold * 100;
+
+  console.log('factorIndices', JSON.stringify(factorIndices, null, 2));
 
   // Get data from Zustand store
   //   const correlationData = correlationState((state) => state.gridRowData);
@@ -147,8 +150,17 @@ const ForceGraph = ({
     // Color scale for countries
     const colorScale = d3
       .scaleOrdinal()
-      .domain(['US', 'JP', 'CA', 'UK', 'FR'])
-      .range(['#3b82f6', '#ef4444', '#10b981', '#f59e0b', '#8b5cf6']);
+      .domain(['pca-1', 'pca-2', 'pca-3', 'pca-4', 'pca-5', 'pca-6', 'pca-7', 'pca-8'])
+      .range([
+        '#d1d5db',
+        '#7dd3fc',
+        '#fdba74',
+        '#86efac',
+        '#fca5a5',
+        '#67e8f9',
+        '#f9a8d4',
+        '#d8b4fe',
+      ]);
 
     // Link color scale (diverging)
     const linkColorScale = d3
@@ -212,7 +224,7 @@ const ForceGraph = ({
       .attr('r', 20)
       .attr('fill', '#fff')
       .attr('stroke', '#fff')
-      .attr('fill', (d) => colorScale(d.id))
+      .attr('fill', (d) => colorScale(d.pca))
       .attr('stroke-width', 2)
       .style('cursor', 'pointer');
 

@@ -128,5 +128,8 @@ registerPromiseWorker(function (array) {
     }
   }
 
+  // console.log('edgeArray', JSON.stringify(edgeArray, null, 2));
+  // console.log('factorIndices', JSON.stringify(factorIndices, null, 2));
+
   return [edgeArray, factorIndices];
 });

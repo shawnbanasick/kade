@@ -25,6 +25,7 @@ const Correlations = () => {
   const corelationDataAll = correlationState((state) => state.forcedGraphDataAll);
   const linkFilter = correlationState((state) => state.linkFilter);
   const correlationThreshold = correlationState((state) => state.correlationThreshold);
+  const factorIndices = correlationState((state) => state.factorIndices);
 
   // Handler for tab clicks
   const handleTabClick = (tabId) => {
@@ -39,6 +40,16 @@ const Correlations = () => {
   } else {
     forcedGraphData = corelationDataAll;
   }
+
+  if (factorIndices.length > 0) {
+    forcedGraphData = forcedGraphData.map((element, index) => {
+      element.pca = `pca-${factorIndices[3][index]}`;
+      console.log('element', element);
+      return element;
+    });
+  }
+
+  console.log('forcedGraphData', JSON.stringify(forcedGraphData, null, 2));
 
   // ${props.view ? 'animate-fade-out' : 'animate-fade-in'}
 
@@ -98,7 +109,7 @@ const Correlations = () => {
       title: t('Network'),
       content: (
         <div>
-          <div className="flex w-[calc(85vw-30px)]  text-basis border-2 border-red-300">
+          <div className="flex w-[calc(85vw-30px)]  text-basis h-[70px]">
             <DebouncedNumberInput
               value={correlationThreshold}
               label="Correlation Threshold"
@@ -110,7 +121,11 @@ const Correlations = () => {
             <ForceGraphDataSelectRadio />
             <PcaScenarios />
           </div>
-          <ForceGraph data={forcedGraphData} correlationThreshold={correlationThreshold} />
+          <ForceGraph
+            data={forcedGraphData}
+            correlationThreshold={correlationThreshold}
+            factorIndices={factorIndices}
+          />
         </div>
       ),
     },
