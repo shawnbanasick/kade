@@ -37,7 +37,6 @@ const DownloadOutputButtons = styled.div`
   padding-bottom: 20px;
   width: 1000px;
   height: 100px;
-  // outline: 2px solid purple;
 `;
 
 const OutputDownloadLabel = styled.div`

@@ -2,6 +2,10 @@ import GeneralButton from '../../Utils/GeneralButton';
 import appState from '../GlobalState/appState';
 import { useTranslation } from 'react-i18next';
 import inputState from '../GlobalState/inputState';
+import calcMaxRespondentNameLength from '../Correlations/calcMaxRespondentNameLength';
+import mainCorrCalcs from '../Correlations/correlationsLogic/mainCorrCalcs';
+import structureDispatch from '../Structure/structureDispatch';
+import coreState from '../GlobalState/coreState';
 
 const UnforcedSortsDisplayButton = (props) => {
   const { t } = useTranslation();
@@ -12,20 +16,34 @@ const UnforcedSortsDisplayButton = (props) => {
   const updateShowExportButtons = inputState((state) => state.updateShowExportButtons);
   const updateIsForcedQsortPattern = inputState((state) => state.updateIsForcedQsortPattern);
   const areQsortsVerified = inputState((state) => state.areQsortsVerified);
+  // correlation related
+  const respondentNames = coreState((state) => state.respondentNames);
+  const mainDataObject = coreState((state) => state.mainDataObject);
 
-  function handleOnClick() {
+  const handleOnClick = async () => {
     updateAreQsortsVerified(true);
     updateIsDataButtonGreen(true);
     updateHasDataBeenConfirmed(true);
     updateShowExportButtons(true);
-  }
-  function handleOnClick2() {
+    updateIsForcedQsortPattern(true);
+    // calculate correlations
+    calcMaxRespondentNameLength(respondentNames);
+    const rawSortsArray = mainDataObject.map((item) => item.rawSort);
+    mainCorrCalcs(respondentNames, rawSortsArray);
+    await structureDispatch();
+  };
+  const handleOnClick2 = async () => {
     updateAreQsortsVerified(true);
     updateIsDataButtonGreen(true);
     updateHasDataBeenConfirmed(true);
     updateShowExportButtons(true);
     updateIsForcedQsortPattern(false);
-  }
+    // calculate correlations
+    calcMaxRespondentNameLength(respondentNames);
+    const rawSortsArray = mainDataObject.map((item) => item.rawSort);
+    mainCorrCalcs(respondentNames, rawSortsArray);
+    await structureDispatch();
+  };
 
   if (props.number === 0) {
     return (
@@ -33,27 +51,32 @@ const UnforcedSortsDisplayButton = (props) => {
         onClick={handleOnClick}
         className={
           areQsortsVerified
-            ? 'bg-primary-button h-[50px] w-[120px] text-[clamp(1.3rem,1.5vw,1.8rem)]'
-            : 'bg-[orange] h-[50px] w-[120px] text-[clamp(1.3rem,1.5vw,1.8rem)]'
+            ? 'bg-primary-button h-[50px] w-[150px] text-[clamp(1.3rem,1.5vw,1.8rem)]'
+            : 'bg-[orange] h-[50px] w-[150px] text-[clamp(1.3rem,1.5vw,1.8rem)]'
         }
       >
-        <div>{t('Sorts Verified')}</div>
+        <div>{`${areQsortsVerified ? t('Sorts Verified') : t('Click after Verifying Sorts')}`}</div>
       </GeneralButton>
     );
   } else {
     return (
-      <GeneralButton
-        onClick={handleOnClick2}
-        className={
-          areQsortsVerified
-            ? 'bg-primary-button h-[50px] w-[120px] text-[clamp(1.3rem,1.5vw,1.8rem)]'
-            : 'bg-[orange] h-[50px] w-[120px] text-[clamp(1.3rem,1.5vw,1.8rem)]'
-        }
-      >
-        <div>
-          {t('Click after Verifying Sorts')}. {t('Unforced Q sorts')}:{` ${props.number}`}
+      <div className="flex flex-row gap-4">
+        <GeneralButton
+          onClick={handleOnClick2}
+          className={
+            areQsortsVerified
+              ? 'bg-primary-button h-[50px] w-[150px] text-[clamp(1.3rem,1.5vw,1.8rem)]'
+              : 'bg-[orange] h-[50px] w-[150px] text-[clamp(1.3rem,1.5vw,1.8rem)]'
+          }
+        >
+          <div>
+            {`${areQsortsVerified ? t('Sorts Verified') : t('Click after Verifying Sorts')}`}
+          </div>
+        </GeneralButton>
+        <div className="flex flex-row items-center ml-8 text-2xl">
+          {t('Unforced Q sorts')}:{` ${props.number}`}
         </div>
-      </GeneralButton>
+      </div>
     );
   }
 };

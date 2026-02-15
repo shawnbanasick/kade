@@ -19,7 +19,7 @@ const ForceGraph = ({
 
   const minCorrelation = correlationThreshold * 100;
 
-  console.log('factorIndices', JSON.stringify(factorIndices, null, 2));
+  // console.log('factorIndices', JSON.stringify(factorIndices, null, 2));
 
   // Get data from Zustand store
   //   const correlationData = correlationState((state) => state.gridRowData);
@@ -235,7 +235,7 @@ const ForceGraph = ({
       .attr('text-anchor', 'middle')
       .attr('dy', '0.35em')
       .attr('class', 'text-xs font-semibold cursor-default pointer-events-none')
-      .attr('fill', '#fff');
+      .attr('fill', '#000');
 
     // Hover effects for nodes
     node

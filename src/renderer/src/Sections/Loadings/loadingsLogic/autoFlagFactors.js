@@ -45,6 +45,9 @@ const autoFlagFactors = () => {
     // reset communalities
     const factorMatrix1 = factorState.getState().factorMatrix;
     const transposedMatrix = transposeMatrix(factorMatrix1);
+
+    console.log(JSON.stringify(transposedMatrix, null, 2));
+
     calculateCommunalities(transposedMatrix);
 
     calculateSigCriterionValues('flag');

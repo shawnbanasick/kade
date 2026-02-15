@@ -26,11 +26,11 @@ const GeneralButton = ({
     hover:shadow-[inset_0_0_0_4px_#666,0_0_1px_transparent]
   `;
 
-  const activeClasses = $isActive ? 'bg-primary-button' : 'bg-grey-button';
+  // const activeClasses = $isActive ? 'bg-primary-button' : 'bg-grey-button';
 
   return (
     <button
-      className={`${baseClasses} ${activeClasses} ${className}`.trim()}
+      className={`${baseClasses} ${className}`.trim()}
       disabled={disabled}
       onClick={onClick}
       {...props}

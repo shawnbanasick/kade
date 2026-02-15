@@ -3,14 +3,14 @@ import correlationState from '../../GlobalState/correlationState';
 import { useTranslation } from 'react-i18next';
 
 const PcaScenarios = () => {
-  const updateLinkFilter = correlationState((state) => state.updateLinkFilter);
+  const updatePcaFilter = correlationState((state) => state.updatePcaFilter);
   const [selected, setSelected] = useState('all');
   const { t } = useTranslation();
 
-  const handleSelection = (value, index) => {
-    console.log(value, index);
-    setSelected(value);
-    updateLinkFilter(value);
+  const handleSelection = (id, value) => {
+    console.log(id, value);
+    setSelected(id);
+    updatePcaFilter(+value);
   };
 
   const options = [

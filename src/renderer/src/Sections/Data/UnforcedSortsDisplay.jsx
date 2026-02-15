@@ -1,4 +1,4 @@
-import ConfirmButton from './UnforcedSortsDisplayButton';
+import UnforcedSortsDisplayButton from './UnforcedSortsDisplayButton';
 import { useTranslation } from 'react-i18next';
 
 const UnforcedSortsDisplay = (props) => {
@@ -6,16 +6,18 @@ const UnforcedSortsDisplay = (props) => {
 
   if (props.display === true) {
     return (
-      <div className="flex font-bold items-baseline">
-        <div className="mr-[10px] text-[clamp(1.3rem,1.5vw,1.8rem)]">{t('Confirm Q Sorts')}:</div>
-        <ConfirmButton number={0} />
+      <div className="flex flex-row font-bold ">
+        <div className="mr-[20px] text-[clamp(1.3rem,1.5vw,1.8rem)]">{t('Confirm Q Sorts')}:</div>
+        <UnforcedSortsDisplayButton number={0} />
       </div>
     );
   } else {
     return (
-      <div className="flex font-bold items-baseline">
-        <div className="mr-[10px] text-[clamp(1.3rem,1.5vw,1.8rem)]">{t('Confirm Q Sorts')}:</div>
-        <ConfirmButton number={props.number} />
+      <div className="flex flex-row font-bold">
+        <div className="mr-[10px] mt-2 text-[clamp(1.3rem,1.5vw,1.8rem)]">
+          {t('Confirm Q Sorts')}:
+        </div>
+        <UnforcedSortsDisplayButton number={props.number} />
       </div>
     );
   }

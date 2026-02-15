@@ -9,7 +9,8 @@ import calcSumSquares from '../Rotation/varimaxLogic/2calcSumSquares';
 import calcStandardizedFactorMatrix from '../Rotation/varimaxLogic/2calcStandardizedFactorMatrix';
 import doVarimaxRotations from '../Rotation/varimaxLogic/2doVarimaxRotations';
 import evenRound from '../../Utils/evenRound';
-// import calculateCommunalities from '../Rotation/varimaxLogic/2calculateCommunalities';
+import calcCommunalities from '../Correlations/ForceDirectedGraph/calcCommunalities';
+import forceCalcSigCriterionValues from '../Correlations/ForceDirectedGraph/forceCalcSigCriteriaValues';
 
 registerPromiseWorker(function (array) {
   // array contents are stringified [X, numberofPrincipalComps]
@@ -17,8 +18,15 @@ registerPromiseWorker(function (array) {
   const array2 = JSON.parse(array);
   const X = array2[0];
   const numberofPrincipalComps = array2[1];
+  const totalStatements = array2[2];
+
+  const forcedAll = array2[3];
+  const forcedPos = array2[4];
+  const forcedNeg = array2[5];
+
   let iterationArray = [2, 3, 4, 5, 6, 7, 8];
   const rotationResultsArray = [];
+  const autoflagDataArray = [];
   const edgeArray = [];
 
   const m = X.length;
@@ -63,15 +71,13 @@ registerPromiseWorker(function (array) {
       tempUnrotatedComponents
     );
     const rotatedResults = doVarimaxRotations(standardizedFactorMatrix, sumSquares);
+    autoflagDataArray.push([...rotatedResults]);
     const transposedRotatedResults = transposeMatrix(rotatedResults);
-    rotationResultsArray.push(transposedRotatedResults);
+    rotationResultsArray.push([...transposedRotatedResults]);
   }
 
   // bring in the FUPC values
   rotationResultsArray.unshift([...unrotatedComponents[0]]);
-
-  console.log('rotationResultsArray', JSON.stringify(rotationResultsArray));
-  // console.log('rotationResultsArray', JSON.stringify(rotationResultsArray[1], null, 2));
 
   const findHighestLoadingPcaFactorIndex = (dataSet) => {
     return dataSet.map((group) => {
@@ -103,7 +109,6 @@ registerPromiseWorker(function (array) {
   };
 
   const factorIndices = findHighestLoadingPcaFactorIndex(rotationResultsArray);
-  // console.log('winningIndices', winningIndices);
 
   // create the edge source array
   for (let j = 0; j < rotationResultsArray.length - 1; j++) {
@@ -128,8 +133,57 @@ registerPromiseWorker(function (array) {
     }
   }
 
-  // console.log('edgeArray', JSON.stringify(edgeArray, null, 2));
-  // console.log('factorIndices', JSON.stringify(factorIndices, null, 2));
+  // BEGIN AUTOFLAG
+  const significanceLevel = evenRound(1.96 * (1 / Math.sqrt(totalStatements)), 5);
+  const autoflagResultsArray = [];
 
-  return [edgeArray, factorIndices];
+  // returns true/false 2D arrays of flagging
+  autoflagDataArray.forEach((array) => {
+    const communalityResults = calcCommunalities(array);
+    const fSigCriterionResults = forceCalcSigCriterionValues(
+      'flag',
+      communalityResults[2],
+      significanceLevel
+    );
+    autoflagResultsArray.push(fSigCriterionResults);
+  });
+  // END AUTOFLAG
+
+  const forcedPosResultsArray = [[], [], [], [], [], [], []];
+  autoflagResultsArray.forEach((array, index) => {
+    array.forEach((item, i) => {
+      if (item.includes(true)) {
+        forcedPosResultsArray[index].push(true);
+      } else {
+        forcedPosResultsArray[index].push(false);
+      }
+    });
+  });
+
+  const transposedForcedPosResultsArray = transposeMatrix(forcedPosResultsArray);
+
+  let autoflaggedForcedPosResultsArray = transposedForcedPosResultsArray.map((array) => {
+    let newArray = [...array];
+    newArray.unshift(false);
+    return newArray;
+  });
+
+  const factorIndicator = transposeMatrix([...factorIndices]);
+
+  forcedNeg.forEach((item, index) => {
+    item['pc'] = factorIndicator[index];
+    item['flag'] = autoflaggedForcedNegResultsArray[index];
+  });
+
+  forcedAll.forEach((item, index) => {
+    item['pc'] = factorIndicator[index];
+    item['flag'] = autoflaggedForcedAllResultsArray[index];
+  });
+
+  forcedPos.forEach((item, index) => {
+    item['pc'] = factorIndicator[index];
+    item['flag'] = autoflaggedForcedPosResultsArray[index];
+  });
+
+  return [edgeArray, factorIndices, forcedPos, forcedNeg, forcedAll];
 });

@@ -28,7 +28,7 @@ const DisplayDataSortsGridButton = () => {
   return (
     <div>
       <GeneralButton
-        className="h-[50px] w-[120px]"
+        className="h-[50px] w-[120px] bg-grey-button"
         id="SortsGridButton"
         onClick={handleClick}
         $isActive={isActive}

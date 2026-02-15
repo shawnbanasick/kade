@@ -4,9 +4,15 @@ import cloneDeep from 'lodash/cloneDeep';
 import PromiseWorker from 'promise-worker';
 import structureState from '../GlobalState/structureState';
 import { MarkerType } from 'reactflow';
+import coreState from '../GlobalState/coreState';
 
 const structureDispatch = () => {
   const X = cloneDeep(correlationState.getState().correlation5Calcs);
+  const forcedAll = cloneDeep(correlationState.getState().forcedGraphDataAll);
+  const forcedPos = cloneDeep(correlationState.getState().forcedGraphDataPos);
+  const forcedNeg = cloneDeep(correlationState.getState().forcedGraphDataNeg);
+
+  const totalStatements = coreState.getState().numStatements;
   const numberofPrincipalComps = determineNumberPCs();
 
   // dispatch webWorker
@@ -16,13 +22,18 @@ const structureDispatch = () => {
 
   // receive webWorker response
   promiseWorker
-    .postMessage(JSON.stringify([X, numberofPrincipalComps]))
+    .postMessage(
+      JSON.stringify([X, numberofPrincipalComps, totalStatements, forcedAll, forcedPos, forcedNeg])
+    )
     .then(function (response) {
       // console.log('response', JSON.stringify(response[0], null, 2));
       // console.log('response', JSON.stringify(response, null, 2));
 
       let data = [...response[0]];
       let factorIndices = [...response[1]];
+      let forcedPos = [...response[2]];
+      let forcedNeg = [...response[3]];
+      let forcedAll = [...response[4]];
 
       data.forEach((item) => {
         if (Math.abs(item[3]) > 0.3) {
@@ -48,6 +59,9 @@ const structureDispatch = () => {
         structureState.setState({ responseArray: data });
         structureState.setState({ initialEdges: initialEdges });
         correlationState.setState({ factorIndices: factorIndices });
+        correlationState.setState({ forcedGraphDataPos: forcedPos });
+        correlationState.setState({ forcedGraphDataNeg: forcedNeg });
+        correlationState.setState({ forcedGraphDataAll: forcedAll });
       });
     })
     .catch(function (error) {

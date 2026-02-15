@@ -26,7 +26,7 @@ const DisplayDataQSortsButton = () => {
   return (
     <div>
       <GeneralButton
-        className="h-[50px] w-[120px]"
+        className="h-[50px] w-[120px] bg-grey-button"
         id="qSortsButton"
         onClick={handleClick}
         $isActive={isActive}

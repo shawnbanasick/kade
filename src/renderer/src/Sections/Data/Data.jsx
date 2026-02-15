@@ -89,11 +89,12 @@ const Data = () => {
           <StatementsList statements={statements} />
         </section>
 
-        {/* Unforced Container */}
-        <div className="flex flex-row items-baseline h-[70px] justify-between gap-4 mt-4 max-w-[60vw] border-2 border-red-500 mb-4">
+        {/* Unforced Container CONFIRM DATA INPUT  */}
+        <div className="flex flex-row h-[70px] gap-4 mt-4 max-w-[70vw] justify-between mb-12 items-center">
           {showUnforcedConfirmMessage && (
             <UnforcedSortsDisplay number={numUnforcedParts} display={displayForcedComfirmMessage} />
           )}
+
           {showExportButtons && (
             <div className="flex flex-row items-center text-center gap-4">
               <div className="text-[clamp(1.3rem,1.5vw,1.8rem)] font-bold self-center align-center ">

@@ -20,6 +20,7 @@ const correlationState = create(
     forcedGraphDataPos: [],
     forcedGraphDataNeg: [],
     linkFilter: 'positive',
+    pcaFilter: 0,
     correlationThreshold: 0.5,
     factorIndices: [],
 
@@ -27,6 +28,7 @@ const correlationState = create(
 
     showCorrelationMatrix: false,
 
+    updatePcaFilter: (inputValue) => set({ pcaFilter: inputValue }),
     updateFactorIndices: (inputValue) => set({ factorIndices: inputValue }),
     updateCorrelationThreshold: (inputValue) => set({ correlationThreshold: inputValue }),
     updateLinkFilter: (inputValue) => set({ linkFilter: inputValue }),

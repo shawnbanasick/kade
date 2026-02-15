@@ -4,6 +4,9 @@ import loadingState from '../../GlobalState/loadingState';
 const calculateFactorLoadingSignificanceLevel = function (totalStatements) {
   const userSelectedSigLevel = loadingState.getState().userSelectedSigLevel;
 
+  console.log('userSelectedSigLevel', userSelectedSigLevel);
+  console.log('totalStatements', totalStatements);
+
   // var totalStatements = QAV.getState("qavOriginalSortSize");
   const significanceLevel = evenRound(userSelectedSigLevel * (1 / Math.sqrt(totalStatements)), 5);
   return significanceLevel;

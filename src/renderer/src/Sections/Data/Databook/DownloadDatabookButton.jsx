@@ -265,7 +265,11 @@ const DownloadDatabookButton = () => {
   };
 
   return (
-    <GeneralButton className="" id="DatabookButton" onClick={handleClick}>
+    <GeneralButton
+      className="h-[50px] w-[320px] bg-grey-button"
+      id="DatabookButton"
+      onClick={handleClick}
+    >
       <div className="flex flex-row  items-center gap-4">
         <div className="flex justify-end items-center">
           <img src={DocxIcon} className="h-[40px]" alt="CSV Icon" />

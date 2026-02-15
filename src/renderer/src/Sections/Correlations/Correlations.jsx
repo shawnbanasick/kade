@@ -26,6 +26,7 @@ const Correlations = () => {
   const linkFilter = correlationState((state) => state.linkFilter);
   const correlationThreshold = correlationState((state) => state.correlationThreshold);
   const factorIndices = correlationState((state) => state.factorIndices);
+  let pcaFilter = correlationState((state) => state.pcaFilter) || 0;
 
   // Handler for tab clicks
   const handleTabClick = (tabId) => {
@@ -40,16 +41,6 @@ const Correlations = () => {
   } else {
     forcedGraphData = corelationDataAll;
   }
-
-  if (factorIndices.length > 0) {
-    forcedGraphData = forcedGraphData.map((element, index) => {
-      element.pca = `pca-${factorIndices[3][index]}`;
-      console.log('element', element);
-      return element;
-    });
-  }
-
-  console.log('forcedGraphData', JSON.stringify(forcedGraphData, null, 2));
 
   // ${props.view ? 'animate-fade-out' : 'animate-fade-in'}
 
