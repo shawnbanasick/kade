@@ -7,9 +7,7 @@ import appState from '../GlobalState/appState';
 import coreState from '../GlobalState/coreState';
 import HeatmapMain from './HeatmapMain';
 import ForceGraph from './ForceDirectedGraph/ForceDirectedGraph';
-import ForceGraphDataSelectRadio from './ForceDirectedGraph/ForceGraphDataSelectRadio';
-import DebouncedNumberInput from './ForceDirectedGraph/ForceGraphCorrLimitInput';
-import PcaScenarios from './ForceDirectedGraph/PcaScenarios';
+// import PcaScenarios from './ForceDirectedGraph/PcaScenarios';
 
 const Correlations = () => {
   const { t } = useTranslation();
@@ -41,6 +39,8 @@ const Correlations = () => {
   } else {
     forcedGraphData = corelationDataAll;
   }
+
+  console.log('forcedGraphData', JSON.stringify(forcedGraphData));
 
   // ${props.view ? 'animate-fade-out' : 'animate-fade-in'}
 
@@ -100,18 +100,6 @@ const Correlations = () => {
       title: t('Network'),
       content: (
         <div>
-          <div className="flex w-[calc(85vw-30px)]  text-basis h-[70px]">
-            <DebouncedNumberInput
-              value={correlationThreshold}
-              label="Correlation Threshold"
-              min={0}
-              max={1}
-              step={0.01}
-              debounceMs={500}
-            />
-            <ForceGraphDataSelectRadio />
-            <PcaScenarios />
-          </div>
           <ForceGraph
             data={forcedGraphData}
             correlationThreshold={correlationThreshold}

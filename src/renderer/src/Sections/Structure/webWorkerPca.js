@@ -38,10 +38,6 @@ registerPromiseWorker(function (array) {
   const svd = svdResults.U;
   const eigenValuesSorted = sortEigenValues(eigens);
 
-  //   const getEigenCumulPercentArray = calcEigenCumulPercentArray(eigenValuesSorted, m);
-  //   const eigenValuesAsPercents = getEigenCumulPercentArray[0];
-  //   const eigenValuesCumulPercentArray = getEigenCumulPercentArray[1];
-
   const doEigenVecsCalcs = calcEigenVectors(
     numberOfSorts,
     numberofPrincipalComps,
@@ -52,8 +48,6 @@ registerPromiseWorker(function (array) {
   let eigenVecs = doEigenVecsCalcs[0];
   const inflectionArray = doEigenVecsCalcs[1];
   eigenVecs = inflectPrincipalComponents(eigenVecs, inflectionArray);
-
-  //   calculateCommunalities([...eigenVecs]);
 
   // transpose to unroatated principal components
   let unrotatedComponents = transposeMatrix(eigenVecs);
@@ -162,7 +156,45 @@ registerPromiseWorker(function (array) {
 
   const transposedForcedPosResultsArray = transposeMatrix(forcedPosResultsArray);
 
-  let autoflaggedForcedPosResultsArray = transposedForcedPosResultsArray.map((array) => {
+  const forcedNegResultsArray = [[], [], [], [], [], [], []];
+  autoflagResultsArray.forEach((array, index) => {
+    array.forEach((item, i) => {
+      if (item.includes(true)) {
+        forcedNegResultsArray[index].push(true);
+      } else {
+        forcedNegResultsArray[index].push(false);
+      }
+    });
+  });
+
+  const transposedForcedNegResultsArray = transposeMatrix(forcedNegResultsArray);
+
+  const forcedAllResultsArray = [[], [], [], [], [], [], []];
+  autoflagResultsArray.forEach((array, index) => {
+    array.forEach((item, i) => {
+      if (item.includes(true)) {
+        forcedAllResultsArray[index].push(true);
+      } else {
+        forcedAllResultsArray[index].push(false);
+      }
+    });
+  });
+
+  const transposedForcedAllResultsArray = transposeMatrix(forcedAllResultsArray);
+
+  const autoflaggedForcedPosResultsArray = transposedForcedPosResultsArray.map((array) => {
+    let newArray = [...array];
+    newArray.unshift(false);
+    return newArray;
+  });
+
+  const autoflaggedForcedNegResultsArray = transposedForcedNegResultsArray.map((array) => {
+    let newArray = [...array];
+    newArray.unshift(false);
+    return newArray;
+  });
+
+  const autoflaggedForcedAllResultsArray = transposedForcedAllResultsArray.map((array) => {
     let newArray = [...array];
     newArray.unshift(false);
     return newArray;

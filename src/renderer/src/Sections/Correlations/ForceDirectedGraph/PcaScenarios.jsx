@@ -2,19 +2,20 @@ import React, { useState } from 'react';
 import correlationState from '../../GlobalState/correlationState';
 import { useTranslation } from 'react-i18next';
 
-const PcaScenarios = () => {
+const PcaScenarios = (props) => {
   const updatePcaFilter = correlationState((state) => state.updatePcaFilter);
   const [selected, setSelected] = useState('all');
   const { t } = useTranslation();
 
   const handleSelection = (id, value) => {
-    console.log(id, value);
-    setSelected(id);
-    updatePcaFilter(+value);
+    props.onSelectionChange(id, value);
+    // console.log(id, value);
+    // setSelected(id);
+    // updatePcaFilter(+value);
   };
 
   const options = [
-    { id: 'one', label: t('1'), value: 0 },
+    // { id: 'one', label: t('1'), value: 0 },
     { id: 'two', label: t('2'), value: 1 },
     { id: 'three', label: t('3'), value: 2 },
     { id: 'four', label: t('4'), value: 3 },
@@ -26,7 +27,7 @@ const PcaScenarios = () => {
   ];
 
   const colorArray = [
-    'bg-gray-300', // Gray
+    // 'bg-gray-300', // Gray
     'bg-sky-300', // Blue
     'bg-orange-300', // Orange
     'bg-green-300', // Green
@@ -34,6 +35,7 @@ const PcaScenarios = () => {
     'bg-cyan-300', // Cyan
     'bg-pink-300', // Magenta
     'bg-purple-300', // Purple
+    'bg-gray-300', // Gray
   ];
 
   // Find the selected option to get its value

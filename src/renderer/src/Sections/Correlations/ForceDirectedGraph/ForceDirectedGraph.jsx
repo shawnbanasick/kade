@@ -1,7 +1,9 @@
 import React, { useEffect, useRef, memo } from 'react';
 import * as d3 from 'd3';
-// import correlationState from '../../GlobalState/correlationState';
 import { useTranslation } from 'react-i18next';
+import PcaScenarios from './PcaScenarios';
+import ForceGraphDataSelectRadio from './ForceGraphDataSelectRadio';
+import DebouncedNumberInput from './ForceGraphCorrLimitInput';
 
 const ForceGraph = ({
   title = '',
@@ -14,6 +16,7 @@ const ForceGraph = ({
 }) => {
   const svgRef = useRef(null);
   const tooltipRef = useRef(null);
+  const colorScaleRef = useRef(null);
 
   const { t } = useTranslation();
 
@@ -55,7 +58,9 @@ const ForceGraph = ({
     // group: d.respondent.match(/[A-Z]+/)[0], // Extract country code (US, JP, CA, UK, FR)
     const nodes = correlationData.map((d) => ({
       id: d.respondent,
-      pca: d.pca || 'pca-1', // Add pca property with fallback
+      pc: d.pc,
+      flag: d.flag,
+      // pca: d.pca || 'pca-1', // Add pca property with fallback
     }));
 
     // Create links from correlation data
@@ -151,7 +156,7 @@ const ForceGraph = ({
     // Color scale for countries
     const colorScale = d3
       .scaleOrdinal()
-      .domain(['pca-1', 'pca-2', 'pca-3', 'pca-4', 'pca-5', 'pca-6', 'pca-7', 'pca-8'])
+      .domain([1, 2, 3, 4, 5, 6, 7, 8])
       .range([
         '#d1d5db',
         '#7dd3fc',
@@ -162,6 +167,8 @@ const ForceGraph = ({
         '#f9a8d4',
         '#d8b4fe',
       ]);
+
+    colorScaleRef.current = colorScale;
 
     // Link color scale (diverging)
     const linkColorScale = d3
@@ -271,7 +278,7 @@ const ForceGraph = ({
 
         tooltip
           .style('opacity', 1)
-          .html(`<strong>${d.id}</strong><br>PCA: ${d.pca}<br>Connections:<br>${connections}`)
+          .html(`<strong>${d.id}</strong><br>PCA: ${d.pc}<br>Connections:<br>${connections}`)
           .style('left', `${event.pageX + 10}px`)
           .style('top', `${event.pageY - 10}px`);
       })
@@ -339,8 +346,42 @@ const ForceGraph = ({
     }
   };
 
+  const handleSelectionChange = (id, value) => {
+    console.log(id, value);
+    if (!svgRef.current || !colorScaleRef.current) return;
+
+    // Use D3 to select all circle elements within the SVG
+    d3.select(svgRef.current)
+      .selectAll('circle')
+      .attr('fill', (d) => {
+        // Find the corresponding data item to get the PCA value
+        const nodeData = correlationData.find((item) => item.respondent === d.id);
+        if (nodeData) {
+          console.log(nodeData.pc[value]);
+          // Check if a specific pca-{value} property exists in the data
+          if (nodeData['pc' + value]) {
+            return colorScaleRef.current(nodeData['pc'][value]);
+          }
+        }
+        // Fallback to current pca value
+        return colorScaleRef.current(d.pc[0]);
+      });
+  };
+
   return (
     <>
+      <div className="flex w-[calc(85vw-30px)]  text-basis h-[70px]">
+        <DebouncedNumberInput
+          value={correlationThreshold}
+          label="Correlation Threshold"
+          min={0}
+          max={1}
+          step={0.01}
+          debounceMs={500}
+        />
+        <ForceGraphDataSelectRadio />
+        <PcaScenarios onSelectionChange={handleSelectionChange} />
+      </div>
       <div className="relative bg-white rounded-lg">
         <svg ref={svgRef}></svg>
         <div
