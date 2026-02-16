@@ -11,7 +11,9 @@ const structureState = create(
     boxWidth: 'variance',
     responseArray: [],
     refreshVizButtonColor: '#d6dbe0',
+    structureTabActive: 'tab1',
 
+    updateStructureTabActive: (inputValue) => set({ structureTabActive: inputValue }),
     updateRefreshVizButtonColor: (inputValue) => set({ refreshVizButtonColor: inputValue }),
     updateResponseArray: (inputValue) => set({ responseArray: inputValue }),
     updateBoxWidth: (inputValue) => set({ boxWidth: inputValue }),

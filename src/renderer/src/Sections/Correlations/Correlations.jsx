@@ -6,7 +6,7 @@ import correlationState from '../GlobalState/correlationState';
 import appState from '../GlobalState/appState';
 import coreState from '../GlobalState/coreState';
 import HeatmapMain from './HeatmapMain';
-import ForceGraph from './ForceDirectedGraph/ForceDirectedGraph';
+// import ForceGraph from './ForceDirectedGraph/ForceDirectedGraph';
 // import PcaScenarios from './ForceDirectedGraph/PcaScenarios';
 
 const Correlations = () => {
@@ -18,31 +18,11 @@ const Correlations = () => {
   const correlationTabActive = correlationState((state) => state.correlationTabActive);
   const updateCorrelationTabActive = correlationState((state) => state.updateCorrelationTabActive);
   const numQsorts = coreState((state) => state.numQsorts);
-  const corelationDataPos = correlationState((state) => state.forcedGraphDataPos);
-  const corelationDataNeg = correlationState((state) => state.forcedGraphDataNeg);
-  const corelationDataAll = correlationState((state) => state.forcedGraphDataAll);
-  const linkFilter = correlationState((state) => state.linkFilter);
-  const correlationThreshold = correlationState((state) => state.correlationThreshold);
-  const factorIndices = correlationState((state) => state.factorIndices);
-  let pcaFilter = correlationState((state) => state.pcaFilter) || 0;
 
   // Handler for tab clicks
   const handleTabClick = (tabId) => {
     updateCorrelationTabActive(tabId);
   };
-
-  let forcedGraphData;
-  if (linkFilter === 'positive') {
-    forcedGraphData = corelationDataPos;
-  } else if (linkFilter === 'negative') {
-    forcedGraphData = corelationDataNeg;
-  } else {
-    forcedGraphData = corelationDataAll;
-  }
-
-  // console.log('forcedGraphData', JSON.stringify(forcedGraphData));
-
-  // ${props.view ? 'animate-fade-out' : 'animate-fade-in'}
 
   const MainContent = () => {
     return (
@@ -96,18 +76,6 @@ const Correlations = () => {
         </div>
       ),
     },
-    {
-      title: t('Network'),
-      content: (
-        <div>
-          <ForceGraph
-            data={forcedGraphData}
-            correlationThreshold={correlationThreshold}
-            factorIndices={factorIndices}
-          />
-        </div>
-      ),
-    },
   ];
 
   return (
@@ -143,18 +111,6 @@ const Correlations = () => {
 
         <div className="tab-content box-border overflow-auto bg-base-100 border-base-300 p-6">
           {tabs[1].content}
-        </div>
-
-        <input
-          type="radio"
-          name="my_tabs_Corr"
-          className={`tab basis-[12vw] hover:shadow-[inset_0_0_0_4px_#666,_0_0_1px_transparent] ${correlationTabActive === 'tab3' ? 'tab-active bg-[#a5d6a7]' : 'bg-[#d6dbe0]'}`}
-          aria-label={tabs[2].title}
-          onClick={() => handleTabClick('tab3')}
-        />
-
-        <div className="tab-content box-border overflow-auto bg-base-100 border-base-300 p-6">
-          {tabs[2].content}
         </div>
       </div>
     </div>

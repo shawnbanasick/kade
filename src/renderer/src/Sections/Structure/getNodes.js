@@ -9,7 +9,7 @@ const getNodes = (labelObj, widthObj, xObj, paddingTopVal, heightVal) => {
     row78: 850,
   };
 
-  console.log(labelObj.label11);
+  // console.log(labelObj.label11);
 
   const initialNodes = [
     {

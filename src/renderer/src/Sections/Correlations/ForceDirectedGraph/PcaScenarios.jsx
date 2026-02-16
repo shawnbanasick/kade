@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 const PcaScenarios = (props) => {
   const updatePcaFilter = correlationState((state) => state.updatePcaFilter);
   const [selected, setSelected] = useState('one');
+  const [resetSelection, setResetSelection] = useState(false);
   const { t } = useTranslation();
 
   const handleSelection = (id, value) => {
@@ -13,6 +14,11 @@ const PcaScenarios = (props) => {
     setSelected(id);
     // updatePcaFilter(+value);
   };
+
+  if (props.isGrayscale !== resetSelection) {
+    setSelected('one');
+    setResetSelection(props.isGrayscale);
+  }
 
   const options = [
     { id: 'one', label: t('1'), value: 0 },

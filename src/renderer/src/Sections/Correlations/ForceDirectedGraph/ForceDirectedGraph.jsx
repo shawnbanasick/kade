@@ -32,6 +32,7 @@ const ForceGraph = ({
 
   // Track auto-flag toggle state
   const [showAutoFlags, setShowAutoFlags] = useState(true);
+  const [resetAutoFlag, setResetAutoFlag] = useState(false);
 
   // Define shape paths for different factors (PCA values 1-8)
   const shapeGenerators = {
@@ -655,6 +656,11 @@ const ForceGraph = ({
         });
     }
   };
+
+  // if (isGrayscale !== resetAutoFlag) {
+  //   setShowAutoFlags(false);
+  //   setResetAutoFlag(isGrayscale);
+  // }
 
   return (
     <>

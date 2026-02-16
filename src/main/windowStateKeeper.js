@@ -5,10 +5,14 @@ export const windowStateKeeper = async (windowName) => {
   let window, windowState;
 
   const setBounds = async () => {
-    // Restore from appConfig
-    if (await settings.has(`windowState.${windowName}`)) {
-      windowState = await settings.get(`windowState.${windowName}`);
-      return;
+    try {
+      // Restore from appConfig
+      if (await settings.has(`windowState.${windowName}`)) {
+        windowState = await settings.get(`windowState.${windowName}`);
+        return;
+      }
+    } catch (error) {
+      console.error(`Failed to load window state for ${windowName}:`, error);
     }
 
     const size = screen.getPrimaryDisplay().workAreaSize;
@@ -23,12 +27,16 @@ export const windowStateKeeper = async (windowName) => {
   };
 
   const saveState = async () => {
-    // bug: lots of save state events are called. they should be debounced
-    if (!windowState.isMaximized) {
-      windowState = window.getBounds();
+    try {
+      // bug: lots of save state events are called. they should be debounced
+      if (!windowState.isMaximized) {
+        windowState = window.getBounds();
+      }
+      windowState.isMaximized = window.isMaximized();
+      await settings.set(`windowState.${windowName}`, windowState);
+    } catch (error) {
+      console.error(`Failed to save window state for ${windowName}:`, error);
     }
-    windowState.isMaximized = window.isMaximized();
-    await settings.set(`windowState.${windowName}`, windowState);
   };
 
   const track = async (win) => {
