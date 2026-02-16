@@ -38,6 +38,18 @@ const PcaScenarios = (props) => {
     'bg-gray-300', // Gray
   ];
 
+  const colorArrayBW = [
+    'bg-gray-300', // Gray
+    'bg-gray-300', // Blue
+    'bg-gray-300', // Orange
+    'bg-gray-300', // Green
+    'bg-gray-300', // Red
+    'bg-gray-300', // Cyan
+    'bg-gray-300', // Magenta
+    'bg-gray-300', // Purple
+    'bg-gray-300', // Gray
+  ];
+
   // Find the selected option to get its value
   const selectedOption = options.find((opt) => opt.id === selected);
   const selectedValue = selectedOption?.value;
@@ -66,8 +78,8 @@ const PcaScenarios = (props) => {
               key={option.id}
               onClick={() => handleSelection(option.id, option.value)}
               className={`
-                relative ${colorArray[index]} px-3 py-1.5 rounded-md text-sm font-medium transition-all duration-200
-                ${shouldScale ? 'scale-135 shadow-md opacity-100' : 'text-gray-700 hover:shadow-[inset_0_0_0_4px_#666,_0_0_1px_transparent] opacity-50'}
+                relative ${props.isGrayscale ? colorArrayBW[index] : colorArray[index]} px-3 py-1.5 rounded-md text-sm font-medium transition-all duration-200
+                ${shouldScale ? 'scale-135 shadow-md opacity-100 hover:shadow-[inset_0_0_0_4px_#666,_0_0_1px_transparent]' : 'text-gray-700 hover:shadow-[inset_0_0_0_4px_#666,_0_0_1px_transparent] opacity-50'}
               `}
             >
               {option.label}

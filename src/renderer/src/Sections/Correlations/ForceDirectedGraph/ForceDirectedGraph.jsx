@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, memo } from 'react';
+import React, { useEffect, useRef, memo, useState } from 'react';
 import * as d3 from 'd3';
 import { useTranslation } from 'react-i18next';
 import PcaScenarios from './PcaScenarios';
@@ -17,16 +17,86 @@ const ForceGraph = ({
   const svgRef = useRef(null);
   const tooltipRef = useRef(null);
   const colorScaleRef = useRef(null);
+  const [isGrayscale, setIsGrayscale] = useState(false);
 
   const { t } = useTranslation();
 
   const minCorrelation = correlationThreshold * 100;
 
-  // console.log('factorIndices', JSON.stringify(factorIndices, null, 2));
-
   // Get data from Zustand store
   //   const correlationData = correlationState((state) => state.gridRowData);
   let correlationData = data;
+
+  // Track which factor index is currently selected (0-based index into pc array)
+  const [currentFactorIndex, setCurrentFactorIndex] = useState(0);
+
+  // Define shape paths for different factors (PCA values 1-8)
+  const shapeGenerators = {
+    1: (r) => `M ${-r},${-r} L ${r},${-r} L ${r},${r} L ${-r},${r} Z`, // Square (centered)
+    2: (r) => {
+      // Triangle (pointing up)
+      const h = r * 1.73; // height for equilateral triangle
+      return `M 0,${-h} L ${r * 1.5},${h * 0.5} L ${-r * 1.5},${h * 0.5} Z`;
+    },
+    3: (r) => {
+      // Diamond
+      return `M 0,${-r * 1.5} L ${r * 1.5},0 L 0,${r * 1.5} L ${-r * 1.5},0 Z`;
+    },
+    4: (r) => {
+      // Pentagon
+      const points = [];
+      for (let i = 0; i < 5; i++) {
+        const angle = (i * 2 * Math.PI) / 5 - Math.PI / 2;
+        points.push(`${r * 1.2 * Math.cos(angle)},${r * 1.2 * Math.sin(angle)}`);
+      }
+      return `M ${points.join(' L ')} Z`;
+    },
+    5: (r) => {
+      // Hexagon
+      const points = [];
+      for (let i = 0; i < 6; i++) {
+        const angle = (i * 2 * Math.PI) / 6;
+        points.push(`${r * 1.2 * Math.cos(angle)},${r * 1.2 * Math.sin(angle)}`);
+      }
+      return `M ${points.join(' L ')} Z`;
+    },
+    6: (r) => {
+      // Oval (ellipse)
+      const rx = r * 1.5; // horizontal radius (wider)
+      const ry = r * 1.0; // vertical radius (narrower)
+      // Approximate ellipse with bezier curves
+      const kappa = 0.5522848; // magic number for circular bezier approximation
+      const ox = rx * kappa; // control point offset x
+      const oy = ry * kappa; // control point offset y
+      return `M ${-rx},0 C ${-rx},${-oy} ${-ox},${-ry} 0,${-ry} C ${ox},${-ry} ${rx},${-oy} ${rx},0 C ${rx},${oy} ${ox},${ry} 0,${ry} C ${-ox},${ry} ${-rx},${oy} ${-rx},0 Z`;
+    },
+    7: (r) => {
+      // Cross/Plus
+      const w = r * 0.6;
+      return `M ${-w},${-r * 1.3} L ${w},${-r * 1.3} L ${w},${-w} L ${r * 1.3},${-w} L ${r * 1.3},${w} L ${w},${w} L ${w},${r * 1.3} L ${-w},${r * 1.3} L ${-w},${w} L ${-r * 1.3},${w} L ${-r * 1.3},${-w} L ${-w},${-w} Z`;
+    },
+    8: (r) => {
+      // Octagon
+      const points = [];
+      for (let i = 0; i < 8; i++) {
+        const angle = (i * 2 * Math.PI) / 8;
+        points.push(`${r * 1.2 * Math.cos(angle)},${r * 1.2 * Math.sin(angle)}`);
+      }
+      return `M ${points.join(' L ')} Z`;
+    },
+  };
+
+  // Grayscale color scale (8 shades from light to dark gray)
+  const grayscaleColors = [
+    '#e5e5e5', // Very light gray
+    '#cccccc',
+    '#b3b3b3',
+    '#999999',
+    '#808080',
+    '#666666',
+    '#4d4d4d',
+    '#333333', // Dark gray
+  ];
 
   // Function to download the graph as SVG
   const downloadSVG = () => {
@@ -48,6 +118,10 @@ const ForceGraph = ({
     URL.revokeObjectURL(url);
   };
 
+  const toggleGrayscale = () => {
+    setIsGrayscale(!isGrayscale);
+  };
+
   useEffect(() => {
     if (!correlationData || correlationData.length === 0 || !svgRef.current) return;
 
@@ -58,9 +132,9 @@ const ForceGraph = ({
     // group: d.respondent.match(/[A-Z]+/)[0], // Extract country code (US, JP, CA, UK, FR)
     const nodes = correlationData.map((d) => ({
       id: d.respondent,
-      pc: d.pc,
+      pc: d.pc, // Keep the full array
       flag: d.flag,
-      // pca: d.pca || 'pca-1', // Add pca property with fallback
+      pca: d.pc && d.pc[currentFactorIndex] ? d.pc[currentFactorIndex] : 1, // Extract factor from pc array
     }));
 
     // Create links from correlation data
@@ -110,50 +184,7 @@ const ForceGraph = ({
       .attr('class', 'text-sm text-gray-500')
       .text(subtitle);
 
-    // Create a group for the graph (so title stays fixed, but graph can zoom/pan)
-    // const container = svg.append('g').attr('transform', `translate(0, 80)`);
-    const zoomContainer = svg.append('g').attr('class', `zoom-container`);
-
-    // Create a group for the graph (so title stays fixed)
-    // const g = svg.append('g').attr('transform', `translate(0, 80)`);
-    // Add a transparent rectangle to capture zoom/pan events
-    zoomContainer
-      .append('rect')
-      .attr('width', width)
-      .attr('height', height - 80)
-      .attr('transform', `translate(0, 80)`)
-      .attr('fill', 'transparent')
-      .style('cursor', 'grab');
-
-    // Create the main graph group
-    const g = zoomContainer.append('g').attr('transform', `translate(0, 80)`);
-
-    // Add zoom and pan behavior
-    const zoom = d3
-      .zoom()
-      .scaleExtent([0.1, 10]) // Min and max zoom levels
-      .filter(function (event) {
-        return event.type !== 'mousedown' || event.target.tagName !== 'circle';
-      }) // Disable zoom when shift key is pressed
-      .on('zoom', (event) => {
-        g.attr('transform', `translate(0, 80) ${event.transform}`);
-      });
-
-    // Apply zoom to the container
-    zoomContainer.call(zoom);
-
-    // Update cursor when dragging
-    zoomContainer
-      .on('mousedown.cursor', function (event) {
-        if (event.target.tagName !== 'circle') {
-          d3.select(this).select('rect').style('cursor', 'grabbing');
-        }
-      })
-      .on('mouseup.cursor', function () {
-        d3.select(this).select('rect').style('cursor', 'grab');
-      });
-
-    // Color scale for countries
+    // Color scale for factors (define early so legend can use it)
     const colorScale = d3
       .scaleOrdinal()
       .domain([1, 2, 3, 4, 5, 6, 7, 8])
@@ -170,11 +201,121 @@ const ForceGraph = ({
 
     colorScaleRef.current = colorScale;
 
+    // Add legend
+    const legendGroup = svg.append('g').attr('class', 'legend-group');
+
+    const legendItemHeight = 35;
+    const legendColumns = 4; // Display in 4 columns
+    const legendColumnWidth = 140;
+    const legendTotalWidth = legendColumns * legendColumnWidth;
+    const legendX = (width - legendTotalWidth) / 2; // Center the legend
+    const legendY = 20; // Higher on the page (was 70)
+
+    // Legend title
+    legendGroup
+      .append('text')
+      .attr('x', legendX - 15)
+      .attr('y', legendY)
+      .attr('class', 'text-sm font-semibold')
+      .attr('fill', '#000')
+      .text('Factors:');
+
+    // Create legend items for factors 1-8
+    for (let i = 1; i <= 8; i++) {
+      const col = (i - 1) % 4; // Which column (0-3): factors 1-4 in row 0, 5-8 in row 1
+      const row = Math.floor((i - 1) / 4); // Which row (0 or 1)
+      const x = legendX + col * legendColumnWidth;
+      const y = legendY + 20 + row * legendItemHeight;
+
+      const legendItem = legendGroup.append('g').attr('transform', `translate(${x}, ${y})`);
+
+      if (isGrayscale) {
+        // Show shapes in grayscale mode - all with same fill color as factor 1
+        legendItem
+          .append('path')
+          .attr('d', shapeGenerators[i](12)) // Smaller size for legend
+          .attr('fill', grayscaleColors[0]) // Use factor 1 color for all shapes
+          .attr('stroke', '#000')
+          .attr('stroke-width', 1.5);
+      } else {
+        // Show colored circles - use respective factor colors
+        legendItem
+          .append('circle')
+          .attr('r', 12)
+          .attr('fill', colorScale(i)) // Use each factor's color
+          .attr('stroke', '#fff')
+          .attr('stroke-width', 1.5);
+      }
+
+      // Label
+      legendItem
+        .append('text')
+        .attr('x', 20)
+        .attr('y', 0)
+        .attr('dy', '0.35em')
+        .attr('class', 'text-xs')
+        .attr('fill', '#000')
+        .text(`Factor ${i}`);
+    }
+
+    // Add explanatory text below the legend
+    legendGroup
+      .append('text')
+      .attr('x', width / 2 - 55)
+      .attr('y', legendY + 90) // Position below the legend items
+      .attr('text-anchor', 'middle')
+      .attr('class', 'text-xs')
+      .attr('fill', '#000')
+      .text('Dashed shape border indicates an auto-flagged factor loading.');
+
+    // Create a group for the graph (so title stays fixed, but graph can zoom/pan)
+    // const container = svg.append('g').attr('transform', `translate(0, 80)`);
+    const zoomContainer = svg.append('g').attr('class', `zoom-container`);
+
+    // Create a group for the graph (so title stays fixed)
+    // const g = svg.append('g').attr('transform', `translate(0, 80)`);
+    // Add a transparent rectangle to capture zoom/pan events
+    zoomContainer
+      .append('rect')
+      .attr('width', width)
+      .attr('height', height - 150) // Adjusted for legend space
+      .attr('transform', `translate(0, 150)`) // Adjusted for legend space
+      .attr('fill', 'transparent')
+      .style('cursor', 'grab');
+
+    // Create the main graph group
+    const g = zoomContainer.append('g').attr('transform', `translate(0, 150)`); // Adjusted for legend space
+
+    // Add zoom and pan behavior
+    const zoom = d3
+      .zoom()
+      .scaleExtent([0.1, 10]) // Min and max zoom levels
+      .filter(function (event) {
+        return event.type !== 'mousedown' || event.target.tagName !== 'circle';
+      }) // Disable zoom when shift key is pressed
+      .on('zoom', (event) => {
+        g.attr('transform', `translate(0, 150) ${event.transform}`); // Adjusted for legend space
+      });
+
+    // Apply zoom to the container
+    zoomContainer.call(zoom);
+
+    // Update cursor when dragging
+    zoomContainer
+      .on('mousedown.cursor', function (event) {
+        if (event.target.tagName !== 'circle') {
+          d3.select(this).select('rect').style('cursor', 'grabbing');
+        }
+      })
+      .on('mouseup.cursor', function () {
+        d3.select(this).select('rect').style('cursor', 'grab');
+      });
+
     // Link color scale (diverging)
     const linkColorScale = d3
       .scaleLinear()
       .domain([-100, 0, 100])
-      .range(['#2563eb', '#e5e7eb', '#dc2626']);
+      .range(isGrayscale ? ['#555555', '#cccccc', '#222222'] : ['#2563eb', '#e5e7eb', '#dc2626']);
 
     // Link width scale
     const linkWidthScale = d3.scaleLinear().domain([0, 100]).range([1, 8]);
@@ -198,9 +339,9 @@ const ForceGraph = ({
             return absCorr / 100;
           })
       )
-      .force('charge', d3.forceManyBody().strength(-25))
-      .force('center', d3.forceCenter(width / 2, (height - 80) / 2))
-      .force('collision', d3.forceCollide().radius(40));
+      .force('charge', d3.forceManyBody().strength(-5)) // smaller number subtracted = weaker force
+      .force('center', d3.forceCenter(width / 2, (height - 150) / 2)) // Adjusted for legend space
+      .force('collision', d3.forceCollide().radius(30));
 
     // Tooltip
     const tooltip = d3.select(tooltipRef.current);
@@ -214,7 +355,14 @@ const ForceGraph = ({
       .append('line')
       .attr('stroke', (d) => linkColorScale(d.value))
       .attr('stroke-width', (d) => linkWidthScale(Math.abs(d.value)))
-      .attr('stroke-opacity', 0.6);
+      .attr('stroke-opacity', 0.6)
+      .style('stroke-dasharray', (d) => {
+        // In grayscale mode, use dashed lines for negative correlations
+        if (isGrayscale && d.value < 0) {
+          return '8, 4'; // Dashed pattern for negative correlations
+        }
+        return 'none'; // Solid line for positive correlations or color mode
+      });
 
     // Create nodes
     const node = g
@@ -225,22 +373,53 @@ const ForceGraph = ({
       .append('g')
       .call(d3.drag().on('start', dragstarted).on('drag', dragged).on('end', dragended));
 
-    // Add circles to nodes
-    // .attr('fill', (d) => colorScale(d.group))
-    node
-      .append('circle')
-      .attr('r', 20)
-      .attr('fill', (d) => colorScale(d.pca))
-      .attr('stroke', '#fff')
-      .attr('stroke-width', 2)
-      .style('cursor', 'pointer');
+    // Add shapes to nodes based on mode
+    if (isGrayscale) {
+      // Use shapes in grayscale mode with uniform fill color
+      node
+        .append('path')
+        .attr('d', (d) => {
+          const pcaValue = d.pca || 1;
+          const shapeGen = shapeGenerators[pcaValue] || shapeGenerators[1];
+          return shapeGen(15); // radius of 15
+        })
+        .attr('fill', grayscaleColors[0]) // Uniform fill color - same as factor 1
+        .attr('stroke', '#000')
+        .attr('stroke-width', 2)
+        .style('stroke-dasharray', (d) => {
+          // Check if flag is true for current factor index
+          const nodeData = correlationData.find((item) => item.respondent === d.id);
+          return nodeData && nodeData.flag && nodeData.flag[currentFactorIndex] ? '5, 5' : 'none';
+        })
+        .style('cursor', 'pointer')
+        .attr('class', 'node-shape'); // Add class for easier selection
+    } else {
+      // Use circles in color mode with varying colors
+      node
+        .append('circle')
+        .attr('r', 20)
+        .attr('fill', (d) => colorScale(d.pca || 1)) // Use each factor's color
+        .attr('stroke', (d) => {
+          // Check if flag is true for current factor index
+          const nodeData = correlationData.find((item) => item.respondent === d.id);
+          return nodeData && nodeData.flag && nodeData.flag[currentFactorIndex] ? '#000' : '#fff';
+        })
+        .attr('stroke-width', 2)
+        .style('stroke-dasharray', (d) => {
+          // Check if flag is true for current factor index
+          const nodeData = correlationData.find((item) => item.respondent === d.id);
+          return nodeData && nodeData.flag && nodeData.flag[currentFactorIndex] ? '5, 5' : 'none';
+        })
+        .style('cursor', 'pointer')
+        .attr('class', 'node-shape'); // Add class for easier selection
+    }
 
     // Add labels to nodes
     node
       .append('text')
       .text((d) => d.id)
       .attr('text-anchor', 'middle')
-      .attr('dy', '0.35em')
+      .attr('dy', '0.35em') // Standard centering works for all shapes now
       .attr('class', 'text-xs font-semibold cursor-default pointer-events-none')
       .attr('fill', '#000');
 
@@ -257,7 +436,8 @@ const ForceGraph = ({
           );
 
         // Highlight connected nodes
-        node.select('circle').style('opacity', (n) => {
+        const shapeSelector = isGrayscale ? 'path' : 'circle';
+        node.select(shapeSelector).style('opacity', (n) => {
           if (n.id === d.id) return 1;
           const connected = links.some(
             (l) =>
@@ -287,7 +467,8 @@ const ForceGraph = ({
           .style('stroke-opacity', 0.6)
           .style('stroke-width', (d) => linkWidthScale(Math.abs(d.value)));
 
-        node.select('circle').style('opacity', 1);
+        const shapeSelector = isGrayscale ? 'path' : 'circle';
+        node.select(shapeSelector).style('opacity', 1);
 
         tooltip.style('opacity', 0);
       });
@@ -338,7 +519,16 @@ const ForceGraph = ({
     return () => {
       simulation.stop();
     };
-  }, [correlationData, width, height, title, subtitle, minCorrelation]);
+  }, [
+    correlationData,
+    width,
+    height,
+    title,
+    subtitle,
+    minCorrelation,
+    isGrayscale,
+    currentFactorIndex,
+  ]);
 
   const resetZoom = () => {
     if (svgRef.current && svgRef.current.resetZoom) {
@@ -348,27 +538,70 @@ const ForceGraph = ({
 
   const handleSelectionChange = (id, value) => {
     if (!svgRef.current || !colorScaleRef.current) return;
-    // Use D3 to select all circle elements within the SVG
+
+    // Update the current factor index
+    setCurrentFactorIndex(value);
+
+    const shapeSelector = isGrayscale ? 'path' : 'circle';
+
+    // Use D3 to select all shape elements within the SVG
     d3.select(svgRef.current)
-      .selectAll('circle')
-      .attr('stroke', (d) => (d.flag[value] === true ? '#000' : '#fff'))
-      .style('stroke-dasharray', (d) => (d.flag[value] === true ? '5, 5' : 'none'))
-      .attr('stroke-width', (d) => (d.flag[value] === true ? 3 : 3))
+      .selectAll(shapeSelector)
+      .attr('stroke', (d) => {
+        if (!d || !d.id) return isGrayscale ? '#000' : '#fff'; // Safety check
+        const nodeData = correlationData.find((item) => item.respondent === d.id);
+        const hasFlag = nodeData && nodeData.flag && nodeData.flag[value] === true;
+
+        if (isGrayscale) {
+          return '#000'; // Always black in grayscale mode
+        } else {
+          return hasFlag ? '#000' : '#fff'; // Black if flag true, white if false
+        }
+      })
+      .style('stroke-dasharray', (d) => {
+        if (!d || !d.id) return 'none'; // Safety check
+        const nodeData = correlationData.find((item) => item.respondent === d.id);
+        const hasFlag = nodeData && nodeData.flag && nodeData.flag[value] === true;
+        return hasFlag ? '5, 5' : 'none';
+      })
+      .attr('stroke-width', 2)
       .attr('fill', (d) => {
+        if (!d || !d.id) return isGrayscale ? '#e5e5e5' : '#d1d5db'; // Safety check
         // Find the corresponding data item to get the PCA value
         const nodeData = correlationData.find((item) => item.respondent === d.id);
         if (nodeData) {
           if (nodeData.pc[value] === null || nodeData.pc[value] === undefined) {
-            return '#d1d5db';
+            return isGrayscale ? '#e5e5e5' : '#d1d5db';
           }
-          // Check if a specific pca-{value} property exists in the data
+          // Get the factor number from the pc array at the selected index
           if (nodeData.pc[value]) {
-            return colorScaleRef.current(nodeData.pc[value]);
+            const factorNum = nodeData.pc[value];
+            if (isGrayscale) {
+              return grayscaleColors[0]; // Uniform fill color for all grayscale shapes
+            }
+            return colorScaleRef.current(factorNum); // Different colors for color mode
           }
         }
         // Fallback to current pca value
-        return '#d1d5db';
+        return isGrayscale ? '#e5e5e5' : '#d1d5db';
       });
+
+    // For grayscale mode, also update the shape based on the new factor
+    if (isGrayscale) {
+      d3.select(svgRef.current)
+        .selectAll('path')
+        .attr('d', (d) => {
+          if (!d || !d.id) return shapeGenerators[1](15); // Safety check
+          const nodeData = correlationData.find((item) => item.respondent === d.id);
+          if (nodeData && nodeData.pc[value]) {
+            const factorNum = nodeData.pc[value];
+            const shapeGen = shapeGenerators[factorNum] || shapeGenerators[1];
+            return shapeGen(15);
+          }
+          // Fallback
+          return shapeGenerators[1](15);
+        });
+    }
   };
 
   return (
@@ -383,7 +616,7 @@ const ForceGraph = ({
           debounceMs={500}
         />
         <ForceGraphDataSelectRadio />
-        <PcaScenarios onSelectionChange={handleSelectionChange} />
+        <PcaScenarios onSelectionChange={handleSelectionChange} isGrayscale={isGrayscale} />
       </div>
       <div className="relative bg-white rounded-lg">
         <svg ref={svgRef}></svg>
@@ -402,7 +635,7 @@ const ForceGraph = ({
       <div className="mt-4 flex gap-4 items-center flex-wrap">
         <button
           onClick={downloadSVG}
-          className="px-4 py-2 bg-grey-button text-black rounded-md hover:bg-indigo-700 transition-colors flex items-center gap-2"
+          className="px-4 py-2 bg-grey-button text-black rounded-md hover:shadow-[inset_0_0_0_4px_#666,_0_0_1px_transparent] transition-colors flex items-center gap-2"
         >
           <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path
@@ -416,7 +649,7 @@ const ForceGraph = ({
         </button>
         <button
           onClick={resetZoom}
-          className="px-4 py-2 bg-grey-button text-black rounded-md hover:bg-gray-700 transition-colors flex items-center gap-2"
+          className="px-4 py-2 bg-grey-button text-black rounded-md hover:shadow-[inset_0_0_0_4px_#666,_0_0_1px_transparent] transition-colors flex items-center gap-2"
         >
           <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path
@@ -428,13 +661,43 @@ const ForceGraph = ({
           </svg>
           Reset View
         </button>
+        <button
+          onClick={toggleGrayscale}
+          className={`px-4 py-2 rounded-md transition-colors flex items-center justify-center gap-2 w-[200px] text-center ${
+            isGrayscale
+              ? 'bg-primary-button text-black text-center hover:shadow-[inset_0_0_0_4px_#666,_0_0_1px_transparent]'
+              : 'bg-grey-button text-black text-center hover:shadow-[inset_0_0_0_4px_#666,_0_0_1px_transparent]'
+          }`}
+        >
+          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"
+            />
+          </svg>
+          {isGrayscale ? 'Color Mode' : 'Grayscale Shapes'}
+        </button>
         <div className="flex gap-4 text-sm">
           <div className="flex items-center gap-2">
-            <div className="w-4 h-1 bg-red-600"></div>
+            <div className={`w-4 h-1 ${isGrayscale ? 'bg-gray-800' : 'bg-red-600'}`}></div>
             <span>Positive correlation</span>
           </div>
           <div className="flex items-center gap-2">
-            <div className="w-4 h-1 bg-blue-600"></div>
+            <div
+              className={`w-4 h-1 ${isGrayscale ? 'bg-gray-400' : 'bg-blue-600'}`}
+              style={
+                isGrayscale
+                  ? {
+                      backgroundImage:
+                        'repeating-linear-gradient(to right, currentColor 0px, currentColor 4px, transparent 4px, transparent 8px)',
+                      backgroundColor: 'transparent',
+                      height: '2px',
+                    }
+                  : {}
+              }
+            ></div>
             <span>Negative correlation</span>
           </div>
         </div>
