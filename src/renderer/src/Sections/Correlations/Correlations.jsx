@@ -40,7 +40,7 @@ const Correlations = () => {
     forcedGraphData = corelationDataAll;
   }
 
-  console.log('forcedGraphData', JSON.stringify(forcedGraphData));
+  // console.log('forcedGraphData', JSON.stringify(forcedGraphData));
 
   // ${props.view ? 'animate-fade-out' : 'animate-fade-in'}
 

@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 
 const ForceGraphDataSelectRadio = () => {
   const updateLinkFilter = correlationState((state) => state.updateLinkFilter);
-  const [selected, setSelected] = useState('all');
+  const [selected, setSelected] = useState('positive');
   const { t } = useTranslation();
 
   const handleSelection = (value) => {
@@ -21,7 +21,7 @@ const ForceGraphDataSelectRadio = () => {
   return (
     <div className="flex flex-col rounded-lg bg-white p-1 ">
       <label className="label mb-0.5">
-        <span className="label-text font-medium">{t('Data')}: </span>
+        <span className="label-text font-medium">{t('Correlation Links')}: </span>
       </label>
       <div className="inline-flex gap-1 h-[25px]">
         {options.map((option) => (

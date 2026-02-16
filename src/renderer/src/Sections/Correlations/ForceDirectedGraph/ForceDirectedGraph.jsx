@@ -278,7 +278,7 @@ const ForceGraph = ({
 
         tooltip
           .style('opacity', 1)
-          .html(`<strong>${d.id}</strong><br>PCA: ${d.pc}<br>Connections:<br>${connections}`)
+          .html(`<strong>${d.id}</strong><br>Connections:<br>${connections}`)
           .style('left', `${event.pageX + 10}px`)
           .style('top', `${event.pageY - 10}px`);
       })
@@ -347,24 +347,27 @@ const ForceGraph = ({
   };
 
   const handleSelectionChange = (id, value) => {
-    console.log(id, value);
     if (!svgRef.current || !colorScaleRef.current) return;
-
     // Use D3 to select all circle elements within the SVG
     d3.select(svgRef.current)
       .selectAll('circle')
+      .attr('stroke', (d) => (d.flag[value] === true ? '#000' : '#fff'))
+      .style('stroke-dasharray', (d) => (d.flag[value] === true ? '5, 5' : 'none'))
+      .attr('stroke-width', (d) => (d.flag[value] === true ? 3 : 3))
       .attr('fill', (d) => {
         // Find the corresponding data item to get the PCA value
         const nodeData = correlationData.find((item) => item.respondent === d.id);
         if (nodeData) {
-          console.log(nodeData.pc[value]);
+          if (nodeData.pc[value] === null || nodeData.pc[value] === undefined) {
+            return '#d1d5db';
+          }
           // Check if a specific pca-{value} property exists in the data
-          if (nodeData['pc' + value]) {
-            return colorScaleRef.current(nodeData['pc'][value]);
+          if (nodeData.pc[value]) {
+            return colorScaleRef.current(nodeData.pc[value]);
           }
         }
         // Fallback to current pca value
-        return colorScaleRef.current(d.pc[0]);
+        return '#d1d5db';
       });
   };
 
@@ -433,10 +436,6 @@ const ForceGraph = ({
           <div className="flex items-center gap-2">
             <div className="w-4 h-1 bg-blue-600"></div>
             <span>Negative correlation</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <div className="w-4 h-1 bg-gray-300"></div>
-            <span>Weak correlation</span>
           </div>
         </div>
       </div>

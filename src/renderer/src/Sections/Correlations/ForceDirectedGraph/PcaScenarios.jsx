@@ -4,18 +4,18 @@ import { useTranslation } from 'react-i18next';
 
 const PcaScenarios = (props) => {
   const updatePcaFilter = correlationState((state) => state.updatePcaFilter);
-  const [selected, setSelected] = useState('all');
+  const [selected, setSelected] = useState('one');
   const { t } = useTranslation();
 
   const handleSelection = (id, value) => {
     props.onSelectionChange(id, value);
     // console.log(id, value);
-    // setSelected(id);
+    setSelected(id);
     // updatePcaFilter(+value);
   };
 
   const options = [
-    // { id: 'one', label: t('1'), value: 0 },
+    { id: 'one', label: t('1'), value: 0 },
     { id: 'two', label: t('2'), value: 1 },
     { id: 'three', label: t('3'), value: 2 },
     { id: 'four', label: t('4'), value: 3 },
@@ -23,11 +23,11 @@ const PcaScenarios = (props) => {
     { id: 'six', label: t('6'), value: 5 },
     { id: 'seven', label: t('7'), value: 6 },
     { id: 'eight', label: t('8'), value: 7 },
-    { id: 'none', label: t('Clear'), value: null },
+    // { id: 'none', label: t('Clear'), value: 8 },
   ];
 
   const colorArray = [
-    // 'bg-gray-300', // Gray
+    'bg-gray-300', // Gray
     'bg-sky-300', // Blue
     'bg-orange-300', // Orange
     'bg-green-300', // Green
