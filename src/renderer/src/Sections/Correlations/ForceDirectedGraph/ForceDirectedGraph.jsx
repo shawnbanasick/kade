@@ -214,12 +214,12 @@ const ForceGraph = ({
     const legendColumnWidth = 140;
     const legendTotalWidth = legendColumns * legendColumnWidth;
     const legendX = (width - legendTotalWidth) / 2; // Center the legend
-    const legendY = 60; // Higher on the page (was 70)
+    const legendY = 20; // Higher on the page (was 70)
 
     // Legend title
     legendGroup
       .append('text')
-      .attr('x', legendX)
+      .attr('x', legendX - 15)
       .attr('y', legendY)
       .attr('class', 'text-sm font-semibold')
       .attr('fill', '#000')
@@ -289,7 +289,7 @@ const ForceGraph = ({
         return event.type !== 'mousedown' || event.target.tagName !== 'circle';
       }) // Disable zoom when shift key is pressed
       .on('zoom', (event) => {
-        g.attr('transform', `translate(0, 150) ${event.transform}`); // Adjusted for legend space
+        g.attr('transform', `translate(0, 50) ${event.transform}`); // Adjusted for legend space
       });
 
     // Apply zoom to the container
@@ -334,9 +334,9 @@ const ForceGraph = ({
             return absCorr / 100;
           })
       )
-      .force('charge', d3.forceManyBody().strength(-25))
+      .force('charge', d3.forceManyBody().strength(-5))
       .force('center', d3.forceCenter(width / 2, (height - 150) / 2)) // Adjusted for legend space
-      .force('collision', d3.forceCollide().radius(40));
+      .force('collision', d3.forceCollide().radius(30));
 
     // Tooltip
     const tooltip = d3.select(tooltipRef.current);
@@ -569,8 +569,8 @@ const ForceGraph = ({
         .select('.legend-group')
         .append('text')
         .attr('class', 'legend-explanation')
-        .attr('x', width / 2)
-        .attr('y', 150) // Position below the legend items (60 + 90)
+        .attr('x', width / 2 - 45)
+        .attr('y', 120) // Position below the legend items (60 + 90)
         .attr('text-anchor', 'middle')
         .attr('class', 'text-xs legend-explanation')
         .attr('fill', '#666')
@@ -658,37 +658,39 @@ const ForceGraph = ({
 
   return (
     <>
-      <div className="flex w-[calc(85vw-30px)] text-basis h-[70px] items-center justify-between">
+      <div className="flex w-[calc(85vw-30px)] text-basis h-[70px] items-center">
         <div className="flex items-center gap-2">
           <DebouncedNumberInput
             value={correlationThreshold}
-            label="Correlation Threshold"
+            label="Cutoff"
             min={0}
             max={1}
             step={0.01}
             debounceMs={500}
           />
           <ForceGraphDataSelectRadio />
-          <PcaScenarios onSelectionChange={handleSelectionChange} />
+          <PcaScenarios onSelectionChange={handleSelectionChange} isGrayscale={isGrayscale} />
         </div>
-        <button
-          onClick={() => setShowAutoFlags(!showAutoFlags)}
-          className={`px-4 py-2 rounded-md transition-colors flex items-center gap-2 ${
-            showAutoFlags
-              ? 'bg-blue-600 text-white hover:bg-blue-700'
-              : 'bg-gray-300 text-gray-700 hover:bg-gray-400'
-          }`}
-        >
-          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M3 21v-4m0 0V5a2 2 0 012-2h6.5l1 1H21l-3 6 3 6h-8.5l-1-1H5a2 2 0 00-2 2zm9-13.5V9"
-            />
-          </svg>
-          Auto-Flag {showAutoFlags ? 'ON' : 'OFF'}
-        </button>
+        <div className="mt-6 ml-6">
+          <button
+            onClick={() => setShowAutoFlags(!showAutoFlags)}
+            className={`px-4 py-2 rounded-md transition-colors flex items-center justify-center gap-2 ${
+              showAutoFlags
+                ? 'bg-primary-button text-black hover:shadow-[inset_0_0_0_4px_#666,_0_0_1px_transparent]'
+                : 'bg-grey-button text-black hover:shadow-[inset_0_0_0_4px_#666,_0_0_1px_transparent]'
+            }`}
+          >
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M3 21v-4m0 0V5a2 2 0 012-2h6.5l1 1H21l-3 6 3 6h-8.5l-1-1H5a2 2 0 00-2 2zm9-13.5V9"
+              />
+            </svg>
+            Auto-Flag {showAutoFlags ? 'ON' : 'OFF'}
+          </button>
+        </div>
       </div>
       <div className="relative bg-white rounded-lg">
         <svg ref={svgRef}></svg>
@@ -707,7 +709,7 @@ const ForceGraph = ({
       <div className="mt-4 flex gap-4 items-center flex-wrap">
         <button
           onClick={downloadSVG}
-          className="px-4 py-2 bg-grey-button text-black rounded-md hover:bg-indigo-700 transition-colors flex items-center gap-2"
+          className="px-4 py-2 bg-grey-button text-black rounded-md hover:shadow-[inset_0_0_0_4px_#666,_0_0_1px_transparent] transition-colors flex items-center gap-2"
         >
           <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path
@@ -721,7 +723,7 @@ const ForceGraph = ({
         </button>
         <button
           onClick={resetZoom}
-          className="px-4 py-2 bg-grey-button text-black rounded-md hover:bg-gray-700 transition-colors flex items-center gap-2"
+          className="px-4 py-2 bg-grey-button text-black rounded-md hover:shadow-[inset_0_0_0_4px_#666,_0_0_1px_transparent] transition-colors flex items-center gap-2"
         >
           <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path
@@ -737,8 +739,8 @@ const ForceGraph = ({
           onClick={toggleGrayscale}
           className={`px-4 py-2 rounded-md transition-colors flex items-center gap-2 ${
             isGrayscale
-              ? 'bg-gray-700 text-white hover:bg-gray-600'
-              : 'bg-grey-button text-black hover:bg-gray-700'
+              ? 'bg-primary-button text-black hover:shadow-[inset_0_0_0_4px_#666,_0_0_1px_transparent]'
+              : 'bg-grey-button text-black hover:shadow-[inset_0_0_0_4px_#666,_0_0_1px_transparent]'
           }`}
         >
           <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">

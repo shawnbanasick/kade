@@ -4,7 +4,7 @@ import correlationState from '../../GlobalState/correlationState';
 const DebouncedNumberInput = ({
   value,
   label,
-  placeholder = 'Enter a number',
+  placeholder = 'val',
   min,
   max,
   step = 1,
