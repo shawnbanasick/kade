@@ -13,8 +13,8 @@ const ForceGraphDataSelectRadio = () => {
   };
 
   const options = [
-    { id: 'positive', label: t('Positive') },
-    { id: 'negative', label: t('Negative') },
+    { id: 'positive', label: '+' },
+    { id: 'negative', label: '-' },
     { id: 'all', label: t('All') },
   ];
 
@@ -29,7 +29,7 @@ const ForceGraphDataSelectRadio = () => {
             key={option.id}
             onClick={() => handleSelection(option.id)}
             className={`
-            relative px-4 py-1.5 rounded-md text-sm font-medium bg-grey-button transition-all duration-200
+            relative px-4 pb-0 rounded-md text-sm font-medium bg-grey-button transition-all duration-200
             ${
               selected === option.id
                 ? `bg-primary-button hover:shadow-[inset_0_0_0_4px_#666,_0_0_1px_transparent]`

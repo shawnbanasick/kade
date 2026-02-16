@@ -55,18 +55,11 @@ const PcaScenarios = (props) => {
   const selectedValue = selectedOption?.value;
 
   return (
-    <div className="flex flex-col rounded-lg bg-white p-1 ml-8">
+    <div className="flex flex-col rounded-lg bg-white p-1 ml-3">
       <label className="label mb-0.5">
-        <span className="label-text font-medium">{t('PCA Scenarios')}: </span>
+        <span className="label-text font-medium">{t('Principal Components Scenarios')}: </span>
       </label>
       <div className="inline-flex flex-wrap gap-4 h-[25px]">
-        <button
-          className={`
-            relative px-0 py-1.5 bg-white rounded-md text-sm font-medium bg-grey-button
-          `}
-        >
-          {t('Principal Components')}:
-        </button>
         {options.map((option, index) => {
           // Determine if this button should be scaled
           const shouldScale =

@@ -30,6 +30,9 @@ const ForceGraph = ({
   // Track which factor index is currently selected (0-based index into pc array)
   const [currentFactorIndex, setCurrentFactorIndex] = useState(0);
 
+  // Track auto-flag toggle state
+  const [showAutoFlags, setShowAutoFlags] = useState(false);
+
   // Define shape paths for different factors (PCA values 1-8)
   const shapeGenerators = {
     1: (r) => `M ${-r},${-r} L ${r},${-r} L ${r},${r} L ${-r},${r} Z`, // Square (centered)
@@ -258,15 +261,17 @@ const ForceGraph = ({
         .text(`Factor ${i}`);
     }
 
-    // Add explanatory text below the legend
-    legendGroup
-      .append('text')
-      .attr('x', width / 2 - 55)
-      .attr('y', legendY + 90) // Position below the legend items
-      .attr('text-anchor', 'middle')
-      .attr('class', 'text-xs')
-      .attr('fill', '#000')
-      .text('Dashed shape border indicates an auto-flagged factor loading.');
+    // Add explanatory text below the legend (only when auto-flags are shown)
+    if (showAutoFlags) {
+      legendGroup
+        .append('text')
+        .attr('x', width / 2 - 55)
+        .attr('y', legendY + 90) // Position below the legend items
+        .attr('text-anchor', 'middle')
+        .attr('class', 'text-xs')
+        .attr('fill', '#000')
+        .text('Dashed border indicates an auto-flagged factor loading.');
+    }
 
     // Create a group for the graph (so title stays fixed, but graph can zoom/pan)
     // const container = svg.append('g').attr('transform', `translate(0, 80)`);
@@ -294,7 +299,7 @@ const ForceGraph = ({
         return event.type !== 'mousedown' || event.target.tagName !== 'circle';
       }) // Disable zoom when shift key is pressed
       .on('zoom', (event) => {
-        g.attr('transform', `translate(0, 150) ${event.transform}`); // Adjusted for legend space
+        g.attr('transform', `translate(0, 50) ${event.transform}`); // Adjusted for legend space
       });
 
     // Apply zoom to the container
@@ -339,7 +344,7 @@ const ForceGraph = ({
             return absCorr / 100;
           })
       )
-      .force('charge', d3.forceManyBody().strength(-5)) // smaller number subtracted = weaker force
+      .force('charge', d3.forceManyBody().strength(-5))
       .force('center', d3.forceCenter(width / 2, (height - 150) / 2)) // Adjusted for legend space
       .force('collision', d3.forceCollide().radius(30));
 
@@ -387,7 +392,8 @@ const ForceGraph = ({
         .attr('stroke', '#000')
         .attr('stroke-width', 2)
         .style('stroke-dasharray', (d) => {
-          // Check if flag is true for current factor index
+          // Check if flag is true for current factor index AND auto-flags are enabled
+          if (!showAutoFlags) return 'none';
           const nodeData = correlationData.find((item) => item.respondent === d.id);
           return nodeData && nodeData.flag && nodeData.flag[currentFactorIndex] ? '5, 5' : 'none';
         })
@@ -400,13 +406,15 @@ const ForceGraph = ({
         .attr('r', 20)
         .attr('fill', (d) => colorScale(d.pca || 1)) // Use each factor's color
         .attr('stroke', (d) => {
-          // Check if flag is true for current factor index
+          // Check if flag is true for current factor index AND auto-flags are enabled
+          if (!showAutoFlags) return '#fff';
           const nodeData = correlationData.find((item) => item.respondent === d.id);
           return nodeData && nodeData.flag && nodeData.flag[currentFactorIndex] ? '#000' : '#fff';
         })
         .attr('stroke-width', 2)
         .style('stroke-dasharray', (d) => {
-          // Check if flag is true for current factor index
+          // Check if flag is true for current factor index AND auto-flags are enabled
+          if (!showAutoFlags) return 'none';
           const nodeData = correlationData.find((item) => item.respondent === d.id);
           return nodeData && nodeData.flag && nodeData.flag[currentFactorIndex] ? '5, 5' : 'none';
         })
@@ -528,7 +536,8 @@ const ForceGraph = ({
     minCorrelation,
     isGrayscale,
     currentFactorIndex,
-  ]);
+    showAutoFlags,
+  ]); // end of useEffects
 
   const resetZoom = () => {
     if (svgRef.current && svgRef.current.resetZoom) {
@@ -549,6 +558,12 @@ const ForceGraph = ({
       .selectAll(shapeSelector)
       .attr('stroke', (d) => {
         if (!d || !d.id) return isGrayscale ? '#000' : '#fff'; // Safety check
+
+        // If auto-flags are disabled, use default stroke colors
+        if (!showAutoFlags) {
+          return isGrayscale ? '#000' : '#fff';
+        }
+
         const nodeData = correlationData.find((item) => item.respondent === d.id);
         const hasFlag = nodeData && nodeData.flag && nodeData.flag[value] === true;
 
@@ -560,6 +575,10 @@ const ForceGraph = ({
       })
       .style('stroke-dasharray', (d) => {
         if (!d || !d.id) return 'none'; // Safety check
+
+        // If auto-flags are disabled, no dashed borders
+        if (!showAutoFlags) return 'none';
+
         const nodeData = correlationData.find((item) => item.respondent === d.id);
         const hasFlag = nodeData && nodeData.flag && nodeData.flag[value] === true;
         return hasFlag ? '5, 5' : 'none';
@@ -586,7 +605,7 @@ const ForceGraph = ({
         return isGrayscale ? '#e5e5e5' : '#d1d5db';
       });
 
-    // For grayscale mode, also update the shape based on the new factor
+    // For grayscale mode, also update the shape based on the new factor - move out
     if (isGrayscale) {
       d3.select(svgRef.current)
         .selectAll('path')
@@ -606,17 +625,39 @@ const ForceGraph = ({
 
   return (
     <>
-      <div className="flex w-[calc(85vw-30px)]  text-basis h-[70px]">
-        <DebouncedNumberInput
-          value={correlationThreshold}
-          label="Correlation Threshold"
-          min={0}
-          max={1}
-          step={0.01}
-          debounceMs={500}
-        />
-        <ForceGraphDataSelectRadio />
-        <PcaScenarios onSelectionChange={handleSelectionChange} isGrayscale={isGrayscale} />
+      <div className="flex w-[calc(85vw-30px)] text-basis h-[70px] items-center">
+        <div className="flex items-center gap-2 ">
+          <DebouncedNumberInput
+            value={correlationThreshold}
+            label="Cutoff"
+            min={0}
+            max={1}
+            step={0.01}
+            debounceMs={500}
+          />
+          <ForceGraphDataSelectRadio />
+          <PcaScenarios onSelectionChange={handleSelectionChange} />
+        </div>
+        <div className="ml-2 mt-6">
+          <button
+            onClick={() => setShowAutoFlags(!showAutoFlags)}
+            className={`px-4 py-2 rounded-md transition-colors flex items-center justify-center gap-2 w-[220px] ${
+              showAutoFlags
+                ? 'bg-primary-button text-black hover:shadow-[inset_0_0_0_4px_#666,_0_0_1px_transparent]'
+                : 'bg-grey-button text-black hover:shadow-[inset_0_0_0_4px_#666,_0_0_1px_transparent]'
+            }`}
+          >
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M3 21v-4m0 0V5a2 2 0 012-2h6.5l1 1H21l-3 6 3 6h-8.5l-1-1H5a2 2 0 00-2 2zm9-13.5V9"
+              />
+            </svg>
+            Auto-Flag Display :{showAutoFlags ? 'ON' : 'OFF'}
+          </button>
+        </div>
       </div>
       <div className="relative bg-white rounded-lg">
         <svg ref={svgRef}></svg>
@@ -663,10 +704,10 @@ const ForceGraph = ({
         </button>
         <button
           onClick={toggleGrayscale}
-          className={`px-4 py-2 rounded-md transition-colors flex items-center justify-center gap-2 w-[200px] text-center ${
+          className={`px-4 py-2 rounded-md transition-colors flex items-center gap-2 ${
             isGrayscale
-              ? 'bg-primary-button text-black text-center hover:shadow-[inset_0_0_0_4px_#666,_0_0_1px_transparent]'
-              : 'bg-grey-button text-black text-center hover:shadow-[inset_0_0_0_4px_#666,_0_0_1px_transparent]'
+              ? 'bg-primary-button text-black hover:shadow-[inset_0_0_0_4px_#666,_0_0_1px_transparent]'
+              : 'bg-grey-button text-black hover:shadow-[inset_0_0_0_4px_#666,_0_0_1px_transparent]'
           }`}
         >
           <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
