@@ -1,15 +1,83 @@
-const getNodes = (labelObj, widthObj, xObj, paddingTopVal, heightVal) => {
+const getNodes = (
+  labelObj,
+  widthObj,
+  paddingTopVal,
+  heightVal,
+  horizontalSpacing = 210,
+  verticalSpacing = 125
+) => {
+  // Vertical positions for each row — evenly spaced by verticalSpacing, with
+  // the first row offset fixed at 100px so the top node has breathing room.
+  const firstRowOffset = 100;
   const rowSpacing = {
-    row12: 100,
-    row23: 225,
-    row34: 350,
-    row45: 475,
-    row56: 600,
-    row67: 725,
-    row78: 850,
+    row12: firstRowOffset,
+    row23: firstRowOffset + verticalSpacing,
+    row34: firstRowOffset + verticalSpacing * 2,
+    row45: firstRowOffset + verticalSpacing * 3,
+    row56: firstRowOffset + verticalSpacing * 4,
+    row67: firstRowOffset + verticalSpacing * 5,
+    row78: firstRowOffset + verticalSpacing * 6,
   };
 
-  // console.log(labelObj.label11);
+  // Each row's nodes are evenly spaced by horizontalSpacing.
+  // Row 1 is centered; rows 2+ start from x=0 and step by horizontalSpacing.
+  // The offsets below preserve the relative centering from your original xObj.
+  const s = horizontalSpacing; // shorthand
+
+  const xObj = {
+    // Row 1 (1 node) — centered over row 2's midpoint
+    // x11: Math.round(s * 0.5),
+    x11: 0,
+
+    // Row 2 (2 nodes)
+    x21: 0,
+    x22: s,
+
+    // Row 3 (3 nodes)
+    x31: 0,
+    x32: s,
+    x33: s * 2,
+
+    // Row 4 (4 nodes)
+    x41: 0,
+    x42: s,
+    x43: s * 2,
+    x44: s * 3,
+
+    // Row 5 (5 nodes)
+    x51: 0,
+    x52: s,
+    x53: s * 2,
+    x54: s * 3,
+    x55: s * 4,
+
+    // Row 6 (6 nodes)
+    x61: 0,
+    x62: s,
+    x63: s * 2,
+    x64: s * 3,
+    x65: s * 4,
+    x66: s * 5,
+
+    // Row 7 (7 nodes)
+    x71: 0,
+    x72: s,
+    x73: s * 2,
+    x74: s * 3,
+    x75: s * 4,
+    x76: s * 5,
+    x77: s * 6,
+
+    // Row 8 (8 nodes)
+    x81: 0,
+    x82: s,
+    x83: s * 2,
+    x84: s * 3,
+    x85: s * 4,
+    x86: s * 5,
+    x87: s * 6,
+    x88: s * 7,
+  };
 
   const initialNodes = [
     {
@@ -123,7 +191,6 @@ const getNodes = (labelObj, widthObj, xObj, paddingTopVal, heightVal) => {
         textAlign: 'center',
       },
     },
-
     {
       id: '5-1',
       data: { label: '5/1' },
@@ -245,7 +312,6 @@ const getNodes = (labelObj, widthObj, xObj, paddingTopVal, heightVal) => {
         textAlign: 'center',
       },
     },
-
     {
       id: '7-1',
       data: { label: '7/1' },
@@ -323,7 +389,6 @@ const getNodes = (labelObj, widthObj, xObj, paddingTopVal, heightVal) => {
         textAlign: 'center',
       },
     },
-
     {
       id: '8-1',
       data: { label: '8/1' },

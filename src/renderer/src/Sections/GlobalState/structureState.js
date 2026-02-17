@@ -13,7 +13,11 @@ const structureState = create(
     refreshVizButtonColor: '#d6dbe0',
     structureTabActive: 'tab1',
     structureCorrelationThreshold: 0.4,
+    horizontalSpacing: 150,
+    verticalSpacing: 100,
 
+    updateVerticalSpacing: (inputValue) => set({ verticalSpacing: inputValue }),
+    updateHorizontalSpacing: (inputValue) => set({ horizontalSpacing: inputValue }),
     updateStructureCorrelationThreshold: (inputValue) =>
       set({ structureCorrelationThreshold: inputValue }),
     updateStructureTabActive: (inputValue) => set({ structureTabActive: inputValue }),
