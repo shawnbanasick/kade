@@ -1,8 +1,18 @@
-import { useCallback, useMemo } from 'react';
-import ReactFlow, { Controls, Background, applyEdgeChanges } from 'reactflow';
+import { useCallback, useMemo, useRef } from 'react';
+import ReactFlow, {
+  Controls,
+  Background,
+  applyEdgeChanges,
+  ReactFlowProvider,
+  Panel,
+} from 'reactflow';
+import * as htmlToImage from 'html-to-image';
+import StraightEdgeWithLabel from './StraightEdgeWithLabel';
+import EdgeLegend from './EdgeLegend';
+
+const edgeTypes = { straightWithLabel: StraightEdgeWithLabel };
 import 'reactflow/dist/style.css';
 import getNodes from './getNodes';
-import styled from 'styled-components';
 import './reactFlow.css';
 import structureState from '../GlobalState/structureState';
 import UserNumberInput from './UserNumberInput';
@@ -57,7 +67,10 @@ const widthObj = {
   width88: 60,
 };
 
-function Flow() {
+// ─── Inner component — has access to useReactFlow ────────────────────────────
+function FlowInner() {
+  const flowRef = useRef(null);
+
   const edges = structureState((state) => state.initialEdges);
   const updateEdges = structureState((state) => state.updateInitialEdges);
   const structureCorrelationThreshold = structureState(
@@ -66,9 +79,6 @@ function Flow() {
   const verticalSpacing = structureState((state) => state.verticalSpacing);
   const horizontalSpacing = structureState((state) => state.horizontalSpacing);
 
-  console.log('edges', edges);
-
-  // Recomputes automatically whenever horizontalSpacing or verticalSpacing changes in Zustand
   const nodes = useMemo(
     () =>
       getNodes(labelObj, widthObj, paddingTopVal, heightVal, horizontalSpacing, verticalSpacing),
@@ -76,8 +86,20 @@ function Flow() {
   );
 
   const onEdgesChange = useCallback(
-    (changes) => updateEdges((eds) => applyEdgeChanges(changes, eds)),
-    []
+    (changes) => {
+      const currentEdges = structureState.getState().initialEdges;
+      updateEdges(applyEdgeChanges(changes, currentEdges));
+    },
+    [updateEdges]
+  );
+
+  const onEdgesDelete = useCallback(
+    (deletedEdges) => {
+      const currentEdges = structureState.getState().initialEdges;
+      const deletedIds = new Set(deletedEdges.map((e) => e.id));
+      updateEdges(currentEdges.filter((e) => !deletedIds.has(e.id)));
+    },
+    [updateEdges]
   );
 
   const handleCorrelationChange = useCallback((newValue) => {
@@ -86,18 +108,50 @@ function Flow() {
   }, []);
 
   const handleVerticalSpacingChange = useCallback((newValue) => {
-    // Just update Zustand — useMemo above handles the rest
     structureState.setState({ verticalSpacing: newValue });
   }, []);
 
   const handleHorizontalSpacingChange = useCallback((newValue) => {
-    // Just update Zustand — useMemo above handles the rest
     structureState.setState({ horizontalSpacing: newValue });
   }, []);
 
+  const handleDownloadSvg = useCallback(() => {
+    const container = flowRef.current;
+    if (!container) return;
+
+    htmlToImage
+      .toSvg(container, {
+        skipFonts: true,
+        skipAutoScale: true,
+        backgroundColor: 'white',
+        filter: (node) => {
+          if (
+            node?.classList?.contains('react-flow__minimap') ||
+            node?.classList?.contains('react-flow__controls') ||
+            node?.classList?.contains('react-flow__background')
+          ) {
+            return false;
+          }
+          if (node?.tagName === 'LINK' && node?.rel === 'stylesheet') {
+            return false;
+          }
+          return true;
+        },
+      })
+      .then((dataUrl) => {
+        const link = document.createElement('a');
+        link.href = dataUrl;
+        link.download = 'structure-model.svg';
+        link.click();
+      })
+      .catch((err) => {
+        console.error('SVG export failed:', err);
+      });
+  }, []);
+
   return (
-    <Container>
-      <div className="flex flex-row gap-20">
+    <div ref={flowRef} className="relative w-full h-[800px] bg-white">
+      <div className="flex flex-row gap-20 items-end">
         <UserNumberInput
           onChange={handleCorrelationChange}
           value={structureCorrelationThreshold}
@@ -131,19 +185,43 @@ function Flow() {
           debounceMs={500}
           className="w-[60px]"
         />
+        <button
+          onClick={handleDownloadSvg}
+          className="h-[22px] px-2.5 mb-1 text-xs bg-gray-100 border border-gray-300 rounded cursor-pointer whitespace-nowrap hover:bg-gray-200"
+        >
+          Download SVG
+        </button>
       </div>
-      <ReactFlow id="SvgNode" nodes={nodes} edges={edges} onEdgesChange={onEdgesChange} fitView>
+      <ReactFlow
+        id="SvgNode"
+        nodes={nodes}
+        edges={edges}
+        edgeTypes={edgeTypes}
+        onEdgesChange={onEdgesChange}
+        onEdgesDelete={onEdgesDelete}
+        deleteKeyCode={['Backspace', 'Delete']}
+        elementsSelectable={true}
+        edgesFocusable={true}
+        edgesUpdatable={true}
+        fitView
+      >
         <Background />
         <Controls />
+        <Panel position="top-right">
+          <EdgeLegend />
+        </Panel>
       </ReactFlow>
-    </Container>
+    </div>
+  );
+}
+
+// ─── Outer wrapper — provides ReactFlowProvider context ──────────────────────
+function Flow() {
+  return (
+    <ReactFlowProvider>
+      <FlowInner />
+    </ReactFlowProvider>
   );
 }
 
 export default Flow;
-
-const Container = styled.div`
-  width: 100%;
-  height: 95%;
-  background-color: white;
-`;
