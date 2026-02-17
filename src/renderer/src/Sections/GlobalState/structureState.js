@@ -12,7 +12,10 @@ const structureState = create(
     responseArray: [],
     refreshVizButtonColor: '#d6dbe0',
     structureTabActive: 'tab1',
+    structureCorrelationThreshold: 0.4,
 
+    updateStructureCorrelationThreshold: (inputValue) =>
+      set({ structureCorrelationThreshold: inputValue }),
     updateStructureTabActive: (inputValue) => set({ structureTabActive: inputValue }),
     updateRefreshVizButtonColor: (inputValue) => set({ refreshVizButtonColor: inputValue }),
     updateResponseArray: (inputValue) => set({ responseArray: inputValue }),

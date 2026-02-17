@@ -2,13 +2,13 @@ import structureState from '../GlobalState/structureState';
 import { MarkerType } from 'reactflow';
 
 const refreshViz = () => {
-  const newCutoff = structureState.getState().lineDisplayCutoff;
+  const newCutoff = structureState.getState().structureCorrelationThreshold; // ← match the correct state key
   const data = structureState.getState().responseArray;
-  let initialEdges = [];
+  const initialEdges = [];
 
   data.forEach((item) => {
     if (Math.abs(item[3]) > newCutoff) {
-      let tempObj = {
+      initialEdges.push({
         id: item[0],
         source: item[1],
         target: item[2],
@@ -24,11 +24,11 @@ const refreshViz = () => {
           height: 8,
           color: 'black',
         },
-      };
-      initialEdges.push(tempObj);
+      });
     }
-    structureState.setState({ initialEdges: initialEdges });
   });
+
+  structureState.setState({ initialEdges }); // ← moved outside the loop
 };
 
 export default refreshViz;

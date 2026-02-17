@@ -1,5 +1,4 @@
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
-import ControlPanel from './ControlPanel';
 import StructViz from './StructViz';
 import styled from 'styled-components';
 import './react-tabs.css';
@@ -26,34 +25,20 @@ const Structure = () => {
   } else {
     forcedGraphData = corelationDataAll;
   }
-  // useEffect(() => {
-  //   console.log('structureTabActive', structureTabActive);
-  // }, [structureTabActive]);
-
-  const handleTabClick = (tabId) => {
-    updateStructureTabActive(tabId);
-  };
 
   const tabs = [
     {
       title: 'Heirarchy',
-      content: (
-        <>
-          <ControlPanel />
-          <StructViz />
-        </>
-      ),
+      content: <StructViz />,
     },
     {
       title: 'Network',
       content: (
-        <div>
-          <ForceGraph
-            data={forcedGraphData}
-            correlationThreshold={correlationThreshold}
-            factorIndices={factorIndices}
-          />
-        </div>
+        <ForceGraph
+          data={forcedGraphData}
+          correlationThreshold={correlationThreshold}
+          factorIndices={factorIndices}
+        />
       ),
     },
     {

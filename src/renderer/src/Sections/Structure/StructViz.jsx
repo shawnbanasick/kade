@@ -6,12 +6,12 @@ import getEdges from './getEdges';
 import styled from 'styled-components';
 import './reactFlow.css';
 import structureState from '../GlobalState/structureState';
+import ControlPanel from './ControlPanel';
+import UserNumberInput from './UserNumberInput';
+import refreshViz from './refreshViz';
 
 const paddingTopVal = 0;
 const heightVal = 20;
-const markerWidthVal = 8;
-const markerHeightVal = 8;
-const markerStrokeWidthVal = 1.5;
 
 const labelObj = {
   label11: '1-1',
@@ -100,14 +100,17 @@ const xObj = {
 
 const initialNodes = getNodes(labelObj, widthObj, xObj, paddingTopVal, heightVal);
 
-// const initialEdges = getEdges(markerWidthVal, markerHeightVal, markerStrokeWidthVal);
-
 function Flow() {
   const edges = structureState((state) => state.initialEdges);
   const updateEdges = structureState((state) => state.updateInitialEdges);
 
+  const structureCorrelationThreshold = structureState(
+    (state) => state.structureCorrelationThreshold
+  );
+  const verticalSpacing = structureState((state) => state.verticalSpacing);
+  const horizontalSpacing = structureState((state) => state.horizontalSpacing);
+
   const [nodes, setNodes] = useState(initialNodes);
-  // const [edges, setEdges] = useState(initialEdges);
 
   const onNodesChange = useCallback(
     (changes) => setNodes((nds) => applyNodeChanges(changes, nds)),
@@ -118,20 +121,74 @@ function Flow() {
     []
   );
 
+  // Each handler writes the new value to Zustand first, then refreshViz reads
+  // it back from state — so the order is always: update → read → render
+  const handleCorrelationChange = useCallback((newValue) => {
+    structureState.setState({ structureCorrelationThreshold: newValue });
+    refreshViz();
+  }, []);
+
+  const handleVerticalSpacingChange = useCallback((newValue) => {
+    structureState.setState({ verticalSpacing: newValue });
+    refreshViz();
+  }, []);
+
+  const handleHorizontalSpacingChange = useCallback((newValue) => {
+    structureState.setState({ horizontalSpacing: newValue });
+    refreshViz();
+  }, []);
+
   return (
-    <Container>
-      <ReactFlow
-        id="SvgNode"
-        nodes={nodes}
-        onNodesChange={onNodesChange}
-        edges={edges}
-        onEdgesChange={onEdgesChange}
-        fitView
-      >
-        <Background />
-        <Controls />
-      </ReactFlow>
-    </Container>
+    <>
+      <Container>
+        <div className="flex flex-row gap-20">
+          <UserNumberInput
+            onChange={handleCorrelationChange}
+            value={structureCorrelationThreshold}
+            label="Correlation Cutoff"
+            placeholder="Threshold"
+            min={0}
+            max={1}
+            step={0.01}
+            debounceMs={500}
+            className="w-[60px]"
+          />
+          <UserNumberInput
+            onChange={handleVerticalSpacingChange}
+            value={verticalSpacing}
+            label="Vertical Spacing"
+            placeholder="Vertical Spacing"
+            min={0}
+            max={500}
+            step={1}
+            debounceMs={500}
+            className="w-[60px]"
+          />
+          <UserNumberInput
+            onChange={handleHorizontalSpacingChange}
+            value={horizontalSpacing}
+            label="Horizontal Spacing"
+            placeholder="Horizontal Spacing"
+            min={0}
+            max={500}
+            step={1}
+            debounceMs={500}
+            className="w-[60px]"
+          />
+        </div>
+        <ReactFlow
+          id="SvgNode"
+          nodes={nodes}
+          onNodesChange={onNodesChange}
+          edges={edges}
+          onEdgesChange={onEdgesChange}
+          fitView
+        >
+          <Background />
+          <Controls />
+        </ReactFlow>
+      </Container>
+    </>
   );
 }
 
@@ -141,9 +198,4 @@ const Container = styled.div`
   width: 100%;
   height: 95%;
   background-color: white;
-  /* display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  background-color: #f0f0f0; */
 `;
