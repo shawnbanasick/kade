@@ -3,6 +3,7 @@ import getSvd from '../Factors/PcaLogic/svd';
 import calcCorrelation from './calcCorrelation';
 import sortEigenValues from '../Factors/PcaLogic/sortEigenValues';
 import calcEigenVectors from '../Factors/PcaLogic/calcEigenVectors';
+import calcEigenCumulPercentArray from '../Factors/PcaLogic/calcEigenCumulPercentArray';
 import transposeMatrix from '../../Utils/transposeMatrix';
 import inflectPrincipalComponents from '../Factors/PcaLogic/inflectPrincipalComponents';
 import calcSumSquares from '../Rotation/varimaxLogic/2calcSumSquares';
@@ -11,6 +12,7 @@ import doVarimaxRotations from '../Rotation/varimaxLogic/2doVarimaxRotations';
 import evenRound from '../../Utils/evenRound';
 import calcCommunalities from '../Correlations/ForceDirectedGraph/calcCommunalities';
 import forceCalcSigCriterionValues from '../Correlations/ForceDirectedGraph/forceCalcSigCriteriaValues';
+import getPercentVarianceArray from './getPercentVarianceArray';
 
 registerPromiseWorker(function (array) {
   // array contents are stringified [X, numberofPrincipalComps]
@@ -28,6 +30,7 @@ registerPromiseWorker(function (array) {
   const rotationResultsArray = [];
   const autoflagDataArray = [];
   const edgeArray = [];
+  const explainedVarianceArrays = [];
 
   const m = X.length;
   const numberOfSorts = m;
@@ -37,6 +40,10 @@ registerPromiseWorker(function (array) {
   const eigens = svdResults.S;
   const svd = svdResults.U;
   const eigenValuesSorted = sortEigenValues(eigens);
+  const eigenCumulPercentArray = calcEigenCumulPercentArray([...eigenValuesSorted], m);
+  const eigenValuesAsPercents = eigenCumulPercentArray[0];
+
+  explainedVarianceArrays.push([eigenValuesAsPercents[0]]);
 
   const doEigenVecsCalcs = calcEigenVectors(
     numberOfSorts,
@@ -64,9 +71,19 @@ registerPromiseWorker(function (array) {
       sumSquares,
       tempUnrotatedComponents
     );
+
     const rotatedResults = doVarimaxRotations(standardizedFactorMatrix, sumSquares);
     autoflagDataArray.push([...rotatedResults]);
+
     const transposedRotatedResults = transposeMatrix(rotatedResults);
+
+    const sumSquaresRotated = calcSumSquares([...transposedRotatedResults]);
+
+    const levelVarianceArray = getPercentVarianceArray(
+      [...transposedRotatedResults],
+      numberOfSorts
+    );
+    explainedVarianceArrays.push(levelVarianceArray);
     rotationResultsArray.push([...transposedRotatedResults]);
   }
 
@@ -217,5 +234,5 @@ registerPromiseWorker(function (array) {
     item['flag'] = autoflaggedForcedPosResultsArray[index];
   });
 
-  return [edgeArray, factorIndices, forcedPos, forcedNeg, forcedAll];
+  return [edgeArray, factorIndices, forcedPos, forcedNeg, forcedAll, explainedVarianceArrays];
 });

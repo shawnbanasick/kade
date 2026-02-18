@@ -23,7 +23,7 @@ const EdgeLegend = () => {
   const paddingX = 12;
   const paddingY = 10;
   const textOffset = lineLength + 10;
-  const width = 175;
+  const width = 155;
   const height = items.length * rowHeight + paddingY * 2 + 12;
 
   return (
@@ -42,12 +42,12 @@ const EdgeLegend = () => {
 
       {/* Title */}
       <text
-        x={paddingX}
+        x={paddingX + 15}
         y={paddingY + 4}
         style={{ fontSize: 11, fontFamily: 'sans-serif', fontWeight: 'bold', fill: '#333' }}
         dominantBaseline="hanging"
       >
-        Edge Legend
+        Correlation Links
       </text>
 
       {/* Legend rows */}

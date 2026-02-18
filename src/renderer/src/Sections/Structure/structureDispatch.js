@@ -34,6 +34,7 @@ const structureDispatch = () => {
       let forcedPos = [...response[2]];
       let forcedNeg = [...response[3]];
       let forcedAll = [...response[4]];
+      let explainedVarianceArrays = [...response[5]];
 
       data.forEach((item) => {
         if (Math.abs(item[3]) > 0.3) {
@@ -58,6 +59,7 @@ const structureDispatch = () => {
         }
         structureState.setState({ responseArray: data });
         structureState.setState({ initialEdges: initialEdges });
+        structureState.setState({ explainedVarianceArrays: explainedVarianceArrays });
         correlationState.setState({ factorIndices: factorIndices });
         correlationState.setState({ forcedGraphDataPos: forcedPos });
         correlationState.setState({ forcedGraphDataNeg: forcedNeg });

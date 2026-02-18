@@ -15,7 +15,9 @@ const structureState = create(
     structureCorrelationThreshold: 0.4,
     horizontalSpacing: 150,
     verticalSpacing: 100,
+    explainedVarianceArrays: [],
 
+    updateExplainedVarianceArrays: (inputValue) => set({ explainedVarianceArrays: inputValue }),
     updateVerticalSpacing: (inputValue) => set({ verticalSpacing: inputValue }),
     updateHorizontalSpacing: (inputValue) => set({ horizontalSpacing: inputValue }),
     updateStructureCorrelationThreshold: (inputValue) =>
