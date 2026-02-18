@@ -63,7 +63,7 @@ const Structure = () => {
         duration-500
       `}
     >
-      <div className="tabs tabs-box flex bg-[#d6dbe0] h-[100%] rounded-tl-none">
+      <div className="tabs tabs-box flex bg-[#d6dbe0] h-[100%] rounded-tl-none rounded-bl-none">
         <input
           type="radio"
           name="my_tabs_Corr"
@@ -72,7 +72,7 @@ const Structure = () => {
           onClick={() => updateStructureTabActive('tab1')}
         />
 
-        <div className="tab-content bg-base-100 border-base-300 p-6">{tabs[0].content}</div>
+        <div className="tab-content bg-base-100 border-base-300 p-4">{tabs[0].content}</div>
 
         <input
           type="radio"

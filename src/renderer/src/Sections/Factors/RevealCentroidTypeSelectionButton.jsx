@@ -17,19 +17,23 @@ const RevealCentroidTypeSelectionButton = () => {
   );
 
   function handleClick() {
+    console.log('handleClick called revealCentroidTypeSelectionButton');
     updateActiveCentroidRevealButton(true);
     updateIsPcaButtonDisabled(true);
     updateShowCentroidSelection(true);
     updateIsCentroidRevealButtonDisabled(true);
   }
 
+  console.log(isActive, isDisabled);
+
   return (
     <div>
       <GeneralButton
         id="displayCentroidTypes"
         $isActive={isActive}
-        disabled={isDisabled}
+        disabled={false}
         onClick={handleClick}
+        className="bg-grey-button"
       >
         {t('Centroid Factors')}
       </GeneralButton>

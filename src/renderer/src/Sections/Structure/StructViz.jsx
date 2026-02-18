@@ -172,6 +172,21 @@ function FlowInner() {
           ) {
             return false;
           }
+          // Exclude button panel - check parent chain for button elements
+          let currentNode = node;
+          while (currentNode) {
+            if (currentNode?.tagName === 'BUTTON') {
+              return false;
+            }
+            if (
+              currentNode?.classList?.contains('react-flow__panel') &&
+              currentNode?.style?.position === 'absolute' &&
+              currentNode?.querySelector('button')
+            ) {
+              return false;
+            }
+            currentNode = currentNode.parentElement;
+          }
           if (node?.tagName === 'LINK' && node?.rel === 'stylesheet') {
             return false;
           }
@@ -201,7 +216,7 @@ function FlowInner() {
   }, [nodes, edges]);
 
   return (
-    <div ref={flowRef} className="relative w-full h-[800px] bg-white">
+    <div ref={flowRef} className="relative w-full h-[95%] bg-white">
       <div className="flex flex-row gap-20 items-end react-flow__panel-top">
         <UserNumberInput
           onChange={handleCorrelationChange}
@@ -238,7 +253,7 @@ function FlowInner() {
         />
 
         {/* Node Size Mode Select */}
-        <div className="form-control flex flex-col p-0 pt-0 mr-0 border-2 border-red-500">
+        <div className="form-control flex flex-col p-0 pt-0 mr-2">
           <label className="label mb-1 mt-1">
             <span className="label-text font-medium">Node Size:</span>
           </label>
@@ -261,32 +276,11 @@ function FlowInner() {
             placeholder="Scale"
             min={1}
             max={10}
-            step={0.5}
+            step={0.1}
             debounceMs={300}
-            className="w-[60px] border-2 border-red-500"
+            className="w-[60px]"
           />
         )}
-
-        <button
-          onClick={handleDownloadSvg}
-          className="px-4 py-2 bg-grey-button text-black rounded-md hover:shadow-[inset_0_0_0_4px_#666,_0_0_1px_transparent] transition-colors flex items-center gap-2"
-        >
-          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
-            />
-          </svg>
-          Download SVG
-        </button>
-        <button
-          onClick={handleDownloadDrawio}
-          className="px-4 py-2 bg-grey-button text-black rounded-md hover:shadow-[inset_0_0_0_4px_#666,_0_0_1px_transparent] transition-colors flex items-center gap-2"
-        >
-          Download Draw.io
-        </button>
       </div>
       <ReactFlow
         id="SvgNode"
@@ -303,9 +297,41 @@ function FlowInner() {
         proOptions={{ hideAttribution: true }}
       >
         <Background />
-        <Controls />
-        <Panel position="top-right" style={{ marginRight: '400px', marginTop: '100px' }}>
+        <Controls style={{ display: 'none' }} />
+        <Panel position="top-left" style={{ marginLeft: '600px', marginTop: '100px' }}>
           <EdgeLegend />
+        </Panel>
+        <Panel position="bottom-left" style={{ marginBottom: '10px', marginLeft: '10px' }}>
+          <div className="flex gap-3">
+            <button
+              onClick={handleDownloadSvg}
+              className="px-4 py-2 bg-grey-button text-black rounded-md hover:shadow-[inset_0_0_0_4px_#666,_0_0_1px_transparent] transition-colors flex items-center gap-2"
+            >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
+                />
+              </svg>
+              Download SVG
+            </button>
+            <button
+              onClick={handleDownloadDrawio}
+              className="px-4 py-2 bg-grey-button text-black rounded-md hover:shadow-[inset_0_0_0_4px_#666,_0_0_1px_transparent] transition-colors flex items-center gap-2"
+            >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
+                />
+              </svg>
+              Download Draw.io Format
+            </button>
+          </div>
         </Panel>
       </ReactFlow>
     </div>

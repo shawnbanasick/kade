@@ -6,6 +6,9 @@ import factorState from '../GlobalState/factorState';
 
 const TypeOfCentroidTransitionContainer = () => {
   const showCentroidSelection = factorState.getState().showCentroidSelection;
+
+  console.log('showCentroidSelection', showCentroidSelection);
+
   if (showCentroidSelection) {
     return (
       <TypeOfAnalysisTransitionContainerDiv>

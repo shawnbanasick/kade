@@ -63,7 +63,11 @@ const ResetAnalysisButton = () => {
     <Modal
       dimmer={'blurring'}
       trigger={
-        <GeneralButton id="resetAnalysisButton" style={{ marginLeft: 275 }} onClick={handleOpen}>
+        <GeneralButton
+          id="resetAnalysisButton"
+          className="bg-grey-button ml-[350px]!"
+          onClick={handleOpen}
+        >
           {t('Reset Analysis')}
         </GeneralButton>
       }

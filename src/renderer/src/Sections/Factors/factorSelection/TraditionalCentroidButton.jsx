@@ -20,27 +20,23 @@ const TraditionalCentroidButton = () => {
   const updateIsHorst55Disabled = factorState((state) => state.updateIsHorst55Disabled);
 
   const handleOnclick = () => {
+    console.log('handle on click called');
     updateShowNumberOfCentroidFacToExtract(true);
     updateActiveTraditionalCentroidFactorButton(true);
     updateIsTraditionalCentroidDisabled(true);
     updateIsHorst55Disabled(true); // // }, 500);
   };
   return (
-    <TradButton
-      as={GeneralButton}
+    <GeneralButton
       id="traditionalCentroidButton"
       $isActive={isActive}
       disabled={isDisabled}
       onClick={handleOnclick}
+      className="bg-grey-button"
     >
       Brown <br /> {t('Centroid Factors')}
-    </TradButton>
+    </GeneralButton>
   );
 };
 
 export default TraditionalCentroidButton;
-
-const TradButton = styled.div`
-  margin-left: 70px;
-  margin-right: 5px;
-`;

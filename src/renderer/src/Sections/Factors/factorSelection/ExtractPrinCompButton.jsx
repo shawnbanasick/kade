@@ -39,6 +39,7 @@ const PCAButton = () => {
         $isActive={isActive}
         disabled={isDisabled}
         onClick={handleClick}
+        className="bg-grey-button ml-[50px]!"
       >
         {t('Principal Components')}
       </GeneralButton>
