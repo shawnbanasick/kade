@@ -1,5 +1,5 @@
 import React from "react";
-import { Button } from "semantic-ui-react";
+import GeneralButton from "../../../Utils/GeneralButton";
 import varimaxDispatch from "../varimaxLogic/varimaxDispatch";
 import state from "../../../store";
 
@@ -61,7 +61,7 @@ const RotationButtonGroup = () => {
     // if (shouldDisplay) {
     return (
       <div>
-        <Button
+        <GeneralButton
           id="judgementalRotationButton"
           size={"small"}
           toggle
@@ -70,8 +70,8 @@ const RotationButtonGroup = () => {
           onClick={this.onJudgeClick}
         >
           Judgmental Rotation
-        </Button>
-        <Button
+        </GeneralButton>
+        <GeneralButton
           id="pcaRotationButton"
           size={"small"}
           toggle
@@ -81,11 +81,9 @@ const RotationButtonGroup = () => {
           onClick={this.onVarimaxClick}
         >
           {varimaxButtonText}
-        </Button>
+        </GeneralButton>
       </div>
     );
-    //   }
-    //   return null;
 }
 
  export default(RotationButtonGroup);

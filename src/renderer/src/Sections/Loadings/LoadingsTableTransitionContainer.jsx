@@ -1,4 +1,3 @@
-import styled from 'styled-components';
 import LoadingsTable from './LoadingsTable/LoadingsTable';
 import { useTranslation } from 'react-i18next';
 import loadingState from '../GlobalState/loadingState';
@@ -33,13 +32,9 @@ const LoadingsTableTransitionContainer = () => {
       </div>
     );
   }
-  return <DefaultMessage>{t('No factor loadings calculated')}</DefaultMessage>;
+  return (
+    <div className="h-[150px] mt-[50px] text-[22px]">{t('No factor loadings calculated')}</div>
+  );
 };
 
 export default LoadingsTableTransitionContainer;
-
-const DefaultMessage = styled.div`
-  height: 150px;
-  margin-top: 50px;
-  font-size: 22px;
-`;

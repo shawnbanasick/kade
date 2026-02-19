@@ -1,4 +1,3 @@
-import styled from 'styled-components';
 import GeneralButton from '../../../Utils/GeneralButton';
 import { useTranslation } from 'react-i18next';
 import doHeywoodAdjustment from '../centroidLogic/horst55Logic/doHeywoodAdjustment';
@@ -16,7 +15,6 @@ const HeywoodCaseNotification = () => {
   const updateHeywoodContinueButtonActive = factorState(
     (state) => state.updateHeywoodContinueButtonActive
   );
-
   const updateIsCentroidFacSelectDisabled = factorState(
     (state) => state.updateIsCentroidFacSelectDisabled
   );
@@ -47,18 +45,14 @@ const HeywoodCaseNotification = () => {
     (state) => state.heywoodParticipantsCommunalityArray
   );
 
-  // set default state on first load
   updateHeywoodAdjustButtonActive(false);
   updateHeywoodContinueButtonActive(false);
 
   const handleReselectClick = () => {
     updateIsCentroidFacSelectDisabled(false);
     updateIsCentroidExtractButtonDisabled(false);
-
-    // remove previous log entry
     projectHistoryArray.pop();
     updateProjectHistoryArray(projectHistoryArray);
-
     updateShowUnrotatedFactorTable(false);
     updateShowEigenvaluesTable(false);
     updateShowScreePlot(false);
@@ -67,18 +61,10 @@ const HeywoodCaseNotification = () => {
   };
 
   const handleContinueClick = () => {
-    const projectLogText3 = `${i18n.t(
-      'Heywood Case Participants'
-    )}: ${heywoodParticipantsTextJoin}. ${i18n.t('Factor Loadings not adjusted')}.`;
-
-    const logMessageObj1 = {
-      logMessage: projectLogText3,
-      logType: 'HeywoodAdjustment',
-    };
-
+    const projectLogText3 = `${i18n.t('Heywood Case Participants')}: ${heywoodParticipantsTextJoin}. ${i18n.t('Factor Loadings not adjusted')}.`;
+    const logMessageObj1 = { logMessage: projectLogText3, logType: 'HeywoodAdjustment' };
     const newProjectHistoryArray = [...projectHistoryArray, logMessageObj1];
     updateProjectHistoryArray(newProjectHistoryArray);
-
     updateShowUnrotatedFactorTable(true);
     updateShowEigenvaluesTable(true);
     updateShowScreePlot(true);
@@ -102,130 +88,61 @@ const HeywoodCaseNotification = () => {
 
   const heywoodReselectButtonActive = false;
 
-  if (showHeywoodCaseNotifications) {
-    return (
-      <Container>
-        <TextSpanLabel>{t('Heywood Case Participants')}</TextSpanLabel>
-        <HorozontalRule />
-        <HeywoodTable>
-          <table>
-            <tbody>
-              <tr>
-                <th>{t('Participant')}</th>
-                <th>{t('Communality')}</th>
-              </tr>
-              {heywoodParticipantsCommunalities.map((item, index) => (
-                <tr key={`key${index.toString()}`}>
-                  <td>{item.participantName}</td>
-                  <td className="center">{item.communality}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </HeywoodTable>
-        <HeywoodText>{`${t('heywoodMessage1')}. ${t('heywoodMessage2')}. ${t(
-          'heywoodMessage3'
-        )}.`}</HeywoodText>
+  if (!showHeywoodCaseNotifications) return null;
 
-        <ButtonContainer>
-          <ExtractionButton
-            onClick={handleContinueClick}
-            isActive={heywoodContinueButtonActive}
-            disabled={heywoodButtonDisabled}
-          >
-            {t('Continue Analysis')}
-          </ExtractionButton>
-          <ExtractionButton
-            onClick={handleReselectClick}
-            isActive={heywoodReselectButtonActive}
-            disabled={heywoodButtonDisabled}
-          >
-            {t('ReSelect Num Factors')}
-          </ExtractionButton>
-          <ExtractionButton
-            onClick={handleAdjustClick}
-            isActive={heywoodAdjustButtonActive}
-            disabled={heywoodButtonDisabled}
-          >
-            {t('Adjust Factor Loadings')}
-          </ExtractionButton>
-        </ButtonContainer>
-      </Container>
-    );
-  } else {
-    return null;
-  }
+  return (
+    <div className="mt-[25px]">
+      <div className="block mt-[25px] ml-[70px] mr-[10px] w-[750px]">
+        {t('Heywood Case Participants')}
+      </div>
+      <div className="block ml-[70px] h-[1px] w-[700px] border-0 border-t border-t-black p-0" />
+      <div className="pt-[25px] pb-[15px] pl-[80px] [&_table]:border-collapse [&_table,&_th,&_td]:border [&_table,&_th,&_td]:border-black [&_th,&_td]:p-[5px] [&_tr:nth-child(even)]:bg-[#eee] [&_tr:hover]:bg-[rgba(131,202,254,0.6)] [&_.center]:text-center">
+        <table>
+          <tbody>
+            <tr>
+              <th>{t('Participant')}</th>
+              <th>{t('Communality')}</th>
+            </tr>
+            {heywoodParticipantsCommunalities.map((item, index) => (
+              <tr key={`key${index.toString()}`}>
+                <td>{item.participantName}</td>
+                <td className="center">{item.communality}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <div className="mt-[10px] w-[680px] text-[15px] ml-[80px]">
+        {`${t('heywoodMessage1')}. ${t('heywoodMessage2')}. ${t('heywoodMessage3')}.`}
+      </div>
+      <div className="flex flex-row w-[820px] ml-[75px] mt-[25px] gap-4">
+        <GeneralButton
+          onClick={handleContinueClick}
+          isActive={heywoodContinueButtonActive}
+          disabled={heywoodButtonDisabled}
+          className={`mt-[25px] ml-[70px] w-[200px] ${heywoodContinueButtonActive ? 'bg-primary-button' : 'bg-grey-button'}`}
+        >
+          {t('Continue Analysis')}
+        </GeneralButton>
+        <GeneralButton
+          onClick={handleReselectClick}
+          isActive={heywoodReselectButtonActive}
+          disabled={heywoodButtonDisabled}
+          className={`mt-[25px] ml-[70px] w-[200px] ${heywoodReselectButtonActive ? 'bg-primary-button' : 'bg-grey-button'}`}
+        >
+          {t('ReSelect Num Factors')}
+        </GeneralButton>
+        <GeneralButton
+          onClick={handleAdjustClick}
+          isActive={heywoodAdjustButtonActive}
+          disabled={heywoodButtonDisabled}
+          className={`mt-[25px] ml-[70px] w-[200px] ${heywoodAdjustButtonActive ? 'bg-primary-button' : 'bg-grey-button'}`}
+        >
+          {t('Adjust Factor Loadings')}
+        </GeneralButton>
+      </div>
+    </div>
+  );
 };
 
 export default HeywoodCaseNotification;
-
-const TextSpanLabel = styled.div`
-  margin-top: 25px;
-  margin-left: 70px;
-  margin-right: 10px;
-  width: 750px;
-  display: block;
-`;
-
-const HorozontalRule = styled.div`
-  display: block;
-  margin-left: 70px;
-  height: 1px;
-  width: 700px;
-  border: 0;
-  border-top: 1px solid black;
-  padding: 0;
-`;
-
-const ExtractionButton = styled(GeneralButton)`
-  margin-top: 25px;
-  margin-left: 70px;
-  width: 200px;
-`;
-
-const HeywoodText = styled.div`
-  margin-top: 10px;
-  width: 680px;
-  font-size: 15px;
-  margin-left: 80px;
-`;
-
-const ButtonContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-  width: 820px;
-`;
-
-const HeywoodTable = styled.div`
-  padding-top: 25px;
-  padding-bottom: 15px;
-  padding-left: 80px;
-
-  table,
-  th,
-  td {
-    border: 1px solid black;
-    border-collapse: collapse;
-  }
-
-  th,
-  td {
-    padding: 5px;
-  }
-
-  tr:nth-child(even) {
-    background-color: #eee;
-  }
-
-  tr:hover {
-    background-color: rgba(131, 202, 254, 0.6);
-  }
-
-  .center {
-    text-align: center;
-  }
-`;
-
-const Container = styled.div`
-  margin-top: 25px;
-`;

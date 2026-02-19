@@ -156,7 +156,7 @@ const SelectNumberOfCentroidFactorsButtons = () => {
         <GeneralButton
           onClick={handleExtraction}
           $disabled={isCentroidFacSelectDisabled}
-          className="flex flex-row gap-3 items-center text-center bg-grey-button justify-start  w-[100px] ml-[70px]"
+          className="flex flex-row items-center text-center bg-grey-button justify-center  w-[120px] ml-[70px]"
         >{`${t('Extract')}`}</GeneralButton>
       </div>
     );

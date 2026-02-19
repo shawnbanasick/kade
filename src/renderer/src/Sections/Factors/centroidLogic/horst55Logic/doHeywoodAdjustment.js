@@ -24,22 +24,20 @@ const doHeywoodAdjustment = () => {
   const showHorstMessage = factorState.getState().didNotConverge;
   const horstAutoStopYesActive = factorState.getState('horstAutoStopYesActive');
   const horstIterations = factorState.getState().horstIterations;
-  const brown = factorState((state) => state.activeTraditionalCentroidFactorButton);
-  const horst = factorState((state) => state.activeHorst55CentroidButton);
+  const brown = factorState.getState().activeTraditionalCentroidFactorButton;
+  const horst = factorState.getState().activeHorst55CentroidButton;
 
-  const updateNumFacsForTableWidth = factorState((state) => state.updateNumFacsForTableWidth);
-  const updateFactorMatrix = factorState((state) => state.updateFactorMatrix);
-  const updateEigenvalues = factorState((state) => state.updateEigenvalues);
-  const updateExplainedVariance = factorState((state) => state.updateExplainedVariance);
-  const updateUnrotatedFactorMatrix = factorState((state) => state.updateUnrotatedFactorMatrix);
-  const updateEigensPercentExpVar = factorState((state) => state.updateEigensPercentExpVar);
-  const updateCumulEigenPerVar = factorState((state) => state.updateCumulEigenPerVar);
-  const updateScreePlotData = factorState((state) => state.updateScreePlotData);
-  const updateProjectHistoryArray = projectHistoryState((state) => state.updateProjectHistoryArray);
-  const updateShowKeepFacForRotButton = rotationState(
-    (state) => state.updateShowKeepFacForRotButton
-  );
-  const updateIsCentroidLoading = factorState((state) => state.updateIsCentroidLoading);
+  // const updateNumFacsForTableWidth = factorState.getState().updateNumFacsForTableWidth;
+  // const updateFactorMatrix = factorState.getState().updateFactorMatrix;
+  // const updateEigenvalues = factorState.getState().updateEigenvalues;
+  // const updateExplainedVariance = factorState.getState().updateExplainedVariance;
+  // const updateUnrotatedFactorMatrix = factorState.getState().updateUnrotatedFactorMatrix;
+  // const updateEigensPercentExpVar = factorState.getState().updateEigensPercentExpVar;
+  // const updateCumulEigenPerVar = factorState.getState().updateCumulEigenPerVar;
+  // const updateScreePlotData = factorState.getState().updateScreePlotData;
+  const updateProjectHistoryArray = projectHistoryState.getState().updateProjectHistoryArray;
+  const updateShowKeepFacForRotButton = rotationState.getState().updateShowKeepFacForRotButton;
+  const updateIsCentroidLoading = factorState.getState().updateIsCentroidLoading;
 
   const numQsorts = fMatrix[0].length;
 
@@ -141,7 +139,7 @@ const doHeywoodAdjustment = () => {
     projectLogText4 = i18n.t('Horst Centroid Factors Extracted');
   }
 
-  const heywoodParticipantsTextJoin = factorState((state) => state.heywoodParticipantsTextJoin);
+  const heywoodParticipantsTextJoin = factorState.getState().heywoodParticipantsTextJoin;
 
   // remove previous log entry
   projectHistoryArray.pop();
@@ -173,17 +171,17 @@ const doHeywoodAdjustment = () => {
   // UPDATE STATE
   // ************************************
 
-  updateNumFacsForTableWidth(numCentroidFactors);
-  updateFactorMatrix(fMatrix);
-  updateEigenvalues(eigenvaluesWithText);
-  updateExplainedVariance(explainedVar);
-  updateUnrotatedFactorMatrix(fMatrix);
-  updateEigensPercentExpVar(explainedVarWithText);
-  updateCumulEigenPerVar(cumulativeVarWithText);
-  updateScreePlotData(formattedScreePlotData);
-  updateIsCentroidLoading(false);
-  updateProjectHistoryArray(newProjectHistoryArray);
-  updateShowKeepFacForRotButton(true);
+  factorState.setState({ numFacsForTableWidth: numCentroidFactors });
+  factorState.setState({ factorMatrix: fMatrix });
+  factorState.setState({ eigenvaluesWithText });
+  factorState.setState({ explainedVar });
+  factorState.setState({ unrotatedFactorMatrix: fMatrix });
+  factorState.setState({ explainedVarWithText });
+  factorState.setState({ cumulativeEigenPerVar: cumulativeVarWithText });
+  factorState.setState({ screePlotData: formattedScreePlotData });
+  factorState.setState({ isCentroidLoading: false });
+  factorState.setState({ projectHistoryArray: newProjectHistoryArray });
+  factorState.setState({ showKeepFacForRotButton: true });
 
   // to use with the undo function in Project History
   sessionStorage.setItem('facMatrixArc0', JSON.stringify(rotFacStateArray1));

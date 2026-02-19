@@ -1,4 +1,3 @@
-import styled from 'styled-components';
 import { useEffect, useRef, useState } from 'react';
 import { AgGridReact } from 'ag-grid-react';
 import 'ag-grid-community/styles/ag-grid.css';
@@ -19,7 +18,6 @@ import rotationState from '../../GlobalState/rotationState';
 import coreState from '../../GlobalState/coreState';
 import resetSection6 from '../../../Utils/resetSection6';
 
-// helper function for filtering btnId when table loads => output buttons
 const filterArray = (item) => {
   let shortened = item;
   shortened = shortened.substring(0, 6);
@@ -29,34 +27,23 @@ const filterArray = (item) => {
   return null;
 };
 
-// set table width and height
 function getWidth(numFacsForTableWidth) {
   let tableWidth = 310 + 15 + 125 * numFacsForTableWidth;
   let windowWidth = window.innerWidth - 205;
-
   if (windowWidth < tableWidth) {
-    windowWidth += 'px';
-    return windowWidth;
+    return windowWidth + 'px';
   }
-
-  tableWidth += 'px';
-  return tableWidth;
+  return tableWidth + 'px';
 }
 
 function getHeight(numQsorts) {
   let heightVal1 = 40 + 25 * numQsorts;
   let heightVal2 = window.innerHeight - 270;
   if (heightVal1 < heightVal2) {
-    heightVal1 += 'px';
-    return heightVal1;
+    return heightVal1 + 'px';
   }
-  heightVal2 += 'px';
-  return heightVal2;
+  return heightVal2 + 'px';
 }
-
-/* ********************************************
-  Component start
- **********************************************  */
 
 const LoadingsTable = (props) => {
   const [localStore, setLocalStore] = useState({
@@ -66,7 +53,6 @@ const LoadingsTable = (props) => {
     autoflagButtonColor: '#d6dbe0',
   });
 
-  // inline styles
   const gridColDefsLoadingsTable = loadingState((state) => state.gridColDefsLoadingsTable);
   const gridRowDataLoadingsTable = loadingState((state) => state.gridRowDataLoadingsTable);
   const isLoadingsTableInitialRender = loadingState((state) => state.isLoadingsTableInitialRender);
@@ -85,7 +71,6 @@ const LoadingsTable = (props) => {
   const updateSendDataToOutputButtonColor = loadingState(
     (state) => state.updateSendDataToOutputButtonColor
   );
-
   const updateNotifyDataSentToOutputSuccess = loadingState(
     (state) => state.updateNotifyDataSentToOutputSuccess
   );
@@ -103,11 +88,8 @@ const LoadingsTable = (props) => {
 
   const gridRef = useRef();
 
-  // notification of table data sent to output
   const notify = async () => {
-    await toast.success(i18n.t('Data sent to Output'), {
-      autoClose: 1500,
-    });
+    await toast.success(i18n.t('Data sent to Output'), { autoClose: 1500 });
     await updateNotifyDataSentToOutputSuccess(false);
     await updateIsLoadingsButtonGreen(true);
   };
@@ -125,49 +107,28 @@ const LoadingsTable = (props) => {
   });
 
   useEffect(() => {
-    window.addEventListener('resize', () => {
-      resetWidthAndHeight();
-    });
-
-    return () => {
-      window.removeEventListener('resize', () => {
-        resetWidthAndHeight();
-      });
-    };
+    const handleResize = () => resetWidthAndHeight();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
   }, []);
-
-  // const onGridReady = (params) => {
-  //   gridApi.current = params.api;
-  //   // gridApi.current.sizeColumnsToFit();
-  // };
 
   let gridOptions = {
     suppressRowHoverHighlight: false,
-    // turns ON column hover, it's off by default
     columnHoverHighlight: true,
     theme: 'legacy',
   };
 
-  // *** GRAB TABLE DATA *** //
   const grabTableLocalState = () => {
-    // grab current table data (including user-added flags)
-    // const nodeArray = gridRef.current.api.getDisplayedRowCount();
     const currentLoadingsTable = [];
     const nodeArray = gridRef.current.api.getRenderedNodes();
     for (let i = 0; i < nodeArray.length; i += 1) {
-      // const rowNode = gridRef.current.api.getDisplayedRowAtIndex(i);
       currentLoadingsTable.push(nodeArray[i].data);
     }
-    // currentLoadingsTable.push(rowNode.data);
-
-    // return rowData;
     return currentLoadingsTable;
   };
 
-  // todo - fix this hack - button color shifted to different listener
   const updateTableLocalState = () => {
-    const currentLoadingsTable = grabTableLocalState();
-    // localStore.temp_gridRowDataLoadingsTable = currentLoadingsTable;
+    grabTableLocalState();
     resetSection6();
   };
 
@@ -175,13 +136,8 @@ const LoadingsTable = (props) => {
     updateSendDataToOutputButtonColor('orange');
   };
 
-  //*** OUTPUT FUNCTION  ***//
   const generateOutput = () => {
-    // grab current table data
     const currentLoadingsTable = grabTableLocalState();
-    // console.log(JSON.stringify(currentLoadingsTable));
-    // send current to local state
-    // localStore.temp_gridRowDataLoadingsTable = currentLoadingsTable;
     updateCurrentLoadingsTable(currentLoadingsTable);
     generateOutputFromLoadingTable(currentLoadingsTable);
     notify();
@@ -206,16 +162,13 @@ const LoadingsTable = (props) => {
       const rowNode = gridRef.current.api.getDisplayedRowAtIndex(i);
       const holder = rowNode.data.highlightingClass;
       const holder2 = holder.slice(0, 2);
-      const holder3 = `${holder2}${highlightType}`;
-      rowNode.data.highlightingClass = holder3;
+      rowNode.data.highlightingClass = `${holder2}${highlightType}`;
       currentLoadingsTable2.push(rowNode.data);
     }
     gridRef.current.api.redrawRows(currentLoadingsTable2);
-    // updateGridRowDataLoadingsTable(currentLoadingsTable2);
     updateHighlighting(highlightType);
   };
 
-  // *** FLAG ALL FUNCTION *** //
   const flagAllQsorts = () => {
     const currentLoadingsTable = grabTableLocalState();
     const factorGroupArray = ['F1', 'F2', 'F3', 'F4', 'F5', 'F6', 'F7', 'F8'];
@@ -224,35 +177,21 @@ const LoadingsTable = (props) => {
       const factorGroupIndexValue = factorGroupArray.indexOf(factorGroup);
       for (let k = 0; k < numFacsForTableWidth; k += 1) {
         const checkboxIndex = `check${k + 1}`;
-        if (factorGroupIndexValue === k) {
-          currentLoadingsTable[i][checkboxIndex] = true;
-        } else {
-          currentLoadingsTable[i][checkboxIndex] = false;
-        }
+        currentLoadingsTable[i][checkboxIndex] = factorGroupIndexValue === k;
       }
     }
-    console.log(JSON.stringify(currentLoadingsTable));
     gridRef.current.api.redrawRows(currentLoadingsTable);
-    // setLocalStore({ temp_gridRowDataLoadingsTable: currentLoadingsTable });
-    // updateGridRowDataLoadingsTable(currentLoadingsTable);
-
-    // gridRef.current.api.redrawRows();
-
     updateSendDataToOutputButtonColor('orange');
   };
 
-  // *** CLEAR ALL CHECKBOXES *** //
   const clearAllCheckboxes = () => {
     const currentLoadingsTable = grabTableLocalState();
     for (let i = 0; i < currentLoadingsTable.length; i += 1) {
       for (let k = 0; k < numFacsForTableWidth; k += 1) {
-        const index = `check${k + 1}`;
-        currentLoadingsTable[i][index] = false;
+        currentLoadingsTable[i][`check${k + 1}`] = false;
       }
     }
     gridRef.current.api.redrawRows(currentLoadingsTable);
-    // setLocalStore({ temp_gridRowDataLoadingsTable: currentLoadingsTable });
-    // updateGridRowDataLoadingsTable(currentLoadingsTable);
     updateSendDataToOutputButtonColor('#d6dbe0');
   };
 
@@ -262,20 +201,15 @@ const LoadingsTable = (props) => {
     updateIsLoadingsTableInitialRender(false);
   }
 
-  // todo - create output buttons array here to stay in sync, but do performance check
   const outputButtonsArray2 = gridColDefsLoadingsTable.map((item) => item.field);
   const outputButtonsArray3 = outputButtonsArray2.filter(filterArray);
   outputButtonsArray3.shift();
   const outputButtonsArray4 = outputButtonsArray3.map((item) => item.slice(6));
-  // delay to avoid react update error - can't update while rendering
   setTimeout(function () {
     updateOutputButtonsArray(outputButtonsArray4);
   }, 100);
 
-  // increase height / width when bipolar split present
   const bipolarSplitCount = Number(bipolarSplitCount1);
-
-  // increase width if bipolar present
   if (bipolarSplitCount > 0) {
     numFacsForTableWidth += bipolarSplitCount;
   }
@@ -289,42 +223,41 @@ const LoadingsTable = (props) => {
 
   return (
     <div>
-      <LoadingsContainerDiv>
+      <div className="grid grid-cols-1">
         <ToastContainer transition={Zoom} />
-        <HighlightingAndFlaggingTextBar>
+        <div className="grid grid-cols-[410px_auto] w-[1100px] h-[30px]">
           <span style={highlightingAndFlaggingStyle}>{props.childTrans.row}</span>
           <span>{props.childTrans.flagging}</span>
-        </HighlightingAndFlaggingTextBar>
-        <HighlightingAndFlaggingButtonBar>
-          <RowColorsContainer>
-            <NoHighlightingButton
+        </div>
+        <div className="grid grid-cols-[400px_auto] h-[50px] w-[1100px]">
+          <div className="flex flex-row">
+            <GeneralButton
               id="noHighlightingButton"
-              className="wrapper1"
+              className="wrapper1 min-w-[80px]"
               disabled={isDisabled}
               onClick={() => highlightRows('none')}
             >
               {props.childTrans.none}
-            </NoHighlightingButton>
-            <ColorHighlightButton
+            </GeneralButton>
+            <GeneralButton
               id="colorsHighlightingButton"
-              className="wrapper1"
+              className="wrapper1 min-w-[80px]"
               disabled={isDisabled}
               onClick={() => highlightRows('colors')}
             >
               {props.childTrans.colors}
-            </ColorHighlightButton>
-            <GrayHighlightButton
+            </GeneralButton>
+            <GeneralButton
               id="graysHighlightingButton"
-              className="wrapper1"
+              className="wrapper1 min-w-[80px]"
               onClick={() => highlightRows('grays')}
               disabled={isDisabled}
               style={grayHighlightButtonStyle}
             >
               {props.childTrans.gray}
-            </GrayHighlightButton>
-          </RowColorsContainer>
-
-          <RowColorsContainer>
+            </GeneralButton>
+          </div>
+          <div className="flex flex-row">
             <GeneralButton
               $buttoncolor={autoflagButtonColor}
               id="autoflagButton"
@@ -334,7 +267,6 @@ const LoadingsTable = (props) => {
             >
               {props.childTrans.autoflag}
             </GeneralButton>
-
             <span style={atStyle}>{props.childTrans.at}</span>
             <SigLevelDropdown data={'allData'} />
             <GeneralButton style={allButtonStyle} disabled={isDisabled} onClick={flagAllQsorts}>
@@ -347,15 +279,15 @@ const LoadingsTable = (props) => {
             >
               {props.childTrans.none}
             </GeneralButton>
-          </RowColorsContainer>
-        </HighlightingAndFlaggingButtonBar>
-        <CommonVarianceCheckboxDiv>
+          </div>
+        </div>
+        <div className="w-[900px] pl-[16px] mt-[3px] mb-[25px]">
           <MajorityCommonVarianceCheckbox />
-        </CommonVarianceCheckboxDiv>
+        </div>
         <div>
-          <ColumnSortText>
+          <p className="text-[12px] font-normal mt-[15px] text-left w-[900px]">
             {props.childTrans.default} {props.childTrans.fg} {props.childTrans.click}
-          </ColumnSortText>
+          </p>
           <div
             id="loadingsTableContainer"
             style={loadingsTableContainerStyle}
@@ -367,7 +299,6 @@ const LoadingsTable = (props) => {
               columnDefs={gridColDefsLoadingsTable}
               rowData={gridRowDataLoadingsTable}
               getRowClass={(params) => params.data.highlightingClass}
-              // onGridReady={onGridReady}
               onCellClicked={updateTableLocalState}
               onCellFocused={changeOutputButtonColor}
               gridOptions={gridOptions}
@@ -375,93 +306,33 @@ const LoadingsTable = (props) => {
             />
           </div>
         </div>
-        <ButtonBarBottom>
-          <DataToOutputButton
+        <div className="flex flex-row justify-between w-[910px] h-[50px]">
+          <GeneralButton
             $buttonColor={sendDataToOutputButtonColor}
             id="generateOutputButton"
             onClick={generateOutput}
+            style={{
+              backgroundColor: sendDataToOutputButtonColor,
+              transition: 'background-color 0.3s ease',
+            }}
           >
             {props.childTrans.send}
-          </DataToOutputButton>
+          </GeneralButton>
           <GeneralButton id="invertFactorsButton" disabled={isDisabled} onClick={doInvertFactor}>
             {props.childTrans.invert}
           </GeneralButton>
           <GeneralButton id="splitFactorsButton" onClick={doSplitFactor}>
             {props.childTrans.split}
           </GeneralButton>
-        </ButtonBarBottom>
+        </div>
         <SplitBipolarFactorModal />
         <InvertFactorButton />
-      </LoadingsContainerDiv>
+      </div>
     </div>
   );
 };
 
 export default LoadingsTable;
-
-const ColumnSortText = styled.p`
-  font-size: 12px;
-  font-weight: normal;
-  margin-top: 15px;
-  text-align: left;
-  width: 900px;
-`;
-
-const LoadingsContainerDiv = styled.div`
-  display: grid;
-  grid-template-columns: 1fr;
-`;
-
-const HighlightingAndFlaggingTextBar = styled.div`
-  display: grid;
-  grid-template-columns: 410px auto;
-  width: 1100px;
-  height: 30px;
-`;
-
-const HighlightingAndFlaggingButtonBar = styled.div`
-  display: grid;
-  grid-template-columns: 400px auto;
-  height: 50px;
-  width: 1100px;
-`;
-
-const CommonVarianceCheckboxDiv = styled.div`
-  width: 900px;
-  padding-left: 16px;
-  margin-top: 3px;
-  margin-bottom: 25px;
-`;
-
-const ButtonBarBottom = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  width: 910px;
-  height: 50px;
-`;
-
-const DataToOutputButton = styled(GeneralButton)`
-  background-color: ${(props) => props.$buttonColor};
-  transition: background-color 0.3s ease;
-`;
-
-const NoHighlightingButton = styled(GeneralButton)`
-  min-width: 80px;
-`;
-
-const ColorHighlightButton = styled(GeneralButton)`
-  min-width: 80px;
-`;
-
-const GrayHighlightButton = styled(GeneralButton)`
-  min-width: 80px;
-`;
-
-const RowColorsContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-`;
 
 /*
 99 = 2.575

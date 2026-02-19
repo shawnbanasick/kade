@@ -26,12 +26,14 @@ const Horst55CentroidModal = () => {
   const handleOnclick = () => {
     updateShowUseHorstLimit(true);
     updateIsPcaButtonDisabled(true);
-    updateDisabledCentroidFactorButton(true);
+    // updateDisabledCentroidFactorButton(true);
     updateActiveHorst55CentroidButton(true);
     updateIsHorst55Disabled(true);
     updateIsTraditionalCentroidDisabled(true);
     updateIsTuckerMacCallumCentroidDisabled(true);
   };
+
+  console.log(isActive);
 
   return (
     <GeneralButton
