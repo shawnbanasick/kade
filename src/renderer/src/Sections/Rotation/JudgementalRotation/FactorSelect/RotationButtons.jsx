@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import styled from 'styled-components';
 import RotationDegreeInput from './RotationDegreeInput';
 import GeneralButton from '../../../../Utils/GeneralButton';
 import rotationState from '../../../GlobalState/rotationState';
@@ -93,13 +92,14 @@ const RotationButtons = () => {
 
   if (shouldDisplayDegreeButtonButtons) {
     return (
-      <ButtonsContainer>
+      <div className="flex flex-row gap-2">
         <GeneralButton
           id={'Button1Degree'}
           $isActive={highlightDegreeButton1}
           width="50px"
           onClick={handleOnclick}
           key={'f1'}
+          className={`h-[30px] p-2 min-w-[50px] ${highlightDegreeButton1 ? 'bg-primary-button' : 'bg-grey-button'}`}
         >
           {`${1}\u00B0`}
         </GeneralButton>
@@ -109,6 +109,7 @@ const RotationButtons = () => {
           $isActive={highlightDegreeButton3}
           onClick={handleOnclick}
           key={'f3'}
+          className={`h-[30px] p-2 min-w-[50px] ${highlightDegreeButton3 ? 'bg-primary-button' : 'bg-grey-button'}`}
         >
           {`${5}\u00B0`}
         </GeneralButton>
@@ -118,6 +119,7 @@ const RotationButtons = () => {
           width="50px"
           onClick={handleOnclick}
           key={'f4'}
+          className={`h-[30px] p-2 min-w-[50px] ${highlightDegreeButton4 ? 'bg-primary-button' : 'bg-grey-button'}`}
         >
           {`${10}\u00B0`}
         </GeneralButton>
@@ -127,6 +129,7 @@ const RotationButtons = () => {
           width="50px"
           onClick={handleOnclick}
           key={'f5'}
+          className={`h-[30px] p-2 min-w-[50px] ${highlightDegreeButton5 ? 'bg-primary-button' : 'bg-grey-button'}`}
         >
           {`${90}\u00B0`}
         </GeneralButton>
@@ -136,15 +139,10 @@ const RotationButtons = () => {
           active={highlightDegreeInputButton}
           onChangeCallback={getRotationDegreeFromUI}
         />
-      </ButtonsContainer>
+      </div>
     );
   }
   return null;
 };
 
 export default RotationButtons;
-
-const ButtonsContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-`;

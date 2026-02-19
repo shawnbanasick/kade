@@ -1,6 +1,4 @@
-import React from 'react';
 import includes from 'lodash/includes';
-import styled from 'styled-components';
 import data from '../plot/data';
 import doD3ChartDataPrep from '../rotationLogic/doD3ChartDataPrep';
 import rotationTablePrep from '../rotationTable/rotationTablePrep';
@@ -280,11 +278,19 @@ const FactorSelectButtons = (props) => {
             8
           </GeneralButton>
         )}
-        <GeneralButton className="wrapper1" id="clearAllRotFacs" onClick={handleClick}>
-          {t('Clear')}
-        </GeneralButton>
-        <GeneralButton id="startRotationDisplay" onClick={handleSubmit}>
+        <GeneralButton
+          id="startRotationDisplay"
+          className={`h-[30px] p-2 min-w-[100px] bg-grey-button`}
+          onClick={handleSubmit}
+        >
           {t('Display')}
+        </GeneralButton>
+        <GeneralButton
+          id="clearAllRotFacs"
+          className={`h-[30px] p-2 min-w-[100px] bg-grey-button ml-12!`}
+          onClick={handleClick}
+        >
+          {t('Clear')}
         </GeneralButton>
         {showRotFactorSelectWarning && (
           <div style={{ width: 160, backgroundColor: 'red' }}>
@@ -307,7 +313,3 @@ const FactorSelectButtons = (props) => {
 };
 
 export default FactorSelectButtons;
-
-const GenButton = styled.div`
-  width: 50px;
-`;

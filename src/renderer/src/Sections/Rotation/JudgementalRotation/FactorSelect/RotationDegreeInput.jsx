@@ -1,59 +1,30 @@
-import styled from 'styled-components';
-
 const RotationDegreeInput = (props) => {
   const saveInputValueToState = (event) => {
     props.onChangeCallback(event);
   };
 
   return (
-    <InputColumn active={props.active}>
-      <StyledInput
+    <div
+      className={`
+        flex flex-col rounded-[3px] text-[18px] w-[50px] h-[30px] border-none
+        transition-shadow duration-300 translate-z-0 items-center justify-center
+        ${
+          props.active
+            ? 'bg-primary-button shadow-[inset_0_0_0_4px_var(--main-theme-color),0_0_1px_transparent]'
+            : 'bg-grey-button shadow-[inset_0_0_0_4px_#d6dbe0,0_0_1px_transparent]'
+        }
+        hover:shadow-[inset_0_0_0_4px_#666,0_0_1px_transparent]
+      `}
+    >
+      <input
         type="text"
         name={props.name}
         onChange={saveInputValueToState}
         value={props.value}
+        className="w-[35px] text-right m-1 outline-none bg-white"
       />
-    </InputColumn>
+    </div>
   );
 };
 
 export default RotationDegreeInput;
-
-// 0 2px 2px 0 black
-const InputColumn = styled.div`
-  display: flex;
-  flex-direction: column;
-  border-radius: 3px;
-  font-size: 18px;
-  width: 50px;
-  height: 40px;
-  border: none;
-  padding-right: 1px;
-  background-color: ${(props) => (props.active ? 'var(--main-theme-color)' : '#d6dbe0')};
-
-  transition-duration: 0.3s;
-  transition-property: box-shadow;
-  transform: translateZ(0);
-  box-shadow:
-    inset 0 0 0 4px ${(props) => (props.active ? 'var(--main-theme-color)' : '#d6dbe0')},
-    0 0 1px 0.6;
-
-  &:hover {
-    box-shadow:
-      inset 0 0 0 4px #666,
-      0 0 1px transparent;
-  }
-`;
-
-const StyledInput = styled.input`
-  width: 35px;
-  text-align: right;
-  margin: 6px;
-  outline: none;
-`;
-
-// const StyledLabel = styled.label`
-//   margin-left: 4px;
-//   text-align: center;
-//   padding-right: 1px;
-// `;
