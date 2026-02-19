@@ -17,6 +17,37 @@ const SelectNumberOfCentroidFactorsButtons = () => {
   const updateCentroid6FactorsActive = factorState((state) => state.updateCentroid6FactorsActive);
   const updateCentroid7FactorsActive = factorState((state) => state.updateCentroid7FactorsActive);
   const updateCentroid8FactorsActive = factorState((state) => state.updateCentroid8FactorsActive);
+  const centroid1FactorsActive = factorState((state) => state.centroid1FactorsActive);
+  const centroid2FactorsActive = factorState((state) => state.centroid2FactorsActive);
+  const centroid3FactorsActive = factorState((state) => state.centroid3FactorsActive);
+  const centroid4FactorsActive = factorState((state) => state.centroid4FactorsActive);
+  const centroid5FactorsActive = factorState((state) => state.centroid5FactorsActive);
+  const centroid6FactorsActive = factorState((state) => state.centroid6FactorsActive);
+  const centroid7FactorsActive = factorState((state) => state.centroid7FactorsActive);
+  const centroid8FactorsActive = factorState((state) => state.centroid8FactorsActive);
+
+  const activeButtonColorArray = [
+    centroid1FactorsActive,
+    centroid2FactorsActive,
+    centroid3FactorsActive,
+    centroid4FactorsActive,
+    centroid5FactorsActive,
+    centroid6FactorsActive,
+    centroid7FactorsActive,
+    centroid8FactorsActive,
+  ];
+
+  const updateActiveButtonColorArray = [
+    updateCentroid1FactorsActive,
+    updateCentroid2FactorsActive,
+    updateCentroid3FactorsActive,
+    updateCentroid4FactorsActive,
+    updateCentroid5FactorsActive,
+    updateCentroid6FactorsActive,
+    updateCentroid7FactorsActive,
+    updateCentroid8FactorsActive,
+  ];
+
   const brownCentroids = factorState((state) => state.activeTraditionalCentroidFactorButton);
   const horstCentroids = factorState((state) => state.activeHorst55CentroidButton);
   const tuckerCentroids = factorState((state) => state.activeTuckerMacCallumCentroidButton);
@@ -36,6 +67,12 @@ const SelectNumberOfCentroidFactorsButtons = () => {
   const updateHorstAutoStopYesDisabled = factorState(
     (state) => state.updateHorstAutoStopYesDisabled
   );
+  const showNumberOfCentroidFacToExtract = factorState(
+    (state) => state.showNumberOfCentroidFacToExtract
+  );
+  const isCentroidFacSelectDisabled = factorState((state) => state.isCentroidFacSelectDisabled);
+  const numCentroidFactors = factorState((state) => state.numCentroidFactors);
+  const updateNumCentroidFactors = factorState((state) => state.updateNumCentroidFactors);
 
   const clearAllButtons = () => {
     updateCentroid1FactorsActive(false);
@@ -52,9 +89,9 @@ const SelectNumberOfCentroidFactorsButtons = () => {
     clearAllButtons();
     const value = event.target.value;
     const factor = event.target.id;
-    // todo - fix this state management
-    factorState[factor] = true;
-    factorState.numCentroidFactors = value;
+    const updateFactor = updateActiveButtonColorArray[factor];
+    updateFactor(true);
+    updateNumCentroidFactors(value);
   };
 
   const handleExtraction = () => {
@@ -63,10 +100,9 @@ const SelectNumberOfCentroidFactorsButtons = () => {
 
       // show spinner duirng calcs
       updateShowCentroidSpinner(true);
-      const numFactors = factorState((state) => state.numCentroidFactors);
       // Brown centroids calcs start
-      centroidDispatch(numFactors);
-      updateNumFacsForTableWidth(numFactors);
+      centroidDispatch(numCentroidFactors);
+      updateNumFacsForTableWidth(numCentroidFactors);
       // hide spinner since calcs are done
       updateDisabledCentroidFactorButton(true);
       updateShowCentroidSpinner(false);
@@ -101,31 +137,28 @@ const SelectNumberOfCentroidFactorsButtons = () => {
     btnId.length = minNumFactors;
   }
 
-  const showNumberOfCentroidFacToExtract = factorState.showNumberOfCentroidFacToExtract;
-  const isCentroidFacSelectDisabled = factorState((state) => state.isCentroidFacSelectDisabled);
-
   if (showNumberOfCentroidFacToExtract) {
     return (
-      <NumCentroidFacButtonsContainerDiv>
-        <TitleSpan>{`${t('Select Number of Factors')}: `}</TitleSpan>
-        {btnId.map((item) => (
-          <NumFacButtons
-            as={GeneralButton}
+      <div className="flex flex-row gap-3 items-center justify-start mt-[25px] w-[800px] ml-[70px]">
+        <span>{`${t('Select Number of Factors')}: `}</span>
+        {btnId.map((item, index) => (
+          <GeneralButton
             key={`centroidF${item}`}
             value={item}
-            isActive={factorState[`centroid${item}FactorsActive`]}
-            disabled={isCentroidFacSelectDisabled}
+            $disabled={isCentroidFacSelectDisabled}
             onClick={handleOnclick}
-            id={`centroid${item}FactorsActive`}
+            className={`${activeButtonColorArray[index] ? 'bg-primary-button' : 'bg-grey-button'} gap-4`}
+            id={index}
           >
             {item}
-          </NumFacButtons>
+          </GeneralButton>
         ))}
-        <ExtractFactorsButton
+        <GeneralButton
           onClick={handleExtraction}
-          disabled={isCentroidFacSelectDisabled}
-        >{`${t('Extract')}`}</ExtractFactorsButton>
-      </NumCentroidFacButtonsContainerDiv>
+          $disabled={isCentroidFacSelectDisabled}
+          className="flex flex-row gap-3 items-center text-center bg-grey-button justify-start  w-[100px] ml-[70px]"
+        >{`${t('Extract')}`}</GeneralButton>
+      </div>
     );
   } else {
     return null;
@@ -133,20 +166,6 @@ const SelectNumberOfCentroidFactorsButtons = () => {
 };
 
 export default SelectNumberOfCentroidFactorsButtons;
-
-const NumCentroidFacButtonsContainerDiv = styled.div`
-  display: flex;
-  margin-top: 25px;
-  margin-left: 70px;
-  width: 800px;
-  flex-direction: row;
-  justify-content: flex-start;
-  align-items: center;
-`;
-
-const NumFacButtons = styled.div`
-  width: 50px;
-`;
 
 const TitleSpan = styled.span`
   margin-right: 10px;

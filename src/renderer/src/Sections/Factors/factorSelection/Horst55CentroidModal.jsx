@@ -1,4 +1,3 @@
-import styled from 'styled-components';
 import GeneralButton from '../../../Utils/GeneralButton';
 import factorState from '../../GlobalState/factorState';
 import { useTranslation } from 'react-i18next';
@@ -35,20 +34,15 @@ const Horst55CentroidModal = () => {
   };
 
   return (
-    <HorstButton
-      as={GeneralButton}
+    <GeneralButton
       id="noFacSelectedModalButton"
-      $isActive={isActive}
       disabled={isDisabled}
       onClick={handleOnclick}
+      className={`${isActive ? 'bg-primary-button' : 'bg-grey-button'} ml-8!`}
     >
       Horst 5.5 <br /> {t('Centroid Factors')}
-    </HorstButton>
+    </GeneralButton>
   );
 };
 
 export default Horst55CentroidModal;
-
-const HorstButton = styled.div`
-  margin-right: 15px;
-`;

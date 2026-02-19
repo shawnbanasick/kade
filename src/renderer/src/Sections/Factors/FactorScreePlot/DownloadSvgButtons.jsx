@@ -3,8 +3,6 @@ import downloadSvgImage from './downloadSvgImage';
 import downloadPngImage from './downloadPngImage';
 import GeneralButton from '../../../Utils/GeneralButton';
 import { useTranslation } from 'react-i18next';
-import SvgIcon from '../../images/SVG_Icon2.svg';
-import PngIcon from '../../images/PNG_Icon2.svg';
 
 const DownloadSvgButtons = () => {
   const { t } = useTranslation();

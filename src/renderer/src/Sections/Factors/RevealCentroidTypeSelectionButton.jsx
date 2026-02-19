@@ -33,7 +33,7 @@ const RevealCentroidTypeSelectionButton = () => {
         $isActive={isActive}
         disabled={false}
         onClick={handleClick}
-        className="bg-grey-button"
+        className={` ${isActive ? 'bg-primary-button' : 'bg-grey-button'}`}
       >
         {t('Centroid Factors')}
       </GeneralButton>

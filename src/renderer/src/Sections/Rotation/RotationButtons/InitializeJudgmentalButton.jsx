@@ -37,9 +37,9 @@ const RotationButtonGroup = () => {
         <div>
           <GeneralButton
             id="judgementalRotationButton"
-            $isActive={judgeButtonActive}
             disabled={isDisabled}
             onClick={onJudgeClick}
+            className={`${judgeButtonActive ? 'bg-primary-button' : 'bg-grey-button'} h-[30px] p-2 min-w-[260px] ml-8!`}
           >
             {t('Initialize Judgmental Rotation')}
           </GeneralButton>

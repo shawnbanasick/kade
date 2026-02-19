@@ -1,8 +1,6 @@
 import { useState } from 'react';
-import { Button, Header, Modal } from 'semantic-ui-react';
 import GeneralButton from '../../Utils/GeneralButton';
 import { useTranslation } from 'react-i18next';
-// import factorState from '../GlobalState/factorState';
 import projectHistoryState from '../GlobalState/projectHistoryState';
 import resetManualRotation from '../../Utils/resetManualRotation';
 import resetBipolarFactors from '../../Utils/resetBipolarFactors';
@@ -16,95 +14,74 @@ import resetFacRotSelectButtons from '../../Utils/resetFacRotSelectButtons';
 const ResetAnalysisButton = () => {
   const { t } = useTranslation();
 
-  const [localStore, setLocalStore] = useState({
-    modalOpen: false,
-  });
+  const [modalOpen, setModalOpen] = useState(false);
+
   const projectHistoryArray = projectHistoryState((state) => state.projectHistoryArray);
   const updateProjectHistoryArray = projectHistoryState((state) => state.updateProjectHistoryArray);
 
   function handleOpen() {
-    setLocalStore({ modalOpen: true });
+    setModalOpen(true);
   }
 
   function handleClose() {
-    setLocalStore({ modalOpen: false });
+    setModalOpen(false);
   }
 
   function doResetAnalysis() {
-    // reset Project History
     const newProjectHistoryArray = [...projectHistoryArray];
     let retainedObject = newProjectHistoryArray[0];
     updateProjectHistoryArray([retainedObject]);
-
-    // hide section 3
     resetSection3();
-
-    // hide section 4
     resetSection4();
-
-    // reset manual rotation
     resetManualRotation();
     resetFacRotSelectButtons();
-
-    // bipolar
     resetBipolarFactors();
-
-    // hide section 5
     resetSection5();
-
-    // hide section 6
     resetSection6('resetAnalysis');
     resetAnalysis();
-
     handleClose();
   }
 
   return (
-    <Modal
-      dimmer={'blurring'}
-      trigger={
-        <GeneralButton
-          id="resetAnalysisButton"
-          className="bg-grey-button ml-[350px]!"
-          onClick={handleOpen}
-        >
-          {t('Reset Analysis')}
-        </GeneralButton>
-      }
-      open={localStore.modalOpen}
-      onClose={handleClose}
-      basic
-      size="small"
-    >
-      <Header content="Reset Analysis" />
-      <Modal.Content>
-        <h2>{t('This will remove the current analysis and cannot be reversed')}</h2>
-        <h2> {t('Are you sure you want to reset')}</h2>
-      </Modal.Content>
-      <Modal.Actions>
-        <div style={{ display: 'flex' }}>
-          <Button
-            size={'big'}
-            style={{ alignSelf: 'flexStart' }}
-            color="green"
-            onClick={handleClose}
-            inverted
-          >
-            {t('No Go back')}
-          </Button>
-          <Button
-            id="resetAnalysisModalGotItButton"
-            size={'big'}
-            style={{ alignSelf: 'flexEnd', marginLeft: 220 }}
-            color="red"
-            onClick={doResetAnalysis}
-            inverted
-          >
-            {t('Yes reset the analysis')}
-          </Button>
+    <>
+      {/* Trigger Button */}
+      <GeneralButton
+        id="resetAnalysisButton"
+        className="bg-grey-button ml-[350px]!"
+        onClick={handleOpen}
+      >
+        {t('Reset Analysis')}
+      </GeneralButton>
+
+      {/* Modal */}
+      <dialog className={`modal ${modalOpen ? 'modal-open' : ''}`}>
+        <div className="modal-box bg-gray-800 text-neutral-content h-[250px] w-[600px]">
+          <div className="text-3xl text-center font-bold mb-4">{t('Reset Analysis')}?</div>
+          <div className="mb-6">
+            <p className="text-xl mb-2">
+              {t('This will remove the current analysis and cannot be reversed')}
+            </p>
+            <p className="text-xl">{t('Are you sure you want to reset')}?</p>
+          </div>
+          <div className="flex justify-between gap-4">
+            <GeneralButton onClick={handleClose} className="bg-primary-button">
+              {t('No Go back')}
+            </GeneralButton>
+            <GeneralButton
+              id="resetAnalysisModalGotItButton"
+              onClick={doResetAnalysis}
+              className="bg-orange-400 text-black"
+            >
+              {t('Yes reset the analysis')}
+            </GeneralButton>
+          </div>
         </div>
-      </Modal.Actions>
-    </Modal>
+        {/* Backdrop close */}
+        <form method="dialog" className="modal-backdrop">
+          <button onClick={handleClose}>close</button>
+        </form>
+      </dialog>
+    </>
   );
 };
 

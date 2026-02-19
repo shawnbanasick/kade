@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import styled from 'styled-components';
 import { Button, Header, Modal } from 'semantic-ui-react';
 import loadingsTableDataPrep from '../../Loadings/LoadingsTable/loadingsTableDataPrep';
 import GeneralButton from '../../../Utils/GeneralButton';
@@ -97,15 +96,15 @@ const FactorSelectButtonModal = () => {
         <Modal
           dimmer={'blurring'}
           trigger={
-            <GeneralFacSelectButton
-              as={GeneralButton}
+            <GeneralButton
               id="factorsKeptSubmitButton"
               $isActive={isActive}
               disabled={isFacSelectDisabled}
               onClick={handleOpen}
+              className={`${isActive ? 'bg-primary-button' : 'bg-grey-button'} h-[30px] p-2 min-w-[100px] ml-8!`}
             >
               {t('Submit')}
-            </GeneralFacSelectButton>
+            </GeneralButton>
           }
           open={localStore.modalOpenSelect}
           onClose={handleClose}
@@ -131,7 +130,3 @@ const FactorSelectButtonModal = () => {
 };
 
 export default FactorSelectButtonModal;
-
-const GeneralFacSelectButton = styled.div`
-  height: 40px;
-`;

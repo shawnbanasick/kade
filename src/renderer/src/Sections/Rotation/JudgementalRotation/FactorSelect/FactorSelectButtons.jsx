@@ -183,7 +183,7 @@ const FactorSelectButtons = (props) => {
 
   if (shouldDisplayRotFactorButtons) {
     return (
-      <React.Fragment>
+      <div className="flex flex-row gap-2 ml-2">
         {show1 && (
           <GeneralButton
             id={'factor 1'}
@@ -191,6 +191,7 @@ const FactorSelectButtons = (props) => {
             width={'50px'}
             onClick={(e) => handleClick(e, baselineData)}
             key={'f1'}
+            className={`${highlightRotfactor1 ? 'bg-primary-button' : 'bg-grey-button'} h-[30px] p-2 min-w-[50px]`}
           >
             1
           </GeneralButton>
@@ -202,6 +203,7 @@ const FactorSelectButtons = (props) => {
             width={'50px'}
             onClick={(e) => handleClick(e, baselineData)}
             key={'f2'}
+            className={`${highlightRotfactor2 ? 'bg-primary-button' : 'bg-grey-button'} h-[30px] p-2 min-w-[50px]`}
           >
             2
           </GeneralButton>
@@ -213,6 +215,7 @@ const FactorSelectButtons = (props) => {
             width={'50px'}
             onClick={(e) => handleClick(e, baselineData)}
             key={'f3'}
+            className={`${highlightRotfactor3 ? 'bg-primary-button' : 'bg-grey-button'} h-[30px] p-2 min-w-[50px]`}
           >
             3
           </GeneralButton>
@@ -224,6 +227,7 @@ const FactorSelectButtons = (props) => {
             $isActive={highlightRotfactor4}
             onClick={(e) => handleClick(e, baselineData)}
             key={'f4'}
+            className={`${highlightRotfactor4 ? 'bg-primary-button' : 'bg-grey-button'} h-[30px] p-2 min-w-[50px]`}
           >
             4
           </GeneralButton>
@@ -235,6 +239,7 @@ const FactorSelectButtons = (props) => {
             width={'50px'}
             onClick={(e) => handleClick(e, baselineData)}
             key={'f5'}
+            className={`${highlightRotfactor5 ? 'bg-primary-button' : 'bg-grey-button'} h-[30px] p-2 min-w-[50px]`}
           >
             5
           </GeneralButton>
@@ -246,6 +251,7 @@ const FactorSelectButtons = (props) => {
             width={'50px'}
             onClick={(e) => handleClick(e, baselineData)}
             key={'f6'}
+            className={`${highlightRotfactor6 ? 'bg-primary-button' : 'bg-grey-button'} h-[30px] p-2 min-w-[50px]`}
           >
             6
           </GeneralButton>
@@ -257,6 +263,7 @@ const FactorSelectButtons = (props) => {
             width={'50px'}
             onClick={(e) => handleClick(e, baselineData)}
             key={'f7'}
+            className={`${highlightRotfactor7 ? 'bg-primary-button' : 'bg-grey-button'} h-[30px] p-2 min-w-[50px]`}
           >
             7
           </GeneralButton>
@@ -268,6 +275,7 @@ const FactorSelectButtons = (props) => {
             width={'50px'}
             onClick={(e) => handleClick(e, baselineData)} // e => this.handleClick(e, baselineData)
             key={'f8'}
+            className={`${highlightRotfactor8 ? 'bg-primary-button' : 'bg-grey-button'} h-[30px] p-2 min-w-[50px]`}
           >
             8
           </GeneralButton>
@@ -292,7 +300,7 @@ const FactorSelectButtons = (props) => {
             </span>
           </div>
         )}
-      </React.Fragment>
+      </div>
     );
   }
   return null;

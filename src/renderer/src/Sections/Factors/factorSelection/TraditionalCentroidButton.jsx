@@ -1,4 +1,3 @@
-import styled from 'styled-components';
 import factorState from '../../GlobalState/factorState';
 import GeneralButton from './../../../Utils/GeneralButton';
 import { useTranslation } from 'react-i18next';
@@ -32,7 +31,7 @@ const TraditionalCentroidButton = () => {
       $isActive={isActive}
       disabled={isDisabled}
       onClick={handleOnclick}
-      className="bg-grey-button"
+      className={`${isActive ? 'bg-grey-button' : 'bg-grey-button'}`}
     >
       Brown <br /> {t('Centroid Factors')}
     </GeneralButton>

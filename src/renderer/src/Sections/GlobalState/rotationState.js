@@ -51,7 +51,7 @@ const rotationState = create(
     rowH2: [],
     rotColDefsFactorTable: [],
     rotRowDataFactorTable: [],
-    rotationActiveTabIndex: 0,
+    rotationActiveTabIndex: 'tab1',
     rotationDegrees: 0,
 
     shouldDisplayFacKept: false,

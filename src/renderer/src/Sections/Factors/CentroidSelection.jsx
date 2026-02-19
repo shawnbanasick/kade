@@ -5,17 +5,15 @@ import Horst55CentroidModal from './factorSelection/Horst55CentroidModal';
 import factorState from '../GlobalState/factorState';
 
 const TypeOfCentroidTransitionContainer = () => {
-  const showCentroidSelection = factorState.getState().showCentroidSelection;
-
-  console.log('showCentroidSelection', showCentroidSelection);
+  const showCentroidSelection = factorState((state) => state.showCentroidSelection);
 
   if (showCentroidSelection) {
     return (
-      <TypeOfAnalysisTransitionContainerDiv>
+      <div className="flex mt-[25px] w-[800px] justify-start">
         <TraditionalCentroidButton />
         {/* <TuckerMacCallumButton /> */}
         <Horst55CentroidModal />
-      </TypeOfAnalysisTransitionContainerDiv>
+      </div>
     );
   } else {
     return null;
@@ -23,10 +21,3 @@ const TypeOfCentroidTransitionContainer = () => {
 };
 
 export default TypeOfCentroidTransitionContainer;
-
-const TypeOfAnalysisTransitionContainerDiv = styled.div`
-  display: flex;
-  margin-top: 25px;
-  width: 800px;
-  justify-content: flex-start;
-`;

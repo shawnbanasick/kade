@@ -1,4 +1,3 @@
-import styled from 'styled-components';
 import GeneralButton from '../../../Utils/GeneralButton';
 import horstDispatcher from '../centroidLogic/horst55Logic/horstDispatcher';
 import factorState from '../../GlobalState/factorState';
@@ -32,6 +31,10 @@ const Horst55CentroidModal = () => {
     (state) => state.updateIsCentroidFacSelectDisabled
   );
 
+  // getState
+  const isActive = factorState((state) => state.activeHorst55CentroidButton);
+  const isDisabled = factorState((state) => state.isHorst55Disabled);
+
   const handleOnclick = () => {
     updateIsCentroidLoading(true);
 
@@ -51,27 +54,19 @@ const Horst55CentroidModal = () => {
     updateIsCentroidFacSelectDisabled(true);
   };
 
-  // getState
-  const isActive = factorState((state) => state.activeHorst55CentroidButton);
-  const isDisabled = factorState((state) => state.isHorst55Disabled);
-
   return (
-    <HorstButton
-      as={GeneralButton}
+    <GeneralButton
       id="noFacSelectedModalButton"
       $isActive={isActive}
       disabled={isDisabled}
       onClick={handleOnclick}
+      className={`${isActive ? 'bg-primary-button' : 'bg-grey-button'}`}
     >
       Use Horst With
       <br />
       Auto-Stop
-    </HorstButton>
+    </GeneralButton>
   );
 };
 
 export default Horst55CentroidModal;
-
-const HorstButton = styled.div`
-  margin-right: 15px;
-`;

@@ -121,104 +121,96 @@ const FactorSelectionForOutputButtons = () => {
 
   if (showKeepFacForRotButton) {
     return (
-      <React.Fragment>
+      <div className="flex flex-row gap-1">
         <GeneralButton
           key={`f1`}
-          width="50px"
-          height="40px"
           value={1}
           $isActive={factor1Active}
           disabled={isFacSelectDisabled}
           onClick={handleOnclick}
           id={`factor1`}
+          className={`${factor1Active ? 'bg-primary-button' : 'bg-grey-button'} h-[30px] w-[40px]`}
         >
           1
         </GeneralButton>
         <GeneralButton
           key={`f2`}
-          width="50px"
-          height="40px"
           value={2}
           $isActive={factor2Active}
           disabled={isFacSelectDisabled}
           onClick={handleOnclick}
           id={`factor2`}
+          className={`${factor2Active ? 'bg-primary-button' : 'bg-grey-button'} h-[30px] w-[40px]`}
         >
           2
         </GeneralButton>
         <GeneralButton
           key={`f3`}
-          width="50px"
-          height="40px"
           value={3}
           $isActive={factor3Active}
           disabled={isFacSelectDisabled}
           onClick={handleOnclick}
           id={`factor3`}
+          className={`${factor3Active ? 'bg-primary-button' : 'bg-grey-button'} h-[30px] w-[40px]`}
         >
           3
         </GeneralButton>
         <GeneralButton
           key={`f4`}
-          width="50px"
-          height="40px"
           value={4}
           $isActive={factor4Active}
           disabled={isFacSelectDisabled}
           onClick={handleOnclick}
           id={`factor4`}
+          className={`${factor4Active ? 'bg-primary-button' : 'bg-grey-button'} h-[30px] w-[40px]`}
         >
           4
         </GeneralButton>
         <GeneralButton
           key={`f5`}
-          width="50px"
-          height="40px"
           value={5}
           $isActive={factor5Active}
           disabled={isFacSelectDisabled}
           onClick={handleOnclick}
           id={`factor5`}
+          className={`${factor5Active ? 'bg-primary-button' : 'bg-grey-button'} h-[30px] w-[40px]`}
         >
           5
         </GeneralButton>
         <GeneralButton
           key={`f6`}
-          width="50px"
-          height="40px"
           value={6}
           $isActive={factor6Active}
           disabled={isFacSelectDisabled}
           onClick={handleOnclick}
           id={`factor6`}
+          className={`${factor6Active ? 'bg-primary-button' : 'bg-grey-button'} h-[30px] w-[40px] `}
         >
           6
         </GeneralButton>
         <GeneralButton
           key={`f7`}
-          width="50px"
-          height="40px"
           value={7}
           $isActive={factor7Active}
           disabled={isFacSelectDisabled}
           onClick={handleOnclick}
           id={`factor7`}
+          className={`${factor7Active ? 'bg-primary-button' : 'bg-grey-button'} h-[30px] w-[40px]`}
         >
           7
         </GeneralButton>
         <GeneralButton
           key={`f8`}
-          width="50px"
-          height="40px"
           value={8}
           $isActive={factor8Active}
           disabled={isFacSelectDisabled}
           onClick={handleOnclick}
           id={`factor8`}
+          className={`${factor8Active ? 'bg-primary-button' : 'bg-grey-button'} h-[30px] w-[40px]`}
         >
           8
         </GeneralButton>
-      </React.Fragment>
+      </div>
     );
   }
   return null;
