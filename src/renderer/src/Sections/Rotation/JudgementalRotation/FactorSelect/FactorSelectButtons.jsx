@@ -181,7 +181,7 @@ const FactorSelectButtons = (props) => {
 
   if (shouldDisplayRotFactorButtons) {
     return (
-      <div className="flex flex-row gap-2 ml-2">
+      <div className="flex flex-row gap-1 ml-1">
         {show1 && (
           <GeneralButton
             id={'factor 1'}
@@ -287,7 +287,7 @@ const FactorSelectButtons = (props) => {
         </GeneralButton>
         <GeneralButton
           id="clearAllRotFacs"
-          className={`h-[30px] p-2 min-w-[100px] bg-grey-button ml-12!`}
+          className={`h-[30px] p-2 min-w-[100px] bg-grey-button!`}
           onClick={handleClick}
         >
           {t('Clear')}

@@ -60,7 +60,7 @@ const Data = () => {
 
   if (areQsortsLoaded && isQsortPatternLoaded) {
     return (
-      <main className="w-[calc(100vw-135px)] max-h-[calc(100vh-22px)] overflow-auto bg-white p-4 pt-6 pl-6 pb-5 select-none font-sans text-lg animate-fade-in">
+      <main className="w-[calc(100vw-135px)] max-h-[calc(100vh-22px)] overflow-auto bg-white p-4 pt-6 pl-6 pb-5 select-none font-sans text-lg animate-fade-in rounded-none">
         {/* Project Title */}
         <h1 className="text-5xl font-bold mb-8">{t('Project Data')}</h1>
 

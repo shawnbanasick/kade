@@ -92,7 +92,7 @@ const RotationButtons = () => {
 
   if (shouldDisplayDegreeButtonButtons) {
     return (
-      <div className="flex flex-row gap-2">
+      <div className="flex flex-row gap-1">
         <GeneralButton
           id={'Button1Degree'}
           $isActive={highlightDegreeButton1}

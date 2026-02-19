@@ -1,6 +1,6 @@
-import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 import rotationState from '../../../GlobalState/rotationState';
+import evenRound from '../../../../Utils/evenRound';
 
 const ParticipantPopUp = () => {
   const { t } = useTranslation();
@@ -12,33 +12,24 @@ const ParticipantPopUp = () => {
   let factor2Value;
   if (participantDataObject !== false) {
     respondent = participantDataObject.respondent;
-    factor1Value = participantDataObject.factor1;
-    factor2Value = participantDataObject.factor2;
+    factor1Value = evenRound(participantDataObject.factor1, 2);
+    factor2Value = evenRound(participantDataObject.factor2, 2);
   }
   return (
-    <div>
+    <div className="mt-2">
       {participantDataObject ? (
-        <PopupDiv>
+        <div className="flex flex-row justify-around w-max min-w-[250px] text-white bg-gray-800 rounded-md p-2">
           <div>{respondent}</div>
           <div>{factor1Value},</div>
           <div>{factor2Value}</div>
-        </PopupDiv>
+        </div>
       ) : (
-        <PopupDiv>{t('Hover to view participant data')}</PopupDiv>
+        <div className="flex flex-row justify-around w-max min-w-[290px] text-black bg-gray-300 rounded-md p-2">
+          {t('Hover over circle to view participant data')}
+        </div>
       )}
     </div>
   );
 };
 
 export default ParticipantPopUp;
-
-const PopupDiv = styled.div`
-  display: flex;
-  justify-content: space-around;
-  width: max-content;
-  min-width: 250px;
-  color: whitesmoke;
-  background: black;
-  border-radius: 4px;
-  padding: 10px;
-`;

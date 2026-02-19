@@ -82,7 +82,7 @@ const Rotation = () => {
         duration-500
       `}
     >
-      <div className="tabs tabs-box flex bg-[#d6dbe0] h-[100%] rounded-tl-none">
+      <div className="tabs tabs-box flex bg-[#d6dbe0] h-[100%] rounded-none">
         <input
           type="radio"
           name="my_tabs_Rot"

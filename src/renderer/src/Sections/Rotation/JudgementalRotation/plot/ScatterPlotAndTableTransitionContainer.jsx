@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import styled from 'styled-components';
 import ScatterPlot from './ScatterPlot';
 import ParticipantPopUp from './ParticipantPopUp';
 import ClockwiseButtons from './ClockwiseButtons';
@@ -10,7 +9,6 @@ import rotationState from '../../../GlobalState/rotationState';
 import GeneralButton from '../../../../Utils/GeneralButton';
 import { useTranslation } from 'react-i18next';
 
-// sets scatterplot width and height
 function getWidthHeight() {
   let windowWidth = window.innerWidth - 533;
   const windowHeight = window.innerHeight - 275;
@@ -42,22 +40,17 @@ const ScatterPlotAndTableTransitionContainer = (props) => {
     height: getWidthHeight(),
   });
 
-  // don't delete - needed for first render on reload
-
   useEffect(() => {
     const size = getWidthHeight();
     setLocalStore({ width: size, height: size });
-    window.addEventListener('resize', () => {
+
+    const handleResize = () => {
       const size = getWidthHeight();
       setLocalStore({ width: size, height: size });
-    });
-
-    return () => {
-      window.removeEventListener('resize', () => {
-        const size = getWidthHeight();
-        setLocalStore({ width: size, height: size });
-      });
     };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
   }, []);
 
   const degreesText = `${rotationDegrees}\u00B0`;
@@ -67,17 +60,21 @@ const ScatterPlotAndTableTransitionContainer = (props) => {
   if (showScatterPlotTableDiv) {
     return (
       <React.Fragment>
-        <DegreesDiv>
-          <TextButton as={GeneralButton}>{t('Rotate axes')}</TextButton>
+        <div className="flex items-end w-full flex-row mb-[20px]">
+          <div className="flex h-[30px] w-[7vw] text-[clamp(0.80rem,1.2cqw,2rem)] mr-4 justify-baseline items-center">
+            {t('Rotate axes')}:
+          </div>
           <RotationButtons />
           <ClockwiseButtons baselineData={props.baselineData} />
-          <DegreesText>
-            {' '}
+          <div className="text-right h-[60px] text-[50px] w-[120px]">
             <p>{degreesText}</p>
-          </DegreesText>
+          </div>
           <SaveRotationButton />
-        </DegreesDiv>
-        <PlotAndChartDiv id="scatterPlotDiv">
+        </div>
+        <div
+          id="scatterPlotDiv"
+          className="flex w-[calc(100vw-523px)] h-[calc(100vh-255px)] mt-[10px]"
+        >
           <div style={{ width: leftContWidth }}>
             <ParticipantPopUp />
             <ScatterPlot
@@ -91,7 +88,7 @@ const ScatterPlotAndTableTransitionContainer = (props) => {
           <div id="rotFactorsTableDiv">
             <RotationTable colDefs={colDefs} maxHeight={maxTableHeight} rowData={rowData} />
           </div>
-        </PlotAndChartDiv>
+        </div>
       </React.Fragment>
     );
   }
@@ -99,33 +96,3 @@ const ScatterPlotAndTableTransitionContainer = (props) => {
 };
 
 export default ScatterPlotAndTableTransitionContainer;
-
-const DegreesText = styled.div`
-  text-align: center;
-  height: 60px;
-  font-size: 50px;
-  width: 105px;
-  margin-left: 10px;
-  margin-right: 17px;
-`;
-
-const PlotAndChartDiv = styled.div`
-  display: flex;
-  width: calc(100wv - 523);
-  height: calc(100vh - 255);
-  margin-top: 10px;
-`;
-
-const TextButton = styled.div`
-  font-size: 20px;
-  background-color: white;
-`;
-
-const DegreesDiv = styled.div`
-  display: flex;
-  align-items: flex-end;
-  width: 100%;
-  flex-direction: row;
-  margin-top: 5;
-  margin-bottom: 20;
-`;

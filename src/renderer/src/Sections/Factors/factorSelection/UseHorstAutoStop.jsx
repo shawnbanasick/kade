@@ -1,5 +1,4 @@
 import React from 'react';
-import styled from 'styled-components';
 import GeneralButton from '../../../Utils/GeneralButton';
 import factorState from '../../GlobalState/factorState';
 import { useTranslation } from 'react-i18next';
@@ -7,7 +6,6 @@ import { useTranslation } from 'react-i18next';
 const UseHorstAutoStop = () => {
   const { t } = useTranslation();
 
-  // getState
   const showUseHorstLimit = factorState((state) => state.showUseHorstLimit);
   const horstAutoStopYesActive = factorState((state) => state.horstAutoStopYesActive);
   const horstAutoStopYesDisabled = factorState((state) => state.horstAutoStopYesDisabled);
@@ -30,7 +28,6 @@ const UseHorstAutoStop = () => {
   const handleClick = (event) => {
     const id = event.target.id;
     if (id === 'yes') {
-      // shouldUseHorstLimit = true;
       updateHorstAutoStopYesActive(true);
       updateHorstAutoStopYesDisabled(true);
       updateHorstAutoStopNoDisabled(true);
@@ -44,57 +41,35 @@ const UseHorstAutoStop = () => {
     }
   };
 
-  if (showUseHorstLimit) {
-    return (
-      <React.Fragment>
-        <HorstLimitContainerDiv>
-          <TextSpan>
-            {`${t('Use Horst limit to determine the number of factors to extract')}?  `}
-          </TextSpan>
-          <YesButton
-            id={'yes'}
-            onClick={handleClick}
-            $isActive={horstAutoStopYesActive}
-            disabled={horstAutoStopYesDisabled}
-          >
-            {t('Yes')}
-          </YesButton>
-          <NoButton
-            id={'no'}
-            onClick={handleClick}
-            $isActive={horstAutoStopNoActive}
-            disabled={horstAutoStopNoDisabled}
-          >
-            {t('No')}
-          </NoButton>
-        </HorstLimitContainerDiv>
-      </React.Fragment>
-    );
-  } else {
-    return null;
-  }
+  if (!showUseHorstLimit) return null;
+
+  return (
+    <React.Fragment>
+      <div className="flex mt-[25px] ml-[70px] w-[800px] flex-row justify-start gap-3 items-center">
+        <span className="mr-[10px]">
+          {`${t('Use Horst limit to determine the number of factors to extract')}?  `}
+        </span>
+        <GeneralButton
+          id="yes"
+          onClick={handleClick}
+          $isActive={horstAutoStopYesActive}
+          disabled={horstAutoStopYesDisabled}
+          className={`w-[75px] ${horstAutoStopYesActive ? 'bg-primary-button' : 'bg-grey-button'}`}
+        >
+          {t('Yes')}
+        </GeneralButton>
+        <GeneralButton
+          id="no"
+          onClick={handleClick}
+          $isActive={horstAutoStopNoActive}
+          disabled={horstAutoStopNoDisabled}
+          className={`w-[75px] ${horstAutoStopNoActive ? 'bg-primary-button' : 'bg-grey-button'}`}
+        >
+          {t('No')}
+        </GeneralButton>
+      </div>
+    </React.Fragment>
+  );
 };
 
 export default UseHorstAutoStop;
-
-const HorstLimitContainerDiv = styled.div`
-  display: flex;
-  margin-top: 25px;
-  margin-left: 70px;
-  width: 800px;
-  flex-direction: row;
-  justify-content: flex-start;
-  align-items: center;
-`;
-
-const YesButton = styled(GeneralButton)`
-  width: 75px;
-`;
-
-const NoButton = styled(GeneralButton)`
-  width: 75px;
-`;
-
-const TextSpan = styled.span`
-  margin-right: 10px;
-`;

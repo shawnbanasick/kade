@@ -16,7 +16,12 @@ module.exports = {
         fadeIn: 'fadeIn 0.5s linear',
         fadeOut: 'fadeOut 0.5s linear',
       },
+      fontSize: {
+        clamp: 'clamp(1rem, 5vw, 3rem)',
+      },
     },
     plugins: [require('flowbite/plugin')],
   },
 };
+
+// text-[clamp(0.80rem,1.2cqw,2rem)]

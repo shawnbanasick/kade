@@ -103,27 +103,25 @@ const SaveRotationButton = () => {
 
   if (rotationDegrees !== 0) {
     return (
-      <OrangeButton
-        as={GeneralButton}
+      <GeneralButton
         id="saveRotationButtonOrange"
         onClick={saveRotations}
         disabled={isDisabled}
-        className="wrapper2"
+        className="wrapper2 bg-orange-300"
       >
         {' '}
         {t('Save Rotation')}
-      </OrangeButton>
+      </GeneralButton>
     );
   }
   return (
     <React.Fragment>
-      <GeneralButton id="saveRotationButtonGray"> {t('Save Rotation')}</GeneralButton>
+      <GeneralButton id="saveRotationButtonGray" className="bg-grey-button">
+        {' '}
+        {t('Save Rotation')}
+      </GeneralButton>
     </React.Fragment>
   );
 };
 
 export default SaveRotationButton;
-
-const OrangeButton = styled.div`
-  background-color: orange !important;
-`;
