@@ -1,9 +1,6 @@
 import loadingState from '../../GlobalState/loadingState';
-import styled from 'styled-components';
 
 const SigLevelDropdownSelect2 = () => {
-  //   const { t } = useTranslation();
-
   const updateUserSelectedSigLevel = loadingState((state) => state.updateUserSelectedSigLevel);
   const updateAutoflagButtonColor = loadingState((state) => state.updateAutoflagButtonColor);
   const loadingSigDropdownValue = loadingState((state) => state.loadingSigDropdownValue);
@@ -14,14 +11,17 @@ const SigLevelDropdownSelect2 = () => {
   const handleChange = (e) => {
     console.log('SigLevelDropdownSelect2 handleChange value:', e.target.value);
     updateLoadingSigDropdownValue(e.target.value);
-
     updateUserSelectedSigLevel(+e.target.value);
     updateLoadingSigDropdownValue(e.target.value);
-    updateAutoflagButtonColor('orange');
+    updateAutoflagButtonColor('bg-[orange]');
   };
 
   return (
-    <DropdownSig onChange={handleChange} value={loadingSigDropdownValue}>
+    <select
+      onChange={handleChange}
+      value={loadingSigDropdownValue}
+      className="text-[16px] h-[30px] w-[125px] pl-[15px] bg-grey-button rounded"
+    >
       <option value="3.891">P &lt; 0.0001</option>
       <option value="3.481">P &lt; 0.0005</option>
       <option value="3.291">P &lt; 0.001</option>
@@ -32,18 +32,8 @@ const SigLevelDropdownSelect2 = () => {
       <option value="1.44">P &lt; 0.15</option>
       <option value="1.28">P &lt; 0.2</option>
       <option value="majority">Maj. Com. Var.</option>
-    </DropdownSig>
+    </select>
   );
 };
 
 export default SigLevelDropdownSelect2;
-
-const DropdownSig = styled.select`
-  font-size: 16px;
-  height: 48px;
-  width: 125px;
-  border: 1px solid #d6dbe0;
-  padding-left: 15px;
-  background-color: #d6dbe0;
-  border-radius: 4px;
-`;

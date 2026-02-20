@@ -1,97 +1,130 @@
-import { useState } from 'react';
-import { Dropdown } from 'semantic-ui-react';
+import { useState, useRef, useEffect } from 'react';
 import loadingState from '../../GlobalState/loadingState';
-import styled from 'styled-components';
 
-// stateOptions = [ { key: 'AL', value: 'AL', text: 'Alabama' }, ...  ]
 const sigOptions = [
-  {
-    key: '99.99',
-    value: 3.891,
-    text: 'P < 0.0001', // text: "99.99%"
-  },
-  {
-    key: '99.95',
-    value: 3.481,
-    text: 'P < 0.0005', // text: "99.95%"
-  },
-  {
-    key: '99.9',
-    value: 3.291,
-    text: 'P < 0.001', // text: "99.9%"
-  },
-  {
-    key: '99.5',
-    value: 2.807,
-    text: 'P < 0.005', // text: "99.5%"
-  },
-  {
-    key: '99',
-    value: 2.575,
-    text: 'P < 0.01', // text: "99%"
-  },
-  {
-    key: '95',
-    value: 1.96,
-    text: 'P < 0.05', // text: "95%"
-  },
-  {
-    key: '90',
-    value: 1.645,
-    text: 'P < 0.1', // text: "90%"
-  },
-  {
-    key: '85',
-    value: 1.44,
-    text: 'P < 0.15', // text: "85%"
-  },
-  {
-    key: '80',
-    value: 1.28,
-    text: 'P < 0.2', // text: "80%"
-  },
-  {
-    key: 'Com',
-    value: 'majority',
-    text: 'Maj. Com. Var.',
-  },
+  { key: '99.99', value: 3.891, text: 'P < 0.0001' },
+  { key: '99.95', value: 3.481, text: 'P < 0.0005' },
+  { key: '99.9', value: 3.291, text: 'P < 0.001' },
+  { key: '99.5', value: 2.807, text: 'P < 0.005' },
+  { key: '99', value: 2.575, text: 'P < 0.01' },
+  { key: '95', value: 1.96, text: 'P < 0.05' },
+  { key: '90', value: 1.645, text: 'P < 0.1' },
+  { key: '85', value: 1.44, text: 'P < 0.15' },
+  { key: '80', value: 1.28, text: 'P < 0.2' },
+  { key: 'Com', value: 'majority', text: 'Maj. Com. Var.' },
 ];
 
 const SigLevelDropdown = () => {
   const [localStore, setLocalStore] = useState({ value: 1.96 });
+  const [isOpen, setIsOpen] = useState(false);
+  const dropdownRef = useRef(null);
 
   const updateUserSelectedSigLevel = loadingState((state) => state.updateUserSelectedSigLevel);
   const updateAutoflagButtonColor = loadingState((state) => state.updateAutoflagButtonColor);
 
-  const handleChange = (e, { value }) => {
-    setLocalStore({ value: value });
+  const handleChange = (value) => {
+    setLocalStore({ value });
     updateUserSelectedSigLevel(value);
-    updateAutoflagButtonColor('orange');
+    updateAutoflagButtonColor('bg-[orange]');
+    setIsOpen(false);
   };
 
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
+        setIsOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
+  const selectedOption = sigOptions.find((o) => o.value === localStore.value);
+
   return (
-    <Container>
-      <Dropdown
-        className="autoflagDropdown"
-        style={{ border: '3px solid red', fontSize: '14px', height: '50px', color: '#000' }}
-        onChange={handleChange}
-        defaultValue={localStore.value}
-        openOnFocus={true}
-        button={true}
-        simple={true}
-        item={true}
-        options={sigOptions}
-      />
-    </Container>
+    <div style={{ height: '30px', position: 'relative' }} ref={dropdownRef}>
+      <button
+        style={{
+          height: '30px',
+          fontSize: '14px',
+          border: '3px solid red',
+          background: 'white',
+          color: '#000',
+          display: 'flex',
+          alignItems: 'center',
+          gap: '4px',
+          padding: '0 8px',
+          whiteSpace: 'nowrap',
+          fontWeight: '500',
+          boxSizing: 'border-box',
+        }}
+        onClick={() => setIsOpen((prev) => !prev)}
+        onFocus={() => setIsOpen(true)}
+      >
+        {selectedOption?.text}
+        <svg
+          style={{ width: '12px', height: '12px', marginLeft: '4px' }}
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+        </svg>
+      </button>
+
+      {isOpen && (
+        <ul
+          style={{
+            position: 'absolute',
+            zIndex: 50,
+            top: '100%',
+            left: 0,
+            margin: 0,
+            padding: 0,
+            background: 'white',
+            border: '1px solid #d1d5db',
+            boxShadow: '0 4px 6px rgba(0,0,0,0.1)',
+            listStyle: 'none',
+            minWidth: '100%',
+          }}
+        >
+          {sigOptions.map((option) => (
+            <li
+              key={option.key}
+              style={{
+                height: '30px',
+                display: 'flex',
+                alignItems: 'center',
+                padding: '0 12px',
+                fontSize: '14px',
+                cursor: 'pointer',
+                whiteSpace: 'nowrap',
+                boxSizing: 'border-box',
+                background: option.value === localStore.value ? '#dbeafe' : 'white',
+                fontWeight: option.value === localStore.value ? '600' : 'normal',
+                color: '#000',
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.background = '#3b82f6';
+                e.currentTarget.style.color = 'white';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.background =
+                  option.value === localStore.value ? '#dbeafe' : 'white';
+                e.currentTarget.style.color = '#000';
+              }}
+              onClick={() => handleChange(option.value)}
+            >
+              {option.text}
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
   );
 };
 
 export default SigLevelDropdown;
-
-const Container = styled.div`
-  color: red;
-  font-size: 12px;
-`;
 
 /*
 'Significance Threshold'

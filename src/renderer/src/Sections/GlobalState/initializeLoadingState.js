@@ -54,8 +54,7 @@ const initializeLoadingState = () => {
 
   const updateUserSelectedSigLevel = loadingState((state) => state.updateUserSelectedSigLevel);
 
-
-  updateAutoflagButtonColor("#d6dbe0");
+  updateAutoflagButtonColor('bg-grey-button');
   updateAutoFlagHistory([]);
 
   updateBipolarDisabled(false);
@@ -70,7 +69,7 @@ const initializeLoadingState = () => {
   updateGridColDefsLoadingsTable([]);
   updateGridRowDataLoadingsTable([]);
 
-  updateHighlighting("grays");
+  updateHighlighting('grays');
 
   updateIsLoadingFactorsKept(false);
   updateIsLoadingAutoflag(false);
@@ -81,7 +80,7 @@ const initializeLoadingState = () => {
   updateRespondentNamesMaxLength(20);
   updateRequireMajorityCommonVariance(true);
 
-  updateSendDataToOutputButtonColor("#d6dbe0");
+  updateSendDataToOutputButtonColor('#d6dbe0');
   updateShowInvertFactorModal(false);
   updateShowLoadingsTable(false);
   updateShowSplitFactorModal(false);
@@ -91,9 +90,7 @@ const initializeLoadingState = () => {
 
   updateUserSelectedSigLevel(1.96);
 
-  
-
-  loadingState.autoflagButtonColor = '#d6dbe0';
+  loadingState.autoflagButtonColor = 'bg-grey-button';
   loadingState.autoFlagHistory = [];
 
   loadingState.bipolarDisabled = false;
