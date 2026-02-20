@@ -3,6 +3,9 @@
 }
 
 .react-tabs__tab-list {
+  display: flex;
+  flex-direction: row;
+  gap: 5px;
   border-bottom: 1px solid #aaa;
   margin: 0 0 0px 3px;
   background-color: #d6dbe0;

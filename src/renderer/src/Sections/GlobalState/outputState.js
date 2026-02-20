@@ -24,7 +24,7 @@ const outputState = create(
     sigDropdownValue1: '2.575',
     sigDropdownValue2: '1.96',
 
-    outputActiveTabIndex: 0,
+    outputActiveTabIndex: 'tab1',
     outputButtonsArray: [],
     outputFactorSelectButtonsDisabled: false,
     outputForDataViz: [],
