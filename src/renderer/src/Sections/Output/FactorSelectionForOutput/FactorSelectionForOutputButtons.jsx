@@ -64,7 +64,19 @@ const FactorSelectionForOutputButtons = () => {
     }
   };
 
+  const highlightUpdaters = {
+    1: updateHighlightFactor1,
+    2: updateHighlightFactor2,
+    3: updateHighlightFactor3,
+    4: updateHighlightFactor4,
+    5: updateHighlightFactor5,
+    6: updateHighlightFactor6,
+    7: updateHighlightFactor7,
+    8: updateHighlightFactor8,
+  };
+
   const handleOnclick = (event) => {
+    console.log(event.target.id);
     const factor = event.target.id;
 
     if (factor === 'selectAllFacs') {
@@ -72,11 +84,12 @@ const FactorSelectionForOutputButtons = () => {
       for (let i = 0; i < btnId.length; i += 1) {
         userSelectedFactors.push(`factor ${btnId[i]}`);
       }
-      [1, 2, 3, 4, 5, 6, 7, 8].forEach((n) => eval(`updateHighlightFactor${n}(true)`));
+      [1, 2, 3, 4, 5, 6, 7, 8].forEach((n) => highlightUpdaters[n](true));
+
       resetSection6('output');
       updateUserSelectedFactors(userSelectedFactors);
     } else if (factor === 'clearAllFacs') {
-      [1, 2, 3, 4, 5, 6, 7, 8].forEach((n) => eval(`updateHighlightFactor${n}(false)`));
+      [1, 2, 3, 4, 5, 6, 7, 8].forEach((n) => highlightUpdaters[n](false));
       updateOutputFactorSelectButtonsDisabled(false);
       resetSection6('output');
       updateUserSelectedFactors([]);
@@ -113,7 +126,7 @@ const FactorSelectionForOutputButtons = () => {
   // Reusable class builders
   const numButtonClass = (isActive) =>
     [
-      'grid items-center justify-items-center min-h-[40px] w-[50px]',
+      'grid items-center justify-items-center min-h-[30px] w-[50px]',
       'text-center text-[18px] font-semibold font-["Helvetica",sans-serif]',
       'border-none rounded-[4px] mr-[3px] mb-[3px] px-[10px] py-[5px]',
       'cursor-pointer text-black no-underline select-none',
@@ -143,8 +156,8 @@ const FactorSelectionForOutputButtons = () => {
         {/* Container1 */}
         <div className="mt-[3px] h-[100px] w-[800px]">
           {/* StyledWrapper */}
-          <div className="flex flex-row h-[50px] w-[900px] items-baseline">
-            <span className="mr-[5px] text-[25px] inline-block">{t('Select Factors')}</span>
+          <div className="flex flex-row h-[40px] items-baseline w-[900px] items-baseline gap-x-[5px]">
+            <span className="text-[25px] inline-block">{t('Select Factors')}</span>
 
             {factors.map(({ show, id, isActive, key, label }) =>
               show ? (
@@ -167,16 +180,24 @@ const FactorSelectionForOutputButtons = () => {
               id="selectAllFacs"
               disabled={areDisabled}
               onClick={handleOnclick}
-              className="min-w-[75px] bg-grey-button"
+              className="min-w-[75px] text-[25px] bg-grey-button h-[30px]"
             >
               {t('All')}
             </GeneralButton>
 
-            <GeneralButton id="clearAllFacs" onClick={handleOnclick} className="min-w-[75px]">
+            <GeneralButton
+              id="clearAllFacs"
+              onClick={handleOnclick}
+              className="min-w-[75px] text-[25px] bg-grey-button h-[30px]"
+            >
               {t('Clear')}
             </GeneralButton>
 
-            <GeneralButton id="startOutput" onClick={handleSubmit} className="min-w-[75px]">
+            <GeneralButton
+              id="startOutput"
+              onClick={handleSubmit}
+              className="min-w-[75px] bg-grey-button h-[30px]"
+            >
               {t('Submit')}
             </GeneralButton>
           </div>

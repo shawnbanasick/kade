@@ -1,4 +1,3 @@
-import styled from 'styled-components';
 import outputState from '../../GlobalState/outputState';
 import GeneralButton from '../../../Utils/GeneralButton';
 import { useTranslation } from 'react-i18next';
@@ -17,70 +16,22 @@ const DistStateListSortByButtons = () => {
     updateDownloadDocxButtonActive(true);
   };
 
-  const shouldDisplayDistStateListButtons = true;
-  if (shouldDisplayDistStateListButtons) {
-    return (
-      <StyledWrapper>
-        <SortButton
-          id={'DownloadDocxFile'}
-          $isActive={downloadDocxButtonActive}
-          onClick={handleOnclick}
-          key={'f1'}
-        >
-          <LineContainer>
-            <SvgContainer>
-              <img src={DocxIcon} height="50px" alt="docx Icon" />
-            </SvgContainer>
-            {t('Document')}
-          </LineContainer>
-        </SortButton>
-      </StyledWrapper>
-    );
-  }
-  return null;
+  return (
+    <div className="flex items-baseline">
+      <GeneralButton
+        id="DownloadDocxFile"
+        onClick={handleOnclick}
+        className="w-fit min-w-[250px] bg-grey-button"
+      >
+        <div className="flex flex-row justify-center items-center text-[22px] h-full w-full">
+          <div className="flex justify-center items-center mr-[10px]">
+            <img src={DocxIcon} className="h-[30px]" alt="docx Icon" />
+          </div>
+          {t('Document')}
+        </div>
+      </GeneralButton>
+    </div>
+  );
 };
 
 export default DistStateListSortByButtons;
-
-const StyledWrapper = styled.div`
-  display: flex;
-  align-items: baseline;
-
-  .wrapper1 {
-    box-shadow: 0 2px 2px 0 black;
-
-    &:hover {
-      box-shadow: 0 2px 2px 0 black;
-    }
-
-    &:active {
-      box-shadow: 0 0 1px 0 black inset;
-    }
-  }
-
-  .downloadButton {
-    margin-left: 120px;
-  }
-`;
-
-const SortButton = styled(GeneralButton)`
-  width: fit-content;
-  min-width: 250px;
-`;
-
-const LineContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-  width: 100%;
-`;
-
-const SvgContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-right: 10px;
-  margin-left: 10;
-`;

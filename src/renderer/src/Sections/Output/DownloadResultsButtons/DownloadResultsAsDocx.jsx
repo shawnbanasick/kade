@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import styled from 'styled-components';
 import { Button, Header, Modal } from 'semantic-ui-react';
 // import downloadResultsAsCsv from "../downloadCsvLogic/downloadCsvOutputFile";
 import GeneralButton from '../../../Utils/GeneralButton';
@@ -7,6 +6,7 @@ import { useTranslation } from 'react-i18next';
 import createOutputDoc from '../downloadDocxLogic/createOutputDoc';
 import outputState from '../../GlobalState/outputState';
 import cloneDeep from 'lodash/cloneDeep';
+import DocxIcon from '../../images/DOCX_Icon2.svg';
 
 const DownloadResultsAsDocx = () => {
   const { t } = useTranslation();
@@ -74,14 +74,15 @@ const DownloadResultsAsDocx = () => {
     <Modal
       dimmer={'blurring'}
       trigger={
-        <DocxButton
-          as={GeneralButton}
+        <GeneralButton
           id="downloadResultsAsDocxButton"
-          $isActive={active}
           onClick={handleOpen}
+          className="flex justify-center items-center w-fit min-w-[250px] bg-grey-button "
         >
-          {buttonText}
-        </DocxButton>
+          <div className="flex flex-row justify-center items-center h-[30px] text-[18px]">
+            {buttonText}
+          </div>
+        </GeneralButton>
       }
       open={localStore.modalOpen}
       onClose={handleClose}
@@ -108,9 +109,3 @@ const DownloadResultsAsDocx = () => {
 };
 
 export default DownloadResultsAsDocx;
-
-const DocxButton = styled.div`
-  min-width: 250px;
-  background-color: orange;
-  // margin-top: 60px;
-`;

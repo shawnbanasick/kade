@@ -1,4 +1,3 @@
-import styled from 'styled-components';
 import { Transition } from 'semantic-ui-react';
 import DownloadResultsAsExcel from './DownloadResultsAsExcel';
 import DownloadResultsAsCsv from './DownloadResultsAsCsv';
@@ -8,52 +7,22 @@ import DownloadDocxFile from './DownloadDocxFile';
 
 const DownloadResultsButtons = () => {
   const { t } = useTranslation();
-
   const showDownloadOutputButtons = outputState((state) => state.showDownloadOutputButtons);
 
   return (
     <Transition visible={showDownloadOutputButtons} animation="fade" duration={1000}>
-      <Container1>
-        <OutputDownloadLabel>{t('Download complete output as')}</OutputDownloadLabel>
-        <DownloadOutputButtons>
+      <div className="h-[150px]">
+        <div className="w-fit text-[24px] leading-[1.2] mr-[5px]">
+          {t('Download complete output as')}
+        </div>
+        <div className="flex flex-row gap-[47px] items-center py-[20px] w-[1000px] h-[100px]">
           <DownloadResultsAsExcel />
           <DownloadResultsAsCsv />
           <DownloadDocxFile />
-        </DownloadOutputButtons>
-      </Container1>
+        </div>
+      </div>
     </Transition>
   );
 };
 
 export default DownloadResultsButtons;
-
-const DownloadOutputButtons = styled.div`
-  display: flex;
-  flex-direction: row;
-  gap: 47px;
-  align-items: center;
-  justify-items: center;
-  padding-top: 20px;
-  padding-bottom: 20px;
-  width: 1000px;
-  height: 100px;
-`;
-
-const OutputDownloadLabel = styled.div`
-  width: fit-content;
-  font-size: 24px;
-  line-height: 1.2;
-  margin-right: 5px;
-`;
-
-// const ButtonRow = styled.div`
-//   display: flex;
-//   flex-direction: row;
-//   justify-content: center;
-//   align-items: center;
-//   margin-top: 20px;
-// `;
-
-const Container1 = styled.div`
-  height: 150px;
-`;

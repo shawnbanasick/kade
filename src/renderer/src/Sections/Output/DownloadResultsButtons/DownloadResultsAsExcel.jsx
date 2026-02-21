@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import styled from 'styled-components';
 import { Button, Header, Modal } from 'semantic-ui-react';
 import downloadExcelDispatch from '../downloadExcelLogic/1_downloadExcelDispatch';
 import GeneralButton from '../../../Utils/GeneralButton';
@@ -15,10 +14,7 @@ const DownloadResultsAsExcel = () => {
   );
   const userSelectedFactors = outputState((state) => state.userSelectedFactors);
 
-  const [localStore, setLocalStore] = useState({
-    modalOpen: false,
-    active: false,
-  });
+  const [localStore, setLocalStore] = useState({ modalOpen: false, active: false });
 
   const handleOpen = () => {
     if (userSelectedFactors.length === 0) {
@@ -35,24 +31,22 @@ const DownloadResultsAsExcel = () => {
     setLocalStore({ modalOpen: false, active: false });
   };
 
-  const active = localStore.active;
   return (
     <Modal
-      dimmer={'blurring'}
+      dimmer="blurring"
       trigger={
-        <ExcelButton
-          as={GeneralButton}
+        <GeneralButton
           id="downloadResultsAsExcelButton"
-          $isActive={active}
           onClick={handleOpen}
+          className="w-fit min-w-[250px]  bg-grey-button"
         >
-          <LineContainer>
-            <SvgContainer>
-              <img src={XlsxIcon} height="50px" alt="xlsx Icon" />
-            </SvgContainer>
+          <div className="flex flex-row justify-center items-center text-[22px]  h-full w-full">
+            <div className="flex justify-center  items-center mr-[10px]">
+              <img src={XlsxIcon} alt="xlsx Icon" className="h-[30px]" />
+            </div>
             {t('Spreadsheet')}
-          </LineContainer>
-        </ExcelButton>
+          </div>
+        </GeneralButton>
       }
       open={localStore.modalOpen}
       onClose={handleClose}
@@ -61,12 +55,12 @@ const DownloadResultsAsExcel = () => {
     >
       <Header content={t('Analysis Output')} />
       <Modal.Content>
-        <span style={{ fontSize: 30 }}>{t('Select the factors to output first')}</span>
+        <span className="text-[30px]">{t('Select the factors to output first')}</span>
       </Modal.Content>
       <Modal.Actions>
         <Button
           id="downloadResultsAsExcelModalGotItButton"
-          size={'huge'}
+          size="huge"
           color="green"
           onClick={handleClose}
           inverted
@@ -79,26 +73,3 @@ const DownloadResultsAsExcel = () => {
 };
 
 export default DownloadResultsAsExcel;
-
-const ExcelButton = styled.div`
-  width: fit-content;
-  min-width: 250px;
-  // margin-right: 20px;
-`;
-
-const LineContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-  width: 100%;
-`;
-
-const SvgContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-right: 10px;
-  margin-left: 10;
-`;
