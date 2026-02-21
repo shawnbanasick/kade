@@ -49,7 +49,7 @@ import currentTime1 from '../../renderer/src/Utils/currentTime1';
 // import calcState from '../../GlobalState/calcState';
 // import cloneDeep from 'lodash/cloneDeep';
 // import newSaveDocumentToFile from './newSaveDocumentToFile';
-// import saveDocumentToZip from './saveDocumentToZip';
+import saveDocumentToZip from './saveDocumentToZip';
 
 // tableCompat = MS Word, LibreOffice Writer
 // padCompat = Google Docs, Apple Pages
@@ -91,6 +91,9 @@ const generateOutputDoc = async (dataContent) => {
     willIncludeDist,
     willIncludeConsensus,
     willIncludeRelRanks,
+    statements,
+    sorts,
+    multiplierArray,
   } = docOptions;
 
   let updateLinksBool = false;
@@ -330,7 +333,7 @@ const generateOutputDoc = async (dataContent) => {
     ],
   });
   if (saveAsZip === true) {
-    // saveDocumentToZip(doc, 'KADE_output_file.zip');
+    saveDocumentToZip(doc, projectName, statements, sorts, multiplierArray);
   } else {
     const timeStamp = `${currentDate1()}_${currentTime1()}`;
     let nameFile = `KADE_results_${projectName}_${timeStamp}.docx`;

@@ -1,5 +1,3 @@
-import styled from 'styled-components';
-// import downloadDistStates from "./downloadDistStates";
 import GeneralButton from '../../../Utils/GeneralButton';
 import { useTranslation } from 'react-i18next';
 import DocSelectionSwitch from '../downloadDocxLogic/DocSelectionSwitch';
@@ -26,15 +24,9 @@ const DistStateListSortByButtons = () => {
     updateUseClippedButtonActive(false);
   };
 
-  const styles = {
-    fontSize: 22,
-    userSelect: 'none',
-  };
-
   const handleOnclick = (event) => {
     const buttonId = event.target.id;
 
-    // clear all button highlighting
     if (buttonId === 'ContentUseTables') {
       clearAllButtons();
       updateUseTablesButtonActive(true);
@@ -50,93 +42,45 @@ const DistStateListSortByButtons = () => {
     }
   };
 
-  const shouldDisplayDistStateListButtons = true;
-  if (shouldDisplayDistStateListButtons) {
-    return (
-      <Container1>
-        <span style={styles}>{t('Document Format')}</span>
-        <hr style={{ width: '100%', marginBottom: 15 }} />
-        <OptionStatementRow>
-          <OptionStatementText>{`1. ${tocText}`}</OptionStatementText>
-          <DocSelectionSwitch
-            name="willUseHyperlinks"
-            value="willUseHyperlinks"
-            toggle={willUseHyperlinks}
-          />
-        </OptionStatementRow>
-        <OptionStatementRow>
-          <OptionStatementText>{`2. ${zebraText}`}</OptionStatementText>
-          <DocSelectionSwitch name="useZebra" value="useZebra" toggle={useZebra} />
-        </OptionStatementRow>
-        <StyledWrapper>
-          <SortButton
-            id={'ContentUseTables'}
-            $isActive={useTablesButtonActive}
-            onClick={handleOnclick}
-            key={'f1'}
-          >
-            {t('Full-Length Statements')}
-          </SortButton>
-          <SortButton
-            id={'ContentUseClipped'}
-            $isActive={useClippedButtonActive}
-            onClick={handleOnclick}
-            key={'f2'}
-          >
-            {t('Truncated Statements')}
-          </SortButton>
-        </StyledWrapper>
-      </Container1>
-    );
-  }
-  return null;
+  return (
+    <div className="flex flex-col pt-[3px] w-[300px] h-[260px] mb-6">
+      <span className="text-[22px] select-none">{t('Document Format')}</span>
+      <hr className="w-full mb-[15px]" />
+
+      <div className="flex items-center pl-[10px] mb-[25px]">
+        <div className="select-none text-[18px]">{`1. ${tocText}`}</div>
+        <DocSelectionSwitch
+          name="willUseHyperlinks"
+          value="willUseHyperlinks"
+          toggle={willUseHyperlinks}
+        />
+      </div>
+
+      <div className="flex items-center pl-[10px] mb-[20px]">
+        <div className="select-none text-[18px]">{`2. ${zebraText}`}</div>
+        <DocSelectionSwitch name="useZebra" value="useZebra" toggle={useZebra} />
+      </div>
+
+      <div className="select-none text-[18px] pl-[10px] mb-[6px]">{`3. ${t('Statement Length')}`}</div>
+
+      <div className="flex items-baseline gap-x-[10px]">
+        <GeneralButton
+          id="ContentUseTables"
+          onClick={handleOnclick}
+          className={`min-w-[120px] ${useTablesButtonActive ? 'bg-primary-button' : 'bg-grey-button'}`}
+        >
+          {t('Full-Length Statements')}
+        </GeneralButton>
+        <GeneralButton
+          id="ContentUseClipped"
+          onClick={handleOnclick}
+          className={`min-w-[120px] ${useClippedButtonActive ? 'bg-primary-button' : 'bg-grey-button'}`}
+        >
+          {t('Truncated Statements')}
+        </GeneralButton>
+      </div>
+    </div>
+  );
 };
 
 export default DistStateListSortByButtons;
-
-const StyledWrapper = styled.div`
-  display: flex;
-  align-items: baseline;
-
-  .wrapper1 {
-    box-shadow: 0 2px 2px 0 black;
-
-    &:hover {
-      box-shadow: 0 2px 2px 0 black;
-    }
-
-    &:active {
-      box-shadow: 0 0 1px 0 black inset;
-    }
-  }
-
-  .downloadButton {
-    margin-left: 120px;
-  }
-`;
-
-const SortButton = styled(GeneralButton)`
-  min-width: 120px;
-`;
-
-const Container1 = styled.div`
-  display: flex;
-  flex-direction: column;
-  padding-top: 3px;
-  width: 300px;
-  height: 260px;
-  margin-bottom: 20px;
-  // outline: 2px solid blue;
-`;
-
-const OptionStatementRow = styled.div`
-  display: flex;
-  align-items: center;
-  padding-left: 10px;
-  margin-bottom: 25px;
-`;
-
-const OptionStatementText = styled.div`
-  user-select: none;
-  font-size: 16px;
-`;

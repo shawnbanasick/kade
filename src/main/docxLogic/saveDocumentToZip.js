@@ -1,39 +1,31 @@
+import fs from 'fs';
+import { dialog } from 'electron';
+import currentDate1 from '../../renderer/src/Utils/currentDate1';
+import currentTime1 from '../../renderer/src/Utils/currentTime1';
 import { Packer } from 'docx';
-import currentDate1 from '../../../Utils/currentDate1';
-import currentTime1 from '../../../Utils/currentTime1';
-import coreState from '../../GlobalState/coreState';
-import calcState from '../../GlobalState/calcState';
 
-const { remote } = require('electron');
-const mainWindow = remote.getCurrentWindow();
-const { dialog } = require('electron').remote;
-let JsZip = require('jszip');
+let JSZip = require('jszip');
 
-const saveZipToFile = async (doc, fileName) => {
-  // setup text output file
-  const data = calcState.getState().outputData;
-  const spacer = '\n\n\n';
-  const newDataArray = [];
-  for (let i = 0, iLen = data.length; i < iLen; i++) {
-    for (let j = 0, jLen = data[i].length; j < jLen; j++) {
-      newDataArray.push(data[i][j].toString() + '\n');
-    }
-    newDataArray.push(spacer, spacer, spacer, spacer, spacer, spacer);
-  }
-  newDataArray.shift();
-
+const saveZipToFile = async (
+  doc,
+  projectName = 'myProject',
+  statements = [],
+  sorts = [],
+  multiplierArray = []
+) => {
   // setup statements text output file
-  let statements = coreState.getState().statements;
   let statementsTxt = '';
   for (let i = 0; i < statements.length; i++) {
-    statementsTxt += statements[i] + '\n';
+    statementsTxt += statements[i].trim() + '\n';
   }
+
+  console.log(statementsTxt);
 
   // setup sorts text output file
   let sortsZipTxt = '';
   let sortsPartName;
   let sortsDisplayText;
-  let mainDataObject = coreState.getState().mainDataObject;
+  let mainDataObject = [...sorts];
   for (let i = 0; i < mainDataObject.length; i++) {
     sortsPartName = mainDataObject[i].name.trim();
     sortsDisplayText = mainDataObject[i].displaySort.trim();
@@ -42,16 +34,14 @@ const saveZipToFile = async (doc, fileName) => {
 
   // naming information
   const timeStamp = `${currentDate1()}_${currentTime1()}`;
-  const projectName = coreState.getState().projectName;
+  const shouldIncludeTimestamp = true;
 
-  // to create option for no timestamp - useful for automated testing
-  const shouldIncludeTimestamp = calcState.getState().shouldIncludeTimestamp;
-
-  let nameFile;
+  // for zipped docx file
+  let nameDocx;
   if (shouldIncludeTimestamp === true) {
-    nameFile = `KADE_results_${projectName}_${timeStamp}.docx`;
+    nameDocx = `KADE_results_${projectName}_${timeStamp}.docx`;
   } else {
-    nameFile = `KADE_results_${projectName}.docx`;
+    nameDocx = `KADE_results_${projectName}.docx`;
   }
 
   let zipNameFile;
@@ -68,9 +58,8 @@ const saveZipToFile = async (doc, fileName) => {
     txtNameFile = `(archive)_KADE_results_${projectName}.txt`;
   }
 
-  const path = await dialog.showSaveDialog(mainWindow, {
-    title: 'Save file as',
-    defaultPath: `*/${zipNameFile}`,
+  const { canceled, filePath } = await dialog.showSaveDialog({
+    defaultPath: zipNameFile,
     filters: [
       {
         name: 'zip',
@@ -79,56 +68,77 @@ const saveZipToFile = async (doc, fileName) => {
     ],
   });
 
-  const filePath = path.filePath;
   // error catch for dialog box cancel
-  if (filePath) {
+  if (!canceled && filePath) {
     // blob all the things - to ensure utf-8 encoding for foreign languages
-    let zipBlob = Packer.toBlob(doc);
-    let statementsBlob = new Blob([statementsTxt], {
-      type: 'text/plain;charset=utf-8',
-    });
-    let nameBlob = new Blob([coreState.getState().projectName], {
-      type: 'text/plain;charset=utf-8',
-    });
-    let sortsBlob = new Blob([sortsZipTxt], {
-      type: 'text/plain;charset=utf-8',
-    });
-    let multiplierArrayTxt = coreState.getState().multiplierArray.toString();
-    let textResultsBlob = new Blob([newDataArray], {
-      type: 'text/plain;charset=utf-8',
-    });
+    let nameText = projectName.toString();
+
+    // let statementsBlob = new Blob([statementsTxt], {
+    //   type: 'text/plain;charset=utf-8',
+    // });
+    // let nameBlob = new Blob([nameText], {
+    //   type: 'text/plain;charset=utf-8',
+    // });
+    // let sortsBlob = new Blob([sortsZipTxt], {
+    //   type: 'text/plain;charset=utf-8',
+    // });
+    // let multiplierArrayTxt = new Blob([multiplierArray], {
+    //   type: 'text/plain;charset=utf-8',
+    // });
 
     (async () => {
       try {
         // Initialize the zip file
-        const zip = new JsZip();
+        const zip = new JSZip();
+
+        const docBuffer = await Packer.toBuffer(doc);
 
         // pack in the files
-        nameFile = nameFile.toString();
-        zip.file(nameFile, zipBlob);
-        zip.file('name.txt', nameBlob);
-        zip.file('statements.txt', statementsBlob);
-        zip.file('sorts.txt', sortsBlob);
-        zip.file('pattern.txt', multiplierArrayTxt);
-        zip.file(txtNameFile, textResultsBlob);
+        zip.file('name.txt', nameText);
+        zip.file('statements.txt', statementsTxt);
+        zip.file('sorts.txt', sortsZipTxt);
+        zip.file('pattern.txt', multiplierArray.toString());
+        zip.file(nameDocx, docBuffer, { binary: true });
 
         // Convert the zip file into a buffer
-        const generatedZip = await zip.generateAsync({ type: 'nodebuffer' });
+        // Convert the zip file into a buffer
+        let zipContent;
+        if (JSZip.support.uint8array) {
+          zipContent = await zip.generateAsync({ type: 'uint8array' });
+        } else {
+          zipContent = await zip.generateAsync({ type: 'string' });
+        }
 
         // Save the zip file
-        fs.writeFileSync(filePath, generatedZip, (err) => {
-          if (err) throw err;
-          console.log('Unexpected file save error!');
+        if (!canceled && filePath) {
+          fs.writeFileSync(filePath, zipContent);
+          dialog.showMessageBoxSync({
+            title: 'KADE',
+            type: 'info',
+            message: `File saved to:`,
+            detail: `${filePath}`,
+            buttons: ['OK'],
+          });
+        }
+      } catch (err) {
+        console.error('Error saving file:', err);
+        dialog.showMessageBoxSync({
+          title: 'KADE',
+          type: 'error',
+          message: 'Error saving file',
+          detail: String(err),
+          buttons: ['OK'],
         });
-      } catch (error) {
-        console.log(error);
       }
-    })();
-
-    dialog.showMessageBox(mainWindow, {
-      message: `File saved to:`,
-      detail: `${filePath}`,
-      buttons: ['OK'],
+    })().catch((err) => {
+      console.error('Error saving file:', err);
+      dialog.showMessageBoxSync({
+        title: 'KADE',
+        type: 'error',
+        message: 'Error saving file',
+        detail: String(err),
+        buttons: ['OK'],
+      });
     });
   }
 };

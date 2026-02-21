@@ -79,11 +79,9 @@ const DownloadResultsAsDocx = () => {
         <GeneralButton
           id="downloadResultsAsDocxButton"
           onClick={handleOpen}
-          className="flex justify-center items-center w-fit min-w-[250px] bg-grey-button "
+          className="flex justify-center items-center h-[30px] p-1 ml-8! w-fit min-w-[250px] bg-grey-button "
         >
-          <div className="flex flex-row justify-center items-center h-[30px] text-[18px]">
-            {buttonText}
-          </div>
+          <div className="flex flex-row justify-center items-center text-[16px]">{buttonText}</div>
         </GeneralButton>
       }
       open={localStore.modalOpen}
