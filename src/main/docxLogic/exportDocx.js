@@ -335,32 +335,33 @@ const generateOutputDoc = async (dataContent) => {
     const timeStamp = `${currentDate1()}_${currentTime1()}`;
     let nameFile = `KADE_results_${projectName}_${timeStamp}.docx`;
 
-    Packer.toBuffer(doc).then(async (doc) => {
+    try {
+      const buffer = await Packer.toBuffer(doc);
+
       const { canceled, filePath } = await dialog.showSaveDialog({
         defaultPath: nameFile,
       });
 
       if (!canceled && filePath) {
-        try {
-          fs.writeFileSync(filePath, doc, (err) => {
-            if (err) {
-              console.error('Error saving file:', err);
-            } else {
-              console.log('File saved successfully');
-            }
-          });
-          dialog.showMessageBoxSync({
-            title: 'KADE',
-            type: 'info',
-            message: `File saved to:`,
-            detail: `${filePath}`,
-            buttons: ['OK'],
-          });
-        } catch (err) {
-          console.error('Error saving file:', err);
-        }
+        fs.writeFileSync(filePath, buffer);
+        dialog.showMessageBoxSync({
+          title: 'KADE',
+          type: 'info',
+          message: `File saved to:`,
+          detail: `${filePath}`,
+          buttons: ['OK'],
+        });
       }
-    });
+    } catch (err) {
+      console.error('Error saving file:', err);
+      dialog.showMessageBoxSync({
+        title: 'KADE',
+        type: 'error',
+        message: 'Error saving file',
+        detail: String(err),
+        buttons: ['OK'],
+      });
+    }
   }
 };
 export default generateOutputDoc;

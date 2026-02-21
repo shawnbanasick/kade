@@ -2,6 +2,9 @@ import calcState from '../../GlobalState/calcState';
 
 const saveDocumentToFile = async (docOptions, translatedTextObj) => {
   const data = calcState.getState().outputData;
+
+  // console.log('data', JSON.stringify(data));
+
   const dataContent = {
     type: 'docx',
     docOptions,

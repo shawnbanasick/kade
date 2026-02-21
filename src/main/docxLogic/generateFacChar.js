@@ -13,10 +13,7 @@ const generateFacChar = (data, data2, useHyperlinks, useZebra, translatedTextObj
   let pageHeader = data.shift();
   data.shift();
 
-  data2.shift();
-  data2.shift();
-  let sectionHeader = data2.shift();
-  data2.shift();
+  let sectionHeader = [translatedTextObj['standardErrorsHeader'] || 'Standard Errors'];
 
   let spacingAfter = 250;
   if (useHyperlinks === true) {
@@ -78,52 +75,69 @@ const generateFacChar = (data, data2, useHyperlinks, useZebra, translatedTextObj
   );
 
   let index0PaddingArray = [32, 7, 7, 7, 7, 7, 7, 7, 7];
-  data.forEach((item, index) => {
-    let tempArray = [];
-    if (index === 0) {
-      item.shift();
-      item.forEach((entry, entryIndex) => {
-        entry = `F${entry.toString().slice(-2).trim()}`;
-        tempArray.push(
-          new TextRun({
-            text: entry.padStart(index0PaddingArray[entryIndex], ' '),
-            bold: true,
-          })
-        );
-      });
-    }
-    if (index > 0) {
-      item.forEach((entry, entryIndex) => {
-        if (entryIndex === 0) {
-          entry = entry.toString().trim().padEnd(26, ' ');
-        } else {
-          entry = entry.toString().padStart(index0PaddingArray[entryIndex], ' ');
-        }
+  try {
+    data.forEach((item, index) => {
+      if (!item || item[0] === null || item[0] === undefined) return;
 
-        let tempText;
-        if (index % 2 !== 0 && useZebra === true) {
-          tempText = new TextRun({
-            text: entry,
-            shading: {
-              type: ShadingType.SOLID,
-              color: 'E2E2E2',
-            },
-          });
-        } else {
-          tempText = new TextRun({
-            text: entry,
-          });
-        }
-        tempArray.push(tempText);
-      });
-    }
-    matrix.push(
-      new Paragraph({
-        style: 'dist4',
-        children: tempArray,
-      })
-    );
-  });
+      let tempArray = [];
+      if (index === 0) {
+        item.shift();
+        item.forEach((entry, entryIndex) => {
+          if (entry === null || entry === undefined || entry === '') return;
+          entry = `F${entry.toString().slice(-2).trim()}`;
+          tempArray.push(
+            new TextRun({
+              text: entry.padStart(index0PaddingArray[entryIndex], ' '),
+              bold: true,
+            })
+          );
+        });
+      }
+      if (index > 0) {
+        item.forEach((entry, entryIndex) => {
+          if (entry === null || entry === undefined || entry === '') return;
+          if (entryIndex === 0) {
+            entry = entry.toString().trim().padEnd(26, ' ');
+          } else {
+            entry = entry.toString().padStart(index0PaddingArray[entryIndex], ' ');
+          }
+
+          let tempText;
+          if (index % 2 !== 0 && useZebra === true) {
+            tempText = new TextRun({
+              text: entry,
+              shading: {
+                type: ShadingType.SOLID,
+                color: 'E2E2E2',
+              },
+            });
+          } else {
+            tempText = new TextRun({
+              text: entry,
+            });
+          }
+          tempArray.push(tempText);
+        });
+      }
+      matrix.push(
+        new Paragraph({
+          style: 'dist4',
+          children: tempArray,
+        })
+      );
+    });
+  } catch (err) {
+    console.error('Error building document children:', err);
+    dialog.showMessageBoxSync({
+      title: 'KADE',
+      type: 'error',
+      message: 'Error generating document',
+      detail: String(err),
+      buttons: ['OK'],
+    });
+    // Stop execution so we don't try to pack a broken document
+    return;
+  }
 
   // STANDARD ERRORS TEXT
   matrix.push(
@@ -152,10 +166,12 @@ const generateFacChar = (data, data2, useHyperlinks, useZebra, translatedTextObj
 
   let data2PaddingArray = [15, 7, 7, 7, 7, 7, 7, 7, 7];
   data2.forEach((item, index) => {
+    if (!item || item[0] === null || item[0] === undefined) return;
     let tempArray = [];
     if (index === 0) {
       item.shift();
       item.forEach((entry, entryIndex) => {
+        if (entry === null || entry === undefined || entry === '') return;
         entry = `F${entry.toString().slice(-2).trim()}`;
         tempArray.push(
           new TextRun({
@@ -167,6 +183,7 @@ const generateFacChar = (data, data2, useHyperlinks, useZebra, translatedTextObj
     }
     if (index > 0) {
       item.forEach((entry, entryIndex) => {
+        if (!item || item[0] === null || item[0] === undefined) return;
         if (entryIndex === 0) {
           entry = entry.toString().padEnd(10, ' ');
           entry = entry.replace(`  `, ` `);

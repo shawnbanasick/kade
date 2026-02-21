@@ -4,7 +4,7 @@ import currentTime1 from '../../renderer/src/Utils/currentTime1';
 import { dialog } from 'electron';
 
 const createXlsxFile = async (dataObj) => {
-  //   console.log('createXlsxFile dataObj:', dataObj);
+  console.log('createXlsxFile dataObj:', dataObj);
 
   var datenum = function (v, date1904) {
     if (date1904) {
