@@ -1,5 +1,3 @@
-import styled from 'styled-components';
-import React from 'react';
 import getInputState from '../../GlobalState/getInputState';
 import inputState from '../../GlobalState/inputState';
 
@@ -11,40 +9,21 @@ const CsvSuccessfulLoadBar = () => {
   const showDataImportSuccessMessage = getInputState('showDataImportSuccessMessage');
 
   if (
-    hasAddedProjectName &&
-    sortsLoaded &&
-    statementsLoaded &&
-    isQsortPatternLoaded &&
-    showDataImportSuccessMessage
-  ) {
-    inputState.showErrorMessageBar = false;
-    return (
-      <SuccessBar>
-        <p>CSV Import Success -- Confirm Q sorts in the Data section</p>
-      </SuccessBar>
-    );
-  }
-  return null;
+    !hasAddedProjectName ||
+    !sortsLoaded ||
+    !statementsLoaded ||
+    !isQsortPatternLoaded ||
+    !showDataImportSuccessMessage
+  )
+    return null;
+
+  inputState.showErrorMessageBar = false;
+
+  return (
+    <div className="bg-[var(--main-theme-color)] h-[50px] px-[10px] font-[Helvetica,sans-serif] text-[20px] flex justify-between items-center self-start [grid-column-start:1] [grid-column-end:-1] [grid-row-start:4] rounded-[4px] border-2 border-[#d6dbe0] mt-[10px] w-[700px]">
+      <p>CSV Import Success -- Confirm Q sorts in the Data section</p>
+    </div>
+  );
 };
 
 export default CsvSuccessfulLoadBar;
-
-const SuccessBar = styled.div`
-  background-color: var(--main-theme-color);
-  height: 50px;
-  padding-left: 10px;
-  padding-right: 10px;
-  font-family: Helvetica, sans-serif;
-  font-size: 20px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  align-self: start;
-  grid-column-start: 1;
-  grid-column-end: -1;
-  grid-row-start: 4;
-  border-radius: 4px;
-  border: 2px solid #d6dbe0;
-  margin-top: 10px;
-  width: 700px;
-`;

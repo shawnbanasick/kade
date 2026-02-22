@@ -1,4 +1,3 @@
-import styled from 'styled-components';
 import LegendText from './LegendText';
 import SigSortsViz from './SigSortsViz';
 import RectangleText from './RectangleText';
@@ -65,7 +64,7 @@ const FactorViz = (props) => {
 
   const margin = { top: 10, left: 10, bottom: 10, right: 10 };
   return (
-    <VizContainer style={getStyles(props)}>
+    <div className="flex flex-col" style={getStyles(props)}>
       <svg
         className="vizImage"
         id={`image${props.id}`}
@@ -84,13 +83,9 @@ const FactorViz = (props) => {
         </g>
       </svg>
       <DownloadFactorVizButtons {...props} />
-    </VizContainer>
+    </>
   );
 };
 
 export default FactorViz;
 
-const VizContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-`;

@@ -1,10 +1,8 @@
 import { useState } from 'react';
-import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 import vizState from '../../GlobalState/vizState';
 
 const UserNumberInput = (props) => {
-  // console.log(JSON.stringify(props, null, 2));
   const { t } = useTranslation();
   const factorVizOptionsHolder = vizState((state) => state.factorVizOptionsHolder);
   const updateFactorVizOptionsHolder = vizState((state) => state.updateFactorVizOptionsHolder);
@@ -16,14 +14,13 @@ const UserNumberInput = (props) => {
   const [showWarning, setShowWarning] = useState(false);
 
   const handleChange = (e) => {
-    let value = e.target.value;
-    if (isNaN(value)) {
-      return null;
-    }
+    const value = e.target.value;
+    if (isNaN(value)) return null;
+
     const key = props.name;
     setShowWarning(false);
-    const upperLimit = props.upperLimit;
-    const lowerLimit = props.lowerLimit;
+    const { upperLimit, lowerLimit } = props;
+
     if (value < lowerLimit || value > upperLimit) {
       setValue(value);
       setShowWarning(true);
@@ -35,63 +32,26 @@ const UserNumberInput = (props) => {
     }
   };
 
-  const warningMessage = `${t('Lower Limit')}: ${props.lowerLimit}, ${t(
-    'Upper Limit'
-  )}: ${props.upperLimit}`;
+  const warningMessage = `${t('Lower Limit')}: ${props.lowerLimit}, ${t('Upper Limit')}: ${props.upperLimit}`;
 
   return (
-    <UserNumberContainer>
-      <NumberInput
+    <div className="flex flex-row" style={{ width: props.width ? `${props.width}px` : '400px' }}>
+      <input
+        type="number"
         placeholder={props.placeholder}
         name={props.name}
         step={props.step}
         value={value}
         onChange={handleChange}
-        className="optionsInput"
+        className="optionsInput text-black cursor-pointer mb-0 w-[75px] rounded-[5px] box-border h-[25px] border border-lightgray shadow-none outline-none transition-all duration-150 text-center hover:outline-none hover:bg-transparent hover:shadow-none"
       />
-      {showWarning ? <NumberWarningMessage>{warningMessage}</NumberWarningMessage> : null}
-    </UserNumberContainer>
+      {showWarning && (
+        <div className="ml-[10px] pt-[4px] px-[10px] bg-[lightpink] text-black h-[25px] w-auto">
+          {warningMessage}
+        </div>
+      )}
+    </div>
   );
 };
 
 export default UserNumberInput;
-
-const NumberInput = styled.input.attrs({
-  type: 'number',
-})`
-  color: black;
-  cursor: pointer;
-  margin-bottom: 0;
-  width: 75px;
-  border-radius: 5px;
-  box-sizing: border-box;
-  height: 25px;
-  border: 1px solid lightgray;
-  box-shadow: none;
-  outline: none;
-  transition: 0.15s;
-  text-align: center;
-  &:hover {
-    outline: none;
-    background: none;
-    box-shadow: none;
-  }
-`;
-
-const NumberWarningMessage = styled.div`
-  margin-left: 10px;
-  padding-top: 4px;
-  padding-left: 10px;
-  padding-right: 10px;
-  background-color: lightpink;
-  color: black;
-  height: 25px;
-  width: auto;
-  /* width: 225px; */
-`;
-
-const UserNumberContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-  width: ${(props) => `${props.width}px` || '400px'};
-`;

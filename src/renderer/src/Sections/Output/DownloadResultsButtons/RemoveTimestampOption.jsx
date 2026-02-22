@@ -1,11 +1,10 @@
 import { Component } from 'react';
-import styled from 'styled-components';
 import TimestampSelectionSwitch from '../FactorViz/TimestampSelectionSwitch';
 
 class RemoveTimestampOption extends Component {
   render() {
     return (
-      <SwitchDivContainer>
+      <div className="flex items-center justify-items-center">
         <div className="switchDiv">
           <div className="switchText" style={{ fontSize: 26, marginBottom: '5px' }}>
             Include timestamp in download name?
@@ -16,16 +15,9 @@ class RemoveTimestampOption extends Component {
             toggle
           />
         </div>
-      </SwitchDivContainer>
+      </div>
     );
   }
 }
 
 export default RemoveTimestampOption;
-
-const SwitchDivContainer = styled.div`
-  display: flex;
-  align-items: center;
-  justify-items: center;
-  border: 2px solid red;
-`;

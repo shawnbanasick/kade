@@ -1,4 +1,3 @@
-import styled from 'styled-components';
 import GeneralButton from './../../../Utils/GeneralButton';
 import { useTranslation } from 'react-i18next';
 import inputState from '../../GlobalState/inputState';
@@ -28,33 +27,19 @@ const SheetsButton = () => {
     updateIsShowSheetsInputButtonGreen(true);
     updateIsShowFirebaseInputButtonGreen(false);
     updateIsShowNetlifyInputButtonGreen(false);
-
-    /*
-    inputState.showSheetsInput = true;
-    inputState.showFirebaseInput = false;
-    inputState.showNetlifyInput = false;
-    inputState.isShowSheetsInputButtonGreen = true;
-    inputState.isShowFirebaseInputButtonGreen = false;
-    inputState.isShowNetlifyInputButtonGreen = false;
-    */
   };
 
   return (
-    <TradButton
-      as={GeneralButton}
+    <GeneralButton
       id="SheetsButton"
       $isActive={isActive}
       onClick={handleOnclick}
       disabled={isDisabled}
+      className="ml-[70px] mr-[5px]"
     >
       {t('Google Sheets')}
-    </TradButton>
+    </GeneralButton>
   );
 };
 
 export default SheetsButton;
-
-const TradButton = styled.div`
-  margin-left: 70px;
-  margin-right: 5px;
-`;

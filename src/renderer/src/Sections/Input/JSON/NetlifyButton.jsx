@@ -1,4 +1,3 @@
-import styled from 'styled-components';
 import GeneralButton from './../../../Utils/GeneralButton';
 import { useTranslation } from 'react-i18next';
 import inputState from '../../GlobalState/inputState';
@@ -40,22 +39,16 @@ const SheetsButton = () => {
   };
 
   return (
-    <TradButton
-      as={GeneralButton}
+    <GeneralButton
       id="NetlifyButton"
       $isActive={isActive}
       onClick={handleOnclick}
       disabled={isDisabled}
+      className="min-w-[120px] ml-[70px] mr-[5px]"
     >
       {t('Netlify')}
-    </TradButton>
+    </GeneralButton>
   );
 };
 
 export default SheetsButton;
-
-const TradButton = styled.div`
-  min-width: 120px;
-  margin-left: 70px;
-  margin-right: 5px;
-`;

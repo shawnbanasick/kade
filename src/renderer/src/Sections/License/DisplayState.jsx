@@ -1,6 +1,4 @@
-import React from 'react';
-import { view, store } from '@risingstack/react-easy-state';
-import styled from 'styled-components';
+import { store } from '@risingstack/react-easy-state';
 import state from '../../store';
 
 const localStore = store({ state });
@@ -17,21 +15,16 @@ const DisplayState = () => {
   });
   localStore.state = result;
   return (
-    <OrderedList>
+    <ol className="w-[80%] mt-[50px]">
       {localStore.state.map((value, index) => (
-        <li style={{ width: 1150, wordWrap: 'break-word' }} key={value + index.toString()}>
+        <li className="w-[1150px] break-words" key={value + index.toString()}>
           {value[0]}
           {': '}
           {value[1]}
         </li>
       ))}
-    </OrderedList>
+    </ol>
   );
 };
 
 export default DisplayState;
-
-const OrderedList = styled.ul`
-  width: 80%;
-  margin-top: 50px;
-`;

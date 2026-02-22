@@ -1,6 +1,4 @@
-import React, { Component } from 'react';
-import { view, store } from '@risingstack/react-easy-state';
-import styled from 'styled-components';
+import { store } from '@risingstack/react-easy-state';
 import state from '../../store';
 
 const statements = state.getState('statements');
@@ -8,19 +6,14 @@ const localStore = store({ statements });
 
 const StatementsInState = () => {
   return (
-    <OrderedList>
+    <ol className="w-[80%] mt-[50px]">
       {localStore.statements.map((value, index) => (
-        <li style={{ width: 1150, wordWrap: 'break-word' }} key={value + index.toString()}>
+        <li className="w-[1150px] wrap-break-word" key={value + index.toString()}>
           {value}
         </li>
       ))}
-    </OrderedList>
+    </ol>
   );
 };
 
 export default StatementsInState;
-
-const OrderedList = styled.ol`
-  width: 80%;
-  margin-top: 50px;
-`;

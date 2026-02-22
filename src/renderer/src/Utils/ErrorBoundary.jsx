@@ -1,5 +1,4 @@
-import React, { Component } from 'react';
-import styled from 'styled-components';
+import { Component } from 'react';
 import i18n from 'i18next';
 
 class ErrorBoundary extends Component {
@@ -19,25 +18,17 @@ class ErrorBoundary extends Component {
 
   render() {
     return this.state.hasError ? (
-      <ErrorBoundaryDiv>
+      <div className="m-[50px]">
         <h1>{i18n.t('There was an unexpected error')}</h1>
-        <ErrorText>
+        <div className="text-[22px] leading-[1.8em] mt-[15px] mb-[15px]">
           {i18n.t('Please contact the developer')}
           <br /> ken.q.tools@gmail.com
           <br />
           {i18n.t('In the top menu click View Force Reload to restart the application')}
-        </ErrorText>
-        <ErrorContainer>
+        </div>
+        <div className="bg-white [&_pre]:text-orange-500 [&_pre]:text-[16px] [&_pre]:mt-[15px] [&_pre]:mb-[15px]">
           {!this.state.showError && (
-            <button
-              onClick={() =>
-                this.setState({
-                  showError: true,
-                })
-              }
-            >
-              Show error →
-            </button>
+            <button onClick={() => this.setState({ showError: true })}>Show error →</button>
           )}
           {this.state.showError && (
             <pre>
@@ -52,8 +43,8 @@ class ErrorBoundary extends Component {
               <code>{this.state.errorMessage}</code>
             </pre>
           )}
-        </ErrorContainer>
-      </ErrorBoundaryDiv>
+        </div>
+      </div>
     ) : (
       this.props.children
     );
@@ -61,25 +52,3 @@ class ErrorBoundary extends Component {
 }
 
 export default ErrorBoundary;
-
-const ErrorBoundaryDiv = styled.div`
-  margin: 50px;
-`;
-
-const ErrorText = styled.div`
-  font-size: 22px;
-  line-height: 1.8em;
-  margin-top: 15px;
-  margin-bottom: 15px;
-`;
-
-const ErrorContainer = styled.div`
-  background-color: white;
-
-  pre {
-    color: orange;
-    font-size: 16px;
-    margin-top: 15px;
-    margin-bottom: 15px;
-  }
-`;

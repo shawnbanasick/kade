@@ -1,4 +1,3 @@
-import styled from 'styled-components';
 import inputState from '../../GlobalState/inputState';
 
 const StatementTextArea = () => {
@@ -12,36 +11,19 @@ const StatementTextArea = () => {
     console.log(textareaInput);
     inputState.sortsPasteTextArea = textareaInput;
     localStorage.setItem('sortsPasteTextArea', textareaInput);
-
-    //appState.currentStatements = statementInput;
-    //  localStorage.setItem("currentStatements", statementInput);
   };
 
   return (
-    <Container>
+    <div className="flex flex-col select-none">
       <label>Paste sort data from Sheets:</label>
-      <StatementTextsInput
-        type="textarea"
+      <textarea
         name="textValue"
         value={pasteTextAreaContent || ''}
         onChange={handleChange}
+        className="w-[clamp(200px,40vw,800px)] h-[400px] mt-[10px] mb-[30px] select-all"
       />
-    </Container>
+    </div>
   );
 };
 
 export default StatementTextArea;
-
-const StatementTextsInput = styled.textarea`
-  width: clamp(200px, 40vw, 800px);
-  height: 400px;
-  margin-top: 10px;
-  margin-bottom: 30px;
-  user-select: all;
-`;
-
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  user-select: none;
-`;

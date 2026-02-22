@@ -5,14 +5,8 @@ import projectHistoryState from '../../GlobalState/projectHistoryState';
 import LoadButton from '../DemoData/LoadButton';
 import processSheetsCsv from './processSheetsCsv';
 import { useTranslation } from 'react-i18next';
-import styled from 'styled-components';
 
-// const { dialog } = require('electron').remote;
-// const fs = require('fs');
-// const { remote } = require('electron');
-// const mainWindow = remote.getCurrentWindow();
-
-const LoadTxtStatementFile = () => {
+const LoadSheetsCsv = () => {
   const { t } = useTranslation();
   const updateProjectHistoryArray = projectHistoryState((state) => state.updateProjectHistoryArray);
   const updateIsDataAlreadyLoaded = inputState((state) => state.updateIsDataAlreadyLoaded);
@@ -21,7 +15,6 @@ const LoadTxtStatementFile = () => {
   const updateShowErrorMessageBar = inputState((state) => state.updateShowErrorMessageBar);
 
   const handleClick = async () => {
-    // getState - check to see if data loaded and correlations started - true ==> throw error
     if (isDataAlreadyLoaded) {
       throwDataAlreadyLoadedInputErrorModal();
     } else {
@@ -38,7 +31,6 @@ const LoadTxtStatementFile = () => {
 
         const path = files.filePaths[0];
 
-        // dialog cancelled case
         if (path === undefined) {
           return;
         }
@@ -57,47 +49,30 @@ const LoadTxtStatementFile = () => {
 
           updateProjectHistoryArray([logMessageObj1]);
           updateIsDataAlreadyLoaded(true);
-          // projectHistoryState.projectHistoryArray = [logMessageObj1];
-          // inputState.isDataAlreadyLoaded = true;
         });
       } catch (error) {
         updateErrorMessage(error.message);
         updateShowErrorMessageBar(true);
-        // inputState.errorMessage = error.message;
-        // inputState.showErrorMessageBar = true;
       }
     }
   };
 
   const isLoadSheetsCsvButtonGreen = getInputState('isLoadSheetsCsvButtonGreen');
+
   return (
     <LoadButton $isActive={isLoadSheetsCsvButtonGreen} onClick={handleClick}>
-      <LineContainer>
-        <SvgContainer xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+      <div className="flex flex-row justify-center items-center h-full w-full">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 20 20"
+          className="rotate-180 mr-[20px] h-[17px] w-[17px] fill-current"
+        >
           <path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z" />
-        </SvgContainer>
-
+        </svg>
         <p>{t('Load Sheets CSV File')}</p>
-      </LineContainer>
+      </div>
     </LoadButton>
   );
 };
 
-export default LoadTxtStatementFile;
-
-const SvgContainer = styled.svg`
-  transform: rotate(180deg);
-  margin-right: 20px;
-  height: 17px;
-  width: 17px;
-  fill: currentColor;
-`;
-
-const LineContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-  width: 100%;
-`;
+export default LoadSheetsCsv;
