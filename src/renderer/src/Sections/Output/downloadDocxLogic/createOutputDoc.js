@@ -46,15 +46,6 @@ const generateOutputDoc = (translatedTextObj) => {
     multiplierArray: coreState.getState().multiplierArray,
   };
 
-  console.log(JSON.stringify(docOptions.sorts, null, 2));
-
-  //let data = dataSource();
-  // const data = cloneDeep(calcState.getState().outputData);
-
-  // let projectName = data[0][2][1];
-  // let version = data[0][19][1];
-  // let dateTime = getDateTime();
-
   newSaveDocumentToFile(docOptions, translatedTextObj);
 };
 

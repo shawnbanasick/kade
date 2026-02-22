@@ -76,7 +76,6 @@ const FactorSelectionForOutputButtons = () => {
   };
 
   const handleOnclick = (event) => {
-    console.log(event.target.id);
     const factor = event.target.id;
 
     if (factor === 'selectAllFacs') {

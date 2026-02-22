@@ -50,8 +50,6 @@ const DownloadResultsAsDocx = () => {
   };
 
   const handleOpen = () => {
-    console.log('handleOpen');
-    console.log('userSelectedFactors', userSelectedFactors);
     // getState
     if (userSelectedFactors.length === 0) {
       setLocalStore({ modalOpen: true });

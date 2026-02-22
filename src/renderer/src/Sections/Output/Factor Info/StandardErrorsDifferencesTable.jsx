@@ -101,9 +101,6 @@ const StandardErrorsDifferencesTable = () => {
   const gridColDefsFacCorrTable2 = getGridColDefsFacCorrTable(...currentData); // state.getState("gridColDefsFacTableEigen");
   const gridRowDataFacCorrTable2 = getGridRowDataFacCorrTable(currentData[0], currentData[2]);
 
-  console.log('gridColDefsFacCorrTable2', JSON.stringify(gridColDefsFacCorrTable2, null, 2));
-  console.log('gridRowDataFacCorrTable2', JSON.stringify(gridRowDataFacCorrTable2, null, 2));
-
   return (
     <div>
       <div style={{ height: 300, width: widthVal }} className="ag-theme-fresh">

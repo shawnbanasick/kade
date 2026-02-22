@@ -21,7 +21,6 @@ const pcaDispatch = () => {
   const respondentNames = cloneDeep(coreState.getState().respondentNames);
   const X = cloneDeep(correlationState.getState().correlation5Calcs);
   const numQsorts = coreState.getState().numQsorts;
-  console.log('project history array', projectHistoryArray);
 
   const m = X.length;
   const numberOfSorts = m;
@@ -53,7 +52,6 @@ const pcaDispatch = () => {
 
   // transpose
   const eigenVecsTransposed = transposeMatrix(eigenVecs);
-  console.log('eigenVecsTransposed', JSON.stringify(eigenVecsTransposed, null, 2));
 
   // truncate arrays
   let limit = 8;

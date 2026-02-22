@@ -17,14 +17,11 @@ const RevealCentroidTypeSelectionButton = () => {
   );
 
   function handleClick() {
-    console.log('handleClick called revealCentroidTypeSelectionButton');
     updateActiveCentroidRevealButton(true);
     updateIsPcaButtonDisabled(true);
     updateShowCentroidSelection(true);
     updateIsCentroidRevealButtonDisabled(true);
   }
-
-  console.log(isActive, isDisabled);
 
   return (
     <div>

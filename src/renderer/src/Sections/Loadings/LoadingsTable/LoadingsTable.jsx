@@ -215,8 +215,6 @@ const LoadingsTable = (props) => {
     marginBottom: 15,
   };
 
-  console.log('autoflagButtonColor', autoflagButtonColor);
-
   return (
     <div>
       <div className="grid grid-cols-1">
