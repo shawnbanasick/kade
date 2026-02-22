@@ -24,6 +24,20 @@ const pushStandardErrorsDifferencesToOutput = function (
   const userSelectedFactors = cloneDeep(outputState.getState().userSelectedFactors);
   const spacer = ['', ''];
 
+  // console.log('stndErrorArray', JSON.stringify(stndErrorArray, null, 2));
+  // console.log('analysisOutput', JSON.stringify(analysisOutput, null, 2));
+  // console.log('sigFactorNumbersArray', JSON.stringify(sigFactorNumbersArray, null, 2));
+  // // console.log('outputData', JSON.stringify(outputData, null, 2));
+  // console.log('sheetNamesXlsx', JSON.stringify(sheetNamesXlsx, null, 2));
+  // console.log('colSizes', JSON.stringify(colSizes, null, 2));
+
+  // console.log('chartText1', JSON.stringify(chartText1, null, 2));
+  // console.log('chartText2', JSON.stringify(chartText2, null, 2));
+
+  console.log('sigSortsArray', JSON.stringify(sigSortsArray, null, 2));
+  console.log('userSelectedFactors', JSON.stringify(userSelectedFactors, null, 2));
+  console.log('spacer', JSON.stringify(spacer, null, 2));
+
   sheetNamesXlsx.push(chartText1);
 
   // set factor sheet col widths

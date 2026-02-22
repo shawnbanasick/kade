@@ -7,8 +7,14 @@ import calcState from '../../GlobalState/calcState';
 import outputState from '../../GlobalState/outputState';
 
 const StandardErrorsDifferencesTable = () => {
-  const data = calcState((state) => state.standardErrorDiffSheetArray);
+  const data2 = calcState((state) => state.standardErrorDiffSheetArray);
+  const data = [...data2];
+
   data.shift();
+  data.shift();
+
+  console.log('data', JSON.stringify(data, null, 2));
+
   const userSelectedFacs = outputState((state) => state.userSelectedFactors);
   const numFacs = userSelectedFacs.length;
 
@@ -97,6 +103,9 @@ const StandardErrorsDifferencesTable = () => {
 
   const gridColDefsFacCorrTable2 = getGridColDefsFacCorrTable(...currentData); // state.getState("gridColDefsFacTableEigen");
   const gridRowDataFacCorrTable2 = getGridRowDataFacCorrTable(currentData[0], currentData[2]);
+
+  console.log('gridColDefsFacCorrTable2', JSON.stringify(gridColDefsFacCorrTable2, null, 2));
+  console.log('gridRowDataFacCorrTable2', JSON.stringify(gridRowDataFacCorrTable2, null, 2));
 
   return (
     <div>

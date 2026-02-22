@@ -13,7 +13,12 @@ const generateFacChar = (data, data2, useHyperlinks, useZebra, translatedTextObj
   let pageHeader = data.shift();
   data.shift();
 
-  let sectionHeader = [translatedTextObj['standardErrorsHeader'] || 'Standard Errors'];
+  data2.shift();
+  data2.shift();
+  let sectionHeader = data2.shift() || translatedTextObj['standardErrorsHeader'];
+  data2.shift();
+
+  // let sectionHeader = [translatedTextObj['standardErrorsHeader'] || 'Standard Errors'];
 
   let spacingAfter = 250;
   if (useHyperlinks === true) {
