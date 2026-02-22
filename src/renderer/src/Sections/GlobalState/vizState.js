@@ -22,7 +22,7 @@ const vizState = create(
 
     titleHeight: 30,
 
-    factorVisualizationsButtonColor: '#d6dbe0',
+    factorVisualizationsButtonColor: 'bg-grey-button',
 
     willAddCustomNames: false,
 

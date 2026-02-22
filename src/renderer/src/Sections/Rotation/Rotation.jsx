@@ -1,4 +1,3 @@
-import { Tab } from 'semantic-ui-react';
 import FactorsKeptNotification from './FactorKeepSelection/FactorsKeptNotification';
 import JudgementalRotationContainer from './JudgementalRotation/JudgementalRotationContainer';
 import FireVarimaxButton from './RotationButtons/FireVarimaxButton';

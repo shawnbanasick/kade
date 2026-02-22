@@ -95,7 +95,7 @@ const initializeVizState = () => {
 
   updateTitleHeight(30);
 
-  updateFactorVisualizationsButtonColor('');
+  updateFactorVisualizationsButtonColor('bg-grey-button');
 
   updateWillAddCustomNames(false);
 

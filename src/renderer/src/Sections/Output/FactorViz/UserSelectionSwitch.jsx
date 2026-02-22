@@ -21,7 +21,7 @@ const UserSelectionSwitch = (props) => {
     factorVizOptionsHolder[key] = newValue;
     setToggle(newValue);
     updateFactorVizOptionsHolder(factorVizOptionsHolder);
-    updateFactorVisualizationsButtonColor('orange');
+    updateFactorVisualizationsButtonColor('bg-[orange]');
   };
 
   return (

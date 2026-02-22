@@ -35,7 +35,7 @@ const DistinguishingPanel = () => {
     localStore.showDistinguishingAs = value;
     factorVizOptionsHolder.showDistinguishingAs = value;
     updateFactorVizOptionsHolder(factorVizOptionsHolder);
-    updateFactorVisualizationsButtonColor('orange');
+    updateFactorVisualizationsButtonColor('bg-[orange]');
   }
 
   return (

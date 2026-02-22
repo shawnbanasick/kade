@@ -1,122 +1,84 @@
-import { React, useState } from 'react';
-import { Button, Header, Modal } from 'semantic-ui-react';
-import styled from 'styled-components';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import appState from '../GlobalState/appState';
+import GeneralButton from '../../Utils/GeneralButton';
+
+// TODO - fix update modal
 const ipc = window.electron.ipcRenderer;
 
-// todo - update ipcRenderer to use electron 30
-
 const UpdateModal = () => {
+  const { t } = useTranslation();
   const [modalOpen, setModalOpen] = useState(false);
 
   const changes = appState((state) => state.changes);
-  const updateVersion = appState((state) => state.changes);
+  const updateVersion = appState((state) => state.updateVersion);
   const updateChanges = appState((state) => state.updateChanges);
-  // const updateUpdateVersion = appState((state) => state.updateChanges);
 
-  const handleOpen = () => {
-    setModalOpen(true);
-  };
+  if (!Array.isArray(changes)) {
+    updateChanges([]);
+  }
+
+  const handleOpen = () => setModalOpen(true);
+  const handleClose = () => setModalOpen(false);
 
   const skipThisUpdate = () => {
-    // appState.installedVersion = getAppState("updateVersion");
     setModalOpen(false);
     ipc.send('skip-update-confirmed', `skip`);
     appState.showUpdateModal = false;
   };
 
-  const handleClose = () => {
-    setModalOpen(false);
-  };
-
-  const { t } = useTranslation();
-
-  if (!Array.isArray(changes)) {
-    updateChanges([]);
-  }
-  console.log('updateVersion', updateVersion);
-
   const updateItems = changes.map((item) => <li key={item}>{item}</li>);
 
   return (
-    <React.Fragment>
-      <Modal
-        dimmer={'blurring'}
-        trigger={
-          <UpdateButton onClick={handleOpen}>
-            <UpdateText>{t('Update Available')}</UpdateText>
-          </UpdateButton>
-        }
-        open={modalOpen}
-        className="wrapper1"
-        onClose={handleClose}
-        basic
-        size={'small'}
+    <>
+      {/* Trigger Button */}
+      <button
+        onClick={handleOpen}
+        className="box-border p-[10px] w-full h-[75px] bg-[#d6dbe0] text-black border-none text-left transition-all duration-[2s] hover:shadow-[inset_0_0_0_4px_#666,0_0_1px_transparent]"
       >
-        <Header content={`${t('Update Available')} --- Version ${updateVersion}`} />
-        <Modal.Content>
-          <h2> {`${t('Changes in this version')}: `}</h2>
-          <ul>{updateItems}</ul>
-        </Modal.Content>
-        <Modal.Actions>
-          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-            <Button size={'big'} color="blue" onClick={handleClose} inverted>
-              {t('Close')}
-            </Button>
-            <Button color="orange" onClick={skipThisUpdate} inverted size={'big'}>
-              {t('Skip This Update')}
-            </Button>
+        <span className="shadow-[inset_0_-20px_0_#ffc04c,inset_0_-17px_0_#ffc04c]">
+          {t('Update Available')}
+        </span>
+      </button>
 
-            <GoToDownloadPageAnchor
+      {/* Modal */}
+      <dialog className={`modal ${modalOpen ? 'modal-open' : ''}`}>
+        <div className="modal-box bg-gray-800 text-neutral-content w-[600px]">
+          <div className="text-3xl text-center font-bold mb-4">
+            {`${t('Update Available')} — Version ${updateVersion}`}
+          </div>
+          <div className="mb-6">
+            <h2 className="text-xl font-semibold mb-2">{`${t('Changes in this version')}:`}</h2>
+            <ul className="list-disc list-inside text-lg">{updateItems}</ul>
+          </div>
+          <div className="flex justify-between gap-4">
+            <GeneralButton onClick={handleClose} className="bg-primary-button">
+              {t('Close')}
+            </GeneralButton>
+            <GeneralButton onClick={skipThisUpdate} className="bg-orange-400 text-black">
+              {t('Skip This Update')}
+            </GeneralButton>
+            <a
               target="_blank"
               rel="noopener noreferrer"
               href="https://github.com/shawnbanasick/kade"
             >
-              <Button
+              <GeneralButton
                 id="skipThisUpdateButton"
-                size={'big'}
-                // style={{ alignSelf: "flexEnd", marginLeft: 220 }}
-                color="orange"
                 onClick={handleClose}
-                inverted
+                className="bg-orange-400 text-black"
               >
                 {t('Go To Download Page')}
-              </Button>
-            </GoToDownloadPageAnchor>
+              </GeneralButton>
+            </a>
           </div>
-        </Modal.Actions>
-      </Modal>
-    </React.Fragment>
+        </div>
+        <form method="dialog" className="modal-backdrop">
+          <button onClick={handleClose}>close</button>
+        </form>
+      </dialog>
+    </>
   );
 };
 
 export default UpdateModal;
-
-const UpdateButton = styled.button`
-  box-sizing: border-box;
-  padding: 10px;
-  width: 100%;
-  height: 75px;
-  /* background: orange; */
-  background: #d6dbe0;
-  /* opacity: 0.6; */
-  color: black;
-  border: none;
-  text-align: left;
-  transition: 2s ease all;
-
-  &:hover {
-    box-shadow:
-      inset 0 0 0 4px #666,
-      0 0 1px transparent;
-  }
-`;
-
-const UpdateText = styled.span`
-  box-shadow:
-    inset 0 -20px 0 #ffc04c,
-    inset 0 -17px 0 #ffc04c;
-`;
-
-const GoToDownloadPageAnchor = styled.a``;

@@ -1,10 +1,7 @@
-import styled from 'styled-components';
-import { Transition } from 'semantic-ui-react';
 import GeneralButton from '../../../Utils/GeneralButton';
 import { useTranslation } from 'react-i18next';
 import vizState from '../../GlobalState/vizState';
 import outputState from '../../GlobalState/outputState';
-import createFactorVizDataObjectForProps from './createFactorVizDataObjectForProps';
 
 const RefreshFactorVizButton = () => {
   const { t } = useTranslation();
@@ -20,8 +17,6 @@ const RefreshFactorVizButton = () => {
     (state) => state.factorVisualizationsButtonColor
   );
 
-  const color = '#a5d6a7';
-
   const refresh = () => {
     const updateKeys = Object.keys(factorVizOptionsHolder);
     for (let i = 0; i < updateKeys.length; i += 1) {
@@ -29,39 +24,23 @@ const RefreshFactorVizButton = () => {
     }
     console.log('line 30', JSON.stringify(factorVizOptions, null, 2));
     updateFactorVizOptions({ ...factorVizOptions });
-    // let newData = createFactorVizDataObjectForProps(factorVizOptions);
-    // console.log('newData', JSON.stringify(newData, null, 2));
     updateFactorVizOptionsHolder({});
-    updateFactorVisualizationsButtonColor(color);
+    updateFactorVisualizationsButtonColor('bg-primary-button');
   };
 
   return (
-    <Transition visible={shouldDisplayFactorVizOptions} animation="fade" duration={1000}>
-      <RefreshButtonContainerDiv>
-        <RefreshButton
-          as={GeneralButton}
+    <div className={`${shouldDisplayFactorVizOptions ? 'visible' : 'hidden'}`}>
+      <div className="inline-flex mt-[10px] mb-[10px] ml-[20px]!">
+        <GeneralButton
           id="refreshFactorVizButton"
           onClick={refresh}
-          $buttonColor={factorVisualizationsButtonColor}
+          className={`${factorVisualizationsButtonColor}`}
         >
           {t('Update Factor Visualizations')}
-        </RefreshButton>
-      </RefreshButtonContainerDiv>
-    </Transition>
+        </GeneralButton>
+      </div>
+    </div>
   );
 };
 
 export default RefreshFactorVizButton;
-
-const RefreshButtonContainerDiv = styled.div`
-  margin-top: 10px;
-  /* margin-top: ${(props) => `${props.marginTop}px`}; */
-  /* margin-bottom: ${(props) => `${props.marginBottom}px`}; */
-  margin-bottom: 10px;
-  margin-left: 20px;
-  display: inline-flex;
-`;
-
-const RefreshButton = styled.div`
-  background-color: ${(props) => props.$buttonColor};
-`;

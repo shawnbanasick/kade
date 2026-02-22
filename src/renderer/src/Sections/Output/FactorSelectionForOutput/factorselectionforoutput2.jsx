@@ -1,7 +1,4 @@
-import React from 'react';
 import includes from 'lodash/includes';
-
-import { Button } from 'semantic-ui-react';
 import state from '../../../store';
 
 import outputDispatch from '../calcualteOutputLogic/1_outputDispatch';
@@ -110,7 +107,7 @@ const FactorSelectionForOutputButtons = () => {
       <div>
         <span style={{ marginRight: 5 }}>Choose Factors To Output:</span>
         {show1 && (
-          <Button
+          <GeneralButton
             id={'factor 1'}
             toggle
             active={state.getState('highlightfactor1')}
@@ -118,10 +115,10 @@ const FactorSelectionForOutputButtons = () => {
             key={'f1'}
           >
             1
-          </Button>
+          </GeneralButton>
         )}
         {show2 && (
-          <Button
+          <GeneralButton
             id={'factor 2'}
             toggle
             active={state.getState('highlightfactor2')}
@@ -129,10 +126,10 @@ const FactorSelectionForOutputButtons = () => {
             key={'f2'}
           >
             2
-          </Button>
+          </GeneralButton>
         )}
         {show3 && (
-          <Button
+          <GeneralButton
             id={'factor 3'}
             toggle
             active={state.getState('highlightfactor3')}
@@ -140,10 +137,10 @@ const FactorSelectionForOutputButtons = () => {
             key={'f3'}
           >
             3
-          </Button>
+          </GeneralButton>
         )}
         {show4 && (
-          <Button
+          <GeneralButton
             id={'factor 4'}
             toggle
             active={state.getState('highlightfactor4')}
@@ -151,10 +148,10 @@ const FactorSelectionForOutputButtons = () => {
             key={'f4'}
           >
             4
-          </Button>
+          </GeneralButton>
         )}
         {show5 && (
-          <Button
+          <GeneralButton
             id={'factor 5'}
             toggle
             active={state.getState('highlightfactor5')}
@@ -162,10 +159,10 @@ const FactorSelectionForOutputButtons = () => {
             key={'f5'}
           >
             5
-          </Button>
+          </GeneralButton>
         )}
         {show6 && (
-          <Button
+          <GeneralButton
             id={'factor 6'}
             toggle
             active={state.getState('highlightfactor6')}
@@ -173,10 +170,10 @@ const FactorSelectionForOutputButtons = () => {
             key={'f6'}
           >
             6
-          </Button>
+          </GeneralButton>
         )}
         {show7 && (
-          <Button
+          <GeneralButton
             id={'factor 7'}
             toggle
             active={state.getState('highlightfactor7')}
@@ -184,10 +181,10 @@ const FactorSelectionForOutputButtons = () => {
             key={'f7'}
           >
             7
-          </Button>
+          </GeneralButton>
         )}
         {show8 && (
-          <Button
+          <GeneralButton
             id={'factor 8'}
             toggle
             active={state.getState('highlightfactor8')}
@@ -195,17 +192,17 @@ const FactorSelectionForOutputButtons = () => {
             key={'f8'}
           >
             8
-          </Button>
+          </GeneralButton>
         )}
-        <Button id="selectAllFacsButton" onClick={handleOnclick}>
+        <GeneralButton id="selectAllFacsButton" onClick={handleOnclick}>
           Select All
-        </Button>
-        <Button id="clearAllFacsButton" onClick={handleOnclick}>
+        </GeneralButton>
+        <GeneralButton id="clearAllFacsButton" onClick={handleOnclick}>
           Clear
-        </Button>
-        <Button id="startOutputButton" onClick={handleSubmit}>
+        </GeneralButton>
+        <GeneralButton id="startOutputButton" onClick={handleSubmit}>
           Submit
-        </Button>
+        </GeneralButton>
       </div>
     );
   }

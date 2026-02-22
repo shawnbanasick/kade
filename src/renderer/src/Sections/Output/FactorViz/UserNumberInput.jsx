@@ -31,7 +31,7 @@ const UserNumberInput = (props) => {
       setValue(value);
       factorVizOptionsHolder[key] = value;
       updateFactorVizOptionsHolder(factorVizOptionsHolder);
-      updateFactorVisualizationsButtonColor('orange');
+      updateFactorVisualizationsButtonColor('bg-[orange]');
     }
   };
 

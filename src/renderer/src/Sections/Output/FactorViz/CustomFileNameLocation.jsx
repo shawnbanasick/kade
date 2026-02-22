@@ -24,7 +24,7 @@ const CustomFileNameLocation = () => {
     setLocalStore({ customFileNameLocation: value });
     factorVizOptionsHolder.customFileNameLocation = value;
     updateFactorVizOptionsHolder(factorVizOptionsHolder);
-    updateFactorVisualizationsButtonColor('orange');
+    updateFactorVisualizationsButtonColor('bg-[orange]');
   }
 
   // todo - fix this checked setting

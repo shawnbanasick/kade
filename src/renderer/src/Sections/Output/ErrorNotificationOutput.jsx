@@ -1,8 +1,6 @@
-import styled from 'styled-components';
-import { Button } from 'semantic-ui-react';
-import React from 'react';
 import state from '../../store';
 import ExtendedErrorModal from '../Input/ExtendedErrorModal';
+import GeneralButton from '../../Utils/GeneralButton';
 
 function handleOnClick() {
   state.setState({
@@ -12,69 +10,43 @@ function handleOnClick() {
 }
 
 const ErrorNotificationOutput = () => {
-  const showErrorMessageBarOutput = true; // state.getState(
-  //   "showErrorMessageBarOutput"
+  const showErrorMessageBarOutput = true;
   console.log('ErrorNotificationOUtput');
-  // );
   const errorMessage = state.getState('errorMessage');
+
   if (showErrorMessageBarOutput) {
     return (
-      <ErrorBar>
+      <div
+        className="
+          absolute flex items-center justify-between
+          left-[155px] bottom-[50px] mb-[5px] z-[9999]
+          w-[calc(100vw-188px)] h-[50px]
+          bg-[rgba(255,102,102,0.8)]
+          px-[10px]
+          font-sans text-xl
+          rounded
+        "
+      >
         <div>Error - {errorMessage}</div>
         <ExtendedErrorModal />
-        <StyledWrapper>
-          <Button className="wrapper1" onClick={handleOnClick}>
+        <div>
+          <GeneralButton
+            className="
+              wrapper1
+              shadow-[0_2px_2px_0_black]
+              hover:shadow-[0_2px_2px_0_black]
+              active:shadow-[inset_0_0_1px_0_black]
+              active:ml-[3px]
+            "
+            onClick={handleOnClick}
+          >
             Close
-          </Button>
-        </StyledWrapper>
-      </ErrorBar>
+          </GeneralButton>
+        </div>
+      </div>
     );
   }
   return null;
 };
 
 export default ErrorNotificationOutput;
-
-const ErrorBar = styled.div`
-  position: absolute;
-  display: flex;
-  align-items: center;
-  justify-items: center;
-  left: 155px;
-  bottom: 50;
-  margin-bottom: 5px;
-  z-index: 9999;
-  width: calc(100vw - 188px);
-  background-color: rgba(255, 102, 102, 0.8);
-  height: 50px;
-  padding-left: 10px;
-  padding-right: 10px;
-  font-family: Helvetica, sans-serif;
-  font-size: 20px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-
-  /* 
-   #ff6666
-  grid-column-start: 1;
-  grid-column-end: -1;
-  grid-row-start: -1; */
-  border-radius: 4px;
-`;
-
-const StyledWrapper = styled.div`
-  .wrapper1 {
-    box-shadow: 0 2px 2px 0 black;
-
-    &:hover {
-      box-shadow: 0 2px 2px 0 black;
-    }
-
-    &:active {
-      box-shadow: 0 0 1px 0 black inset;
-      margin-left: 3px;
-      /* margin-top: 3px; */
-    }
-  }
-`;

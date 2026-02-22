@@ -1,9 +1,8 @@
-import { Button, Header, Modal } from 'semantic-ui-react';
 import loadingState from '../../GlobalState/loadingState';
 import outputState from '../../GlobalState/outputState';
+import GeneralButton from '../../../Utils/GeneralButton';
 
 const NoLoadingsFlaggedWarningModal = () => {
-  // getState
   const showNoLoadingsFlaggedWarningModal = outputState(
     (state) => state.showNoLoadingsFlaggedWarningModal
   );
@@ -33,7 +32,6 @@ const NoLoadingsFlaggedWarningModal = () => {
     (state) => state.updateDisplayFactorVisualizations
   );
   const updateShowDocxOptions = outputState((state) => state.updateShowDocxOptions);
-
   const updateSendDataToOutputButtonColor = loadingState(
     (state) => state.updateSendDataToOutputButtonColor
   );
@@ -51,33 +49,31 @@ const NoLoadingsFlaggedWarningModal = () => {
     updateSendDataToOutputButtonColor('#d6dbe0');
   };
 
-  if (showNoLoadingsFlaggedWarningModal) {
-    return (
-      <Modal dimmer={'blurring'} open={showNoLoadingsFlaggedWarningModal} onClose={handleClose}>
-        <Header content="Error Checking" />
-        <Modal.Content>
-          <span style={{ fontSize: 30, display: 'block' }}>
-            A factor without a flagged loading was selected.
-          </span>
-          <span style={{ fontSize: 22, marginTop: 20, display: 'block' }}>
-            Problem factors: {factorsWithoutLoading}
-          </span>
-        </Modal.Content>
-        <Modal.Actions>
-          <Button
+  if (!showNoLoadingsFlaggedWarningModal) return null;
+
+  return (
+    <dialog className={`modal ${showNoLoadingsFlaggedWarningModal ? 'modal-open' : ''}`}>
+      <div className="modal-box bg-gray-800 text-neutral-content w-[600px]">
+        <div className="text-3xl text-center font-bold mb-4">Error Checking</div>
+        <div className="mb-6">
+          <p className="text-2xl mb-4">A factor without a flagged loading was selected.</p>
+          <p className="text-xl">Problem factors: {factorsWithoutLoading}</p>
+        </div>
+        <div className="flex justify-end">
+          <GeneralButton
             id="noLoadingsFlaggedModalGotItButton"
-            color="green"
-            style={{ margin: 15 }}
-            floated="right"
             onClick={handleClose}
-            inverted
+            className="bg-primary-button"
           >
             Got it
-          </Button>
-        </Modal.Actions>
-      </Modal>
-    );
-  }
-  return null;
+          </GeneralButton>
+        </div>
+      </div>
+      <form method="dialog" className="modal-backdrop">
+        <button onClick={handleClose}>close</button>
+      </form>
+    </dialog>
+  );
 };
+
 export default NoLoadingsFlaggedWarningModal;

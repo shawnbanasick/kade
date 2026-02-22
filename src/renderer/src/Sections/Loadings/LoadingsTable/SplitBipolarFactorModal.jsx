@@ -1,8 +1,8 @@
-import { Button, Header, Modal } from 'semantic-ui-react';
 import splitBipolarFactor from '../loadingsLogic/splitBipolarFactor';
 import SplitBipolarFactorDropdownSelect from './SplitBipolarFactorDropdownSelect';
 import { useTranslation } from 'react-i18next';
 import loadingState from '../../GlobalState/loadingState';
+import GeneralButton from '../../../Utils/GeneralButton';
 
 const SplitBipolarFactorButtonModal = () => {
   const { t } = useTranslation();
@@ -23,29 +23,30 @@ const SplitBipolarFactorButtonModal = () => {
     splitBipolarFactor();
   };
 
-  if (showSplitFactorModal) {
-    return (
-      <Modal dimmer={'blurring'} open={showSplitFactorModal} onClose={handleClose}>
-        <Header content={t('Factor Loadings Table')} />
-        <Modal.Content>
+  if (!showSplitFactorModal) return null;
+
+  return (
+    <dialog className={`modal ${showSplitFactorModal ? 'modal-open' : ''}`}>
+      <div className="modal-box bg-gray-800 text-neutral-content w-[600px]">
+        <div className="text-3xl text-center font-bold mb-4">{t('Factor Loadings Table')}</div>
+        <div className="mb-6">
           <SplitBipolarFactorDropdownSelect />
-        </Modal.Content>
-        <Modal.Actions>
-          <Button
+        </div>
+        <div className="flex justify-end">
+          <GeneralButton
             id="splitBipolarModalSubmitButton"
-            color="green"
-            style={{ margin: 15 }}
-            floated="right"
             onClick={handleClick}
-            inverted
+            className="bg-primary-button"
           >
             {t('Submit')}
-          </Button>
-        </Modal.Actions>
-      </Modal>
-    );
-  }
-  return null;
+          </GeneralButton>
+        </div>
+      </div>
+      <form method="dialog" className="modal-backdrop">
+        <button onClick={handleClose}>close</button>
+      </form>
+    </dialog>
+  );
 };
 
 export default SplitBipolarFactorButtonModal;

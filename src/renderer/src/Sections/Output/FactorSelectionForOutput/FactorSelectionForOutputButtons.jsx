@@ -1,5 +1,4 @@
 import includes from 'lodash/includes';
-import { Transition } from 'semantic-ui-react';
 import outputDispatch from '../calcualteOutputLogic/1_outputDispatch';
 import GeneralButton from '../../../Utils/GeneralButton';
 import { useTranslation } from 'react-i18next';
@@ -151,7 +150,7 @@ const FactorSelectionForOutputButtons = () => {
 
   if (showOutputFactorSelection) {
     return (
-      <Transition visible={showOutputFactorSelection} animation="fade" duration={1000}>
+      <div>
         {/* Container1 */}
         <div className="mt-[3px] h-[100px] w-[800px]">
           {/* StyledWrapper */}
@@ -201,7 +200,7 @@ const FactorSelectionForOutputButtons = () => {
             </GeneralButton>
           </div>
         </div>
-      </Transition>
+      </div>
     );
   }
 

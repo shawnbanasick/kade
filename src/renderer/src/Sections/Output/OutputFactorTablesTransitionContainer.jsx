@@ -1,20 +1,16 @@
-import { Transition } from 'semantic-ui-react';
 import FactorCorrelationsTable from './Factor Info/FactorCorrelationsTable';
 import FactorCharacteristicsTable from './Factor Info/FactorCharacteristicsTable';
 import StandardErrorsDifferencesTable from './Factor Info/StandardErrorsDifferencesTable';
 import { useTranslation } from 'react-i18next';
 import outputState from '../GlobalState/outputState';
 
-// import './OutputFactorTablesTransitionContainer.css';
-
 const OutputFactorTablesTransitionContainer = () => {
   const { t } = useTranslation();
-
   const showFactorCorrelationsTable = outputState((state) => state.showFactorCorrelationsTable);
 
   if (showFactorCorrelationsTable) {
     return (
-      <Transition visible={showFactorCorrelationsTable} animation="fade" duration={1000}>
+      <div className={`${showFactorCorrelationsTable ? 'visible' : 'hidden'}`}>
         <div className="section">
           <div className="outputFactorTables">
             <span className="outputFactorTablesSpan3">
@@ -36,35 +32,12 @@ const OutputFactorTablesTransitionContainer = () => {
             <StandardErrorsDifferencesTable />
           </div>
         </div>
-      </Transition>
+      </div>
     );
   }
   return (
-    <h2 style={{ marginTop: 50, marginLeft: 50 }}>
-      {t('Select factors for output in the Options tab')}
-    </h2>
+    <h2 className="mt-[50px] ml-[50px]!">{t('Select factors for output in the Options tab')}</h2>
   );
 };
 
 export default OutputFactorTablesTransitionContainer;
-
-/*
-.outputFactorTables {
-    margin-top: 50px;
-    display: flex;
-    flex-direction: column;
-}
-
-.outputFactorTablesSpan2 {
-    text-align: left; 
-    margin-bottom: 5px;
-    font-size: 16px;
-    line-height: 18px;
-}
-
-.outputFactorTablesSpan3 {
-    text-align: left;
-    font-size: 26px;
-    margin-bottom: 5px;
-}
-*/

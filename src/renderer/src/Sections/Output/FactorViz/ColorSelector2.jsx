@@ -21,7 +21,7 @@ const ColorSelector = (props) => {
     const colorProperty = e.target.id;
     factorVizOptionsHolder[colorProperty] = e.target.value;
     updateFactorVizOptionsHolder(factorVizOptionsHolder);
-    updateFactorVisualizationsButtonColor('orange');
+    updateFactorVisualizationsButtonColor('bg-[orange');
   }
 
   return (

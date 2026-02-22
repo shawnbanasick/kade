@@ -11,7 +11,7 @@ const UserTextInput = (props) => {
     const key = props.name;
     factorVizOptionsHolder[key] = e.target.value;
     updateFactorVizOptionsHolder(factorVizOptionsHolder);
-    updateFactorVisualizationsButtonColor('orange');
+    updateFactorVisualizationsButtonColor('bg-[orange]');
   };
 
   return (

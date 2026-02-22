@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-import { Button, Header, Modal } from 'semantic-ui-react';
+import { useState } from 'react';
 import { ToastContainer, toast, Zoom } from 'react-toastify';
 import initializeAppState from '../GlobalState/initializeAppState';
 import initializeInputState from '../GlobalState/initializeInputState';
@@ -17,21 +16,17 @@ import GeneralButton from '../../Utils/GeneralButton';
 import { useTranslation } from 'react-i18next';
 
 const ClearProjectModal = () => {
-  const [localStore, setLocalStore] = useState({
-    modalOpen: false,
-  });
+  const { t } = useTranslation();
+  const [modalOpen, setModalOpen] = useState(false);
 
-  const handleOpen = () => {
-    setLocalStore({ modalOpen: true });
-  };
+  const projectClearedTrans = t('Project Cleared');
 
-  const handleClose = () => {
-    setLocalStore({ modalOpen: false });
-  };
+  const handleOpen = () => setModalOpen(true);
+  const handleClose = () => setModalOpen(false);
 
-  const clearAnalysis = (projectClearedTrans) => {
-    setLocalStore({ modalOpen: false });
-    notify(projectClearedTrans);
+  const clearAnalysis = () => {
+    setModalOpen(false);
+    toast.success(projectClearedTrans);
     initializeInputState();
     initializeAppState();
     initializeCorrelationState();
@@ -46,57 +41,42 @@ const ClearProjectModal = () => {
     initializeCoreState();
   };
 
-  async function notify(projectClearedTrans) {
-    toast.success(projectClearedTrans);
-  }
-
-  const { t } = useTranslation();
-  const projectClearedTrans = t('Project Cleared');
-
-  const style1 = { display: 'flex' };
-  const style2 = { alignSelf: 'flexStart' };
-  const style3 = { alignSelf: 'flexEnd', marginLeft: 220 };
-
   return (
-    <React.Fragment>
+    <>
       <ToastContainer autoClose={2000} transition={Zoom} />
-      <Modal
-        dimmer={'blurring'}
-        trigger={<GeneralButton onClick={handleOpen}>{t('Clear Project')}</GeneralButton>}
-        open={localStore.modalOpen}
-        className="wrapper1"
-        onClose={handleClose}
-        basic
-        size={'small'}
-      >
-        <Header content={t('Clear Project')} />
-        <Modal.Content>
-          <h2>
-            {t('Clearing the project will remove all data and analysis')}
-            <br />
-            {t('This action cannot be reversed')}
-          </h2>
-          <h2> {t('Are you sure you want to clear the current project')}</h2>
-        </Modal.Content>
-        <Modal.Actions>
-          <div style={style1}>
-            <Button size={'big'} style={style2} color="green" onClick={handleClose} inverted>
+
+      {/* Trigger Button */}
+      <GeneralButton onClick={handleOpen}>{t('Clear Project')}</GeneralButton>
+
+      {/* Modal */}
+      <dialog className={`modal ${modalOpen ? 'modal-open' : ''}`}>
+        <div className="modal-box bg-gray-800 text-neutral-content w-[600px]">
+          <div className="text-3xl text-center font-bold mb-4">{t('Clear Project')}</div>
+          <div className="mb-6">
+            <p className="text-xl mb-2">
+              {t('Clearing the project will remove all data and analysis')}
+            </p>
+            <p className="text-xl mb-2">{t('This action cannot be reversed')}</p>
+            <p className="text-xl">{t('Are you sure you want to clear the current project')}</p>
+          </div>
+          <div className="flex justify-between gap-4">
+            <GeneralButton onClick={handleClose} className="bg-primary-button">
               {t('No Go Back')}
-            </Button>
-            <Button
+            </GeneralButton>
+            <GeneralButton
               id="resetAnalysisModalGotItButton"
-              size={'big'}
-              style={style3}
-              color="red"
-              onClick={() => clearAnalysis(projectClearedTrans)}
-              inverted
+              onClick={clearAnalysis}
+              className="bg-red-500 text-white"
             >
               {t('Yes delete the data and analysis')}
-            </Button>
+            </GeneralButton>
           </div>
-        </Modal.Actions>
-      </Modal>
-    </React.Fragment>
+        </div>
+        <form method="dialog" className="modal-backdrop">
+          <button onClick={handleClose}>close</button>
+        </form>
+      </dialog>
+    </>
   );
 };
 

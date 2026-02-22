@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { Button, Header, Modal } from 'semantic-ui-react';
 import loadingsTableDataPrep from '../../Loadings/LoadingsTable/loadingsTableDataPrep';
 import GeneralButton from '../../../Utils/GeneralButton';
 import { useTranslation } from 'react-i18next';
@@ -11,7 +10,7 @@ import factorState from '../../GlobalState/factorState';
 
 const FactorSelectButtonModal = () => {
   const { t } = useTranslation();
-  // getState
+
   const numFactorsKept = rotationState((state) => state.numFactorsKeptForRot);
   const projectHistoryArray = projectHistoryState((state) => state.projectHistoryArray);
   let splitFactorsArray = loadingState((state) => state.splitFactorsArray);
@@ -28,27 +27,26 @@ const FactorSelectButtonModal = () => {
   let archiveCounter = rotationState((state) => state.archiveCounter);
   const factorMatrix = factorState((state) => state.factorMatrix);
 
-  const [localStore, setLocalStore] = useState({
-    isActive: false,
-    modalOpenSelect: false,
-  });
+  const [isActive, setIsActive] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
+
+  const isFacSelectDisabled = rotationState((state) => state.isFacSelectDisabled);
+  const showKeepFacForRotButton = rotationState((state) => state.showKeepFacForRotButton);
 
   const handleOpen = () => {
     if (isNaN(numFactorsKept)) {
-      setLocalStore({ ...localStore, modalOpenSelect: false });
+      setModalOpen(true);
     } else {
-      setLocalStore({ ...localStore, isActive: true });
+      setIsActive(true);
 
       splitFactorsArray.length = +numFactorsKept;
       updateSplitFactorsArray([...splitFactorsArray]);
       updateSplitFactorsArrayArchive([...splitFactorsArray]);
 
-      // update project history in dom and state
       const projectHistoryText = `${i18n.t(
         'Number of factors selected for rotation'
       )}: ${numFactorsKept}`;
 
-      // a shortcut to remove history when selecting a second time - truncate array
       projectHistoryArray.length = 2;
 
       const logMessageObj = {
@@ -57,8 +55,6 @@ const FactorSelectButtonModal = () => {
       };
 
       projectHistoryArray.push(logMessageObj);
-
-      // update state
       updateProjectHistoryArray(projectHistoryArray);
 
       updateIsLoadingFactorsKept(true);
@@ -67,13 +63,10 @@ const FactorSelectButtonModal = () => {
         loadingsTableDataPrep(numFactorsKept);
       }, 10);
 
-      // show loadings table
       updateIsFacSelectDisabled(true);
       updateShouldDisplayFacKept(true);
       updateShowLoadingsTable(true);
       updateArchiveCounter(archiveCounter);
-
-      // getState - archive values for undo function (ProjectHistory component)
 
       archiveCounter += 1;
       const archiveName = `facMatrixArc${archiveCounter}`;
@@ -82,51 +75,50 @@ const FactorSelectButtonModal = () => {
   };
 
   const handleClose = () => {
-    setLocalStore({ ...localStore, modalOpenSelect: false });
+    setModalOpen(false);
   };
 
-  const isFacSelectDisabled = rotationState((state) => state.isFacSelectDisabled);
-  // setLocalStore({ ...localStore, isActive: isFacSelectDisabled });
-  const isActive = localStore.isActive;
-  const showKeepFacForRotButton = rotationState((state) => state.showKeepFacForRotButton);
+  if (!showKeepFacForRotButton) return null;
 
-  if (showKeepFacForRotButton) {
-    return (
-      <React.Fragment>
-        <Modal
-          dimmer={'blurring'}
-          trigger={
-            <GeneralButton
-              id="factorsKeptSubmitButton"
-              $isActive={isActive}
-              disabled={isFacSelectDisabled}
-              onClick={handleOpen}
-              className={`${isActive ? 'bg-primary-button' : 'bg-grey-button'} h-[30px] p-2 min-w-[100px] ml-8!`}
-            >
-              {t('Submit')}
-            </GeneralButton>
-          }
-          open={localStore.modalOpenSelect}
-          onClose={handleClose}
-          basic
-          size="small"
-        >
-          <Header content="Factor Rotation" />
-          <Modal.Content>
-            <span style={{ fontSize: 30 }}>
+  return (
+    <>
+      {/* Trigger Button */}
+      <GeneralButton
+        id="factorsKeptSubmitButton"
+        $isActive={isActive}
+        disabled={isFacSelectDisabled}
+        onClick={handleOpen}
+        className={`${isActive ? 'bg-primary-button' : 'bg-grey-button'} h-[30px] p-2 min-w-[100px] ml-8!`}
+      >
+        {t('Submit')}
+      </GeneralButton>
+
+      {/* Modal */}
+      <dialog className={`modal ${modalOpen ? 'modal-open' : ''}`}>
+        <div className="modal-box bg-gray-800 text-neutral-content h-[250px] w-[600px]">
+          <div className="text-3xl text-center font-bold mb-4">{t('Factor Rotation')}</div>
+          <div className="mb-6">
+            <p className="text-xl">
               {t('Please select the number of factors to keep for rotation')}
-            </span>
-          </Modal.Content>
-          <Modal.Actions>
-            <Button id="FactorSelectModalGotItButton" color="green" onClick={handleClose} inverted>
+            </p>
+          </div>
+          <div className="flex justify-end">
+            <GeneralButton
+              id="FactorSelectModalGotItButton"
+              onClick={handleClose}
+              className="bg-primary-button"
+            >
               {t('Got it')}
-            </Button>
-          </Modal.Actions>
-        </Modal>
-      </React.Fragment>
-    );
-  }
-  return null;
+            </GeneralButton>
+          </div>
+        </div>
+        {/* Backdrop close */}
+        <form method="dialog" className="modal-backdrop">
+          <button onClick={handleClose}>close</button>
+        </form>
+      </dialog>
+    </>
+  );
 };
 
 export default FactorSelectButtonModal;
