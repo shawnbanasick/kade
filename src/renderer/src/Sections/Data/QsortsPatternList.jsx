@@ -1,21 +1,12 @@
-import styled from 'styled-components';
-
 const StatementList = (props) => {
   let mapKey = 1;
   return (
-    <CustomUl>
+    <ul className="list-none text-right w-[167px] pl-[5px]">
       {props.texts.map((listValue) => (
         <li key={mapKey++}>{listValue}</li>
       ))}
-    </CustomUl>
+    </ul>
   );
 };
 
 export default StatementList;
-
-const CustomUl = styled.ul`
-  list-style-type: none;
-  text-align: right;
-  width: 167px;
-  padding-left: 5px !important;
-`;

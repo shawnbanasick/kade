@@ -1,4 +1,3 @@
-import styled from 'styled-components';
 import TraditionalCentroidButton from './factorSelection/TraditionalCentroidButton';
 import Horst55CentroidModal from './factorSelection/Horst55CentroidModal';
 // import TuckerMacCallumButton from "./factorSelection/TuckerMacCallumCentroidButton";

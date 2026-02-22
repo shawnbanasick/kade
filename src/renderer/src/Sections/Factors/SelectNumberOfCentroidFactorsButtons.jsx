@@ -1,4 +1,3 @@
-import styled from 'styled-components';
 import GeneralButton from '../../Utils//GeneralButton';
 import { useTranslation } from 'react-i18next';
 import horstDispatcher from './centroidLogic/horst55Logic/horstDispatcher';
@@ -166,9 +165,3 @@ const SelectNumberOfCentroidFactorsButtons = () => {
 };
 
 export default SelectNumberOfCentroidFactorsButtons;
-
-const TitleSpan = styled.span`
-  margin-right: 10px;
-`;
-
-const ExtractFactorsButton = styled(GeneralButton)``;

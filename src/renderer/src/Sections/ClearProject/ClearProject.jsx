@@ -1,4 +1,3 @@
-import styled, { keyframes } from 'styled-components';
 import ClearProjectModal from './ClearProjectModal';
 import { useTranslation } from 'react-i18next';
 
@@ -6,7 +5,7 @@ const ClearProject = () => {
   const { t } = useTranslation();
 
   return (
-    <MainContent>
+    <div className="flex flex-col pt-[50px] pr-[100px] pl-[100px] items-center bg-white font-[Helvetica,sans-serif] text-[18px] w-[calc(100vw-135px)] box-border max-h-[calc(100vh-22px)] overflow-hidden select-none animate-fadeIn">
       <h1>{t('Clear Project')}</h1>
       <h2>
         {t('Click this button to begin a new project')} <br />
@@ -18,49 +17,8 @@ const ClearProject = () => {
       <br />
       <br />
       <ClearProjectModal />
-    </MainContent>
+    </div>
   );
 };
 
 export default ClearProject;
-
-const fadeIn = keyframes`
-  from {
-    opacity: 0;
-  }
-
-  to {
-    opacity: 1;
-  }
-`;
-
-const fadeOut = keyframes`
-  from {
-    opacity: 1;
-  }
-
-  to {
-    opacity: 0;
-  }
-`;
-
-const MainContent = styled.div`
-  display: flex;
-  flex-direction: column;
-  padding-top: 50px;
-  padding-right: 100px;
-  padding-left: 100px;
-  justify-items: center;
-  align-items: center;
-  background-color: white;
-  visibility: ${(props) => (props.view ? 'hidden' : 'visible')};
-  animation: ${(props) => (props.view ? fadeOut : fadeIn)} 0.5s linear;
-  transition: visibility 0.5s linear;
-  font-family: Helvetica, sans-serif;
-  font-size: 18px;
-  width: calc(100vw - 135px);
-  box-sizing: border-box;
-  max-height: calc(100vh - 22px);
-  overflow: hidden;
-  user-select: none;
-`;

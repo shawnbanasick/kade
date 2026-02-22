@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import styled, { css } from 'styled-components';
 import Start from './Sections/Start/Start';
 import Input from './Sections/Input/Input';
 import Data from './Sections/Data/Data';
