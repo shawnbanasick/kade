@@ -1,11 +1,7 @@
 import { useState } from 'react';
-import styled from 'styled-components';
 import UserNumberInputStructure from './userNumberInputStructure';
 import refreshViz from './refreshViz';
 import structureState from '../GlobalState/structureState';
-// import structureDispatch from './structureDispatch';
-// import GeneralButton from '../../Utils/GeneralButton';
-// import structureState from '../GlobalState/structureState';
 
 const ControlPanel = () => {
   const [selectedValue, setSelectedValue] = useState('variance');
@@ -17,7 +13,6 @@ const ControlPanel = () => {
     updateRefreshVizButtonColor(
       getComputedStyle(document.documentElement).getPropertyValue('--main-theme-color')
     );
-    // structureDispatch();
   };
 
   const handleRadioChange = (value) => {
@@ -25,16 +20,19 @@ const ControlPanel = () => {
   };
 
   return (
-    <Panel>
-      <PanelRow>
-        <Message>
+    <div className="flex flex-col justify-center items-center h-[150px] w-full border-b-[1.5px] border-black bg-white pb-2.5">
+      {/* Row 1 - Message */}
+      <div className="flex flex-row items-center justify-between w-[90%] mt-2.5 [&_span]:text-base [&_span]:mr-1.5">
+        <span className="text-base w-[1000px]">
           Individual links and boxes can be deleted by left clicking on them with your mouse and
           then pressing the &quot;Backspace&quot; key.
-        </Message>
-      </PanelRow>
-      <PanelRow>
-        <LineDispDiv>
-          <LabelSpan>Line Display Cutoff:</LabelSpan>
+        </span>
+      </div>
+
+      {/* Row 2 - Line Display Cutoff */}
+      <div className="flex flex-row items-center justify-between w-[90%] mt-2.5 [&_span]:text-base [&_span]:mr-1.5">
+        <div className="flex flex-row items-center justify-center w-[230px]">
+          <span className="text-base mr-1.5 w-[300px]">Line Display Cutoff:</span>
           <UserNumberInputStructure
             name={'adjustEdgeCutoffTo'}
             step="0.01"
@@ -42,14 +40,16 @@ const ControlPanel = () => {
             upperLimit={1.0}
             value={0.3}
           />
-        </LineDispDiv>
-        <MainButton height={20}>Display Number of Autoflagged Q Sorts</MainButton>
-        <MainButton height={20}>Download PNG Image</MainButton>
-      </PanelRow>
-      <StylesContainer>
-        <RadioGroup>
-          <span>Box Width:</span>
-          <RadioButton>
+        </div>
+        <MainButton>Display Number of Autoflagged Q Sorts</MainButton>
+        <MainButton>Download PNG Image</MainButton>
+      </div>
+
+      {/* Row 3 - Radio buttons */}
+      <div className="flex flex-1 mt-2.5 justify-center items-center">
+        <div className="flex flex-row text-base items-center justify-around rounded-lg">
+          <span className="mr-0">Box Width:</span>
+          <div className="flex flex-row items-stretch ml-2.5">
             <input
               type="radio"
               id="variance"
@@ -57,10 +57,11 @@ const ControlPanel = () => {
               checked={selectedValue === 'variance'}
               onChange={() => handleRadioChange('variance')}
             />
-            <RadioLabel htmlFor="variance">Explained Variance</RadioLabel>
-          </RadioButton>
-
-          <RadioButton>
+            <label htmlFor="variance" className="flex ml-2">
+              Explained Variance
+            </label>
+          </div>
+          <div className="flex flex-row items-stretch ml-2.5">
             <input
               type="radio"
               id="constant"
@@ -68,13 +69,17 @@ const ControlPanel = () => {
               checked={selectedValue === 'constant'}
               onChange={() => handleRadioChange('constant')}
             />
-            <RadioLabel htmlFor="constant">Constant</RadioLabel>
-          </RadioButton>
-        </RadioGroup>
-      </StylesContainer>
-      <PanelRow>
-        <LineDispDiv2>
-          <LabelSpan>Adjust Vertical Spacing:</LabelSpan>
+            <label htmlFor="constant" className="flex ml-2">
+              Constant
+            </label>
+          </div>
+        </div>
+      </div>
+
+      {/* Row 4 - Vertical Spacing */}
+      <div className="flex flex-row items-center justify-between w-[90%] mt-2.5 [&_span]:text-base [&_span]:mr-1.5">
+        <div className="flex flex-row items-center justify-between w-[255px]">
+          <span className="text-base mr-1.5 w-[300px]">Adjust Vertical Spacing:</span>
           <UserNumberInputStructure
             name={'adjustVerticalSpacing'}
             step="0.01"
@@ -83,163 +88,40 @@ const ControlPanel = () => {
             value={0.4}
             width={150}
           />
-        </LineDispDiv2>
-        <MainButton
-          height={20}
-          width={800}
-          onClick={handleRefresh}
-          $buttonColor={refreshVizButtonColor}
-        >
+        </div>
+        <MainButton onClick={handleRefresh} buttonColor={refreshVizButtonColor}>
           Refresh Visualization
         </MainButton>
-        <MainButton height={20} width={800}>
-          Download SVG Image
-        </MainButton>
-      </PanelRow>
-    </Panel>
+        <MainButton>Download SVG Image</MainButton>
+      </div>
+    </div>
+  );
+};
+
+// MainButton extracted as a small component to handle dynamic buttonColor prop cleanly
+const MainButton = ({ children, onClick, buttonColor, isActive, disabled }) => {
+  return (
+    <button
+      onClick={onClick}
+      disabled={disabled}
+      style={{ backgroundColor: buttonColor }}
+      className={`
+        grid items-center justify-items-center shadow-none min-h-[20px] h-auto w-auto
+        text-center text-base font-normal font-sans border-none rounded-[4px]
+        mr-[3px] mb-[3px] py-[5px] px-[10px] cursor-pointer text-black no-underline
+        transition-[box-shadow] duration-300 translate-z-0
+        focus:outline-none disabled:pointer-events-none disabled:opacity-70
+        hover:[box-shadow:inset_0_0_0_4px_#666,_0_0_1px_transparent]
+        ${
+          isActive
+            ? '[box-shadow:inset_0_0_0_2px_#666,_0_0_1px_transparent]'
+            : '[box-shadow:inset_0_0_0_0px_#666,_0_0_0px_transparent]'
+        }
+      `}
+    >
+      {children}
+    </button>
   );
 };
 
 export default ControlPanel;
-
-const Panel = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  height: 150px;
-  width: 100%;
-  border-bottom: 1.5px solid black;
-  background-color: white;
-  padding-bottom: 10px;
-`;
-
-const PanelRow = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  width: 90%;
-  margin-top: 10px;
-  span {
-    font-size: 16px;
-    margin-right: 5px;
-  }
-`;
-
-const LabelSpan = styled.span`
-  font-size: 16px;
-  margin-right: 5px;
-  width: 300px;
-`;
-
-const LineDispDiv = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  width: 230px;
-`;
-
-const LineDispDiv2 = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  width: 255px;
-`;
-
-const MainButton = styled.button`
-  display: grid;
-  align-items: center;
-  justify-items: center;
-  box-shadow: none;
-  min-height: 20px;
-  height: ${(props) => props.height || 'auto'};
-  width: ${(props) => props.width || 'auto'};
-  text-align: center;
-  font-size: 16px;
-  font-family: Helvetica, sans-serif;
-  font-weight: normal;
-  border: none;
-  border-radius: 4px;
-  margin-right: 3px;
-  margin-bottom: 3px;
-  padding: 5px;
-  padding-left: 10px;
-  padding-right: 10px;
-  cursor: pointer;
-  background-color: ${(props) => props.$buttonColor};
-  text-decoration: none;
-  color: black;
-  transition: all 0.5s ease;
-  /* transition: background-color 0.5s ease; */
-  transition-duration: 0.3s;
-  transition-property: box-shadow;
-  transform: translateZ(0);
-  box-shadow:
-    inset 0 0 0 4px ${(props) => (props.$isActive ? 'var(--main-theme-color)' : '#d6dbe0')},
-    0 0 1px 0.6;
-  /* background-color: ${(props) => (props.$isActive ? 'var(--main-theme-color)' : '#d6dbe0')}; */
-
-  box-shadow: ${(props) =>
-    props.$isActive
-      ? 'inset 0 0 0 2px #666, 0 0 1px transparent'
-      : 'inset 0 0 0 0px #666, 0 0 0px transparent'};
-
-  &:hover {
-    box-shadow:
-      inset 0 0 0 4px #666,
-      0 0 1px transparent;
-  }
-
-  &:focus {
-    outline: none;
-  }
-
-  &:disabled {
-    pointer-events: none;
-    opacity: 0.7;
-  }
-`;
-
-const StylesContainer = styled.div`
-  display: flex;
-  flex: 1;
-  margin-top: 10px;
-  justify-content: 'center';
-  align-items: 'center';
-`;
-
-const RadioGroup = styled.div`
-  display: flex;
-  flex-direction: row;
-  font-size: 16px;
-  align-items: center;
-  justify-content: space-around;
-  border-radius: 8px;
-  background-color: 'white';
-  box-shadow: '0px 2px 3.84px rgba(0, 0, 0, 0.25)';
-
-  span {
-    margin-right: 0px;
-  }
-`;
-
-const RadioButton = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: stretch;
-  margin-left: 10px;
-`;
-
-const RadioLabel = styled.label`
-  display: flex;
-  margin-left: 8px;
-  color: '#333';
-`;
-
-const Message = styled.span`
-  font-size: 16px;
-  width: 1000px;
-`;

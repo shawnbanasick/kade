@@ -4,7 +4,6 @@ import GeneralButton from '../../../Utils/GeneralButton';
 import { useTranslation } from 'react-i18next';
 import SvgIcon from '../../images/SVG_Icon2.svg';
 import PngIcon from '../../images/PNG_Icon2.svg';
-import styled from 'styled-components';
 import vizState from '../../GlobalState/vizState';
 import coreState from '../../GlobalState/coreState';
 import d3ToPng from 'd3-svg-to-png';
@@ -26,26 +25,16 @@ const DownloadFactorVizButtons = (props) => {
     const customNameLocation = factorVizOptions.customFileNameLocation;
     if (shouldAddName === true) {
       if (customNameLocation === 'prepend') {
-        config = {
-          filename: `${customName}_${projectName}_${cleanFactorName}_${dateTime}`,
-        };
+        config = { filename: `${customName}_${projectName}_${cleanFactorName}_${dateTime}` };
       } else if (customNameLocation === 'append') {
-        config = {
-          filename: `${projectName}_${cleanFactorName}_${dateTime}_${customName}`,
-        };
+        config = { filename: `${projectName}_${cleanFactorName}_${dateTime}_${customName}` };
       } else if (customNameLocation === 'replace') {
-        config = {
-          filename: customName,
-        };
+        config = { filename: customName };
       } else {
-        config = {
-          filename: `${projectName}_${cleanFactorName}_${dateTime}`,
-        };
+        config = { filename: `${projectName}_${cleanFactorName}_${dateTime}` };
       }
     } else {
-      config = {
-        filename: `${projectName}_${cleanFactorName}_${dateTime}`,
-      };
+      config = { filename: `${projectName}_${cleanFactorName}_${dateTime}` };
     }
 
     const svg = document.querySelector(imageName);
@@ -54,20 +43,14 @@ const DownloadFactorVizButtons = (props) => {
       svgEl.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
       const svgData = svgEl.outerHTML;
       const preface = '<?xml version="1.0" standalone="no"?>\r\n';
-      const svgBlob = new Blob([preface, svgData], {
-        type: 'image/svg+xml;charset=utf-8',
-      });
-
-      // to buffer
+      const svgBlob = new Blob([preface, svgData], { type: 'image/svg+xml;charset=utf-8' });
       const arrayBuffer = await new Response(svgBlob).arrayBuffer();
       const defaultPath = `${name}.svg`;
-
       const filepath = await window.electronAPI.showSaveSvgDialog(defaultPath);
       if (!filepath) {
         alert('Save operation was canceled.');
         return;
       }
-
       try {
         const result = await window.electronAPI.saveSVG(arrayBuffer, filepath);
         console.log(result);
@@ -117,7 +100,6 @@ const DownloadFactorVizButtons = (props) => {
         alert('Save operation was canceled.');
         return;
       }
-
       try {
         const result = await window.electronAPI.savePNG(buffer, filepath);
         console.log(result);
@@ -128,50 +110,32 @@ const DownloadFactorVizButtons = (props) => {
   };
 
   return (
-    <div style={{ display: 'flex' }}>
+    <div className="flex">
       <GeneralButton
         id={`downloadSvgButtonFacViz${props.id}`}
         onClick={() => downloadSvgImage(props.id)}
-        style={{ marginRight: 5, marginLeft: 20 }}
+        className="mr-1.5 ml-5"
       >
-        <LineContainer>
-          <SvgContainer>
+        <div className="flex flex-row justify-center items-center h-full w-full">
+          <div className="flex justify-center items-center mr-2.5">
             <img src={SvgIcon} height="50px" alt="svg Icon" />
-          </SvgContainer>
-
+          </div>
           {t('Download Vector Image')}
-        </LineContainer>
+        </div>
       </GeneralButton>
       <GeneralButton
         id={`downloadPngButtonFacViz${props.id}`}
         onClick={() => downloadFacVizAsPng(props.id)}
       >
-        <LineContainer>
-          <SvgContainer>
+        <div className="flex flex-row justify-center items-center h-full w-full">
+          <div className="flex justify-center items-center mr-2.5">
             <img src={PngIcon} height="50px" alt="png Icon" />
-          </SvgContainer>
-
+          </div>
           {t('Download Raster Image')}
-        </LineContainer>
+        </div>
       </GeneralButton>
     </div>
   );
 };
+
 export default DownloadFactorVizButtons;
-
-const LineContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-  width: 100%;
-`;
-
-const SvgContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-right: 10px;
-  margin-left: 10;
-`;

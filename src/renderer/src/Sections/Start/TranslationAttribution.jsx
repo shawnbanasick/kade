@@ -1,24 +1,13 @@
 import { useTranslation } from 'react-i18next';
-import styled from 'styled-components';
 
 const TranslationAttribution = () => {
   const { t } = useTranslation();
 
   return (
-    <TranslationAttContainer>{`${t('Translation')}  ${t('translator')}`}</TranslationAttContainer>
+    <div className="flex h-[22px] text-[20px] w-[80%] leading-[1.5em] justify-center items-center grid-area-translation mt-2.5">
+      {`${t('Translation')}  ${t('translator')}`}
+    </div>
   );
 };
 
 export default TranslationAttribution;
-
-const TranslationAttContainer = styled.div`
-  display: flex;
-  height: 22px;
-  font-size: 20px;
-  width: 80%;
-  line-height: 1.5em;
-  justify-content: center;
-  align-items: center;
-  grid-area: translation;
-  margin-top: 10px;
-`;

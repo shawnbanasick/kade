@@ -1,6 +1,4 @@
 import React from 'react';
-
-import styled from 'styled-components';
 import transposeMatrix from '../../../../Utils/transposeMatrix';
 import calcuateSigCriterionValues from '../../varimaxLogic/2calculateSigCriterionValues';
 import loadingsTableDataPrep from '../../../Loadings/LoadingsTable/loadingsTableDataPrep';

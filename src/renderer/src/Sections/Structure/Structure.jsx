@@ -1,8 +1,5 @@
 import { useEffect } from 'react';
-import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import StructViz from './StructViz';
-import styled from 'styled-components';
-import './react-tabs.css';
 import structureState from '../GlobalState/structureState';
 import ForceGraph from '../Correlations/ForceDirectedGraph/ForceDirectedGraph';
 import correlationState from '../GlobalState/correlationState';
@@ -122,15 +119,3 @@ const Structure = () => {
 };
 
 export default Structure;
-
-const Container = styled.div`
-  width: 100%;
-  height: 100%;
-  background-color: #d6dbe0;
-`;
-
-const ColorBox = styled.div`
-  width: 100%;
-  height: 5px;
-  background-color: #d6dbe0;
-`;

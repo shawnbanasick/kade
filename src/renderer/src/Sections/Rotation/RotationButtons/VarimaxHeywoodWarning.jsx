@@ -1,5 +1,4 @@
 import React from 'react';
-import styled from 'styled-components';
 import GeneralButton from '../../../Utils/GeneralButton';
 import { useTranslation } from 'react-i18next';
 import doContinueAnalysis from '../VarimaxHeywoodAdjust/doContinueAnalysis';
@@ -32,7 +31,6 @@ const RotationButtonGroup = () => {
     updateVariAdjustButtonDisabled(true);
     updateVariPqmAdjustButtonActive(false);
     updateVariPqmAdjustButtonDisabled(true);
-    return;
   };
 
   const onVariAdjustClick = () => {
@@ -43,7 +41,6 @@ const RotationButtonGroup = () => {
     updateVariAdjustButtonDisabled(true);
     updateVariPqmAdjustButtonActive(false);
     updateVariPqmAdjustButtonDisabled(true);
-    return;
   };
 
   const onVariPqmAdjustClick = () => {
@@ -54,7 +51,6 @@ const RotationButtonGroup = () => {
     updateVariAdjustButtonDisabled(true);
     updateVariPqmAdjustButtonActive(true);
     updateVariPqmAdjustButtonDisabled(true);
-    return;
   };
 
   const shouldDisplay = rotationState((state) => state.showVarimaxHeywoodWarning);
@@ -71,63 +67,47 @@ const RotationButtonGroup = () => {
     varimaxButtonDisabled = true;
   }
 
-  const textTrans1 = t('variHeywoodText1');
-  const textTrans2 = t('variHeywoodText2');
-  const textTrans3 = t('variHeywoodText3');
-
   if (shouldDisplay) {
     return (
       <React.Fragment>
-        <TextDiv>{`${textTrans1}. ${textTrans2}. ${textTrans3}.`}</TextDiv>
+        <div className="mt-[30px] w-[750px] text-sm">
+          {`${t('variHeywoodText1')}. ${t('variHeywoodText2')}. ${t('variHeywoodText3')}.`}
+        </div>
         <h4>{`Factor loading > 1: ${varimaxHeywoodWarningParticipants}`}</h4>
-        <ContainerDiv>
-          <VarHeywoodButton
+        <div className="mt-[25px] flex flex-row">
+          <GeneralButton
             id="VariContinueButton"
             $isActive={variContinueButtonActive}
             disabled={variContinueButtonDisabled}
             onClick={onVariContClick}
+            className="mr-2.5"
           >
             {t('Continue Analysis')}
-          </VarHeywoodButton>
-          <VarHeywoodButton
+          </GeneralButton>
+          <GeneralButton
             id="VariAdjustButton"
             $isActive={variAdjustButtonActive}
             disabled={variAdjustButtonDisabled}
             onClick={onVariAdjustClick}
+            className="mr-2.5"
           >
             {t('Adjust Value to 0.99')}
-          </VarHeywoodButton>
-          <VarHeywoodButton
+          </GeneralButton>
+          <GeneralButton
             id="VariPqmAdjustButton"
             $isActive={variPqmAdjustButtonActive}
             disabled={variPqmAdjustButtonDisabled}
             onClick={onVariPqmAdjustClick}
+            className="mr-2.5"
           >
             {t('Adjust to PQMethod-style Value')}
-          </VarHeywoodButton>
-        </ContainerDiv>
+          </GeneralButton>
+        </div>
       </React.Fragment>
     );
   }
+
   return null;
 };
 
 export default RotationButtonGroup;
-
-// return <p style={{ fontSize: 22 }}>Continue with Analysis</p>;
-
-const ContainerDiv = styled.div`
-  margin-top: 25px;
-  display: flex;
-  flex-direction: row;
-`;
-
-const VarHeywoodButton = styled(GeneralButton)`
-  margin-right: 10px;
-`;
-
-const TextDiv = styled.div`
-  margin-top: 30px;
-  width: 750px;
-  font-size: 14px;
-`;

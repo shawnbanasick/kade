@@ -1,48 +1,45 @@
 import React from 'react';
-import styled from 'styled-components';
 import UserTextInput from './UserTextInput';
 import UserSelectionSwitch from './UserSelectionSwitch';
 import { useTranslation } from 'react-i18next';
-
-const styles = {
-  fontSize: 22,
-  userSelect: 'none',
-};
 
 const GeneralOptionsPanel = () => {
   const { t } = useTranslation();
 
   return (
     <React.Fragment>
-      <span style={styles}>{t('General')}</span>
-      <hr style={{ width: '100%', marginBottom: 15 }} />
-      <OptionStatementRow>
-        <OptionStatementText>{`1. ${t('Include legend with visualization')}?`}</OptionStatementText>
+      <span className="text-[22px] select-none">{t('General')}</span>
+      <hr className="w-full mb-[15px]" />
+
+      <div className="flex items-center mb-3 pl-2.5">
+        <div className="select-none text-base">{`1. ${t('Include legend with visualization')}?`}</div>
         <UserSelectionSwitch name="willIncludeLegend" value="willIncludeLegend" toggle={true} />
-      </OptionStatementRow>
-      <OptionStatementRow>
-        <OptionStatementText>{`2. ${t('Prepend statement numbers')}?`}</OptionStatementText>
+      </div>
+
+      <div className="flex items-center mb-3 pl-2.5">
+        <div className="select-none text-base">{`2. ${t('Prepend statement numbers')}?`}</div>
         <UserSelectionSwitch
           name="willPrependStateNums"
           value="willPrependStateNums"
           toggle={false}
         />
-      </OptionStatementRow>
-      <OptionStatementRow>
-        <OptionStatementText>{`3. ${t('Display only statement numbers')}?`}</OptionStatementText>
+      </div>
+
+      <div className="flex items-center mb-3 pl-2.5">
+        <div className="select-none text-base">{`3. ${t('Display only statement numbers')}?`}</div>
         <UserSelectionSwitch
           name="willDisplayOnlyStateNums"
           value="willDisplayOnlyStateNums"
           toggle={false}
         />
-      </OptionStatementRow>
-      <OptionStatementRow>
-        <OptionStatementText>
-          {`4. ${t('Add custom names to factor visualizations')}?`}
-        </OptionStatementText>
+      </div>
+
+      <div className="flex items-center mb-3 pl-2.5">
+        <div className="select-none text-base">{`4. ${t('Add custom names to factor visualizations')}?`}</div>
         <UserSelectionSwitch name="willAddCustomNames" value="willAddCustomNames" toggle={false} />
-      </OptionStatementRow>
-      <div style={{ marginTop: 10 }}>
+      </div>
+
+      <div className="mt-2.5">
         <UserTextInput
           name={'customFactorNames'}
           label="names"
@@ -56,15 +53,3 @@ const GeneralOptionsPanel = () => {
 };
 
 export default GeneralOptionsPanel;
-
-const OptionStatementRow = styled.div`
-  display: flex;
-  align-items: center;
-  margin-bottom: 12px;
-  padding-left: 10px;
-`;
-
-const OptionStatementText = styled.div`
-  user-select: none;
-  font-size: 16px;
-`;

@@ -1,4 +1,3 @@
-import styled from 'styled-components';
 import vizState from '../../GlobalState/vizState';
 
 const UserTextInput = (props) => {
@@ -15,23 +14,14 @@ const UserTextInput = (props) => {
   };
 
   return (
-    <UserText
+    <input
       placeholder={props.placeholder}
-      width={props.width}
-      left={props.left}
       name={props.name}
       value={props.value}
       onChange={handleChange}
-      className="optionsInput"
+      className={`optionsInput w-[90%] pl-[10px] ${props.left ? `ml-[${props.left}px]` : ''}`}
     />
   );
 };
 
 export default UserTextInput;
-
-const UserText = styled.input((props) => ({
-  // width: `${props.width}px`,
-  width: `90%`,
-  marginLeft: `${props.left}px`,
-  paddingLeft: `10px`,
-}));

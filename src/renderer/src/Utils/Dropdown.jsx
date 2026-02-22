@@ -1,11 +1,9 @@
 import React from 'react';
-import styled from 'styled-components';
-
 // todo - delete unused component
 
 const localStore = store({
   expanded: false,
-  value: '', // "Select Participant Id..."
+  value: '',
   hasClicked: false,
 });
 
@@ -33,22 +31,23 @@ class Dropdown extends React.Component {
   }
 
   handleTriggerClick() {
-    localStore.expanded = !this.state.expanded;
+    localStore.expanded = !localStore.expanded;
   }
 
   render() {
+    const { width, options } = this.props;
+    const isExpanded = localStore.expanded;
+
     let dropdown;
-    if (localStore.expanded) {
+    if (isExpanded) {
       dropdown = (
-        <div className="content">
-          {this.props.options.map((item, index) => (
+        <div className="absolute w-full border-2 border-[#d6dbe0] rounded-b-md bg-white z-[999] h-[200px] overflow-auto">
+          {options.map((item, index) => (
             <div
               role="listbox"
               key={item.toString() + index}
-              onClick={(e) => {
-                this.handleItemClick(e);
-              }}
-              className="item"
+              onClick={(e) => this.handleItemClick(e)}
+              className="px-2.5 py-2.5 font-sans transition-colors duration-100 z-[999] hover:bg-[#d6dbe0] hover:text-black hover:cursor-pointer"
             >
               {item}
             </div>
@@ -58,101 +57,22 @@ class Dropdown extends React.Component {
     }
 
     return (
-      <DropdownDiv
-        className={` ${localStore.expanded ? 'active' : ''}`}
+      <div
+        className={`relative z-[99] overflow-visible mt-[7px] outline-none transition-shadow duration-100 font-sans text-lg ${isExpanded ? 'shadow-[0_10px_30px_rgba(0,0,0,0.2)]' : 'shadow-[0_4px_10px_rgba(0,0,0,0.2)]'}`}
+        style={{ width }}
         tabIndex="0"
-        width={this.props.width}
-        onBlur={() => {
-          this.collapse();
-        }}
+        onBlur={() => this.collapse()}
       >
         <div
-          className="trigger"
-          onClick={() => {
-            this.handleTriggerClick();
-          }}
+          onClick={() => this.handleTriggerClick()}
+          className={`border border-black cursor-pointer inline-block p-2.5 w-full bg-[#d6dbe0] h-[25px] shadow-[0_2px_2px_0_black] z-[99] overflow-visible transition-colors duration-100 text-black ${isExpanded ? 'rounded-t-md border-b-0' : 'rounded-md'}`}
         >
           {localStore.value}
         </div>
         {dropdown}
-      </DropdownDiv>
+      </div>
     );
   }
 }
 
 export default Dropdown;
-
-// <Dropdown options={['Strawberry Cream', 'Chocolate Flakes', 'Marshmallow Sprinkles']} />
-// blue color => #d6dbe0
-
-const DropdownDiv = styled.div`
-  width: ${(props) => props.width};
-  box-shadow: 0 4px 10px rgba(#7c4dff, 0.2);
-  margin-top: 7px;
-  outline: none;
-  position: relative;
-  transition: box-shadow 0.1s linear;
-  font-family: Helvetica, sans-serif;
-  font-size: 18px;
-  z-index: 99;
-  overflow: visible;
-
-  &.active {
-    box-shadow: 0 10px 30px rgba(#7c4dff, 0.2);
-  }
-
-  &:hover > .trigger,
-  &.active > .trigger {
-    background: #d6dbe0;
-    color: black;
-  }
-
-  &.active > .trigger {
-    background: #d6dbe0;
-    border-bottom-right-radius: 0;
-    border-bottom-left-radius: 0;
-    color: black;
-    overflow: visible;
-  }
-
-  .trigger {
-    border: 1px solid black;
-    border-radius: 5px;
-    cursor: pointer;
-    display: inline-block;
-    padding: 10px;
-    width: 100%;
-    background: #d6dbe0;
-    height: 25px;
-    box-shadow: 0 2px 2px 0 black;
-    z-index: 99;
-    overflow: visible;
-  }
-
-  .content {
-    background: ##d6dbe0;
-    border: 2px solid #d6dbe0;
-    border-radius: 0 0 5px 5px;
-    padding: 10px;
-    position: absolute;
-    width: 100%;
-    overflow: auto;
-    height: 200px;
-    background-color: white;
-    z-index: 999;
-    overflow: visible;
-  }
-
-  .item {
-    padding: 10px;
-    transition: background 0.1s linear;
-    font-family: Helvetica, sans-serif;
-    z-index: 999;
-
-    &:hover {
-      background: #d6dbe0;
-      color: black;
-      cursor: pointer;
-    }
-  }
-`;
