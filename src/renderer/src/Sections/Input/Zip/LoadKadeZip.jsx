@@ -42,6 +42,8 @@ const LoadKadeZip = () => {
       try {
         await window.electronAPI.openZipFile();
         window.bridge.zipData((event, zipData) => {
+          console.log(JSON.stringify(zipData));
+
           processKadeZip(zipData);
           updateShowErrorMessageBar(false);
           const logMessageObj1 = {

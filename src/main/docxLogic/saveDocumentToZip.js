@@ -19,8 +19,6 @@ const saveZipToFile = async (
     statementsTxt += statements[i].trim() + '\n';
   }
 
-  console.log(statementsTxt);
-
   // setup sorts text output file
   let sortsZipTxt = '';
   let sortsPartName;
@@ -58,6 +56,7 @@ const saveZipToFile = async (
     txtNameFile = `(archive)_KADE_results_${projectName}.txt`;
   }
 
+  // open dialog box to save file
   const { canceled, filePath } = await dialog.showSaveDialog({
     defaultPath: zipNameFile,
     filters: [
@@ -73,34 +72,21 @@ const saveZipToFile = async (
     // blob all the things - to ensure utf-8 encoding for foreign languages
     let nameText = projectName.toString();
 
-    // let statementsBlob = new Blob([statementsTxt], {
-    //   type: 'text/plain;charset=utf-8',
-    // });
-    // let nameBlob = new Blob([nameText], {
-    //   type: 'text/plain;charset=utf-8',
-    // });
-    // let sortsBlob = new Blob([sortsZipTxt], {
-    //   type: 'text/plain;charset=utf-8',
-    // });
-    // let multiplierArrayTxt = new Blob([multiplierArray], {
-    //   type: 'text/plain;charset=utf-8',
-    // });
-
     (async () => {
       try {
         // Initialize the zip file
         const zip = new JSZip();
 
-        const docBuffer = await Packer.toBuffer(doc);
+        // No BLOBS in Node.js
+        const docBuffer = Packer.toBuffer(doc);
 
         // pack in the files
-        zip.file('name.txt', nameText);
-        zip.file('statements.txt', statementsTxt);
-        zip.file('sorts.txt', sortsZipTxt);
-        zip.file('pattern.txt', multiplierArray.toString());
+        zip.file('name.txt', nameText.toString().trim());
+        zip.file('statements.txt', statementsTxt.toString().trim());
+        zip.file('sorts.txt', sortsZipTxt.toString().trim());
+        zip.file('pattern.txt', multiplierArray.toString().trim());
         zip.file(nameDocx, docBuffer, { binary: true });
 
-        // Convert the zip file into a buffer
         // Convert the zip file into a buffer
         let zipContent;
         if (JSZip.support.uint8array) {
@@ -111,7 +97,7 @@ const saveZipToFile = async (
 
         // Save the zip file
         if (!canceled && filePath) {
-          fs.writeFileSync(filePath, zipContent);
+          fs.writeFileSync(filePath, Buffer.from(zipContent));
           dialog.showMessageBoxSync({
             title: 'KADE',
             type: 'info',
