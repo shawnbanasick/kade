@@ -7,15 +7,7 @@ const OptionsBox = () => {
 
   return (
     <>
-      <div
-        className={`
-          w-[500px] h-full box-border overflow-auto mr-[50px]
-          transition-[visibility] duration-500 linear
-          [&_.ui.attached.tabular.menu]:bg-grey-button [&_.ui.attached.tabular.menu]:h-[45px]
-          [&_.ui.bottom.attached.segment.active.tab]:border-b-white [&_.ui.bottom.attached.segment.active.tab]:border-l-white
-          ${displayState ? 'visible animate-fadeIn' : 'invisible animate-fadeOut'}
-        `}
-      >
+      <div className={`w-[500px]   h-[560px] mr-[50px]`}>
         {displayState && <DocxContentSelectionPanel />}
       </div>
       <ToastContainer transition={Zoom} />

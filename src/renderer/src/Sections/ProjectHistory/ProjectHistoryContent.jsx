@@ -1,20 +1,19 @@
-import styled from 'styled-components';
-import transposeMatrix from '../../../Utils/transposeMatrix';
-import calculateCommunalities from '../../Rotation/varimaxLogic/2calculateCommunalities';
-import calcuateSigCriterionValues from '../../Rotation/varimaxLogic/2calculateSigCriterionValues';
-import loadingsTableDataPrep from '../LoadingsTable/loadingsTableDataPrep';
-import GeneralButton from '../../../Utils/GeneralButton';
+import transposeMatrix from '../../Utils/transposeMatrix';
+import calculateCommunalities from '../Rotation/varimaxLogic/2calculateCommunalities';
+import calcuateSigCriterionValues from '../Rotation/varimaxLogic/2calculateSigCriterionValues';
+import loadingsTableDataPrep from '../Loadings/LoadingsTable/loadingsTableDataPrep';
+import GeneralButton from '../../Utils/GeneralButton';
 import { useTranslation } from 'react-i18next';
-import rotationState from '../../GlobalState/rotationState';
-import outputState from '../../GlobalState/outputState';
-import loadingState from '../../GlobalState/loadingState';
-import factorState from '../../GlobalState/factorState';
-import projectHistoryState from '../../GlobalState/projectHistoryState';
-import resetSection6 from '../../../Utils/resetSection6';
-import resetManualRotation from '../../../Utils/resetManualRotation';
-import resetVarimax from '../../../Utils/resetVarimax';
+import rotationState from '../GlobalState/rotationState';
+import outputState from '../GlobalState/outputState';
+import loadingState from '../GlobalState/loadingState';
+import factorState from '../GlobalState/factorState';
+import projectHistoryState from '../GlobalState/projectHistoryState';
+import resetSection6 from '../../Utils/resetSection6';
+import resetManualRotation from '../../Utils/resetManualRotation';
+import resetVarimax from '../../Utils/resetVarimax';
 
-const ProjectHistory = () => {
+const ProjectHistoryContent = () => {
   const { t } = useTranslation();
 
   const updateSendDataToOutputButtonColor = loadingState(
@@ -42,58 +41,33 @@ const ProjectHistory = () => {
   const updateBipolarIndexArray = loadingState((state) => state.updateBipolarIndexArray);
 
   const handleUndo = () => {
-    // getState - get counter and adjust value
-
     archiveCounter -= 1;
     const previousFacMatrixArchive = `facMatrixArc${archiveCounter}`;
 
-    // getState - remove entry from project history
     const typeOfUndo3 = projectHistoryArray.pop();
     const typeOfUndo = typeOfUndo3.logType;
 
-    // get the previous matrix from archive
     let previousFacMatrix = JSON.parse(sessionStorage.getItem(previousFacMatrixArchive));
 
     if (typeOfUndo === 'Bipolar') {
       previousFacMatrix = JSON.parse(sessionStorage.getItem('undoAllBipolarMatrix'));
 
-      // let bipolarFactorsArray = getLoadingState("bipolarFactorsArray");
-
-      // bipolarFactorsArray.pop();
-
-      /*
-      if (bipolarFactorsArray.length > 0) {
-        bipolarFactorsArray.forEach((item, index) => {
-          splitFactorsArray = splitFactorsArray.filter(
-            object => object.value !== item
-          );
-        });
-      }
-      */
-
       const projectHistoryArrayLength = JSON.parse(
         sessionStorage.getItem('projectHistoryArrayLength')
       );
 
-      // remove all listings of bipolar splits from history array
       projectHistoryArray.length = projectHistoryArrayLength;
-
       bipolarSplitCount = 0;
       archiveCounter -= 1;
     }
 
-    // ************* Regular Undo
-
-    // reset significance calculations
     const previousFacMatrix2 = transposeMatrix([...previousFacMatrix]);
     calculateCommunalities(previousFacMatrix2);
     calcuateSigCriterionValues('noFlag');
 
-    // restore previous factor matrix to current factor matrix
     const updateFactorMatrix = factorState((state) => state.updateFactorMatrix);
     updateFactorMatrix(previousFacMatrix);
 
-    // re-draw loadings table
     loadingsTableDataPrep(numFactors);
 
     if (typeOfUndo === 'Varimax') {
@@ -111,111 +85,57 @@ const ProjectHistory = () => {
         (state) => state.updateVarimaxButtonDisabled
       );
       updateVarimaxButtonDisabled(false);
-
-      // hide section 6
       resetSection6();
-
       updateSendDataToOutputButtonColor('#d6dbe0');
       updateUserSelectedFactors([]);
-
-      // reset manual rotation
       resetManualRotation();
-
-      // reset varimax
       resetVarimax();
-      return; // early return varimax undo
+      return;
     }
 
     if (typeOfUndo === 'Selected') {
       updateArchiveCounter(archiveCounter);
       updateProjectHistoryArray(projectHistoryArray);
-
-      // hide section 4
       updateShouldDisplayFacKept(false);
       updateVarimaxButtonDisabled(false);
-
-      // reset manual rotation
       resetManualRotation();
-
-      // hide section 5
       updateShowLoadingsTable(false);
-
-      // hide section 6
       resetSection6();
-
-      // reset send data button (loading state)
       updateSendDataToOutputButtonColor('#d6dbe0');
       return;
     }
 
-    // default undo
     updateArchiveCounter(archiveCounter);
     updateBipolarSplitCount(bipolarSplitCount);
     updateProjectHistoryArray(projectHistoryArray);
-
-    // hide section 6
     resetSection6();
-
     updateSendDataToOutputButtonColor('#d6dbe0');
     updateBipolarDisabled(false);
     updateBipolarIndexArray([]);
-    // normal return
   };
 
   const shouldDisplayUndoButton = projectHistoryArray.length > 3;
   let mapCounter = 1;
+
   return (
-    <MainContent>
-      <TitleDiv>{t('Project Log')}</TitleDiv>
-      <CustomOl>
-        {projectHistoryArray.map((listValue, index) => (
+    <div className="grid grid-rows-[100px_1fr] grid-cols-1 text-black justify-items-start items-center box-border bg-white pb-[10px] pt-[10px] font-[Helvetica,sans-serif] text-[18px]  border-l border-red-500">
+      <div className="text-[28px]  ml-[50px] h-[35px] w-[400px] border-2 border-red-500">
+        {t('Project Log')}
+      </div>
+      <ol className="text-[20px] list-decimal ml-[70px] leading-[2em] w-[900px] border-2 border-red-500">
+        {projectHistoryArray.map((listValue) => (
           <li key={mapCounter++}>{listValue.logMessage}</li>
         ))}
-      </CustomOl>
+      </ol>
       {shouldDisplayUndoButton && (
-        <UndoButton as={GeneralButton} id="undoButton" onClick={handleUndo}>
-          {t('Undo Last Action')}
-        </UndoButton>
+        <div className="ml-[40px] mt-[15px]">
+          <GeneralButton id="undoButton" onClick={handleUndo} className="bg-grey-button">
+            {t('Undo Last Action')}
+          </GeneralButton>
+        </div>
       )}
-    </MainContent>
+    </div>
   );
 };
 
-export default ProjectHistory;
-
-const UndoButton = styled.div`
-  margin-left: 40px;
-  margin-top: 15px;
-`;
-
-const TitleDiv = styled.div`
-  font-size: 28px;
-  margin-bottom: 5px;
-  margin-left: 20px;
-  height: 35px;
-  width: 400px;
-`;
-
-const CustomOl = styled.ol`
-  margin-top: 2px;
-  margin-bottom: 2px;
-  font-size: 20px;
-  line-height: 2em;
-  width: 900px;
-`;
-
-const MainContent = styled.div`
-  display: grid;
-  grid-template-rows: 100px 1fr;
-  grid-template-columns: 1fr;
-  justify-items: left;
-  align-items: center;
-  box-sizing: border-box;
-  background-color: white;
-  padding-bottom: 50px;
-  padding-top: 50px;
-  font-family: Helvetica, sans-serif;
-  font-size: 18px;
-  width: calc(100vw - 155);
-  height: calc(100vh - 120);
-`;
+export default ProjectHistoryContent;

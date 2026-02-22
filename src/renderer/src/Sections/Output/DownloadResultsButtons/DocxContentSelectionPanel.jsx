@@ -100,33 +100,33 @@ const GeneralOptionsPanel = () => {
   ];
 
   return (
-    <div className="h-[500px]">
+    <div className="h-[460px]">
       <span className="text-[22px] select-none">{t('Document Content')}</span>
       <hr className="w-full mb-[15px]" />
 
       {/* Row 4 (Q Sort Correlations) is kept separate due to its extra controls */}
       {rows.slice(0, 3).map(({ label, name, toggle }) => (
         <div key={name} className="flex flex-row items-center w-full pl-[10px]">
-          <div className="select-none text-[18px] w-auto">{label}</div>
+          <div className="select-none text-[16px] w-auto">{label}</div>
           <DocSelectionSwitch name={name} value={name} toggle={toggle} />
         </div>
       ))}
 
       <div className="flex flex-row items-center w-full pl-[10px]">
-        <div className="select-none text-[18px] w-auto">{`4. ${t('Q Sort Correlations')}`}</div>
+        <div className="select-none text-[16px] w-auto">{`4. ${t('Q Sort Correlations')}`}</div>
         <DocSelectionSwitch
           name="willIncludeCorrMatrix"
           value="willIncludeCorrMatrix"
           toggle={willIncludeCorrMatrix}
         />
         <br />
-        <div className="select-none text-[18px] w-auto">{t('Highlight')}</div>
+        <div className="select-none text-[16px] w-auto">{t('Highlight')}</div>
         <DocSelectionSwitch
           name="willIncludeThreshold"
           value="willIncludeThreshold"
           toggle={willIncludeThreshold}
         />
-        <div className="select-none text-[18px] w-auto">{`${t('Value')}: `}</div>
+        <div className="select-none text-[16px] w-auto">{`${t('Value')}: `}</div>
         <DocxNumberInput
           name="correlationThreshold"
           step="1"

@@ -207,7 +207,7 @@ const Heatmap = ({
   }, [correlationData, width, height, title, subtitle]);
 
   return (
-    <>
+    <div className="">
       <div className="relative">
         <svg ref={svgRef}></svg>
         <div
@@ -217,7 +217,7 @@ const Heatmap = ({
       </div>
       <button
         onClick={downloadSVG}
-        className="mt-4 ml-20! mb-[50px]! px-4 py-2 cursor-pointer bg-grey-button text-black rounded-md hover:bg-grey-button-hover transition-colors flex items-center gap-2"
+        className="mt-4 ml-30! mb-[50px]! px-4 py-2 cursor-pointer bg-grey-button text-black rounded-md hover:bg-grey-button-hover transition-colors flex items-center gap-2"
       >
         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path
@@ -229,7 +229,7 @@ const Heatmap = ({
         </svg>
         Download SVG
       </button>
-    </>
+    </div>
   );
 };
 

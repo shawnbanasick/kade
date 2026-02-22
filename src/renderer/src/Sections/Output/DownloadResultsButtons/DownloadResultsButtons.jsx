@@ -9,15 +9,9 @@ const DownloadResultsButtons = () => {
   const showDownloadOutputButtons = outputState((state) => state.showDownloadOutputButtons);
 
   return (
-    <div
-      className={`h-[120px] transition-opacity duration-1000 ease-in-out ${
-        showDownloadOutputButtons ? 'opacity-100' : 'opacity-0 pointer-events-none'
-      }`}
-    >
-      <div className="w-fit text-[24px] leading-[1.2] mr-[5px]">
-        {t('Download complete output as')}
-      </div>
-      <div className="flex flex-row gap-[47px] items-center py-[10px] w-full h-[80px]">
+    <div className={`h-[100px] mt-[30px] ${showDownloadOutputButtons ? 'visible' : 'hidden'}`}>
+      <div className="w-fit text-[24px] mr-[5px] mt-0!">{t('Download complete output as')}</div>
+      <div className="flex flex-row gap-[47px] items-center py-[10px] w-full h-[60px]">
         <DownloadResultsAsExcel />
         <DownloadResultsAsCsv />
         <DownloadDocxFile />

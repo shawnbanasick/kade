@@ -29,13 +29,13 @@ const ScreeContainer = (props) => {
   const numFactors = Number(numFacsFromState) + 1;
 
   return (
-    <React.Fragment>
+    <div className="mt-10">
       <h1>{t('Scree Plot')}</h1>
       <ScreePlot data={data} {...props} {...styles} numFacs={numFactors} />
       <div className="controls">
         <DownloadSvgButtons />
       </div>
-    </React.Fragment>
+    </div>
   );
 };
 

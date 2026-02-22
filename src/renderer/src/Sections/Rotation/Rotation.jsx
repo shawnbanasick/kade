@@ -27,7 +27,7 @@ const Rotation = () => {
 
   const tabs = [
     {
-      title: t('Options'),
+      title: optionsTrans,
       content: (
         <div>
           <div className="grid bg-white max-w-[1197px] select-none [grid-template-rows:50px_120px_150px_1fr] h-[calc(100vh-75px)]">
@@ -46,7 +46,7 @@ const Rotation = () => {
       ),
     },
     {
-      title: t('Varimax'),
+      title: varimaxTrans,
       content: (
         <div>
           <div className="bg-white overflow-auto p-[5px] box-border h-[calc(100vh-75px)] select-none">
@@ -57,7 +57,7 @@ const Rotation = () => {
       ),
     },
     {
-      title: t('Judgmental'),
+      title: judgmentalTrans,
       content: (
         <div>
           <div className="bg-white overflow-auto p-[5px] box-border h-[calc(100vh-75px)] select-none">
@@ -79,13 +79,14 @@ const Rotation = () => {
         h-full
         transition-[visibility,opacity]
         duration-500
+        text-black
       `}
     >
       <div className="tabs tabs-box flex bg-[#d6dbe0] h-[100%] rounded-none">
         <input
           type="radio"
           name="my_tabs_Rot"
-          className={`tab basis-[12vw] hover:shadow-[inset_0_0_0_4px_#666,_0_0_1px_transparent] ${rotationActiveTabIndex === 'tab1' ? 'tab-active bg-[#a5d6a7]' : 'bg-[#d6dbe0]'}`}
+          className={`tab basis-[12vw] text-[clamp(1rem,1.5vw,1.1rem)] hover:shadow-[inset_0_0_0_4px_#666,_0_0_1px_transparent] ${rotationActiveTabIndex === 'tab1' ? 'tab-active bg-[#a5d6a7]' : 'bg-[#d6dbe0]'}`}
           aria-label={tabs[0].title}
           onClick={() => handleTabClick('tab1')}
         />
@@ -95,7 +96,7 @@ const Rotation = () => {
         <input
           type="radio"
           name="my_tabs_Rot"
-          className={`tab basis-[12vw] hover:shadow-[inset_0_0_0_4px_#666,_0_0_1px_transparent] ${rotationActiveTabIndex === 'tab2' ? 'tab-active bg-[#a5d6a7]' : 'bg-[#d6dbe0]'}`}
+          className={`tab basis-[12vw] text-[clamp(1rem,1.5vw,1.1rem)] hover:shadow-[inset_0_0_0_4px_#666,_0_0_1px_transparent] ${rotationActiveTabIndex === 'tab2' ? 'tab-active bg-[#a5d6a7]' : 'bg-[#d6dbe0]'}`}
           aria-label={tabs[1].title}
           onClick={() => handleTabClick('tab2')}
         />
@@ -107,7 +108,7 @@ const Rotation = () => {
         <input
           type="radio"
           name="my_tabs_Rot"
-          className={`tab basis-[12vw] hover:shadow-[inset_0_0_0_4px_#666,_0_0_1px_transparent] ${rotationActiveTabIndex === 'tab3' ? 'tab-active bg-[#a5d6a7]' : 'bg-[#d6dbe0]'}`}
+          className={`tab basis-[12vw] text-[clamp(1rem,1.5vw,1.1rem)] hover:shadow-[inset_0_0_0_4px_#666,_0_0_1px_transparent] ${rotationActiveTabIndex === 'tab3' ? 'tab-active bg-[#a5d6a7]' : 'bg-[#d6dbe0]'}`}
           aria-label={tabs[2].title}
           onClick={() => handleTabClick('tab3')}
         />

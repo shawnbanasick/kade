@@ -7,7 +7,7 @@ const DownloadSvgButtons = () => {
   const { t } = useTranslation();
 
   return (
-    <div className="flex flex-row items-center mt-[50px] mb-[200px]">
+    <div className="flex flex-row items-center mt-[40px] ml-[50px] mb-[200px]">
       <GeneralButton
         id="downloadSvgButtonScree"
         className="bg-grey-button mr-[20px]!"

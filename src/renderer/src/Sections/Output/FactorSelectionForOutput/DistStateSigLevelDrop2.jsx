@@ -1,10 +1,7 @@
-import styled from 'styled-components';
 import outputState from '../../GlobalState/outputState';
 import calcState from '../../GlobalState/calcState';
 import { useTranslation } from 'react-i18next';
 import resetSection6 from '../../../Utils/resetSection6';
-
-// stateOptions = [ { key: 'AL', value: 'AL', text: 'Alabama' }, ...  ]
 
 const SigLevelDropdown2 = () => {
   const { t } = useTranslation();
@@ -85,7 +82,6 @@ const SigLevelDropdown2 = () => {
     updateHighlightFactor8(false);
 
     resetSection6('output');
-    // reset cache of factor viz data
     updateOutputForDataViz2([]);
     updateDistStateLowerValueText(distStateLowerValueText);
     updateUserSelectedDistStateSigLevel2(value);
@@ -93,41 +89,25 @@ const SigLevelDropdown2 = () => {
 
   const sigOptionsSliced = sigOptions.slice(sliceValueDistStateSigLevelDrop1);
 
-  if (showOutputFactorSelection) {
-    return (
-      <DropdownRow>
-        <span>{`${t('Set distinguishing statements threshold 2')}:`}</span>
-        <select onChange={handleChange} defaultValue={sigDropdownValue2}>
-          {sigOptionsSliced}
-        </select>
-      </DropdownRow>
-    );
-  }
-  return null;
+  if (!showOutputFactorSelection) return null;
+
+  return (
+    <div className="flex items-baseline mt-[10px]">
+      <span className="text-[25px] mr-[5px]">
+        {`${t('Set distinguishing statements threshold 2')}:`}
+      </span>
+      <select
+        onChange={handleChange}
+        defaultValue={sigDropdownValue2}
+        className="text-[24px] h-[36px] w-[160px] border border-[#d6dbe0] pl-[15px] bg-[#d6dbe0] rounded-[4px]"
+      >
+        {sigOptionsSliced}
+      </select>
+    </div>
+  );
 };
 
 export default SigLevelDropdown2;
-
-const DropdownRow = styled.div`
-  display: flex;
-  margin-top: 10px;
-  align-items: baseline;
-
-  span {
-    font-size: 25px;
-    margin-right: 5px;
-  }
-
-  select {
-    font-size: 24px;
-    height: 36px;
-    width: 160px;
-    border: 1px solid #d6dbe0;
-    padding-left: 15px;
-    background-color: #d6dbe0;
-    border-radius: 4px;
-  }
-`;
 
 /*
 'Significance Threshold'

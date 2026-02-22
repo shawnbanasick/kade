@@ -29,7 +29,8 @@ const Output = () => {
   const updateNotifyOutputDistStateError = outputState(
     (state) => state.updateNotifyOutputDistStateError
   );
-  let showTableDataNotSentWarning;
+  const showTableDataNotSentWarning = outputState((state) => state.showTableDataNotSentWarning);
+  const showNotification = outputState((state) => state.notifyOutputDistStateError);
 
   const notify = async () => {
     await toast.error('Error >>> Reset threshold levels', {
@@ -45,19 +46,16 @@ const Output = () => {
   };
 
   const tabInputClass = (tabId) =>
-    `tab w-[10vw] hover:shadow-[inset_0_0_0_4px_#666,_0_0_1px_transparent]  ${
+    `tab w-[10vw] text-[clamp(1rem,1.5vw,1.1rem)] hover:shadow-[inset_0_0_0_4px_#666,_0_0_1px_transparent]  ${
       outputActiveTabIndex === tabId ? 'tab-active bg-[#a5d6a7]' : 'bg-[#d6dbe0]'
     }`;
 
   // Shared content window classes
   const window1Class =
-    'bg-white grid grid-rows-[80px_80px_80px_1fr_auto] select-none min-w-[calc(100vw-166px)] h-[calc(100vh-80px)] overflow-auto box-border';
+    'bg-white flex flex-col select-none min-w-[calc(100vw-166px)] h-[calc(100vh-80px)] overflow-auto box-border';
 
   const window2Class =
     'pt-[15px] bg-white select-none h-[calc(100vh-70px)] min-w-[calc(100vw-186px)] overflow-auto box-border';
-
-  showTableDataNotSentWarning = outputState((state) => state.showTableDataNotSentWarning);
-  const showNotification = outputState((state) => state.notifyOutputDistStateError);
 
   if (showNotification) {
     notify();
@@ -68,15 +66,18 @@ const Output = () => {
       title: t('Options'),
       content: (
         <div className={window1Class}>
-          {showTableDataNotSentWarning && (
-            <div className="text-[25px] ml-[50px] mt-[100px]">{t('No Data Click')}</div>
+          {showTableDataNotSentWarning ? (
+            <div className="text-[25px] ml-[50px] mt-[50px]">{t('No Data Click')}</div>
+          ) : (
+            <>
+              <DistStateSigLevelDrop1 />
+              <DistStateSigLevelDrop2 />
+              <FactorSelectionForOutputButtons />
+            </>
           )}
-          <DistStateSigLevelDrop1 />
-          <DistStateSigLevelDrop2 />
-          <FactorSelectionForOutputButtons />
           <DownloadResultsButtons />
           {displayState && (
-            <div className="flex flex-row">
+            <div className="flex flex-row mt-[25px]">
               <DownloadDocxOptionsBox />
               <div className="flex flex-col h-full">
                 <DocxFormatButtons />
@@ -138,7 +139,7 @@ const Output = () => {
   return (
     <div
       className="
-        bg-[#d6dbe0]
+        bg-grey-button
         w-[calc(100vw-135px)]
         box-border
         h-screen
@@ -149,10 +150,11 @@ const Output = () => {
         [&_.outputToastProgress]:bg-white
         [&_.outputToastBody]:text-white
         [&_.Toastify\_\_close-button]:text-white
+        text-black
       "
     >
       <div className="w-[calc(100vw-135px)] box-border h-full overflow-auto transition-[visibility,opacity] duration-500">
-        <div className="tabs tabs-box flex bg-[#d6dbe0] h-[100vh] rounded-none">
+        <div className="tabs tabs-box flex bg-grey-button h-full rounded-none">
           <input
             type="radio"
             name="my_tabs_6"
@@ -160,7 +162,7 @@ const Output = () => {
             aria-label={tabs[0].title}
             onClick={() => handleTabClick('tab1')}
           />
-          <div className="tab-content bg-base-100 border-base-300 p-6">{tabs[0].content}</div>
+          <div className="tab-content bg-base-100 border-base-300 p-6 pt-1">{tabs[0].content}</div>
 
           <input
             type="radio"

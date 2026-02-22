@@ -73,7 +73,6 @@ const mainCorrCalcs = (respondentNames, rawSortsArray) => {
     }
 
     // loop to check for NaN
-    // var res = array.every(function(element) {return typeof element === 'number';});
     const trans1b = i18n.t('For projects with unforced data you must input the Q Sort Design data');
     const trans2b = i18n.t('Please go back to the 1 Input section and input the Q Sort Design');
 
@@ -83,9 +82,6 @@ const mainCorrCalcs = (respondentNames, rawSortsArray) => {
         explanation = `${trans1b}. ${trans2b}.`;
         inputDataErrorMessage(errorMessage, explanation);
         isError = true;
-        // state.setState({
-        //   isCorrelationsButtonGreen: false
-        // });
         return;
       }
 
@@ -112,7 +108,6 @@ const mainCorrCalcs = (respondentNames, rawSortsArray) => {
     correlationState.setState({ showCorrelationMatrix: true });
     correlationState.setState({ activeStartAnalysisButton: true });
     correlationState.setState({ isLoadingBeginAnalysis: false });
-    appState.setState({ isCorrelationsButtonGreen: true });
     inputState.setState({ isDataAlreadyLoaded: true });
   }
 };

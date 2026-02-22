@@ -1,43 +1,54 @@
-import styled, { keyframes } from 'styled-components';
 import './anchorStyling.css';
 import heroImage from '../../assets/kade-hero-image.png';
 import TranslationAttribution from './TranslationAttribution';
 import { useTranslation } from 'react-i18next';
 
+const linkDivClasses =
+  'grid [align-items:center] justify-center h-[100px] w-[380px] text-[22px] mr-[3px] mb-[3px] text-center select-none leading-[1.2]';
+
 const Start = () => {
   const { t } = useTranslation();
 
   return (
-    <MainContent>
-      <ImageContainer>
-        <Image src={heroImage} alt="Kade image" />
-      </ImageContainer>
-      <WebLinkRow>
-        <h1>{`${t('Website Links')}:`}</h1>
-        <Rule />
-      </WebLinkRow>
-      <WebLinkDiv1>
-        <StyledAnchor
+    <div className="box-border grid grid-cols-4 text-black mt-[50px] [grid-template-rows:430px_10px_10px_100px_40px_20px_170px_1fr] [grid-template-areas:'row1_row1_row1_row1''weblinkRow_weblinkRow_weblinkRow_weblinkRow''rule_rule_rule_rule''linkboxRow1_linkboxRow1_linkboxRow2_linkboxRow2''linkboxRow3_linkboxRow3_linkboxRow4_linkboxRow4''rule2_rule2_rule2_rule2''translation_translation_translation_translation'] justify-items-center items-center bg-white font-[Helvetica,sans-serif] text-[18px] w-[calc(100vw-135px)] max-h-full overflow-auto select-none animate-fadeIn">
+      {/* Hero Image */}
+      <div className="grid items-center justify-center [grid-area:row1]">
+        <img src={heroImage} alt="Kade image" className="w-[600px]" />
+      </div>
+
+      {/* Website Links heading 
+      <div className="[grid-area:weblinkRow] w-[80%] flex items-end">
+        <div className="text-black w-[150px]">{`${t('Website Links')}:`}</div>
+        </div>*/}
+      <hr className="[grid-area:rule] w-[80%] ml-4" />
+
+      {/* Link Box 1 */}
+      <div className={`[grid-area:linkboxRow1] ${linkDivClasses}`}>
+        <a
           className="sixth before after"
           target="_blank"
           rel="noopener noreferrer"
           href="https://github.com/shawnbanasick/kade"
         >
           Home Page
-        </StyledAnchor>
-      </WebLinkDiv1>
-      <WebLinkDiv2>
-        <StyledAnchor
+        </a>
+      </div>
+
+      {/* Link Box 2 */}
+      <div className={`[grid-area:linkboxRow2] ${linkDivClasses}`}>
+        <a
           className="sixth before after"
           target="_blank"
           rel="noopener noreferrer"
           href="https://github.com/shawnbanasick/kade/wiki"
         >
           User Manual
-        </StyledAnchor>
-      </WebLinkDiv2>
-      <WebLinkDiv3>
-        <StyledAnchor
+        </a>
+      </div>
+
+      {/* Link Box 3 */}
+      <div className={`[grid-area:linkboxRow3] ${linkDivClasses}`}>
+        <a
           className="sixth before after"
           target="_blank"
           rel="noopener noreferrer"
@@ -45,165 +56,30 @@ const Start = () => {
         >
           Ken-Q Analysis <br />
           Web Application
-        </StyledAnchor>
-      </WebLinkDiv3>
-      <WebLinkDiv4>
-        <StyledAnchor
+        </a>
+      </div>
+
+      {/* Link Box 4 */}
+      <div className={`[grid-area:linkboxRow4] ${linkDivClasses} !h-[50px]`}>
+        <a
           className="sixth before after"
           target="_blank"
           rel="noopener noreferrer"
           href="https://shawnbanasick.github.io/ken-q-data/index.html"
         >
           Ken-Q Data
-        </StyledAnchor>
-      </WebLinkDiv4>
-      <Rule2 />
-      <TranslationAttribution />
-    </MainContent>
+        </a>
+      </div>
+
+      {/* Rule 2 */}
+      <hr className="[grid-area:rule2] mt-[50px] w-[80%]" />
+
+      {/* Translation */}
+      <div className="[grid-area:translation]">
+        <TranslationAttribution />
+      </div>
+    </div>
   );
 };
 
 export default Start;
-
-const fadeIn = keyframes`
-  from {
-    opacity: 0;
-  }
-
-  to {
-    opacity: 1;
-  }
-`;
-
-const fadeOut = keyframes`
-  from {
-    opacity: 1;
-  }
-
-  to {
-    opacity: 0;
-  }
-`;
-
-const StyledAnchor = styled.a``;
-
-const MainContent = styled.div`
-  box-sizing: border-box;
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
-  grid-template-rows: 430px 10px 10px 100px 40px 20px 170px 1fr;
-  grid-template-areas:
-    'row1 row1 row1 row1'
-    'weblinkRow weblinkRow weblinkRow weblinkRow'
-    'rule rule rule rule'
-    'linkboxRow1 linkboxRow1 linkboxRow2 linkboxRow2'
-    'linkboxRow3 linkboxRow3 linkboxRow4 linkboxRow4'
-    'rule2 rule2 rule2 rule2'
-    'translation translation translation translation';
-  justify-items: center;
-  align-items: center;
-  background-color: white;
-  visibility: ${(props) => (props.view ? 'hidden' : 'visible')};
-  animation: ${(props) => (props.view ? fadeOut : fadeIn)} 0.5s linear;
-  transition: visibility 0.5s linear;
-  font-family: Helvetica, sans-serif;
-  font-size: 18px;
-  width: calc(100vw - 135px);
-  box-sizing: border-box;
-  max-height: 100%;
-  overflow: auto;
-  user-select: none;
-`;
-
-const WebLinkDiv1 = styled.div`
-  display: flex;
-  grid-area: linkboxRow1;
-  height: 100px;
-  width: 380px;
-  display: grid;
-  align-items: center;
-  justify-content: center;
-  font-size: 22px;
-  margin-right: 3px;
-  margin-bottom: 3px;
-  text-align: center;
-  user-select: none;
-  line-height: 1.2;
-`;
-
-const WebLinkDiv2 = styled.div`
-  display: flex;
-  grid-area: linkboxRow2;
-  height: 100px;
-  width: 380px;
-  display: grid;
-  align-items: center;
-  justify-content: center;
-  font-size: 22px;
-  margin-right: 3px;
-  margin-bottom: 3px;
-  text-align: center;
-  user-select: none;
-  line-height: 1.2;
-`;
-
-const WebLinkDiv3 = styled.div`
-  display: flex;
-  grid-area: linkboxRow3;
-  height: 100px;
-  width: 380px;
-  display: grid;
-  align-items: center;
-  justify-content: center;
-  font-size: 22px;
-  margin-right: 3px;
-  margin-bottom: 3px;
-  text-align: center;
-  user-select: none;
-  line-height: 1.2;
-`;
-
-const WebLinkDiv4 = styled.div`
-  display: flex;
-  grid-area: linkboxRow4;
-  height: 50px;
-  width: 380px;
-  display: grid;
-  align-items: center;
-  justify-content: center;
-  font-size: 22px;
-  margin-right: 3px;
-  margin-bottom: 3px;
-  text-align: center;
-  user-select: none;
-  line-height: 1.2;
-`;
-
-const WebLinkRow = styled.div`
-  align-items: flex-end;
-  grid-area: weblinkRow;
-  width: 80%;
-`;
-
-const ImageContainer = styled.div`
-  display: grid;
-  align-items: center;
-  justify-content: center;
-  grid-area: row1;
-`;
-
-const Image = styled.img`
-  align-items: center;
-  justify-content: center;
-  width: 600px;
-`;
-
-const Rule = styled.hr`
-  grid-area: rule;
-`;
-
-const Rule2 = styled.hr`
-  margin-top: 50px;
-  grid-area: rule2;
-  width: 80%;
-`;

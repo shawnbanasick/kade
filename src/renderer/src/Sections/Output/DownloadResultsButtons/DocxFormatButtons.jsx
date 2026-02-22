@@ -61,7 +61,7 @@ const DistStateListSortByButtons = () => {
         <DocSelectionSwitch name="useZebra" value="useZebra" toggle={useZebra} />
       </div>
 
-      <div className="select-none text-[18px] pl-[10px] mb-[6px]">{`3. ${t('Statement Length')}`}</div>
+      <div className="select-none text-[18px] pl-[10px] ">{`3. ${t('Statement Length')}`}</div>
 
       <div className="flex items-baseline gap-x-[10px]">
         <GeneralButton
@@ -74,7 +74,7 @@ const DistStateListSortByButtons = () => {
         <GeneralButton
           id="ContentUseClipped"
           onClick={handleOnclick}
-          className={`min-w-[120px] ${useClippedButtonActive ? 'bg-primary-button' : 'bg-grey-button'}`}
+          className={`min-w-[120px] s${useClippedButtonActive ? 'bg-primary-button' : 'bg-grey-button'}`}
         >
           {t('Truncated Statements')}
         </GeneralButton>

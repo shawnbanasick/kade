@@ -1,13 +1,11 @@
+import { useEffect } from 'react';
 import CorrelationTable from './CorrelationTable/CorrelationTable';
-import CalculateCorrelationsButton from './CalculateCorrelationsButton';
 import ErrorNotification from '../Input/ErrorChecking/ErrorNotification';
 import { useTranslation } from 'react-i18next';
 import correlationState from '../GlobalState/correlationState';
 import appState from '../GlobalState/appState';
 import coreState from '../GlobalState/coreState';
 import HeatmapMain from './HeatmapMain';
-// import ForceGraph from './ForceDirectedGraph/ForceDirectedGraph';
-// import PcaScenarios from './ForceDirectedGraph/PcaScenarios';
 
 const Correlations = () => {
   const { t } = useTranslation();
@@ -18,6 +16,13 @@ const Correlations = () => {
   const correlationTabActive = correlationState((state) => state.correlationTabActive);
   const updateCorrelationTabActive = correlationState((state) => state.updateCorrelationTabActive);
   const numQsorts = coreState((state) => state.numQsorts);
+  const updateIsCorrelationsButtonGreen = appState(
+    (state) => state.updateIsCorrelationsButtonGreen
+  );
+
+  useEffect(() => {
+    updateIsCorrelationsButtonGreen(true);
+  }, []);
 
   // Handler for tab clicks
   const handleTabClick = (tabId) => {
@@ -27,15 +32,13 @@ const Correlations = () => {
   const MainContent = () => {
     return (
       <div
-        className={`grid grid-cols-1 text-black grid-rows-[70px_1fr] pl-5 justify-items-start items-center bg-white   overflow-auto select-none transition-all duration-500 linear `}
+        className={`grid grid-cols-1 text-black  pl-5 justify-items-start items-center bg-white   overflow-auto select-none transition-all duration-500 linear `}
         style={{
           gridTemplateAreas: `'header header header' 'main main main' 'footer footer footer'`,
         }}
       >
         <div className="justify-self-start" style={{ gridArea: 'header' }}>
-          {hasDataBeenConfirmed ? (
-            <CalculateCorrelationsButton />
-          ) : (
+          {hasDataBeenConfirmed ? null : (
             <div className="mt-[50px] ml-5 text-[22px] pt-[60px]">
               {t("Verify Q sorts in section '2. Data'")}
             </div>
@@ -68,7 +71,7 @@ const Correlations = () => {
       title: t('Heatmap'),
       content: (
         <div>
-          <div className="flex w-[500px] ml-[150px] text-4xl">{`${t('Correlation Heatmap')}`}</div>
+          {/* <div className="flex w-[500px] ml-[150px] text-4xl">{`${t('Correlation Heatmap')}`}</div> */}
           <HeatmapMain
             width={numQsorts < 20 ? numQsorts * 60 : numQsorts * 40}
             height={numQsorts < 20 ? numQsorts * 60 : numQsorts * 40}
@@ -88,13 +91,14 @@ const Correlations = () => {
         h-full
         transition-[visibility,opacity]
         duration-500
+        text-black
       `}
     >
       <div className="tabs tabs-box flex bg-[#d6dbe0] h-[100%] rounded-none">
         <input
           type="radio"
           name="my_tabs_Corr"
-          className={`tab basis-[12vw] hover:shadow-[inset_0_0_0_4px_#666,_0_0_1px_transparent] ${correlationTabActive === 'tab1' ? 'tab-active bg-[#a5d6a7]' : 'bg-[#d6dbe0]'}`}
+          className={`tab basis-[12vw] text-[clamp(1rem,1.5vw,1.1rem)] hover:shadow-[inset_0_0_0_4px_#666,_0_0_1px_transparent] ${correlationTabActive === 'tab1' ? 'tab-active bg-[#a5d6a7]' : 'bg-[#d6dbe0]'}`}
           aria-label={tabs[0].title}
           onClick={() => handleTabClick('tab1')}
         />
@@ -104,7 +108,7 @@ const Correlations = () => {
         <input
           type="radio"
           name="my_tabs_Corr"
-          className={`tab basis-[12vw] hover:shadow-[inset_0_0_0_4px_#666,_0_0_1px_transparent] ${correlationTabActive === 'tab2' ? 'tab-active bg-[#a5d6a7]' : 'bg-[#d6dbe0]'}`}
+          className={`tab basis-[12vw] text-[clamp(1rem,1.5vw,1.1rem)] hover:shadow-[inset_0_0_0_4px_#666,_0_0_1px_transparent] ${correlationTabActive === 'tab2' ? 'tab-active bg-[#a5d6a7]' : 'bg-[#d6dbe0]'}`}
           aria-label={tabs[1].title}
           onClick={() => handleTabClick('tab2')}
         />

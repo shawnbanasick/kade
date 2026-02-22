@@ -1,4 +1,3 @@
-import styled from 'styled-components';
 import outputState from '../../GlobalState/outputState';
 import calcState from '../../GlobalState/calcState';
 import { useTranslation } from 'react-i18next';
@@ -53,56 +52,38 @@ const SigLevelDropdown = () => {
     updateHighlightFactor8(false);
 
     resetSection6('output');
-    // reset cache of factor viz data
     updateOutputForDataViz2([]);
     updateSliceValueDistStateSigLevelDrop1(sliceValue);
     updateDistStateUpperValueText(distStateUpperValueText);
     updateUserSelectedDistStateSigLevel1(+e.target.value);
   };
 
-  if (showOutputFactorSelection) {
-    return (
-      <DropdownRow>
-        <span>{`${t('Set distinguishing statements threshold 1')}:`}</span>
-        <select onChange={handleChange} defaultValue={sigDropdownValue1}>
-          <option value="3.891">P &lt; 0.0001</option>
-          <option value="3.481">P &lt; 0.0005</option>
-          <option value="3.291">P &lt; 0.001</option>
-          <option value="2.807">P &lt; 0.005</option>
-          <option value="2.575">P &lt; 0.01</option>
-          <option value="1.96">P &lt; 0.05</option>
-          <option value="1.645">P &lt; 0.1</option>
-          <option value="1.44">P &lt; 0.15</option>
-        </select>
-      </DropdownRow>
-    );
-  }
-  return null;
+  if (!showOutputFactorSelection) return null;
+
+  return (
+    <div className="flex mt-[10px] items-baseline">
+      <span className="text-[25px] mr-[5px]">
+        {`${t('Set distinguishing statements threshold 1')}:`}
+      </span>
+      <select
+        onChange={handleChange}
+        defaultValue={sigDropdownValue1}
+        className="text-[24px] h-[36px] w-[160px] border border-[#d6dbe0] pl-[15px] bg-[#d6dbe0] rounded-[4px]"
+      >
+        <option value="3.891">P &lt; 0.0001</option>
+        <option value="3.481">P &lt; 0.0005</option>
+        <option value="3.291">P &lt; 0.001</option>
+        <option value="2.807">P &lt; 0.005</option>
+        <option value="2.575">P &lt; 0.01</option>
+        <option value="1.96">P &lt; 0.05</option>
+        <option value="1.645">P &lt; 0.1</option>
+        <option value="1.44">P &lt; 0.15</option>
+      </select>
+    </div>
+  );
 };
 
 export default SigLevelDropdown;
-
-const DropdownRow = styled.div`
-  display: flex;
-  margin-top: 20px;
-  align-items: baseline;
-
-  span {
-    font-size: 25px;
-    margin-right: 5px;
-  }
-
-  select {
-    font-size: 24px;
-    height: 36px;
-    width: 160px;
-    border: 1px solid #d6dbe0;
-    padding-left: 15px;
-    background-color: #d6dbe0;
-    border-radius: 4px;
-  }
-`;
-
 /*
 
  <Dropdown

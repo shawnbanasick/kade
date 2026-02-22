@@ -77,13 +77,15 @@ function Input() {
         overflow-auto
         transition-[visibility,opacity]
         duration-500
+        text-black
+        text-[clamp(1rem,1.5vw,1.1rem)] 
       `}
       >
         <div className="tabs tabs-box flex bg-grey-button h-full rounded-none">
           <input
             type="radio"
             name="my_tabs_6"
-            className={`tab basis-[9vw] hover:shadow-[inset_0_0_0_4px_#666,_0_0_1px_transparent] ${inputActiveTab === 'tab1' ? 'tab-active bg-primary-button text-black' : 'bg-grey-button'}`}
+            className={`tab basis-[9vw] text-[clamp(1rem,1.5vw,1.1rem)]  hover:shadow-[inset_0_0_0_4px_#666,_0_0_1px_transparent] ${inputActiveTab === 'tab1' ? 'tab-active bg-primary-button text-black' : 'bg-grey-button'}`}
             aria-label={tabs[0].title}
             onClick={() => handleTabClick('tab1')}
           />
@@ -93,7 +95,7 @@ function Input() {
           <input
             type="radio"
             name="my_tabs_6"
-            className={`tab basis-[9vw] hover:shadow-[inset_0_0_0_4px_#666,_0_0_1px_transparent] ${inputActiveTab === 'tab2' ? 'tab-active bg-primary-button text-black' : 'bg-grey-button'}`}
+            className={`tab basis-[9vw] text-[clamp(1rem,1.5vw,1.1rem)]  hover:shadow-[inset_0_0_0_4px_#666,_0_0_1px_transparent] ${inputActiveTab === 'tab2' ? 'tab-active bg-primary-button text-black' : 'bg-grey-button'}`}
             aria-label={tabs[1].title}
             onClick={() => handleTabClick('tab2')}
           />
@@ -103,7 +105,7 @@ function Input() {
           <input
             type="radio"
             name="my_tabs_6"
-            className={`tab basis-[9vw] hover:shadow-[inset_0_0_0_4px_#666,_0_0_1px_transparent] ${inputActiveTab === 'tab3' ? 'tab-active bg-primary-button text-black' : 'bg-grey-button'}`}
+            className={`tab basis-[9vw] text-[clamp(1rem,1.5vw,1.1rem)]  hover:shadow-[inset_0_0_0_4px_#666,_0_0_1px_transparent] ${inputActiveTab === 'tab3' ? 'tab-active bg-primary-button text-black' : 'bg-grey-button'}`}
             aria-label={tabs[2].title}
             onClick={() => handleTabClick('tab3')}
           />
@@ -113,7 +115,7 @@ function Input() {
           <input
             type="radio"
             name="my_tabs_6"
-            className={`tab basis-[9vw] hover:shadow-[inset_0_0_0_4px_#666,_0_0_1px_transparent] ${inputActiveTab === 'tab4' ? 'tab-active bg-primary-button text-black' : 'bg-grey-button'}`}
+            className={`tab basis-[9vw] text-[clamp(1rem,1.5vw,1.1rem)]  hover:shadow-[inset_0_0_0_4px_#666,_0_0_1px_transparent] ${inputActiveTab === 'tab4' ? 'tab-active bg-primary-button text-black' : 'bg-grey-button'}`}
             aria-label={tabs[3].title}
             onClick={() => handleTabClick('tab4')}
           />
@@ -123,7 +125,7 @@ function Input() {
           <input
             type="radio"
             name="my_tabs_6"
-            className={`tab basis-[9vw] hover:shadow-[inset_0_0_0_4px_#666,_0_0_1px_transparent] ${inputActiveTab === 'tab5' ? 'tab-active bg-primary-button text-black' : 'bg-grey-button'}`}
+            className={`tab basis-[9vw] text-[clamp(1rem,1.5vw,1.1rem)]  hover:shadow-[inset_0_0_0_4px_#666,_0_0_1px_transparent] ${inputActiveTab === 'tab5' ? 'tab-active bg-primary-button text-black' : 'bg-grey-button'}`}
             aria-label={tabs[4].title}
             onClick={() => handleTabClick('tab5')}
           />
@@ -133,7 +135,7 @@ function Input() {
           <input
             type="radio"
             name="my_tabs_6"
-            className={`tab basis-[9vw] hover:shadow-[inset_0_0_0_4px_#666,_0_0_1px_transparent] ${inputActiveTab === 'tab6' ? 'tab-active bg-primary-button text-black' : 'bg-grey-button'}`}
+            className={`tab basis-[9vw] text-[clamp(1rem,1.5vw,1.1rem)]  hover:shadow-[inset_0_0_0_4px_#666,_0_0_1px_transparent] ${inputActiveTab === 'tab6' ? 'tab-active bg-primary-button text-black' : 'bg-grey-button'}`}
             aria-label={tabs[5].title}
             onClick={() => handleTabClick('tab6')}
           />
@@ -143,7 +145,7 @@ function Input() {
           <input
             type="radio"
             name="my_tabs_6"
-            className={`tab basis-[9vw] hover:shadow-[inset_0_0_0_4px_#666,_0_0_1px_transparent] ${inputActiveTab === 'tab7' ? 'tab-active bg-primary-button text-black' : 'bg-grey-button'}`}
+            className={`tab basis-[9vw] text-[clamp(1rem,1.5vw,1.1rem)]  hover:shadow-[inset_0_0_0_4px_#666,_0_0_1px_transparent] ${inputActiveTab === 'tab7' ? 'tab-active bg-primary-button text-black' : 'bg-grey-button'}`}
             aria-label={tabs[6].title}
             onClick={() => handleTabClick('tab7')}
           />

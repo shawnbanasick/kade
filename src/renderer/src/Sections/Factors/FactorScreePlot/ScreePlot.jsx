@@ -66,7 +66,8 @@ const ScatterPlot = (props) => {
     yScale: yScale(props),
   };
   return (
-    <div style={styles.container}>
+    // <div style={styles.container}>
+    <div style={styles.container} className="">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         id="screePlot"

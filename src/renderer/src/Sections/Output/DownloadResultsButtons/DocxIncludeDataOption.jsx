@@ -7,7 +7,7 @@ const GeneralOptionsPanel = () => {
   const willIncludeDataFiles = outputState((state) => state.willIncludeDataFiles);
 
   return (
-    <div className="h-[100px] w-[300px] mt-8 mb-[10px]">
+    <div className="h-[100px] w-[300px] mt-25">
       <span className="text-[22px] select-none">{t('Data Files')}</span>
       <hr className="w-full mb-[15px]" />
       <div className="flex items-center pl-[10px]">
