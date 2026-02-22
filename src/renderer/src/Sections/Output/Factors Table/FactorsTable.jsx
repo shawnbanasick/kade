@@ -12,17 +12,11 @@ import coreState from '../../GlobalState/coreState';
 
 const getArrayValues = (userSelectedFactors) => {
   const headerRow = [i18n.t('Nm'), i18n.t('Statement'), i18n.t('Nm')];
-
   const colWidthVals = [60, 250, 60];
-  // 110,
-  //  90,
-
   const alignmentVals = ['center', 'left', 'center'];
-  // center
-
   const pinnedVals = [true, true, true];
-  // false
 
+  // data preparation
   for (let i = 0; i < userSelectedFactors.length; i += 1) {
     const identifier3 = userSelectedFactors[i].slice(7);
     const identifier2 = `F${identifier3} ${i18n.t('Z score')}`;
@@ -32,7 +26,6 @@ const getArrayValues = (userSelectedFactors) => {
     alignmentVals.push('center', 'center');
     pinnedVals.push(false, false);
   }
-
   return [headerRow, colWidthVals, alignmentVals, pinnedVals];
 };
 
@@ -76,16 +69,15 @@ function getGridRowDataFacTable(data2, headerRow) {
   return gridRowDataFacTable;
 }
 
-function getWidth(numFactors) {
-  let widthVal = 383 + 200 * numFactors;
-  let x = window.innerWidth - 40 - 152;
-
-  if (x < widthVal) {
-    x += 'px';
-    return x;
+function getWidth(colWidthVals) {
+  if (!Array.isArray(colWidthVals)) {
+    // fallback if called with old signature
+    return 383 + 230 * colWidthVals + 'px';
   }
-  widthVal += 'px';
-  return widthVal;
+  const totalColWidth = colWidthVals.reduce((sum, w) => sum + w, 0);
+  const maxWidth = window.innerWidth - 40 - 100;
+  // add width of tool bar
+  return Math.min(totalColWidth + 20, maxWidth) + 'px';
 }
 
 function getHeight(numStatements) {
@@ -96,6 +88,7 @@ function getHeight(numStatements) {
     return y;
   }
   heightVal += 'px';
+  console.log(heightVal);
   return heightVal;
 }
 
@@ -110,19 +103,11 @@ const FactorsTable = () => {
     theme: 'legacy',
   };
 
-  const [localStore, setLocalStore] = useState({
-    numFactors: 0,
-    numStatements: numStatements,
-  });
-
   function resetWidthAndHeight() {
-    // this.gridApi.setGridAutoHeight(false);
-    const numFactors = localStore.numFactors;
-    const numStatements = localStore.numStatements;
     const table = document.querySelector('#innerContainerFactors');
     if (table !== null) {
       table.style.height = getHeight(numStatements);
-      table.style.width = getWidth(numFactors);
+      table.style.width = getWidth(arrayValues[1]); // was getWidth(numFactors)
     }
   }
 
@@ -147,7 +132,6 @@ const FactorsTable = () => {
 
   const showFactorsTable = outputState((state) => state.showFactorCorrelationsTable);
 
-  // return [headerRow, colWidthVals, alignmentVals, pinnedVals];
   // getState
   const userSelectedFactors = outputState((state) => state.userSelectedFactors);
   const numFacs = userSelectedFactors.length;
@@ -157,14 +141,6 @@ const FactorsTable = () => {
   const currentData = getCurrentData(arrayValues[0], numFacs);
 
   const numFactors = currentData[1];
-
-  // setLocalStore((preState) => {
-  //   return {
-  //     ...preState,
-  //     numFactors: numFactors,
-  //     numStatements: numStatements,
-  //   };
-  // });
 
   const gridColDefsFacTable = getGridColDefsFacTable(
     currentData[1], // numFacs
@@ -180,15 +156,15 @@ const FactorsTable = () => {
 
   if (showFactorsTable) {
     return (
-      <Container1>
-        <p style={{ fontWeight: 'normal', marginTop: 15, textAlign: 'left' }}>
+      <div className="flex flex-col w-[80%]">
+        <p className="font-sans text-base font-normal mt-5 text-left">
           {t('Click the table headers to re-sort by column')}{' '}
           {t('(low-to-high, high-to-low, original sort)')}.
         </p>
         <div
           id="innerContainerFactors"
           style={{
-            width: getWidth(numFactors),
+            width: getWidth(arrayValues[1]),
             height: getHeight(numStatements),
           }}
           className="ag-theme-fresh"
@@ -202,18 +178,14 @@ const FactorsTable = () => {
             enableBrowserTooltips={true}
           />
         </div>
-      </Container1>
+      </div>
     );
   }
   return (
-    <h2 style={{ marginTop: 50, marginLeft: 50 }}>
+    <h2 style={{ marginTop: 5, marginLeft: 50 }}>
       {t('Select factors for output in the Options tab')}
     </h2>
   );
 };
 
 export default FactorsTable;
-
-const Container1 = styled.div`
-  padding-bottom: 50px;
-`;

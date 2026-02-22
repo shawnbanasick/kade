@@ -108,7 +108,7 @@ const FactorCharacteristicsTable = () => {
   );
 
   return (
-    <div>
+    <div className="flex flex-col w-[80%]">
       <div style={{ height: 140, width: widthVal }} className="ag-theme-fresh">
         <AgGridReact
           ref={gridApi}

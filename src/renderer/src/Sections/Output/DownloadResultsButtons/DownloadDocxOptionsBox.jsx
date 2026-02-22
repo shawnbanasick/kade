@@ -9,7 +9,7 @@ const OptionsBox = () => {
     <>
       <div
         className={`
-          w-[500px] h-[550px] box-border overflow-auto mb-[150px] mr-[50px]
+          w-[500px] h-full box-border overflow-auto mr-[50px]
           transition-[visibility] duration-500 linear
           [&_.ui.attached.tabular.menu]:bg-grey-button [&_.ui.attached.tabular.menu]:h-[45px]
           [&_.ui.bottom.attached.segment.active.tab]:border-b-white [&_.ui.bottom.attached.segment.active.tab]:border-l-white

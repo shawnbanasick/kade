@@ -54,7 +54,7 @@ const Output = () => {
     'bg-white grid grid-rows-[80px_80px_80px_1fr_auto] select-none min-w-[calc(100vw-166px)] h-[calc(100vh-80px)] overflow-auto box-border';
 
   const window2Class =
-    'pt-[15px] bg-white select-none h-[calc(100vh-48px)] min-w-[calc(100vw-166px)] overflow-auto box-border';
+    'pt-[15px] bg-white select-none h-[calc(100vh-70px)] min-w-[calc(100vw-186px)] overflow-auto box-border';
 
   showTableDataNotSentWarning = outputState((state) => state.showTableDataNotSentWarning);
   const showNotification = outputState((state) => state.notifyOutputDistStateError);
@@ -78,7 +78,7 @@ const Output = () => {
           {displayState && (
             <div className="flex flex-row">
               <DownloadDocxOptionsBox />
-              <div className="flex flex-col h-[448px]">
+              <div className="flex flex-col h-full">
                 <DocxFormatButtons />
                 <DocxIncludeDataOption />
                 <DownloadResultsAsDocx />

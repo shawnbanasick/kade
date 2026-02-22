@@ -100,7 +100,7 @@ const GeneralOptionsPanel = () => {
   ];
 
   return (
-    <React.Fragment>
+    <div className="h-[500px]">
       <span className="text-[22px] select-none">{t('Document Content')}</span>
       <hr className="w-full mb-[15px]" />
 
@@ -142,7 +142,7 @@ const GeneralOptionsPanel = () => {
           <DocSelectionSwitch name={name} value={name} toggle={toggle} />
         </div>
       ))}
-    </React.Fragment>
+    </div>
   );
 };
 

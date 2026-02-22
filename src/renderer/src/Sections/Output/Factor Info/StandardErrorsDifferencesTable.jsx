@@ -9,11 +9,8 @@ import outputState from '../../GlobalState/outputState';
 const StandardErrorsDifferencesTable = () => {
   const data2 = calcState((state) => state.standardErrorDiffSheetArray);
   const data = [...data2];
-
   data.shift();
   data.shift();
-
-  console.log('data', JSON.stringify(data, null, 2));
 
   const userSelectedFacs = outputState((state) => state.userSelectedFactors);
   const numFacs = userSelectedFacs.length;
