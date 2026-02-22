@@ -1,10 +1,6 @@
-import styled from 'styled-components';
-
-import React from 'react';
-
 const HelpSection = () => {
   return (
-    <MainContent>
+    <div className="bg-white p-[50px] overflow-auto">
       <h2>KADE Help File and User Manual</h2>
       <hr />
       <br />
@@ -13,62 +9,18 @@ const HelpSection = () => {
       <br />
       <br />
       <p>A more detailed user guide (with video) is available online here: </p>
-      <WebLinkDiv2>
-        <StyledAnchor
+      <div className="grid h-[120px] w-[180px] items-center justify-center bg-[#d6dbe0] rounded-[5px] text-[22px] mt-[30px] ml-[100px] mr-[3px] mb-[3px] shadow-[0_2px_2px_0_black] text-center select-none leading-[1.2] hover:bg-[#abafb3] active:shadow-[inset_0_0_1px_0_black] active:ml-[97px]">
+        <a
           target="_blank"
           rel="noopener noreferrer"
           href="https://github.com/shawnbanasick/kade/wiki"
+          className="text-black hover:text-black"
         >
           KADE Online User Manual
-        </StyledAnchor>
-      </WebLinkDiv2>
-    </MainContent>
+        </a>
+      </div>
+    </div>
   );
 };
 
 export default HelpSection;
-
-const MainContent = styled.div`
-  background-color: white;
-  padding: 50px;
-  overflow: auto;
-`;
-
-const WebLinkDiv2 = styled.div`
-  display: flex;
-  height: 120px;
-  width: 180px;
-  display: grid;
-  align-items: center;
-  justify-content: center;
-  background-color: #d6dbe0;
-  color: black;
-  border-radius: 5px;
-  font-size: 22px;
-  margin-right: 3px;
-  margin-top: 30px;
-  margin-left: 100px;
-  margin-bottom: 3px;
-  box-shadow: 0 2px 2px 0 black;
-  text-align: center;
-  user-select: none;
-  line-height: 1.2;
-
-  &:hover {
-    background-color: #abafb3;
-  }
-
-  &:active {
-    box-shadow: 0 0 1px 0 black inset;
-    margin-left: 97px;
-    /* margin-top: 3px; */
-  }
-`;
-
-const StyledAnchor = styled.a`
-  color: black;
-
-  &:hover {
-    color: black;
-  }
-`;

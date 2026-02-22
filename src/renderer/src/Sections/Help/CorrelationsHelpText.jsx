@@ -1,10 +1,8 @@
-import React from 'react';
-import styled from 'styled-components';
 import correlationsImage from './helpImages/k3-correlations.png';
 
 const HelpSection = () => {
   return (
-    <MainContent>
+    <div className="bg-white user-select-all p-[50px] overflow-auto">
       <h2 id="correlationssectionfaq">Correlations Section FAQ:</h2>
       <ul>
         <li>
@@ -27,15 +25,8 @@ const HelpSection = () => {
         {`To generate the correlation table, click the "Calculate Correlations" button at the top of the screen.`}
       </p>
       <img src={correlationsImage} width="1000px" alt="correlations" />
-    </MainContent>
+    </div>
   );
 };
 
 export default HelpSection;
-
-const MainContent = styled.div`
-  background-color: white;
-  user-select: all;
-  padding: 50px;
-  overflow: auto;
-`;

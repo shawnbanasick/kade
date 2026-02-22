@@ -21,18 +21,24 @@ const ProjectNameInput = () => {
   };
 
   return (
-    <React.Fragment>
-      <div className={`flex flex-row items-center text-[20px] font-bold pl-[5px] mb-[10px] gap-3 `}>
+    <div className="flex flex-col">
+      <label htmlFor="projectNameInput" className="ml-9 text-[20px] text-left text-black font-bold">
+        Project Name:
+      </label>
+      <div
+        className={`flex flex-row row-start-2 items-center text-black text-[20px] font-bold pl-[5px] mb-[10px] gap-3 `}
+      >
         3.
         <input
           className={`text-[20px] h-[30px] w-[355px] p-2 m-[3px] text-black bg-white border border-black rounded-sm`}
           onChange={(e) => handleChange(e)}
           label="Project Name:"
+          id="projectNameInput"
           placeholder={t('Input Project Name')}
           value={projectName}
         />
       </div>
-    </React.Fragment>
+    </div>
   );
 };
 

@@ -7,7 +7,7 @@ const CsvStatementCard = () => {
   return (
     <div
       id="CsvStatementCardContainer"
-      className="grid grid-flow-row justify-items-center items-center bg-white border-2 border-gray-400 h-[340px] w-90 rounded-[5px]"
+      className="grid grid-flow-row text-black justify-items-center items-center bg-white border-2 border-gray-400 h-[340px]  rounded-[5px]"
     >
       <div id="CsvStatementCardMeta" className="bg-white font-sans text-lg font-bold">
         <div

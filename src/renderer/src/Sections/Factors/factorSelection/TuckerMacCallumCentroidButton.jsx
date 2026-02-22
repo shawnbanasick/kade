@@ -1,4 +1,3 @@
-import styled from 'styled-components';
 import GeneralButton from '../../../Utils/GeneralButton';
 import tuckerDispatcher from '../centroidLogic/tuckerLogic/tuckerDispatcher';
 import { useTranslation } from 'react-i18next';
@@ -60,19 +59,16 @@ const TuckerMacCallumCentroidButton = () => {
   };
 
   return (
-    <TuckerButton
+    <GeneralButton
       id="tuckerButton"
       $isActive={isActive}
       disabled={isDisabled}
       onClick={handleOnclick}
+      className={` ${isActive ? 'bg-primary-button' : 'bg-grey-button'} shadow-[0_2px_2px_0_black] hover:shadow-[0_2px_2px_0_black] active:shadow-[0_1px_1px_0_black] active:ml-[3px] active:translate-y-[1px]`}
     >
       Tucker and MacCallum <br /> {t('Centroid Factors')}
-    </TuckerButton>
+    </GeneralButton>
   );
 };
 
 export default TuckerMacCallumCentroidButton;
-
-const TuckerButton = styled(GeneralButton)`
-  margin-right: 5px;
-`;

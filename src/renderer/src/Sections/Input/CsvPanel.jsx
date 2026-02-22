@@ -12,13 +12,13 @@ const CsvPanel = () => {
     <div id="csvDataWindow">
       <div
         id="csvPanelHeader"
-        className="font-['Helvetica'] text-[1.5vw] font-bold h-[30px] mt-[10px]"
+        className="font-['Helvetica'] text-black text-[1.5vw] font-bold h-[30px] mb-5"
       >
         {t('Load both a statements file and a Q sorts CSV file')}
       </div>
       <div
         id="csvPanelWindow"
-        className="grid grid-cols-[350px_350px] grid-rows-[350px_75px_45px_1fr] select-none"
+        className="grid grid-cols-[350px_350px] grid-rows-[350px_75px_15px_50px_1fr] select-none gap-10 ml-10"
       >
         <CsvStatementCard id="csvStatementCard" />
         <CsvSortsCard id="csvSortsCard" />

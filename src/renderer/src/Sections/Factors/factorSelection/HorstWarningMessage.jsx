@@ -1,4 +1,3 @@
-import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 import factorState from '../../GlobalState/factorState';
 
@@ -7,25 +6,13 @@ const HorstWarningMessage = () => {
   const showHorstWarningMessage = factorState((state) => state.didNotConverge);
   const horstIterations = factorState((state) => state.horstIterations);
 
-  if (showHorstWarningMessage) {
-    return (
-      <HorstNoConvergenceMessage>
-        {`${t('No convergence')}: ${horstIterations} ${t('iterations')}`}
-      </HorstNoConvergenceMessage>
-    );
-  } else {
-    return null;
-  }
+  if (!showHorstWarningMessage) return null;
+
+  return (
+    <div className="mb-[50px] text-[20px] bg-[#ffff00] min-w-[300px] px-[20px] py-[3px] w-max border-2 border-black">
+      {`${t('No convergence')}: ${horstIterations} ${t('iterations')}`}
+    </div>
+  );
 };
 
 export default HorstWarningMessage;
-
-const HorstNoConvergenceMessage = styled.div`
-  margin-bottom: 50px;
-  font-size: 20px;
-  background: #ffff00;
-  min-width: 300px;
-  padding: 3px 20px 3px 20px;
-  width: max-content;
-  border: 2px solid black;
-`;

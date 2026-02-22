@@ -9,13 +9,13 @@ const ExcelPanel = () => {
     <div id="ExcelDataWindow">
       <div
         id="excelPanelHeader"
-        className="font-['Helvetica'] text-[1.5vw] font-bold h-[30px] mt-[10px]"
+        className="font-['Helvetica'] text-black text-[1.5vw] font-bold h-[30px] mb-5 "
       >
         {t('Load a Type 1 OR Type 2 Spreadsheet (XLSX) File')}
       </div>
       <div
         id="excelPanelWindow"
-        className="grid grid-cols-[350px_350px] grid-rows-[350px_75px_120px_1fr] select-none"
+        className="grid grid-cols-[350px_350px] grid-rows-[350px_75px_120px_1fr] select-none ml-10"
       >
         <ExcelT1Card />
         <ExcelT2Card />

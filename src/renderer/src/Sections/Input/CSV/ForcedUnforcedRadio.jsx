@@ -40,7 +40,7 @@ const RadioExampleRadioGroup = (props) => {
   };
 
   return (
-    <div className="flex items-center h-10 col-span-2 pl-2 font-sans text-xl">
+    <div className="flex items-baseline h-10 col-span-2 pl-2 text-black font-sans text-xl">
       <div className="pr-3.5 font-bold">4</div>
       <div className="pr-2.5">{t('Q sorts are')}</div>
       <div className="flex items-center gap-2.5">

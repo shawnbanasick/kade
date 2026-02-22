@@ -1,40 +1,22 @@
-import React from 'react';
-import styled from 'styled-components';
 import factorState from '../../GlobalState/factorState';
 import GeneralButton from '../../../Utils/GeneralButton';
 
-// getState
-const isActive = factorState((state) => state.activeCentroidRevealButton);
-const CentroidSelectButton = () => (
-  <div>
-    <StyledWrapper>
+const CentroidSelectButton = () => {
+  const isActive = factorState((state) => state.activeCentroidRevealButton);
+
+  return (
+    <div>
       <GeneralButton
         id="centroidSelectButton"
-        size={'big'}
+        size="big"
         toggle
-        className={'wrapper1'}
         active={isActive}
+        className="shadow-[0_2px_2px_0_black] hover:shadow-[0_2px_2px_0_black] active:shadow-[0_1px_1px_0_black] active:ml-[3px] active:translate-y-[1px]"
       >
         Centroid Factors 2
       </GeneralButton>
-    </StyledWrapper>
-  </div>
-);
+    </div>
+  );
+};
 
 export default CentroidSelectButton;
-
-const StyledWrapper = styled.div`
-  .wrapper1 {
-    box-shadow: 0 2px 2px 0 black;
-
-    &:hover {
-      box-shadow: 0 2px 2px 0 black;
-    }
-
-    &:active {
-      box-shadow: 0 1px 1px 0 black;
-      margin-left: 3px;
-      transform: translateY(1px);
-    }
-  }
-`;

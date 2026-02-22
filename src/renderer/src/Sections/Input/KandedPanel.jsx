@@ -8,7 +8,7 @@ const KandedPanel = () => {
     <div id="ExcelKadeDataWindow">
       <div
         id="excelKadePanelHeader"
-        className="font-['Helvetica'] text-[1.5vw] font-bold h-[30px] mt-[10px]"
+        className="font-['Helvetica'] text-black text-[1.5vw] font-bold h-[30px] mb-5"
       >
         {t('Load a KADE or Ken-Q Analysis (web) XLSX output file')}
       </div>

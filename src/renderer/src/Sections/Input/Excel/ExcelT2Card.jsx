@@ -8,7 +8,7 @@ const ExcelT2Card = () => {
   return (
     <div
       id="ExcelT2CardContainer"
-      className="grid grid-flow-row justify-items-center items-center bg-white border-2 border-gray-400 h-[340px] w-90 rounded-[5px]"
+      className="grid grid-flow-row text-black ml-10 justify-items-center items-center bg-white border-2 border-gray-400 h-[340px] w-90 rounded-[5px]"
     >
       <div id="ExcelT2CardMeta" className="bg-white font-sans text-lg font-bold">
         <div

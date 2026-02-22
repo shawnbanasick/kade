@@ -1,10 +1,6 @@
-import React from 'react';
-
-import styled from 'styled-components';
-
 const HelpSection = () => {
   return (
-    <MainContent>
+    <div className="select-all bg-white px-[50px] pt-[50px] pb-[20px] [&_p]:max-w-[700px]">
       <h1 id="datainputsectionfaq">Data Input Section FAQ:</h1>
       <ul>
         <li>
@@ -68,25 +64,26 @@ const HelpSection = () => {
         EQ Web Sort is Do-It-Yourself online Q sorting software. No web development skills are
         required. Participant Q sort data are output in a{' '}
         <strong>
-          <CustomAnchor
+          <a
             target="_blank"
             rel="noopener noreferrer"
             href="https://en.wikipedia.org/wiki/JSON"
+            className="text-[#d35400] underline hover:text-blue-600"
           >
             JSON
-          </CustomAnchor>
+          </a>
         </strong>{' '}
         or CSV formatted file. Project statements should be in plain text format.
         <strong>
-          {' '}
           (
-          <CustomAnchor
+          <a
             target="_blank"
             rel="noopener noreferrer"
             href="https://github.com/shawnbanasick/eq-web-sort"
+            className="text-[#d35400] underline hover:text-blue-600"
           >
             EQ Web Sort Homepage
-          </CustomAnchor>
+          </a>
           )
         </strong>
       </p>
@@ -96,37 +93,18 @@ const HelpSection = () => {
         *.STA) and a file containing participant Q-sorts information (file type *.DAT). Both files
         are required to bring PQMethod data in KADE.{' '}
         <strong>
-          (
-          <CustomAnchor
+          <a
             target="_blank"
             rel="noopener noreferrer"
             href="http://schmolck.org/qmethod/"
+            className="text-[#d35400] underline hover:text-blue-600"
           >
             PQMethod Homepage
-          </CustomAnchor>
-          )
+          </a>
         </strong>
       </p>
-    </MainContent>
+    </div>
   );
 };
 
 export default HelpSection;
-
-const CustomAnchor = styled.a`
-  color: #d35400 !important;
-  text-decoration: underline !important;
-  &:hover {
-    color: blue !important;
-  }
-`;
-
-const MainContent = styled.div`
-  user-select: all;
-  background-color: white;
-  padding: 50px;
-  padding-bottom: 20px;
-  p {
-    max-width: 700px;
-  }
-`;

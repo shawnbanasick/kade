@@ -1,6 +1,3 @@
-import React from 'react';
-
-import styled from 'styled-components';
 import FactorImagePca from './helpImages/k3-pca-1.png';
 import FactorImagePca2 from './helpImages/k3-pca2-scree.png';
 import Centroid1 from './helpImages/k3-centroid-1.png';
@@ -11,7 +8,7 @@ import horstHeywood from './helpImages/k3-centroid-horst-heywood.png';
 
 const HelpSection = () => {
   return (
-    <MainContent>
+    <div className="bg-white user-select-all p-[50px] overflow-auto max-w-[950px] mx-auto">
       <h2 id="factorssectionfaq">Factors Section FAQ:</h2>
       <ul>
         <li>
@@ -83,19 +80,8 @@ const HelpSection = () => {
         adjust the factor loadings for that participant so that their communality equals 1.0.
       </p>
       <img src={horstHeywood} width="1000px" alt="horst centroid factors" />
-    </MainContent>
+    </div>
   );
 };
 
 export default HelpSection;
-
-const MainContent = styled.div`
-  background-color: white;
-  padding: 50px;
-  user-select: all;
-  overflow: auto;
-
-  p {
-    max-width: 950px;
-  }
-`;

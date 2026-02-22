@@ -80,14 +80,14 @@ const QsortDesignInputElement = (props) => {
 
   if (!isForcedQsortPattern) {
     return (
-      <div className="mt-2.5 flex flex-col col-start-1 w-[78vw] gap-1">
+      <div className="mt-2.5 flex text-black flex-col col-start-1 w-[78vw] gap-1">
         <div className="flex  items-start gap-2">
           <div
-            className={`${getBackgroundColorClass()} text-xl mb-1.5 w-full max-w-[800px] pt-4 px-1.5 h-[50px] mt-2.5 rounded`}
+            className={`${getBackgroundColorClass()} text-black text-xl mb-1.5 w-full max-w-[800px] pt-4 px-1.5 h-[50px] mt-2.5 rounded`}
           >
-            <div className="flex flex-row font-bold w-[800px] pl-1">
+            <div className="flex flex-row text-black font-bold w-[800px] pl-1">
               <div className="w-[25px]">5.</div>{' '}
-              <div className="w-[40vw] text-[clamp(0.8rem,1.5vw,1.2rem)] text-left">
+              <div className="w-[40vw] text-black text-[clamp(0.8rem,1.5vw,1.2rem)] text-left">
                 {t('Q Sort Pattern - Number of Statements in Each Column')}
               </div>
               <button
