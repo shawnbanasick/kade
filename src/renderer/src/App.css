@@ -7,6 +7,12 @@
   --color-grey-button: #d6dbe0;
 }
 
+@layer base {
+  html {
+    @apply text-black;
+  }
+}
+
 /* .App {
   text-align: center;
 }

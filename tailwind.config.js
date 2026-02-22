@@ -2,6 +2,9 @@ module.exports = {
   content: ['./index.html', './src/**/*.{js,jsx,ts,tsx}', './node_modules/flowbite/**/*.js'],
   theme: {
     extend: {
+      textColor: {
+        DEFAULT: '#000000', // Sets the default text color
+      },
       keyframes: {
         fadeIn: {
           '0%': { opacity: '0' },

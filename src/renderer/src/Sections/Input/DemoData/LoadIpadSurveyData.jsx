@@ -61,11 +61,11 @@ const LoadIpadSurveyData = () => {
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 20 20"
-            className="rotate-180 mr-5 h-[17px] w-[17px] fill-current"
+            className="rotate-180 h-[17px] w-[17px] fill-current"
           >
             <path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z" />
           </svg>
-          <div className="ml-5 font-sans text-lg font-bold">{t('Load iPad Survey')}</div>
+          <div className="font-sans text-lg font-bold">{t('Load iPad Survey')}</div>
         </div>
       </NewLoadButton>
     </div>

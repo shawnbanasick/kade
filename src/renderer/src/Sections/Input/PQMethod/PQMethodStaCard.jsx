@@ -7,7 +7,7 @@ const PQMethodStaCard = () => {
   return (
     <div
       id="pqmethodStaContainer"
-      className="grid grid-flow-row justify-items-center items-center bg-white border-2 border-gray-400 h-[340px] w-90 rounded-[5px]"
+      className="grid grid-flow-row justify-items-center text-black items-center bg-white border-2 border-gray-400 h-[340px] w-90 rounded-[5px]"
     >
       <div id="pqmethodStaCardMeta" className="bg-white font-sans text-lg font-bold">
         <div id="ExcelT1CardLabel">1. {t('Load Statements (STA File)')}</div>

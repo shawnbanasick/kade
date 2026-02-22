@@ -55,7 +55,7 @@ const UnforcedSortsDisplayButton = (props) => {
             : 'bg-[orange] h-[50px] w-[150px] text-[clamp(1.3rem,1.5vw,1.8rem)]'
         }
       >
-        <div>{`${areQsortsVerified ? t('Sorts Verified') : t('Click after Verifying Sorts')}`}</div>
+        <div className="text-[clamp(0.5rem,1.5vw,1rem)] text-center leading-tight">{`${areQsortsVerified ? t('Sorts Verified') : t('Click after Verifying Sorts')}`}</div>
       </GeneralButton>
     );
   } else {

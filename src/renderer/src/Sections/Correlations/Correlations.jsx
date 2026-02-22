@@ -27,7 +27,7 @@ const Correlations = () => {
   const MainContent = () => {
     return (
       <div
-        className={`grid grid-cols-1 grid-rows-[70px_1fr] pl-5 justify-items-start items-center bg-white   overflow-auto select-none transition-all duration-500 linear `}
+        className={`grid grid-cols-1 text-black grid-rows-[70px_1fr] pl-5 justify-items-start items-center bg-white   overflow-auto select-none transition-all duration-500 linear `}
         style={{
           gridTemplateAreas: `'header header header' 'main main main' 'footer footer footer'`,
         }}
