@@ -8,9 +8,8 @@ import createRawSorts from './createRawSorts';
 import createStatementNumArray from './createStatementNumArray';
 import calcQsortPatternArray from './calcQsortPatternArray';
 import modifySortPattern from './modifySortPattern';
-import JSZip from 'jszip';
 
-function processKadeZip(data) {
+function processKadeZip(zipDataObject) {
   if (inputState.isDataAlreadyLoaded) {
     inputState.setState({ excelErrorMessage1: 'Data are already loaded.' });
     return;
@@ -25,70 +24,57 @@ function processKadeZip(data) {
   let mainDataObject = [];
 
   try {
-    JSZip.loadAsync(data).then(function (zip) {
-      Object.keys(zip.files).forEach(function (filename) {
-        inputState.setState({ dataOrigin: 'zip' });
+    inputState.setState({ dataOrigin: 'zip' });
 
-        // HANDLE STATEMENTS
-        if (filename === 'statements.txt') {
-          zip.files['statements.txt'].async('string').then(function (fileData) {
-            const result = fileData
-              .split(/\r?\n/)
-              .filter((element) => element)
-              .map((element) => element.trim());
+    Object.keys(zipDataObject).forEach(function (filename) {
+      // HANDLE STATEMENTS
+      if (filename === 'statements.txt') {
+        const result = zipDataObject['statements.txt']
+          .split(/\r?\n/)
+          .filter((element) => element)
+          .map((element) => element.trim());
 
-            coreState.setState({ numStatements: result.length });
+        coreState.setState({ numStatements: result.length });
 
-            statementNumArray = createStatementNumArray(result.length);
+        statementNumArray = createStatementNumArray(result.length);
 
-            coreState.setState({ statementNumArray: statementNumArray });
-            coreState.setState({ statements: result });
-            inputState.setState({ areStatementsLoaded: true });
-          });
-        }
+        coreState.setState({ statementNumArray: statementNumArray });
+        coreState.setState({ statements: result });
+        inputState.setState({ areStatementsLoaded: true });
+      }
 
-        // HANDLE SORTS
-        if (filename === 'sorts.txt') {
-          zip.files['sorts.txt']
-            .async('string')
-            .then(function (fileData) {
-              const result = parseKade(fileData);
-              numberSorts = result.length;
+      // HANDLE SORTS
+      if (filename === 'sorts.txt') {
+        const result = parseKade(zipDataObject['sorts.txt']);
+        numberSorts = result.length;
 
-              participantNames = createParticipantNameArray(result);
-              let rawSorts = createRawSorts(result);
-              mainDataObject = createMainDataObject(participantNames, rawSorts);
-              sortDisplayText = sortsDisplayText(mainDataObject);
-            })
-            .then(function () {
-              coreState.setState({ respondentNames: participantNames });
-              coreState.setState({ numQsorts: numberSorts });
-              coreState.setState({ mainDataObject: mainDataObject });
-              coreState.setState({ sortsDisplayText: sortDisplayText });
-              inputState.setState({ areQsortsLoaded: true });
-            });
-        }
+        participantNames = createParticipantNameArray(result);
+        let rawSorts = createRawSorts(result);
+        mainDataObject = createMainDataObject(participantNames, rawSorts);
+        sortDisplayText = sortsDisplayText(mainDataObject);
 
-        // HANDLE PATTERN
-        if (filename === 'pattern.txt') {
-          let sortPattern = [];
-          zip.files['pattern.txt'].async('string').then(function (fileData) {
-            sortPattern = parseKade(fileData);
-            multiplierArray = modifySortPattern(sortPattern);
-            qSortPatternArray = calcQsortPatternArray(multiplierArray);
-            coreState.setState({ multiplierArray: multiplierArray });
-            coreState.setState({ qSortPattern: qSortPatternArray });
-            inputState.setState({ isQsortPatternLoaded: true });
-          });
-        }
+        coreState.setState({ respondentNames: participantNames });
+        coreState.setState({ numQsorts: numberSorts });
+        coreState.setState({ mainDataObject: mainDataObject });
+        coreState.setState({ sortsDisplayText: sortDisplayText });
+        inputState.setState({ areQsortsLoaded: true });
+      }
 
-        // HANDLE NAME
-        if (filename === 'name.txt') {
-          zip.files['name.txt'].async('string').then(function (fileData) {
-            coreState.setState({ projectName: fileData });
-          });
-        }
-      });
+      // HANDLE PATTERN
+      if (filename === 'pattern.txt') {
+        let sortPattern = [];
+        sortPattern = parseKade(zipDataObject['pattern.txt']);
+        multiplierArray = modifySortPattern(sortPattern);
+        qSortPatternArray = calcQsortPatternArray(multiplierArray);
+        coreState.setState({ multiplierArray: multiplierArray });
+        coreState.setState({ qSortPattern: qSortPatternArray });
+        inputState.setState({ isQsortPatternLoaded: true });
+      }
+
+      // HANDLE NAME
+      if (filename === 'name.txt') {
+        coreState.setState({ projectName: zipDataObject['name.txt'] });
+      }
     });
 
     inputState.setState({ isDataAlreadyLoaded: true });
