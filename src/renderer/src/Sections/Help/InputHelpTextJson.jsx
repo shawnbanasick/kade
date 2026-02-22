@@ -1,6 +1,3 @@
-import React from 'react';
-
-import styled from 'styled-components';
 import JsonInputImage1 from './helpImages/k3-json-1.png';
 import JsonInputImage2 from './helpImages/k3-json-2.png';
 import JsonInputImage3 from './helpImages/k3-json-3.png';
@@ -9,7 +6,7 @@ import JsonFormatImage from './helpImages/k3-json-format.png';
 
 const HelpSection = () => {
   return (
-    <MainContent>
+    <div className="bg-white p-5 overflow-auto user-select-all pb-20 [&_p]:max-w-[700px]">
       <hr />
       <h1 id="easyhtmlqfaq">EQ Web Sort Files FAQ:</h1>
       <ul>
@@ -18,13 +15,14 @@ const HelpSection = () => {
             <strong>What is EQ Web Sort?</strong>
             <br /> It is a free DIY online Q sort software for text statements and images. More
             information is available{' '}
-            <CustomAnchor
+            <a
               target="_blank"
               rel="noopener noreferrer"
               href="https://github.com/shawnbanasick/eq-web-sort"
+              className="text-[#d35400] underline hover:text-blue-500"
             >
               <strong>here</strong>
-            </CustomAnchor>{' '}
+            </a>{' '}
           </p>
         </li>
         <li>
@@ -122,26 +120,8 @@ const HelpSection = () => {
       </p>
       <br />
       <img src={JsonInputImage4} width="900px" alt="import json file" />
-    </MainContent>
+    </div>
   );
 };
 
 export default HelpSection;
-
-const MainContent = styled.div`
-  background-color: white;
-  padding: 50px;
-  user-select: all;
-
-  p {
-    max-width: 700px;
-  }
-`;
-
-const CustomAnchor = styled.a`
-  color: #d35400 !important;
-  text-decoration: underline !important;
-  &:hover {
-    color: blue !important;
-  }
-`;

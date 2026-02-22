@@ -1,4 +1,3 @@
-import styled from 'styled-components';
 import displayJsonData from './JSON/displayJsonData';
 import DatabaseSelectButtons from './JSON/DatabaseSelectButtons';
 import Dropdown from './JSON/DropdownJSON';
@@ -34,86 +33,67 @@ const JsonPanel = () => {
 
   if (!showFirebaseInput && !showSheetsInput && !showNetlifyInput) {
     return (
-      <DataWindow>
+      <div className="bg-white">
         <p>JSON panel</p>
         <DatabaseSelectButtons />
-      </DataWindow>
-    );
-  } else {
-    return (
-      <DataWindow>
-        <DatabaseSelectButtons />
-        <CardHolder id="JsonCardHolder">
-          <LoadJsonStatementsCard />
-          {showFirebaseInput && <JsonQsortsCard />}
-          {showSheetsInput && <CsvJsonCard />}
-          {showNetlifyInput && <NetlifyCard />}
-          {showNetlifyInput && <div />}
-          {showSheetsInput && <div />}
-          <ProjectNameInput />
-          {showFirebaseInput && (
-            <Dropdown
-              id="select1"
-              options={options}
-              class="ui fluid selection dropdown"
-              onChangeMessageUpTree={handleMessage}
-            />
-          )}
-
-          {showSheetsInput && (
-            <DropdownSheets
-              id="selectSheets"
-              options={options}
-              class="ui fluid selection dropdown"
-              onChangeMessageUpSheetsTree={handleSheetsMessage}
-            />
-          )}
-          {showNetlifyInput && (
-            <NetlifyDropdown
-              id="selectNetlify"
-              options={options}
-              class="ui fluid selection dropdown"
-              onChangeMessageUpNetlifyTree={handleNetlifyMessage}
-            />
-          )}
-          {/* <ForcedUnforcedRadio number={'5.'} /> */}
-
-          <div />
-          {/* <QsortDesignInputElement style={{ gridRowStart: 4 }} number={'6.'} /> */}
-          {/* {showFirebaseInput && <DownloadCsvModal />} */}
-          {/* <ZipErrorCheckButton number={'7.'} gridRow={5} /> */}
-        </CardHolder>
-      </DataWindow>
+      </div>
     );
   }
+
+  return (
+    <div className="bg-white">
+      <DatabaseSelectButtons />
+      <div
+        id="JsonCardHolder"
+        className="grid select-none"
+        style={{
+          gridTemplateColumns: '350px 350px 1fr',
+          gridTemplateRows: '310px 45px 45px 120px 120px 1fr',
+          gridTemplateAreas: `
+            'card card'
+            'projectName projectName'
+            'Qsortsare Qsortsare'
+            'design design'
+            'unforced'
+            '. download'
+          `,
+        }}
+      >
+        <LoadJsonStatementsCard />
+        {showFirebaseInput && <JsonQsortsCard />}
+        {showSheetsInput && <CsvJsonCard />}
+        {showNetlifyInput && <NetlifyCard />}
+        {showNetlifyInput && <div />}
+        {showSheetsInput && <div />}
+        <ProjectNameInput />
+        {showFirebaseInput && (
+          <Dropdown
+            id="select1"
+            options={options}
+            class="ui fluid selection dropdown"
+            onChangeMessageUpTree={handleMessage}
+          />
+        )}
+        {showSheetsInput && (
+          <DropdownSheets
+            id="selectSheets"
+            options={options}
+            class="ui fluid selection dropdown"
+            onChangeMessageUpSheetsTree={handleSheetsMessage}
+          />
+        )}
+        {showNetlifyInput && (
+          <NetlifyDropdown
+            id="selectNetlify"
+            options={options}
+            class="ui fluid selection dropdown"
+            onChangeMessageUpNetlifyTree={handleNetlifyMessage}
+          />
+        )}
+        <div />
+      </div>
+    </div>
+  );
 };
 
 export default JsonPanel;
-
-const DataWindow = styled.div`
-  background-color: white;
-`;
-
-const CardHolder = styled.div`
-  display: grid;
-  grid-template-columns: 350px 350px 1fr;
-  grid-template-rows: 310px 45px 45px 120px 120px 1fr;
-  grid-template-areas:
-    'card card'
-    'projectName projectName'
-    'Qsortsare Qsortsare'
-    'design design'
-    'unforced'
-    '. download';
-  user-select: none;
-`;
-
-/*
-const Header = styled.div`
-  font-family: Helvetica;
-  font-size: 1.5vw;
-  font-weight: bold;
-  height: 30px;
-  margin-top: 10px;
-`;
-*/

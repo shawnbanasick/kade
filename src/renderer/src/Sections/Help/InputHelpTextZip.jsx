@@ -1,5 +1,3 @@
-import React from 'react';
-import styled from 'styled-components';
 import ZipInputImage1 from './helpImages/k3-input-zip-1.png';
 import ZipInputImage2 from './helpImages/k3-input-zip-2.png';
 import ZipInputImage3 from './helpImages/k3-input-zip-3.png';
@@ -7,7 +5,7 @@ import ZipInputImage4 from './helpImages/k3-input-zip-4.png';
 
 const HelpSection = () => {
   return (
-    <MainContent>
+    <div className="bg-white p-5 overflow-auto user-select-all [&_li]:max-w-[700px] [&_p]:max-w-[700px]">
       <hr />
       <h1 id="easyhtmlqfaq">KADE Zip Files FAQ:</h1>
       <ul>
@@ -82,21 +80,8 @@ const HelpSection = () => {
       <p>
         Once all of the files have been created, compress them into a Zip file for import into KADE.
       </p>
-    </MainContent>
+    </div>
   );
 };
 
 export default HelpSection;
-
-const MainContent = styled.div`
-  background-color: white;
-  padding: 50px;
-  user-select: all;
-
-  li {
-    max-width: 700px;
-  }
-  p {
-    max-width: 700px;
-  }
-`;

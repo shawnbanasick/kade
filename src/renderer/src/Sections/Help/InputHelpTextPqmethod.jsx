@@ -1,10 +1,8 @@
-import React from 'react';
-import styled from 'styled-components';
 import PqmethodInputImage from './helpImages/k3-pqmethod.png';
 
 const HelpSection = () => {
   return (
-    <MainContent>
+    <div className="bg-white p-5 overflow-auto user-select-all pb-20">
       <hr />
       <h2 id="pqmethodfileimportfaq">PQMethod File Import FAQ:</h2>
       <ul>
@@ -42,15 +40,8 @@ const HelpSection = () => {
           loaded properly.
         </li>
       </ol>
-    </MainContent>
+    </div>
   );
 };
 
 export default HelpSection;
-
-const MainContent = styled.div`
-  background-color: white;
-  padding: 50px;
-  padding-bottom: 150px;
-  user-select: all;
-`;

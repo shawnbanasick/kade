@@ -1,15 +1,13 @@
-import styled from 'styled-components';
-
 const License = () => {
   return (
-    <MainContent>
+    <div className="flex m-[50px] mt-[200px] justify-items-center items-center box-border bg-white pb-[100px] pt-[50px] font-sans text-[18px] max-w-[calc(100vw-335px)] h-screen">
       <div>
         <h1>KADE (Ken-Q Analysis Desktop Edition)</h1>
         <h2>Copyright (C) 2024 Shawn Banasick</h2>
-        <SelectableText>
+        <h3 className="select-text">
           Cite as: <br /> Banasick, S. (2019). KADE: A desktop application for Q methodology.
           Journal of Open Source Software, 4(36), 1360, https://doi.org/10.21105/joss.01360
-        </SelectableText>
+        </h3>
         <br />
         <span>
           This program is free software: you can redistribute it and/or modify it under the terms of
@@ -32,12 +30,12 @@ const License = () => {
             POSSIBILITY OF SUCH DAMAGE.`}
         </span>
         <hr />
-        <div style={{ marginTop: 35 }}>
+        <div className="mt-[35px]">
           <span>Built with:</span>
           <ul>
             <li>Electron (MIT license)</li>
             <li>Electron Builder (MIT license)</li>
-            <li>React (MIT license) </li>
+            <li>React (MIT license)</li>
             <li>React Toastify (MIT license)</li>
             <li>D3.js (BSD license)</li>
             <li>ag-Grid (MIT license)</li>
@@ -70,29 +68,8 @@ const License = () => {
           <br />
         </div>
       </div>
-    </MainContent>
+    </div>
   );
 };
 
 export default License;
-
-const MainContent = styled.div`
-  display: flex;
-  margin: 50px;
-  margin-top: 200px;
-  justify-items: center;
-  align-items: center;
-  box-sizing: border-box;
-  background-color: white;
-  padding-bottom: 100px;
-  padding-top: 50px;
-  font-family: Helvetica, sans-serif;
-  font-size: 18px;
-  max-width: calc(100vw - 335px);
-  height: calc(100vh);
-  /* overflow: auto; */
-`;
-
-const SelectableText = styled.h3`
-  user-select: text;
-`;

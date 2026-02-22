@@ -1,4 +1,3 @@
-import styled from 'styled-components';
 import LoadJsonQsorts from './LoadJsonQsorts';
 import { useTranslation } from 'react-i18next';
 
@@ -6,11 +5,11 @@ const JsonQsortsCard = () => {
   const { t } = useTranslation();
 
   return (
-    <Card>
-      <CardMeta>
-        <CardLabel>2. {t('Load JSON File')}</CardLabel>
-      </CardMeta>
-      <Image>
+    <div className="grid grid-flow-row justify-items-center items-center bg-white h-[300px] w-[280px] border-2 border-[darkgray] rounded-[5px]">
+      <div className="bg-white font-sans text-[18px] font-bold">
+        <div className="font-sans text-[18px] font-bold">2. {t('Load JSON File')}</div>
+      </div>
+      <div className="bg-white w-[275px] h-[175px]">
         <img
           style={{ width: '250px', height: '165px', marginLeft: '12px' }}
           alt="Q sorts sample"
@@ -519,42 +518,10 @@ Cg7DZqzQblCiQQSMAlgUDZucQRXAQSCCSwUSUQKLuNWrNBuQIJBBJwSSBQdi5xBBeBBAIJbFQJBM
 puo9ZsUK5AAoEEXBIIlJ1LHMFFIIFAAhtVAoGy26g1G5QrkEAgAZcEAmXnEkdwEUggkMBGlUCg7D
 ZqzQblCiQQSMAlgf8f9sftM14kzxAAAAAASUVORK5CYII="
         />
-      </Image>
+      </div>
       <LoadJsonQsorts />
-    </Card>
+    </div>
   );
 };
 
 export default JsonQsortsCard;
-
-const Card = styled.div`
-  display: grid;
-  grid-auto-flow: row;
-  justify-items: center;
-  align-items: center;
-  background-color: white;
-  border: 2px solid black;
-  height: 300px;
-  width: 280px;
-  border: 2px solid darkgray;
-  border-radius: 5px;
-`;
-
-const Image = styled.div`
-  background-color: white;
-  width: 275px;
-  height: 175px;
-`;
-
-const CardMeta = styled.div`
-  background-color: white;
-  font-family: Helvetica, sans-serif;
-  font-size: 18px;
-  font-weight: bold;
-`;
-
-const CardLabel = styled.div`
-  font-family: Helvetica, sans-serif;
-  font-size: 18px;
-  font-weight: bold;
-`;

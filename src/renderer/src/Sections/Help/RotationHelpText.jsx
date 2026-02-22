@@ -1,6 +1,3 @@
-import React from 'react';
-
-import styled from 'styled-components';
 import rotationJudgmental from './helpImages/k3-rotation-judgmental.png';
 import varimax from './helpImages/k3-rotation-varimax.png';
 import varimaxAdjustment from './helpImages/k3-rotation-varimax-adjustment.png';
@@ -8,7 +5,7 @@ import factorSelect from './helpImages/k3-rotation-num-factors.png';
 
 const HelpSection = () => {
   return (
-    <MainContent>
+    <div className="bg-white p-[50px] pb-[150px] select-all overflow-auto [&_p]:max-w-[950px] [&_ol]:max-w-[950px]">
       <h2 id="factorrotationsectionfaq">Factor Rotation Section FAQ:</h2>
       <ul>
         <li>
@@ -41,7 +38,7 @@ const HelpSection = () => {
         <strong>&quot;Options&quot;</strong> tab.
         <br />
       </p>
-      <div style={{ width: 1000 + 'px' }}>
+      <div className="w-[1000px]">
         <center>
           <img src={factorSelect} width="900px" alt="select factors" />
         </center>
@@ -90,23 +87,8 @@ const HelpSection = () => {
         orange <strong>&quot;Save Rotation&quot;</strong> button is clicked.
       </p>
       <hr />
-    </MainContent>
+    </div>
   );
 };
 
 export default HelpSection;
-
-const MainContent = styled.div`
-  background-color: white;
-  padding: 50px;
-  padding-bottom: 150px;
-  user-select: all;
-  overflow: auto;
-
-  p {
-    max-width: 950px;
-  }
-  ol {
-    max-width: 950px;
-  }
-`;

@@ -1,11 +1,10 @@
 import React from 'react';
 
-import styled from 'styled-components';
 import loadingTable from './helpImages/k3-loadings-1.png';
 
 const HelpSection = () => {
   return (
-    <MainContent>
+    <div className="bg-white p-5 overflow-auto user-select-all">
       <h2 id="loadingssectionfaq">Loadings Section FAQ:</h2>
       <ul>
         <li>
@@ -63,15 +62,8 @@ const HelpSection = () => {
         <strong>&quot;7. Output&quot;</strong> section.{' '}
       </p>
       <img src={loadingTable} width="1000px" alt="factor loadings table" />
-    </MainContent>
+    </div>
   );
 };
 
 export default HelpSection;
-
-const MainContent = styled.div`
-  background-color: white;
-  padding: 50px;
-  user-select: all;
-  overflow: auto;
-`;

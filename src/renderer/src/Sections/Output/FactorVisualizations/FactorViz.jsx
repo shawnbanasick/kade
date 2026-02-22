@@ -83,9 +83,8 @@ const FactorViz = (props) => {
         </g>
       </svg>
       <DownloadFactorVizButtons {...props} />
-    </>
+    </div>
   );
 };
 
 export default FactorViz;
-

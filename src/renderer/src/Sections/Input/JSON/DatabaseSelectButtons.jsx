@@ -1,24 +1,15 @@
-import styled from 'styled-components';
 import FirebaseButton from './FirebaseButton';
 import SheetsButton from './SheetsButton';
 import NetlifyButton from './NetlifyButton';
 
 const DatabaseSelectButtons = () => {
   return (
-    <ContainerDiv>
+    <div className="flex mt-1 mb-2 w-[800px] justify-start">
       <FirebaseButton />
       <SheetsButton />
       <NetlifyButton />
-    </ContainerDiv>
+    </div>
   );
 };
 
 export default DatabaseSelectButtons;
-
-const ContainerDiv = styled.div`
-  display: flex;
-  margin-top: 5px;
-  margin-bottom: 10px;
-  width: 800px;
-  justify-content: flex-start;
-`;

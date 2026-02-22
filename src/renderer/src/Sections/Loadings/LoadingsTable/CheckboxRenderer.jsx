@@ -1,5 +1,4 @@
 import React from 'react';
-import styled from 'styled-components';
 
 class CheckboxRenderer extends React.Component {
   constructor(props) {
@@ -19,31 +18,22 @@ class CheckboxRenderer extends React.Component {
 
   render() {
     return (
-      <Holder>
-        <StyledInput
+      <div className="h-[20px] pt-px">
+        <input
           type="checkbox"
           checked={this.state.value}
           onChange={this.handleCheckboxChange}
+          className="scale-[1.2]"
         />
-      </Holder>
+      </div>
     );
   }
 }
 
 export default CheckboxRenderer;
 
-const StyledInput = styled.input`
-  transform: scale(1.2, 1.2);
-`;
-
-const Holder = styled.div`
-  height: 20px;
-  padding-top: 1px;
-`;
-
 /*
 import { useState } from 'react';
-import styled from 'styled-components';
 
 const CheckboxRenderer = (props) => {
   const [state, setState] = useState({ value: props.value });

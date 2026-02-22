@@ -1,11 +1,8 @@
-import React from 'react';
-
-import styled from 'styled-components';
 import k3KadeImport from './helpImages/k3-kade-import.png';
 
 const HelpSection = () => {
   return (
-    <MainContent>
+    <div className="bg-white p-5 overflow-auto user-select-all pb-20">
       <hr />
       <h1 id="kadefileandkenqanalysisfileimportfaq">
         KADE File and Ken-Q Analysis File Import FAQ
@@ -28,14 +25,8 @@ const HelpSection = () => {
           loaded properly.
         </li>
       </ol>
-    </MainContent>
+    </div>
   );
 };
 
 export default HelpSection;
-
-const MainContent = styled.div`
-  background-color: white;
-  user-select: all;
-  padding: 50px;
-`;

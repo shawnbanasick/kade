@@ -1,5 +1,3 @@
-import React from 'react';
-import styled from 'styled-components';
 import type2Input from './helpImages/XlsxType2Input.png';
 import type1ProjectName from './helpImages/XlsxType1ProjectName.png';
 import type2Sorts from './helpImages/XlsxType2Sorts.png';
@@ -10,7 +8,7 @@ import type1Save from './helpImages/XlsxType1Save.png';
 
 const HelpSection = () => {
   return (
-    <MainContent>
+    <div className="bg-white user-select-all p-5">
       <hr />
       <h1 id="exceltype2faq">XLSX Type 2 FAQ:</h1>
       <ul>
@@ -24,13 +22,14 @@ const HelpSection = () => {
           <p>
             <strong>Where can I get a copy of the sample file?</strong>
             <br /> Use this link:{' '}
-            <CustomAnchor
+            <a
               target="_blank"
               rel="noopener noreferrer"
               href="https://docs.google.com/spreadsheets/d/1Rr0XBwTVls1Z2b1ydzTCEKDqzMgJ0pRrhr5NAac4NTI/edit?usp=sharing"
+              className="text-[#d35400] underline hover:text-blue-500"
             >
               <strong>Type 2 Sample File</strong>
-            </CustomAnchor>{' '}
+            </a>{' '}
             <mark>
               (on the Google Sheets file, click &quot;File&quot;, &quot;Download&quot;,
               &quot;Microsoft Excel (.xlsx)&quot;)
@@ -52,13 +51,14 @@ const HelpSection = () => {
       <h2 id="type2Setup">XLSX Type 2 Setup</h2>
       <h3 id="step1AccessSpreadsheet">
         Step 1 - Access a Spreadsheet Program (
-        <CustomAnchor
+        <a
           target="_blank"
           rel="noopener noreferrer"
           href="https://www.libreoffice.org/download/download-libreoffice/"
+          className="text-[#d35400] underline hover:text-blue-500"
         >
           <strong>LibreOffice Calc</strong>
-        </CustomAnchor>{' '}
+        </a>{' '}
         or MS Excel) That Can Create XLSX Files
       </h3>
       <h3 id="step2AddProjectNameWorksheet">Step 2 - Add a Project Name Worksheet</h3>
@@ -115,22 +115,8 @@ const HelpSection = () => {
         <li>Save as a XLSX file.</li>
       </ul>
       <img src={type1Save} width="1000px" alt="step 8" />
-    </MainContent>
+    </div>
   );
 };
 
 export default HelpSection;
-
-const MainContent = styled.div`
-  background-color: white;
-  user-select: all;
-  padding: 50px;
-`;
-
-const CustomAnchor = styled.a`
-  color: #d35400 !important;
-  text-decoration: underline !important;
-  &:hover {
-    color: blue !important;
-  }
-`;

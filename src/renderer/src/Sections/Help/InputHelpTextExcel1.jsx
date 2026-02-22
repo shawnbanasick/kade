@@ -1,5 +1,3 @@
-import React from 'react';
-import styled from 'styled-components';
 import type1Image from './helpImages/XlsxType1LoadButton.png';
 import type1ProjectName from './helpImages/XlsxType1ProjectName.png';
 import type1Sorts from './helpImages/XlsxType1Sorts.png';
@@ -10,7 +8,7 @@ import type1Save from './helpImages/XlsxType1Save.png';
 
 const HelpSection = () => {
   return (
-    <MainContent>
+    <div className="bg-white user-select-all p-5">
       <hr />
       <h1 id="exceltype1inputfaq">Excel Type 1 Input FAQ:</h1>
       <ul>
@@ -24,13 +22,14 @@ const HelpSection = () => {
           <p>
             <strong>Where can I get a copy of the sample file?</strong>
             <br /> Use this link:{' '}
-            <CustomAnchor
+            <a
               target="_blank"
               rel="noopener noreferrer"
               href="https://docs.google.com/spreadsheets/d/1vsz-X9_EIo3bi4nxBTtQbEWB21qOxBLprWaluaNmvec/edit?usp=sharing"
+              className="text-[#d35400] underline hover:text-blue-500"
             >
               <strong>Type 1 Sample File</strong>
-            </CustomAnchor>{' '}
+            </a>{' '}
             <mark>
               (on the Google Sheets file, click &quot;File&quot;, &quot;Download&quot;,
               &quot;Microsoft Excel (.xlsx)&quot;)
@@ -50,13 +49,14 @@ const HelpSection = () => {
       <h2 id="filesetup">XLSX Type 1 File Setup</h2>
       <h3 id="step1AccessSpreadsheet">
         Step 1 - Access a Spreadsheet Program (
-        <CustomAnchor
+        <a
           target="_blank"
           rel="noopener noreferrer"
           href="https://www.libreoffice.org/download/download-libreoffice/"
+          className="text-[#d35400] underline hover:text-blue-500"
         >
           <strong>LibreOffice Calc</strong>
-        </CustomAnchor>{' '}
+        </a>{' '}
         or MS Excel) That Can Create XLSX Files
       </h3>
 
@@ -110,22 +110,8 @@ const HelpSection = () => {
         <li>Save as a XLSX file.</li>
       </ul>
       <img src={type1Save} width="1000px" alt="step 8" />
-    </MainContent>
+    </div>
   );
 };
 
 export default HelpSection;
-
-const MainContent = styled.div`
-  background-color: white;
-  padding: 50px;
-  user-select: all;
-`;
-
-const CustomAnchor = styled.a`
-  color: #d35400 !important;
-  text-decoration: underline !important;
-  &:hover {
-    color: blue !important;
-  }
-`;
