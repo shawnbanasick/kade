@@ -1,4 +1,3 @@
-import styled from 'styled-components';
 import GeneralButton from './../../../Utils/GeneralButton';
 import { useTranslation } from 'react-i18next';
 import inputState from '../../GlobalState/inputState';
@@ -30,21 +29,16 @@ const FirebaseButton = () => {
   };
 
   return (
-    <TradButton
-      as={GeneralButton}
+    <GeneralButton
+      className="ml-[70px] mr-[5px]"
       id="FirebaseButton"
       $isActive={isActive}
       onClick={handleOnclick}
       disabled={isDisabled}
     >
       {t('Firebase or Local Data')}
-    </TradButton>
+    </GeneralButton>
   );
 };
 
 export default FirebaseButton;
-
-const TradButton = styled.div`
-  margin-left: 70px;
-  margin-right: 5px;
-`;

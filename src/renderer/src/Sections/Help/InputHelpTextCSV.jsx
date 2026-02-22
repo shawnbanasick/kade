@@ -1,12 +1,10 @@
 import React from 'react';
 
-import styled from 'styled-components';
-
 const HelpSection = () => {
   const CsvInputImage = React.lazy(() => import('./helpImages/CsvInputImage'));
 
   return (
-    <MainContent>
+    <div className="bg-white p-[50px] user-select-all">
       <hr />
       <h1 id="csvfaq">CSV FAQ:</h1>
       <ul>
@@ -34,9 +32,14 @@ const HelpSection = () => {
       <p>
         For the <strong>Q sorts file</strong>, use a spreadsheet program like Microsoft Excel,
         Google Sheets, or{' '}
-        <CustomAnchor target="_blank" rel="noopener noreferrer" href="https://www.libreoffice.org/">
+        <a
+          target="_blank"
+          rel="noopener noreferrer"
+          href="https://www.libreoffice.org/"
+          className="text-[#d35400] underline hover:text-blue-500"
+        >
           <strong>Libre Office</strong>
-        </CustomAnchor>{' '}
+        </a>{' '}
         to setup the file. In the file, the data should be organized by statement number. A header
         row showing the statement numbers is required at the top of the file. Participant names or
         identifiers should be listed in the first column. Q-sort data should start in the second
@@ -77,22 +80,8 @@ const HelpSection = () => {
           successfully been loaded.{' '}
         </li>
       </ol>
-    </MainContent>
+    </div>
   );
 };
 
 export default HelpSection;
-
-const MainContent = styled.div`
-  background-color: white;
-  padding: 50px;
-  user-select: all;
-`;
-
-const CustomAnchor = styled.a`
-  color: #d35400 !important;
-  text-decoration: underline !important;
-  &:hover {
-    color: blue !important;
-  }
-`;

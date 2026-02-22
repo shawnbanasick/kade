@@ -4,7 +4,6 @@ import throwDataAlreadyLoadedInputErrorModal from '../ErrorChecking/throwDataAlr
 import NewLoadButton from '../../../Utils/NewLoadButton';
 import inputState from '../../GlobalState/inputState';
 import { useTranslation } from 'react-i18next';
-import styled from 'styled-components';
 
 const LoadExcelT2 = () => {
   const [t] = useTranslation();

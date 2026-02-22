@@ -1,5 +1,3 @@
-import React from 'react';
-import styled from 'styled-components';
 import { ToastContainer, toast, Slide } from 'react-toastify';
 import convertJSONToData from './convertJSONToData';
 import revertLoadButtonsColors from '../DemoData/revertLoadButtonsColors';
@@ -40,13 +38,11 @@ const LoadJsonQsortsFile = () => {
   let isNoError = true;
 
   const handleClick = async () => {
-    // check to see if data loaded and correlations started - true ==> throw error
     if (isDataAlreadyLoaded) {
       throwDataAlreadyLoadedInputErrorModal();
     } else {
       try {
         const processJson = (results) => {
-          // convert from JSON to array
           const resultsArray = [];
           const resultsKeys = Object.keys(results);
 
@@ -62,13 +58,11 @@ const LoadJsonQsortsFile = () => {
           }
 
           if (isNoError === true) {
-            // todo - this is the source of the extra brackets
-
             console.log(JSON.stringify(results, null, 2));
 
             const csvData = convertJSONToData(results);
-
             const columnHeaders = csvData[0][0];
+
             revertLoadButtonsColors('json');
             updateJsonParticipantId(columnHeaders);
             updateShowJsonParticipantIdDropdown(true);
@@ -81,8 +75,7 @@ const LoadJsonQsortsFile = () => {
             updateDisabledSheetsButton(true);
             notifyWarning();
             updateIsDataAlreadyLoaded(true);
-          } // end if
-          // end read file path
+          }
         };
 
         await window.electronAPI.openJsonFile();
@@ -97,43 +90,24 @@ const LoadJsonQsortsFile = () => {
   };
 
   return (
-    <React.Fragment>
-      <JsonButton
-        as={LoadButton}
-        $isActive={isLoadJsonQsortsButtonGreen}
-        onClick={() => handleClick()}
-      >
-        <LineContainer>
-          <SvgContainer xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-            <path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z" />
-          </SvgContainer>
-          <p>{t('Load JSON File')}</p>
-        </LineContainer>
-      </JsonButton>
+    <>
+      <div className="mt-[18px]">
+        <LoadButton $isActive={isLoadJsonQsortsButtonGreen} onClick={() => handleClick()}>
+          <div className="flex flex-row justify-center items-center h-full w-full">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 20 20"
+              className="rotate-180 mr-[20px] h-[17px] w-[17px] fill-current"
+            >
+              <path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z" />
+            </svg>
+            <p>{t('Load JSON File')}</p>
+          </div>
+        </LoadButton>
+      </div>
       <ToastContainer transition={Slide} />
-    </React.Fragment>
+    </>
   );
 };
 
 export default LoadJsonQsortsFile;
-
-const JsonButton = styled.div`
-  margin-top: 18px;
-`;
-
-const SvgContainer = styled.svg`
-  transform: rotate(180deg);
-  margin-right: 20px;
-  height: 17px;
-  width: 17px;
-  fill: currentColor;
-`;
-
-const LineContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-  width: 100%;
-`;

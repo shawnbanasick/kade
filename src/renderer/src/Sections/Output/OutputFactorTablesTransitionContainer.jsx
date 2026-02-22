@@ -11,24 +11,20 @@ const OutputFactorTablesTransitionContainer = () => {
   if (showFactorCorrelationsTable) {
     return (
       <div className={`${showFactorCorrelationsTable ? 'visible' : 'hidden'}`}>
-        <div className="section">
-          <div className="outputFactorTables">
-            <span className="outputFactorTablesSpan3">
-              {t('Correlations between Factor Scores')}
-            </span>
+        <div className="">
+          <div className="mb-[30px]">
+            <span className="text-2xl">{t('Correlations between Factor Scores')}</span>
             <FactorCorrelationsTable />
           </div>
-          <div className="outputFactorTables">
-            <span className="outputFactorTablesSpan3">{t('Factor Characteristics')}</span>
+          <div className="mb-[30px]">
+            <span className="text-2xl">{t('Factor Characteristics')}</span>
             <FactorCharacteristicsTable />
           </div>
-          <div className="outputFactorTables">
-            <span className="outputFactorTablesSpan3">
+          <div className="flex flex-col gap-1 mb-[30px]">
+            <span className="text-2xl">
               {t('Standard Errors for Differences in Factor Z scores')}
             </span>
-            <span className="outputFactorTablesSpan2">
-              {t('Diagonal Entries Are S E Within Factors')}
-            </span>
+            <span className="">{t('Diagonal Entries Are S E Within Factors')}</span>
             <StandardErrorsDifferencesTable />
           </div>
         </div>

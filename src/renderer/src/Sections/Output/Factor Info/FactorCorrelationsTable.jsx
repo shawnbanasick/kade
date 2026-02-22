@@ -97,7 +97,7 @@ const FactorCorrelationsTable = () => {
   gridRowDataFacCorrTable = getGridRowDataFacCorrTable(currentData[0], currentData[2]);
 
   return (
-    <div>
+    <div className="">
       <div style={{ height: 'auto', width: widthVal }} className="ag-theme-fresh">
         <AgGridReact
           id="facCorTable"

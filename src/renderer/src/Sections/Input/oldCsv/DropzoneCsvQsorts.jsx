@@ -1,17 +1,15 @@
-import Papa from "papaparse";
-import styled from "styled-components";
-import React, { Component } from "react";
-import Dropzone, { FileReader } from "react-dropzone";
-import state from "../../../store";
-import { sortsDisplayText } from "../logic/sortsDisplayText";
-import shiftRawSortsPositive from "../logic/shiftRawSortsPositive";
-import calcMultiplierArrayT2 from "../Excel/excelLogic/calcMultiplierArrayT2";
-import checkUniqueParticipantNames from "../logic/checkUniqueParticipantNames";
+import Papa from 'papaparse';
+import Dropzone from 'react-dropzone';
+import state from '../../../store';
+import { sortsDisplayText } from '../logic/sortsDisplayText';
+import shiftRawSortsPositive from '../logic/shiftRawSortsPositive';
+import calcMultiplierArrayT2 from '../Excel/excelLogic/calcMultiplierArrayT2';
+import checkUniqueParticipantNames from '../logic/checkUniqueParticipantNames';
 
-const handleDropRejected = (...args) => console.log("reject", args);
+const handleDropRejected = (...args) => console.log('reject', args);
 
 function handleDrop(acceptedFiles) {
-  acceptedFiles.forEach(file => {
+  acceptedFiles.forEach((file) => {
     const reader = new FileReader();
     reader.onload = () => {
       try {
@@ -19,27 +17,22 @@ function handleDrop(acceptedFiles) {
         const lines3 = parsedFile.data;
         let qSortPatternArray;
 
-        // remove the first (header) line
         lines3.shift();
 
-        // parsing first line of PQMethod file to set qav variables
         const numberSorts = lines3.length;
-        if (lines3[0][1] === "") {
+        if (lines3[0][1] === '') {
           throw new Error("Can't find any Q-sorts in the file!");
         }
 
-        // remove empty "" strings from array
         let maxLength = lines3[0].length;
         for (let i = 0; i < lines3[0].length - 1; i += 1) {
           const value1 = lines3[0][i];
-          if (value1 === "") {
+          if (value1 === '') {
             maxLength = i;
             break;
           }
         }
 
-        // todo - check if other data import methods check to see if min value is above zero
-        // before doing positive shift for raw sorts
         let minValue;
         let arrayShiftedPositive;
         const mainDataObject = [];
@@ -54,7 +47,6 @@ function handleDrop(acceptedFiles) {
           if (j === 0) {
             minValue = Math.min(...asNumbers);
           }
-          // grab last for for qSortPattern
           qSortPatternArray = asNumbers;
 
           if (minValue < 1) {
@@ -74,7 +66,6 @@ function handleDrop(acceptedFiles) {
         const sortsDisplayTextArray = sortsDisplayText(mainDataObject);
         const participantNames = checkUniqueParticipantNames(respondentNames);
 
-        // send data to STATE
         state.setState({
           numQsorts: numberSorts,
           qSortPattern: qSortPatternArray,
@@ -83,26 +74,25 @@ function handleDrop(acceptedFiles) {
           mainDataObject,
           sortsDisplayText: sortsDisplayTextArray,
           multiplierArray,
-          dataOrigin: "csv"
+          dataOrigin: 'csv',
         });
       } catch (error) {
-        // set error message
         state.setState({
           csvErrorMessage1: error.message,
-          showCsvErrorModal: true
+          showCsvErrorModal: true,
         });
       }
     };
     reader.onabort = () => {
       state.setState({
-        excelErrorMessage1: "The file reader aborted the load process!",
-        showExcelErrorModal: true
+        excelErrorMessage1: 'The file reader aborted the load process!',
+        showExcelErrorModal: true,
       });
     };
     reader.onerror = () => {
       state.setState({
-        excelErrorMessage1: "The file reader encountered an error!",
-        showExcelErrorModal: true
+        excelErrorMessage1: 'The file reader encountered an error!',
+        showExcelErrorModal: true,
       });
     };
     reader.readAsBinaryString(file);
@@ -111,34 +101,21 @@ function handleDrop(acceptedFiles) {
 
 const CsvQsortsDropzone = () => {
   return (
-    <Section>
-      <Dropzone
-        onDrop={handleDrop}
-        multiple={false}
-        onDropRejected={handleDropRejected}
-      >
-        Drag a file here or
-        <br /> click to load.
+    <div className="grid items-center justify-items-center h-[120px] w-[280px]">
+      <Dropzone onDrop={handleDrop} multiple={false} onDropRejected={handleDropRejected}>
+        {({ getRootProps, getInputProps }) => (
+          <div
+            {...getRootProps()}
+            className="border-2 border-blue-600 h-[60px] w-[280px] px-[10px] pt-[25px] pb-0 text-center font-[Helvetica,sans-serif]"
+          >
+            <input {...getInputProps()} />
+            Drag a file here or
+            <br /> click to load.
+          </div>
+        )}
       </Dropzone>
-    </Section>
+    </div>
   );
 };
 
 export default CsvQsortsDropzone;
-
-const Section = styled.div`
-  display: grid;
-  align-items: center;
-  justify-items: center;
-  height: 120px;
-  width: 280px;
-
-  div {
-    border: 2px solid blue;
-    height: 60px !important;
-    width: 280px;
-    padding: 25px 10px 0px 10px;
-    text-align: center;
-    font-family: Helvetica, sans-serif;
-  }
-`;

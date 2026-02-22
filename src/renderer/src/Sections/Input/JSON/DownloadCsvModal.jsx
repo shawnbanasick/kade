@@ -1,4 +1,3 @@
-import styled from 'styled-components';
 import downloadCSVdata from './downloadCSVdata';
 import LoadButton from '../DemoData/LoadButton';
 import inputState from '../../GlobalState/inputState';
@@ -24,38 +23,17 @@ const DownloadCsvModal = () => {
   };
 
   return (
-    <GridContainerDiv>
+    <div className="[grid-column-start:3] [grid-row-start:1]">
       <LoadButton onClick={handleClick}>
-        <LineContainer>
-          <SvgContainer>
+        <div className="flex flex-row justify-center items-center h-full w-full">
+          <div className="flex justify-center items-center mr-[10px]">
             <img src={CsvIcon} height="50px" alt="CSV Icon" />
-          </SvgContainer>
+          </div>
           {t('Download JSON Data')}
-        </LineContainer>
+        </div>
       </LoadButton>
-    </GridContainerDiv>
+    </div>
   );
 };
+
 export default DownloadCsvModal;
-
-const GridContainerDiv = styled.div`
-  grid-column-start: 3;
-  grid-row-start: 1;
-`;
-
-const LineContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-  width: 100%;
-`;
-
-const SvgContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-right: 10px;
-  margin-left: 10;
-`;
