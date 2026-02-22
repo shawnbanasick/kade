@@ -1,24 +1,14 @@
 import { useState } from 'react';
-import styled from 'styled-components';
-import { Form, Radio } from 'semantic-ui-react';
 import UserNumberInput from './UserNumberInput';
 import ColorSelector from './ColorSelector2';
 import UserSelectionSwitch from './UserSelectionSwitch';
 import { useTranslation } from 'react-i18next';
 import vizState from '../../GlobalState/vizState';
 
-const styles = {
-  width: 150,
-};
-
-const styles2 = {
-  display: 'flex',
-  marginTop: 15,
-  marginRight: 5,
-  fontSize: 16,
-  userSelect: 'none',
-  textAlign: 'center',
-};
+const radioOptions = [
+  { label: 'Symbol', value: 'symbol' },
+  { label: null, value: 'distinguishingColor' }, // label set dynamically below
+];
 
 const DistinguishingPanel = () => {
   const { t } = useTranslation();
@@ -29,75 +19,75 @@ const DistinguishingPanel = () => {
     (state) => state.updateFactorVisualizationsButtonColor
   );
 
-  const [localStore, setLocalStore] = useState({ showDistinguishingAs: 'symbol' });
+  const [showDistinguishingAs, setShowDistinguishingAs] = useState('symbol');
 
-  function handleChange(e, { value }) {
-    localStore.showDistinguishingAs = value;
+  const handleChange = (value) => {
+    setShowDistinguishingAs(value);
     factorVizOptionsHolder.showDistinguishingAs = value;
     updateFactorVizOptionsHolder(factorVizOptionsHolder);
     updateFactorVisualizationsButtonColor('bg-[orange]');
-  }
+  };
+
+  const radioOptions = [
+    { label: t('Symbol'), value: 'symbol' },
+    { label: colorTrans, value: 'distinguishingColor' },
+  ];
 
   return (
-    <div style={{ marginTop: 30 }}>
-      <span style={{ fontSize: 22, userSelect: 'none' }}>
+    <div className="mt-[30px]">
+      <span className="text-[22px] select-none">
         {t('Distinguishing and Consensus Statements')}
       </span>
-      <hr style={{ width: '100%', marginBottom: 5 }} />
-      <OptionStatementRow>
-        <OptionStatementText>{`13. ${t('Indicate distinguishing')}?`}</OptionStatementText>
+      <hr className="w-full mb-[5px]" />
+
+      {/* Row 13 */}
+      <div className="flex items-center mb-3 pl-[10px]">
+        <div className="text-[16px] select-none">{`13. ${t('Indicate distinguishing')}?`}</div>
         <UserSelectionSwitch
           name="willIndicateDistinguishing"
           value="willIndicateDistinguishing"
           toggle
         />
-        <HolderDiv>
-          <Form style={styles2}>
-            <Form.Field>{t('with')}</Form.Field>
-            <Form.Field>
-              <Radio
-                style={{ marginLeft: 16, fontSize: 16 }}
-                label={t('Symbol')}
+        <div className="flex mt-[15px] mr-[5px] text-[16px] select-none text-center items-center">
+          <span>{t('with')}</span>
+          {radioOptions.map(({ label, value }) => (
+            <label key={value} className="flex items-center gap-2 ml-4 cursor-pointer text-[16px]">
+              <input
+                type="radio"
                 name="radioGroup1"
-                value="symbol"
-                checked={localStore.showDistinguishingAs === 'symbol'}
-                onChange={handleChange}
+                value={value}
+                checked={showDistinguishingAs === value}
+                onChange={() => handleChange(value)}
+                className="radio radio-sm"
               />
-            </Form.Field>
-            <Form.Field>
-              <Radio
-                style={{ marginLeft: 16, fontSize: 16 }}
-                label={colorTrans}
-                name="radioGroup1"
-                value="distinguishingColor"
-                checked={localStore.showDistinguishingAs === 'distinguishingColor'}
-                onChange={handleChange}
-              />
-            </Form.Field>
-          </Form>
-        </HolderDiv>
+              <span className="pt-[3px]">{label}</span>
+            </label>
+          ))}
+        </div>
         <ColorSelector
           id="distinguishingIndicator05"
-          style={{ marginLeft: 5 }}
+          className="ml-[5px]"
           defaultColor={'#ededed'}
         />
-        <OptionStatementText style={{ marginLeft: 5, marginRight: 5 }}>01:</OptionStatementText>
+        <div className="text-[16px] select-none ml-[5px] mr-[5px]">01:</div>
         <ColorSelector
           id="distinguishingIndicator01"
-          style={{ marginLeft: 5 }}
+          className="ml-[5px]"
           defaultColor={'#bdbdbd'}
         />
-      </OptionStatementRow>
-      <OptionStatementRow>
-        <OptionStatementText2>
+      </div>
+
+      {/* Row 14 sub */}
+      <div className="flex items-center mb-3 pl-[10px]">
+        <div className="text-[16px] select-none pl-[10px]">
           {`-- ${t('Adjust distinguishing statement indicator size')}?`}
-        </OptionStatementText2>
+        </div>
         <UserSelectionSwitch
           name="willAdjustDistIndicatorSize"
           value="willAdjustDistIndicatorSize"
           toggle={false}
         />
-        <div style={styles}>
+        <div className="w-[150px]">
           <UserNumberInput
             name={'willAdjustDistIndicatorSizeBy'}
             lowerLimit={1}
@@ -106,56 +96,23 @@ const DistinguishingPanel = () => {
             step={0.5}
           />
         </div>
-      </OptionStatementRow>
-      {/* <OptionStatementRow>
-        <OptionStatementText2>
-          {`-- ${t("Display distinguishing statement comparison triangles")}?`}
-        </OptionStatementText2>
-        <UserSelectionSwitch
-          name="willDisplayDistingCompareSymbols"
-          value="willDisplayDistingCompareSymbols"
-          toggle
-        />
-      </OptionStatementRow> */}
-      <OptionStatementRow>
-        <OptionStatementText>
+      </div>
+
+      {/* Row 14 */}
+      <div className="flex items-center mb-3 pl-[10px]">
+        <div className="text-[16px] select-none">
           {`14. ${t('Display consensus statement indicator color')}?`}
-        </OptionStatementText>
+        </div>
         <UserSelectionSwitch
           name="willDisplayConsensusStates"
           value="willDisplayConsensusStates"
           toggle={false}
         />
-        <OptionStatementText style={{ marginRight: 10 }}>{`${t('Color')}: `}</OptionStatementText>
+        <div className="text-[16px] select-none mr-[10px]">{`${t('Color')}: `}</div>
         <ColorSelector id="consensusIndicator" defaultColor={'#d9effe'} />
-      </OptionStatementRow>
+      </div>
     </div>
   );
 };
 
 export default DistinguishingPanel;
-
-const OptionStatementRow = styled.div`
-  display: flex;
-  align-items: center;
-  margin-bottom: 12px;
-  padding-left: 10px;
-`;
-
-const OptionStatementText = styled.div`
-  font-size: 16px;
-  user-select: none;
-`;
-
-const OptionStatementText2 = styled.div`
-  font-size: 16px;
-  user-select: none;
-  padding-left: 10px;
-`;
-
-const HolderDiv = styled.div`
-  label {
-    padding-left: 18px !important;
-    padding-top: 3px;
-  }
-`;

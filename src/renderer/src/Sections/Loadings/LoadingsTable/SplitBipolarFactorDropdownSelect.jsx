@@ -1,45 +1,47 @@
-import { Dropdown } from 'semantic-ui-react';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import loadingState from '../../GlobalState/loadingState';
 
 const InvertFactorDropdownSelect = () => {
   const { t } = useTranslation();
-  let splitFactorsArray = loadingState((state) => state.splitFactorsArray);
-  let bipolarFactorsArray = loadingState((state) => state.bipolarFactorsArray);
+  const splitFactorsArray = loadingState((state) => state.splitFactorsArray);
+  const bipolarFactorsArray = loadingState((state) => state.bipolarFactorsArray);
   const updateFactorToSplit = loadingState((state) => state.updateFactorToSplit);
 
-  const saveDropdownValueToState = (event, data) => {
-    if (data === null || data === undefined) {
-      return;
-    }
-    const factorToSplit = data.value;
+  const [activeValue, setActiveValue] = useState('');
+
+  const saveDropdownValueToState = (e) => {
+    const factorToSplit = e.target.value;
+    setActiveValue(factorToSplit);
     updateFactorToSplit(factorToSplit);
   };
 
   const getOptions = () => {
     if (bipolarFactorsArray.length > 0) {
-      bipolarFactorsArray.forEach((item) => {
-        splitFactorsArray = splitFactorsArray.filter((object) => object.value !== item);
-      });
+      return splitFactorsArray.filter((object) => !bipolarFactorsArray.includes(object.value));
     }
     return splitFactorsArray;
   };
 
   const options = getOptions();
+
   return (
-    <div style={{ display: 'flex' }}>
-      <span style={{ marginRight: 20, fontSize: 30 }}>
-        {`${t('Select the factor to split')}: `}
-      </span>
-      <Dropdown
-        placeholder={'?'}
+    <div className="flex items-center">
+      <span className="mr-5 text-[30px]">{`${t('Select the factor to split')}: `}</span>
+      <select
+        value={activeValue}
         onChange={saveDropdownValueToState}
-        openOnFocus
-        button
-        simple
-        item
-        options={options}
-      />
+        className="select select-bordered bg-white text-[14px] w-full max-w-xs"
+      >
+        <option value="" disabled>
+          ?
+        </option>
+        {options.map((opt) => (
+          <option key={opt.key} value={opt.value}>
+            {opt.text}
+          </option>
+        ))}
+      </select>
     </div>
   );
 };

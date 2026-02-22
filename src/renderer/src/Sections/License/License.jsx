@@ -38,10 +38,7 @@ const License = () => {
             <li>Electron (MIT license)</li>
             <li>Electron Builder (MIT license)</li>
             <li>React (MIT license) </li>
-            <li>React Easy State (MIT license)</li>
             <li>React Toastify (MIT license)</li>
-            <li>Styled Components (MIT license)</li>
-            <li>Semantic-UI-React (MIT license)</li>
             <li>D3.js (BSD license)</li>
             <li>ag-Grid (MIT license)</li>
             <li>react-i18next (MIT license)</li>

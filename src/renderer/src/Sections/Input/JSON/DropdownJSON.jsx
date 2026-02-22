@@ -1,20 +1,14 @@
 import { useState } from 'react';
 import { toast } from 'react-toastify';
-import { Dropdown } from 'semantic-ui-react';
 import { useTranslation } from 'react-i18next';
 import inputState from '../../GlobalState/inputState';
 
 function formatOptions(rawOptions) {
-  const formattedOptions = [];
-  for (let i = 0; i < rawOptions.length; i += 1) {
-    const tempObj = {};
-    const value = rawOptions[i];
-    tempObj.key = [`${i}key`];
-    tempObj.text = value;
-    tempObj.value = value;
-    formattedOptions.push(tempObj);
-  }
-  return formattedOptions;
+  return rawOptions.map((value, i) => ({
+    key: `${i}key`,
+    text: value,
+    value: value,
+  }));
 }
 
 const DropdownJSON = (props) => {
@@ -24,37 +18,40 @@ const DropdownJSON = (props) => {
     (state) => state.updateIsLoadJsonQsortsButtonGreen
   );
 
-  const [localStore, setLocalStore] = useState({
-    options: [],
-    activeValue: '',
-  });
+  const [activeValue, setActiveValue] = useState('');
 
   const options = formatOptions(props.options);
-  localStore.options = options;
 
-  const saveDropdownValueToState = (event, data) => {
-    setLocalStore({ options: options, activeValue: data.value });
-    props.onChangeMessageUpTree(data.value);
+  const saveDropdownValueToState = (e) => {
+    const val = e.target.value;
+    setActiveValue(val);
+    props.onChangeMessageUpTree(val);
     toast.dismiss();
     updateNotifyDataUploadSuccess(true);
     updateIsLoadJsonQsortsButtonGreen(true);
   };
 
   return (
-    <div role="listbox" style={{ marginLeft: 20, backgroundColor: 'lightgray', fontSize: 18 }}>
-      <span style={{ marginRight: 10, fontSize: 18, width: 150, paddingLeft: 20 }}>
+    <div role="listbox" className="flex items-center ml-5 bg-gray-300 text-[18px] py-1 pr-2">
+      <span className="pl-5 mr-2.5 text-[18px] w-[150px]">
         <b>4.</b>
       </span>
-      <Dropdown
-        placeholder={t('Select Participant ID')}
+      <select
+        value={activeValue}
         onChange={saveDropdownValueToState}
-        openOnFocus
-        scrolling
-        value={localStore.activeValue}
-        button
-        options={localStore.options}
-      />
+        className="select select-bordered select-sm bg-white text-[18px] w-full max-w-xs"
+      >
+        <option value="" disabled>
+          {t('Select Participant ID')}
+        </option>
+        {options.map((opt) => (
+          <option key={opt.key} value={opt.value}>
+            {opt.text}
+          </option>
+        ))}
+      </select>
     </div>
   );
 };
+
 export default DropdownJSON;

@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { toast } from 'react-toastify';
-import { Dropdown } from 'semantic-ui-react';
 import { useTranslation } from 'react-i18next';
 import inputState from '../../GlobalState/inputState';
 import coreState from '../../GlobalState/coreState';
@@ -25,14 +24,11 @@ const DropdownJSON = (props) => {
     { key: 3, text: 'url UserCode', value: 'urlUsercode' },
   ];
 
-  const [localStore, setLocalStore] = useState({
-    options: mainOptions,
-    activeValue: '',
-  });
+  const [activeValue, setActiveValue] = useState('');
 
-  const saveDropdownValueToState = (event, data) => {
-    let value = data.value;
-    setLocalStore({ options: mainOptions, activeValue: value });
+  const saveDropdownValueToState = (e) => {
+    const value = e.target.value;
+    setActiveValue(value);
 
     console.log('value', value);
 
@@ -49,7 +45,7 @@ const DropdownJSON = (props) => {
 
     if (qSortsLoaded) {
       if (value === 'randomId') {
-        let names = checkUniqueParticipantNames(names2);
+        const names = checkUniqueParticipantNames(names2);
         mainDataObjectArray.forEach((item, index) => {
           item.name = names[index];
         });
@@ -58,17 +54,18 @@ const DropdownJSON = (props) => {
       }
 
       if (value === 'partId') {
-        let names2 = inputState((state) => state.csvPartIdArray);
-        let names = checkUniqueParticipantNames(names2);
+        const csvPartIdArray = inputState.getState().csvPartIdArray;
+        const names = checkUniqueParticipantNames(csvPartIdArray);
         mainDataObjectArray.forEach((item, index) => {
           item.name = names[index];
         });
         updateMainDataObject([...mainDataObjectArray]);
         updateRespondentNames([...names]);
       }
+
       if (value === 'urlUsercode') {
-        let names2b = inputState((state) => state.csvUrlUsercodeArray);
-        let names = checkUniqueParticipantNames(names2b);
+        const csvUrlUsercodeArray = inputState.getState().csvUrlUsercodeArray;
+        const names = checkUniqueParticipantNames(csvUrlUsercodeArray);
         mainDataObjectArray.forEach((item, index) => {
           item.name = names[index];
         });
@@ -79,20 +76,26 @@ const DropdownJSON = (props) => {
   };
 
   return (
-    <div role="listbox" style={{ marginLeft: 20 }}>
-      <span style={{ marginRight: 10, fontSize: 20 }}>
+    <div role="listbox" className="flex items-center ml-5">
+      <span className="mr-2.5 text-[20px]">
         <b>4.</b> ID:{' '}
       </span>
-      <Dropdown
-        placeholder={t('Select Participant ID')}
+      <select
+        value={activeValue}
         onChange={saveDropdownValueToState}
-        openOnFocus
-        scrolling
-        value={localStore.activeValue}
-        button
-        options={localStore.options}
-      />
+        className="select select-bordered select-sm bg-white text-[14px] w-full max-w-xs"
+      >
+        <option value="" disabled>
+          {t('Select Participant ID')}
+        </option>
+        {mainOptions.map((opt) => (
+          <option key={opt.key} value={opt.value}>
+            {opt.text}
+          </option>
+        ))}
+      </select>
     </div>
   );
 };
+
 export default DropdownJSON;

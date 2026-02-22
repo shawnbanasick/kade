@@ -1,4 +1,4 @@
-import { Dropdown } from 'semantic-ui-react';
+import { useState } from 'react';
 import rotationState from '../../GlobalState/rotationState';
 import loadingState from '../../GlobalState/loadingState';
 import { useTranslation } from 'react-i18next';
@@ -8,75 +8,40 @@ const InvertFactorDropdownSelect = () => {
   const updateFactorToInvert = loadingState((state) => state.updateFactorToInvert);
   const numFactorsKeptForRot = rotationState((state) => state.numFactorsKeptForRot);
 
-  const saveDropdownValueToState = (event, data) => {
-    const factorToInvert = data.value;
+  const [activeValue, setActiveValue] = useState('');
+
+  const saveDropdownValueToState = (e) => {
+    const factorToInvert = Number(e.target.value);
+    setActiveValue(factorToInvert);
     updateFactorToInvert(factorToInvert);
   };
 
   const getOptions = () => {
-    const options = [
-      {
-        key: 'factor1',
-        text: '1',
-        value: 1,
-      },
-      {
-        key: 'factor2',
-        text: '2',
-        value: 2,
-      },
-      {
-        key: 'factor3',
-        text: '3',
-        value: 3,
-      },
-      {
-        key: 'factor4',
-        text: '4',
-        value: 4,
-      },
-      {
-        key: 'factor5',
-        text: '5',
-        value: 5,
-      },
-      {
-        key: 'factor6',
-        text: '6',
-        value: 6,
-      },
-      {
-        key: 'factor7',
-        text: '7',
-        value: 7,
-      },
-      {
-        key: 'factor8',
-        text: '8',
-        value: 8,
-      },
-    ];
-    // shorten options list if using centroid
-    options.length = +numFactorsKeptForRot;
-    return options;
+    const options = [1, 2, 3, 4, 5, 6, 7, 8];
+    return options.slice(0, +numFactorsKeptForRot);
   };
 
   const options = getOptions();
+
   return (
-    <div>
-      <span style={{ marginRight: 20, fontSize: 30 }}>
-        {`${t('Select the factor to invert')}: `}
-      </span>
-      <Dropdown
-        placeholder={'?'}
+    <div className="flex items-center">
+      <span className="mr-5 text-[30px]">{`${t('Select the factor to invert')}: `}</span>
+      <select
+        value={activeValue}
         onChange={saveDropdownValueToState}
-        openOnFocus
-        button
-        simple
-        item
-        options={options}
-      />
+        className="select select-bordered bg-white text-[14px] w-full max-w-xs"
+      >
+        <option value="" disabled>
+          ?
+        </option>
+        {options.map((num) => (
+          <option key={`factor${num}`} value={num}>
+            {num}
+          </option>
+        ))}
+      </select>
     </div>
   );
 };
+
 export default InvertFactorDropdownSelect;

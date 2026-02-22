@@ -1,15 +1,12 @@
 import { useState } from 'react';
-import { Form, Radio } from 'semantic-ui-react';
-import styled from 'styled-components';
 import { useTranslation } from 'react-i18next';
 import vizState from '../../GlobalState/vizState';
 
-const styles = {
-  display: 'flex',
-  marginTop: 15,
-  fontSize: 20,
-  userSelect: 'none',
-};
+const radioOptions = [
+  { label: 'Prepend', value: 'prepend' },
+  { label: 'Append', value: 'append' },
+  { label: 'Replace', value: 'replace' },
+];
 
 const CustomFileNameLocation = () => {
   const { t } = useTranslation();
@@ -18,64 +15,34 @@ const CustomFileNameLocation = () => {
   const updateFactorVisualizationsButtonColor = vizState(
     (state) => state.updateFactorVisualizationsButtonColor
   );
-  const [localStore, setLocalStore] = useState({ customFileNameLocation: '' });
 
-  function handleChange(e, { value }) {
-    setLocalStore({ customFileNameLocation: value });
+  const [customFileNameLocation, setCustomFileNameLocation] = useState('');
+
+  const handleChange = (value) => {
+    setCustomFileNameLocation(value);
     factorVizOptionsHolder.customFileNameLocation = value;
     updateFactorVizOptionsHolder(factorVizOptionsHolder);
     updateFactorVisualizationsButtonColor('bg-[orange]');
-  }
+  };
 
-  // todo - fix this checked setting
   return (
-    <HolderDiv>
-      <Form style={styles}>
-        <Form.Field>{t('Custom name position')}</Form.Field>
-        <Form.Field>
-          <Radio
-            style={{ marginLeft: 16, fontSize: 20 }}
-            label={t('Prepend')}
+    <div className="flex mt-[15px] text-[20px] select-none items-center">
+      <span>{t('Custom name position')}</span>
+      {radioOptions.map(({ label, value }) => (
+        <label key={value} className="flex items-center gap-2 ml-4 cursor-pointer text-[20px]">
+          <input
+            type="radio"
             name="radioGroup"
-            value="prepend"
-            checked={localStore.customFileNameLocation === 'prepend'}
-            onChange={handleChange}
+            value={value}
+            checked={customFileNameLocation === value}
+            onChange={() => handleChange(value)}
+            className="radio radio-sm"
           />
-        </Form.Field>
-        <Form.Field>
-          <Radio
-            style={{ marginLeft: 16, fontSize: 20 }}
-            label={t('Append')}
-            name="radioGroup"
-            value="append"
-            checked={localStore.customFileNameLocation === 'append'}
-            onChange={handleChange}
-          />
-        </Form.Field>
-        <Form.Field>
-          <Radio
-            style={{ marginLeft: 16, fontSize: 20 }}
-            label={t('Replace')}
-            name="radioGroup"
-            value="replace"
-            checked={localStore.customFileNameLocation === 'replace'}
-            onChange={handleChange}
-          />
-        </Form.Field>
-      </Form>
-    </HolderDiv>
+          {t(label)}
+        </label>
+      ))}
+    </div>
   );
 };
+
 export default CustomFileNameLocation;
-
-/*
-.ui.radio.checkbox label {
-    padding-left: 18px !important;
-}
-*/
-
-const HolderDiv = styled.div`
-  label {
-    padding-left: 18px !important;
-  }
-`;

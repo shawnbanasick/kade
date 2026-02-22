@@ -1,11 +1,9 @@
-import React, { useState } from 'react';
-import { Tab } from 'semantic-ui-react';
-import styled, { keyframes } from 'styled-components';
+import { useState } from 'react';
+import { Tabs, TabList, Tab, TabPanel } from 'react-tabs';
 import HelpHome from './HelpHome';
 import InputHelpText from './InputHelpText';
 import OutputHelpText from './OutputHelpText';
 import FactorsHelpText from './FactorsHelpText';
-// import InputHelpTextCSV from "./InputHelpTextCSV";
 import LoadingsHelpText from './LoadingsHelpText';
 import RotationHelpText from './RotationHelpText';
 import InputHelpTextJson from './InputHelpTextJson';
@@ -16,152 +14,89 @@ import CorrelationsHelpText from './CorrelationsHelpText';
 import InputHelpTextPqmethod from './InputHelpTextPqmethod';
 import InputHelpTextZip from './InputHelpTextZip';
 
-// factorScoreRanksArray
-
-const panes = [
-  {
-    menuItem: 'Help-Home',
-    render: () => (
-      <Tab.Pane className="helpTabs">
-        <DataWindow2>
-          <HelpHome />
-        </DataWindow2>
-      </Tab.Pane>
-    ),
-  },
-  {
-    menuItem: 'Help-Input',
-    render: () => (
-      <Tab.Pane className="helpTabs">
-        <DataWindow2>
-          <InputHelpText />
-          <InputHelpTextExcel1 />
-          <InputHelpTextExcel2 />
-          <InputHelpTextExcel3 />
-          <InputHelpTextZip />
-          <InputHelpTextJson />
-          <InputHelpTextPqmethod />
-        </DataWindow2>
-      </Tab.Pane>
-    ),
-  },
-  {
-    menuItem: 'Help-Correlations',
-    render: () => (
-      <Tab.Pane className="helpTabs">
-        <DataWindow2>
-          <CorrelationsHelpText />
-        </DataWindow2>
-      </Tab.Pane>
-    ),
-  },
-  {
-    menuItem: 'Help-Factors',
-    render: () => (
-      <Tab.Pane className="helpTabs">
-        <DataWindow2>
-          <FactorsHelpText />
-        </DataWindow2>
-      </Tab.Pane>
-    ),
-  },
-  {
-    menuItem: 'Help-Rotation',
-    render: () => (
-      <Tab.Pane className="helpTabs">
-        <DataWindow2>
-          <RotationHelpText />
-        </DataWindow2>
-      </Tab.Pane>
-    ),
-  },
-  {
-    menuItem: 'Help-Loadings',
-    render: () => (
-      <Tab.Pane className="helpTabs">
-        <DataWindow2>
-          <LoadingsHelpText />
-        </DataWindow2>
-      </Tab.Pane>
-    ),
-  },
-  {
-    menuItem: 'Help-Output',
-    render: () => (
-      <Tab.Pane className="helpTabs">
-        <DataWindow2>
-          <OutputHelpText />
-        </DataWindow2>
-      </Tab.Pane>
-    ),
-  },
+const tabLabels = [
+  'Help-Home',
+  'Help-Input',
+  'Help-Correlations',
+  'Help-Factors',
+  'Help-Rotation',
+  'Help-Loadings',
+  'Help-Output',
 ];
 
 const Output = () => {
   const [activeIndex, setActiveIndex] = useState(0);
 
-  function handleTabChange(e, { activeIndex }) {
-    setActiveIndex(activeIndex);
-  }
-
   return (
-    <MainContent>
-      <Tab
-        style={{ paddingRight: '0px !important' }}
-        panes={panes}
-        activeIndex={activeIndex}
-        onTabChange={handleTabChange}
-        id={'helpSection'}
-      />
-    </MainContent>
+    <div
+      id="helpSection"
+      className="bg-[#d6dbe0] w-[calc(100vw-135px)] box-border h-screen overflow-auto select-all animate-fadeIn"
+    >
+      <Tabs selectedIndex={activeIndex} onSelect={(index) => setActiveIndex(index)}>
+        {/* Tab Bar */}
+        <TabList className="flex flex-wrap border-b border-gray-300 bg-[#d6dbe0]">
+          {tabLabels.map((label) => (
+            <Tab
+              key={label}
+              className="px-4 py-2 text-sm font-medium cursor-pointer select-none text-gray-600 border border-transparent hover:text-black focus:outline-none"
+              selectedClassName="bg-white border-gray-300 border-b-white rounded-t text-black -mb-px"
+            >
+              {label}
+            </Tab>
+          ))}
+        </TabList>
+
+        {/* Tab Panels */}
+        <TabPanel>
+          <div className="pt-[15px] bg-white h-[calc(100vh-48px)] min-w-[calc(100vw-166px)] overflow-auto">
+            <HelpHome />
+          </div>
+        </TabPanel>
+
+        <TabPanel>
+          <div className="pt-[15px] bg-white h-[calc(100vh-48px)] min-w-[calc(100vw-166px)] overflow-auto">
+            <InputHelpText />
+            <InputHelpTextExcel1 />
+            <InputHelpTextExcel2 />
+            <InputHelpTextExcel3 />
+            <InputHelpTextZip />
+            <InputHelpTextJson />
+            <InputHelpTextPqmethod />
+          </div>
+        </TabPanel>
+
+        <TabPanel>
+          <div className="pt-[15px] bg-white h-[calc(100vh-48px)] min-w-[calc(100vw-166px)] overflow-auto">
+            <CorrelationsHelpText />
+          </div>
+        </TabPanel>
+
+        <TabPanel>
+          <div className="pt-[15px] bg-white h-[calc(100vh-48px)] min-w-[calc(100vw-166px)] overflow-auto">
+            <FactorsHelpText />
+          </div>
+        </TabPanel>
+
+        <TabPanel>
+          <div className="pt-[15px] bg-white h-[calc(100vh-48px)] min-w-[calc(100vw-166px)] overflow-auto">
+            <RotationHelpText />
+          </div>
+        </TabPanel>
+
+        <TabPanel>
+          <div className="pt-[15px] bg-white h-[calc(100vh-48px)] min-w-[calc(100vw-166px)] overflow-auto">
+            <LoadingsHelpText />
+          </div>
+        </TabPanel>
+
+        <TabPanel>
+          <div className="pt-[15px] bg-white h-[calc(100vh-48px)] min-w-[calc(100vw-166px)] overflow-auto">
+            <OutputHelpText />
+          </div>
+        </TabPanel>
+      </Tabs>
+    </div>
   );
 };
 
 export default Output;
-
-const fadeIn = keyframes`
-  from {
-    opacity: 0;
-  }
-
-  to {
-    opacity: 1;
-  }
-`;
-
-const fadeOut = keyframes`
-  from {
-    opacity: 1;
-  }
-
-  to {
-    opacity: 0;
-  }
-`;
-
-const MainContent = styled.div`
-  background-color: #d6dbe0;
-  visibility: ${(props) => (props.view ? 'hidden' : 'visible')};
-  animation: ${(props) => (props.view ? fadeOut : fadeIn)} 0.5s linear;
-  transition: visibility 0.5s linear;
-
-  width: calc(100vw - 135px);
-  box-sizing: border-box;
-  height: 100vh;
-  overflow: auto;
-
-  user-select: all;
-
-  .ui.bottom.attached.segment.active.tab {
-    border-bottom-color: white;
-    border-left-color: white;
-  }
-`;
-
-const DataWindow2 = styled.div`
-  padding-top: 15px;
-  background-color: white;
-  height: calc(100vh - 48px);
-  min-width: calc(100vw - 166px);
-  overflow: auto;
-`;

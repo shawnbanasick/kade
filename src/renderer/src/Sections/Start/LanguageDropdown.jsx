@@ -1,61 +1,42 @@
-import { Dropdown } from 'semantic-ui-react';
-
+import { useState } from 'react';
 import i18n from 'i18next';
 
 const options = [
-  {
-    key: 'language1',
-    text: 'Chinese',
-    value: 'cn',
-  },
-  {
-    key: 'language2',
-    text: 'English',
-    value: 'en',
-  },
-  {
-    key: 'language3',
-    text: 'French',
-    value: 'fr',
-  },
-  {
-    key: 'language4',
-    text: 'German',
-    value: 'de',
-  },
-  {
-    key: 'language5',
-    text: 'Japanese',
-    value: 'jp',
-  },
-  {
-    key: 'language6',
-    text: 'Korean',
-    value: 'kr',
-  },
-  {
-    key: 'language7',
-    text: 'Spanish',
-    value: 'es',
-  },
+  { key: 'language1', text: 'Chinese', value: 'cn' },
+  { key: 'language2', text: 'English', value: 'en' },
+  { key: 'language3', text: 'French', value: 'fr' },
+  { key: 'language4', text: 'German', value: 'de' },
+  { key: 'language5', text: 'Japanese', value: 'jp' },
+  { key: 'language6', text: 'Korean', value: 'kr' },
+  { key: 'language7', text: 'Spanish', value: 'es' },
 ];
 
-const languageDropdown = () => {
-  const changeLanguage = (event, data) => {
-    console.log(data.value);
-    i18n.changeLanguage(data.value);
+const LanguageDropdown = () => {
+  const [activeValue, setActiveValue] = useState('');
+
+  const changeLanguage = (e) => {
+    const val = e.target.value;
+    console.log(val);
+    setActiveValue(val);
+    i18n.changeLanguage(val);
   };
 
   return (
-    <Dropdown
-      placeholder={'Select User Interface Language'}
+    <select
+      value={activeValue}
       onChange={changeLanguage}
-      openOnFocus
-      scrolling
-      button
-      options={options}
-    />
+      className="select select-bordered bg-white text-[14px] w-full max-w-xs"
+    >
+      <option value="" disabled>
+        Select User Interface Language
+      </option>
+      {options.map((opt) => (
+        <option key={opt.key} value={opt.value}>
+          {opt.text}
+        </option>
+      ))}
+    </select>
   );
 };
 
-export default languageDropdown;
+export default LanguageDropdown;

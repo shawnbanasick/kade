@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { toast } from 'react-toastify';
-import { Dropdown } from 'semantic-ui-react';
 import { useTranslation } from 'react-i18next';
 import inputState from '../../GlobalState/inputState';
 import coreState from '../../GlobalState/coreState';
@@ -12,8 +11,7 @@ const DropdownJSON = (props) => {
   const updateUserSelectNetlifyPartId = inputState((state) => state.updateUserSelectNetlifyPartId);
   const updateMainDataObject = coreState((state) => state.updateMainDataObject);
   const updateRespondentNames = coreState((state) => state.updateRespondentNames);
-  let mainDataObjectArray = coreState((state) => state.mainDataObject);
-  // let mainDataObjectArray = getCoreState('mainDataObject');
+  const mainDataObjectArray = coreState((state) => state.mainDataObject);
 
   const mainOptions = [
     { key: 1, text: 'participant ID', value: 'partId' },
@@ -21,18 +19,11 @@ const DropdownJSON = (props) => {
     { key: 3, text: 'url UserCode', value: 'urlUsercode' },
   ];
 
-  const [localStore, setLocalStore] = useState({
-    options: mainOptions,
-    activeValue: '',
-  });
+  const [activeValue, setActiveValue] = useState('');
 
-  const saveDropdownValueToState = (event, data) => {
-    let value = data.value;
-    setLocalStore({
-      options: mainOptions,
-      activeValue: value,
-    });
-    // localStore.activeValue = value;
+  const saveDropdownValueToState = (e) => {
+    const value = e.target.value;
+    setActiveValue(value);
 
     if (value !== 'randomId' && value !== 'partId' && value !== 'urlUsercode') {
       return;
@@ -40,75 +31,66 @@ const DropdownJSON = (props) => {
 
     props.onChangeMessageUpNetlifyTree(value);
     toast.dismiss();
-    // inputState.isLoadNetlifyCsvButtonGreen = true;
 
-    let qSortsLoaded = inputState((state) => state.isLoadNetlifyCsvButtonGreen);
-    // let qSortsLoaded = getInputState('isLoadNetlifyCsvButtonGreen');
+    const qSortsLoaded = inputState.getState().isLoadNetlifyCsvButtonGreen;
 
     if (qSortsLoaded) {
       updateNotifyDataUploadSuccess(true);
       updateUserSelectNetlifyPartId(value);
-      // inputState.notifyDataUploadSuccess = true;
-      // inputState.userSelectNetlifyPartId = value;
 
       if (value === 'randomId') {
-        let names2 = inputState((state) => state.csvRandomIdArray);
-        // let names2 = getInputState('csvRandomIdArray');
-        let names = checkUniqueParticipantNames(names2);
+        const names2 = inputState.getState().csvRandomIdArray;
+        const names = checkUniqueParticipantNames(names2);
         mainDataObjectArray.forEach((item, index) => {
           item.name = names[index];
         });
-
         updateMainDataObject([...mainDataObjectArray]);
         updateRespondentNames([...names]);
-        // coreState.mainDataObject = [...mainDataObjectArray];
-        // coreState.respondentNames = [...names];
       }
 
       if (value === 'partId') {
-        let names2c = inputState((state) => state.csvPartIdArray);
-        // let names2c = getInputState('csvPartIdArray');
-        let names = checkUniqueParticipantNames(names2c);
+        const names2c = inputState.getState().csvPartIdArray;
+        const names = checkUniqueParticipantNames(names2c);
         mainDataObjectArray.forEach((item, index) => {
           item.name = names[index];
         });
         updateMainDataObject([...mainDataObjectArray]);
         updateRespondentNames([...names]);
-        // coreState.mainDataObject = [...mainDataObjectArray];
-        // coreState.respondentNames = [...names];
       }
+
       if (value === 'urlUsercode') {
-        let names2b = inputState((state) => state.csvUrlUsercodeArray);
-        // let names2b = getInputState('csvUrlUsercodeArray');
-        let names = checkUniqueParticipantNames(names2b);
+        const names2b = inputState.getState().csvUrlUsercodeArray;
+        const names = checkUniqueParticipantNames(names2b);
         mainDataObjectArray.forEach((item, index) => {
           item.name = names[index];
         });
         updateMainDataObject([...mainDataObjectArray]);
         updateRespondentNames([...names]);
-        // coreState.mainDataObject = [...mainDataObjectArray];
-        // coreState.respondentNames = [...names];
       }
     }
-
-    // isLoadSheetsCsvButtonGreen
   };
 
   return (
-    <div role="listbox" style={{ marginLeft: 20 }}>
-      <span style={{ marginRight: 10, fontSize: 20 }}>
+    <div role="listbox" className="flex items-center ml-5">
+      <span className="mr-2.5 text-[20px]">
         <b>4.</b> ID:{' '}
       </span>
-      <Dropdown
-        placeholder={t('Select Participant ID')}
+      <select
+        value={activeValue}
         onChange={saveDropdownValueToState}
-        openOnFocus
-        scrolling
-        value={localStore.activeValue}
-        button
-        options={localStore.options}
-      />
+        className="select select-bordered select-sm bg-white text-[14px] w-full max-w-xs"
+      >
+        <option value="" disabled>
+          {t('Select Participant ID')}
+        </option>
+        {mainOptions.map((opt) => (
+          <option key={opt.key} value={opt.value}>
+            {opt.text}
+          </option>
+        ))}
+      </select>
     </div>
   );
 };
+
 export default DropdownJSON;
