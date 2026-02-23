@@ -1,9 +1,9 @@
 import React from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
-const SortsList = (props) => {
+const SortsDisplayList = (props) => {
   return (
-    <div className="pl-8 pt-8">
+    <div className="pl-8 pt-4 overflow-y-auto h-[calc(100vh-160px)]">
       <ul>
         {props.sortsDisplayText.map(function (listValue, index) {
           return (
@@ -42,4 +42,4 @@ const SortsList = (props) => {
   );
 };
 
-export default SortsList;
+export default SortsDisplayList;

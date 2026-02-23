@@ -51,8 +51,8 @@ const UnforcedSortsDisplayButton = (props) => {
         onClick={handleOnClick}
         className={
           areQsortsVerified
-            ? 'bg-primary-button h-[50px] w-[150px] text-[clamp(1.3rem,1.5vw,1.8rem)]'
-            : 'bg-[orange] h-[50px] w-[150px] text-[clamp(1.3rem,1.5vw,1.8rem)]'
+            ? 'bg-primary-button h-[30px] w-[150px] text-[clamp(1.3rem,1.5vw,1.8rem)]'
+            : 'bg-[orange] h-[30px] w-[150px] text-[clamp(1.3rem,1.5vw,1.8rem)]'
         }
       >
         <div className="text-[clamp(0.5rem,1.5vw,1rem)] text-center leading-tight">{`${areQsortsVerified ? t('Sorts Verified') : t('Click after Verifying Sorts')}`}</div>
@@ -65,8 +65,8 @@ const UnforcedSortsDisplayButton = (props) => {
           onClick={handleOnClick2}
           className={
             areQsortsVerified
-              ? 'bg-primary-button h-[50px] w-[150px] text-[clamp(1.3rem,1.5vw,1.8rem)]'
-              : 'bg-[orange] h-[50px] w-[150px] text-[clamp(1.3rem,1.5vw,1.8rem)]'
+              ? 'bg-primary-button h-[30px] w-[150px] text-[clamp(1.3rem,1.5vw,1.8rem)]'
+              : 'bg-[orange] h-[30px] w-[150px] text-[clamp(1.3rem,1.5vw,1.8rem)]'
           }
         >
           <div>

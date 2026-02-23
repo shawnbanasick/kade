@@ -31,6 +31,8 @@ const Data = () => {
   const showExportButtons = inputState((state) => state.showExportButtons);
   const showQsortsSpreadsheet = dataDisplayState((state) => state.showQsortsSpreadsheet);
   const showQsorts = dataDisplayState((state) => state.showQsorts);
+  const dataActiveTab = dataDisplayState((state) => state.dataActiveTab);
+  const updateDataActiveTab = dataDisplayState((state) => state.updateDataActiveTab);
 
   let showUnforcedConfirmMessage = false;
 
@@ -58,14 +60,10 @@ const Data = () => {
     showUnforcedConfirmMessage = true;
   }
 
-  if (areQsortsLoaded && isQsortPatternLoaded) {
+  const InfoPanel = () => {
     return (
-      <main className="w-[calc(100vw-135px)] text-black max-h-[calc(100vh-22px)] overflow-auto bg-white p-4 pt-6 pl-6 pb-5 select-none font-sans text-lg animate-fade-in rounded-none">
-        {/* Project Title */}
-        <h1 className="text-5xl font-bold mb-8">{t('Project Data')}</h1>
-
-        {/* Information Container */}
-        <section className="mb-8 space-y-2">
+      <>
+        <section className="mb-8 pl-6 space-y-2">
           <h2 className="text-2xl font-semibold">
             {t('Project Name')}: <span className="font-normal">{projectName}</span>
           </h2>
@@ -75,51 +73,51 @@ const Data = () => {
           <h2 className="text-2xl font-semibold">
             {t('Number of Statements')}: <span className="font-normal">{numStatements}</span>
           </h2>
-          {qSortPattern && (
+        </section>
+      </>
+    );
+  };
+
+  const PatternPanel = () => {
+    return (
+      <section className="mb-8 space-y-2 pl-6">
+        <h2 className="text-2xl font-semibold">{t('Q Sort Pattern')}:</h2>
+        <QsortsPatternList texts={texts} />
+      </section>
+    );
+  };
+
+  const StatementsPanel = () => {
+    return (
+      <section className="py-2 mb-12">
+        <StatementsList statements={statements} />
+      </section>
+    );
+  };
+
+  const SortsPanel = () => {
+    return (
+      <>
+        <div className="flex flex-row gap-1 max-w-[85vw] justify-between mb-6 items-center">
+          {showUnforcedConfirmMessage && (
             <>
-              <h2 className="text-2xl font-semibold">{t('Q Sort Pattern')}:</h2>
-              <QsortsPatternList texts={texts} />
+              <div className="flex flex-row items-center gap-4 max-w-[60vw] justify-between">
+                <div className="flex flex-row items-center gap-4">
+                  <div className="text-[clamp(1.3rem,1.5vw,1.8rem)]">
+                    {t('Display Participant Q Sorts as')}
+                  </div>
+                  <DisplayDataQsortsButton />
+                  <DisplayDataSortsGridButton />
+                </div>
+              </div>
+              <UnforcedSortsDisplay
+                number={numUnforcedParts}
+                display={displayForcedComfirmMessage}
+              />
             </>
           )}
-        </section>
-
-        {/* Statement List Container */}
-        <section className="py-8 mb-12">
-          <h1 className="text-3xl font-bold mb-4">{t('Statements')}:</h1>
-          <StatementsList statements={statements} />
-        </section>
-
-        {/* Unforced Container CONFIRM DATA INPUT  */}
-        <div className="flex flex-row h-[70px] gap-4 mt-4 max-w-[70vw] justify-between mb-12 items-center">
-          {showUnforcedConfirmMessage && (
-            <UnforcedSortsDisplay number={numUnforcedParts} display={displayForcedComfirmMessage} />
-          )}
-
-          {showExportButtons && (
-            <div className="flex flex-row items-center text-center gap-4">
-              <div className="text-[clamp(1.3rem,1.5vw,1.8rem)] font-bold self-center align-center ">
-                {t('Export PQMethod')}
-              </div>
-              <div className="flex flex-row gap-4 mt-1">
-                <StaFileButton />
-                <DatFileButton />
-              </div>
-            </div>
-          )}
         </div>
-
-        {/* Sorts List Container */}
-        <section className="min-h-[1000px]">
-          <div className="flex flex-row items-center gap-4 max-w-[60vw] justify-between">
-            <div className="flex flex-row items-center gap-4">
-              <div className="text-[clamp(1.3rem,1.5vw,1.8rem)] font-bold">
-                {t('Display Participant Q Sorts as')}
-              </div>
-              <DisplayDataQsortsButton />
-              <DisplayDataSortsGridButton />
-            </div>
-            <DownloadDatabookButton />
-          </div>
+        <section className="h-[calc(100vh-200px)]">
           {showQsortsSpreadsheet && <ParticipantsQsortsGrid data={mainDataObject} />}
           {showQsorts && (
             <SortsDisplayList
@@ -128,7 +126,122 @@ const Data = () => {
             />
           )}
         </section>
-      </main>
+      </>
+    );
+  };
+
+  const DownloadsPanel = () => {
+    return (
+      <section className="py-8 mb-12">
+        {showExportButtons && (
+          <div className="flex flex-row flex-wrap items-center text-center gap-4">
+            <DownloadDatabookButton />
+            <div className="text-[clamp(1.3rem,1.5vw,1.8rem)] ml-12! font-bold self-center align-center ">
+              {t('Export PQMethod')}
+            </div>
+            <div className="flex flex-row gap-4 mt-1">
+              <StaFileButton />
+              <DatFileButton />
+            </div>
+          </div>
+        )}
+      </section>
+    );
+  };
+
+  // Handler for tab clicks
+  const handleTabClick = (tabId) => {
+    updateDataActiveTab(tabId);
+  };
+
+  const tabs = [
+    {
+      title: t('Info'),
+      content: <InfoPanel />,
+    },
+    {
+      title: t('Pattern'),
+      content: <PatternPanel />,
+    },
+    {
+      title: t('Statements'),
+      content: <StatementsPanel />,
+    },
+    {
+      title: t('Q Sorts'),
+      content: <SortsPanel />,
+    },
+    {
+      title: t('Downloads'),
+      content: <DownloadsPanel />,
+    },
+  ];
+
+  if (areQsortsLoaded && isQsortPatternLoaded) {
+    return (
+      <div
+        className={`
+        bg-white
+        w-[calc(100vw-135px)]
+        box-border
+        h-full
+        overflow-auto
+        transition-[visibility,opacity]
+        duration-500
+        text-black
+        text-[clamp(1rem,1.5vw,1.1rem)] 
+      `}
+      >
+        <div className="tabs tabs-box flex bg-grey-button h-full rounded-none">
+          <input
+            type="radio"
+            name="my_tabs_6"
+            className={`tab basis-[9vw] text-[clamp(1rem,1.5vw,1.1rem)]  hover:shadow-[inset_0_0_0_4px_#666,_0_0_1px_transparent] ${dataActiveTab === 'tab1' ? 'tab-active bg-primary-button text-black' : 'bg-grey-button'}`}
+            aria-label={tabs[0].title}
+            onClick={() => handleTabClick('tab1')}
+          />
+
+          <div className="tab-content bg-base-100 border-base-300 p-6">{tabs[0].content}</div>
+
+          <input
+            type="radio"
+            name="my_tabs_6"
+            className={`tab basis-[9vw] text-[clamp(1rem,1.5vw,1.1rem)]  hover:shadow-[inset_0_0_0_4px_#666,_0_0_1px_transparent] ${dataActiveTab === 'tab2' ? 'tab-active bg-primary-button text-black' : 'bg-grey-button'}`}
+            aria-label={tabs[1].title}
+            onClick={() => handleTabClick('tab2')}
+          />
+
+          <div className="tab-content bg-base-100 border-base-300 p-6">{tabs[1].content}</div>
+
+          <input
+            type="radio"
+            name="my_tabs_6"
+            className={`tab basis-[9vw] text-[clamp(1rem,1.5vw,1.1rem)]  hover:shadow-[inset_0_0_0_4px_#666,_0_0_1px_transparent] ${dataActiveTab === 'tab3' ? 'tab-active bg-primary-button text-black' : 'bg-grey-button'}`}
+            aria-label={tabs[2].title}
+            onClick={() => handleTabClick('tab3')}
+          />
+
+          <div className="tab-content bg-base-100 border-base-300 p-6">{tabs[2].content}</div>
+
+          <input
+            type="radio"
+            name="my_tabs_6"
+            className={`tab basis-[9vw] text-[clamp(1rem,1.5vw,1.1rem)]  hover:shadow-[inset_0_0_0_4px_#666,_0_0_1px_transparent] ${dataActiveTab === 'tab4' ? 'tab-active bg-primary-button text-black' : 'bg-grey-button'}`}
+            aria-label={tabs[3].title}
+            onClick={() => handleTabClick('tab4')}
+          />
+          <div className="tab-content bg-base-100 border-base-300 p-1 pl-6">{tabs[3].content}</div>
+
+          <input
+            type="radio"
+            name="my_tabs_6"
+            className={`tab basis-[9vw] text-[clamp(1rem,1.5vw,1.1rem)]  hover:shadow-[inset_0_0_0_4px_#666,_0_0_1px_transparent] ${dataActiveTab === 'tab5' ? 'tab-active bg-primary-button text-black' : 'bg-grey-button'}`}
+            aria-label={tabs[4].title}
+            onClick={() => handleTabClick('tab5')}
+          />
+          <div className="tab-content bg-base-100 border-base-300 p-6">{tabs[4].content}</div>
+        </div>
+      </div>
     );
   } else {
     return (

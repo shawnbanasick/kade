@@ -1,14 +1,14 @@
-const style1 = { width: 1150, wordWrap: 'break-word' };
-
 const SortsList = () => {
   return (
-    <ol>
-      {this.props.displayText.map((listValue) => (
-        <li style={style1} key={listValue.toString()}>
-          {listValue}
-        </li>
-      ))}
-    </ol>
+    <div className="w-[1150px] border-2 border-red-500">
+      <ol>
+        {this.props.displayText.map((listValue) => (
+          <li className=" wrap-break-word" key={listValue.toString()}>
+            {listValue}
+          </li>
+        ))}
+      </ol>
+    </div>
   );
 };
 
