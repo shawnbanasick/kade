@@ -60,7 +60,7 @@ const LoadSheetsCsv = () => {
   const isLoadSheetsCsvButtonGreen = getInputState('isLoadSheetsCsvButtonGreen');
 
   return (
-    <LoadButton $isActive={isLoadSheetsCsvButtonGreen} onClick={handleClick}>
+    <LoadButton isactive={isLoadSheetsCsvButtonGreen} onClick={handleClick}>
       <div className="flex flex-row justify-center items-center h-full w-full">
         <svg
           xmlns="http://www.w3.org/2000/svg"

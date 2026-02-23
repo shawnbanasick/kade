@@ -77,7 +77,6 @@ const RotationButtonGroup = () => {
         <div className="mt-[25px] flex flex-row">
           <GeneralButton
             id="VariContinueButton"
-            $isActive={variContinueButtonActive}
             disabled={variContinueButtonDisabled}
             onClick={onVariContClick}
             className="mr-2.5"
@@ -86,7 +85,6 @@ const RotationButtonGroup = () => {
           </GeneralButton>
           <GeneralButton
             id="VariAdjustButton"
-            $isActive={variAdjustButtonActive}
             disabled={variAdjustButtonDisabled}
             onClick={onVariAdjustClick}
             className="mr-2.5"
@@ -95,7 +93,6 @@ const RotationButtonGroup = () => {
           </GeneralButton>
           <GeneralButton
             id="VariPqmAdjustButton"
-            $isActive={variPqmAdjustButtonActive}
             disabled={variPqmAdjustButtonDisabled}
             onClick={onVariPqmAdjustClick}
             className="mr-2.5"

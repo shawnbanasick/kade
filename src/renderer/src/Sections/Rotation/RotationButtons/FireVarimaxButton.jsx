@@ -65,7 +65,6 @@ const RotationButtonGroup = () => {
       <div>
         <GeneralButton
           id="pcaRotationButton"
-          $isActive={varimaxButtonActive}
           disabled={varimaxButtonDisabled}
           onClick={onVarimaxClick}
           className={`w-[170px] h-[30px] ${varimaxButtonActive ? 'bg-primary-button' : 'bg-grey-button'}`}

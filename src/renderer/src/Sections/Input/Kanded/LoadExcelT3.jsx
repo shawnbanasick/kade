@@ -54,7 +54,7 @@ const LoadExcelT3 = () => {
   };
 
   return (
-    <NewLoadButton $isActive={isLoadExcelT3ButtonGreen} onClick={() => handleClick()}>
+    <NewLoadButton isactive={isLoadExcelT3ButtonGreen} onClick={() => handleClick()}>
       <div
         id="ExcelT3LineContainer"
         className="flex flex-row justify-center items-center h-full w-full gap-3"

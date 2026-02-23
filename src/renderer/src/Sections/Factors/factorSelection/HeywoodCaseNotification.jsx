@@ -121,7 +121,6 @@ const HeywoodCaseNotification = () => {
       <div className="flex flex-row w-[820px] ml-[75px] mt-[25px] gap-4">
         <GeneralButton
           onClick={handleContinueClick}
-          isActive={heywoodContinueButtonActive}
           disabled={heywoodButtonDisabled}
           className={`mt-[25px] ml-[70px] w-[200px] ${heywoodContinueButtonActive ? 'bg-primary-button' : 'bg-grey-button'}`}
         >
@@ -129,7 +128,6 @@ const HeywoodCaseNotification = () => {
         </GeneralButton>
         <GeneralButton
           onClick={handleReselectClick}
-          isActive={heywoodReselectButtonActive}
           disabled={heywoodButtonDisabled}
           className={`mt-[25px] ml-[70px] w-[200px] ${heywoodReselectButtonActive ? 'bg-primary-button' : 'bg-grey-button'}`}
         >
@@ -137,7 +135,6 @@ const HeywoodCaseNotification = () => {
         </GeneralButton>
         <GeneralButton
           onClick={handleAdjustClick}
-          isActive={heywoodAdjustButtonActive}
           disabled={heywoodButtonDisabled}
           className={`mt-[25px] ml-[70px] w-[200px] ${heywoodAdjustButtonActive ? 'bg-primary-button' : 'bg-grey-button'}`}
         >

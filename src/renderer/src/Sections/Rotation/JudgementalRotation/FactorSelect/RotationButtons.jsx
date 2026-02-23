@@ -95,7 +95,6 @@ const RotationButtons = () => {
       <div className="flex flex-row gap-1">
         <GeneralButton
           id={'Button1Degree'}
-          $isActive={highlightDegreeButton1}
           width="50px"
           onClick={handleOnclick}
           key={'f1'}
@@ -106,7 +105,6 @@ const RotationButtons = () => {
         <GeneralButton
           id={'Button5Degrees'}
           width="50px"
-          $isActive={highlightDegreeButton3}
           onClick={handleOnclick}
           key={'f3'}
           className={`h-[30px] p-2 min-w-[50px] ${highlightDegreeButton3 ? 'bg-primary-button' : 'bg-grey-button'}`}
@@ -115,7 +113,6 @@ const RotationButtons = () => {
         </GeneralButton>
         <GeneralButton
           id={'Button10Degrees'}
-          $isActive={highlightDegreeButton4}
           width="50px"
           onClick={handleOnclick}
           key={'f4'}
@@ -125,7 +122,6 @@ const RotationButtons = () => {
         </GeneralButton>
         <GeneralButton
           id={'Button90Degrees'}
-          $isActive={highlightDegreeButton5}
           width="50px"
           onClick={handleOnclick}
           key={'f5'}

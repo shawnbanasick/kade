@@ -185,7 +185,6 @@ const FactorSelectButtons = (props) => {
         {show1 && (
           <GeneralButton
             id={'factor 1'}
-            $isActive={highlightRotfactor1}
             width={'50px'}
             onClick={(e) => handleClick(e, baselineData)}
             key={'f1'}
@@ -197,7 +196,6 @@ const FactorSelectButtons = (props) => {
         {show2 && (
           <GeneralButton
             id={'factor 2'}
-            $isActive={highlightRotfactor2}
             width={'50px'}
             onClick={(e) => handleClick(e, baselineData)}
             key={'f2'}
@@ -209,7 +207,6 @@ const FactorSelectButtons = (props) => {
         {show3 && (
           <GeneralButton
             id={'factor 3'}
-            $isActive={highlightRotfactor3}
             width={'50px'}
             onClick={(e) => handleClick(e, baselineData)}
             key={'f3'}
@@ -222,7 +219,6 @@ const FactorSelectButtons = (props) => {
           <GeneralButton
             id={'factor 4'}
             width={'50px'}
-            $isActive={highlightRotfactor4}
             onClick={(e) => handleClick(e, baselineData)}
             key={'f4'}
             className={`${highlightRotfactor4 ? 'bg-primary-button' : 'bg-grey-button'} h-[30px] p-2 min-w-[50px]`}
@@ -233,7 +229,6 @@ const FactorSelectButtons = (props) => {
         {show5 && (
           <GeneralButton
             id={'factor 5'}
-            $isActive={highlightRotfactor5}
             width={'50px'}
             onClick={(e) => handleClick(e, baselineData)}
             key={'f5'}
@@ -245,7 +240,6 @@ const FactorSelectButtons = (props) => {
         {show6 && (
           <GeneralButton
             id={'factor 6'}
-            $isActive={highlightRotfactor6}
             width={'50px'}
             onClick={(e) => handleClick(e, baselineData)}
             key={'f6'}
@@ -257,7 +251,6 @@ const FactorSelectButtons = (props) => {
         {show7 && (
           <GeneralButton
             id={'factor 7'}
-            $isActive={highlightRotfactor7}
             width={'50px'}
             onClick={(e) => handleClick(e, baselineData)}
             key={'f7'}
@@ -269,7 +262,6 @@ const FactorSelectButtons = (props) => {
         {show8 && (
           <GeneralButton
             id={'factor 8'}
-            $isActive={highlightRotfactor8}
             width={'50px'}
             onClick={(e) => handleClick(e, baselineData)} // e => this.handleClick(e, baselineData)
             key={'f8'}

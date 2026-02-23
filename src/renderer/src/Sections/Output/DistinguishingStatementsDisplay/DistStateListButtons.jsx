@@ -88,7 +88,6 @@ const DistStateListButtons = () => {
       <div className="text-[18px] font-bold">Threshold:</div>
       <GeneralButton
         id="p0001Button"
-        $isActive={localStore.p0001Active}
         onClick={handleOnclick}
         className={`min-w-[80px] ${localStore.p0001Active ? 'bg-primary-button' : 'bg-grey-button'}`}
         key="f1"
@@ -97,7 +96,6 @@ const DistStateListButtons = () => {
       </GeneralButton>
       <GeneralButton
         id="p0005Button"
-        $isActive={localStore.p0005Active}
         onClick={handleOnclick}
         className={`min-w-[80px] ${localStore.p0005Active ? 'bg-primary-button' : 'bg-grey-button'}`}
         key="f2"
@@ -106,7 +104,6 @@ const DistStateListButtons = () => {
       </GeneralButton>
       <GeneralButton
         id="p001Button"
-        $isActive={localStore.p001Active}
         onClick={handleOnclick}
         className={`min-w-[80px] ${localStore.p001Active ? 'bg-primary-button' : 'bg-grey-button'}`}
         key="f3"
@@ -115,7 +112,6 @@ const DistStateListButtons = () => {
       </GeneralButton>
       <GeneralButton
         id="p005Button"
-        $isActive={localStore.p005Active}
         onClick={handleOnclick}
         className={`min-w-[80px] ${localStore.p005Active ? 'bg-primary-button' : 'bg-grey-button'}`}
         key="f4"
@@ -124,7 +120,6 @@ const DistStateListButtons = () => {
       </GeneralButton>
       <GeneralButton
         id="p01Button"
-        $isActive={localStore.p01Active}
         onClick={handleOnclick}
         className={`min-w-[80px] ${localStore.p01Active ? 'bg-primary-button' : 'bg-grey-button'}`}
         key="f5"
@@ -133,7 +128,6 @@ const DistStateListButtons = () => {
       </GeneralButton>
       <GeneralButton
         id="p05Button"
-        $isActive={localStore.p05Active}
         onClick={handleOnclick}
         className={`min-w-[80px] ${localStore.p05Active ? 'bg-primary-button' : 'bg-grey-button'}`}
         key="f6"
@@ -142,7 +136,6 @@ const DistStateListButtons = () => {
       </GeneralButton>
       <GeneralButton
         id="p1Button"
-        $isActive={localStore.p1Active}
         onClick={handleOnclick}
         className={`min-w-[80px] ${localStore.p1Active ? 'bg-primary-button' : 'bg-grey-button'}`}
         key="f7"
@@ -151,7 +144,6 @@ const DistStateListButtons = () => {
       </GeneralButton>
       <GeneralButton
         id="p15Button"
-        $isActive={localStore.p15Active}
         onClick={handleOnclick}
         className={`min-w-[80px] ${localStore.p15Active ? 'bg-primary-button' : 'bg-grey-button'}`}
         key="f8"
@@ -160,7 +152,6 @@ const DistStateListButtons = () => {
       </GeneralButton>
       <GeneralButton
         id="p2Button"
-        $isActive={localStore.p2Active}
         onClick={handleOnclick}
         className={`min-w-[80px] ${localStore.p2Active ? 'bg-primary-button' : 'bg-grey-button'}`}
         key="f9"

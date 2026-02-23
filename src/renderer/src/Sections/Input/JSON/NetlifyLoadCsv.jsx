@@ -59,7 +59,7 @@ const LoadTxtStatementFile = () => {
   };
 
   return (
-    <LoadButton $isActive={isLoadNetlifyCsvButtonGreen} onClick={handleClick}>
+    <LoadButton isactive={isLoadNetlifyCsvButtonGreen} onClick={handleClick}>
       <div className="flex flex-row justify-center items-center h-full w-full">
         <svg
           xmlns="http://www.w3.org/2000/svg"

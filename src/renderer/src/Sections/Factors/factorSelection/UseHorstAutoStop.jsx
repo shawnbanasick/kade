@@ -52,7 +52,6 @@ const UseHorstAutoStop = () => {
         <GeneralButton
           id="yes"
           onClick={handleClick}
-          $isActive={horstAutoStopYesActive}
           disabled={horstAutoStopYesDisabled}
           className={`w-[75px] ${horstAutoStopYesActive ? 'bg-primary-button' : 'bg-grey-button'}`}
         >
@@ -61,7 +60,6 @@ const UseHorstAutoStop = () => {
         <GeneralButton
           id="no"
           onClick={handleClick}
-          $isActive={horstAutoStopNoActive}
           disabled={horstAutoStopNoDisabled}
           className={`w-[75px] ${horstAutoStopNoActive ? 'bg-primary-button' : 'bg-grey-button'}`}
         >

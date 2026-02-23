@@ -56,7 +56,6 @@ const DistStateListSortByButtons = () => {
 
       <GeneralButton
         id="thresholdButton"
-        $isActive={thresholdButtonActive}
         onClick={handleOnclick}
         key="f1"
         className={`min-w-[120px] ${thresholdButtonActive ? 'bg-primary-button' : 'bg-grey-button'}`}
@@ -65,7 +64,6 @@ const DistStateListSortByButtons = () => {
       </GeneralButton>
       <GeneralButton
         id="qSortValueButton"
-        $isActive={qSortValueButtonActive}
         onClick={handleOnclick}
         key="f2"
         className={`min-w-[120px] ${qSortValueButtonActive ? 'bg-primary-button' : 'bg-grey-button'}`}
@@ -74,7 +72,6 @@ const DistStateListSortByButtons = () => {
       </GeneralButton>
       <GeneralButton
         id="statementNumButton"
-        $isActive={statementNumButtonActive}
         onClick={handleOnclick}
         key="f3"
         className={`min-w-[120px] ${statementNumButtonActive ? 'bg-primary-button' : 'bg-grey-button'}`}
@@ -83,7 +80,6 @@ const DistStateListSortByButtons = () => {
       </GeneralButton>
       <GeneralButton
         id="zScoreButton"
-        $isActive={zScoreButtonActive}
         onClick={handleOnclick}
         key="f4"
         className={`min-w-[120px] ${zScoreButtonActive ? 'bg-primary-button' : 'bg-grey-button'}`}

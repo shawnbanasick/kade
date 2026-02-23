@@ -55,7 +55,7 @@ const LoadTxtStatementFile = () => {
   };
 
   return (
-    <LoadButton $isActive={isLoadJsonTextButtonGreen} onClick={handleClick}>
+    <LoadButton isactive={isLoadJsonTextButtonGreen} onClick={handleClick}>
       <div className="flex flex-row justify-center items-center h-full w-full">
         <svg
           xmlns="http://www.w3.org/2000/svg"

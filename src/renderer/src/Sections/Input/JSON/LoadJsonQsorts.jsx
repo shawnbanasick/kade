@@ -92,7 +92,7 @@ const LoadJsonQsortsFile = () => {
   return (
     <>
       <div className="mt-[18px]">
-        <LoadButton $isActive={isLoadJsonQsortsButtonGreen} onClick={() => handleClick()}>
+        <LoadButton isactive={isLoadJsonQsortsButtonGreen} onClick={() => handleClick()}>
           <div className="flex flex-row justify-center items-center h-full w-full">
             <svg
               xmlns="http://www.w3.org/2000/svg"

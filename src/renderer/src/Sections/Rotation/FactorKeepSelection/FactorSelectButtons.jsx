@@ -125,7 +125,6 @@ const FactorSelectionForOutputButtons = () => {
         <GeneralButton
           key={`f1`}
           value={1}
-          $isActive={factor1Active}
           disabled={isFacSelectDisabled}
           onClick={handleOnclick}
           id={`factor1`}
@@ -136,7 +135,6 @@ const FactorSelectionForOutputButtons = () => {
         <GeneralButton
           key={`f2`}
           value={2}
-          $isActive={factor2Active}
           disabled={isFacSelectDisabled}
           onClick={handleOnclick}
           id={`factor2`}
@@ -147,7 +145,6 @@ const FactorSelectionForOutputButtons = () => {
         <GeneralButton
           key={`f3`}
           value={3}
-          $isActive={factor3Active}
           disabled={isFacSelectDisabled}
           onClick={handleOnclick}
           id={`factor3`}
@@ -158,7 +155,6 @@ const FactorSelectionForOutputButtons = () => {
         <GeneralButton
           key={`f4`}
           value={4}
-          $isActive={factor4Active}
           disabled={isFacSelectDisabled}
           onClick={handleOnclick}
           id={`factor4`}
@@ -169,7 +165,6 @@ const FactorSelectionForOutputButtons = () => {
         <GeneralButton
           key={`f5`}
           value={5}
-          $isActive={factor5Active}
           disabled={isFacSelectDisabled}
           onClick={handleOnclick}
           id={`factor5`}
@@ -180,7 +175,6 @@ const FactorSelectionForOutputButtons = () => {
         <GeneralButton
           key={`f6`}
           value={6}
-          $isActive={factor6Active}
           disabled={isFacSelectDisabled}
           onClick={handleOnclick}
           id={`factor6`}
@@ -191,7 +185,6 @@ const FactorSelectionForOutputButtons = () => {
         <GeneralButton
           key={`f7`}
           value={7}
-          $isActive={factor7Active}
           disabled={isFacSelectDisabled}
           onClick={handleOnclick}
           id={`factor7`}
@@ -202,7 +195,6 @@ const FactorSelectionForOutputButtons = () => {
         <GeneralButton
           key={`f8`}
           value={8}
-          $isActive={factor8Active}
           disabled={isFacSelectDisabled}
           onClick={handleOnclick}
           id={`factor8`}

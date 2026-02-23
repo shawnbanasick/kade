@@ -9,7 +9,7 @@ const LoadButton = ({ children, isActive, onClick, className = '' }) => {
         hover:[box-shadow:inset_0_0_0_4px_#666,_0_0_1px_transparent]
         active:opacity-60 active:[box-shadow:0_0_1px_0_black_inset]
         ${
-          isActive
+          isactive
             ? 'bg-[var(--main-theme-color)] [box-shadow:inset_0_0_0_2px_#666,_0_0_1px_transparent]'
             : 'bg-[#d6dbe0] [box-shadow:inset_0_0_0_0px_#666,_0_0_0px_transparent]'
         }

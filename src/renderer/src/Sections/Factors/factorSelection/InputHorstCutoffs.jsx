@@ -71,7 +71,6 @@ const UseHorstAutoStop = () => {
       <GeneralButton
         id="extractHorst"
         onClick={handleClick}
-        isActive={horstExtractActive}
         disabled={horstExtractDisabled}
         className={`mt-[25px]! ml-[70px]! w-[250px] ${horstExtractActive ? 'bg-primary-button' : 'bg-grey-button'}`}
       >

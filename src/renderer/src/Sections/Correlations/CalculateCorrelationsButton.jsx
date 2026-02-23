@@ -32,7 +32,7 @@ const CalculateCorrelationsButton = () => {
 
   return (
     <React.Fragment>
-      <GeneralButton $isActive={isCorrelationsButtonGreen} onClick={() => handleClick()}>
+      <GeneralButton onClick={() => handleClick()}>
         <p>{t('Calculate Correlations')}</p>
       </GeneralButton>
       <ErrorNotification />
