@@ -91,7 +91,7 @@ const DistStateListSortByButtons = () => {
         id="downloadButton"
         onClick={() => downloadDistStates()}
         key="f5"
-        className="h-[30px] min-w-[160px] bg-grey-button p-0! border border-red-500"
+        className="h-[30px] min-w-[160px] bg-grey-button p-0!"
       >
         <div className="flex flex-row justify-center items-center">
           <div className="flex justify-center items-center mr-[10px]">

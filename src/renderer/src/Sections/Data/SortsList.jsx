@@ -1,6 +1,6 @@
 const SortsList = () => {
   return (
-    <div className="w-[1150px] border-2 border-red-500">
+    <div className="w-[1150px]">
       <ol>
         {this.props.displayText.map((listValue) => (
           <li className=" wrap-break-word" key={listValue.toString()}>

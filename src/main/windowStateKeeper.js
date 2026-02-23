@@ -26,17 +26,21 @@ export const windowStateKeeper = async (windowName) => {
     };
   };
 
-  const saveState = async () => {
-    try {
-      // bug: lots of save state events are called. they should be debounced
-      if (!windowState.isMaximized) {
-        windowState = window.getBounds();
+  let saveStateTimer = null;
+
+  const saveState = () => {
+    clearTimeout(saveStateTimer);
+    saveStateTimer = setTimeout(async () => {
+      try {
+        if (!windowState.isMaximized) {
+          windowState = window.getBounds();
+        }
+        windowState.isMaximized = window.isMaximized();
+        await settings.set(`windowState.${windowName}`, windowState);
+      } catch (error) {
+        console.error(`Failed to save window state for ${windowName}:`, error);
       }
-      windowState.isMaximized = window.isMaximized();
-      await settings.set(`windowState.${windowName}`, windowState);
-    } catch (error) {
-      console.error(`Failed to save window state for ${windowName}:`, error);
-    }
+    }, 500);
   };
 
   const track = async (win) => {

@@ -33,6 +33,7 @@ const Data = () => {
   const showQsorts = dataDisplayState((state) => state.showQsorts);
   const dataActiveTab = dataDisplayState((state) => state.dataActiveTab);
   const updateDataActiveTab = dataDisplayState((state) => state.updateDataActiveTab);
+  const areQsortsVerified = inputState((state) => state.areQsortsVerified);
 
   let showUnforcedConfirmMessage = false;
 
@@ -62,7 +63,7 @@ const Data = () => {
 
   const InfoPanel = () => {
     return (
-      <>
+      <div className="flex justify-center mt-9">
         <section className="mb-8 pl-6 space-y-2">
           <h2 className="text-2xl font-semibold">
             {t('Project Name')}: <span className="font-normal">{projectName}</span>
@@ -74,24 +75,28 @@ const Data = () => {
             {t('Number of Statements')}: <span className="font-normal">{numStatements}</span>
           </h2>
         </section>
-      </>
+      </div>
     );
   };
 
   const PatternPanel = () => {
     return (
-      <section className="mb-8 space-y-2 pl-6">
-        <h2 className="text-2xl font-semibold">{t('Q Sort Pattern')}:</h2>
-        <QsortsPatternList texts={texts} />
-      </section>
+      <div className="flex justify-center mt-9">
+        <section className="mb-8 space-y-2 pl-6">
+          <h2 className="text-2xl font-semibold">{t('Q Sort Pattern')}:</h2>
+          <QsortsPatternList texts={texts} />
+        </section>
+      </div>
     );
   };
 
   const StatementsPanel = () => {
     return (
-      <section className="py-2 mb-12">
-        <StatementsList statements={statements} />
-      </section>
+      <div className="flex justify-between items-center mt-4">
+        <section className="flex h-[calc(100vh-200px)] items-center w-full py-2 mb-12">
+          <StatementsList statements={statements} />
+        </section>
+      </div>
     );
   };
 
@@ -133,7 +138,7 @@ const Data = () => {
   const DownloadsPanel = () => {
     return (
       <section className="py-8 mb-12">
-        {showExportButtons && (
+        {showExportButtons ? (
           <div className="flex flex-row flex-wrap items-center text-center gap-4">
             <DownloadDatabookButton />
             <div className="text-[clamp(1.3rem,1.5vw,1.8rem)] ml-12! font-bold self-center align-center ">
@@ -142,6 +147,12 @@ const Data = () => {
             <div className="flex flex-row gap-4 mt-1">
               <StaFileButton />
               <DatFileButton />
+            </div>
+          </div>
+        ) : (
+          <div className="flex flex-row flex-wrap items-center text-center gap-4">
+            <div className="text-[clamp(1.3rem,1.5vw,1.8rem)] ml-12! font-bold self-center align-center ">
+              {t('Please verify Q Sorts to enable exports')}
             </div>
           </div>
         )}
@@ -185,7 +196,7 @@ const Data = () => {
         w-[calc(100vw-135px)]
         box-border
         h-full
-        overflow-auto
+        overflow-y-auto
         transition-[visibility,opacity]
         duration-500
         text-black
@@ -221,12 +232,12 @@ const Data = () => {
             onClick={() => handleTabClick('tab3')}
           />
 
-          <div className="tab-content bg-base-100 border-base-300 p-6">{tabs[2].content}</div>
+          <div className="tab-content bg-base-100 border-base-300 p-1 ">{tabs[2].content}</div>
 
           <input
             type="radio"
             name="my_tabs_6"
-            className={`tab basis-[9vw] text-[clamp(1rem,1.5vw,1.1rem)]  hover:shadow-[inset_0_0_0_4px_#666,_0_0_1px_transparent] ${dataActiveTab === 'tab4' ? 'tab-active bg-primary-button text-black' : 'bg-grey-button'}`}
+            className={`tab basis-[9vw] text-[clamp(1rem,1.5vw,1.1rem)]  hover:shadow-[inset_0_0_0_4px_#666,_0_0_1px_transparent] ${areQsortsVerified ? (dataActiveTab === 'tab4' ? 'tab-active bg-primary-button text-black' : 'bg-grey-button') : 'bg-orange-button'}`}
             aria-label={tabs[3].title}
             onClick={() => handleTabClick('tab4')}
           />

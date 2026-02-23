@@ -31,6 +31,9 @@ let menuBuilder;
 async function createWindow() {
   const mainWindowStateKeeper = await windowStateKeeper('main');
 
+  let splash = new BrowserWindow({ width: 400, height: 300, frame: false, transparent: true });
+  splash.loadFile('splash.html');
+
   // Create the browser window.
   const mainWindow = new BrowserWindow({
     x: mainWindowStateKeeper.x,
@@ -60,6 +63,7 @@ async function createWindow() {
   // i18nextBackend.mainBindings(ipcMain, win, fs);
 
   mainWindow.on('ready-to-show', () => {
+    splash.close();
     mainWindow.show();
   });
 

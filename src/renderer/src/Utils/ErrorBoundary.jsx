@@ -18,7 +18,7 @@ class ErrorBoundary extends Component {
 
   render() {
     return this.state.hasError ? (
-      <div className="m-[50px]">
+      <div className="m-[50px] text-white">
         <h1>{i18n.t('There was an unexpected error')}</h1>
         <div className="text-[22px] leading-[1.8em] mt-[15px] mb-[15px]">
           {i18n.t('Please contact the developer')}
@@ -26,7 +26,7 @@ class ErrorBoundary extends Component {
           <br />
           {i18n.t('In the top menu click View Force Reload to restart the application')}
         </div>
-        <div className="bg-white [&_pre]:text-orange-500 [&_pre]:text-[16px] [&_pre]:mt-[15px] [&_pre]:mb-[15px]">
+        <div className="bg-white text-black [&_pre]:text-orange-500 [&_pre]:text-[16px] [&_pre]:mt-[15px] [&_pre]:mb-[15px]">
           {!this.state.showError && (
             <button onClick={() => this.setState({ showError: true })}>Show error →</button>
           )}

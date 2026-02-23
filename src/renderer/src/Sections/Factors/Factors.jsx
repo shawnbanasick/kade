@@ -17,6 +17,32 @@ const Factors = () => {
   const showCentroidError = factorState((state) => state.showCentroidError);
   const showCorrelationMatrix = correlationState((state) => state.showCorrelationMatrix);
 
+  const tabs = [
+    {
+      name: t('Centroid'),
+      component: (
+        <>
+          <CentroidSelection />
+          <UseHorstAutoStop />
+          <InputHorstCutoffsNoLimit />
+          <SelectNumberOfCentroidFactorsButtons />
+          <InputHorstCutoffs />
+          <HeywoodCaseNotification />
+          <UnrotatedFactorsTransitionContainer />
+          {showCentroidError ? <ErrorNotification /> : null}
+        </>
+      ),
+    },
+    {
+      name: t('Principal Components'),
+      component: (
+        <>
+          <UnrotatedFactorsTransitionContainer />
+        </>
+      ),
+    },
+  ];
+
   return (
     <div className="flex flex-col text-black overflow-auto p-[5px] pt-[15px] px-[15px] font-[Helvetica,sans-serif] text-[18px] bg-white box-border select-none animate-fadeIn">
       {showCorrelationMatrix ? (
