@@ -46,9 +46,18 @@ const DownloadResultsAsDocx = () => {
       <GeneralButton
         id="downloadResultsAsDocxButton"
         onClick={handleOpen}
-        className="flex justify-center items-center h-[30px] p-1 ml-8! w-fit min-w-[250px] bg-grey-button mt-[20px]"
+        className="flex justify-center items-center h-[30px] p-1 ml-5! w-fit min-w-[270px] bg-grey-button mt-[20px]"
       >
-        <div className="flex flex-row justify-center items-center text-[16px]">{buttonText}</div>
+        <div className="flex flex-row gap-3 justify-center items-center text-[16px]">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 20 20"
+            className="h-[17px] w-[17px] fill-current mb-1"
+          >
+            <path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z" />
+          </svg>
+          {buttonText}
+        </div>
       </GeneralButton>
 
       {/* Modal */}

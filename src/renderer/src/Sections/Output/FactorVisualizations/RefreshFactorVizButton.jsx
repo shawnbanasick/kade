@@ -22,10 +22,11 @@ const RefreshFactorVizButton = () => {
     for (let i = 0; i < updateKeys.length; i += 1) {
       factorVizOptions[updateKeys[i]] = factorVizOptionsHolder[updateKeys[i]];
     }
-    console.log('line 30', JSON.stringify(factorVizOptions, null, 2));
     updateFactorVizOptions({ ...factorVizOptions });
     updateFactorVizOptionsHolder({});
-    updateFactorVisualizationsButtonColor('bg-primary-button');
+    setTimeout(() => {
+      updateFactorVisualizationsButtonColor('bg-primary-button');
+    }, 100);
   };
 
   return (

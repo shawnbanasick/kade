@@ -2,8 +2,6 @@ import GeneralButton from '../../../Utils/GeneralButton';
 import { useTranslation } from 'react-i18next';
 import outputState from '../../GlobalState/outputState';
 
-// todo - change this back to normal button
-// display rules prevent premature click now
 const DisplayVisualizationsButtons = () => {
   // hide button is only one factor selected
   const userSelectedFactors = outputState((state) => state.userSelectedFactors);
@@ -28,7 +26,11 @@ const DisplayVisualizationsButtons = () => {
   if (showDownloadOutputButtons && shouldDisplay) {
     return (
       <div style={{ display: 'flex' }}>
-        <GeneralButton id="displayVisualizationsButton" onClick={handleDisplayViz}>
+        <GeneralButton
+          id="displayVisualizationsButton"
+          onClick={handleDisplayViz}
+          className="flex justify-center items-center h-[30px] p-1 ml-5! w-fit min-w-[270px] bg-grey-button mt-[20px]"
+        >
           {t('Display Composite Factors')}
         </GeneralButton>
       </div>

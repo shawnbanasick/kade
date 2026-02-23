@@ -55,7 +55,7 @@ const Output = () => {
     'bg-white flex flex-col select-none min-w-[calc(100vw-166px)] h-[calc(100vh-80px)] overflow-auto box-border';
 
   const window2Class =
-    'pt-[15px] bg-white select-none h-[calc(100vh-70px)] min-w-[calc(100vw-186px)] overflow-auto box-border';
+    'pt-[10px] bg-white select-none h-[calc(100vh-80px)] min-w-[calc(100vw-186px)] overflow-auto box-border';
 
   if (showNotification) {
     notify();

@@ -21,8 +21,9 @@ const DownloadFactorVizButtons = (props) => {
     const dateTime = `${date}_${time}`;
     const cleanFactorName = `${imageId}`;
     let config;
-    const customName = factorVizOptions.customDownloadFileNames;
-    const customNameLocation = factorVizOptions.customFileNameLocation;
+    const customName = factorVizOptions.customDownloadFileNames[0];
+    const customNameLocation2 = factorVizOptions.customFileNameLocation;
+    const customNameLocation = customNameLocation2.trim();
     if (shouldAddName === true) {
       if (customNameLocation === 'prepend') {
         config = { filename: `${customName}_${projectName}_${cleanFactorName}_${dateTime}` };
@@ -110,15 +111,21 @@ const DownloadFactorVizButtons = (props) => {
   };
 
   return (
-    <div className="flex">
+    <div className="flex flex-row items-center justify-left pl-48">
       <GeneralButton
         id={`downloadSvgButtonFacViz${props.id}`}
         onClick={() => downloadSvgImage(props.id)}
-        className="mr-1.5 ml-5"
+        className="mr-1.5 ml-5 bg-grey-button h-[30px] p-1 w-fit min-w-[270px]"
       >
         <div className="flex flex-row justify-center items-center h-full w-full">
           <div className="flex justify-center items-center mr-2.5">
-            <img src={SvgIcon} height="50px" alt="svg Icon" />
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 20 20"
+              className="h-[17px] w-[17px] fill-current mb-1"
+            >
+              <path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z" />
+            </svg>
           </div>
           {t('Download Vector Image')}
         </div>
@@ -126,10 +133,17 @@ const DownloadFactorVizButtons = (props) => {
       <GeneralButton
         id={`downloadPngButtonFacViz${props.id}`}
         onClick={() => downloadFacVizAsPng(props.id)}
+        className="mr-1.5 ml-5 bg-grey-button h-[30px] p-1 w-fit min-w-[270px]"
       >
         <div className="flex flex-row justify-center items-center h-full w-full">
           <div className="flex justify-center items-center mr-2.5">
-            <img src={PngIcon} height="50px" alt="png Icon" />
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 20 20"
+              className="h-[17px] w-[17px] fill-current mb-1"
+            >
+              <path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z" />
+            </svg>
           </div>
           {t('Download Raster Image')}
         </div>

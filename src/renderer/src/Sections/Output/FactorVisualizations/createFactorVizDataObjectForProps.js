@@ -28,7 +28,7 @@ const createFactorVizDataObjectForProps = (factorVizOptions) => {
   if (useCustomNames) {
     const customFactorNamesArray1 = factorVizOptions.customFactorNames;
     if (customFactorNamesArray1.length !== 0) {
-      customFactorNamesArray = customFactorNamesArray1.split(',');
+      customFactorNamesArray = customFactorNamesArray1;
     } else {
       customFactorNamesArray = [];
     }

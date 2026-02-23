@@ -155,7 +155,7 @@ const FactorsTable = () => {
   if (showFactorsTable) {
     return (
       <div className="flex flex-col w-[80%]">
-        <p className="font-sans text-base font-normal mt-5 text-left">
+        <p className="font-sans text-base font-normal text-left">
           {t('Click the table headers to re-sort by column')}{' '}
           {t('(low-to-high, high-to-low, original sort)')}.
         </p>

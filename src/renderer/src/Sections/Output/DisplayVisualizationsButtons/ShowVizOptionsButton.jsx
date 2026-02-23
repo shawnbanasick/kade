@@ -28,7 +28,11 @@ const DisplayVisualizationsButtons = () => {
   if (showDownloadOutputButtons && shouldDisplay) {
     return (
       <div style={{ display: 'flex' }}>
-        <GeneralButton id="viewVisualizationsDisplayOptions" onClick={handleOpenVizOptions}>
+        <GeneralButton
+          id="viewVisualizationsDisplayOptions"
+          onClick={handleOpenVizOptions}
+          className="flex justify-center items-center h-[30px] p-1 ml-5! w-fit min-w-[270px] bg-grey-button mt-[20px]"
+        >
           {t('View Display Options')}
         </GeneralButton>
       </div>

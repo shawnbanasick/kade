@@ -2,6 +2,16 @@ import { useState } from 'react';
 import vizState from '../../GlobalState/vizState';
 
 const ColorSelector = (props) => {
+  const factorVizOptionsHolder = vizState((state) => state.factorVizOptionsHolder);
+  const updateFactorVizOptionsHolder = vizState((state) => state.updateFactorVizOptionsHolder);
+  const updateFactorVisualizationsButtonColor = vizState(
+    (state) => state.updateFactorVisualizationsButtonColor
+  );
+
+  const newFactorVizOptionsHolder = {
+    ...factorVizOptionsHolder,
+  };
+
   const [localStore, setLocalStore] = useState({
     // color: '#d9effe',
     color: props.defaultColor,
@@ -10,18 +20,13 @@ const ColorSelector = (props) => {
   // todo - check this - use localStore? for color value
   function handleChange(e) {
     // getState
-    const factorVizOptionsHolder = vizState((state) => state.factorVizOptionsHolder);
-    const updateFactorVizOptionsHolder = vizState((state) => state.updateFactorVizOptionsHolder);
-    const updateFactorVisualizationsButtonColor = vizState(
-      (state) => state.updateFactorVisualizationsButtonColor
-    );
 
     setLocalStore({ color: e.target.value });
 
     const colorProperty = e.target.id;
-    factorVizOptionsHolder[colorProperty] = e.target.value;
-    updateFactorVizOptionsHolder(factorVizOptionsHolder);
-    updateFactorVisualizationsButtonColor('bg-[orange');
+    newFactorVizOptionsHolder[colorProperty] = e.target.value;
+    updateFactorVizOptionsHolder(newFactorVizOptionsHolder);
+    updateFactorVisualizationsButtonColor('bg-[orange]');
   }
 
   return (
