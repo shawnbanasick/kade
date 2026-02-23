@@ -20,7 +20,7 @@ const factorState = create(
     centroid6FactorsActive: false,
     centroid7FactorsActive: true,
     centroid8FactorsActive: false,
-    centroidNumFacSubmitButtonColor: '#d6dbe0',
+    centroidNumFacSubmitButtonColor: 'bg-primary-button',
     cumulEigenPerVar: [],
 
     didNotConverge: false,

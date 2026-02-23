@@ -39,7 +39,7 @@ const CallCentroidFactorButton = () => {
   };
 
   return (
-    <GeneralButton buttonColor="#d6dbe0" onClick={() => handleClick()}>
+    <GeneralButton className="bg-primary-button" onClick={() => handleClick()}>
       {showCentroidSpinner ? <Spinner /> : <p>Centroid Factors</p>}
     </GeneralButton>
   );

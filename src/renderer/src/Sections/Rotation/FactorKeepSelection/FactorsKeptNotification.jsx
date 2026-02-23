@@ -14,7 +14,7 @@ const FactorsKeptNotification = () => {
         <br />
         <br />
         <br />
-        {t('Click the Varimax or Judgmental tabs for more options')}
+        {t('Click the Varimax or Judgmental tabs to rotate factors')}
       </div>
     </div>
   );
