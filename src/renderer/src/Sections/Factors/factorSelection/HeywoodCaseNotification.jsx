@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import GeneralButton from '../../../Utils/GeneralButton';
 import { useTranslation } from 'react-i18next';
 import doHeywoodAdjustment from '../centroidLogic/horst55Logic/doHeywoodAdjustment';
@@ -45,8 +46,10 @@ const HeywoodCaseNotification = () => {
     (state) => state.heywoodParticipantsCommunalityArray
   );
 
-  updateHeywoodAdjustButtonActive(false);
-  updateHeywoodContinueButtonActive(false);
+  useEffect(() => {
+    updateHeywoodAdjustButtonActive(false);
+    updateHeywoodContinueButtonActive(false);
+  }, []);
 
   const handleReselectClick = () => {
     updateIsCentroidFacSelectDisabled(false);

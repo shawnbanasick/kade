@@ -574,5 +574,15 @@
   "Participant data and Q sort data do not match": "Participant data and Q sort data do not match",
   "One or more participants have a different number of Q sorts values than the project design": "One or more participants have a different number of Q sorts values than the project design",
   "The 'version' tab is missing from the spreadsheet": "The 'version' tab is missing from the spreadsheet",
-  "Sort Values": "Sort Values"
+  "Sort Values": "Sort Values",
+
+  "*** Version 1.4.0 ***": "*** Version 1.4.0 ***",
+  "Statement Length": "Statement Length",
+  "This will remove the current analysis and cannot be reversed": "This will remove the current analysis and cannot be reversed.",
+  "Are you sure you want to reset": "Are you sure you want to reset",
+  "No Go back": "No Go back",
+  "Yes reset the analysis": "Yes reset the analysis",
+  "Download SVG Image": "Download SVG Image",
+  "Download PNG Image": "Download PNG Image",
+  "Factor Rotation": "Factor Rotation"
 }

@@ -45,14 +45,8 @@ function getHeight(numQsorts) {
   return heightVal2 + 'px';
 }
 
+// *** COMPONENT START***
 const LoadingsTable = (props) => {
-  const [localStore, setLocalStore] = useState({
-    numQsorts: 0,
-    numFacsForTableWidth: 0,
-    sendDataToOutputButtonColor: '#d6dbe0',
-    autoflagButtonColor: 'bg-grey-button',
-  });
-
   const gridColDefsLoadingsTable = loadingState((state) => state.gridColDefsLoadingsTable);
   const gridRowDataLoadingsTable = loadingState((state) => state.gridRowDataLoadingsTable);
   const isLoadingsTableInitialRender = loadingState((state) => state.isLoadingsTableInitialRender);
@@ -81,6 +75,13 @@ const LoadingsTable = (props) => {
   const updateOutputButtonsArray = outputState((state) => state.updateOutputButtonsArray);
 
   const gridRef = useRef();
+
+  const [localStore, setLocalStore] = useState({
+    numQsorts: 0,
+    numFacsForTableWidth: 0,
+    sendDataToOutputButtonColor: '#d6dbe0',
+    autoflagButtonColor: 'bg-grey-button',
+  });
 
   const notify = async () => {
     await toast.success(i18n.t('Data sent to Output'), { autoClose: 1500 });
@@ -127,7 +128,9 @@ const LoadingsTable = (props) => {
   };
 
   const changeOutputButtonColor = () => {
-    updateSendDataToOutputButtonColor('orange');
+    setTimeout(() => {
+      updateSendDataToOutputButtonColor('orange');
+    }, 100);
   };
 
   const generateOutput = () => {
@@ -175,7 +178,9 @@ const LoadingsTable = (props) => {
       }
     }
     gridRef.current.api.redrawRows(currentLoadingsTable);
-    updateSendDataToOutputButtonColor('orange');
+    setTimeout(() => {
+      updateSendDataToOutputButtonColor('orange');
+    }, 100);
   };
 
   const clearAllCheckboxes = () => {
@@ -186,22 +191,26 @@ const LoadingsTable = (props) => {
       }
     }
     gridRef.current.api.redrawRows(currentLoadingsTable);
-    updateSendDataToOutputButtonColor('#d6dbe0');
+    setTimeout(() => {
+      updateSendDataToOutputButtonColor('#d6dbe0');
+    }, 100);
   };
 
-  if (isLoadingsTableInitialRender) {
-    setLocalStore({ temp_gridColDefsLoadingsTable: gridColDefsLoadingsTable });
-    setLocalStore({ temp_gridRowDataLoadingsTable: gridRowDataLoadingsTable });
-    updateIsLoadingsTableInitialRender(false);
-  }
+  useEffect(() => {
+    if (isLoadingsTableInitialRender) {
+      setLocalStore({ temp_gridColDefsLoadingsTable: gridColDefsLoadingsTable });
+      setLocalStore({ temp_gridRowDataLoadingsTable: gridRowDataLoadingsTable });
+      updateIsLoadingsTableInitialRender(false);
+    }
+  }, [isLoadingsTableInitialRender]);
 
-  const outputButtonsArray2 = gridColDefsLoadingsTable.map((item) => item.field);
-  const outputButtonsArray3 = outputButtonsArray2.filter(filterArray);
-  outputButtonsArray3.shift();
-  const outputButtonsArray4 = outputButtonsArray3.map((item) => item.slice(6));
-  setTimeout(function () {
+  useEffect(() => {
+    const outputButtonsArray2 = gridColDefsLoadingsTable.map((item) => item.field);
+    const outputButtonsArray3 = outputButtonsArray2.filter(filterArray);
+    outputButtonsArray3.shift();
+    const outputButtonsArray4 = outputButtonsArray3.map((item) => item.slice(6));
     updateOutputButtonsArray(outputButtonsArray4);
-  }, 100);
+  }, [gridColDefsLoadingsTable]);
 
   const bipolarSplitCount = Number(bipolarSplitCount1);
   if (bipolarSplitCount > 0) {
