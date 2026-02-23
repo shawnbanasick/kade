@@ -38,6 +38,7 @@ async function createWindow() {
     width: mainWindowStateKeeper.width,
     height: mainWindowStateKeeper.height,
     show: false,
+    backgroundColor: '#ffffff',
     autoHideMenuBar: false,
     ...(process.platform === 'linux' ? { icon } : {}),
     webPreferences: {
@@ -47,7 +48,7 @@ async function createWindow() {
       nodeIntegrationInWorker: false,
       nodeIntegrationInSubFrames: false,
       contextIsolation: true,
-      enableRemoteModule: false,
+      enableRemoteModule: true,
     },
   });
   if (mainWindowStateKeeper.isMaximized === true) {
