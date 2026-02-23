@@ -23,7 +23,7 @@ class CheckboxRenderer extends React.Component {
           type="checkbox"
           checked={this.state.value}
           onChange={this.handleCheckboxChange}
-          className="scale-[1.2]"
+          className="scale-[1.2] accent-[#83cafe]"
         />
       </div>
     );
