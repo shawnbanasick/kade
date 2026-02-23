@@ -20,6 +20,9 @@ import DocxIncludeDataOption from './DownloadResultsButtons/DocxIncludeDataOptio
 import DownloadResultsAsDocx from './DownloadResultsButtons/DownloadResultsAsDocx';
 // import vizState from '../GlobalState/vizState';
 import outputState from '../GlobalState/outputState';
+import calcState from '../GlobalState/calcState';
+
+import i18n from 'i18next';
 
 const Output = () => {
   const { t } = useTranslation();
@@ -60,6 +63,77 @@ const Output = () => {
   if (showNotification) {
     notify();
   }
+
+  const userSelectedFactors = outputState((state) => state.userSelectedFactors);
+
+  const getArrayValues = (userSelectedFactors) => {
+    const headerRow = [i18n.t('Nm'), i18n.t('Statement'), i18n.t('Nm')];
+    const colWidthVals = [60, 250, 60];
+    const alignmentVals = ['center', 'left', 'center'];
+    const pinnedVals = [true, true, true];
+
+    for (let i = 0; i < userSelectedFactors.length; i += 1) {
+      const identifier3 = userSelectedFactors[i].slice(7);
+      const identifier2 = `F${identifier3} ${i18n.t('Z score')}`;
+      const identifier = `F${identifier3} ${i18n.t('Rank')}`;
+      headerRow.push(identifier2, identifier);
+      colWidthVals.push(110, 90);
+      alignmentVals.push('center', 'center');
+      pinnedVals.push(false, false);
+    }
+    return [headerRow, colWidthVals, alignmentVals, pinnedVals];
+  };
+
+  const numFacs = userSelectedFactors.length;
+  const arrayValues = getArrayValues(userSelectedFactors);
+
+  const data = calcState((state) => state.factorScoreRanksArray);
+  const currentData = ((data) => {
+    const lengthCutOff = numFacs * 2 + 3;
+    arrayValues[0].length = lengthCutOff;
+    return [data, numFacs];
+  })(data);
+
+  const getGridColDefsFacTable = (numFacs, headerRow, pinnedVals, colWidthVals, alignmentVals) => {
+    const gridColDefsFacTable = [];
+    for (let i = 0; i < headerRow.length; i += 1) {
+      gridColDefsFacTable.push({
+        headerName: headerRow[i],
+        field: headerRow[i],
+        pinned: pinnedVals[i],
+        editable: false,
+        sortable: true,
+        width: colWidthVals[i],
+        cellStyle: { textAlign: alignmentVals[i] },
+      });
+    }
+    return gridColDefsFacTable;
+  };
+
+  const gridRowDataFacTable = getGridRowDataFacTable(currentData[0], arrayValues[0]);
+
+  function getGridRowDataFacTable(data2, headerRow) {
+    if (data2 === undefined) return null;
+    const data = data2.slice(5);
+    const gridRowDataFacTable = [];
+    for (let j = 0; j < data.length; j += 1) {
+      const tempObj = {};
+      tempObj.factorList = data[j][0];
+      for (let k = 0; k < headerRow.length; k += 1) {
+        tempObj[headerRow[k]] = data[j][k];
+      }
+      gridRowDataFacTable.push(tempObj);
+    }
+    return gridRowDataFacTable;
+  }
+
+  const gridColDefsFacTable = getGridColDefsFacTable(
+    currentData[1],
+    arrayValues[0],
+    arrayValues[3],
+    arrayValues[1],
+    arrayValues[2]
+  );
 
   const tabs = [
     {
@@ -102,8 +176,15 @@ const Output = () => {
     {
       title: t('Factors Table'),
       content: (
-        <div className={window2Class}>
-          <FactorsTable />
+        <div
+          className={
+            'bg-white flex select-none w-full min-w-0 overflow-hidden h-[calc(100vh-80px)]'
+          }
+        >
+          <FactorsTable
+            gridColDefsFacTable={gridColDefsFacTable}
+            gridRowDataFacTable={gridRowDataFacTable}
+          />
         </div>
       ),
     },

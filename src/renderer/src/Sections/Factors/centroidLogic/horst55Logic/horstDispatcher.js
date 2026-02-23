@@ -82,6 +82,7 @@ const horstDispatcher = (shouldUseHorstLimit) => {
   const factorTrans = i18n.t('Factor');
   const nmTrans = i18n.t('Nm');
   const translationsText = { participantTrans, factorTrans, nmTrans };
+
   const factorTableData = factorTableDataPrep(
     numCentroidFactors,
     fMatrix,
@@ -89,9 +90,9 @@ const horstDispatcher = (shouldUseHorstLimit) => {
     translationsText
   );
 
-  factorState.gridColDefsFactorTable = factorTableData.gridColDefsFactorTable;
-  factorState.gridRowDataFactorTable = factorTableData.gridRowDataFactorTable;
-  factorState.unrotatedFactorMatrixOutput = factorTableData.unrotatedFactorArray;
+  factorState.setState({ gridColDefsFactorTable: factorTableData.gridColDefsFactorTable });
+  factorState.setState({ gridRowDataFactorTable: factorTableData.gridRowDataFactorTable });
+  factorState.setState({ unrotatedFactorMatrixOutput: factorTableData.unrotatedFactorArray });
 
   // ************************************
   // PREP EIGENS TABLE

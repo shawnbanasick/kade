@@ -1,29 +1,10 @@
-import { useEffect } from 'react';
+import { useEffect, useCallback, useRef } from 'react';
 import { AgGridReact } from 'ag-grid-react';
 import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
 import factorState from '../../GlobalState/factorState';
 import coreState from '../../GlobalState/coreState';
 
-// HELPER FUNCTION
-function getWidth(numFacsForTableWidth, width1, width2) {
-  let widthVal = width1 + 10 + width2 * numFacsForTableWidth;
-  let x = window.innerWidth - 265;
-
-  if (x < widthVal) {
-    x += 'px';
-    return x;
-  }
-
-  if (widthVal > 985) {
-    widthVal = 985;
-  }
-
-  widthVal += 'px';
-  return widthVal;
-}
-
-// HELPER FUNCTION
 function getHeight(numQsorts) {
   let heightVal = 40 + 25 * numQsorts;
   let y = window.innerHeight - 140;
@@ -35,26 +16,25 @@ function getHeight(numQsorts) {
   return heightVal;
 }
 
-// HELPER FUNCTION
-function resetWidthAndHeight(numQsorts, width1, width2, numFacsForTableWidth) {
-  const table = document.querySelector('#unRotatedFactorTable');
-  if (table !== null) {
-    table.style.height = getHeight(numQsorts);
-    table.style.width = getWidth(numFacsForTableWidth, width1, width2);
-  }
-}
-
 const UnrotatedFactorTable = () => {
-  // getState
-  let numFacsForTableWidth = factorState((state) => state.numFacsForTableWidth);
+  const gridRef = useRef();
+  const containerRef = useRef();
   const gridColDefsFactorTable = factorState((state) => state.gridColDefsFactorTable);
   const gridRowDataFactorTable = factorState((state) => state.gridRowDataFactorTable);
   const numQsorts = coreState((state) => state.numQsorts);
 
-  // const onGridReady = (params) => {
-  //   gridApi.current = params.api;
-  //   gridApi.current.sizeColumnsToFit();
-  // };
+  const sizeToFit = useCallback(() => {
+    gridRef.current?.api?.sizeColumnsToFit();
+  }, []);
+
+  // ResizeObserver watches the container div itself, not the window,
+  // so it responds to any layout shift (sidebar toggle, panel resize, etc.)
+  useEffect(() => {
+    if (!containerRef.current) return;
+    const observer = new ResizeObserver(() => sizeToFit());
+    observer.observe(containerRef.current);
+    return () => observer.disconnect();
+  }, [sizeToFit]);
 
   let gridOptions = {
     suppressRowHoverHighlight: false,
@@ -63,41 +43,24 @@ const UnrotatedFactorTable = () => {
     theme: 'legacy',
   };
 
-  // let widthVal = 80 + 190 + 90 * numFacsForTableWidth;
-  // widthVal += 'px';
-
-  useEffect(() => {
-    window.addEventListener('resize', () => {
-      resetWidthAndHeight(numQsorts, 250, 100, numFacsForTableWidth);
-    });
-
-    return () => {
-      window.removeEventListener('resize', () => {
-        resetWidthAndHeight(numQsorts, 250, 100, numFacsForTableWidth);
-      });
-    };
-  }, []);
-
   const style2 = {
     marginTop: 30,
-    width: getWidth(numFacsForTableWidth, 250, 100),
+    width: '100%',
     height: getHeight(numQsorts),
   };
 
   return (
-    <div>
+    <div ref={containerRef} className="w-full min-w-0 max-w-[1400px] overflow-hidden">
       <div id="unRotatedFactorTable" style={style2} className="ag-theme-fresh">
         <AgGridReact
-          // properties
+          ref={gridRef}
           columnDefs={gridColDefsFactorTable}
           rowData={gridRowDataFactorTable}
-          // events
           gridOptions={gridOptions}
           animateRows={true}
           enableBrowserTooltips={true}
-          // onGridReady={onGridReady}
-          // modules={AllCommunityModules}
-          // domLayout={'autoHeight'}
+          onGridReady={sizeToFit}
+          onGridColumnsChanged={sizeToFit}
         />
       </div>
     </div>

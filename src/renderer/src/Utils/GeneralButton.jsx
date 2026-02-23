@@ -1,12 +1,4 @@
-const GeneralButton = ({
-  height,
-  width,
-  $isActive,
-  disabled,
-  onClick,
-  className = '',
-  ...props
-}) => {
+const GeneralButton = ({ height, width, disabled, onClick, className = '', ...props }) => {
   const baseClasses = `
     grid items-center 
     justify-items-center

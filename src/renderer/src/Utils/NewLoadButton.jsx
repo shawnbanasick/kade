@@ -1,6 +1,6 @@
 import React from 'react';
 
-const LoadButton = ({ isActive = false, onClick, children, className = '' }) => {
+const LoadButton = ({ isactive = false, onClick, children, className = '' }) => {
   return (
     <div
       onClick={onClick}

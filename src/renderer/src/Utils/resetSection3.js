@@ -8,7 +8,7 @@ const resetSection3 = () => {
     didNotConverge: false,
     activePcaButton: false,
     activeCentroidRevealButton: false,
-    activeTraditionalCentroiFactorButton: false,
+    activeTraditionalCentroidFactorButton: false,
     activeHorst55CentroidButton: false,
     activeTuckerMacCallumCentroidButton: false,
     centroid1FactorsActive: false,

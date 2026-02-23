@@ -19,7 +19,6 @@ const TraditionalCentroidButton = () => {
   const updateIsHorst55Disabled = factorState((state) => state.updateIsHorst55Disabled);
 
   const handleOnclick = () => {
-    console.log('handle on click called');
     updateShowNumberOfCentroidFacToExtract(true);
     updateActiveTraditionalCentroidFactorButton(true);
     updateIsTraditionalCentroidDisabled(true);

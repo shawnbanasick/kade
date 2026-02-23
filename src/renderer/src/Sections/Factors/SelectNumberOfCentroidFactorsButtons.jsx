@@ -52,9 +52,9 @@ const SelectNumberOfCentroidFactorsButtons = () => {
   const tuckerCentroids = factorState((state) => state.activeTuckerMacCallumCentroidButton);
   const updateShowCentroidSpinner = factorState((state) => state.updateShowCentroidSpinner);
   const updateNumFacsForTableWidth = factorState((state) => state.updateNumFacsForTableWidth);
-  const updateDisabledCentroidFactorButton = factorState(
-    (state) => state.updateDisabledCentroidFactorButton
-  );
+  // const updateDisabledCentroidFactorButton = factorState(
+  //   (state) => state.updateDisabledCentroidFactorButton
+  // );
   const updateIsHorst55Disabled = factorState((state) => state.updateIsHorst55Disabled);
   const updateIsTuckerMacCallumCentroidDisabled = factorState(
     (state) => state.updateIsTuckerMacCallumCentroidDisabled
@@ -103,16 +103,16 @@ const SelectNumberOfCentroidFactorsButtons = () => {
       centroidDispatch(numCentroidFactors);
       updateNumFacsForTableWidth(numCentroidFactors);
       // hide spinner since calcs are done
-      updateDisabledCentroidFactorButton(true);
+      // updateDisabledCentroidFactorButton(true);
       updateShowCentroidSpinner(false);
-      updateDisabledCentroidFactorButton(true);
+      // updateDisabledCentroidFactorButton(true);
       updateIsHorst55Disabled(true);
       updateIsTuckerMacCallumCentroidDisabled(true);
       updateIsCentroidFacSelectDisabled(true);
     }
 
     if (horstCentroids === true) {
-      console.log('horst');
+      console.log('horst centroids selected');
       let shouldUseHorstLimit = false;
 
       updateHorstAutoStopNoActive(true);
@@ -125,7 +125,7 @@ const SelectNumberOfCentroidFactorsButtons = () => {
     }
 
     if (tuckerCentroids === true) {
-      console.log('tucker');
+      console.log('tucker centroids selected');
     }
   };
 
@@ -144,7 +144,7 @@ const SelectNumberOfCentroidFactorsButtons = () => {
           <GeneralButton
             key={`centroidF${item}`}
             value={item}
-            $disabled={isCentroidFacSelectDisabled}
+            disabled={isCentroidFacSelectDisabled}
             onClick={handleOnclick}
             className={`${activeButtonColorArray[index] ? 'bg-primary-button' : 'bg-grey-button'} gap-4`}
             id={index}
@@ -154,7 +154,7 @@ const SelectNumberOfCentroidFactorsButtons = () => {
         ))}
         <GeneralButton
           onClick={handleExtraction}
-          $disabled={isCentroidFacSelectDisabled}
+          disabled={isCentroidFacSelectDisabled}
           className="flex flex-row items-center text-center bg-grey-button justify-center  w-[120px] ml-[70px]"
         >{`${t('Extract')}`}</GeneralButton>
       </div>

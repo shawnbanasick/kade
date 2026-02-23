@@ -5,6 +5,7 @@ import HorstNumberInput from './HorstNumberInput';
 import { useTranslation } from 'react-i18next';
 import appState from '../../GlobalState/appState';
 import factorState from '../../GlobalState/factorState';
+import rotationState from '../../GlobalState/rotationState';
 
 const UseHorstAutoStop = () => {
   const { t } = useTranslation();
@@ -20,23 +21,27 @@ const UseHorstAutoStop = () => {
   );
   const updateShowEigenvaluesTable = factorState((state) => state.updateShowEigenvaluesTable);
   const updateShowScreePlot = factorState((state) => state.updateShowScreePlot);
-  const updateHrstExtractActive = factorState((state) => state.updateHrstExtractActive);
+  const updateHorstExtractActive = factorState((state) => state.updateHorstExtractActive);
   const updateHorstExtractDisabled = factorState((state) => state.updateHorstExtractDisabled);
   const updateIsFactorsButtonGreen = appState((state) => state.updateIsFactorsButtonGreen);
-  const updateShowKeepFacForRotButton = factorState((state) => state.updateShowKeepFacForRotButton);
+  const updateShowKeepFacForRotButton = rotationState(
+    (state) => state.updateShowKeepFacForRotButton
+  );
 
-  const handleClick = () => {
-    const shouldUseHorstLimit = true;
-    updateShowCentroidSpinner(true);
-    horstDispatcher(shouldUseHorstLimit);
-    updateShowCentroidSpinner(false);
-    updateShowUnrotatedFactorTable(true);
-    updateShowEigenvaluesTable(true);
-    updateShowScreePlot(true);
-    updateShowKeepFacForRotButton(true);
-    updateIsFactorsButtonGreen(true);
-    updateHrstExtractActive(true);
-    updateHorstExtractDisabled(true);
+  let shouldUseHorstLimit = false;
+
+  const handleClick = async () => {
+    shouldUseHorstLimit = true;
+    await updateShowCentroidSpinner(true);
+    await horstDispatcher(shouldUseHorstLimit);
+    await updateShowCentroidSpinner(false);
+    await updateShowUnrotatedFactorTable(true);
+    await updateShowEigenvaluesTable(true);
+    await updateShowScreePlot(true);
+    await updateShowKeepFacForRotButton(true);
+    await updateIsFactorsButtonGreen(true);
+    await updateHorstExtractActive(true);
+    await updateHorstExtractDisabled(true);
   };
 
   if (!showUseHorstIterationSetup) return null;
