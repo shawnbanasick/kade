@@ -32,10 +32,9 @@ const SheetsButton = () => {
   return (
     <GeneralButton
       id="SheetsButton"
-      $isActive={isActive}
       onClick={handleOnclick}
       disabled={isDisabled}
-      className="ml-[70px] mr-[5px]"
+      className={`ml-[70px] mr-[5px] ${isActive ? 'bg-primary-button' : 'bg-grey-button'}`}
     >
       {t('Google Sheets')}
     </GeneralButton>

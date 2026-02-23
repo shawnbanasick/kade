@@ -61,7 +61,6 @@ const TuckerMacCallumCentroidButton = () => {
   return (
     <GeneralButton
       id="tuckerButton"
-      $isActive={isActive}
       disabled={isDisabled}
       onClick={handleOnclick}
       className={` ${isActive ? 'bg-primary-button' : 'bg-grey-button'} shadow-[0_2px_2px_0_black] hover:shadow-[0_2px_2px_0_black] active:shadow-[0_1px_1px_0_black] active:ml-[3px] active:translate-y-[1px]`}

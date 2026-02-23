@@ -27,7 +27,6 @@ const RevealCentroidTypeSelectionButton = () => {
     <div>
       <GeneralButton
         id="displayCentroidTypes"
-        $isActive={isActive}
         disabled={false}
         onClick={handleClick}
         className={` ${isActive ? 'bg-primary-button' : 'bg-grey-button'}`}

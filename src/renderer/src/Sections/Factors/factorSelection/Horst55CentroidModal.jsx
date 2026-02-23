@@ -33,8 +33,6 @@ const Horst55CentroidModal = () => {
     updateIsTuckerMacCallumCentroidDisabled(true);
   };
 
-  console.log(isActive);
-
   return (
     <GeneralButton
       id="noFacSelectedModalButton"

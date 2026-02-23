@@ -584,5 +584,12 @@
   "Yes reset the analysis": "Yes reset the analysis",
   "Download SVG Image": "Download SVG Image",
   "Download PNG Image": "Download PNG Image",
-  "Factor Rotation": "Factor Rotation"
+  "Factor Rotation": "Factor Rotation",
+  "To clear your project from KADE click on View in the top menu then Force Reload": "To clear your project from KADE, click on 'View' in the top menu, then click 'Force Reload'",
+  "This will clear all data and analysis from KADE": "This will clear all data and analysis from KADE",
+  "Scroll to zoom": "Scroll to zoom",
+  "Drag background to pan": "Drag background to pan",
+  "Drag nodes to move": "Drag nodes to move",
+  "Correlation Links": "Correlation Links",
+  "Principal Components Scenarios": "Principal Components Scenarios"
 }

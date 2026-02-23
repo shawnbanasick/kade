@@ -21,14 +21,14 @@ const PcaScenarios = (props) => {
   }
 
   const options = [
-    { id: 'one', label: t('1'), value: 0 },
-    { id: 'two', label: t('2'), value: 1 },
-    { id: 'three', label: t('3'), value: 2 },
-    { id: 'four', label: t('4'), value: 3 },
-    { id: 'five', label: t('5'), value: 4 },
-    { id: 'six', label: t('6'), value: 5 },
-    { id: 'seven', label: t('7'), value: 6 },
-    { id: 'eight', label: t('8'), value: 7 },
+    { id: 'one', label: '1', value: 0 },
+    { id: 'two', label: '2', value: 1 },
+    { id: 'three', label: '3', value: 2 },
+    { id: 'four', label: '4', value: 3 },
+    { id: 'five', label: '5', value: 4 },
+    { id: 'six', label: '6', value: 5 },
+    { id: 'seven', label: '7', value: 6 },
+    { id: 'eight', label: '8', value: 7 },
     // { id: 'none', label: t('Clear'), value: 8 },
   ];
 

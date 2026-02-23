@@ -28,10 +28,9 @@ const TraditionalCentroidButton = () => {
   return (
     <GeneralButton
       id="traditionalCentroidButton"
-      $isActive={isActive}
       disabled={isDisabled}
       onClick={handleOnclick}
-      className={`${isActive ? 'bg-grey-button' : 'bg-grey-button'}`}
+      className={` ${isActive ? 'bg-primary-button' : 'bg-grey-button'}`}
     >
       Brown <br /> {t('Centroid Factors')}
     </GeneralButton>

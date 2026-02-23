@@ -30,9 +30,8 @@ const FirebaseButton = () => {
 
   return (
     <GeneralButton
-      className="ml-[70px] mr-[5px]"
+      className={`ml-[70px] mr-[5px] ${isActive ? 'bg-primary-button' : 'bg-grey-button'}`}
       id="FirebaseButton"
-      $isActive={isActive}
       onClick={handleOnclick}
       disabled={isDisabled}
     >

@@ -57,7 +57,6 @@ const Horst55CentroidModal = () => {
   return (
     <GeneralButton
       id="noFacSelectedModalButton"
-      $isActive={isActive}
       disabled={isDisabled}
       onClick={handleOnclick}
       className={`${isActive ? 'bg-primary-button' : 'bg-grey-button'}`}

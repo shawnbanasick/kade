@@ -2,7 +2,7 @@ import GeneralButton from './../../../Utils/GeneralButton';
 import { useTranslation } from 'react-i18next';
 import inputState from '../../GlobalState/inputState';
 
-const SheetsButton = () => {
+const NetlifyButton = () => {
   const { t } = useTranslation();
   // getState
   const isActive = inputState((state) => state.isShowNetlifyInputButtonGreen);
@@ -27,28 +27,18 @@ const SheetsButton = () => {
     updateIsShowSheetsInputButtonGreen(false);
     updateIsShowFirebaseInputButtonGreen(false);
     updateIsShowNetlifyInputButtonGreen(true);
-
-    /*
-    inputState.showSheetsInput = false;
-    inputState.showNetlifyInput = true;
-    inputState.showFirebaseInput = false;
-    inputState.isShowSheetsInputButtonGreen = false;
-    inputState.isShowFirebaseInputButtonGreen = false;
-    inputState.isShowNetlifyInputButtonGreen = true;
-    */
   };
 
   return (
     <GeneralButton
       id="NetlifyButton"
-      $isActive={isActive}
       onClick={handleOnclick}
       disabled={isDisabled}
-      className="min-w-[120px] ml-[70px] mr-[5px]"
+      className={`min-w-[120px] ml-[70px] mr-[5px] ${isActive ? 'bg-primary-button' : 'bg-grey-button'}`}
     >
       {t('Netlify')}
     </GeneralButton>
   );
 };
 
-export default SheetsButton;
+export default NetlifyButton;

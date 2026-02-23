@@ -47,7 +47,6 @@ const ZipErrorCheckButton = (props) => {
       </div>
       <GeneralButton
         id="csvDataErrorCheckButton"
-        $isActive={isActive}
         onClick={handleOnclick}
         className={[
           'mr-[5px]',

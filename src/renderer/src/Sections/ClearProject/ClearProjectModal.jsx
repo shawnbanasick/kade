@@ -25,20 +25,20 @@ const ClearProjectModal = () => {
   const handleClose = () => setModalOpen(false);
 
   const clearAnalysis = () => {
-    setModalOpen(false);
-    toast.success(projectClearedTrans);
     initializeInputState();
-    initializeAppState();
-    initializeCorrelationState();
-    initializeDataDisplayState();
-    initializeFactorState();
-    initializeRotationState();
-    initializeLoadingState();
-    initializeOutPutState();
-    initializeProjectHistoryState();
-    initializeVizState();
-    initializeCalcState();
-    initializeCoreState();
+    // initializeAppState();
+    // initializeCorrelationState();
+    // initializeDataDisplayState();
+    // initializeFactorState();
+    // initializeRotationState();
+    // initializeLoadingState();
+    // initializeOutPutState();
+    // initializeProjectHistoryState();
+    // initializeVizState();
+    // initializeCalcState();
+    // initializeCoreState();
+    toast.success(projectClearedTrans);
+    setModalOpen(false);
   };
 
   return (
@@ -46,7 +46,9 @@ const ClearProjectModal = () => {
       <ToastContainer autoClose={2000} transition={Zoom} />
 
       {/* Trigger Button */}
-      <GeneralButton onClick={handleOpen}>{t('Clear Project')}</GeneralButton>
+      <GeneralButton onClick={handleOpen} className="bg-grey-button text-3xl!">
+        {t('Clear Project')}
+      </GeneralButton>
 
       {/* Modal */}
       <dialog className={`modal ${modalOpen ? 'modal-open' : ''}`}>

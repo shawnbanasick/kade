@@ -85,7 +85,6 @@ const FactorSelectButtonModal = () => {
       {/* Trigger Button */}
       <GeneralButton
         id="factorsKeptSubmitButton"
-        $isActive={isActive}
         disabled={isFacSelectDisabled}
         onClick={handleOpen}
         className={`${isActive ? 'bg-primary-button' : 'bg-grey-button'} h-[30px] p-2 min-w-[100px] ml-8!`}
