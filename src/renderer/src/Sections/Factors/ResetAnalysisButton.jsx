@@ -47,7 +47,7 @@ const ResetAnalysisButton = () => {
       {/* Trigger Button */}
       <GeneralButton
         id="resetAnalysisButton"
-        className="bg-grey-button ml-[350px]!"
+        className="bg-grey-button ml-[350px] h-[30px] "
         onClick={handleOpen}
       >
         {t('Reset Analysis')}

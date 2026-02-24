@@ -33,16 +33,14 @@ const PCAButton = () => {
   };
 
   return (
-    <div>
-      <GeneralButton
-        id="extractPrinCompButton"
-        disabled={isDisabled}
-        onClick={handleClick}
-        className={`ml-[50px]! ${isActive ? 'bg-primary-button' : 'bg-grey-button'}`}
-      >
-        {t('Principal Components')}
-      </GeneralButton>
-    </div>
+    <GeneralButton
+      id="extractPrinCompButton"
+      disabled={isDisabled}
+      onClick={handleClick}
+      className={`ml-[50px]! h-[30px] ${isActive ? 'bg-primary-button' : 'bg-grey-button'}`}
+    >
+      {t('Principal Components')}
+    </GeneralButton>
   );
 };
 

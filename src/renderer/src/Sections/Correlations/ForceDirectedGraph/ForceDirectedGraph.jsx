@@ -663,12 +663,12 @@ const ForceGraph = ({
   // }
 
   return (
-    <>
-      <div className="flex w-[calc(85vw-30px)] text-basis h-[70px] items-center">
+    <div className="h-[calc(100vh-130px)]">
+      <div className="flex w-[calc(85vw-30px)] text-basis h-[75px] items-center">
         <div className="flex items-center gap-2">
           <DebouncedNumberInput
             value={correlationThreshold}
-            label="Cutoff"
+            label={t('Cutoff')}
             min={0}
             max={1}
             step={0.01}
@@ -782,7 +782,7 @@ const ForceGraph = ({
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

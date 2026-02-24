@@ -38,9 +38,9 @@ const Horst55CentroidModal = () => {
       id="noFacSelectedModalButton"
       disabled={isDisabled}
       onClick={handleOnclick}
-      className={`${isActive ? 'bg-primary-button' : 'bg-grey-button'} ml-8!`}
+      className={`h-[30px] w-[250px] ${isActive ? 'bg-primary-button' : 'bg-grey-button'} ml-8!`}
     >
-      Horst 5.5 <br /> {t('Centroid Factors')}
+      Horst {t('Centroid Factors')}
     </GeneralButton>
   );
 };

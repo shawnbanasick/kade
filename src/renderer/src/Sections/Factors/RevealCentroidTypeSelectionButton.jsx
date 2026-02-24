@@ -24,16 +24,14 @@ const RevealCentroidTypeSelectionButton = () => {
   }
 
   return (
-    <div>
-      <GeneralButton
-        id="displayCentroidTypes"
-        disabled={false}
-        onClick={handleClick}
-        className={` ${isActive ? 'bg-primary-button' : 'bg-grey-button'}`}
-      >
-        {t('Centroid Factors')}
-      </GeneralButton>
-    </div>
+    <GeneralButton
+      id="displayCentroidTypes"
+      disabled={false}
+      onClick={handleClick}
+      className={`h-[30px] ${isActive ? 'bg-primary-button' : 'bg-grey-button'}`}
+    >
+      {t('Centroid Factors')}
+    </GeneralButton>
   );
 };
 export default RevealCentroidTypeSelectionButton;

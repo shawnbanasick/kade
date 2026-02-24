@@ -28,7 +28,7 @@ const filterArray = (item) => {
 };
 
 function getWidth(numFacsForTableWidth) {
-  let tableWidth = 310 + 15 + 125 * numFacsForTableWidth;
+  let tableWidth = 315 + 15 + 125 * numFacsForTableWidth;
   let windowWidth = window.innerWidth - 205;
   if (windowWidth < tableWidth) {
     return windowWidth + 'px';
@@ -225,15 +225,17 @@ const LoadingsTable = (props) => {
   };
 
   return (
-    <div>
-      <div className="grid grid-cols-1">
+    <div className="flex flex-col items-center">
+      <div className="flex flex-col items-center">
         <ToastContainer transition={Zoom} />
-        <div className="grid grid-cols-[410px_auto] w-[1100px] h-[30px]">
-          <span className="mr-[255px]">{props.childTrans.row}</span>
-          <span>{props.childTrans.flagging}</span>
+        <div className="flex flex-col items-center">
+          <div className="grid grid-cols-[410px_auto] w-[840px] h-[30px]">
+            <span className="mr-[255px]">{props.childTrans.row}</span>
+            <span>{props.childTrans.flagging}</span>
+          </div>
         </div>
-        <div className="grid grid-cols-[400px_auto] h-[50px] w-[1100px]">
-          <div className="flex flex-row gap-3">
+        <div className="flex flex-row">
+          <div id="rowHighlightingButtonGroup" className="flex flex-row gap-3">
             <GeneralButton
               id="noHighlightingButton"
               className="wrapper1 min-w-[80px] bg-grey-button h-[30px]"
@@ -259,7 +261,7 @@ const LoadingsTable = (props) => {
               {props.childTrans.gray}
             </GeneralButton>
           </div>
-          <div className="flex flex-row gap-3 h-[30px] items-center justify-left">
+          <div id="flaggingButtonGroup" className="flex flex-row gap-3 h-[30px]">
             <GeneralButton
               id="autoflagButton"
               onClick={autoFlagFactors}
@@ -286,11 +288,11 @@ const LoadingsTable = (props) => {
             </GeneralButton>
           </div>
         </div>
-        <div className="w-[900px] pl-[16px] mt-[3px] mb-[25px]">
+        <div className="flex items-center w-[900px] pl-[16px] mt-[3px]">
           <MajorityCommonVarianceCheckbox />
         </div>
-        <div>
-          <p className="text-[12px] font-normal mt-[15px] text-left w-[900px]">
+        <div className="flex flex-col items-center">
+          <p className="flex items-center text-[16px]   text-center">
             {props.childTrans.default} {props.childTrans.fg} {props.childTrans.click}
           </p>
           <div

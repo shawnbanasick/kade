@@ -19,11 +19,11 @@ const ForceGraphDataSelectRadio = () => {
   ];
 
   return (
-    <div className="flex flex-col rounded-lg bg-white p-1 ">
-      <label className="label mb-0.5">
+    <div className="flex flex-col rounded-lg bg-white p-2 pb-1 pl-1">
+      <label className="label">
         <span className="label-text font-medium">{t('Correlation Links')}: </span>
       </label>
-      <div className="inline-flex gap-1 h-[25px]">
+      <div className="inline-flex gap-1 mt-1 h-[30px]">
         {options.map((option) => (
           <button
             key={option.id}
