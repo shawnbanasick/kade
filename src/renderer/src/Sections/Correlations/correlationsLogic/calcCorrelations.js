@@ -64,11 +64,11 @@ export default function calculateCorrelations(rawSorts, respondentNames) {
     const tempObjAll = {};
     const tempObjPos = {};
     const tempObjNeg = {};
-    tempObjAll.respondent = `p${j + 1}`;
-    tempObjPos.respondent = `p${j + 1}`;
-    tempObjNeg.respondent = `p${j + 1}`;
+    tempObjAll.respondent = `${(j + 1).toString()}`;
+    tempObjPos.respondent = `${(j + 1).toString()}`;
+    tempObjNeg.respondent = `${(j + 1).toString()}`;
     element.forEach((data, k) => {
-      const key = `p${k + 1}`;
+      const key = `${(k + 1).toString()}`;
       tempObjAll[key] = data;
       if (data > 0) {
         tempObjPos[key] = data;

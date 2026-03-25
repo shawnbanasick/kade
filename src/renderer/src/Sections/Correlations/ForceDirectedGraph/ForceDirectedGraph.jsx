@@ -47,12 +47,11 @@ const ForceGraph = ({
       return `M ${points.join(' L ')} Z`;
     },
     5: (r) => {
-      const points = [];
-      for (let i = 0; i < 6; i++) {
-        const angle = (i * 2 * Math.PI) / 6;
-        points.push(`${r * 1.2 * Math.cos(angle)},${r * 1.2 * Math.sin(angle)}`);
-      }
-      return `M ${points.join(' L ')} Z`;
+      // Parallelogram: skewed rectangle, offset top-right bottom-left
+      const w = r * 1.4;
+      const h = r * 1.0;
+      const skew = r * 0.6;
+      return `M ${-w + skew},${-h} L ${w + skew},${-h} L ${w - skew},${h} L ${-w - skew},${h} Z`;
     },
     6: (r) => {
       const rx = r * 2.0; // wider ratio for clearly visible oval
@@ -63,8 +62,11 @@ const ForceGraph = ({
       return `M ${-rx},0 C ${-rx},${-oy} ${-ox},${-ry} 0,${-ry} C ${ox},${-ry} ${rx},${-oy} ${rx},0 C ${rx},${oy} ${ox},${ry} 0,${ry} C ${-ox},${ry} ${-rx},${oy} ${-rx},0 Z`;
     },
     7: (r) => {
-      const w = r * 0.6;
-      return `M ${-w},${-r * 1.3} L ${w},${-r * 1.3} L ${w},${-w} L ${r * 1.3},${-w} L ${r * 1.3},${w} L ${w},${w} L ${w},${r * 1.3} L ${-w},${r * 1.3} L ${-w},${w} L ${-r * 1.3},${w} L ${-r * 1.3},${-w} L ${-w},${-w} Z`;
+      // Trapezoid: wide base, narrow top
+      const wTop = r * 0.9;
+      const wBot = r * 1.6;
+      const h = r * 1.1;
+      return `M ${-wTop},${-h} L ${wTop},${-h} L ${wBot},${h} L ${-wBot},${h} Z`;
     },
     8: (r) => {
       const points = [];
@@ -87,16 +89,18 @@ const ForceGraph = ({
     '#333333',
   ];
 
-  // draw.io shape style map for each factor number (1-8)
+  // draw.io shape style map for each factor number (1-8).
+  // Use explicit shape= prefix (required for reliable rendering per draw.io docs).
+  // Deliberately omit html= here — it is appended once at the end of each style string.
   const drawioShapeStyles = {
-    1: 'rounded=0;whiteSpace=wrap;html=1;', // Square/Rectangle
-    2: 'shape=mxgraph.basic.acute_triangle;whiteSpace=wrap;html=1;', // Triangle
-    3: 'rhombus;whiteSpace=wrap;html=1;', // Diamond
-    4: 'shape=mxgraph.basic.pentagon;whiteSpace=wrap;html=1;', // Pentagon
-    5: 'shape=mxgraph.basic.hexagon;whiteSpace=wrap;html=1;', // Hexagon
-    6: 'ellipse;whiteSpace=wrap;html=1;', // Oval/Ellipse — geometry set to wide rectangle below
-    7: 'shape=mxgraph.basic.plus;whiteSpace=wrap;html=1;', // Cross/Plus
-    8: 'shape=mxgraph.basic.octagon;whiteSpace=wrap;html=1;', // Octagon
+    1: 'rounded=0;whiteSpace=wrap;', // Square/Rectangle
+    2: 'shape=triangle;direction=north;whiteSpace=wrap;', // Triangle (pointing up)
+    3: 'rhombus;whiteSpace=wrap;', // Diamond
+    4: 'shape=mxgraph.basic.pentagon;whiteSpace=wrap;', // Pentagon
+    5: 'shape=parallelogram;whiteSpace=wrap;', // Parallelogram
+    6: 'ellipse;whiteSpace=wrap;', // Oval/Ellipse
+    7: 'shape=trapezoid;whiteSpace=wrap;', // Trapezoid
+    8: 'shape=mxgraph.basic.octagon;whiteSpace=wrap;', // Octagon
   };
 
   // Color scale values (matching D3 colorScale domain 1-8)
@@ -199,11 +203,11 @@ const ForceGraph = ({
       const fillColor = isGrayscale ? grayscaleColors[0] : factorColors[factorNum - 1];
       const strokeColor = isGrayscale ? '#000000' : pos.flagged ? '#000000' : '#ffffff';
       const dashed = pos.flagged ? 'dashed=1;dashPattern=5 5;' : '';
-      const baseStyle = isGrayscale
-        ? drawioShapeStyles[factorNum]
-        : `ellipse;whiteSpace=wrap;html=1;`; // color mode always uses ellipse (circle)
+      const baseStyle = isGrayscale ? drawioShapeStyles[factorNum] : 'ellipse;whiteSpace=wrap;'; // color mode always uses ellipse (circle)
 
-      const style = `${baseStyle}fillColor=${fillColor};strokeColor=${strokeColor};fontStyle=1;fontSize=12;${dashed}html=0;`;
+      // Ensure html=0 is the only html= declaration (strip any from baseStyle first)
+      const cleanBase = baseStyle.replace(/html=\d;?/g, '');
+      const style = `${cleanBase}fillColor=${fillColor};strokeColor=${strokeColor};fontStyle=1;fontSize=12;${dashed}html=0;`;
       // Factor 6 (oval) gets a wider bounding box in grayscale only; color mode uses uniform circles
       const nodeW = isGrayscale && factorNum === 6 ? NODE_W * 1.6 : NODE_W;
       const nodeH = isGrayscale && factorNum === 6 ? NODE_H * 0.7 : NODE_H;
@@ -276,8 +280,9 @@ const ForceGraph = ({
       const itemY = legendBoxY + 40 + row * LEGEND_ITEM_H;
 
       const fillColor = isGrayscale ? grayscaleColors[0] : factorColors[i - 1];
-      const baseStyle = isGrayscale ? drawioShapeStyles[i] : 'ellipse;whiteSpace=wrap;html=1;';
-      const swatchStyle = `${baseStyle}fillColor=${fillColor};strokeColor=#000000;fontSize=10;fontStyle=1;`;
+      const baseStyle = isGrayscale ? drawioShapeStyles[i] : 'ellipse;whiteSpace=wrap;';
+      const cleanBase = baseStyle.replace(/html=\d;?/g, '');
+      const swatchStyle = `${cleanBase}fillColor=${fillColor};strokeColor=#000000;fontSize=10;fontStyle=1;html=0;`;
 
       // Factor 6 (oval) swatch uses a wider bounding box in grayscale only
       const swatchW = isGrayscale && i === 6 ? LEGEND_SHAPE_SIZE * 1.6 : LEGEND_SHAPE_SIZE;
@@ -673,8 +678,8 @@ const ForceGraph = ({
         tooltip
           .style('opacity', 1)
           .html(`<strong>${d.id}</strong><br>Connections:<br>${connections}`)
-          .style('left', `${event.pageX + 10}px`)
-          .style('top', `${event.pageY - 10}px`);
+          .style('left', `${event.pageX - 130}px`)
+          .style('top', `${event.pageY - 100}px`);
       })
       .on('mouseout', function () {
         link

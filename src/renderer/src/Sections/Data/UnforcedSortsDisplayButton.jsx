@@ -65,8 +65,8 @@ const UnforcedSortsDisplayButton = (props) => {
           onClick={handleOnClick2}
           className={
             areQsortsVerified
-              ? 'bg-primary-button h-[30px] w-[270px] text-[clamp(1.3rem,1.5vw,1.8rem)]'
-              : 'bg-[orange] h-[30px] w-[270px] text-[clamp(1.3rem,1.5vw,1.8rem)]'
+              ? 'bg-primary-button h-[35px] w-[270px] text-[1.2rem] mt-4 '
+              : 'bg-[orange] h-[35px] w-[270px] text-[1.2rem] mt-4'
           }
         >
           <div>

@@ -44,14 +44,6 @@ const Structure = () => {
         />
       ),
     },
-    {
-      title: 'Factor Characteristics',
-      content: <h2>Some Correlations</h2>,
-    },
-    {
-      title: 'Influencers',
-      content: <h2>Some influencers data</h2>,
-    },
   ];
 
   return (
@@ -88,30 +80,6 @@ const Structure = () => {
 
         <div className="tab-content box-border overflow-auto bg-base-100 border-base-300 p-2 pl-6">
           {tabs[1].content}
-        </div>
-
-        <input
-          type="radio"
-          name="my_tabs_Corr"
-          className={`tab basis-[12vw] text-[clamp(1rem,1.5vw,1.1rem)] hover:shadow-[inset_0_0_0_4px_#666,_0_0_1px_transparent] ${structureTabActive === 'tab3' ? 'tab-active bg-[#a5d6a7]' : 'bg-[#d6dbe0]'}`}
-          aria-label={tabs[2].title}
-          onClick={() => updateStructureTabActive('tab3')}
-        />
-
-        <div className="tab-content box-border overflow-auto bg-base-100 border-base-300 p-6">
-          {tabs[2].content}
-        </div>
-
-        <input
-          type="radio"
-          name="my_tabs_Corr"
-          className={`tab basis-[12vw] text-[clamp(1rem,1.5vw,1.1rem)] hover:shadow-[inset_0_0_0_4px_#666,_0_0_1px_transparent] ${structureTabActive === 'tab4' ? 'tab-active bg-[#a5d6a7]' : 'bg-[#d6dbe0]'}`}
-          aria-label={tabs[3].title}
-          onClick={() => updateStructureTabActive('tab4')}
-        />
-
-        <div className="tab-content box-border overflow-auto bg-base-100 border-base-300 p-6">
-          {tabs[3].content}
         </div>
       </div>
     </div>

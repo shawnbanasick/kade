@@ -53,10 +53,12 @@ const pushProjectHistoryToOutputArray = function (
 
   // get project history
   for (let i = 0; i < list.length; i++) {
-    if (i === 0) {
-      dataXlsx.push([analsysProcessTrans, `${i + 1}. ${list[i].logMessage}`]);
-    } else {
-      dataXlsx.push(['', `${i + 1}. ${list[i].logMessage}`]);
+    if (list[i]?.logMessage) {
+      if (i === 0) {
+        dataXlsx.push([analsysProcessTrans, `${i + 1}. ${list[i].logMessage}`]);
+      } else {
+        dataXlsx.push(['', `${i + 1}. ${list[i].logMessage}`]);
+      }
     }
   }
 

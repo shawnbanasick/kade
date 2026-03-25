@@ -2,6 +2,7 @@ const GeneralButton = ({ height, width, disabled, onClick, className = '', ...pr
   const baseClasses = `
     grid items-center 
     justify-items-center
+    justify-center
     min-h-[0px]
     text-center
     text-base
