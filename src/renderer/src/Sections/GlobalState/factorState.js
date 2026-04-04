@@ -63,7 +63,11 @@ const factorState = create(
     numCentroidFactors: 7,
     numFacsForTableWidth: 0,
 
+    parallelMeans: [],
+    parallel95: [],
     pcaButtonText: 'Principal Components',
+    displayParallelMeans: false,
+    displayParallel95: false,
 
     screePlotData: [],
     showCentroidError: false,
@@ -82,6 +86,10 @@ const factorState = create(
     useHeywoodAdjustment: false,
     unrotatedFactorMatrixOutput: [],
 
+    updateDisplayParallelMeans: (inputValue) => set({ displayParallelMeans: inputValue }),
+    updateDisplayParallel95: (inputValue) => set({ displayParallel95: inputValue }),
+    updateParallelMeans: (inputValue) => set({ parallelMeans: inputValue }),
+    updateParallel95: (inputValue) => set({ parallel95: inputValue }),
     updateShowHorstIterationSetup: (inputValue) => set({ showUseHorstIterationSetup: inputValue }),
     updateHeywoodAdjustButtonActive: (inputValue) => set({ heywoodAdjustButtonActive: inputValue }),
     updateHeywoodContinueButtonActive: (inputValue) =>

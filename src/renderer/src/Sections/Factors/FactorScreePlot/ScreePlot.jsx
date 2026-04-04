@@ -4,6 +4,7 @@ import Line from './DataLine';
 import XYAxis from './XyAxis';
 import DataCircles from './DataCircles';
 import AxisTextLabels from './AxisTextLabels';
+import ParallelRefLine from './ParallelRefLine';
 
 const styles = {
   container: {
@@ -40,8 +41,8 @@ const yMax = (data) => {
   let maxValue = d3.max(data, (d) => d[1]);
   if (maxValue < 10 && maxValue > 5) {
     maxValue = 10;
-  } else if (maxValue < 5) {
-    maxValue = 5;
+  } else if (maxValue < 3) {
+    maxValue = 3;
   }
   return maxValue;
 };
@@ -60,11 +61,16 @@ const yScale = (props) =>
     .domain([0, yMax(props.data)])
     .range([props.height - props.padding, props.padding]);
 
-const ScatterPlot = (props) => {
+const ScreePlot = (props) => {
+  const { showMeans = false, showP95 = false, means, p95 } = props;
+
   const scales = {
     xScale: xScale(props),
     yScale: yScale(props),
   };
+
+  const refLineProps = { ...scales, width: props.width, padding: props.padding };
+
   return (
     // <div style={styles.container}>
     <div style={styles.container} className="">
@@ -79,9 +85,23 @@ const ScatterPlot = (props) => {
         <AxisTextLabels />
         <Line {...props} {...scales} />
         <DataCircles {...props} {...scales} />
+        <ParallelRefLine
+          {...refLineProps}
+          data={means}
+          label="PA Mean"
+          show={showMeans}
+          variant="means"
+        />
+        <ParallelRefLine
+          {...refLineProps}
+          data={p95}
+          label="PA 95th Percentile"
+          show={showP95}
+          variant="p95"
+        />
       </svg>
     </div>
   );
 };
 
-export default ScatterPlot;
+export default ScreePlot;

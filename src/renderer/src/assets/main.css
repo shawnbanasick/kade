@@ -1,6 +1,8 @@
 @import './base.css';
 
 body {
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
   display: flex;
   align-items: center;
   justify-content: center;

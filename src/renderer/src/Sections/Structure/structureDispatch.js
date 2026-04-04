@@ -5,6 +5,7 @@ import PromiseWorker from 'promise-worker';
 import structureState from '../GlobalState/structureState';
 import { MarkerType } from 'reactflow';
 import coreState from '../GlobalState/coreState';
+import factorState from '../GlobalState/factorState';
 
 const structureDispatch = () => {
   const X = cloneDeep(correlationState.getState().correlation5Calcs);
@@ -15,7 +16,12 @@ const structureDispatch = () => {
   const totalStatements = coreState.getState().numStatements;
   const numberofPrincipalComps = determineNumberPCs();
 
-  // dispatch webWorker
+  const mainDataObject = coreState.getState().mainDataObject;
+  const sortsArray = mainDataObject.map((item) => item.rawSort);
+  // console.log('sortsArray', sortsArray.length);
+  // console.log('sortsArray', JSON.stringify(sortsArray, null, 2));
+
+  // dispatch STRUCTURE webWorker
   const worker = new Worker(new URL('./webWorkerPca.js', import.meta.url), { type: 'module' });
   const promiseWorker = new PromiseWorker(worker);
   let initialEdges = [];
@@ -65,6 +71,37 @@ const structureDispatch = () => {
         correlationState.setState({ forcedGraphDataNeg: forcedNeg });
         correlationState.setState({ forcedGraphDataAll: forcedAll });
       });
+    })
+    .catch(function (error) {
+      console.error(error);
+      // handle error
+    });
+
+  // dispatch PARALLEL webWorker
+  const worker2 = new Worker(new URL('./webWorkerParallel.js', import.meta.url), {
+    type: 'module',
+  });
+  const promiseWorker2 = new PromiseWorker(worker2);
+
+  promiseWorker2
+    .postMessage(JSON.stringify(sortsArray))
+    .then(function (response) {
+      const means = [...response[1]];
+      const p95 = [...response[2]];
+
+      const meansDataArray = [];
+      const p95DataArray = [];
+
+      means.forEach((item, index) => {
+        meansDataArray.push([index + 1, item]);
+      });
+
+      p95.forEach((item, index) => {
+        p95DataArray.push([index + 1, item]);
+      });
+
+      factorState.setState({ parallelMeans: meansDataArray });
+      factorState.setState({ parallel95: p95DataArray });
     })
     .catch(function (error) {
       console.error(error);

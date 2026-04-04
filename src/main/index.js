@@ -31,7 +31,13 @@ let menuBuilder;
 async function createWindow() {
   const mainWindowStateKeeper = await windowStateKeeper('main');
 
-  let splash = new BrowserWindow({ width: 400, height: 300, frame: false, transparent: true });
+  let splash = new BrowserWindow({
+    width: 400,
+    height: 300,
+    frame: false,
+    transparent: true,
+    alwaysOnTop: true,
+  });
   splash.loadFile('splash.html');
 
   // Create the browser window.
@@ -54,6 +60,14 @@ async function createWindow() {
       enableRemoteModule: true,
     },
   });
+
+  // Add this right after creating mainWindow
+  mainWindow.webContents.on('did-finish-load', () => {
+    // Forces the window to paint before showing
+    // mainWindow.webContents.executeJavaScript('document.body.style.visibility = "visible"');
+    mainWindow.webContents.executeJavaScript('document.body.style.opacity = "1"');
+  });
+
   if (mainWindowStateKeeper.isMaximized === true) {
     mainWindow.maximize();
   }
@@ -62,9 +76,15 @@ async function createWindow() {
   // Sets up main.js bindings for our i18next backend
   // i18nextBackend.mainBindings(ipcMain, win, fs);
 
+  // delay the showing of the main window to give the splash time to load
   mainWindow.on('ready-to-show', () => {
-    splash.close();
-    mainWindow.show();
+    setTimeout(() => {
+      if (splash && !splash.isDestroyed()) {
+        splash.close();
+      }
+      mainWindow.show();
+      splash = null;
+    }, 500);
   });
 
   mainWindow.webContents.setWindowOpenHandler((details) => {
@@ -74,11 +94,14 @@ async function createWindow() {
 
   // HMR for renderer base on electron-vite cli.
   // Load the remote URL for development or the local html file for production.
-  if (is.dev && process.env['ELECTRON_RENDERER_URL']) {
-    mainWindow.loadURL(process.env['ELECTRON_RENDERER_URL']);
-  } else {
-    mainWindow.loadFile(join(__dirname, '../renderer/index.html'));
-  }
+  // Wait for splash to finish loading before loading the main window
+  splash.webContents.on('did-finish-load', () => {
+    if (is.dev && process.env['ELECTRON_RENDERER_URL']) {
+      mainWindow.loadURL(process.env['ELECTRON_RENDERER_URL']);
+    } else {
+      mainWindow.loadFile(join(__dirname, '../renderer/index.html'));
+    }
+  });
 
   menuBuilder = MenuFactory(win, app.name);
 
@@ -107,147 +130,163 @@ async function createWindow() {
   });
 }
 
-// This method will be called when Electron has finished
-// initialization and is ready to create browser windows.
-// Some APIs can only be used after this event occurs.
-app.whenReady().then(() => {
-  // Set app user model id for windows
-  electronApp.setAppUserModelId('com.electron');
+app.commandLine.appendSwitch('disable-features', 'NetworkServiceSandbox');
+app.commandLine.appendSwitch('disable-gpu-shader-disk-cache');
 
-  // installExtension(REACT_DEVELOPER_TOOLS)
-  //   .then((name) => console.log(`Added Extension: ${name}`))
-  //   .catch((err) => console.log('An error occurred: ', err));
+const gotTheLock = app.requestSingleInstanceLock();
 
-  // Default open or close DevTools by F12 in development
-  // and ignore CommandOrControl + R in production.
-  // see https://github.com/alex8088/electron-toolkit/tree/master/packages/utils
-  app.on('browser-window-created', (_, window) => {
-    optimizer.watchWindowShortcuts(window);
+if (!gotTheLock) {
+  app.quit();
+} else {
+  app.on('second-instance', () => {
+    // If a second instance is launched, focus the existing window
+    if (win) {
+      if (win.isMinimized()) win.restore();
+      win.focus();
+    }
   });
 
-  // IPC test
-  ipcMain.on('ping', () => console.log('pong'));
+  // This method will be called when Electron has finished
+  // initialization and is ready to create browser windows.
+  // Some APIs can only be used after this event occurs.
+  app.whenReady().then(() => {
+    // Set app user model id for windows
+    electronApp.setAppUserModelId('com.electron');
 
-  // Open Files
-  ipcMain.on('dialog:openStaFile', openStaFile);
-  ipcMain.on('dialog:openDatFile', openDatFile);
-  ipcMain.on('dialog:openExcelFile', openExcelFile);
-  ipcMain.on('dialog:openZipFile', openZipFile);
-  ipcMain.on('dialog:openTxtFile', openTxtFile);
-  ipcMain.on('dialog:openJsonFile', openJsonFile);
-  ipcMain.on('dialog:openCsvFile', openCsvFile);
+    // installExtension(REACT_DEVELOPER_TOOLS)
+    //   .then((name) => console.log(`Added Extension: ${name}`))
+    //   .catch((err) => console.log('An error occurred: ', err));
 
-  // Path
-  ipcMain.handle('getPath', () => {
-    app.getPath('documents');
-  });
+    // Default open or close DevTools by F12 in development
+    // and ignore CommandOrControl + R in production.
+    // see https://github.com/alex8088/electron-toolkit/tree/master/packages/utils
+    app.on('browser-window-created', (_, window) => {
+      optimizer.watchWindowShortcuts(window);
+    });
 
-  // Save Files
+    // IPC test
+    ipcMain.on('ping', () => console.log('pong'));
 
-  ipcMain.handle('save-svg', async (event, arrayBuffer, filePath) => {
-    const imgContent = Buffer.from(arrayBuffer).toString('utf-8');
-    return new Promise((resolve, reject) => {
-      fs.writeFile(filePath, imgContent, (err) => {
-        if (err) {
-          reject(err);
-        } else {
-          resolve('File saved successfully');
-          dialog.showMessageBoxSync({
-            title: 'KADE',
-            type: 'info',
-            message: `File saved to:`,
-            detail: `${filePath}`,
-            buttons: ['OK'],
-          });
-        }
+    // Open Files
+    ipcMain.on('dialog:openStaFile', openStaFile);
+    ipcMain.on('dialog:openDatFile', openDatFile);
+    ipcMain.on('dialog:openExcelFile', openExcelFile);
+    ipcMain.on('dialog:openZipFile', openZipFile);
+    ipcMain.on('dialog:openTxtFile', openTxtFile);
+    ipcMain.on('dialog:openJsonFile', openJsonFile);
+    ipcMain.on('dialog:openCsvFile', openCsvFile);
+
+    // Path
+    ipcMain.handle('getPath', () => {
+      app.getPath('documents');
+    });
+
+    // Save Files
+
+    ipcMain.handle('save-svg', async (event, arrayBuffer, filePath) => {
+      const imgContent = Buffer.from(arrayBuffer).toString('utf-8');
+      return new Promise((resolve, reject) => {
+        fs.writeFile(filePath, imgContent, (err) => {
+          if (err) {
+            reject(err);
+          } else {
+            resolve('File saved successfully');
+            dialog.showMessageBoxSync({
+              title: 'KADE',
+              type: 'info',
+              message: `File saved to:`,
+              detail: `${filePath}`,
+              buttons: ['OK'],
+            });
+          }
+        });
       });
     });
-  });
 
-  ipcMain.handle('save-png', async (event, imgContent, filePath) => {
-    return new Promise((resolve, reject) => {
-      fs.writeFile(filePath, imgContent, 'base64', (err) => {
-        if (err) {
-          reject(err);
-        } else {
-          resolve('File saved successfully');
-          dialog.showMessageBoxSync({
-            title: 'KADE',
-            type: 'info',
-            message: `File saved to:`,
-            detail: `${filePath}`,
-            buttons: ['OK'],
-          });
-        }
+    ipcMain.handle('save-png', async (event, imgContent, filePath) => {
+      return new Promise((resolve, reject) => {
+        fs.writeFile(filePath, imgContent, 'base64', (err) => {
+          if (err) {
+            reject(err);
+          } else {
+            resolve('File saved successfully');
+            dialog.showMessageBoxSync({
+              title: 'KADE',
+              type: 'info',
+              message: `File saved to:`,
+              detail: `${filePath}`,
+              buttons: ['OK'],
+            });
+          }
+        });
       });
     });
-  });
 
-  ipcMain.handle('large-data', async (event, arrayBuffer, path) => {
-    const dataContent = JSON.parse(Buffer.from(arrayBuffer).toString('utf-8'));
+    ipcMain.handle('large-data', async (event, arrayBuffer, path) => {
+      const dataContent = JSON.parse(Buffer.from(arrayBuffer).toString('utf-8'));
 
-    if (dataContent.type === 'docx') {
-      exportDocx(dataContent);
-    }
-    if (dataContent.type === 'xlsx') {
-      createXlsxFile(dataContent);
-    }
-    if (dataContent.type === 'csv') {
-      createCsvFile(dataContent);
-    }
-  });
-
-  ipcMain.handle('show-saveSvg-dialog', async (event, defaultPath) => {
-    const result = await dialog.showSaveDialog({
-      title: 'Save SVG',
-      defaultPath: defaultPath || 'untitled.svg',
-      filters: [{ name: 'SVG Files', extensions: ['svg'] }],
-    });
-    return result.filePath;
-  });
-
-  ipcMain.handle('show-savePng-dialog', async (event, defaultPath) => {
-    const result = await dialog.showSaveDialog({
-      title: 'Save PNG',
-      defaultPath: defaultPath || 'untitled.png',
-      filters: [{ name: 'PNG Files', extensions: ['png'] }],
-    });
-    return result.filePath;
-  });
-
-  ipcMain.handle('show-saveDocx-dialog', async (event, defaultPath) => {
-    const result = await dialog.showSaveDialog({
-      title: 'Save DOCX',
-      defaultPath: defaultPath || 'untitled.docx',
-      filters: [{ name: 'DOCX Files', extensions: ['docx'] }],
-    });
-    return result.filePath;
-  });
-
-  ipcMain.on('showSaveDialogSync', saveSvgFile);
-  ipcMain.handle('writeFile', (event, filepath, buffer) => {
-    var message = {};
-    fs.writeFileSync(filepath, buffer, (err) => {
-      if (err) {
-        message.text = err;
-        message.title = 'Error Saving File';
-      } else {
-        message.text = filepath;
-        message.title = 'File saved to';
+      if (dataContent.type === 'docx') {
+        exportDocx(dataContent);
+      }
+      if (dataContent.type === 'xlsx') {
+        createXlsxFile(dataContent);
+      }
+      if (dataContent.type === 'csv') {
+        createCsvFile(dataContent);
       }
     });
-    return message;
+
+    ipcMain.handle('show-saveSvg-dialog', async (event, defaultPath) => {
+      const result = await dialog.showSaveDialog({
+        title: 'Save SVG',
+        defaultPath: defaultPath || 'untitled.svg',
+        filters: [{ name: 'SVG Files', extensions: ['svg'] }],
+      });
+      return result.filePath;
+    });
+
+    ipcMain.handle('show-savePng-dialog', async (event, defaultPath) => {
+      const result = await dialog.showSaveDialog({
+        title: 'Save PNG',
+        defaultPath: defaultPath || 'untitled.png',
+        filters: [{ name: 'PNG Files', extensions: ['png'] }],
+      });
+      return result.filePath;
+    });
+
+    ipcMain.handle('show-saveDocx-dialog', async (event, defaultPath) => {
+      const result = await dialog.showSaveDialog({
+        title: 'Save DOCX',
+        defaultPath: defaultPath || 'untitled.docx',
+        filters: [{ name: 'DOCX Files', extensions: ['docx'] }],
+      });
+      return result.filePath;
+    });
+
+    ipcMain.on('showSaveDialogSync', saveSvgFile);
+    ipcMain.handle('writeFile', (event, filepath, buffer) => {
+      var message = {};
+      fs.writeFileSync(filepath, buffer, (err) => {
+        if (err) {
+          message.text = err;
+          message.title = 'Error Saving File';
+        } else {
+          message.text = filepath;
+          message.title = 'File saved to';
+        }
+      });
+      return message;
+    });
+
+    createWindow();
+
+    app.on('activate', function () {
+      // On macOS it's common to re-create a window in the app when the
+      // dock icon is clicked and there are no other windows open.
+      if (BrowserWindow.getAllWindows().length === 0) createWindow();
+    });
   });
-
-  createWindow();
-
-  app.on('activate', function () {
-    // On macOS it's common to re-create a window in the app when the
-    // dock icon is clicked and there are no other windows open.
-    if (BrowserWindow.getAllWindows().length === 0) createWindow();
-  });
-});
-
+}
 // Quit when all windows are closed, except on macOS. There, it's common
 // for applications and their menu bar to stay active until the user quits
 // explicitly with Cmd + Q.

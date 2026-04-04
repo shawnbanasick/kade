@@ -7,7 +7,7 @@ const AxisTextLables = () => {
   return (
     <g>
       <text id="yAxisTitle" fontFamily="arial" x={-210} y={-7} transform={'rotate(270 90,50)'}>
-        {t('Eigenvalues')}
+        {t('Eigenvalue')}
       </text>
       <text id="xAxisTitle" fontFamily="arial" x={300} y={590}>
         {t('Factor Number')}
