@@ -23,8 +23,6 @@ const styles = {
 };
 
 // Returns the largest X coordinate from the data set
-// const xMax = data => d3.max(data, d => d[0]);
-// const xMax = 8;
 const xMax = (props) => {
   let maxValue = props.numFacs;
   if (maxValue < 3) {
@@ -36,14 +34,9 @@ const xMax = (props) => {
 };
 
 // Returns the higest Y coordinate from the data set
-// const yMax = data => d3.max(data, d => d[1]);
 const yMax = (data) => {
-  let maxValue = d3.max(data, (d) => d[1]);
-  if (maxValue < 10 && maxValue > 5) {
-    maxValue = 10;
-  } else if (maxValue < 3) {
-    maxValue = 3;
-  }
+  const maxValue2 = Math.ceil(d3.max(data, (d) => d[1]));
+  const maxValue = maxValue2;
   return maxValue;
 };
 
@@ -64,6 +57,11 @@ const yScale = (props) =>
 const ScreePlot = (props) => {
   const { showMeans = false, showP95 = false, means, p95 } = props;
 
+  const yMax_ = yMax(props.data);
+  // Generate an array of every integer from 0 to yMax
+  const yTickValues = Array.from({ length: yMax_ + 1 }, (_, i) => i);
+  console.log('yticValues', yTickValues);
+
   const scales = {
     xScale: xScale(props),
     yScale: yScale(props),
@@ -72,7 +70,6 @@ const ScreePlot = (props) => {
   const refLineProps = { ...scales, width: props.width, padding: props.padding };
 
   return (
-    // <div style={styles.container}>
     <div style={styles.container} className="">
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -81,7 +78,7 @@ const ScreePlot = (props) => {
         width={props.width + 20}
         height={props.height}
       >
-        <XYAxis {...props} {...scales} {...styles.XYAxis} />
+        <XYAxis {...props} {...scales} yTickValues={yTickValues} {...styles.XYAxis} />
         <AxisTextLabels />
         <Line {...props} {...scales} />
         <DataCircles {...props} {...scales} />

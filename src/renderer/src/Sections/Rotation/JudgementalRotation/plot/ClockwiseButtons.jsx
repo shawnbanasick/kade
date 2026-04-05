@@ -18,7 +18,7 @@ const ClockwiseButtons = (props) => {
       <GeneralButton
         id="clockwise"
         onClick={(e) => handleClick(e, baselineData)}
-        className="bg-grey-button text-xl! p-1! font-bold! h-[30px] w-[30px] ml-[10px]! mr-[10px]!"
+        className="bg-grey-button text-[22px] p-1! leading-5 font-bold! h-[30px] w-[30px] ml-[10px]! mr-[10px]!"
       >
         {'\u21BB'}
       </GeneralButton>
@@ -26,7 +26,7 @@ const ClockwiseButtons = (props) => {
       <GeneralButton
         id="counterClockwise"
         onClick={(e) => handleClick(e, baselineData)}
-        className="bg-grey-button text-xl! p-1! font-bold! h-[30px] w-[30px]"
+        className="bg-grey-button text-[22px] p-1! leading-5 font-bold! h-[30px] w-[30px]"
       >
         {'\u21BA'}
       </GeneralButton>

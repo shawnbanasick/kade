@@ -32,9 +32,9 @@ const RotationTable = (props) => {
   };
 
   return (
-    <div>
-      <p style={{ marginTop: 15, fontWeight: 300, fontSize: 14 }}>
-        {t('Highlighting levels are set by the flagging options in Section 6 Loadings')}{' '}
+    <div className="">
+      <p style={{ fontWeight: 300, fontSize: 14 }}>
+        {t('Highlighting levels are set by the flagging options in Section 7. Loadings')}{' '}
       </p>
       <div style={containerStyle} className="ag-theme-fresh">
         <AgGridReact

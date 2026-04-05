@@ -92,7 +92,7 @@ const RotationButtons = () => {
 
   if (shouldDisplayDegreeButtonButtons) {
     return (
-      <div className="flex flex-row gap-1">
+      <div className="flex flex-row gap-1 justify-center items-center">
         <GeneralButton
           id={'Button1Degree'}
           width="50px"

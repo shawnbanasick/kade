@@ -12,6 +12,7 @@ export default (props) => {
     translate: `translate(${props.padding}, 0)`,
     scale: props.yScale,
     orient: 'left',
+    yTickValues: props.yTickValues,
   };
   return (
     <g className="xy-axis">

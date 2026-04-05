@@ -6,7 +6,7 @@ const RotationDegreeInput = (props) => {
   return (
     <div
       className={`
-        flex flex-col rounded-[3px] text-[18px] w-[50px] h-[30px] border-none
+        flex flex-col rounded-[3px] text-[18px] w-[50px]  h-[26px] border-none
         transition-shadow duration-300 translate-z-0 items-center justify-center outline-2 outline-gray-300
         ${
           props.active
@@ -21,7 +21,7 @@ const RotationDegreeInput = (props) => {
         name={props.name}
         onChange={saveInputValueToState}
         value={props.value}
-        className="w-[35px] text-right m-1 outline-none outline-2 rounded-[3px] outline-gray-300 p-0.5 bg-white"
+        className="w-[35px] h-[24px] text-right rounded-[3px] outline-gray-300 p-0.5 bg-white"
       />
     </div>
   );

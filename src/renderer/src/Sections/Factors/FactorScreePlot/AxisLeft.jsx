@@ -11,8 +11,15 @@ export default class AxisLeft extends React.Component {
   }
 
   renderAxis() {
+    console.log('yTickValues received:', this.props);
+
     const node = this.axis;
-    const axis = d3.axisLeft().ticks(5).scale(this.props.scale);
+    const axis = d3
+      .axisLeft()
+      .scale(this.props.scale)
+      // use explicit integer tick values
+      .tickValues(this.props.yTickValues)
+      .tickFormat(d3.format('d'));
     d3.select(node).call(axis);
   }
 

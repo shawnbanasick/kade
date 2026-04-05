@@ -11,6 +11,7 @@ const JudgementalTitleDiv = () => {
   const factorMatrix = factorState((state) => state.factorMatrix);
   const notifyForSavedRotation = rotationState((state) => state.notifyForSavedRotation);
   const updateNotifyForSavedRotation = rotationState((state) => state.updateNotifyForSavedRotation);
+  const shouldShowJudgeRotDiv = rotationState((state) => state.shouldShowJudgeRotDiv);
 
   const notify = async () => {
     await updateNotifyForSavedRotation(false);
@@ -23,17 +24,22 @@ const JudgementalTitleDiv = () => {
   }
 
   return (
-    <div id="outmostDiv" className="w-full h-full">
-      <div
-        id="selectButton"
-        className="flex items-center justify-items-center text-[20px] h-[50px] w-full"
-      >
-        <div className="mr-[3px] text-[clamp(0.80rem,1.2cqw,2rem)]">{t('Select Factors')}</div>
-        <FactorSelectButtons baselineData={baselineData} />
-        <ToastContainer transition={Zoom} />
-      </div>
-      <ScatterPlotAndTableTransitionContainer baselineData={baselineData} />
-    </div>
+    <>
+      {shouldShowJudgeRotDiv ? (
+        <div id="outmostDiv" className="w-full mt-1 h-[calc(100vh-95px)]">
+          <div
+            id="selectButton"
+            className="flex items-center justify-items-center text-[20px] h-[40px] w-full"
+          >
+            {/* <div className="w-[85px] text-[clamp(0.80rem,1.2cqw,2rem)]">{t('Factors')}:</div> */}
+            <div className="w-[85px] text-[22px]">{t('Factors')}:</div>
+            <FactorSelectButtons baselineData={baselineData} />
+            <ToastContainer transition={Zoom} />
+          </div>
+          <ScatterPlotAndTableTransitionContainer baselineData={baselineData} />
+        </div>
+      ) : null}
+    </>
   );
 };
 

@@ -6,7 +6,7 @@ import RotationTable from '../rotationTable/RotationTable';
 import RotationButtons from '../FactorSelect/RotationButtons';
 import SaveRotationButton from '../FactorSelect/SaveRotationButton';
 import rotationState from '../../../GlobalState/rotationState';
-import GeneralButton from '../../../../Utils/GeneralButton';
+// import GeneralButton from '../../../../Utils/GeneralButton';
 import { useTranslation } from 'react-i18next';
 
 function getWidthHeight() {
@@ -60,21 +60,19 @@ const ScatterPlotAndTableTransitionContainer = (props) => {
   if (showScatterPlotTableDiv) {
     return (
       <React.Fragment>
-        <div className="flex items-end w-full flex-row mb-[20px]">
-          <div className="flex h-[30px] w-[7vw] text-[clamp(0.80rem,1.2cqw,2rem)] mr-4 justify-baseline items-center">
-            {t('Rotate axes')}:
+        <div className="flex items-end w-full h-[40px] flex-row mb-3" id="RotPlotFactorsSelectDiv">
+          {/* <div className="flex h-[30px] w-[85px] text-[clamp(0.80rem,1.2cqw,2rem)] justify-baseline items-center"> */}
+          <div className="flex h-[28px] w-[85px] text-[22px] justify-baseline items-center">
+            {t('Rotate')}:
           </div>
           <RotationButtons />
           <ClockwiseButtons baselineData={props.baselineData} />
-          <div className="text-right h-[60px] text-[50px] w-[120px]">
+          <div className="text-center h-[50px] text-[36px] leading-16 w-[120px]">
             <p>{degreesText}</p>
           </div>
           <SaveRotationButton />
         </div>
-        <div
-          id="scatterPlotDiv"
-          className="flex w-[calc(100vw-523px)] h-[calc(100vh-255px)] mt-[10px]"
-        >
+        <div id="scatterPlotDiv" className="flex w-full h-[calc(100vh-200px)] mt-[5px]">
           <div style={{ width: leftContWidth }}>
             <ParticipantPopUp />
             <ScatterPlot

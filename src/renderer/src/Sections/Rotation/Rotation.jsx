@@ -1,5 +1,4 @@
 import FactorsKeptNotification from './FactorKeepSelection/FactorsKeptNotification';
-import JudgementalRotationContainer from './JudgementalRotation/JudgementalRotationContainer';
 import FireVarimaxButton from './RotationButtons/FireVarimaxButton';
 import InitializeJudgementalButton from './RotationButtons/InitializeJudgmentalButton';
 import FactorSelectButtons from './FactorKeepSelection/FactorSelectButtons';
@@ -7,6 +6,8 @@ import FactorSelectButtonModal from './FactorKeepSelection/FactorSelectButtonMod
 import { useTranslation } from 'react-i18next';
 import VarimaxHeywoodWarning from './RotationButtons/VarimaxHeywoodWarning';
 import rotationState from '../GlobalState/rotationState';
+// import JudgementalRotationContainer from './JudgementalRotation/JudgementalRotationContainer';
+import JudgementalTitleDiv from './JudgementalRotation/plot/JudgementalTitleDiv';
 
 const Rotation = () => {
   const { t } = useTranslation();
@@ -49,7 +50,7 @@ const Rotation = () => {
       title: varimaxTrans,
       content: (
         <div>
-          <div className="bg-white overflow-auto p-[5px] box-border h-[calc(100vh-75px)] select-none">
+          <div className="bg-white overflow-auto p-[5px] box-border h-[calc(100vh-120px)] select-none">
             <FireVarimaxButton />
             <VarimaxHeywoodWarning />
           </div>
@@ -60,9 +61,9 @@ const Rotation = () => {
       title: judgmentalTrans,
       content: (
         <div>
-          <div className="bg-white overflow-auto p-[5px] box-border h-[calc(100vh-75px)] select-none">
+          <div className="bg-white overflow-auto pl-[5px]  h-full">
             <InitializeJudgementalButton />
-            <JudgementalRotationContainer />
+            <JudgementalTitleDiv />
           </div>
         </div>
       ),
@@ -113,7 +114,7 @@ const Rotation = () => {
           onClick={() => handleTabClick('tab3')}
         />
 
-        <div className="tab-content box-border overflow-auto bg-base-100 border-base-300 p-6">
+        <div className="tab-content h-[calc(100vh-58px)] overflow-auto bg-base-100 border-base-300 p-6 pt-1">
           {tabs[2].content}
         </div>
       </div>
