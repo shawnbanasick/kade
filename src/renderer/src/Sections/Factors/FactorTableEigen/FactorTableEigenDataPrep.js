@@ -1,9 +1,30 @@
 import evenRound from '../../../Utils/evenRound';
 
-const factorTableEigenDataPrep = (numFactors, eigenValues, eigensTranslations) => {
-  //   console.log("par1", JSON.stringify(numFactors));
-  //   console.log("par2", JSON.stringify(eigenValues));
-  //  console.log("par3", JSON.stringify(eigensTranslations));
+const factorTableEigenDataPrep = (
+  numFactors,
+  eigenValues,
+  eigensTranslations,
+  parallelMeans = [],
+  parallel95 = []
+) => {
+  console.log('par1', JSON.stringify(numFactors));
+  console.log('par2', JSON.stringify(eigenValues));
+  console.log('par3', JSON.stringify(eigensTranslations));
+  console.log('par4', JSON.stringify(parallelMeans));
+  console.log('par4', JSON.stringify(parallel95));
+
+  const parallelMeansArray = [];
+  const parallel95Array = [];
+  parallelMeans.forEach((array, index) => {
+    parallelMeansArray.push(array[1]);
+    parallel95Array.push(parallel95[index][1]);
+  });
+
+  parallelMeansArray.unshift(eigensTranslations.parallelMeansTrans);
+  parallel95Array.unshift(eigensTranslations.parallel95Trans);
+
+  console.log('par5', JSON.stringify(parallelMeansArray));
+  console.log('par5', JSON.stringify(parallel95Array));
 
   const gridColDefsFacTableEigen = [
     {
@@ -19,6 +40,7 @@ const factorTableEigenDataPrep = (numFactors, eigenValues, eigensTranslations) =
     },
   ];
 
+  // setup HEADER
   for (let i = 0; i < numFactors; i += 1) {
     const facNumber = i + 1;
     gridColDefsFacTableEigen.push({
@@ -38,6 +60,12 @@ const factorTableEigenDataPrep = (numFactors, eigenValues, eigensTranslations) =
   eigenValues[0].unshift(eigensTranslations.eigenValuesTrans);
   eigenValues[1].unshift(eigensTranslations.explainedVarianceTrans);
   eigenValues[2].unshift(eigensTranslations.cumuExplainedVarianceTrans);
+
+  let originalArray = eigenValues.shift();
+  if (parallelMeansArray.length > 1) {
+    eigenValues.unshift(parallelMeansArray, parallel95Array);
+  }
+  eigenValues.unshift(originalArray);
 
   const gridRowDataFacTableEigen = [];
 

@@ -21,6 +21,8 @@ const pcaDispatch = () => {
   const respondentNames = cloneDeep(coreState.getState().respondentNames);
   const X = cloneDeep(correlationState.getState().correlation5Calcs);
   const numQsorts = coreState.getState().numQsorts;
+  const parallelMeans = cloneDeep(factorState.getState().parallelMeans);
+  const parallel95 = cloneDeep(factorState.getState().parallel95);
 
   const m = X.length;
   const numberOfSorts = m;
@@ -113,20 +115,26 @@ const pcaDispatch = () => {
   factorState.setState({ unrotatedFactorMatrixOutput: factorTableData.unrotatedFactorArray });
 
   // draw eigenvalues sub table
-  const eigenValuesTrans = i18n.t('Eigenvalues');
+  const eigenValuesTrans = i18n.t('Actual Eigenvalues');
   const explainedVarianceTrans = i18n.t('Explained Variance');
   const cumuExplainedVarianceTrans = i18n.t('Cumulative Explained Variance');
   const factorTrans2 = i18n.t('Factor');
+  const parallelMeansTrans = i18n.t('Parallel Analysis Means (1,000 iterations)');
+  const parallel95Trans = i18n.t('Parallel Analysis 95th Percentile');
   const eigensTranslations = {
     eigenValuesTrans,
     explainedVarianceTrans,
     cumuExplainedVarianceTrans,
     factorTrans2,
+    parallelMeansTrans,
+    parallel95Trans,
   };
   const factorTableEigenData = factorTableEigenDataPrep(
     numberofPrincipalComps,
     eigenvaluesArray,
-    eigensTranslations
+    eigensTranslations,
+    parallelMeans,
+    parallel95
   );
 
   factorState.setState({ gridColDefsFacTableEigen: factorTableEigenData.gridColDefsFacTableEigen });

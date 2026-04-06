@@ -11,8 +11,6 @@ export default class AxisLeft extends React.Component {
   }
 
   renderAxis() {
-    console.log('yTickValues received:', this.props);
-
     const node = this.axis;
     const axis = d3
       .axisLeft()

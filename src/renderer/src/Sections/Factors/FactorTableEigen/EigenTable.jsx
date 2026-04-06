@@ -32,7 +32,7 @@ const EigenTable = () => {
   const style2 = {
     marginTop: 30,
     width: '100%', // Let the container fill available space
-    height: getHeight(3),
+    height: getHeight(gridRowDataFacTableEigen.length),
   };
 
   let gridOptions = {

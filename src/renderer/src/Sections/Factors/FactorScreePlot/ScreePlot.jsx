@@ -60,7 +60,6 @@ const ScreePlot = (props) => {
   const yMax_ = yMax(props.data);
   // Generate an array of every integer from 0 to yMax
   const yTickValues = Array.from({ length: yMax_ + 1 }, (_, i) => i);
-  console.log('yticValues', yTickValues);
 
   const scales = {
     xScale: xScale(props),
