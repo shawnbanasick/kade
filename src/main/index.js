@@ -152,7 +152,7 @@ if (!gotTheLock) {
   app.whenReady().then(() => {
     // Set app user model id for windows
     electronApp.setAppUserModelId('com.electron');
-
+ 
     // installExtension(REACT_DEVELOPER_TOOLS)
     //   .then((name) => console.log(`Added Extension: ${name}`))
     //   .catch((err) => console.log('An error occurred: ', err));

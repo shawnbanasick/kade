@@ -7,12 +7,6 @@ const factorTableEigenDataPrep = (
   parallelMeans = [],
   parallel95 = []
 ) => {
-  console.log('par1', JSON.stringify(numFactors));
-  console.log('par2', JSON.stringify(eigenValues));
-  console.log('par3', JSON.stringify(eigensTranslations));
-  console.log('par4', JSON.stringify(parallelMeans));
-  console.log('par4', JSON.stringify(parallel95));
-
   const parallelMeansArray = [];
   const parallel95Array = [];
   parallelMeans.forEach((array, index) => {
@@ -22,9 +16,6 @@ const factorTableEigenDataPrep = (
 
   parallelMeansArray.unshift(eigensTranslations.parallelMeansTrans);
   parallel95Array.unshift(eigensTranslations.parallel95Trans);
-
-  console.log('par5', JSON.stringify(parallelMeansArray));
-  console.log('par5', JSON.stringify(parallel95Array));
 
   const gridColDefsFacTableEigen = [
     {

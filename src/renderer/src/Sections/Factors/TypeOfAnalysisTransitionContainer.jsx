@@ -4,8 +4,8 @@ import RevealCentroidTypeSelectionButton from './RevealCentroidTypeSelectionButt
 
 const TypeOfAnalysisTransitionContainer = () => {
   return (
-    <div className="flex flex-col max-w-[90%] justify-start ml-[70px]  h-[150px]">
-      <div className="flex flex-row mb-5">
+    <div className="flex flex-col max-w-[90%] justify-start  h-[100px]">
+      <div className="flex flex-row mb-4 ml-[70px]">
         <RevealCentroidTypeSelectionButton />
         <PcaButton />
         <ResetAnalysisButton />
