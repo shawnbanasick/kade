@@ -1,22 +1,29 @@
 import React, { useState } from 'react';
 import correlationState from '../../GlobalState/correlationState';
 import { useTranslation } from 'react-i18next';
+import structureState from '../../GlobalState/structureState';
 
 const PcaScenarios = (props) => {
   const updatePcaFilter = correlationState((state) => state.updatePcaFilter);
   const [selected, setSelected] = useState('one');
   const [resetSelection, setResetSelection] = useState(false);
   const { t } = useTranslation();
+  const updateShowAutoFlags = structureState((state) => state.updateShowAutoFlags);
+  const updateSelectedPcaScenario = structureState((state) => state.updateSelectedPcaScenario);
+  const selectedPcaScenario = structureState((state) => state.selectedPcaScenario);
 
   const handleSelection = (id, value) => {
     props.onSelectionChange(id, value);
     // console.log(id, value);
-    setSelected(id);
+    // setSelected(id);
+    updateSelectedPcaScenario(id);
     // updatePcaFilter(+value);
+    updateShowAutoFlags(false)
   };
 
   if (props.isGrayscale !== resetSelection) {
-    setSelected('one');
+    // setSelected('one');
+    updateSelectedPcaScenario('one');
     setResetSelection(props.isGrayscale);
   }
 
@@ -57,7 +64,7 @@ const PcaScenarios = (props) => {
   ];
 
   // Find the selected option to get its value
-  const selectedOption = options.find((opt) => opt.id === selected);
+  const selectedOption = options.find((opt) => opt.id === selectedPcaScenario);
   const selectedValue = selectedOption?.value;
 
   return (
@@ -65,11 +72,11 @@ const PcaScenarios = (props) => {
       <label className="label mb-0.5">
         <span className="label-text font-medium">{t('Principal Components Scenarios')}: </span>
       </label>
-      <div className="inline-flex flex-wrap gap-4 h-[25px]">
+      <div className="inline-flex flex-wrap gap-4 h-6.25">
         {options.map((option, index) => {
           // Determine if this button should be scaled
           const shouldScale =
-            option.id === selected ||
+            option.id === selectedPcaScenario ||
             (selectedValue !== null && option.value !== null && option.value <= selectedValue);
 
           return (
@@ -78,7 +85,7 @@ const PcaScenarios = (props) => {
               onClick={() => handleSelection(option.id, option.value)}
               className={`
                 relative ${props.isGrayscale ? colorArrayBW[index] : colorArray[index]} px-3 py-1.5 rounded-md text-sm font-medium transition-all duration-200
-                ${shouldScale ? 'scale-135 shadow-md opacity-100 hover:shadow-[inset_0_0_0_4px_#666,_0_0_1px_transparent]' : 'text-gray-700 hover:shadow-[inset_0_0_0_4px_#666,_0_0_1px_transparent] opacity-50'}
+                ${shouldScale ? 'scale-125 shadow-md opacity-100 hover:shadow-[inset_0_0_0_4px_#666,0_0_1px_transparent]' : 'text-gray-700 hover:shadow-[inset_0_0_0_4px_#666,0_0_1px_transparent] opacity-50'}
               `}
             >
               {option.label}

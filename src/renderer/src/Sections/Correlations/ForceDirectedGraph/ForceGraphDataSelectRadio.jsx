@@ -1,15 +1,22 @@
 import React, { useState } from 'react';
 import correlationState from '../../GlobalState/correlationState';
 import { useTranslation } from 'react-i18next';
+import structureState from '../../GlobalState/structureState';
 
 const ForceGraphDataSelectRadio = () => {
   const updateLinkFilter = correlationState((state) => state.updateLinkFilter);
   const [selected, setSelected] = useState('positive');
   const { t } = useTranslation();
+  const updateShowAutoFlags = structureState((state) => state.updateShowAutoFlags);
+  const updateSelectedPcaScenario = structureState((state) => state.updateSelectedPcaScenario);
+
+// setShowAutoFlags(!showAutoFlags)
 
   const handleSelection = (value) => {
     setSelected(value);
     updateLinkFilter(value);
+    updateShowAutoFlags(false); // Reset auto-flags when changing correlation link filter
+    updateSelectedPcaScenario('one'); // Reset PCA scenario to 'one' when changing correlation link filter
   };
 
   const options = [
@@ -23,17 +30,17 @@ const ForceGraphDataSelectRadio = () => {
       <label className="label">
         <span className="label-text font-medium">{t('Correlation Links')}: </span>
       </label>
-      <div className="inline-flex gap-1 mt-1 h-[30px]">
+      <div className="inline-flex gap-1 mt-1 h-10">
         {options.map((option) => (
           <button
             key={option.id}
             onClick={() => handleSelection(option.id)}
             className={`
-            relative px-4 pb-0 rounded-md text-sm font-medium bg-grey-button transition-all duration-200
+            flex relative px-4 pb-0 rounded-md text-large bg-grey-button transition-all duration-200  w-10 pt-1.5 justify-center
             ${
               selected === option.id
-                ? `bg-primary-button hover:shadow-[inset_0_0_0_4px_#666,_0_0_1px_transparent]`
-                : `text-gray-700 hover:shadow-[inset_0_0_0_4px_#666,_0_0_1px_transparent]`
+                ? `bg-primary-button hover:shadow-[inset_0_0_0_4px_#666,0_0_1px_transparent]`
+                : `text-gray-700 hover:shadow-[inset_0_0_0_4px_#666,0_0_1px_transparent]`
             }
           `}
           >

@@ -4,6 +4,8 @@ import { useTranslation } from 'react-i18next';
 import PcaScenarios from './PcaScenarios';
 import ForceGraphDataSelectRadio from './ForceGraphDataSelectRadio';
 import DebouncedNumberInput from './ForceGraphCorrLimitInput';
+import structureState from '../../GlobalState/structureState';
+import { update } from 'lodash';
 
 const ForceGraph = ({
   title = '',
@@ -18,6 +20,8 @@ const ForceGraph = ({
   const tooltipRef = useRef(null);
   const colorScaleRef = useRef(null);
   const [isGrayscale, setIsGrayscale] = useState(false);
+  const showAutoFlags = structureState((state) => state.showAutoFlags);
+  const updateShowAutoFlags = structureState((state) => state.updateShowAutoFlags);
 
   const { t } = useTranslation();
 
@@ -26,11 +30,14 @@ const ForceGraph = ({
   let correlationData = data;
 
   const [currentFactorIndex, setCurrentFactorIndex] = useState(0);
-  const [showAutoFlags, setShowAutoFlags] = useState(true);
-  const [resetAutoFlag, setResetAutoFlag] = useState(false);
+  
+  // const [showAutoFlags, setShowAutoFlags] = useState(true);
+  // const [resetAutoFlag, setResetAutoFlag] = useState(false);
 
   const shapeGenerators = {
-    1: (r) => `M ${-r},${-r} L ${r},${-r} L ${r},${r} L ${-r},${r} Z`,
+1: (r) => {
+  return `M ${-r},0 A ${r},${r} 0 1,0 ${r},0 A ${r},${r} 0 1,0 ${-r},0 Z`;
+},
     2: (r) => {
       const h = r * 1.73;
       return `M 0,${-h} L ${r * 1.5},${h * 0.5} L ${-r * 1.5},${h * 0.5} Z`;
@@ -48,19 +55,12 @@ const ForceGraph = ({
     },
     5: (r) => {
       // Parallelogram: skewed rectangle, offset top-right bottom-left
-      const w = r * 1.4;
+      const w = r * 1.0;
       const h = r * 1.0;
       const skew = r * 0.6;
       return `M ${-w + skew},${-h} L ${w + skew},${-h} L ${w - skew},${h} L ${-w - skew},${h} Z`;
     },
-    6: (r) => {
-      const rx = r * 2.0; // wider ratio for clearly visible oval
-      const ry = r * 0.9;
-      const kappa = 0.5522848;
-      const ox = rx * kappa;
-      const oy = ry * kappa;
-      return `M ${-rx},0 C ${-rx},${-oy} ${-ox},${-ry} 0,${-ry} C ${ox},${-ry} ${rx},${-oy} ${rx},0 C ${rx},${oy} ${ox},${ry} 0,${ry} C ${-ox},${ry} ${-rx},${oy} ${-rx},0 Z`;
-    },
+   6: (r) => `M ${-r},${-r} L ${r},${-r} L ${r},${r} L ${-r},${r} Z`,
     7: (r) => {
       // Trapezoid: wide base, narrow top
       const wTop = r * 0.9;
@@ -93,12 +93,12 @@ const ForceGraph = ({
   // Use explicit shape= prefix (required for reliable rendering per draw.io docs).
   // Deliberately omit html= here — it is appended once at the end of each style string.
   const drawioShapeStyles = {
-    1: 'rounded=0;whiteSpace=wrap;', // Square/Rectangle
+    1: 'ellipse;whiteSpace=wrap;', // Oval/Ellipse
     2: 'shape=triangle;direction=north;whiteSpace=wrap;', // Triangle (pointing up)
     3: 'rhombus;whiteSpace=wrap;', // Diamond
     4: 'shape=mxgraph.basic.pentagon;whiteSpace=wrap;', // Pentagon
     5: 'shape=parallelogram;whiteSpace=wrap;', // Parallelogram
-    6: 'ellipse;whiteSpace=wrap;', // Oval/Ellipse
+    6: 'rounded=0;whiteSpace=wrap;', // Square/Rectangle
     7: 'shape=trapezoid;whiteSpace=wrap;', // Trapezoid
     8: 'shape=mxgraph.basic.octagon;whiteSpace=wrap;', // Octagon
   };
@@ -206,11 +206,18 @@ const ForceGraph = ({
       const baseStyle = isGrayscale ? drawioShapeStyles[factorNum] : 'ellipse;whiteSpace=wrap;'; // color mode always uses ellipse (circle)
 
       // Ensure html=0 is the only html= declaration (strip any from baseStyle first)
+      const labelAlign = isGrayscale && factorNum === 2 ? 'verticalAlign=bottom;spacingBottom=8;' : 'verticalAlign=middle;';
       const cleanBase = baseStyle.replace(/html=\d;?/g, '');
-      const style = `${cleanBase}fillColor=${fillColor};strokeColor=${strokeColor};fontStyle=1;fontSize=12;${dashed}html=0;`;
+      const style = `${cleanBase}fillColor=${fillColor};strokeColor=${strokeColor};fontStyle=1;fontSize=12;${labelAlign}${dashed}html=0;`;
+      // const cleanBase = baseStyle.replace(/html=\d;?/g, '');
+      // const style = `${cleanBase}fillColor=${fillColor};strokeColor=${strokeColor};fontStyle=1;fontSize=12;${dashed}html=0;`;
       // Factor 6 (oval) gets a wider bounding box in grayscale only; color mode uses uniform circles
-      const nodeW = isGrayscale && factorNum === 6 ? NODE_W * 1.6 : NODE_W;
-      const nodeH = isGrayscale && factorNum === 6 ? NODE_H * 0.7 : NODE_H;
+      let nodeW = isGrayscale ? NODE_W * 0.7 : NODE_W;
+      let nodeH = isGrayscale ? NODE_H * 0.7 : NODE_H;
+      // let nodeW = isGrayscale && factorNum === 6 ? NODE_W * 1.6 : NODE_W;
+      // let nodeH = isGrayscale && factorNum === 6 ? NODE_H * 0.7 : NODE_H;
+      // // nodeW = isGrayscale && factorNum === 1 || factorNum === 2 ? NODE_W * 0.7 : NODE_W;
+      // nodeH = isGrayscale && factorNum === 1 || factorNum === 2 ? NODE_H * 0.7 : NODE_H;
       const cx = Math.round(pos.x + offsetX - nodeW / 2);
       const cy = Math.round(pos.y + offsetY - nodeH / 2);
 
@@ -232,7 +239,7 @@ const ForceGraph = ({
 
       if (isGrayscale) {
         edgeColor = l.value < 0 ? '#555555' : '#222222';
-        edgeDash = l.value < 0 ? 'dashed=1;dashPattern=8 4;' : '';
+        edgeDash = l.value < 0 ? 'dashed=1;dashPattern=4 4;' : '';
       } else {
         edgeColor = l.value < 0 ? '#2563eb' : '#dc2626';
         edgeDash = '';
@@ -281,12 +288,14 @@ const ForceGraph = ({
 
       const fillColor = isGrayscale ? grayscaleColors[0] : factorColors[i - 1];
       const baseStyle = isGrayscale ? drawioShapeStyles[i] : 'ellipse;whiteSpace=wrap;';
+      const labelAlign = isGrayscale && i === 2 ? 'verticalAlign=bottom;spacingBottom=4;' : 'verticalAlign=middle;';
       const cleanBase = baseStyle.replace(/html=\d;?/g, '');
-      const swatchStyle = `${cleanBase}fillColor=${fillColor};strokeColor=#000000;fontSize=10;fontStyle=1;html=0;`;
+      const swatchStyle = `${cleanBase}fillColor=${fillColor};strokeColor=#000000;fontSize=10;fontStyle=1;${labelAlign}html=0;`;
+      // const swatchStyle = `${cleanBase}fillColor=${fillColor};strokeColor=#000000;fontSize=10;fontStyle=1;html=0;`;
 
       // Factor 6 (oval) swatch uses a wider bounding box in grayscale only
-      const swatchW = isGrayscale && i === 6 ? LEGEND_SHAPE_SIZE * 1.6 : LEGEND_SHAPE_SIZE;
-      const swatchH = isGrayscale && i === 6 ? LEGEND_SHAPE_SIZE * 0.7 : LEGEND_SHAPE_SIZE;
+      const swatchW = LEGEND_SHAPE_SIZE;
+      const swatchH = LEGEND_SHAPE_SIZE;
 
       // Shape swatch
       const swatchCid = cellId++;
@@ -344,7 +353,7 @@ const ForceGraph = ({
 
     // Negative correlation line swatch (dashed in grayscale)
     const negColor = isGrayscale ? '#555555' : '#2563eb';
-    const negDash = isGrayscale ? 'dashed=1;dashPattern=8 4;' : '';
+    const negDash = isGrayscale ? 'dashed=1;dashPattern=4 4;' : '';
     const negCid = cellId++;
     legendXmlCells.push(
       `<mxCell id="${negCid}" value="" ` +
@@ -416,6 +425,7 @@ const ForceGraph = ({
 
   const toggleGrayscale = () => {
     setIsGrayscale(!isGrayscale);
+    updateShowAutoFlags(false); // Auto-flags are only designed for color mode, so 
   };
 
   useEffect(() => {
@@ -498,7 +508,8 @@ const ForceGraph = ({
 
       if (isGrayscale) {
         // Use a smaller r for the oval so it fits the legend row height cleanly
-        const legendR = i === 6 ? 8 : 12;
+        const legendR = 12;
+        // const legendR = i === 1 ? 12 : i === 6 ? 16 : 12;
         legendItem
           .append('path')
           .attr('d', shapeGenerators[i](legendR))
@@ -638,11 +649,15 @@ const ForceGraph = ({
         .attr('class', 'node-shape');
     }
 
+    // text labels on top of shapes
     node
       .append('text')
       .text((d) => d.id)
       .attr('text-anchor', 'middle')
-      .attr('dy', '0.35em')
+     .attr('dy', (d) => {
+    if (isGrayscale && (d.pca === 2 || d.allPcData?.[currentFactorIndex] === 2)) return '0.45em';
+    return '0.35em';
+  })
       .attr('class', 'text-xs font-semibold cursor-default pointer-events-none')
       .attr('fill', '#000');
 
@@ -774,6 +789,9 @@ const ForceGraph = ({
   }, [showAutoFlags, width]);
 
   const handleSelectionChange = (id, value) => {
+
+    console.log('Selected factor index:', id, value);
+
     if (!svgRef.current || !colorScaleRef.current) return;
     setCurrentFactorIndex(value);
 
@@ -840,9 +858,9 @@ const ForceGraph = ({
           <ForceGraphDataSelectRadio />
           <PcaScenarios onSelectionChange={handleSelectionChange} isGrayscale={isGrayscale} />
         </div>
-        <div className="mt-6 ml-6">
+        <div className="mt-9 ml-6">
           <button
-            onClick={() => setShowAutoFlags(!showAutoFlags)}
+            onClick={() => updateShowAutoFlags(!showAutoFlags)}
             className={`px-4 py-2 rounded-md transition-colors flex items-center justify-center gap-2 ${
               showAutoFlags
                 ? 'bg-primary-button text-black hover:shadow-[inset_0_0_0_4px_#666,_0_0_1px_transparent]'
@@ -910,11 +928,7 @@ const ForceGraph = ({
 
         <button
           onClick={toggleGrayscale}
-          className={`px-4 py-2 rounded-md transition-colors flex items-center gap-2 ${
-            isGrayscale
-              ? 'bg-primary-button text-black hover:shadow-[inset_0_0_0_4px_#666,_0_0_1px_transparent]'
-              : 'bg-grey-button text-black hover:shadow-[inset_0_0_0_4px_#666,_0_0_1px_transparent]'
-          }`}
+          className={`px-4 py-2 rounded-md transition-colors flex items-center gap-2 bg-grey-button text-black hover:shadow-[inset_0_0_0_4px_#666,_0_0_1px_transparent] w-[200px] justify-center`}
         >
           <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path
@@ -924,7 +938,7 @@ const ForceGraph = ({
               d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"
             />
           </svg>
-          {isGrayscale ? 'Color Mode' : 'Grayscale Shapes'}
+          {isGrayscale ? 'Color Mode' : 'Grayscale Mode'}
         </button>
 
         {/* ── NEW: Download draw.io button ── */}
@@ -942,7 +956,7 @@ const ForceGraph = ({
               d="M9 3H5a2 2 0 00-2 2v4m6-6h10a2 2 0 012 2v4M9 3v18m0 0h10a2 2 0 002-2V9M9 21H5a2 2 0 01-2-2V9m0 0h18"
             />
           </svg>
-          Download draw.io
+          Download diagrams.net File
         </button>
 
         {/* Legend */}

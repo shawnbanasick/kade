@@ -1,3 +1,4 @@
+import { update } from 'lodash';
 import { create } from 'zustand';
 import { immer } from 'zustand/middleware/immer';
 
@@ -16,7 +17,11 @@ const structureState = create(
     horizontalSpacing: 150,
     verticalSpacing: 100,
     explainedVarianceArrays: [],
+    showAutoFlags: false,
+    selectedPcaScenario: 'one',
 
+    updateSelectedPcaScenario: (inputValue) => set({ selectedPcaScenario: inputValue }),
+    updateShowAutoFlags: (inputValue) => set({ showAutoFlags: inputValue }),
     updateExplainedVarianceArrays: (inputValue) => set({ explainedVarianceArrays: inputValue }),
     updateVerticalSpacing: (inputValue) => set({ verticalSpacing: inputValue }),
     updateHorizontalSpacing: (inputValue) => set({ horizontalSpacing: inputValue }),
