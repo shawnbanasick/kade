@@ -28,7 +28,7 @@ const RotationTable = (props) => {
   const containerStyle = {
     marginTop: 10,
     height: heightVal,
-    width: colMaxWidth + 390,
+    width: colMaxWidth + 400,
   };
 
   return (

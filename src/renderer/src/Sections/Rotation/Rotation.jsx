@@ -6,7 +6,6 @@ import FactorSelectButtonModal from './FactorKeepSelection/FactorSelectButtonMod
 import { useTranslation } from 'react-i18next';
 import VarimaxHeywoodWarning from './RotationButtons/VarimaxHeywoodWarning';
 import rotationState from '../GlobalState/rotationState';
-// import JudgementalRotationContainer from './JudgementalRotation/JudgementalRotationContainer';
 import JudgementalTitleDiv from './JudgementalRotation/plot/JudgementalTitleDiv';
 
 const Rotation = () => {
@@ -31,7 +30,7 @@ const Rotation = () => {
       title: optionsTrans,
       content: (
         <div>
-          <div className="grid bg-white max-w-[1197px] select-none [grid-template-rows:50px_120px_150px_1fr] h-[calc(100vh-75px)]">
+          <div className="grid bg-white max-w-299.25 select-none grid-rows-[50px_120px_150px_1fr] h-[calc(100vh-75px)]">
             {showKeepFacForRotButton ? (
               <div className="mr-5 mt-2.5 text-[22px]">{numberFactorsKeepTrans}</div>
             ) : (
@@ -50,7 +49,7 @@ const Rotation = () => {
       title: varimaxTrans,
       content: (
         <div>
-          <div className="bg-white overflow-auto p-[5px] box-border h-[calc(100vh-120px)] select-none">
+          <div className="bg-white overflow-auto p-1.25 box-border h-[calc(100vh-120px)] select-none">
             <FireVarimaxButton />
             <VarimaxHeywoodWarning />
           </div>
@@ -61,7 +60,7 @@ const Rotation = () => {
       title: judgmentalTrans,
       content: (
         <div>
-          <div className="bg-white overflow-auto pl-[5px]  h-full">
+          <div className="bg-white overflow-auto pl-1.25  h-full">
             <InitializeJudgementalButton />
             <JudgementalTitleDiv />
           </div>
@@ -87,7 +86,7 @@ const Rotation = () => {
         <input
           type="radio"
           name="my_tabs_Rot"
-          className={`tab basis-[12vw] text-[clamp(1rem,1.5vw,1.1rem)] hover:shadow-[inset_0_0_0_4px_#666,_0_0_1px_transparent] ${rotationActiveTabIndex === 'tab1' ? 'tab-active bg-[#a5d6a7]' : 'bg-[#d6dbe0]'}`}
+          className={`tab basis-[12vw] text-[clamp(1rem,1.5vw,1.1rem)] hover:shadow-[inset_0_0_0_4px_#666,0_0_1px_transparent] ${rotationActiveTabIndex === 'tab1' ? 'tab-active bg-[#a5d6a7]' : 'bg-[#d6dbe0]'}`}
           aria-label={tabs[0].title}
           onClick={() => handleTabClick('tab1')}
         />
@@ -97,7 +96,7 @@ const Rotation = () => {
         <input
           type="radio"
           name="my_tabs_Rot"
-          className={`tab basis-[12vw] text-[clamp(1rem,1.5vw,1.1rem)] hover:shadow-[inset_0_0_0_4px_#666,_0_0_1px_transparent] ${rotationActiveTabIndex === 'tab2' ? 'tab-active bg-[#a5d6a7]' : 'bg-[#d6dbe0]'}`}
+          className={`tab basis-[12vw] text-[clamp(1rem,1.5vw,1.1rem)] hover:shadow-[inset_0_0_0_4px_#666,0_0_1px_transparent] ${rotationActiveTabIndex === 'tab2' ? 'tab-active bg-[#a5d6a7]' : 'bg-[#d6dbe0]'}`}
           aria-label={tabs[1].title}
           onClick={() => handleTabClick('tab2')}
         />

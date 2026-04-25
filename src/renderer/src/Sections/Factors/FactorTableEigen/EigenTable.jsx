@@ -18,21 +18,24 @@ function getHeight(numRows) {
 
 const EigenTable = () => {
   const gridRef = useRef();
-  const gridColDefsFacTableEigenPrepped = factorState((state) => state.gridColDefsFacTableEigenPrepped);
-  const gridRowDataFacTableEigenPrepped = factorState((state) => state.gridRowDataFacTableEigenPrepped);
+  const gridColDefsFacTableEigenPrepped = factorState(
+    (state) => state.gridColDefsFacTableEigenPrepped
+  );
+  const gridRowDataFacTableEigenPrepped = factorState(
+    (state) => state.gridRowDataFacTableEigenPrepped
+  );
   const parallelMeans = factorState((state) => state.parallelMeans);
   const parallel95 = factorState((state) => state.parallel95);
   const eigensTranslations = factorState((state) => state.eigensTranslations);
-  
+
   const sizeToFit = useCallback(() => {
     gridRef.current?.api?.sizeColumnsToFit();
   }, []);
-  
+
   useEffect(() => {
     window.addEventListener('resize', sizeToFit);
     return () => window.removeEventListener('resize', sizeToFit);
   }, [sizeToFit]);
-
 
   const parallelMeansObject = {};
   const parallel95Object = {};
@@ -43,18 +46,19 @@ const EigenTable = () => {
     parallel95Object[`factor${index + 1}`] = parallel95[index][1];
   });
 
-const rowDataWithParallel = useMemo(() => [
-  gridRowDataFacTableEigenPrepped[0],
-  parallelMeansObject,
-  parallel95Object,
-  ...gridRowDataFacTableEigenPrepped.slice(1),
-], [gridRowDataFacTableEigenPrepped, parallelMeans, parallel95]);
+  const rowDataWithParallel = useMemo(
+    () => [
+      gridRowDataFacTableEigenPrepped[0],
+      parallelMeansObject,
+      parallel95Object,
+      ...gridRowDataFacTableEigenPrepped.slice(1),
+    ],
+    [gridRowDataFacTableEigenPrepped, parallelMeans, parallel95]
+  );
 
+  const height = getHeight(rowDataWithParallel?.length) || '300px';
 
-
-const height = getHeight(rowDataWithParallel?.length) || '300px';
-  
-const style2 = {
+  const style2 = {
     marginTop: 30,
     width: '100%', // Let the container fill available space
     height: height, // Dynamic height based on row count, with a default
@@ -66,7 +70,6 @@ const style2 = {
     enableSorting: true,
     theme: 'legacy',
   };
-
 
   return (
     <div className="w-full min-w-0 max-w-350 overflow-hidden">

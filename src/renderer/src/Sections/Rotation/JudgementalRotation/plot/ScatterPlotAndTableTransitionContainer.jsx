@@ -55,24 +55,25 @@ const ScatterPlotAndTableTransitionContainer = (props) => {
 
   const degreesText = `${rotationDegrees}\u00B0`;
   const leftContWidth = getWidthHeight();
-  const maxTableHeight = window.innerHeight - 300;
+  // const maxTableHeight = window.innerHeight - 300;
+  const maxTableHeight = 360;
 
   if (showScatterPlotTableDiv) {
     return (
       <React.Fragment>
-        <div className="flex items-end w-full h-[40px] flex-row mb-3" id="RotPlotFactorsSelectDiv">
+        <div className="flex items-end w-full h-10 flex-row mb-3" id="RotPlotFactorsSelectDiv">
           {/* <div className="flex h-[30px] w-[85px] text-[clamp(0.80rem,1.2cqw,2rem)] justify-baseline items-center"> */}
-          <div className="flex h-[28px] w-[85px] text-[22px] justify-baseline items-center">
+          <div className="flex h-7 w-21.25 text-[22px] justify-baseline items-center">
             {t('Rotate')}:
           </div>
           <RotationButtons />
           <ClockwiseButtons baselineData={props.baselineData} />
-          <div className="text-center h-[50px] text-[36px] leading-16 w-[120px]">
+          <div className="text-center h-12.5 text-[36px] leading-16 w-30">
             <p>{degreesText}</p>
           </div>
           <SaveRotationButton />
         </div>
-        <div id="scatterPlotDiv" className="flex w-full h-[calc(100vh-200px)] mt-[5px]">
+        <div id="scatterPlotDiv" className="flex w-full h-[calc(100vh-200px)] mt-1.25">
           <div style={{ width: leftContWidth }}>
             <ParticipantPopUp />
             <ScatterPlot
