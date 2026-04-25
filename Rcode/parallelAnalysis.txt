@@ -28,7 +28,7 @@ get_eigen <- function(x) {
 obs_eigen <- get_eigen(q_matrix)
 
 # Number of resamples
-n_iter <- 1000
+n_iter <- 5000
 
 # Storage
 rand_eigen <- matrix(NA, nrow = n_iter, ncol = ncol(q_matrix))

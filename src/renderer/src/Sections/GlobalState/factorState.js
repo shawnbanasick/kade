@@ -85,7 +85,11 @@ const factorState = create(
 
     useHeywoodAdjustment: false,
     unrotatedFactorMatrixOutput: [],
+    numberOfPrincipalComps: 0,
+    eigenValuesArray: [],
+    eigensTranslations: {},
 
+    updateEigensTranslations: (inputValue) => set({ eigensTranslations: inputValue }),
     updateDisplayParallelMeans: (inputValue) => set({ displayParallelMeans: inputValue }),
     updateDisplayParallel95: (inputValue) => set({ displayParallel95: inputValue }),
     updateParallelMeans: (inputValue) => set({ parallelMeans: inputValue }),

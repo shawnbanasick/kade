@@ -27,6 +27,7 @@ const pcaDispatch = () => {
   const m = X.length;
   const numberOfSorts = m;
   const numberofPrincipalComps = determineNumberPCs();
+  factorState.setState({ numberofPrincipalComps: numberofPrincipalComps });
 
   // calcualte svd from correlations
   const svdResults = getSvd(X);
@@ -104,6 +105,7 @@ const pcaDispatch = () => {
   const factorTrans = i18n.t('Factor');
   const nmTrans = i18n.t('Nm');
   const translationsText = { participantTrans, factorTrans, nmTrans };
+
   const factorTableData = factorTableDataPrep(
     numberofPrincipalComps,
     eigenVecsTransposed,
@@ -113,6 +115,8 @@ const pcaDispatch = () => {
   factorState.setState({ gridColDefsFactorTable: factorTableData.gridColDefsFactorTable });
   factorState.setState({ gridRowDataFactorTable: factorTableData.gridRowDataFactorTable });
   factorState.setState({ unrotatedFactorMatrixOutput: factorTableData.unrotatedFactorArray });
+
+  factorState.setState({ eigenvaluesArray: eigenvaluesArray });
 
   // draw eigenvalues sub table
   const eigenValuesTrans = i18n.t('Actual Eigenvalues');
@@ -129,6 +133,7 @@ const pcaDispatch = () => {
     parallelMeansTrans,
     parallel95Trans,
   };
+
   const factorTableEigenData = factorTableEigenDataPrep(
     numberofPrincipalComps,
     eigenvaluesArray,
@@ -137,8 +142,12 @@ const pcaDispatch = () => {
     parallel95
   );
 
-  factorState.setState({ gridColDefsFacTableEigen: factorTableEigenData.gridColDefsFacTableEigen });
-  factorState.setState({ gridRowDataFacTableEigen: factorTableEigenData.gridRowDataFacTableEigen });
+  factorState.setState({
+    gridColDefsFacTableEigenPrepped: factorTableEigenData.gridColDefsFacTableEigen,
+  });
+  factorState.setState({
+    gridRowDataFacTableEigenPrepped: factorTableEigenData.gridRowDataFacTableEigen,
+  });
 
   factorState.setState({ showUnrotatedFactorTable: true });
   factorState.setState({ showEigenvaluesTable: true });

@@ -20,6 +20,7 @@ const ForceGraph = ({
   const tooltipRef = useRef(null);
   const colorScaleRef = useRef(null);
   const [isGrayscale, setIsGrayscale] = useState(false);
+  const [forceStrength, setForceStrength] = useState(-5);
   const showAutoFlags = structureState((state) => state.showAutoFlags);
   const updateShowAutoFlags = structureState((state) => state.updateShowAutoFlags);
 
@@ -586,7 +587,7 @@ const ForceGraph = ({
           .distance((d) => 200 - Math.abs(d.value))
           .strength((d) => Math.abs(d.value) / 100)
       )
-      .force('charge', d3.forceManyBody().strength(-5))
+      .force('charge', d3.forceManyBody().strength(forceStrength))
       .force('center', d3.forceCenter(width / 2, (height - 150) / 2))
       .force('collision', d3.forceCollide().radius(30));
 
@@ -742,7 +743,7 @@ const ForceGraph = ({
     return () => {
       simulation.stop();
     };
-  }, [correlationData, width, height, title, subtitle, minCorrelation, isGrayscale]);
+  }, [correlationData, width, height, title, subtitle, minCorrelation, isGrayscale, forceStrength]);
 
   const resetZoom = () => {
     if (svgRef.current && svgRef.current.resetZoom) {
@@ -789,8 +790,6 @@ const ForceGraph = ({
   }, [showAutoFlags, width]);
 
   const handleSelectionChange = (id, value) => {
-
-    console.log('Selected factor index:', id, value);
 
     if (!svgRef.current || !colorScaleRef.current) return;
     setCurrentFactorIndex(value);
@@ -845,8 +844,8 @@ const ForceGraph = ({
 
   return (
     <div className="h-[calc(100vh-130px)]">
-      <div className="flex w-[calc(85vw-30px)] text-basis h-[75px] items-center">
-        <div className="flex items-center gap-2">
+      <div className="flex w-[calc(85vw-30px)] text-basis h-[80px] items-center">
+        <div className="flex gap-2">
           <DebouncedNumberInput
             value={correlationThreshold}
             label={t('Cutoff')}
@@ -858,10 +857,10 @@ const ForceGraph = ({
           <ForceGraphDataSelectRadio />
           <PcaScenarios onSelectionChange={handleSelectionChange} isGrayscale={isGrayscale} />
         </div>
-        <div className="mt-9 ml-6">
+        <div className="flex flex-row mt-8 ml-6">
           <button
             onClick={() => updateShowAutoFlags(!showAutoFlags)}
-            className={`px-4 py-2 rounded-md transition-colors flex items-center justify-center gap-2 ${
+            className={`px-4 py-2 rounded-md transition-colors flex items-center justify-center ${
               showAutoFlags
                 ? 'bg-primary-button text-black hover:shadow-[inset_0_0_0_4px_#666,_0_0_1px_transparent]'
                 : 'bg-grey-button text-black hover:shadow-[inset_0_0_0_4px_#666,_0_0_1px_transparent]'
@@ -877,6 +876,24 @@ const ForceGraph = ({
             </svg>
             Auto-Flag {showAutoFlags ? 'ON' : 'OFF'}
           </button>
+          <div className="flex items-center gap-2 mb-0 ml-6">
+            <div className="flex flex-col items-left">
+              <label className="text-md font-medium">Attraction Strength</label>
+                <div className="flex flex-row items-center gap-2">
+                    <input
+                      type="range"
+                      min={-50}
+                      max={-1}
+                      step={1}
+                      value={forceStrength}
+                      onChange={(e) => setForceStrength(Number(e.target.value))}
+                      className="w-32"
+                      style={{accentColor:  '#a5d6a7' }}
+                      />
+                    <span className="text-sm w-8">{100 + forceStrength}</span>
+                </div>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -898,7 +915,7 @@ const ForceGraph = ({
         {/* ── Existing buttons ── */}
         <button
           onClick={downloadSVG}
-          className="px-4 py-2 bg-grey-button text-black rounded-md hover:shadow-[inset_0_0_0_4px_#666,_0_0_1px_transparent] transition-colors flex items-center gap-2"
+          className="px-4 py-2 bg-grey-button text-black rounded-md hover:shadow-[inset_0_0_0_4px_#666,0_0_1px_transparent] transition-colors flex items-center gap-2"
         >
           <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path
@@ -913,7 +930,7 @@ const ForceGraph = ({
 
         <button
           onClick={resetZoom}
-          className="px-4 py-2 bg-grey-button text-black rounded-md hover:shadow-[inset_0_0_0_4px_#666,_0_0_1px_transparent] transition-colors flex items-center gap-2"
+          className="px-4 py-2 bg-grey-button text-black rounded-md hover:shadow-[inset_0_0_0_4px_#666,0_0_1px_transparent] transition-colors flex items-center gap-2"
         >
           <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path
@@ -928,7 +945,7 @@ const ForceGraph = ({
 
         <button
           onClick={toggleGrayscale}
-          className={`px-4 py-2 rounded-md transition-colors flex items-center gap-2 bg-grey-button text-black hover:shadow-[inset_0_0_0_4px_#666,_0_0_1px_transparent] w-[200px] justify-center`}
+          className={`px-4 py-2 rounded-md transition-colors flex items-center gap-2 bg-grey-button text-black hover:shadow-[inset_0_0_0_4px_#666,0_0_1px_transparent] w-50 justify-center`}
         >
           <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path
@@ -944,7 +961,7 @@ const ForceGraph = ({
         {/* ── NEW: Download draw.io button ── */}
         <button
           onClick={downloadDrawio}
-          className="px-4 py-2 bg-grey-button text-black rounded-md hover:shadow-[inset_0_0_0_4px_#666,_0_0_1px_transparent] transition-colors flex items-center gap-2"
+          className="px-4 py-2 bg-grey-button text-black rounded-md hover:shadow-[inset_0_0_0_4px_#666,0_0_1px_transparent] transition-colors flex items-center gap-2"
           title="Export the current graph layout as a draw.io diagram (.drawio)"
         >
           {/* draw.io-style icon: grid / diagram symbol */}

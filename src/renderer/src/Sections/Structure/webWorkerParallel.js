@@ -9,9 +9,8 @@ import unzip from 'lodash/unzip';
  * @param {Array<Array<number>>} data - The original 2D dataset (rows x cols).
  * @param {number} iterations - Number of random datasets to generate.
  */
-registerPromiseWorker(function (stringData, iterations = 1000) {
+registerPromiseWorker(function (stringData, iterations = 5000) {
   const data = JSON.parse(stringData);
-  // console.log(JSON.stringify(data));
 
   function toRMatrix(matrix) {
     const flat = matrix.map((row) => row.join(',')).join(',\n  ');
@@ -19,7 +18,6 @@ registerPromiseWorker(function (stringData, iterations = 1000) {
 
     return `data <- matrix(c(\n  ${flat}\n), nrow = ${nrow}, byrow = TRUE)\n\nq_matrix <- t(data)`;
   }
-  console.log(toRMatrix([...data]));
 
   // Mean for each column position
   function meanByColumn(matrix) {
@@ -62,7 +60,6 @@ registerPromiseWorker(function (stringData, iterations = 1000) {
   for (let i = 0; i < currentMatrix.length; i++) {
     const pullX = currentMatrix[i];
     for (let k = i; k < currentMatrix.length; k++) {
-      // console.log('pullX', JSON.stringify(currentMatrix[k]));
       const correlationValue = getPqmethodCorrelation(pullX, currentMatrix[k])[0];
       workingArray[i][k] = correlationValue;
       if (k !== i) {
@@ -79,8 +76,6 @@ registerPromiseWorker(function (stringData, iterations = 1000) {
   const originalEigenvaluesResult = [...originalEigenvalues]
     .slice(0, 8)
     .map((x) => Number(x.toFixed(3)));
-
-  console.log('Original Eigenvalues', JSON.stringify(originalEigenvaluesResult));
 
   const iterationEigenvalues = [];
 
@@ -113,10 +108,6 @@ registerPromiseWorker(function (stringData, iterations = 1000) {
   const p95 = percentileByColumn([...iterationEigenvalues]);
   const meanResult = [...mean].slice(0, 8).map((x) => Number(x.toFixed(3)));
   const p95Result = [...p95].slice(0, 8).map((x) => Number(x.toFixed(3)));
-
-  console.log('Mean', JSON.stringify(meanResult));
-  console.log('P95', JSON.stringify(p95Result));
-  console.log('parallel analysis processing completed successfully');
 
   return [originalEigenvaluesResult, meanResult, p95Result];
 });

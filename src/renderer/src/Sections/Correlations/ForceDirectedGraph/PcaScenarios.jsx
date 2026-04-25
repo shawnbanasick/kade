@@ -68,9 +68,9 @@ const PcaScenarios = (props) => {
   const selectedValue = selectedOption?.value;
 
   return (
-    <div className="flex flex-col rounded-lg bg-white p-1 ml-3">
-      <label className="label mb-0.5">
-        <span className="label-text font-medium">{t('Principal Components Scenarios')}: </span>
+    <div className="flex flex-col h-6.25 mt-1 rounded-lg bg-white p-1 ml-3">
+      <label className="label mb-2">
+        <span className="label-text font-medium">{t('PCA Scenarios - Select Number of Factors')}: </span>
       </label>
       <div className="inline-flex flex-wrap gap-4 h-6.25">
         {options.map((option, index) => {
@@ -85,7 +85,7 @@ const PcaScenarios = (props) => {
               onClick={() => handleSelection(option.id, option.value)}
               className={`
                 relative ${props.isGrayscale ? colorArrayBW[index] : colorArray[index]} px-3 py-1.5 rounded-md text-sm font-medium transition-all duration-200
-                ${shouldScale ? 'scale-125 shadow-md opacity-100 hover:shadow-[inset_0_0_0_4px_#666,0_0_1px_transparent]' : 'text-gray-700 hover:shadow-[inset_0_0_0_4px_#666,0_0_1px_transparent] opacity-50'}
+                ${shouldScale ? 'scale-125  opacity-100 hover:shadow-[inset_0_0_0_4px_#666,0_0_1px_transparent]' : 'text-gray-700 hover:shadow-[inset_0_0_0_4px_#666,0_0_1px_transparent] opacity-50'}
               `}
             >
               {option.label}

@@ -7,16 +7,6 @@ const factorTableEigenDataPrep = (
   parallelMeans = [],
   parallel95 = []
 ) => {
-  const parallelMeansArray = [];
-  const parallel95Array = [];
-  parallelMeans.forEach((array, index) => {
-    parallelMeansArray.push(array[1]);
-    parallel95Array.push(parallel95[index][1]);
-  });
-
-  parallelMeansArray.unshift(eigensTranslations.parallelMeansTrans);
-  parallel95Array.unshift(eigensTranslations.parallel95Trans);
-
   const gridColDefsFacTableEigen = [
     {
       headerName: '',
@@ -51,12 +41,6 @@ const factorTableEigenDataPrep = (
   eigenValues[0].unshift(eigensTranslations.eigenValuesTrans);
   eigenValues[1].unshift(eigensTranslations.explainedVarianceTrans);
   eigenValues[2].unshift(eigensTranslations.cumuExplainedVarianceTrans);
-
-  let originalArray = eigenValues.shift();
-  if (parallelMeansArray.length > 1) {
-    eigenValues.unshift(parallelMeansArray, parallel95Array);
-  }
-  eigenValues.unshift(originalArray);
 
   const gridRowDataFacTableEigen = [];
 

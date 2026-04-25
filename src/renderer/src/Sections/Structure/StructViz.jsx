@@ -217,50 +217,50 @@ function FlowInner() {
 
   return (
     <div ref={flowRef} className="relative w-full h-[95%] bg-white">
-      <div className="flex flex-row gap-20 items-end react-flow__panel-top">
+      <div className="flex flex-row gap-15 items-end react-flow__panel-top">
         <UserNumberInput
           onChange={handleCorrelationChange}
           value={structureCorrelationThreshold}
-          label="Correlation Cutoff"
+          label="Corr. Cutoff"
           placeholder="Threshold"
           min={0}
           max={1}
           step={0.01}
           debounceMs={500}
-          className="w-[60px]"
+          className="w-15"
         />
         <UserNumberInput
           onChange={handleVerticalSpacingChange}
           value={verticalSpacing}
-          label="Vertical Spacing"
+          label="Vert. Spacing"
           placeholder="Vertical Spacing"
           min={0}
           max={500}
           step={1}
           debounceMs={500}
-          className="w-[60px]"
+          className="w-15"
         />
         <UserNumberInput
           onChange={handleHorizontalSpacingChange}
           value={horizontalSpacing}
-          label="Horizontal Spacing"
+          label="Hori. Spacing"
           placeholder="Horizontal Spacing"
           min={0}
           max={500}
           step={1}
           debounceMs={500}
-          className="w-[60px]"
+          className="w-15"
         />
 
         {/* Node Size Mode Select */}
-        <div className="form-control flex flex-col p-0 pt-0 mr-2">
-          <label className="label mb-1 mt-1">
+        <div className="form-control flex flex-col p-0 pt-0 ml-5 mr-0 mb-3.5 ">
+          <label className="label mb-2">
             <span className="label-text font-medium">Node Size:</span>
           </label>
           <select
             value={nodeSizeMode}
             onChange={(e) => setNodeSizeMode(e.target.value)}
-            className="input input-bordered h-[22px] text-xs px-2 py-0"
+            className="input input-bordered h-5.5 text-xs px-2 py-0 "
           >
             <option value="constant">Constant</option>
             <option value="variance">Explained Variance</option>
@@ -278,7 +278,7 @@ function FlowInner() {
             max={10}
             step={0.1}
             debounceMs={300}
-            className="w-[60px]"
+            className="w-15"
           />
         )}
       </div>
@@ -301,11 +301,11 @@ function FlowInner() {
         <Panel position="top-left" style={{ marginLeft: '600px', marginTop: '100px' }}>
           <EdgeLegend />
         </Panel>
-        <Panel position="bottom-left" style={{ marginBottom: '10px', marginLeft: '10px' }}>
+        <Panel position="bottom-left" style={{ marginBottom: '25px', marginLeft: '10px' }}>
           <div className="flex gap-3">
             <button
               onClick={handleDownloadSvg}
-              className="px-4 py-2 bg-grey-button text-black rounded-md hover:shadow-[inset_0_0_0_4px_#666,_0_0_1px_transparent] transition-colors flex items-center gap-2"
+              className="px-4 py-2 bg-grey-button text-black rounded-md hover:shadow-[inset_0_0_0_4px_#666,0_0_1px_transparent] transition-colors flex items-center gap-2"
             >
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path
@@ -319,7 +319,7 @@ function FlowInner() {
             </button>
             <button
               onClick={handleDownloadDrawio}
-              className="px-4 py-2 bg-grey-button text-black rounded-md hover:shadow-[inset_0_0_0_4px_#666,_0_0_1px_transparent] transition-colors flex items-center gap-2"
+              className="px-4 py-2 bg-grey-button text-black rounded-md hover:shadow-[inset_0_0_0_4px_#666,0_0_1px_transparent] transition-colors flex items-center gap-2"
             >
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path
@@ -329,7 +329,7 @@ function FlowInner() {
                   d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
                 />
               </svg>
-              Download Draw.io Format
+              Download diagrams.net File
             </button>
           </div>
         </Panel>

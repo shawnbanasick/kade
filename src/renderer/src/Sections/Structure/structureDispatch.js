@@ -102,6 +102,7 @@ const structureDispatch = () => {
 
       factorState.setState({ parallelMeans: meansDataArray });
       factorState.setState({ parallel95: p95DataArray });
+      structureState.setState({ hasParallelAnalysisFinished: true });
     })
     .catch(function (error) {
       console.error(error);

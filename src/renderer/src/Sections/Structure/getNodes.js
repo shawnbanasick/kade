@@ -8,7 +8,7 @@ const getNodes = (
 ) => {
   // Vertical positions for each row — evenly spaced by verticalSpacing, with
   // the first row offset fixed at 100px so the top node has breathing room.
-  const firstRowOffset = 100;
+  const firstRowOffset = verticalSpacing;
   const rowSpacing = {
     row12: firstRowOffset,
     row23: firstRowOffset + verticalSpacing,
@@ -33,6 +33,7 @@ const getNodes = (
     alignItems: 'center',
     justifyContent: 'center',
     textAlign: 'center',
+    padding: 1,
   });
 
   const xObj = {
@@ -92,7 +93,7 @@ const getNodes = (
   const initialNodes = [
     {
       id: `${labelObj.label11}`,
-      data: { label: '1/1' },
+      data: { label: 'FUPC' },
       position: { x: xObj.x11, y: 0 },
       type: 'input',
       style: nodeStyle(widthObj.width11),

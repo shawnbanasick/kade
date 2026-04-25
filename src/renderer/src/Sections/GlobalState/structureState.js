@@ -19,7 +19,10 @@ const structureState = create(
     explainedVarianceArrays: [],
     showAutoFlags: false,
     selectedPcaScenario: 'one',
+    hasParallelAnalysisFinished: false,
 
+    updateHasParallelAnalysisFinished: (inputValue) =>
+      set({ hasParallelAnalysisFinished: inputValue }),
     updateSelectedPcaScenario: (inputValue) => set({ selectedPcaScenario: inputValue }),
     updateShowAutoFlags: (inputValue) => set({ showAutoFlags: inputValue }),
     updateExplainedVarianceArrays: (inputValue) => set({ explainedVarianceArrays: inputValue }),

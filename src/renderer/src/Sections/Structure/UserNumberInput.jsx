@@ -56,7 +56,7 @@ const UserNumberInput = ({
         min={min}
         max={max}
         step={step}
-        className="input input-bordered h-[22px]"
+        className="input input-bordered h-[42px] ml-4"
       />
     </div>
   );
