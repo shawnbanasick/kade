@@ -1,5 +1,5 @@
 import displayJsonData from './JSON/displayJsonData';
-import DatabaseSelectButtons from './JSON/DatabaseSelectButtons';
+// import DatabaseSelectButtons from './JSON/DatabaseSelectButtons';
 import Dropdown from './JSON/DropdownJSON';
 import JsonQsortsCard from './JSON/JsonQsortsCard';
 import LoadJsonStatementsCard from './JSON/LoadJsonStatementsCard';
@@ -33,9 +33,16 @@ const JsonPanel = () => {
 
   if (!showFirebaseInput && !showSheetsInput && !showNetlifyInput) {
     return (
-      <div className="bg-white">
-        <p>JSON panel</p>
-        <DatabaseSelectButtons />
+      <div className="flex flex-col bg-white text-2xl">
+        <p>For EQ Web Sort data, please use the online legacy data converter</p>
+        <a
+          href="https://kade-legacy-data-conversion.netlify.app/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center w-75 justify-center mt-4 gap-1.5 px-4 py-2 bg-gray-300 hover:bg-gray-400 text-sm font-medium rounded-lg hover:text-white! transition-colors duration-100"
+        >
+          Visit the legacy data converter ↗
+        </a>
       </div>
     );
   }

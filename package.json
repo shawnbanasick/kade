@@ -29,7 +29,7 @@
       "app/localization/locales/**/*"
     ],
     "win": {
-      "icon": "../build/icon.png",
+      "icon": "build/icons/win/icon.ico",
       "target": [
         "portable",
         "nsis"

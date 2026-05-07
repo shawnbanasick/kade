@@ -13,6 +13,7 @@ import coreState from '../../GlobalState/coreState';
 import correlationState from '../../GlobalState/correlationState';
 import i18n from 'i18next';
 import cloneDeep from 'lodash/cloneDeep';
+import calcCohensD from './3_calcCohensD';
 
 const pushFactorsToOutputArray = (outputData, sheetNamesXlsx, colSizes) => {
   // pulls array - ["factor 1", "factor 2", "factor 3", "factor 4", "factor 5", "factor 6", "factor 7", "factor 8"]
@@ -114,6 +115,25 @@ const pushFactorsToOutputArray = (outputData, sheetNamesXlsx, colSizes) => {
   const weightedRawSorts = weightRawSorts(weightedFactorScores);
   const combinedWeightedSorts = combineWeightedSorts(weightedRawSorts);
   const calculatedZScores = calculateZScores(combinedWeightedSorts);
+
+  console.log('zScores', JSON.stringify(calculatedZScores));
+
+  const toZScoreMatrix = (data) => {
+    // data is the outer array of 3 factor arrays
+    const numStatements = data[0].length;
+    const numFactors = data.length;
+
+    return Array.from({ length: numStatements }, (_, i) =>
+      Array.from({ length: numFactors }, (_, j) => data[j][i].zScore)
+    );
+  };
+  let newData = JSON.parse(JSON.stringify(calculatedZScores));
+  // console.log('newData', JSON.stringify(newData));
+  console.log(JSON.stringify(toZScoreMatrix(newData)));
+  console.log(
+    // JSON.stringify(calcCohensD(toZScoreMatrix(newData), numFactorsSelectedForOutputnumFactorsSelectedForOutput, 0.8))
+    JSON.stringify(calcCohensD(toZScoreMatrix(newData), 3, 0.3))
+  );
 
   assignFactorScores(calculatedZScores);
 

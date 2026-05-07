@@ -6,7 +6,6 @@ import RotationTable from '../rotationTable/RotationTable';
 import RotationButtons from '../FactorSelect/RotationButtons';
 import SaveRotationButton from '../FactorSelect/SaveRotationButton';
 import rotationState from '../../../GlobalState/rotationState';
-// import GeneralButton from '../../../../Utils/GeneralButton';
 import { useTranslation } from 'react-i18next';
 
 function getWidthHeight() {
@@ -56,7 +55,7 @@ const ScatterPlotAndTableTransitionContainer = (props) => {
   const degreesText = `${rotationDegrees}\u00B0`;
   const leftContWidth = getWidthHeight();
   // const maxTableHeight = window.innerHeight - 300;
-  const maxTableHeight = 360;
+  const maxTableHeight = window.innerHeight / 2 - 120;
 
   if (showScatterPlotTableDiv) {
     return (
@@ -84,8 +83,13 @@ const ScatterPlotAndTableTransitionContainer = (props) => {
               {...scatterPlotStyles}
             />
           </div>
-          <div id="rotFactorsTableDiv">
-            <RotationTable colDefs={colDefs} maxHeight={maxTableHeight} rowData={rowData} />
+          <div className="flex flex-col">
+            <div id="rotFactorsTableDiv">
+              <RotationTable colDefs={colDefs} maxHeight={maxTableHeight} rowData={rowData} />
+            </div>
+            <div className="flex items-center justify-center h-full mt-2 outline-2 outline-red-200">
+              <span>network graphs and legend will go here</span>
+            </div>
           </div>
         </div>
       </React.Fragment>

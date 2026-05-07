@@ -2,6 +2,8 @@ import { app, shell, BrowserWindow, ipcMain, dialog } from 'electron';
 import { join } from 'path';
 import { electronApp, optimizer, is } from '@electron-toolkit/utils';
 import icon from '../../resources/icon.png?asset';
+import iconWin from '../../resources/icon2.ico?asset'; // add for Windows
+import iconMac from '../../resources/icon.icns?asset'; // add for macOS
 import MenuFactory from './menu';
 import i18nextMainBackend from '../../app/localization/i18n.mainconfig';
 import openStaFile from './openFileLogic/openStaFile';
@@ -17,6 +19,7 @@ import { windowStateKeeper } from './windowStateKeeper';
 import settings from 'electron-settings';
 import createXlsxFile from './excelLogic/createXlsxFile';
 import createCsvFile from './csvLogic/createCsvFile';
+import { dir } from 'console';
 
 const fs = require('fs');
 
@@ -27,6 +30,17 @@ const fs = require('fs');
 // be closed automatically when the JavaScript object is garbage collected.
 let win;
 let menuBuilder;
+
+function getIcon() {
+  switch (process.platform) {
+    case 'win32':
+      return iconWin;
+    case 'darwin':
+      return iconMac;
+    default:
+      return icon; // Linux — your existing png
+  }
+}
 
 async function createWindow() {
   const mainWindowStateKeeper = await windowStateKeeper('main');
@@ -49,7 +63,7 @@ async function createWindow() {
     show: false,
     backgroundColor: '#ffffff',
     autoHideMenuBar: false,
-    ...(process.platform === 'linux' ? { icon } : {}),
+    icon: getIcon(),
     webPreferences: {
       preload: join(__dirname, '../preload/index.js'),
       sandbox: false,
@@ -103,7 +117,7 @@ async function createWindow() {
     }
   });
 
-  menuBuilder = MenuFactory(win, app.name);
+  menuBuilder = MenuFactory(mainWindow, app.name);
 
   menuBuilder.buildMenu(i18nextMainBackend);
 
@@ -152,7 +166,7 @@ if (!gotTheLock) {
   app.whenReady().then(() => {
     // Set app user model id for windows
     electronApp.setAppUserModelId('com.electron');
- 
+
     // installExtension(REACT_DEVELOPER_TOOLS)
     //   .then((name) => console.log(`Added Extension: ${name}`))
     //   .catch((err) => console.log('An error occurred: ', err));

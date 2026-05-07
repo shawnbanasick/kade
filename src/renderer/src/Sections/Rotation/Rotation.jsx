@@ -82,7 +82,7 @@ const Rotation = () => {
         text-black
       `}
     >
-      <div className="tabs tabs-box flex bg-[#d6dbe0] h-[100%] rounded-none">
+      <div className="tabs tabs-box flex bg-[#d6dbe0] h-full rounded-none">
         <input
           type="radio"
           name="my_tabs_Rot"
@@ -108,7 +108,7 @@ const Rotation = () => {
         <input
           type="radio"
           name="my_tabs_Rot"
-          className={`tab basis-[12vw] text-[clamp(1rem,1.5vw,1.1rem)] hover:shadow-[inset_0_0_0_4px_#666,_0_0_1px_transparent] ${rotationActiveTabIndex === 'tab3' ? 'tab-active bg-[#a5d6a7]' : 'bg-[#d6dbe0]'}`}
+          className={`tab basis-[12vw] text-[clamp(1rem,1.5vw,1.1rem)] hover:shadow-[inset_0_0_0_4px_#666,0_0_1px_transparent] ${rotationActiveTabIndex === 'tab3' ? 'tab-active bg-[#a5d6a7]' : 'bg-[#d6dbe0]'}`}
           aria-label={tabs[2].title}
           onClick={() => handleTabClick('tab3')}
         />

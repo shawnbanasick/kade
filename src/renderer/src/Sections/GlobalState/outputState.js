@@ -126,7 +126,9 @@ const outputState = create(
       '481 - 495',
       '496 - 510',
     ],
+    cohensValues: {},
 
+    updateCohensValues: (inputValue) => set({ cohensValues: inputValue }),
     updateSigDropdownValue1: (inputValue) => set({ sigDropdownValue1: inputValue }),
     updateSigDropdownValue2: (inputValue) => set({ sigDropdownValue2: inputValue }),
     updateHighlightFactor1: (inputValue) => set({ highlightFactor1: inputValue }),

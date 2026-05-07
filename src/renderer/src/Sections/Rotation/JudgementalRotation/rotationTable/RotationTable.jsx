@@ -10,6 +10,9 @@ const RotationTable = (props) => {
   // getState
   const colMaxWidth = correlationState((state) => state.colMaxWidth);
   const rowData = props.rowData;
+
+  // console.log('RotationTable rowData:', JSON.stringify(rowData));
+
   const colDefs = props.colDefs;
   const maxHeight = props.maxHeight;
   let heightVal = rowData.length * 28 + 13;
