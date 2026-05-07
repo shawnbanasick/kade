@@ -64,22 +64,22 @@ const Structure = () => {
           type="radio"
           name="my_tabs_Corr"
           className={`tab basis-[12vw] text-[clamp(1rem,1.5vw,1.1rem)] hover:shadow-[inset_0_0_0_4px_#666,0_0_1px_transparent] ${structureTabActive === 'tab1' ? 'tab-active bg-[#a5d6a7]' : 'bg-[#d6dbe0]'}`}
-          aria-label={tabs[0].title}
+          aria-label={tabs[1].title}
           onClick={() => updateStructureTabActive('tab1')}
         />
 
-        <div className="tab-content bg-base-100 border-base-300 p-4">{tabs[0].content}</div>
+        <div className="tab-content bg-base-100 border-base-300 p-4">{tabs[1].content}</div>
 
         <input
           type="radio"
           name="my_tabs_Corr"
           className={`tab basis-[12vw] text-[clamp(1rem,1.5vw,1.1rem)] hover:shadow-[inset_0_0_0_4px_#666,0_0_1px_transparent] ${structureTabActive === 'tab2' ? 'tab-active bg-[#a5d6a7]' : 'bg-[#d6dbe0]'}`}
-          aria-label={tabs[1].title}
+          aria-label={tabs[0].title}
           onClick={() => updateStructureTabActive('tab2')}
         />
 
         <div className="tab-content box-border overflow-auto bg-base-100 border-base-300 p-2 pl-6">
-          {tabs[1].content}
+          {tabs[0].content}
         </div>
       </div>
     </div>

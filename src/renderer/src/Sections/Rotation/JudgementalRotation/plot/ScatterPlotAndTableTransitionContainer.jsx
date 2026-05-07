@@ -54,8 +54,8 @@ const ScatterPlotAndTableTransitionContainer = (props) => {
 
   const degreesText = `${rotationDegrees}\u00B0`;
   const leftContWidth = getWidthHeight();
-  // const maxTableHeight = window.innerHeight - 300;
-  const maxTableHeight = window.innerHeight / 2 - 120;
+  const maxTableHeight = window.innerHeight - 284;
+  // const maxTableHeight = window.innerHeight / 2 - 120;
 
   if (showScatterPlotTableDiv) {
     return (
@@ -87,9 +87,9 @@ const ScatterPlotAndTableTransitionContainer = (props) => {
             <div id="rotFactorsTableDiv">
               <RotationTable colDefs={colDefs} maxHeight={maxTableHeight} rowData={rowData} />
             </div>
-            <div className="flex items-center justify-center h-full mt-2 outline-2 outline-red-200">
+            {/* <div className="flex items-center justify-center h-full mt-2 outline-2 outline-red-200">
               <span>network graphs and legend will go here</span>
-            </div>
+            </div> */}
           </div>
         </div>
       </React.Fragment>
