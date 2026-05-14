@@ -197,10 +197,10 @@ const App = () => {
           <div id="buttonColumn" className="flex flex-col box-border bg-[#d6dbe0] overflow-hidden">
             <button
               id="startButton"
-              className={`box-border h-[100px] p-[5px] pr-[25px] w-full text-center transition-all duration-300 ease-[ease] outline-none select-none hover:opacity-100 hover:shadow-[inset_0_0_0_4px_#666,_0_0_1px_transparent] border-b-1 border-gray-400 ${viewStart ? 'bg-primary-button' : 'bg-primary-button'}`}
+              className={`box-border h-25 p-1.25 pr-6.25 w-full text-center transition-all duration-300 ease-[ease] outline-none select-none hover:opacity-100 hover:shadow-[inset_0_0_0_4px_#666,_0_0_1px_transparent] border-b-1 border-gray-400 ${viewStart ? 'bg-primary-button' : 'bg-primary-button'}`}
               onClick={() => handleClick('viewStart')}
             >
-              <p className="title font-bold text-xl m-[5px_0_5px] text-black">KADE v1.4.0</p>
+              <p className="title font-bold text-xl m-[5px_0_5px] text-black">{t('Start')}</p>
             </button>
 
             <FileButton
@@ -269,7 +269,7 @@ const App = () => {
             {showUpdateModal ? (
               <UpdateModal />
             ) : (
-              <div className="box-border p-[10px] w-full h-[75px] bg-[#d6dbe0] text-black border-none text-left transition-all duration-300 ease-[ease]" />
+              <div className="box-border p-2.5 w-full h-18.75 bg-[#d6dbe0] text-black border-none text-left transition-all duration-300 ease-[ease]" />
             )}
 
             <FileButton $active={viewClearProject} onClick={() => handleClick('viewClearProject')}>
@@ -291,7 +291,7 @@ const App = () => {
 
           <div
             id="actionWindow"
-            className="bg-white overflow-auto [&_*]:[box-sizing:inherit] [&_*:before]:[box-sizing:inherit] [&_*:after]:[box-sizing:inherit]"
+            className="bg-white overflow-auto **:[box-sizing:inherit] [&_*:before]:[box-sizing:inherit] [&_*:after]:[box-sizing:inherit]"
           >
             {viewStart && <Start view={viewStart} />}
             {viewInput && <Input view={viewInput} />}

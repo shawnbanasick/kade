@@ -74,6 +74,8 @@ const pushConsensusStatementsToOutput = function (
     consensusDisagreeArray.push(tempArray1a);
   }
 
+  outputState.setState({ consensusDisagreeArray: [...consensusDisagreeArray] });
+
   const locator = userSelectedFactors.length + 2;
   consensusDisagreeArray.sort((a, b) => {
     if (a[locator] === b[locator]) {

@@ -116,7 +116,7 @@ const pushFactorsToOutputArray = (outputData, sheetNamesXlsx, colSizes) => {
   const combinedWeightedSorts = combineWeightedSorts(weightedRawSorts);
   const calculatedZScores = calculateZScores(combinedWeightedSorts);
 
-  console.log('zScores', JSON.stringify(calculatedZScores));
+  // console.log('zScores', JSON.stringify(calculatedZScores));
 
   const toZScoreMatrix = (data) => {
     // data is the outer array of 3 factor arrays
@@ -129,11 +129,43 @@ const pushFactorsToOutputArray = (outputData, sheetNamesXlsx, colSizes) => {
   };
   let newData = JSON.parse(JSON.stringify(calculatedZScores));
   // console.log('newData', JSON.stringify(newData));
-  console.log(JSON.stringify(toZScoreMatrix(newData)));
-  console.log(
-    // JSON.stringify(calcCohensD(toZScoreMatrix(newData), numFactorsSelectedForOutputnumFactorsSelectedForOutput, 0.8))
-    JSON.stringify(calcCohensD(toZScoreMatrix(newData), 3, 0.3))
-  );
+  const zScoreMatrix = toZScoreMatrix(newData);
+  // console.log(JSON.stringify(toZScoreMatrix(newData)));
+  // console.log(JSON.stringify(calcCohensD(toZScoreMatrix(newData), 3, 0.3)));
+
+  outputState.setState({
+    cohens10: calcCohensD([...zScoreMatrix], numFactorsSelectedForOutput, 0.1),
+  });
+  outputState.setState({
+    cohens20: calcCohensD([...zScoreMatrix], numFactorsSelectedForOutput, 0.2),
+  });
+  outputState.setState({
+    cohens30: calcCohensD([...zScoreMatrix], numFactorsSelectedForOutput, 0.3),
+  });
+  outputState.setState({
+    cohens40: calcCohensD([...zScoreMatrix], numFactorsSelectedForOutput, 0.4),
+  });
+  outputState.setState({
+    cohens50: calcCohensD([...zScoreMatrix], numFactorsSelectedForOutput, 0.5),
+  });
+  outputState.setState({
+    cohens60: calcCohensD([...zScoreMatrix], numFactorsSelectedForOutput, 0.6),
+  });
+  outputState.setState({
+    cohens70: calcCohensD([...zScoreMatrix], numFactorsSelectedForOutput, 0.7),
+  });
+  outputState.setState({
+    cohens80: calcCohensD([...zScoreMatrix], numFactorsSelectedForOutput, 0.8),
+  });
+  outputState.setState({
+    cohens90: calcCohensD([...zScoreMatrix], numFactorsSelectedForOutput, 0.9),
+  });
+  outputState.setState({
+    cohens90: calcCohensD([...zScoreMatrix], numFactorsSelectedForOutput, 0.9),
+  });
+  outputState.setState({
+    cohens100: calcCohensD([...zScoreMatrix], numFactorsSelectedForOutput, 1.0),
+  });
 
   assignFactorScores(calculatedZScores);
 

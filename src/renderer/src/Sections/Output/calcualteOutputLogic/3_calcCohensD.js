@@ -56,6 +56,7 @@ function cohenEffectSize(zscores, nFactors, dThreshold) {
     .filter((s) => dsTotals[s] === 0)
     .map((s) => s + 1);
 
-  return { diff, ds, distinguishing, consensus };
+  // return { diff, ds, distinguishing, consensus };
+  return { distinguishing, consensus };
 }
 export default cohenEffectSize;

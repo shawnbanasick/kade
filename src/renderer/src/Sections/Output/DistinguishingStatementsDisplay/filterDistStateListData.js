@@ -10,6 +10,7 @@ const capitalizeFirstLetter = (string) => {
 
 const filterDistStateListData = (thresholdLevel, sortKey) => {
   const distStateListData = calcState.getState().distStateListData;
+
   const userSelectedFactors = outputState.getState().userSelectedFactors;
 
   for (let i = 0; i < distStateListData.length; i++) {

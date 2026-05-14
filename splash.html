@@ -1,35 +1,78 @@
 <!doctype html>
 <html>
   <head>
+    <meta charset="UTF-8" />
     <style>
-      body {
+      * {
         margin: 0;
-        background: transparent;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        width: 400px;
+        height: 300px;
+        background: #1e1e2e;
         display: flex;
         flex-direction: column;
-        justify-content: center;
         align-items: center;
-        height: 100vh;
+        justify-content: center;
+        font-family: sans-serif;
+        color: white;
+        border-radius: 12px;
+        overflow: hidden;
+        -webkit-app-region: no-drag;
       }
-      .spinner {
-        width: 50px;
-        height: 50px;
-        border: 4px solid #ccc;
-        border-top-color: #333;
-        border-radius: 50%;
-        animation: spin 0.8s linear infinite;
+
+      img {
+        width: 80px;
+        height: 80px;
+        margin-bottom: 16px;
       }
-      @keyframes spin {
-        to {
-          transform: rotate(360deg);
+
+      h1 {
+        font-size: 24px;
+        margin-bottom: 8px;
+      }
+
+      .subtitle {
+        font-size: 13px;
+        opacity: 0.5;
+        margin-bottom: 32px;
+      }
+
+      .bar-track {
+        width: 200px;
+        height: 4px;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 2px;
+        overflow: hidden;
+      }
+
+      .bar-fill {
+        height: 100%;
+        width: 0%;
+        background: #6c63ff;
+        border-radius: 2px;
+        animation: load 1.5s ease forwards;
+      }
+
+      @keyframes load {
+        0% {
+          width: 0%;
+        }
+        100% {
+          width: 100%;
         }
       }
     </style>
   </head>
   <body>
-    <h1 class="text">Loading...</h1>
-    <br />
-    <br />
-    <div class="spinner"></div>
+    <img src="./resources/icon.png" alt="logo" />
+    <h1>KADE</h1>
+    <p class="subtitle">Loading...</p>
+    <div class="bar-track">
+      <div class="bar-fill"></div>
+    </div>
   </body>
 </html>

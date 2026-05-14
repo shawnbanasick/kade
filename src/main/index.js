@@ -38,7 +38,7 @@ function getIcon() {
     case 'darwin':
       return iconMac;
     default:
-      return icon; // Linux — your existing png
+      return icon; // Linux PNG file
   }
 }
 
