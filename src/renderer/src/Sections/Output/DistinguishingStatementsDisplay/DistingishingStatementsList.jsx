@@ -1,7 +1,6 @@
 import React from 'react';
 import DistStateListButtons from './DistStateListButtons';
 import filterDistStateListData from './filterDistStateListData';
-import DistStateListSortByButtons from './DistStateListSortByButtons';
 import { useTranslation } from 'react-i18next';
 import outputState from '../../GlobalState/outputState';
 import DistinguishingTypeButtons from './DistinguishingTypeButtons';
@@ -9,12 +8,16 @@ import DistStateListCohensButton from './DistStateListCohensButton';
 import calcCohensData from './calcCohensData';
 import filterDistStateCohenListData from './filterDistStateCohenListData';
 import CohensDynamicTable from './CohensDynamicTable';
+import DistStateListSortByButtons from './DistStateListSortByButtons';
+import DistStateListCohenSortByButtons from './DistStateListCohenSortByButtons';
+import { sort } from 'd3';
 
 const DistinguishingStatementsList = () => {
   const { t } = useTranslation();
 
   const sortKey = outputState((state) => state.distStateListSortKey);
   const threshold = outputState((state) => state.threshold);
+  const sortCohensBy = outputState((state) => state.sortCohensBy);
   const displayData = filterDistStateListData(threshold, sortKey);
   const showFactorCorrelationsTable = outputState((state) => state.showFactorCorrelationsTable);
   const distIdentType = outputState((state) => state.distIdentType);
@@ -45,8 +48,6 @@ const DistinguishingStatementsList = () => {
   const userSelectedFactors = outputState((state) => state.userSelectedFactors);
   const cohensThreshold = outputState((state) => state.cohensThreshold);
 
-  console.log('userSelectedFactors', JSON.stringify(userSelectedFactors));
-
   const cohensData = calcCohensData(
     {
       cohens10,
@@ -64,15 +65,11 @@ const DistinguishingStatementsList = () => {
   );
 
   const displayCohenData = filterDistStateCohenListData(
-    // [...cohensData].sort((a, b) => a.factor1CohenLevel - b.factor1CohenLevel),
     [...cohensData],
     cohensThreshold,
-    userSelectedFactors
+    userSelectedFactors,
+    sortCohensBy
   );
-
-  // console.log('displayCohenData', JSON.stringify(displayCohenData.distStates, null, 2));
-
-  // console.log('displayData', JSON.stringify(displayData[0], null, 2));
 
   if (showFactorCorrelationsTable) {
     if (distIdentType === 'stephensonMethod') {
@@ -124,7 +121,7 @@ const DistinguishingStatementsList = () => {
             {t('Interactive List')} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{' '}
             {t('Output thresholds are set in the Options section')}
           </div>
-          <DistStateListSortByButtons />
+          <DistStateListCohenSortByButtons />
           <DistStateListCohensButton />
           {displayCohenData.map((factorItem, index) => (
             <React.Fragment key={`key${index.toString()}`}>

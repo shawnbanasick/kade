@@ -1,14 +1,11 @@
 const CohensDynamicTable = (props) => {
   // 1. Extract all unique keys from the array of objects to form columns
 
-  console.log('CohensDynamicTable props.data', JSON.stringify(props, null, 2));
-
   if (!props.data || props.data.length === 0) {
     return <div>No data available</div>;
   }
 
   const columns = [...new Set(props.data.flatMap((item) => Object.keys(item)))];
-  console.log('CohensDynamicTable columns', JSON.stringify(columns, null, 2));
 
   const newColNames = columns.map((col) => {
     if (col.includes('factor') && col.includes('CohenLevel')) {

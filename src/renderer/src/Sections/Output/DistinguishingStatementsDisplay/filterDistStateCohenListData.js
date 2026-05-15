@@ -1,28 +1,34 @@
-const filterDistStateCohenListData = (data, cohenThreshold, userSelectedFactors) => {
-  console.log('filterDistStateCohenListData input data', JSON.stringify(data, null, 2));
+const filterDistStateCohenListData = (data, cohenThreshold, userSelectedFactors, sortCohensBy) => {
   if (cohenThreshold === null) return data;
-  console.log('filterDistStateCohenListData cohenThreshold', cohenThreshold);
 
   const returnArray = [];
-  const filteredData = [...data].filter((item) => item.factor1CohenLevel >= cohenThreshold);
+  const masterDataArray = [];
+
+  userSelectedFactors.forEach((factor, index) => {
+    const filteredData = [...data].filter(
+      (item) => item[`factor${index + 1}CohenLevel`] >= cohenThreshold
+    );
+    masterDataArray.push([...filteredData]);
+  });
 
   userSelectedFactors.forEach((factor, index) => {
     const tempObj = {};
     tempObj.factor = `Factor ${index + 1}`;
     tempObj.factorNumber = index + 1;
     // sort cohen levels by factor and then in descending order and then by sort value in descending order
-    tempObj.distStates = [...filteredData].sort(
-      (a, b) => b[`factor${index + 1}CohenLevel`] - a[`factor${index + 1}CohenLevel`]
-    );
+    if (sortCohensBy === 'cohenLevel') {
+      tempObj.distStates = [...masterDataArray[index]].sort(
+        (a, b) => b[`factor${index + 1}CohenLevel`] - a[`factor${index + 1}CohenLevel`]
+      );
+    } else if (sortCohensBy === 'sortValue') {
+      tempObj.distStates = [...masterDataArray[index]].sort(
+        (a, b) => b[`F${index + 1} Sort Value`] - a[`F${index + 1} Sort Value`]
+      );
+    } else if (sortCohensBy === 'statementNum') {
+      tempObj.distStates = [...masterDataArray[index]].sort((a, b) => a.statement - b.statement);
+    }
     returnArray.push(tempObj);
   });
-
-  // const sortedData = [...filteredData].sort((a, b) => b.factor1CohenLevel - a.factor1CohenLevel);
-
-  // const returnObject = {
-  //   factor: 'Factor 1',
-  //   distStates: sortedData,
-  // };
 
   return returnArray;
 };

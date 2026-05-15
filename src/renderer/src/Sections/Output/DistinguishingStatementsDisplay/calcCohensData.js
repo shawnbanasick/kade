@@ -1,18 +1,9 @@
-const calcCohensData = (
-  cohensLevelsData = {},
-  consensusDisagreeArray = [],
-  userSelectedFactors = []
-) => {
-  console.log('levelsData', JSON.stringify(cohensLevelsData));
-  // console.log('consensusDisagreeArray', JSON.stringify(consensusDisagreeArray));
-  // console.log('userSelectedFactors', JSON.stringify(userSelectedFactors));
-
+const calcCohensData = (cohensLevelsData = {}, consensusDisagreeArray = []) => {
   if (consensusDisagreeArray.length === 0) {
     return [];
   }
 
   const numFactors = cohensLevelsData.cohens100.distinguishing.length;
-  console.log('numFactors', numFactors);
 
   const prepFactorArray = consensusDisagreeArray.map((item, index) => {
     const tempObj = {};
@@ -40,7 +31,6 @@ const calcCohensData = (
     });
   });
 
-  console.log('prep', prepFactorArray);
   return prepFactorArray;
 };
 

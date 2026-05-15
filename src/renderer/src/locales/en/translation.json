@@ -592,5 +592,9 @@
   "Drag nodes to move": "Drag nodes to move",
   "Correlation Links": "Correlation Links",
   "Principal Components Scenarios": "Principal Components Scenarios",
-  "Click the Varimax or Judgmental tabs to rotate factors": "Click the Varimax or Judgmental tabs to rotate factors"
+  "Click the Varimax or Judgmental tabs to rotate factors": "Click the Varimax or Judgmental tabs to rotate factors",
+  "cohensDLevel": "Cohen's D Level",
+  "cohensD": "Cohen's D",
+  "stephenson": "Stephenson",
+  "selectMethodForIdentifyingDistinguishingStatements": "Select Method for Identifying Distinguishing Statements"
 }

@@ -24,7 +24,7 @@ const DistinguishingTypeButtons = () => {
   return (
     <div className="flex items-center gap-3">
       <div className="mr-2.5 text-xl mb-2  font-bold">
-        {t('Select Method for Identifying Distinguishing Statements')}:
+        {t('selectMethodForIdentifyingDistinguishingStatements')}:
       </div>
       <GeneralButton
         id="stephensonMethodButton"
@@ -32,7 +32,7 @@ const DistinguishingTypeButtons = () => {
         key="f2"
         className={`min-w-30 ${stephensonMethodButtonActive ? 'bg-primary-button' : 'bg-grey-button'}`}
       >
-        {t('Stephenson')}
+        {t('stephenson')}
       </GeneralButton>
       <GeneralButton
         id="cohenMethodButton"
@@ -40,7 +40,7 @@ const DistinguishingTypeButtons = () => {
         key="f3"
         className={`min-w-30 ${cohenMethodButtonActive ? 'bg-primary-button' : 'bg-grey-button'}`}
       >
-        {t("Cohen's d")}
+        {t('cohensD')}
       </GeneralButton>
     </div>
   );

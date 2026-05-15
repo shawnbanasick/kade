@@ -52,13 +52,13 @@ const DistStateListSortByButtons = () => {
 
   return (
     <div className="flex items-center gap-3">
-      <div className="mr-[10px] text-[18px] font-bold">{t('Sort By')}</div>
+      <div className="mr-2.5 text-[18px] font-bold">{t('Sort By')}</div>
 
       <GeneralButton
         id="thresholdButton"
         onClick={handleOnclick}
         key="f1"
-        className={`min-w-[120px] ${thresholdButtonActive ? 'bg-primary-button' : 'bg-grey-button'}`}
+        className={`min-w-30 ${thresholdButtonActive ? 'bg-primary-button' : 'bg-grey-button'}`}
       >
         {t('Threshold')}
       </GeneralButton>
@@ -66,7 +66,7 @@ const DistStateListSortByButtons = () => {
         id="qSortValueButton"
         onClick={handleOnclick}
         key="f2"
-        className={`min-w-[120px] ${qSortValueButtonActive ? 'bg-primary-button' : 'bg-grey-button'}`}
+        className={`min-w-30 ${qSortValueButtonActive ? 'bg-primary-button' : 'bg-grey-button'}`}
       >
         {t('Q Sort Value')}
       </GeneralButton>
@@ -74,7 +74,7 @@ const DistStateListSortByButtons = () => {
         id="statementNumButton"
         onClick={handleOnclick}
         key="f3"
-        className={`min-w-[120px] ${statementNumButtonActive ? 'bg-primary-button' : 'bg-grey-button'}`}
+        className={`min-w-30 ${statementNumButtonActive ? 'bg-primary-button' : 'bg-grey-button'}`}
       >
         {t('Number')}
       </GeneralButton>
@@ -82,7 +82,7 @@ const DistStateListSortByButtons = () => {
         id="zScoreButton"
         onClick={handleOnclick}
         key="f4"
-        className={`min-w-[120px] ${zScoreButtonActive ? 'bg-primary-button' : 'bg-grey-button'}`}
+        className={`min-w-30 ${zScoreButtonActive ? 'bg-primary-button' : 'bg-grey-button'}`}
       >
         {t('Z score')}
       </GeneralButton>
@@ -91,11 +91,11 @@ const DistStateListSortByButtons = () => {
         id="downloadButton"
         onClick={() => downloadDistStates()}
         key="f5"
-        className="h-[30px] min-w-[160px] bg-grey-button p-0!"
+        className="h-10 min-w-40 bg-grey-button p-0!"
       >
         <div className="flex flex-row justify-center items-center">
-          <div className="flex justify-center items-center mr-[10px]">
-            <img src={CsvIcon} className="w-[28px] h-[28px]" alt="csv Icon" />
+          <div className="flex justify-center items-center mr-2.5">
+            <img src={CsvIcon} className="w-7 h-7" alt="csv Icon" />
           </div>
           {t('Download Data')}
         </div>

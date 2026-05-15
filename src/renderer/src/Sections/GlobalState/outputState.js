@@ -58,6 +58,10 @@ const outputState = create(
 
     threshold: 3,
     cohensThreshold: 30,
+    sortCohensBy: 'cohenLevel',
+    cohenSortByCohensButtonActive: true,
+    cohenSortBySortValueButtonActive: false,
+    cohenSortByStatementNumButtonActive: false,
     userSelectedFactors: [],
 
     // DOCX options
@@ -153,6 +157,13 @@ const outputState = create(
     distIdentType: 'stephensonMethod',
     consensusDisagreeArray: [],
 
+    updateCohenSortByCohensButtonActive: (inputValue) =>
+      set({ cohenSortByCohensButtonActive: inputValue }),
+    updateCohenSortBySortValueButtonActive: (inputValue) =>
+      set({ cohenSortBySortValueButtonActive: inputValue }),
+    updateCohenSortByStatementNumButtonActive: (inputValue) =>
+      set({ cohenSortByStatementNumButtonActive: inputValue }),
+    updateSortCohensBy: (inputValue) => set({ sortCohensBy: inputValue }),
     updateConsensusDisagreeArray: (inputValue) => set({ consensusDisagreeArray: inputValue }),
     updateCohensThreshold: (inputValue) => set({ cohensThreshold: inputValue }),
     updateCohens10: (inputValue) => set({ cohens10: inputValue }),
