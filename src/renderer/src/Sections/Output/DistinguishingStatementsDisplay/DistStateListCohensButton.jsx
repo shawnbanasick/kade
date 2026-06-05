@@ -1,13 +1,14 @@
 import { useState } from 'react';
 import GeneralButton from '../../../Utils/GeneralButton';
 import outputState from '../../GlobalState/outputState';
+import { useTranslation } from 'react-i18next';
 
 const DistStateListButtons = () => {
   const threshold = outputState((state) => state.threshold);
   const updateCohensThreshold = outputState((state) => state.updateCohensThreshold);
+  const { t } = useTranslation();
 
   const [localStore, setLocalStore] = useState({
-    rotationDegreeInput: '',
     cohen10Active: false,
     cohen20Active: false,
     cohen30Active: false,
@@ -41,58 +42,60 @@ const DistStateListButtons = () => {
     if (buttonId === 'cohen10Button') {
       clearAllButtons();
       setLocalStore((prevState) => ({ ...prevState, cohen10Active: true }));
-      updateCohensThreshold(10);
+      updateCohensThreshold(0.1);
     }
     if (buttonId === 'cohen20Button') {
       clearAllButtons();
       setLocalStore((prevState) => ({ ...prevState, cohen20Active: true }));
-      updateCohensThreshold(20);
+      updateCohensThreshold(0.2);
     }
     if (buttonId === 'cohen30Button') {
       clearAllButtons();
       setLocalStore((prevState) => ({ ...prevState, cohen30Active: true }));
-      updateCohensThreshold(30);
+      updateCohensThreshold(0.3);
     }
     if (buttonId === 'cohen40Button') {
       clearAllButtons();
       setLocalStore((prevState) => ({ ...prevState, cohen40Active: true }));
-      updateCohensThreshold(40);
+      updateCohensThreshold(0.4);
     }
     if (buttonId === 'cohen50Button') {
       clearAllButtons();
       setLocalStore((prevState) => ({ ...prevState, cohen50Active: true }));
-      updateCohensThreshold(50);
+      updateCohensThreshold(0.5);
     }
     if (buttonId === 'cohen60Button') {
       clearAllButtons();
       setLocalStore((prevState) => ({ ...prevState, cohen60Active: true }));
-      updateCohensThreshold(60);
+      updateCohensThreshold(0.6);
     }
     if (buttonId === 'cohen70Button') {
       clearAllButtons();
       setLocalStore((prevState) => ({ ...prevState, cohen70Active: true }));
-      updateCohensThreshold(70);
+      updateCohensThreshold(0.7);
     }
     if (buttonId === 'cohen80Button') {
       clearAllButtons();
       setLocalStore((prevState) => ({ ...prevState, cohen80Active: true }));
-      updateCohensThreshold(80);
+      updateCohensThreshold(0.8);
     }
     if (buttonId === 'cohen90Button') {
       clearAllButtons();
       setLocalStore((prevState) => ({ ...prevState, cohen90Active: true }));
-      updateCohensThreshold(90);
+      updateCohensThreshold(0.9);
     }
     if (buttonId === 'cohen100Button') {
       clearAllButtons();
       setLocalStore((prevState) => ({ ...prevState, cohen100Active: true }));
-      updateCohensThreshold(100);
+      updateCohensThreshold(1.0);
     }
   };
 
   return (
     <div className="flex items-baseline mt-5 gap-3">
-      <div className="text-[18px] font-bold">Cohen's d Level:</div>
+      <div className="text-[18px] font-bold">
+        {t('cohens')} <i>d</i> {t('level')}:
+      </div>
       <GeneralButton
         id="cohen10Button"
         onClick={handleOnclick}

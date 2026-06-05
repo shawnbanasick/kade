@@ -57,7 +57,7 @@ const outputState = create(
     distStateListSortKey: 'statementNum',
 
     threshold: 3,
-    cohensThreshold: 30,
+    cohensThreshold: 0.3,
     sortCohensBy: 'cohenLevel',
     cohenSortByCohensButtonActive: true,
     cohenSortBySortValueButtonActive: false,

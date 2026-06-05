@@ -10,7 +10,6 @@ import filterDistStateCohenListData from './filterDistStateCohenListData';
 import CohensDynamicTable from './CohensDynamicTable';
 import DistStateListSortByButtons from './DistStateListSortByButtons';
 import DistStateListCohenSortByButtons from './DistStateListCohenSortByButtons';
-import { sort } from 'd3';
 
 const DistinguishingStatementsList = () => {
   const { t } = useTranslation();
@@ -75,11 +74,11 @@ const DistinguishingStatementsList = () => {
     if (distIdentType === 'stephensonMethod') {
       return (
         <div className="pb-37.5 pr-5">
-          <DistinguishingTypeButtons />
-          <div className="mb-5 text-xl mt-5">
+          <div className="mb-5 text-xl">
             {t('Interactive List')} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{' '}
             {t('Output thresholds are set in the Options section')}
           </div>
+          <DistinguishingTypeButtons textSize="xl" className="mb-5" />
           <DistStateListSortByButtons />
           <DistStateListButtons />
 

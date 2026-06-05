@@ -23,10 +23,8 @@ const calcCohensData = (cohensLevelsData = {}, consensusDisagreeArray = []) => {
     levelData.distinguishing.forEach((factorDist, factorIndex) => {
       factorDist.forEach((statementNum) => {
         const statementIndex = statementNum - 1;
-        prepFactorArray[statementIndex][`factor${factorIndex + 1}CohenLevel`] = parseInt(
-          key.replace('cohens', ''),
-          10
-        );
+        prepFactorArray[statementIndex][`factor${factorIndex + 1}CohenLevel`] =
+          parseFloat(key.replace('cohens', '')) / 100;
       });
     });
   });

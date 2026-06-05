@@ -56,15 +56,17 @@ const DistStateListCohenSortByButtons = () => {
 
       <GeneralButton
         id="cohenDButton"
-        onClick={handleOnclick}
+        onClick={() => handleOnclick({ target: { id: 'cohenDButton' } })}
         key="f1"
         className={`min-w-30 ${cohenSortByCohensButtonActive ? 'bg-primary-button' : 'bg-grey-button'}`}
       >
-        {t('cohensDLevel')}
+        <div>
+          {t('cohens')} <i>d</i>
+        </div>
       </GeneralButton>
       <GeneralButton
         id="cohenSortBySortValueButton"
-        onClick={handleOnclick}
+        onClick={() => handleOnclick({ target: { id: 'cohenSortBySortValueButton' } })}
         key="f2"
         className={`min-w-30 ${cohenSortBySortValueButtonActive ? 'bg-primary-button' : 'bg-grey-button'}`}
       >
@@ -72,7 +74,7 @@ const DistStateListCohenSortByButtons = () => {
       </GeneralButton>
       <GeneralButton
         id="statementNumButton"
-        onClick={handleOnclick}
+        onClick={() => handleOnclick({ target: { id: 'statementNumButton' } })}
         key="f3"
         className={`min-w-30 ${cohenSortByStatementNumButtonActive ? 'bg-primary-button' : 'bg-grey-button'}`}
       >

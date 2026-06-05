@@ -57,6 +57,16 @@ const calcState = create(
     userSelectedDistStateSigLevel1: 2.575,
     userSelectedDistStateSigLevel2: 1.96,
 
+    stephConsensus0001: [],
+    stephConsensus0005: [],
+    stephConsensus001: [],
+    stephConsensus005: [],
+    stephConsensus01: [],
+    stephConsensus05: [],
+    stephConsensus1: [],
+    stephConsensus15: [],
+    stephConsensus2: [],
+
     updateAnalysisOutput: (inputValue) => set({ analysisOutput: inputValue }),
     updateColSizes: (inputValue) => set({ colSizes: inputValue }),
     updateCompositeFactorMasterArray: (inputValue) =>

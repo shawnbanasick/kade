@@ -593,8 +593,8 @@
   "Correlation Links": "Correlation Links",
   "Principal Components Scenarios": "Principal Components Scenarios",
   "Click the Varimax or Judgmental tabs to rotate factors": "Click the Varimax or Judgmental tabs to rotate factors",
-  "cohensDLevel": "Cohen's D Level",
-  "cohensD": "Cohen's D",
+  "level": "Level",
+  "cohens": "Cohen's",
   "stephenson": "Stephenson",
   "selectMethodForIdentifyingDistinguishingStatements": "Select Method for Identifying Distinguishing Statements"
 }

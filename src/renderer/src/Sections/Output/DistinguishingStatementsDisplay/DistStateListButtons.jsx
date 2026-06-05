@@ -84,12 +84,12 @@ const DistStateListButtons = () => {
   };
 
   return (
-    <div className="flex items-baseline mt-[20px] gap-3">
+    <div className="flex items-baseline mt-5 gap-3">
       <div className="text-[18px] font-bold">Threshold:</div>
       <GeneralButton
         id="p0001Button"
         onClick={handleOnclick}
-        className={`min-w-[80px] ${localStore.p0001Active ? 'bg-primary-button' : 'bg-grey-button'}`}
+        className={`min-w-20 ${localStore.p0001Active ? 'bg-primary-button' : 'bg-grey-button'}`}
         key="f1"
       >
         0.0001
@@ -97,7 +97,7 @@ const DistStateListButtons = () => {
       <GeneralButton
         id="p0005Button"
         onClick={handleOnclick}
-        className={`min-w-[80px] ${localStore.p0005Active ? 'bg-primary-button' : 'bg-grey-button'}`}
+        className={`min-w-20 ${localStore.p0005Active ? 'bg-primary-button' : 'bg-grey-button'}`}
         key="f2"
       >
         0.0005
@@ -105,7 +105,7 @@ const DistStateListButtons = () => {
       <GeneralButton
         id="p001Button"
         onClick={handleOnclick}
-        className={`min-w-[80px] ${localStore.p001Active ? 'bg-primary-button' : 'bg-grey-button'}`}
+        className={`min-w-20 ${localStore.p001Active ? 'bg-primary-button' : 'bg-grey-button'}`}
         key="f3"
       >
         0.001
@@ -113,7 +113,7 @@ const DistStateListButtons = () => {
       <GeneralButton
         id="p005Button"
         onClick={handleOnclick}
-        className={`min-w-[80px] ${localStore.p005Active ? 'bg-primary-button' : 'bg-grey-button'}`}
+        className={`min-w-20 ${localStore.p005Active ? 'bg-primary-button' : 'bg-grey-button'}`}
         key="f4"
       >
         0.005
@@ -121,7 +121,7 @@ const DistStateListButtons = () => {
       <GeneralButton
         id="p01Button"
         onClick={handleOnclick}
-        className={`min-w-[80px] ${localStore.p01Active ? 'bg-primary-button' : 'bg-grey-button'}`}
+        className={`min-w-20 ${localStore.p01Active ? 'bg-primary-button' : 'bg-grey-button'}`}
         key="f5"
       >
         0.01
@@ -129,7 +129,7 @@ const DistStateListButtons = () => {
       <GeneralButton
         id="p05Button"
         onClick={handleOnclick}
-        className={`min-w-[80px] ${localStore.p05Active ? 'bg-primary-button' : 'bg-grey-button'}`}
+        className={`min-w-20 ${localStore.p05Active ? 'bg-primary-button' : 'bg-grey-button'}`}
         key="f6"
       >
         0.05
@@ -137,7 +137,7 @@ const DistStateListButtons = () => {
       <GeneralButton
         id="p1Button"
         onClick={handleOnclick}
-        className={`min-w-[80px] ${localStore.p1Active ? 'bg-primary-button' : 'bg-grey-button'}`}
+        className={`min-w-20 ${localStore.p1Active ? 'bg-primary-button' : 'bg-grey-button'}`}
         key="f7"
       >
         0.1
@@ -145,7 +145,7 @@ const DistStateListButtons = () => {
       <GeneralButton
         id="p15Button"
         onClick={handleOnclick}
-        className={`min-w-[80px] ${localStore.p15Active ? 'bg-primary-button' : 'bg-grey-button'}`}
+        className={`min-w-20 ${localStore.p15Active ? 'bg-primary-button' : 'bg-grey-button'}`}
         key="f8"
       >
         0.15
@@ -153,7 +153,7 @@ const DistStateListButtons = () => {
       <GeneralButton
         id="p2Button"
         onClick={handleOnclick}
-        className={`min-w-[80px] ${localStore.p2Active ? 'bg-primary-button' : 'bg-grey-button'}`}
+        className={`min-w-20 ${localStore.p2Active ? 'bg-primary-button' : 'bg-grey-button'}`}
         key="f9"
       >
         0.2

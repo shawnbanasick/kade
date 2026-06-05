@@ -179,7 +179,7 @@ const FactorSelectionForOutputButtons = () => {
               id="selectAllFacs"
               disabled={areDisabled}
               onClick={handleOnclick}
-              className="min-w-[100px] text-[20px] bg-grey-button h-[30px] p-0!  items-center justify-center"
+              className="min-w-35 text-[20px] bg-grey-button h-7.5 p-0!  items-center justify-center"
             >
               {t('All')}
             </GeneralButton>
@@ -187,7 +187,7 @@ const FactorSelectionForOutputButtons = () => {
             <GeneralButton
               id="clearAllFacs"
               onClick={handleOnclick}
-              className="min-w-[100px] text-[20px] bg-grey-button h-[30px] p-0! items-center justify-center"
+              className="min-w-35 text-[20px] bg-grey-button h-7.5 p-0! items-center justify-center"
             >
               {t('Clear')}
             </GeneralButton>
@@ -195,9 +195,9 @@ const FactorSelectionForOutputButtons = () => {
             <GeneralButton
               id="startOutput"
               onClick={handleSubmit}
-              className="min-w-[100px] text-[20px] bg-grey-button h-[30px] p-0! items-center justify-center"
+              className="min-w-35 text-[20px] bg-grey-button h-7.5 p-0! items-center justify-center"
             >
-              {t('Submit')}
+              {t('Calculate')}
             </GeneralButton>
           </div>
         </div>

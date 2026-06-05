@@ -11,6 +11,7 @@ import addDistinguishingSymbolsToData from '../FactorVisualizations/addDistingui
 import outputState from '../../GlobalState/outputState';
 import calcState from '../../GlobalState/calcState';
 import i18n from 'i18next';
+import reduceConsensusArray from './3_reduceConsensusArray';
 
 const pushDistinguishingStatementsToOutput = function (
   sigSortsArray,
@@ -100,15 +101,34 @@ const pushDistinguishingStatementsToOutput = function (
   const masterDistingStatementNumbersArray05 = [];
   const masterDistingStatementNumbersArray01 = [];
   const distStatementsTableArray = [];
-  let array0001;
-  let array0005;
-  let array001;
-  let array005;
-  let array01;
-  let array05;
-  let array1;
-  let array15;
-  let array2;
+  let array0001 = [];
+  let array0005 = [];
+  let array001 = [];
+  let array005 = [];
+  let array01 = [];
+  let array05 = [];
+  let array1 = [];
+  let array15 = [];
+  let array2 = [];
+  let listArray0001 = [];
+  let listArray0005 = [];
+  let listArray001 = [];
+  let listArray005 = [];
+  let listArray01 = [];
+  let listArray05 = [];
+  let listArray1 = [];
+  let listArray15 = [];
+  let listArray2 = [];
+  let listArray0001Display = [];
+  let listArray0005Display = [];
+  let listArray001Display = [];
+  let listArray005Display = [];
+  let listArray01Display = [];
+  let listArray05Display = [];
+  let listArray1Display = [];
+  let listArray15Display = [];
+  let listArray2Display = [];
+
   // looping through all factors to determine if distinguishing!
   // todo - create if statement for case of only two sig factors-bypass processing of second c 4894
   for (j = 0; j < sigSortsArray.length; j++) {
@@ -139,6 +159,15 @@ const pushDistinguishingStatementsToOutput = function (
       array1 = [];
       array15 = [];
       array2 = [];
+      listArray0001 = [];
+      listArray0005 = [];
+      listArray001 = [];
+      listArray005 = [];
+      listArray01 = [];
+      listArray05 = [];
+      listArray1 = [];
+      listArray15 = [];
+      listArray2 = [];
 
       for (m = 0; m < sigSortsArray.length; m++) {
         // factor m
@@ -188,38 +217,47 @@ const pushDistinguishingStatementsToOutput = function (
           // P < 0.0001 Level
           if (testValue >= sedComparisonValue * 3.891) {
             array0001.push(true);
+            listArray0001.push(true);
           }
           // P < 0.0005 Level
           if (testValue >= sedComparisonValue * 3.481) {
             array0005.push(true);
+            listArray0005.push(true);
           }
           // P < 0.001 Level
           if (testValue >= sedComparisonValue * 3.291) {
             array001.push(true);
+            listArray001.push(true);
           }
           // P < 0.005 Level
           if (testValue >= sedComparisonValue * 2.807) {
             array005.push(true);
+            listArray005.push(true);
           }
           // P < 0.01 Level
           if (testValue >= sedComparisonValue * 2.575) {
             array01.push(true);
+            listArray01.push(true);
           }
           // P < 0.05 Level
           if (testValue >= sedComparisonValue * 1.96) {
             array05.push(true);
+            listArray05.push(true);
           }
           // P < 0.1 Level
           if (testValue >= sedComparisonValue * 1.645) {
             array1.push(true);
+            listArray1.push(true);
           }
           // P < 0.15 Level
           if (testValue >= sedComparisonValue * 1.44) {
             array15.push(true);
+            listArray15.push(true);
           }
           // P < 0.2 Level
           if (testValue >= sedComparisonValue * 1.28) {
             array2.push(true);
+            listArray2.push(true);
           }
 
           // User selections
@@ -232,6 +270,8 @@ const pushDistinguishingStatementsToOutput = function (
             sig05Array.push(sig05);
           }
 
+          // table data
+
           if (
             Math.abs(analysisOutput[j][k].zScore - analysisOutput[m][k].zScore) >=
             sedComparisonValue * userSelectedDistStateSigLevel1 // 2.58
@@ -242,6 +282,20 @@ const pushDistinguishingStatementsToOutput = function (
           }
         }
       }
+
+      console.log(`Statement ${k + 1} comparisons for Factor ${j + 1}:`, {
+        array0001,
+        array0005,
+        array001,
+        array005,
+        array01,
+        array05,
+        array1,
+        array15,
+        array2,
+      });
+
+      console.log(sigFactorNumbersArray);
 
       switch (true) {
         // P < 0.0001 Level
@@ -286,6 +340,7 @@ const pushDistinguishingStatementsToOutput = function (
           distStatementsTableTempObj.sigLevelRank = 2;
           distStatementsTableTempArray.push(distStatementsTableTempObj);
           break;
+
         // P < 0.15 Level
         case array15.length === sigFactorNumbersArray.length - 1:
           distStatementsTableTempObj.sigLevelText = 'P < 0.15';
@@ -318,6 +373,47 @@ const pushDistinguishingStatementsToOutput = function (
 
       if (sig01Array.length === 0) {
         consensusStatementTransferArray01.push(newStatementNum);
+      }
+
+      // console.log('consensus arrays before reduction:', {
+      //   listArray0001,
+      //   listArray0005,
+      //   listArray001,
+      //   listArray005,
+      //   listArray01,
+      //   listArray05,
+      //   listArray1,
+      //   listArray15,
+      //   listArray2,
+      // });
+
+      // consensus list statement values
+      if (listArray0001.length === 0) {
+        listArray0001Display.push(newStatementNum);
+      }
+      if (listArray0005.length === 0) {
+        listArray0005Display.push(newStatementNum);
+      }
+      if (listArray001.length === 0) {
+        listArray001Display.push(newStatementNum);
+      }
+      if (listArray005.length === 0) {
+        listArray005Display.push(newStatementNum);
+      }
+      if (listArray01.length === 0) {
+        listArray01Display.push(newStatementNum);
+      }
+      if (listArray05.length === 0) {
+        listArray05Display.push(newStatementNum);
+      }
+      if (listArray1.length === 0) {
+        listArray1Display.push(newStatementNum);
+      }
+      if (listArray15.length === 0) {
+        listArray15Display.push(newStatementNum);
+      }
+      if (listArray2.length === 0) {
+        listArray2Display.push(newStatementNum);
       }
     }
 
@@ -367,6 +463,11 @@ const pushDistinguishingStatementsToOutput = function (
   // develop consensus statement data
   // ******
 
+  console.log('consensus arrays before reduction2 : ', {
+    consensusStatementComparisonArray05,
+    consensusStatementComparisonArray01,
+  });
+
   do {
     consensusStatementComparisonArray05 = reduceDistingArray(consensusStatementComparisonArray05);
   } while (consensusStatementComparisonArray05.length > 1);
@@ -376,12 +477,54 @@ const pushDistinguishingStatementsToOutput = function (
   } while (consensusStatementComparisonArray01.length > 1);
 
   const consensus05 = flatten(consensusStatementComparisonArray05);
-  const consensusStatementComparisonArray01b = flatten(consensusStatementComparisonArray01);
 
+  // combine and find unique statement numbers for consensus
+  const reducedOutput0001 = reduceConsensusArray(
+    listArray0001Display,
+    sigFactorNumbersArray.length
+  );
+  const reducedOutput0005 = reduceConsensusArray(
+    listArray0005Display,
+    sigFactorNumbersArray.length
+  );
+  const reducedOutput001 = reduceConsensusArray(listArray001Display, sigFactorNumbersArray.length);
+  const reducedOutput005 = reduceConsensusArray(listArray005Display, sigFactorNumbersArray.length);
+  const reducedOutput01 = reduceConsensusArray(listArray01Display, sigFactorNumbersArray.length);
+  const reducedOutput05 = reduceConsensusArray(listArray05Display, sigFactorNumbersArray.length);
+  const reducedOutput1 = reduceConsensusArray(listArray1Display, sigFactorNumbersArray.length);
+  const reducedOutput15 = reduceConsensusArray(listArray15Display, sigFactorNumbersArray.length);
+  const reducedOutput2 = reduceConsensusArray(listArray2Display, sigFactorNumbersArray.length);
+
+  console.log('reduce consensus array:', uniq(reducedOutput05));
+  console.log('reduce consensus array:', uniq(reducedOutput01));
+
+  console.log('reduce consensus arrays:', {
+    reducedOutput0001,
+    reducedOutput0005,
+    reducedOutput001,
+    reducedOutput005,
+    reducedOutput01,
+    reducedOutput05,
+    reducedOutput1,
+    reducedOutput15,
+    reducedOutput2,
+  });
+
+  const consensusStatementComparisonArray01b = flatten(consensusStatementComparisonArray01);
   const consensus01 = xor(consensus05, consensusStatementComparisonArray01b);
 
   calcState.setState({ consensus05Statements: consensus05 });
   calcState.setState({ consensus01Statements: consensus01 });
+  // for consensus table display - need to know which statements are in which category for display of appropriate significance level
+  calcState.setState({ stephConsensus0001: reducedOutput0001 });
+  calcState.setState({ stephConsensus0005: reducedOutput0005 });
+  calcState.setState({ stephConsensus001: reducedOutput001 });
+  calcState.setState({ stephConsensus005: reducedOutput005 });
+  calcState.setState({ stephConsensus01: reducedOutput01 });
+  calcState.setState({ stephConsensus05: reducedOutput05 });
+  calcState.setState({ stephConsensus1: reducedOutput1 });
+  calcState.setState({ stephConsensus15: reducedOutput15 });
+  calcState.setState({ stephConsensus2: reducedOutput2 });
 
   sheetNamesXlsx.push(chartText2);
 

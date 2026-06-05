@@ -18,9 +18,11 @@ import DownloadDocxOptionsBox from './DownloadResultsButtons/DownloadDocxOptions
 import DocxFormatButtons from './DownloadResultsButtons/DocxFormatButtons';
 import DocxIncludeDataOption from './DownloadResultsButtons/DocxIncludeDataOption';
 import DownloadResultsAsDocx from './DownloadResultsButtons/DownloadResultsAsDocx';
+import DistinguishingTypeButtons from './DistinguishingStatementsDisplay/DistinguishingTypeButtons';
 // import vizState from '../GlobalState/vizState';
 import outputState from '../GlobalState/outputState';
 import calcState from '../GlobalState/calcState';
+import ConsensusStatementsList from './ConsensusStatementsDisplay/ConsensusStatementsList';
 
 import i18n from 'i18next';
 
@@ -34,6 +36,7 @@ const Output = () => {
   );
   const showTableDataNotSentWarning = outputState((state) => state.showTableDataNotSentWarning);
   const showNotification = outputState((state) => state.notifyOutputDistStateError);
+  const distIdentType = outputState((state) => state.distIdentType);
 
   const notify = async () => {
     await toast.error('Error >>> Reset threshold levels', {
@@ -137,44 +140,33 @@ const Output = () => {
 
   const tabs = [
     {
-      title: t('Options'),
+      title: t('Results'),
       content: (
         <div className={window1Class}>
           {showTableDataNotSentWarning ? (
-            <div className="text-[25px] ml-[50px] mt-[50px]">{t('No Data Click')}</div>
+            <div className="text-[25px] ml-12.5 mt-12.5">{t('No Data Click')}</div>
           ) : (
             <>
-              <DistStateSigLevelDrop1 />
-              <DistStateSigLevelDrop2 />
+              <div className="text-5xl mt-8">{t('Calculate Results')}</div>
+              <DistinguishingTypeButtons className="mt-6.25" textSize="2xl" />
+              {distIdentType === 'stephensonMethod' && (
+                <div className="mt-6.25">
+                  <DistStateSigLevelDrop1 />
+                  <DistStateSigLevelDrop2 />
+                </div>
+              )}
+              {distIdentType === 'cohenMethod' && <div className="mt-6.25"></div>}
               <FactorSelectionForOutputButtons />
             </>
           )}
-          <DownloadResultsButtons />
-          {displayState && (
-            <div className="flex flex-row mt-[25px]">
-              <DownloadDocxOptionsBox />
-              <div className="flex flex-col h-full">
-                <DocxFormatButtons />
-                <DocxIncludeDataOption />
-                <DownloadResultsAsDocx />
-              </div>
-            </div>
-          )}
+
           <NoLoadingsFlaggedWarningModal />
           <MultipleFactorsFlaggedWarningModal />
         </div>
       ),
     },
     {
-      title: t('Factor Characteristics'),
-      content: (
-        <div className={window2Class}>
-          <OutputFactorTablesTransitionContainer />
-        </div>
-      ),
-    },
-    {
-      title: t('Factors Table'),
+      title: t('Factors'),
       content: (
         <div
           className={
@@ -189,7 +181,16 @@ const Output = () => {
       ),
     },
     {
-      title: t('Distinguishing Statements'),
+      title: t('Characteristics'),
+      content: (
+        <div className={window2Class}>
+          <OutputFactorTablesTransitionContainer />
+        </div>
+      ),
+    },
+
+    {
+      title: t('Distinguishing'),
       content: (
         <div className={window2Class}>
           <DistinguishingStatementsList />
@@ -197,12 +198,20 @@ const Output = () => {
       ),
     },
     {
-      title: t('Factor Visualizations'),
+      title: t('Consensus'),
+      content: (
+        <div className={window2Class}>
+          <ConsensusStatementsList />
+        </div>
+      ),
+    },
+    {
+      title: t('Visualizations'),
       content: (
         <>
           <ToastContainer transition={Zoom} autoClose={5000} />
           <div className={window2Class}>
-            <div className="flex h-[50px] ml-[20px]">
+            <div className="flex h-12.5 ml-5">
               <DisplayVisualizationsButtons />
               <ShowVizOptionsButton />
             </div>
@@ -213,6 +222,24 @@ const Output = () => {
             <FactorVizDispatch />
           </div>
         </>
+      ),
+    },
+    {
+      title: t('Downloads'),
+      content: (
+        <div className={window2Class}>
+          <DownloadResultsButtons />
+          {displayState && (
+            <div className="flex flex-row mt-6.25">
+              <DownloadDocxOptionsBox />
+              <div className="flex flex-col h-full">
+                <DocxFormatButtons />
+                <DocxIncludeDataOption />
+                <DownloadResultsAsDocx />
+              </div>
+            </div>
+          )}
+        </div>
       ),
     },
   ];
@@ -280,6 +307,22 @@ const Output = () => {
             onClick={() => handleTabClick('tab5')}
           />
           <div className="tab-content bg-base-100 border-base-300 p-6">{tabs[4].content}</div>
+          <input
+            type="radio"
+            name="my_tabs_6"
+            className={tabInputClass('tab6')}
+            aria-label={tabs[5].title}
+            onClick={() => handleTabClick('tab6')}
+          />
+          <div className="tab-content bg-base-100 border-base-300 p-6">{tabs[5].content}</div>
+          <input
+            type="radio"
+            name="my_tabs_6"
+            className={tabInputClass('tab7')}
+            aria-label={tabs[6].title}
+            onClick={() => handleTabClick('tab7')}
+          />
+          <div className="tab-content bg-base-100 border-base-300 p-6">{tabs[6].content}</div>
         </div>
       </div>
     </div>
