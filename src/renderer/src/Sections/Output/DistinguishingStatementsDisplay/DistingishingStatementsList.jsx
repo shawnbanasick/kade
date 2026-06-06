@@ -1,8 +1,7 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import DistStateListButtons from './DistStateListButtons';
 import filterDistStateListData from './filterDistStateListData';
 import { useTranslation } from 'react-i18next';
-import outputState from '../../GlobalState/outputState';
 import DistinguishingTypeButtons from './DistinguishingTypeButtons';
 import DistStateListCohensButton from './DistStateListCohensButton';
 import calcCohensData from './calcCohensData';
@@ -10,6 +9,8 @@ import filterDistStateCohenListData from './filterDistStateCohenListData';
 import CohensDynamicTable from './CohensDynamicTable';
 import DistStateListSortByButtons from './DistStateListSortByButtons';
 import DistStateListCohenSortByButtons from './DistStateListCohenSortByButtons';
+import outputState from '../../GlobalState/outputState';
+import calcState from '../../GlobalState/calcState';
 
 const DistinguishingStatementsList = () => {
   const { t } = useTranslation();
@@ -17,7 +18,6 @@ const DistinguishingStatementsList = () => {
   const sortKey = outputState((state) => state.distStateListSortKey);
   const threshold = outputState((state) => state.threshold);
   const sortCohensBy = outputState((state) => state.sortCohensBy);
-  const displayData = filterDistStateListData(threshold, sortKey);
   const showFactorCorrelationsTable = outputState((state) => state.showFactorCorrelationsTable);
   const distIdentType = outputState((state) => state.distIdentType);
   const {
@@ -46,6 +46,11 @@ const DistinguishingStatementsList = () => {
   const consensusDisagreeArray = outputState((state) => state.consensusDisagreeArray);
   const userSelectedFactors = outputState((state) => state.userSelectedFactors);
   const cohensThreshold = outputState((state) => state.cohensThreshold);
+  const distStateListData = calcState((state) => state.distStateListData);
+
+  const displayData = useMemo(() => {
+    return filterDistStateListData(threshold, sortKey, distStateListData, userSelectedFactors);
+  }, [threshold, sortKey, distStateListData, userSelectedFactors]);
 
   const cohensData = calcCohensData(
     {
@@ -70,6 +75,8 @@ const DistinguishingStatementsList = () => {
     sortCohensBy
   );
 
+  const thresholdLabel = t('Threshold');
+
   if (showFactorCorrelationsTable) {
     if (distIdentType === 'stephensonMethod') {
       return (
@@ -80,11 +87,11 @@ const DistinguishingStatementsList = () => {
           </div>
           <DistinguishingTypeButtons textSize="xl" className="mb-5" />
           <DistStateListSortByButtons />
-          <DistStateListButtons />
+          <DistStateListButtons label={thresholdLabel} />
 
           {displayData.map((factorItem, index1) => (
             <React.Fragment key={`key${index1.toString()}`}>
-              <h2>{`${t('Factor')} ${factorItem.userSelectedFactor.slice(7)}`}</h2>
+              <div className="text-2xl font-bold mt-6">{`${t('Factor')} ${factorItem.userSelectedFactor.slice(7)}`}</div>
               <table className="border-collapse border border-black">
                 <tbody>
                   <tr>
@@ -99,11 +106,19 @@ const DistinguishingStatementsList = () => {
                       key={`key${index.toString()}`}
                       className={`hover:bg-[rgba(131,202,254,0.6)] ${index % 2 === 0 ? '' : 'bg-[#eee]'}`}
                     >
-                      <td className="border border-black p-1.25">{item.sigLevelText}</td>
-                      <td className="border border-black p-1.25 text-right">{item.zScore}</td>
-                      <td className="border border-black p-1.25 text-center">{item.sortValue}</td>
-                      <td className="border border-black p-1.25 text-center">{item.statement}</td>
-                      <td className="border border-black p-1.25 min-w-150">{item.sortStatement}</td>
+                      <td className="border border-black p-1.25 min-w-25 text-center">
+                        {item.sigLevelText}
+                      </td>
+                      <td className="border border-black p-1.25 min-w-20 text-center">
+                        {item.zScore}
+                      </td>
+                      <td className="border border-black p-1.25 text-center min-w-36">
+                        {item.sortValue}
+                      </td>
+                      <td className="border border-black p-1.25 text-center min-w-25">
+                        {item.statement}
+                      </td>
+                      <td className="border border-black p-1.25 w-full">{item.sortStatement}</td>
                     </tr>
                   ))}
                 </tbody>

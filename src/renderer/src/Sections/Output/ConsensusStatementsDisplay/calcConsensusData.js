@@ -1,10 +1,12 @@
 const calcConsensusData = (cohensLevelsData = {}, consensusDisagreeArray = []) => {
-  if (consensusDisagreeArray.length === 0) {
+  if (consensusDisagreeArray.length === 0 || Object.keys(cohensLevelsData).length === 0) {
+    console.log(
+      '%cParameter Error%c in "calcConsensusData" - consensusDisagreeArray or cohensLevelsData is missing or empty in calcConsensusData',
+      'color: red; font-weight: bold',
+      'color: black'
+    );
     return [];
   }
-
-  // console.log('testing Consensus disagree array:', consensusDisagreeArray);
-  console.log('Testing Cohen Levels Data:', cohensLevelsData.cohens100);
 
   const numFactors = cohensLevelsData.cohens100.distinguishing.length;
 
@@ -25,16 +27,12 @@ const calcConsensusData = (cohensLevelsData = {}, consensusDisagreeArray = []) =
 
   Object.keys(cohensLevelsData).forEach((key) => {
     const levelData = cohensLevelsData[key];
-    // console.log(`Processing ${key} with consensus:`, levelData);
     const levelKey = key.replace('cohens', '');
-    // console.log(`Level key: ${levelKey}`);
     levelData.consensus.forEach((statementNum) => {
       const statementIndex = statementNum - 1;
       prepFactorArray[statementIndex].consensusArray.push(+levelKey);
     });
   });
-
-  //   console.log('testing prepFactorArray:', JSON.stringify(prepFactorArray, null, 2));
   return prepFactorArray;
 };
 export default calcConsensusData;

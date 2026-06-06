@@ -57,6 +57,7 @@ const outputState = create(
     distStateListSortKey: 'statementNum',
 
     threshold: 3,
+    stephensonsThreshold: 0.01,
     cohensThreshold: 0.3,
     sortCohensBy: 'cohenLevel',
     cohenSortByCohensButtonActive: true,
@@ -156,7 +157,27 @@ const outputState = create(
     cohenMethodButtonActive: false,
     distIdentType: 'stephensonMethod',
     consensusDisagreeArray: [],
+    p0001Active: false,
+    p0005Active: false,
+    p001Active: false,
+    p005Active: false,
+    p01Active: false,
+    p05Active: true,
+    p1Active: false,
+    p15Active: false,
+    p2Active: false,
 
+    updateP0001Active: (inputValue) => set({ p0001Active: inputValue }),
+    updateP0005Active: (inputValue) => set({ p0005Active: inputValue }),
+    updateP001Active: (inputValue) => set({ p001Active: inputValue }),
+    updateP005Active: (inputValue) => set({ p005Active: inputValue }),
+    updateP01Active: (inputValue) => set({ p01Active: inputValue }),
+    updateP05Active: (inputValue) => set({ p05Active: inputValue }),
+    updateP1Active: (inputValue) => set({ p1Active: inputValue }),
+    updateP15Active: (inputValue) => set({ p15Active: inputValue }),
+    updateP2Active: (inputValue) => set({ p2Active: inputValue }),
+
+    updateStephensonsThreshold: (inputValue) => set({ stephensonsThreshold: inputValue }),
     updateCohenSortByCohensButtonActive: (inputValue) =>
       set({ cohenSortByCohensButtonActive: inputValue }),
     updateCohenSortBySortValueButtonActive: (inputValue) =>

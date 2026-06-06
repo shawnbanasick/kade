@@ -2,35 +2,59 @@ import { useState } from 'react';
 import GeneralButton from '../../../Utils/GeneralButton';
 import outputState from '../../GlobalState/outputState';
 
-const DistStateListButtons = () => {
+const DistStateListButtons = ({ label }) => {
   const threshold = outputState((state) => state.threshold);
   const updateThreshold = outputState((state) => state.updateThreshold);
+  const p0001Active = outputState((state) => state.p0001Active);
+  const p0005Active = outputState((state) => state.p0005Active);
+  const p001Active = outputState((state) => state.p001Active);
+  const p005Active = outputState((state) => state.p005Active);
+  const p01Active = outputState((state) => state.p01Active);
+  const p05Active = outputState((state) => state.p05Active);
+  const p1Active = outputState((state) => state.p1Active);
+  const p15Active = outputState((state) => state.p15Active);
+  const p2Active = outputState((state) => state.p2Active);
 
-  const [localStore, setLocalStore] = useState({
-    rotationDegreeInput: '',
-    p0001Active: false,
-    p0005Active: false,
-    p001Active: false,
-    p005Active: false,
-    p01Active: false,
-    p05Active: true,
-    p1Active: false,
-    p15Active: false,
-    p2Active: false,
-    buttonColor: '#d6dbe0',
-    pressed: false,
-  });
+  const updateP0001Active = (value) => {
+    outputState.setState({ p0001Active: value });
+  };
+  const updateP0005Active = (value) => {
+    outputState.setState({ p0005Active: value });
+  };
+  const updateP001Active = (value) => {
+    outputState.setState({ p001Active: value });
+  };
+  const updateP005Active = (value) => {
+    outputState.setState({ p005Active: value });
+  };
+  const updateP01Active = (value) => {
+    outputState.setState({ p01Active: value });
+  };
+  const updateP05Active = (value) => {
+    outputState.setState({ p05Active: value });
+  };
+  const updateP1Active = (value) => {
+    outputState.setState({ p1Active: value });
+  };
+  const updateP15Active = (value) => {
+    outputState.setState({ p15Active: value });
+  };
+  const updateP2Active = (value) => {
+    outputState.setState({ p2Active: value });
+  };
 
   const clearAllButtons = () => {
-    localStore.p0001Active = false;
-    localStore.p0005Active = false;
-    localStore.p001Active = false;
-    localStore.p005Active = false;
-    localStore.p01Active = false;
-    localStore.p05Active = false;
-    localStore.p1Active = false;
-    localStore.p15Active = false;
-    localStore.p2Active = false;
+    outputState.setState((state) => ({
+      p0001Active: false,
+      p0005Active: false,
+      p001Active: false,
+      p005Active: false,
+      p01Active: false,
+      p05Active: false,
+      p1Active: false,
+      p15Active: false,
+      p2Active: false,
+    }));
   };
 
   const handleOnclick = (event) => {
@@ -38,125 +62,125 @@ const DistStateListButtons = () => {
 
     if (buttonId === 'p0001Button') {
       clearAllButtons();
-      setLocalStore((prevState) => ({ ...prevState, p0001Active: true }));
+      updateP0001Active(true);
       updateThreshold(8);
     }
     if (buttonId === 'p0005Button') {
       clearAllButtons();
-      setLocalStore((prevState) => ({ ...prevState, p0005Active: true }));
+      updateP0005Active(true);
       updateThreshold(7);
     }
     if (buttonId === 'p001Button') {
       clearAllButtons();
-      setLocalStore((prevState) => ({ ...prevState, p001Active: true }));
+      updateP001Active(true);
       updateThreshold(6);
     }
     if (buttonId === 'p005Button') {
       clearAllButtons();
-      setLocalStore((prevState) => ({ ...prevState, p005Active: true }));
+      updateP005Active(true);
       updateThreshold(5);
     }
     if (buttonId === 'p01Button') {
       clearAllButtons();
-      setLocalStore((prevState) => ({ ...prevState, p01Active: true }));
+      updateP01Active(true);
       updateThreshold(4);
     }
     if (buttonId === 'p05Button') {
       clearAllButtons();
-      setLocalStore((prevState) => ({ ...prevState, p05Active: true }));
+      updateP05Active(true);
       updateThreshold(3);
     }
     if (buttonId === 'p1Button') {
       clearAllButtons();
-      setLocalStore((prevState) => ({ ...prevState, p1Active: true }));
+      updateP1Active(true);
       updateThreshold(2);
     }
     if (buttonId === 'p15Button') {
       clearAllButtons();
-      setLocalStore((prevState) => ({ ...prevState, p15Active: true }));
+      updateP15Active(true);
       updateThreshold(1);
     }
     if (buttonId === 'p2Button') {
       clearAllButtons();
-      setLocalStore((prevState) => ({ ...prevState, p2Active: true }));
+      updateP2Active(true);
       updateThreshold(0);
     }
   };
 
   return (
     <div className="flex items-baseline mt-5 gap-3">
-      <div className="text-[18px] font-bold">Threshold:</div>
+      <div className="text-[18px] font-bold">{label}:</div>
       <GeneralButton
-        id="p0001Button"
+        id="p2Button"
         onClick={handleOnclick}
-        className={`min-w-20 ${localStore.p0001Active ? 'bg-primary-button' : 'bg-grey-button'}`}
-        key="f1"
+        className={`min-w-20 ${p2Active ? 'bg-primary-button' : 'bg-grey-button'}`}
+        key="f9"
       >
-        0.0001
-      </GeneralButton>
-      <GeneralButton
-        id="p0005Button"
-        onClick={handleOnclick}
-        className={`min-w-20 ${localStore.p0005Active ? 'bg-primary-button' : 'bg-grey-button'}`}
-        key="f2"
-      >
-        0.0005
-      </GeneralButton>
-      <GeneralButton
-        id="p001Button"
-        onClick={handleOnclick}
-        className={`min-w-20 ${localStore.p001Active ? 'bg-primary-button' : 'bg-grey-button'}`}
-        key="f3"
-      >
-        0.001
-      </GeneralButton>
-      <GeneralButton
-        id="p005Button"
-        onClick={handleOnclick}
-        className={`min-w-20 ${localStore.p005Active ? 'bg-primary-button' : 'bg-grey-button'}`}
-        key="f4"
-      >
-        0.005
-      </GeneralButton>
-      <GeneralButton
-        id="p01Button"
-        onClick={handleOnclick}
-        className={`min-w-20 ${localStore.p01Active ? 'bg-primary-button' : 'bg-grey-button'}`}
-        key="f5"
-      >
-        0.01
-      </GeneralButton>
-      <GeneralButton
-        id="p05Button"
-        onClick={handleOnclick}
-        className={`min-w-20 ${localStore.p05Active ? 'bg-primary-button' : 'bg-grey-button'}`}
-        key="f6"
-      >
-        0.05
-      </GeneralButton>
-      <GeneralButton
-        id="p1Button"
-        onClick={handleOnclick}
-        className={`min-w-20 ${localStore.p1Active ? 'bg-primary-button' : 'bg-grey-button'}`}
-        key="f7"
-      >
-        0.1
+        0.2
       </GeneralButton>
       <GeneralButton
         id="p15Button"
         onClick={handleOnclick}
-        className={`min-w-20 ${localStore.p15Active ? 'bg-primary-button' : 'bg-grey-button'}`}
+        className={`min-w-20 ${p15Active ? 'bg-primary-button' : 'bg-grey-button'}`}
         key="f8"
       >
         0.15
       </GeneralButton>
       <GeneralButton
-        id="p2Button"
+        id="p1Button"
         onClick={handleOnclick}
-        className={`min-w-20 ${localStore.p2Active ? 'bg-primary-button' : 'bg-grey-button'}`}
-        key="f9"
+        className={`min-w-20 ${p1Active ? 'bg-primary-button' : 'bg-grey-button'}`}
+        key="f7"
       >
-        0.2
+        0.1
+      </GeneralButton>
+      <GeneralButton
+        id="p05Button"
+        onClick={handleOnclick}
+        className={`min-w-20 ${p05Active ? 'bg-primary-button' : 'bg-grey-button'}`}
+        key="f6"
+      >
+        0.05
+      </GeneralButton>
+      <GeneralButton
+        id="p01Button"
+        onClick={handleOnclick}
+        className={`min-w-20 ${p01Active ? 'bg-primary-button' : 'bg-grey-button'}`}
+        key="f5"
+      >
+        0.01
+      </GeneralButton>
+      <GeneralButton
+        id="p005Button"
+        onClick={handleOnclick}
+        className={`min-w-20 ${p005Active ? 'bg-primary-button' : 'bg-grey-button'}`}
+        key="f4"
+      >
+        0.005
+      </GeneralButton>
+      <GeneralButton
+        id="p001Button"
+        onClick={handleOnclick}
+        className={`min-w-20 ${p001Active ? 'bg-primary-button' : 'bg-grey-button'}`}
+        key="f3"
+      >
+        0.001
+      </GeneralButton>
+      <GeneralButton
+        id="p0005Button"
+        onClick={handleOnclick}
+        className={`min-w-20 ${p0005Active ? 'bg-primary-button' : 'bg-grey-button'}`}
+        key="f2"
+      >
+        0.0005
+      </GeneralButton>
+      <GeneralButton
+        id="p0001Button"
+        onClick={handleOnclick}
+        className={`min-w-20 ${p0001Active ? 'bg-primary-button' : 'bg-grey-button'}`}
+        key="f1"
+      >
+        0.0001
       </GeneralButton>
     </div>
   );

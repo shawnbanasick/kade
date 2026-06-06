@@ -1,5 +1,19 @@
 const calculateStephConsensusData = (data, consensusDisagreeArray) => {
   if (!data || data.length === 0) {
+    console.log(
+      '%cParameter Error%c in "calculateStephConsensusData" - data is missing or empty in calculateStephConsensusData',
+      'color: red; font-weight: bold',
+      'color: black'
+    );
+    return [];
+  }
+
+  if (!consensusDisagreeArray || consensusDisagreeArray.length === 0) {
+    console.log(
+      '%cParameter Error%c in "calculateStephConsensusData" - consensusDisagreeArray is missing or empty in calculateStephConsensusData',
+      'color: red; font-weight: bold',
+      'color: black'
+    );
     return [];
   }
 

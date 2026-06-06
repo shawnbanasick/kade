@@ -2,15 +2,16 @@ import { useMemo } from 'react';
 import DistinguishingTypeButtons from '../DistinguishingStatementsDisplay/DistinguishingTypeButtons';
 import DistStateListCohenSortByButtons from '../DistinguishingStatementsDisplay/DistStateListCohenSortByButtons';
 import DistStateListCohensButton from '../DistinguishingStatementsDisplay/DistStateListCohensButton';
-import outputState from '../../GlobalState/outputState';
-import calcState from '../../GlobalState/calcState';
 import calcConsensusData from './calcConsensusData';
 import filterConsensusData from './filterConsensusData';
 import calculateStephConsensusData from './calculateStephConsensusData';
 import DistStateListButtons from '../DistinguishingStatementsDisplay/DistStateListButtons';
-import { useTranslation } from 'react-i18next';
 import DistStateListSortByButtons from '../DistinguishingStatementsDisplay/DistStateListSortByButtons';
 import filterStephenConsensusData from './filterStephenConsensusData';
+import ConStateListStephButtons from './ConStateListStephButtons';
+import outputState from '../../GlobalState/outputState';
+import calcState from '../../GlobalState/calcState';
+import { useTranslation } from 'react-i18next';
 
 const ConsensusStatementsList = () => {
   const { t } = useTranslation();
@@ -18,9 +19,7 @@ const ConsensusStatementsList = () => {
   const cohensThreshold = outputState((state) => state.cohensThreshold);
   const sortCohensBy = outputState((state) => state.sortCohensBy);
   const distIdentType = outputState((state) => state.distIdentType);
-  const threshold = outputState((state) => state.threshold);
-
-  console.log('Consensus Statements List - consensusDisagreeArray:', consensusDisagreeArray);
+  const threshold = outputState((state) => state.stephensonsThreshold);
 
   const {
     cohens10,
@@ -68,16 +67,6 @@ const ConsensusStatementsList = () => {
     stephConsensus2: state.stephConsensus2,
   }));
 
-  console.log('stephConsensus0001:', stephConsensus0001);
-  console.log('stephConsensus0005:', stephConsensus0005);
-  console.log('stephConsensus001:', stephConsensus001);
-  console.log('stephConsensus005:', stephConsensus005);
-  console.log('stephConsensus01:', stephConsensus01);
-  console.log('stephConsensus05:', stephConsensus05);
-  console.log('stephConsensus1:', stephConsensus1);
-  console.log('stephConsensus15:', stephConsensus15);
-  console.log('stephConsensus2:', stephConsensus2);
-
   const stephConsensusData = useMemo(
     () =>
       calculateStephConsensusData(
@@ -109,8 +98,6 @@ const ConsensusStatementsList = () => {
   );
 
   const stephData = filterStephenConsensusData(stephConsensusData, threshold);
-
-  console.log('Filtered Steph Consensus Data:', stephData);
 
   const consensusData = useMemo(
     () =>
@@ -144,9 +131,8 @@ const ConsensusStatementsList = () => {
     ]
   );
 
-  console.log('Consensus Statements List - consensusData:', consensusData);
-
   const consensusStatements = filterConsensusData(consensusData, cohensThreshold, sortCohensBy);
+  const thresholdLabel = t('Distinguishing Statements Threshold');
 
   if (distIdentType === 'stephensonMethod') {
     return (
@@ -157,7 +143,7 @@ const ConsensusStatementsList = () => {
         </div>
         <DistinguishingTypeButtons textSize="xl" />
         <DistStateListSortByButtons />
-        <DistStateListButtons />
+        <ConStateListStephButtons />
         {/* <div className="text-xl font-bold mt-8">{t('consensusStatementsList')}</div> */}
         <>
           <h2>{`${t('Consensus Statements')}`}</h2>

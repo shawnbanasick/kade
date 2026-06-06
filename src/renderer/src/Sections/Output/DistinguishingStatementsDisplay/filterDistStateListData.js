@@ -1,6 +1,3 @@
-import calcState from '../../GlobalState/calcState';
-import outputState from '../../GlobalState/outputState';
-
 const capitalizeFirstLetter = (string) => {
   if (!string) {
     return string;
@@ -8,16 +5,33 @@ const capitalizeFirstLetter = (string) => {
   return string.charAt(0).toUpperCase() + string.slice(1);
 };
 
-const filterDistStateListData = (thresholdLevel, sortKey) => {
-  const distStateListData = calcState.getState().distStateListData;
+const filterDistStateListData = (
+  thresholdLevel,
+  sortKey,
+  distStateListDataPrep,
+  userSelectedFactors
+) => {
+  if (
+    thresholdLevel === undefined ||
+    sortKey === undefined ||
+    !distStateListDataPrep ||
+    !userSelectedFactors
+  ) {
+    console.log(
+      '%cParameter Error%c in "filterDistStateListData" - thresholdLevel, sortKey, distStateListData, or userSelectedFactors is missing or undefined in filterDistStateListData',
+      'color: red; font-weight: bold',
+      'color: black'
+    );
+    return [];
+  }
 
-  const userSelectedFactors = outputState.getState().userSelectedFactors;
+  const distStateListData = JSON.parse(JSON.stringify(distStateListDataPrep));
 
   for (let i = 0; i < distStateListData.length; i++) {
     const userSelectedFactor = capitalizeFirstLetter(userSelectedFactors[i]);
     distStateListData[i].userSelectedFactor = userSelectedFactor;
     distStateListData[i].distStates = distStateListData[i].distStates.filter(
-      (item) => item.sigLevelRank >= thresholdLevel
+      (item) => +item.sigLevelRank >= +thresholdLevel
     );
   }
 

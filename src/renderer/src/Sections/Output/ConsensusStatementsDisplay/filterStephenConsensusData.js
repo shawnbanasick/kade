@@ -8,21 +8,7 @@ const filterStephenConsensusData = (data, limits) => {
     return [];
   }
 
-  const converterObj = {
-    8: 0.0001,
-    7: 0.0005,
-    6: 0.001,
-    5: 0.005,
-    4: 0.01,
-    3: 0.05,
-    2: 0.1,
-    1: 0.15,
-    0: 0.2,
-  };
-
-  const threshold = converterObj[limits];
-
-  console.log(limits, 'highest Filtering with limits:', limits);
+  const threshold = limits;
 
   const highestLevelMap = {};
   data.forEach((subarray) => {
@@ -47,10 +33,6 @@ const filterStephenConsensusData = (data, limits) => {
         return acc;
       }, {})
   );
-
-  console.log('Master List with Highest Levels:', masterList);
-
-  console.log('Filtering with threshold:', threshold);
   return masterList.filter((item) => item.highestLevel >= threshold);
 };
 
