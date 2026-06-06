@@ -8,6 +8,7 @@ import calculateStephConsensusData from './calculateStephConsensusData';
 import DistStateListButtons from '../DistinguishingStatementsDisplay/DistStateListButtons';
 import DistStateListSortByButtons from '../DistinguishingStatementsDisplay/DistStateListSortByButtons';
 import filterStephenConsensusData from './filterStephenConsensusData';
+import ConStateListSortByButtons from './ConStateListSortByButtons';
 import outputState from '../../GlobalState/outputState';
 import calcState from '../../GlobalState/calcState';
 import { useTranslation } from 'react-i18next';
@@ -19,6 +20,7 @@ const ConsensusStatementsList = () => {
   const sortCohensBy = outputState((state) => state.sortCohensBy);
   const distIdentType = outputState((state) => state.distIdentType);
   const threshold = outputState((state) => state.threshold);
+  const stephensonSortBy = outputState((state) => state.conStephensonSortBy);
 
   const {
     cohens10,
@@ -96,7 +98,7 @@ const ConsensusStatementsList = () => {
     ]
   );
 
-  const stephData = filterStephenConsensusData(stephConsensusData, threshold);
+  const stephData = filterStephenConsensusData(stephConsensusData, threshold, stephensonSortBy);
 
   const consensusData = useMemo(
     () =>
@@ -141,7 +143,7 @@ const ConsensusStatementsList = () => {
           {t('Output thresholds are set in the Options section')}
         </div>
         <DistinguishingTypeButtons textSize="xl" />
-        <DistStateListSortByButtons />
+        <ConStateListSortByButtons />
         <DistStateListButtons label={thresholdLabel} />
         {/* <div className="text-xl font-bold mt-8">{t('consensusStatementsList')}</div> */}
         <>

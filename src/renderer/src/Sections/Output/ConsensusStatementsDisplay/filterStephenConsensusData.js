@@ -1,4 +1,4 @@
-const filterStephenConsensusData = (data, limits) => {
+const filterStephenConsensusData = (data, limits, sortBy) => {
   if (!data || data.length === 0) {
     console.log(
       '%cParameter Error%c in "filterStephenConsensusData"',
@@ -45,7 +45,27 @@ const filterStephenConsensusData = (data, limits) => {
         return acc;
       }, {})
   );
-  return masterList.filter((item) => item.highestLevel >= threshold);
+
+  const returnList = masterList.filter((item) => item.highestLevel >= threshold);
+
+  if (sortBy === 'threshold') {
+    return returnList.sort((a, b) => b.highestLevel - a.highestLevel);
+  }
+
+  if (sortBy === 'statementNum') {
+    return returnList.sort((a, b) => {
+      if (a.stateNo === b.stateNo) {
+        return a.highestLevel - b.highestLevel;
+      } else if (a.stateNo > b.stateNo) {
+        return 1;
+      } else if (a.stateNo < b.stateNo) {
+        return -1;
+      }
+      return null;
+    });
+  }
+
+  return returnList;
 };
 
 export default filterStephenConsensusData;

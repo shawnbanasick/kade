@@ -166,7 +166,13 @@ const outputState = create(
     p1Active: false,
     p15Active: false,
     p2Active: false,
+    ConThresholdButtonActive: false,
+    ConNumberButtonActive: false,
+    conStephensonSortBy: 'threshold',
 
+    updateConStephensonSortBy: (inputValue) => set({ conStephensonSortBy: inputValue }),
+    updateConThresholdButtonActive: (inputValue) => set({ ConThresholdButtonActive: inputValue }),
+    updateConNumberButtonActive: (inputValue) => set({ ConNumberButtonActive: inputValue }),
     updateP0001Active: (inputValue) => set({ p0001Active: inputValue }),
     updateP0005Active: (inputValue) => set({ p0005Active: inputValue }),
     updateP001Active: (inputValue) => set({ p001Active: inputValue }),
