@@ -8,7 +8,19 @@ const filterStephenConsensusData = (data, limits) => {
     return [];
   }
 
-  const threshold = limits;
+  const converterObject = {
+    8: 0.0001,
+    7: 0.0005,
+    6: 0.001,
+    5: 0.005,
+    4: 0.01,
+    3: 0.05,
+    2: 0.1,
+    1: 0.15,
+    0: 0.2,
+  };
+
+  const threshold = converterObject[limits];
 
   const highestLevelMap = {};
   data.forEach((subarray) => {

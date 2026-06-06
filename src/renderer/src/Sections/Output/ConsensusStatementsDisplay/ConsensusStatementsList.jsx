@@ -8,7 +8,6 @@ import calculateStephConsensusData from './calculateStephConsensusData';
 import DistStateListButtons from '../DistinguishingStatementsDisplay/DistStateListButtons';
 import DistStateListSortByButtons from '../DistinguishingStatementsDisplay/DistStateListSortByButtons';
 import filterStephenConsensusData from './filterStephenConsensusData';
-import ConStateListStephButtons from './ConStateListStephButtons';
 import outputState from '../../GlobalState/outputState';
 import calcState from '../../GlobalState/calcState';
 import { useTranslation } from 'react-i18next';
@@ -19,7 +18,7 @@ const ConsensusStatementsList = () => {
   const cohensThreshold = outputState((state) => state.cohensThreshold);
   const sortCohensBy = outputState((state) => state.sortCohensBy);
   const distIdentType = outputState((state) => state.distIdentType);
-  const threshold = outputState((state) => state.stephensonsThreshold);
+  const threshold = outputState((state) => state.threshold);
 
   const {
     cohens10,
@@ -143,16 +142,16 @@ const ConsensusStatementsList = () => {
         </div>
         <DistinguishingTypeButtons textSize="xl" />
         <DistStateListSortByButtons />
-        <ConStateListStephButtons />
+        <DistStateListButtons label={thresholdLabel} />
         {/* <div className="text-xl font-bold mt-8">{t('consensusStatementsList')}</div> */}
         <>
           <h2>{`${t('Consensus Statements')}`}</h2>
-          <table className="border-collapse border border-black mb-10">
+          <table className="border-collapse border border-black mb-10 mr-5">
             <tbody>
               <tr>
                 <th className="border border-black p-1.25">{t('Threshold')}</th>
                 <th className="border border-black p-1.25">{t('Q Sort Values')}</th>
-                <th className="border border-black p-1.25">{t('Number')}</th>
+                <th className="border border-black p-1.25">{t('Statement Number')}</th>
                 <th className="border border-black p-1.25">{t('Statement')}</th>
               </tr>
               {stephData.map((statement, index) => (
@@ -160,11 +159,15 @@ const ConsensusStatementsList = () => {
                   key={`key${index.toString()}`}
                   className={`hover:bg-[rgba(131,202,254,0.6)] ${index % 2 === 0 ? '' : 'bg-[#eee]'}`}
                 >
-                  <td className="border border-black p-1.25 text-center">
-                    {statement.highestLevel}
+                  <td className="border border-black p-1.25 text-center w-30">
+                    {`P < ${statement.highestLevel}`}
                   </td>
-                  <td className="border border-black p-1.25 text-center">{statement.qValues}</td>
-                  <td className="border border-black p-1.25 text-center">{statement.stateNo}</td>
+                  <td className="border border-black p-1.25 text-center w-50">
+                    {statement.qValues}
+                  </td>
+                  <td className="border border-black p-1.25 text-center w-50">
+                    {statement.stateNo}
+                  </td>
                   <td className="border border-black p-1.25 text-left">{statement.statement}</td>
                 </tr>
               ))}
