@@ -93,7 +93,7 @@ const DistStateListButtons = () => {
 
   return (
     <div className="flex items-baseline mt-5 gap-3">
-      <div className="text-[18px] font-bold">
+      <div className="text-xl font-bold">
         {t('cohens')} <i>d</i> {t('level')}:
       </div>
       <GeneralButton

@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import DistinguishingTypeButtons from '../DistinguishingStatementsDisplay/DistinguishingTypeButtons';
 import DistStateListCohenSortByButtons from '../DistinguishingStatementsDisplay/DistStateListCohenSortByButtons';
 import DistStateListCohensButton from '../DistinguishingStatementsDisplay/DistStateListCohensButton';
@@ -21,6 +21,35 @@ const ConsensusStatementsList = () => {
   const distIdentType = outputState((state) => state.distIdentType);
   const threshold = outputState((state) => state.threshold);
   const stephensonSortBy = outputState((state) => state.conStephensonSortBy);
+
+  const [sortConfig, setSortConfig] = useState({ key: null, direction: 'asc' });
+
+  const handleSort = (key) => {
+    setSortConfig((prev) => ({
+      key,
+      direction: prev.key === key && prev.direction === 'asc' ? 'desc' : 'asc',
+    }));
+  };
+
+  const sortRows = (rows, keyMap) => {
+    if (!sortConfig.key) return rows;
+    return [...rows].sort((a, b) => {
+      const aVal = a[keyMap[sortConfig.key]] ?? '';
+      const bVal = b[keyMap[sortConfig.key]] ?? '';
+      const aNum = Number(aVal);
+      const bNum = Number(bVal);
+      const isNumeric = !isNaN(aNum) && !isNaN(bNum) && aVal !== '' && bVal !== '';
+      const cmp = isNumeric ? aNum - bNum : String(aVal).localeCompare(String(bVal));
+      return sortConfig.direction === 'asc' ? cmp : -cmp;
+    });
+  };
+
+  const SortIcon = ({ colKey }) => {
+    if (sortConfig.key !== colKey) return <span style={{ opacity: 0.3, marginLeft: 4 }}>⇅</span>;
+    return <span style={{ marginLeft: 4 }}>{sortConfig.direction === 'asc' ? '↑' : '↓'}</span>;
+  };
+
+  const thStyle = { cursor: 'pointer', userSelect: 'none', whiteSpace: 'nowrap' };
 
   const {
     cohens10,
@@ -135,6 +164,34 @@ const ConsensusStatementsList = () => {
   const consensusStatements = filterConsensusData(consensusData, cohensThreshold, sortCohensBy);
   const thresholdLabel = t('Distinguishing Statements Threshold');
 
+  const stephHeaders = [
+    { label: t('Threshold'), key: 'threshold' },
+    { label: t('Q Sort Values'), key: 'qValues' },
+    { label: t('Statement Number'), key: 'stateNo' },
+    { label: t('Statement'), key: 'statement' },
+  ];
+  const stephKeyMap = {
+    threshold: 'highestLevel',
+    qValues: 'qValues',
+    stateNo: 'stateNo',
+    statement: 'statement',
+  };
+  const sortedStephData = sortRows(stephData, stephKeyMap);
+
+  const cohensHeaders = [
+    { label: t('Cohens d'), key: 'cutoffLevel' },
+    { label: t('Q Sort Values'), key: 'qValues' },
+    { label: t('Number'), key: 'statement' },
+    { label: t('Statement'), key: 'sortStatement' },
+  ];
+  const cohensKeyMap = {
+    cutoffLevel: 'cutoffLevel',
+    qValues: 'qValues',
+    statement: 'statement',
+    sortStatement: 'sortStatement',
+  };
+  const sortedConsensusStatements = sortRows(consensusStatements, cohensKeyMap);
+
   if (distIdentType === 'stephensonMethod') {
     return (
       <div className="flex flex-col">
@@ -146,21 +203,28 @@ const ConsensusStatementsList = () => {
         <>
           <h2>{`${t('Consensus Statements')}`}</h2>
           <table className="border-collapse border border-black mb-10 mr-5">
-            <tbody>
+            <thead>
               <tr>
-                <th className="border border-black p-1.25">{t('Threshold')}</th>
-                <th className="border border-black p-1.25">{t('Q Sort Values')}</th>
-                <th className="border border-black p-1.25">{t('Statement Number')}</th>
-                <th className="border border-black p-1.25">{t('Statement')}</th>
+                {stephHeaders.map(({ label, key }) => (
+                  <th
+                    key={key}
+                    className="border border-black p-1.25"
+                    onClick={() => handleSort(key)}
+                    style={thStyle}
+                  >
+                    {label}
+                    <SortIcon colKey={key} />
+                  </th>
+                ))}
               </tr>
-              {stephData.map((statement, index) => (
+            </thead>
+            <tbody>
+              {sortedStephData.map((statement, index) => (
                 <tr
-                  key={`key${index.toString()}`}
+                  key={`key${index}`}
                   className={`hover:bg-[rgba(131,202,254,0.6)] ${index % 2 === 0 ? '' : 'bg-[#eee]'}`}
                 >
-                  <td className="border border-black p-1.25 text-center w-30">
-                    {`P < ${statement.highestLevel}`}
-                  </td>
+                  <td className="border border-black p-1.25 text-center w-30">{`P < ${statement.highestLevel}`}</td>
                   <td className="border border-black p-1.25 text-center w-50">
                     {statement.qValues}
                   </td>
@@ -187,16 +251,25 @@ const ConsensusStatementsList = () => {
         <>
           <h2>{`${t('Consensus Statements')}`}</h2>
           <table className="border-collapse border border-black">
-            <tbody>
+            <thead>
               <tr>
-                <th className="border border-black p-1.25">{t('Cohens d')}</th>
-                <th className="border border-black p-1.25">{t('Q Sort Values')}</th>
-                <th className="border border-black p-1.25">{t('Number')}</th>
-                <th className="border border-black p-1.25">{t('Statement')}</th>
+                {cohensHeaders.map(({ label, key }) => (
+                  <th
+                    key={key}
+                    className="border border-black p-1.25"
+                    onClick={() => handleSort(key)}
+                    style={thStyle}
+                  >
+                    {label}
+                    <SortIcon colKey={key} />
+                  </th>
+                ))}
               </tr>
-              {consensusStatements.map((statement, index) => (
+            </thead>
+            <tbody>
+              {sortedConsensusStatements.map((statement, index) => (
                 <tr
-                  key={`key${index.toString()}`}
+                  key={`key${index}`}
                   className={`hover:bg-[rgba(131,202,254,0.6)] ${index % 2 === 0 ? '' : 'bg-[#eee]'}`}
                 >
                   <td className="border border-black p-1.25 text-center">

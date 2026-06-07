@@ -109,7 +109,7 @@ const DistStateListButtons = ({ label }) => {
 
   return (
     <div className="flex items-baseline mt-5 gap-3">
-      <div className="text-[18px] font-bold">{label}:</div>
+      <div className="text-xl font-bold">{label}:</div>
       <GeneralButton
         id="p2Button"
         onClick={handleOnclick}

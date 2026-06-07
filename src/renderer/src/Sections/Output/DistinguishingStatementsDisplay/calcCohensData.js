@@ -1,5 +1,18 @@
-const calcCohensData = (cohensLevelsData = {}, consensusDisagreeArray = []) => {
-  if (consensusDisagreeArray.length === 0) {
+const calcCohensData = (
+  cohensLevelsData = {},
+  consensusDisagreeArray = [],
+  userSelectedFactors = []
+) => {
+  if (
+    consensusDisagreeArray.length === 0 ||
+    Object.keys(cohensLevelsData).length === 0 ||
+    userSelectedFactors.length === 0
+  ) {
+    console.log(
+      '%cParameter Error%c in "calcCohensData" - consensusDisagreeArray, cohensLevelsData, or userSelectedFactors is missing or empty in calcCohensData',
+      'color: red; font-weight: bold',
+      'color: black'
+    );
     return [];
   }
 

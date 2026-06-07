@@ -1,13 +1,31 @@
 import { useState, useMemo } from 'react';
 
 const CohensDynamicTable = (props) => {
+  console.log(props);
+
+  // props.factor should be the factor number, e.g. 1, 2, 3
   const [sortConfig, setSortConfig] = useState({ key: null, direction: 'asc' });
 
   if (!props.data || props.data.length === 0) {
     return <div>No data available</div>;
   }
 
-  const columns = [...new Set(props.data.flatMap((item) => Object.keys(item)))];
+  const allColumns = [...new Set(props.data.flatMap((item) => Object.keys(item)))];
+
+  const columns = props.factor
+    ? allColumns.filter((col) => {
+        const isFactor =
+          col === `factor${props.factor}CohenLevel` || col === `F${props.factor} Sort Value`;
+        const isNonFactorCol = !col.match(/factor\d+CohenLevel/) && !col.match(/F\d+ Sort Value/);
+        return isFactor || isNonFactorCol;
+      })
+    : allColumns;
+
+  if (!props.data || props.data.length === 0) {
+    return <div>No data available</div>;
+  }
+
+  // const columns = [...new Set(props.data.flatMap((item) => Object.keys(item)))];
 
   const newColNames = columns.map((col) => {
     if (col.includes('factor') && col.includes('CohenLevel')) {
