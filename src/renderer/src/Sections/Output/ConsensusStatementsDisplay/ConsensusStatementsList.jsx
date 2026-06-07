@@ -127,7 +127,13 @@ const ConsensusStatementsList = () => {
     ]
   );
 
-  const stephData = filterStephenConsensusData(stephConsensusData, threshold, stephensonSortBy);
+  // use stephConsensusData to create download data
+
+  const stephData = filterStephenConsensusData(
+    [...stephConsensusData],
+    threshold,
+    stephensonSortBy
+  );
 
   const consensusData = useMemo(
     () =>
@@ -195,14 +201,12 @@ const ConsensusStatementsList = () => {
   if (distIdentType === 'stephensonMethod') {
     return (
       <div className="flex flex-col">
-        <div className="mb-5 text-5xl mt-3">{t('Consensus Statements')}</div>
-        <DistinguishingTypeButtons textSize="xl" className="mb-5" />
-        <ConStateListSortByButtons />
+        <div className="mb-5 text-5xl">{t('Consensus Statements')}</div>
+        <DistinguishingTypeButtons textSize="xl" className="" origin={'consensus'} />
         <DistStateListButtons label={thresholdLabel} />
         {/* <div className="text-xl font-bold mt-8">{t('consensusStatementsList')}</div> */}
         <>
-          <h2>{`${t('Consensus Statements')}`}</h2>
-          <table className="border-collapse border border-black mb-10 mr-5">
+          <table className="border-collapse border border-black mb-10 mr-5 mt-4">
             <thead>
               <tr>
                 {stephHeaders.map(({ label, key }) => (
@@ -242,49 +246,40 @@ const ConsensusStatementsList = () => {
   } else {
     return (
       <div className="flex flex-col">
-        <div className="mb-5 text-5xl mt-3">{t('Consensus Statements')}</div>
+        <div className="mb-5 text-5xl">{t('Consensus Statements')}</div>
 
-        <DistinguishingTypeButtons textSize="xl" className="mb-5" />
-        <DistStateListCohenSortByButtons />
+        <DistinguishingTypeButtons textSize="xl" className="" origin={'consensus'} />
         <DistStateListCohensButton />
-        <div className="text-xl font-bold mt-8">{t('consensusStatementsList')}</div>
-        <>
-          <h2>{`${t('Consensus Statements')}`}</h2>
-          <table className="border-collapse border border-black">
-            <thead>
-              <tr>
-                {cohensHeaders.map(({ label, key }) => (
-                  <th
-                    key={key}
-                    className="border border-black p-1.25"
-                    onClick={() => handleSort(key)}
-                    style={thStyle}
-                  >
-                    {label}
-                    <SortIcon colKey={key} />
-                  </th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {sortedConsensusStatements.map((statement, index) => (
-                <tr
-                  key={`key${index}`}
-                  className={`hover:bg-[rgba(131,202,254,0.6)] ${index % 2 === 0 ? '' : 'bg-[#eee]'}`}
+        <table className="border-collapse border border-black mt-4">
+          <thead>
+            <tr>
+              {cohensHeaders.map(({ label, key }) => (
+                <th
+                  key={key}
+                  className="border border-black p-1.25"
+                  onClick={() => handleSort(key)}
+                  style={thStyle}
                 >
-                  <td className="border border-black p-1.25 text-center">
-                    {statement.cutoffLevel}
-                  </td>
-                  <td className="border border-black p-1.25 text-center">{statement.qValues}</td>
-                  <td className="border border-black p-1.25 text-center">{statement.statement}</td>
-                  <td className="border border-black p-1.25 min-w-150">
-                    {statement.sortStatement}
-                  </td>
-                </tr>
+                  {label}
+                  <SortIcon colKey={key} />
+                </th>
               ))}
-            </tbody>
-          </table>
-        </>
+            </tr>
+          </thead>
+          <tbody>
+            {sortedConsensusStatements.map((statement, index) => (
+              <tr
+                key={`key${index}`}
+                className={`hover:bg-[rgba(131,202,254,0.6)] ${index % 2 === 0 ? '' : 'bg-[#eee]'}`}
+              >
+                <td className="border border-black p-1.25 text-center">{statement.cutoffLevel}</td>
+                <td className="border border-black p-1.25 text-center">{statement.qValues}</td>
+                <td className="border border-black p-1.25 text-center">{statement.statement}</td>
+                <td className="border border-black p-1.25 min-w-150">{statement.sortStatement}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
     );
   }

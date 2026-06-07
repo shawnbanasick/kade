@@ -30,7 +30,7 @@ const calculateStephConsensusData = (data, consensusDisagreeArray) => {
       return tempObj;
     });
   });
-
+  console.log('prepFactorArray', prepFactorArray);
   return prepFactorArray;
 };
 export default calculateStephConsensusData;
