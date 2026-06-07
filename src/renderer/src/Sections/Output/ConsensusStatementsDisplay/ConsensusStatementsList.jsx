@@ -137,12 +137,9 @@ const ConsensusStatementsList = () => {
 
   if (distIdentType === 'stephensonMethod') {
     return (
-      <div className="flex flex-col gap-4">
-        <div className="mb-5 text-xl">
-          {t('Interactive List')} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{' '}
-          {t('Output thresholds are set in the Options section')}
-        </div>
-        <DistinguishingTypeButtons textSize="xl" />
+      <div className="flex flex-col">
+        <div className="mb-5 text-5xl mt-3">{t('Consensus Statements')}</div>
+        <DistinguishingTypeButtons textSize="xl" className="mb-5" />
         <ConStateListSortByButtons />
         <DistStateListButtons label={thresholdLabel} />
         {/* <div className="text-xl font-bold mt-8">{t('consensusStatementsList')}</div> */}
@@ -180,8 +177,10 @@ const ConsensusStatementsList = () => {
     );
   } else {
     return (
-      <div className="flex flex-col gap-4">
-        <DistinguishingTypeButtons />
+      <div className="flex flex-col">
+        <div className="mb-5 text-5xl mt-3">{t('Consensus Statements')}</div>
+
+        <DistinguishingTypeButtons textSize="xl" className="mb-5" />
         <DistStateListCohenSortByButtons />
         <DistStateListCohensButton />
         <div className="text-xl font-bold mt-8">{t('consensusStatementsList')}</div>

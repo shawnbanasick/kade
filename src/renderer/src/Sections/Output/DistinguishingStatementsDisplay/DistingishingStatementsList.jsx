@@ -80,11 +80,8 @@ const DistinguishingStatementsList = () => {
   if (showFactorCorrelationsTable) {
     if (distIdentType === 'stephensonMethod') {
       return (
-        <div className="pb-37.5 pr-5">
-          <div className="mb-5 text-xl">
-            {t('Interactive List')} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{' '}
-            {t('Output thresholds are set in the Options section')}
-          </div>
+        <div className="mb-37.5 pr-5">
+          <div className="mb-5 text-5xl">{t('Distinguishing Statements')}</div>
           <DistinguishingTypeButtons textSize="xl" className="mb-5" />
           <DistStateListSortByButtons />
           <DistStateListButtons label={thresholdLabel} />
@@ -130,11 +127,8 @@ const DistinguishingStatementsList = () => {
     } else if (distIdentType === 'cohenMethod') {
       return (
         <div className="pb-37.5 pr-5">
-          <DistinguishingTypeButtons />
-          <div className="mb-5 text-xl mt-5">
-            {t('Interactive List')} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{' '}
-            {t('Output thresholds are set in the Options section')}
-          </div>
+          <div className="mb-5 text-5xl">{t('Distinguishing Statements')}</div>
+          <DistinguishingTypeButtons textSize="xl" className="mb-6" />
           <DistStateListCohenSortByButtons />
           <DistStateListCohensButton />
           {displayCohenData.map((factorItem, index) => (

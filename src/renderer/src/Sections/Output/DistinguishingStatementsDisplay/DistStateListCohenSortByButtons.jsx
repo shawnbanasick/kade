@@ -53,7 +53,6 @@ const DistStateListCohenSortByButtons = () => {
   return (
     <div className="flex items-center gap-3">
       <div className="mr-2.5 text-[18px] font-bold">{t('Sort By')}</div>
-
       <GeneralButton
         id="cohenDButton"
         onClick={() => handleOnclick({ target: { id: 'cohenDButton' } })}
