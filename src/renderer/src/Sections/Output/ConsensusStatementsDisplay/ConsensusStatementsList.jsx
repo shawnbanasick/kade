@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useMemo, useState, useEffect, useRef } from 'react';
 import DistinguishingTypeButtons from '../DistinguishingStatementsDisplay/DistinguishingTypeButtons';
 import DistStateListCohenSortByButtons from '../DistinguishingStatementsDisplay/DistStateListCohenSortByButtons';
 import DistStateListCohensButton from '../DistinguishingStatementsDisplay/DistStateListCohensButton';
@@ -21,8 +21,8 @@ const ConsensusStatementsList = () => {
   const distIdentType = outputState((state) => state.distIdentType);
   const threshold = outputState((state) => state.threshold);
   const stephensonSortBy = outputState((state) => state.conStephensonSortBy);
-
   const [sortConfig, setSortConfig] = useState({ key: null, direction: 'asc' });
+  const [data1, setData1] = useState([]);
 
   const handleSort = (key) => {
     setSortConfig((prev) => ({
@@ -127,13 +127,17 @@ const ConsensusStatementsList = () => {
     ]
   );
 
+  console.log('ConsensusStatementsList stephConsensusData:', stephConsensusData);
   // use stephConsensusData to create download data
 
-  const stephData = filterStephenConsensusData(
-    [...stephConsensusData],
-    threshold,
-    stephensonSortBy
+  const stephData = useMemo(
+    () => filterStephenConsensusData([...stephConsensusData], threshold, stephensonSortBy),
+    [stephConsensusData, threshold, stephensonSortBy]
   );
+
+  useEffect(() => {
+    setData1([...stephData]);
+  }, [stephData]);
 
   const consensusData = useMemo(
     () =>
@@ -182,6 +186,7 @@ const ConsensusStatementsList = () => {
     stateNo: 'stateNo',
     statement: 'statement',
   };
+
   const sortedStephData = sortRows(stephData, stephKeyMap);
 
   const cohensHeaders = [
@@ -202,7 +207,7 @@ const ConsensusStatementsList = () => {
     return (
       <div className="flex flex-col">
         <div className="mb-5 text-5xl">{t('Consensus Statements')}</div>
-        <DistinguishingTypeButtons textSize="xl" className="" origin={'consensus'} />
+        <DistinguishingTypeButtons textSize="xl" className="" origin={'consensus'} data1={data1} />
         <DistStateListButtons label={thresholdLabel} />
         {/* <div className="text-xl font-bold mt-8">{t('consensusStatementsList')}</div> */}
         <>
@@ -248,7 +253,12 @@ const ConsensusStatementsList = () => {
       <div className="flex flex-col">
         <div className="mb-5 text-5xl">{t('Consensus Statements')}</div>
 
-        <DistinguishingTypeButtons textSize="xl" className="" origin={'consensus'} />
+        <DistinguishingTypeButtons
+          textSize="xl"
+          className=""
+          origin={'consensus'}
+          data1={stephData}
+        />
         <DistStateListCohensButton />
         <table className="border-collapse border border-black mt-4">
           <thead>

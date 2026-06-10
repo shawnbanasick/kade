@@ -18,12 +18,28 @@ const createConExcelFile = async (dataContent) => {
   // const data = [...dataContent.dataXlsx];
 
   const workbook = new ExcelJS.Workbook();
-  const worksheet = workbook.addWorksheet('Content');
+  const worksheet = workbook.addWorksheet('Consensus - Stephenson');
   worksheet.columns = [
-    { header: 'Id', key: 'id', width: 10 },
-    { header: 'Name', key: 'name', width: 32 },
-    { header: 'D.O.B.', key: 'DOB', width: 10, outlineLevel: 1 },
+    { header: 'Threshold', key: 'highestLevel', width: 40 },
+    { header: 'Q Sort Values', key: 'qValues', width: 40 },
+    { header: 'Statement Number', key: 'stateNo', width: 40 },
+    { header: 'Statement', key: 'statement', width: 100 },
   ];
+
+  worksheet.getRow(1).font = { bold: true };
+  worksheet.getRow(1).alignment = { vertical: 'middle', horizontal: 'center' };
+  worksheet.getColumn(1).alignment = { vertical: 'middle', horizontal: 'center' };
+  worksheet.getColumn(2).alignment = { vertical: 'middle', horizontal: 'center' };
+  worksheet.getColumn(3).alignment = { vertical: 'middle', horizontal: 'center' };
+
+  dataContent.conStephensonData.forEach((item) => {
+    worksheet.addRow({
+      highestLevel: item.highestLevel,
+      qValues: item.qValues,
+      stateNo: item.stateNo,
+      statement: item.statement,
+    });
+  });
 
   const timeStamp = `${currentDate1()}_${currentTime1()}`;
 

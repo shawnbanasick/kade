@@ -8,6 +8,8 @@ const DistinguishingTypeButtons = (props) => {
   const stephensonMethodButtonActive = outputState((state) => state.stephensonMethodButtonActive);
   const cohenMethodButtonActive = outputState((state) => state.cohenMethodButtonActive);
   const projectName = coreState((state) => state.projectName);
+  const conStephensonDataForExport = outputState((state) => state.conStephensonDataForExport);
+  const conCohenDataForExport = outputState((state) => state.conCohenDataForExport);
 
   const handleOnclick = (type) => {
     console.log('handleOnclick type:', type, 'origin:', origin);
@@ -23,14 +25,17 @@ const DistinguishingTypeButtons = (props) => {
     }
   };
 
+  console.log('DistinguishingTypeButtons conStephensonDataForExport:', props.data1);
+
   const handleDownload = async (origin) => {
     if (origin === 'consensus') {
       console.log('handleDownload origin:', origin);
-      const dataXlsx = 'test data for consensus statements'; // Replace with actual data from store
+      // const dataXlsx = 'test data for consensus statements'; // Replace with actual data from store
       const dataContent = {
         projectName: projectName,
         type: 'ConExcel',
-        dataXlsx,
+        conStephensonData: props.data1, // Replace with actual data from store
+        // conCohenData: props.data2, // Replace with actual data from store
       };
 
       const newBlob = new Blob([JSON.stringify(dataContent)], { type: 'text/plain' });

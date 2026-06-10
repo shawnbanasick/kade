@@ -169,7 +169,12 @@ const outputState = create(
     ConThresholdButtonActive: false,
     ConNumberButtonActive: false,
     conStephensonSortBy: 'threshold',
+    conStephensonDataForExport: [],
+    conCohenDataForExport: [],
 
+    updateConStephensonDataForExport: (inputValue) =>
+      set({ conStephensonDataForExport: inputValue }),
+    updateConCohenDataForExport: (inputValue) => set({ conCohenDataForExport: inputValue }),
     updateConStephensonSortBy: (inputValue) => set({ conStephensonSortBy: inputValue }),
     updateConThresholdButtonActive: (inputValue) => set({ ConThresholdButtonActive: inputValue }),
     updateConNumberButtonActive: (inputValue) => set({ ConNumberButtonActive: inputValue }),

@@ -20,7 +20,6 @@ import settings from 'electron-settings';
 import createXlsxFile from './excelLogic/createXlsxFile';
 import createCsvFile from './csvLogic/createCsvFile';
 import createConExcelFile from './excelLogic/createConExcelFile';
-import { dir } from 'console';
 
 const fs = require('fs');
 
@@ -250,7 +249,6 @@ if (!gotTheLock) {
         createCsvFile(dataContent);
       }
       if (dataContent.type === 'ConExcel') {
-        console.log('Received data for consensus statements Excel file:');
         createConExcelFile(dataContent);
       }
     });
