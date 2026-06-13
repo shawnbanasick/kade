@@ -12,7 +12,6 @@ const DistinguishingTypeButtons = (props) => {
   const conCohenDataForExport = outputState((state) => state.conCohenDataForExport);
 
   const handleOnclick = (type) => {
-    console.log('handleOnclick type:', type, 'origin:', origin);
     if (type === 'stephensonMethod') {
       outputState.setState({ distIdentType: 'stephensonMethod' });
       outputState.setState({ stephensonMethodButtonActive: true });
@@ -25,39 +24,34 @@ const DistinguishingTypeButtons = (props) => {
     }
   };
 
-  console.log('DistinguishingTypeButtons conStephensonDataForExport:', props);
-
   const handleDownload = async (origin) => {
     if (origin === 'consensus') {
-      console.log('handleDownload origin:', origin);
+      let cohenExcelData = JSON.parse(JSON.stringify(props.cohenData));
+      cohenExcelData = cohenExcelData.filter((item) => +item.cutoffLevel > 0);
+      cohenExcelData = cohenExcelData.sort((a, b) => a.cutoffLevel - b.cutoffLevel);
 
       const data = props.exportData; // Replace with actual data from store
       data.sort((a, b) => b.highestLevel - a.highestLevel);
-      // const dataXlsx = 'test data for consensus statements'; // Replace with actual data from store
       const dataContent = {
         projectName: projectName,
         type: 'ConExcel',
-        conStephensonData: data, // Replace with actual data from store
-        conCohenData: props.cohenData, // Replace with actual data from store
-        // conCohenData: props.data2, // Replace with actual data from store
+        conStephensonData: data,
+        conCohenData: cohenExcelData,
       };
 
       const newBlob = new Blob([JSON.stringify(dataContent)], { type: 'text/plain' });
       const arrayBuffer = await new Response(newBlob).arrayBuffer();
 
       try {
-        // const buffer = new Uint8Array(data).buffer;
         window.bridge.sendLargeData('large-data', arrayBuffer, 'path');
-
-        // const result = await window.electronAPI.saveDocx(docxContent.buffer, filepath);
-        // console.log(result);
       } catch (error) {
-        console.error('Failed to save file:', error);
+        console.error('Failed to save Consent Statements List file:', error);
       }
-    } else {
-      // Implement download logic for distinguishing statements here
+    } else if (origin === 'distinguishing') {
+      // Implement download logic for distinguishing statements if needed
+      console.log('Download distinguishing statements - not implemented yet');
     }
-    // Implement download logic here, using the selected method (stephensonMethod or cohenMethod)
+    return null;
   };
 
   return (

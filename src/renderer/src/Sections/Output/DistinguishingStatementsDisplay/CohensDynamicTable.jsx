@@ -1,9 +1,6 @@
 import { useState, useMemo } from 'react';
 
 const CohensDynamicTable = (props) => {
-  console.log(props);
-
-  // props.factor should be the factor number, e.g. 1, 2, 3
   const [sortConfig, setSortConfig] = useState({ key: null, direction: 'asc' });
 
   if (!props.data || props.data.length === 0) {
@@ -24,8 +21,6 @@ const CohensDynamicTable = (props) => {
   if (!props.data || props.data.length === 0) {
     return <div>No data available</div>;
   }
-
-  // const columns = [...new Set(props.data.flatMap((item) => Object.keys(item)))];
 
   const newColNames = columns.map((col) => {
     if (col.includes('factor') && col.includes('CohenLevel')) {

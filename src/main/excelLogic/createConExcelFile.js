@@ -13,7 +13,6 @@ const createConExcelFile = async (dataContent) => {
   };
 
   const projectName = dataContent.projectName;
-  // const data = [...dataContent.dataXlsx];
 
   const workbook = new ExcelJS.Workbook();
   const worksheet = workbook.addWorksheet('Consensus - Stephenson');

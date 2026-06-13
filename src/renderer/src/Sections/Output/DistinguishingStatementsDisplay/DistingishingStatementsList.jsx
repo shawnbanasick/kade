@@ -118,7 +118,7 @@ const DistinguishingStatementsList = () => {
       return (
         <div className="mb-37.5 pr-5">
           <div className="mb-5 text-5xl">{t('Distinguishing Statements')}</div>
-          <DistinguishingTypeButtons textSize="xl" className="mb-5" />
+          <DistinguishingTypeButtons textSize="xl" className="mb-5" origin={'distinguishing'} />
           {/* <DistStateListSortByButtons /> */}
           <DistStateListButtons label={thresholdLabel} />
 
@@ -178,7 +178,7 @@ const DistinguishingStatementsList = () => {
       return (
         <div className="pb-37.5 pr-5">
           <div className="mb-5 text-5xl">{t('Distinguishing Statements')}</div>
-          <DistinguishingTypeButtons textSize="xl" className="mb-6" />
+          <DistinguishingTypeButtons textSize="xl" className="mb-6" origin={'distinguishing'} />
           {/* <DistStateListCohenSortByButtons /> */}
           <DistStateListCohensButton />
           {displayCohenData.map((factorItem, index) => (

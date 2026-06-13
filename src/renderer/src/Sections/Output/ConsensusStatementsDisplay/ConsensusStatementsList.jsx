@@ -143,8 +143,6 @@ const ConsensusStatementsList = () => {
     setData1(stephData.returnList);
   }, [stephData]);
 
-  console.log('xxy', stephData.excelExport);
-
   const consensusData = useMemo(
     () =>
       calcConsensusData(
@@ -183,9 +181,8 @@ const ConsensusStatementsList = () => {
     sortCohensBy
   );
 
-  const excelExportCohenData = JSON.parse(JSON.stringify(cohenConsensusStatements)); // deep copy to avoid mutating original data
+  const excelExportCohenData = JSON.parse(JSON.stringify(cohenConsensusStatements));
 
-  console.log('cohenConsensusStatements before filter:', cohensThreshold);
   const filteredCohenConsensusStatements = cohenConsensusStatements.filter(
     (item) => +item.cutoffLevel > 0 && +item.cutoffLevel <= +cohensThreshold
   );
@@ -231,6 +228,7 @@ const ConsensusStatementsList = () => {
           origin={'consensus'}
           exportData={excelExportData}
           cohenData={excelExportCohenData}
+          cohensThreshold={cohensThreshold}
         />
         <DistStateListButtons label={thresholdLabel} />
         <>
@@ -282,6 +280,7 @@ const ConsensusStatementsList = () => {
           origin={'consensus'}
           exportData={excelExportData}
           cohenData={excelExportCohenData}
+          cohensThreshold={cohensThreshold}
         />
         <DistStateListCohensButton />
         <table className="border-collapse border border-black mt-4">
