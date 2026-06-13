@@ -16,17 +16,7 @@ const filterConsensusData = (
     }
   });
 
-  consensusData = consensusData.filter(
-    (item) => +item.cutoffLevel > 0 && +item.cutoffLevel <= +cohensThreshold
-  );
-
-  if (sortCohensBy === 'cohenLevel') {
-    consensusData.sort((a, b) => a.cutoffLevel - b.cutoffLevel);
-  } else if (sortCohensBy === 'sortValue') {
-    consensusData.sort((a, b) => b['F1 Sort Value'] - a['F1 Sort Value']);
-  } else if (sortCohensBy === 'statementNum') {
-    consensusData.sort((a, b) => a.statement - b.statement);
-  }
+  consensusData.sort((a, b) => b['F1 Sort Value'] - a['F1 Sort Value']);
 
   return consensusData;
 };

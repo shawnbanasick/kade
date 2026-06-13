@@ -46,26 +46,16 @@ const filterStephenConsensusData = (data, limits, sortBy) => {
       }, {})
   );
 
+  const excelExport = JSON.parse(JSON.stringify(masterList));
+  console.log('xxy', excelExport);
+
   const returnList = masterList.filter((item) => item.highestLevel >= threshold);
 
-  if (sortBy === 'threshold') {
-    return returnList.sort((a, b) => b.highestLevel - a.highestLevel);
-  }
+  returnList.sort((a, b) => b.highestLevel - a.highestLevel);
 
-  if (sortBy === 'statementNum') {
-    return returnList.sort((a, b) => {
-      if (a.stateNo === b.stateNo) {
-        return a.highestLevel - b.highestLevel;
-      } else if (a.stateNo > b.stateNo) {
-        return 1;
-      } else if (a.stateNo < b.stateNo) {
-        return -1;
-      }
-      return null;
-    });
-  }
+  console.log('xxx', returnList);
 
-  return returnList;
+  return { returnList, excelExport };
 };
 
 export default filterStephenConsensusData;

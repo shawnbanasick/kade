@@ -24,14 +24,7 @@ const ConsensusStatementsList = () => {
   const [sortConfig, setSortConfig] = useState({ key: null, direction: 'asc' });
   const [data1, setData1] = useState([]);
 
-  const handleSort = (key) => {
-    setSortConfig((prev) => ({
-      key,
-      direction: prev.key === key && prev.direction === 'asc' ? 'desc' : 'asc',
-    }));
-  };
-
-  const sortRows = (rows, keyMap) => {
+  const sortRows = (rows = [], keyMap) => {
     if (!sortConfig.key) return rows;
     return [...rows].sort((a, b) => {
       const aVal = a[keyMap[sortConfig.key]] ?? '';
@@ -42,6 +35,13 @@ const ConsensusStatementsList = () => {
       const cmp = isNumeric ? aNum - bNum : String(aVal).localeCompare(String(bVal));
       return sortConfig.direction === 'asc' ? cmp : -cmp;
     });
+  };
+
+  const handleSort = (key) => {
+    setSortConfig((prev) => ({
+      key,
+      direction: prev.key === key && prev.direction === 'asc' ? 'desc' : 'asc',
+    }));
   };
 
   const SortIcon = ({ colKey }) => {
@@ -127,7 +127,6 @@ const ConsensusStatementsList = () => {
     ]
   );
 
-  console.log('ConsensusStatementsList stephConsensusData:', stephConsensusData);
   // use stephConsensusData to create download data
 
   const stephData = useMemo(
@@ -135,9 +134,16 @@ const ConsensusStatementsList = () => {
     [stephConsensusData, threshold, stephensonSortBy]
   );
 
+  let excelExportData = [];
+  if (stephData.excelExport) {
+    excelExportData = JSON.parse(JSON.stringify(stephData.excelExport)); // deep copy to avoid mutating original data
+  }
+
   useEffect(() => {
-    setData1([...stephData]);
+    setData1(stephData.returnList);
   }, [stephData]);
+
+  console.log('xxy', stephData.excelExport);
 
   const consensusData = useMemo(
     () =>
@@ -171,7 +177,19 @@ const ConsensusStatementsList = () => {
     ]
   );
 
-  const consensusStatements = filterConsensusData(consensusData, cohensThreshold, sortCohensBy);
+  const cohenConsensusStatements = filterConsensusData(
+    consensusData,
+    cohensThreshold,
+    sortCohensBy
+  );
+
+  const excelExportCohenData = JSON.parse(JSON.stringify(cohenConsensusStatements)); // deep copy to avoid mutating original data
+
+  console.log('cohenConsensusStatements before filter:', cohensThreshold);
+  const filteredCohenConsensusStatements = cohenConsensusStatements.filter(
+    (item) => +item.cutoffLevel > 0 && +item.cutoffLevel <= +cohensThreshold
+  );
+
   const thresholdLabel = t('Distinguishing Statements Threshold');
 
   const stephHeaders = [
@@ -187,7 +205,7 @@ const ConsensusStatementsList = () => {
     statement: 'statement',
   };
 
-  const sortedStephData = sortRows(stephData, stephKeyMap);
+  const sortedStephData = sortRows(data1, stephKeyMap);
 
   const cohensHeaders = [
     { label: t('Cohens d'), key: 'cutoffLevel' },
@@ -201,15 +219,20 @@ const ConsensusStatementsList = () => {
     statement: 'statement',
     sortStatement: 'sortStatement',
   };
-  const sortedConsensusStatements = sortRows(consensusStatements, cohensKeyMap);
+  const sortedCohenConsensusStatements = sortRows(filteredCohenConsensusStatements, cohensKeyMap);
 
   if (distIdentType === 'stephensonMethod') {
     return (
       <div className="flex flex-col">
         <div className="mb-5 text-5xl">{t('Consensus Statements')}</div>
-        <DistinguishingTypeButtons textSize="xl" className="" origin={'consensus'} data1={data1} />
+        <DistinguishingTypeButtons
+          textSize="xl"
+          className=""
+          origin={'consensus'}
+          exportData={excelExportData}
+          cohenData={excelExportCohenData}
+        />
         <DistStateListButtons label={thresholdLabel} />
-        {/* <div className="text-xl font-bold mt-8">{t('consensusStatementsList')}</div> */}
         <>
           <table className="border-collapse border border-black mb-10 mr-5 mt-4">
             <thead>
@@ -257,7 +280,8 @@ const ConsensusStatementsList = () => {
           textSize="xl"
           className=""
           origin={'consensus'}
-          data1={stephData}
+          exportData={excelExportData}
+          cohenData={excelExportCohenData}
         />
         <DistStateListCohensButton />
         <table className="border-collapse border border-black mt-4">
@@ -277,7 +301,7 @@ const ConsensusStatementsList = () => {
             </tr>
           </thead>
           <tbody>
-            {sortedConsensusStatements.map((statement, index) => (
+            {sortedCohenConsensusStatements.map((statement, index) => (
               <tr
                 key={`key${index}`}
                 className={`hover:bg-[rgba(131,202,254,0.6)] ${index % 2 === 0 ? '' : 'bg-[#eee]'}`}

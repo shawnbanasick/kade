@@ -25,16 +25,20 @@ const DistinguishingTypeButtons = (props) => {
     }
   };
 
-  console.log('DistinguishingTypeButtons conStephensonDataForExport:', props.data1);
+  console.log('DistinguishingTypeButtons conStephensonDataForExport:', props);
 
   const handleDownload = async (origin) => {
     if (origin === 'consensus') {
       console.log('handleDownload origin:', origin);
+
+      const data = props.exportData; // Replace with actual data from store
+      data.sort((a, b) => b.highestLevel - a.highestLevel);
       // const dataXlsx = 'test data for consensus statements'; // Replace with actual data from store
       const dataContent = {
         projectName: projectName,
         type: 'ConExcel',
-        conStephensonData: props.data1, // Replace with actual data from store
+        conStephensonData: data, // Replace with actual data from store
+        conCohenData: props.cohenData, // Replace with actual data from store
         // conCohenData: props.data2, // Replace with actual data from store
       };
 
