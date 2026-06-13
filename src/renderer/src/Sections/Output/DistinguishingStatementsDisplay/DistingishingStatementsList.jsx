@@ -69,7 +69,9 @@ const DistinguishingStatementsList = () => {
     userSelectedFactors
   );
 
-  const displayCohenData = useMemo(() => {
+  const cohensExportData = JSON.parse(JSON.stringify(cohensData));
+
+  const displayCohenDataPrep = useMemo(() => {
     return filterDistStateCohenListData(
       [...cohensData],
       cohensThreshold,
@@ -77,6 +79,11 @@ const DistinguishingStatementsList = () => {
       sortCohensBy
     );
   }, [cohensData, cohensThreshold, userSelectedFactors, sortCohensBy]);
+
+  const displayCohenData = displayCohenDataPrep.returnArray;
+  const cohenExcelExport = displayCohenDataPrep.cohenExcelExport;
+
+  // console.log('Cohens data for export:', JSON.stringify(cohenExcelExport, null, 2));
 
   const thresholdLabel = t('Threshold');
 
@@ -178,7 +185,12 @@ const DistinguishingStatementsList = () => {
       return (
         <div className="pb-37.5 pr-5">
           <div className="mb-5 text-5xl">{t('Distinguishing Statements')}</div>
-          <DistinguishingTypeButtons textSize="xl" className="mb-6" origin={'distinguishing'} />
+          <DistinguishingTypeButtons
+            textSize="xl"
+            className="mb-6"
+            origin={'distinguishing'}
+            cohenData={cohenExcelExport}
+          />
           {/* <DistStateListCohenSortByButtons /> */}
           <DistStateListCohensButton />
           {displayCohenData.map((factorItem, index) => (

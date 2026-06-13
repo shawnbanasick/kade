@@ -48,8 +48,26 @@ const DistinguishingTypeButtons = (props) => {
         console.error('Failed to save Consent Statements List file:', error);
       }
     } else if (origin === 'distinguishing') {
-      // Implement download logic for distinguishing statements if needed
-      console.log('Download distinguishing statements - not implemented yet');
+      console.log('origin is distinguishing, preparing data for export...');
+      const data = props.cohenData; //
+
+      // console.log('Data to be exported:', JSON.stringify(data, null, 2));
+      console.log('Data to be exported:', data.length);
+
+      const dataContent = {
+        projectName: projectName,
+        type: 'distExcel',
+        // conStephensonData: data,
+        conCohenData: data,
+      };
+      const newBlob = new Blob([JSON.stringify(dataContent)], { type: 'text/plain' });
+      const arrayBuffer = await new Response(newBlob).arrayBuffer();
+
+      try {
+        window.bridge.sendLargeData('large-data', arrayBuffer, 'path');
+      } catch (error) {
+        console.error('Failed to save Consent Statements List file:', error);
+      }
     }
     return null;
   };

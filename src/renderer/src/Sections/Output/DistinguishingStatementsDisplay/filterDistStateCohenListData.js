@@ -33,6 +33,15 @@ const filterDistStateCohenListData = (data, cohenThreshold, userSelectedFactors,
     return match ? parseInt(match[1], 10) : null;
   });
 
+  // prep seaparate export data to escape filtering and sorting
+  const cohenExcelExportDataPrep = JSON.parse(JSON.stringify(data)); // deep copy to avoid mutating original data
+  const cohenExcelExportData = [];
+  const cohenExcelExport = [];
+  userSelectedFactors.forEach((factor, index) => {
+    const filteredData = [...data].filter((item) => item[`factor${index + 1}CohenLevel`] >= 0);
+    cohenExcelExportData.push([...filteredData]);
+  });
+
   userSelectedFactors.forEach((factor, index) => {
     const filteredData = [...data].filter(
       (item) => item[`factor${index + 1}CohenLevel`] >= cohenThreshold
@@ -45,20 +54,23 @@ const filterDistStateCohenListData = (data, cohenThreshold, userSelectedFactors,
     tempObj.factor = factorNumbers[index];
     tempObj.factorNumber = index + 1;
     // sort cohen levels by factor and then in descending order and then by sort value in descending order
-    if (sortCohensBy === 'cohenLevel') {
-      tempObj.distStates = [...masterDataArray[index]].sort(
-        (a, b) => b[`factor${index + 1}CohenLevel`] - a[`factor${index + 1}CohenLevel`]
-      );
-    } else if (sortCohensBy === 'sortValue') {
-      tempObj.distStates = [...masterDataArray[index]].sort(
-        (a, b) => b[`F${index + 1} Sort Value`] - a[`F${index + 1} Sort Value`]
-      );
-    } else if (sortCohensBy === 'statementNum') {
-      tempObj.distStates = [...masterDataArray[index]].sort((a, b) => a.statement - b.statement);
-    }
+    tempObj.distStates = [...cohenExcelExportData[index]].sort(
+      (a, b) => b[`factor${index + 1}CohenLevel`] - a[`factor${index + 1}CohenLevel`]
+    );
+    cohenExcelExport.push(tempObj);
+  });
+
+  userSelectedFactors.forEach((factor, index) => {
+    const tempObj = {};
+    tempObj.factor = factorNumbers[index];
+    tempObj.factorNumber = index + 1;
+    // sort cohen levels by factor and then in descending order and then by sort value in descending order
+    tempObj.distStates = [...masterDataArray[index]].sort(
+      (a, b) => b[`factor${index + 1}CohenLevel`] - a[`factor${index + 1}CohenLevel`]
+    );
     returnArray.push(tempObj);
   });
 
-  return returnArray;
+  return { returnArray, cohenExcelExport };
 };
 export default filterDistStateCohenListData;

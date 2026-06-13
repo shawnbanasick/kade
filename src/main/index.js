@@ -20,6 +20,7 @@ import settings from 'electron-settings';
 import createXlsxFile from './excelLogic/createXlsxFile';
 import createCsvFile from './csvLogic/createCsvFile';
 import createConExcelFile from './excelLogic/createConExcelFile';
+import createDistExcelFile from './excelLogic/createDistExcelFile';
 
 const fs = require('fs');
 
@@ -250,6 +251,9 @@ if (!gotTheLock) {
       }
       if (dataContent.type === 'ConExcel') {
         createConExcelFile(dataContent);
+      }
+      if (dataContent.type === 'distExcel') {
+        createDistExcelFile(dataContent);
       }
     });
 
