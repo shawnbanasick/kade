@@ -48,6 +48,10 @@ const DistinguishingStatementsList = () => {
   const cohensThreshold = outputState((state) => state.cohensThreshold);
   const distStateListData = calcState((state) => state.distStateListData);
 
+  console.log('xxx', distStateListData);
+
+  const stephenExportData = JSON.parse(JSON.stringify(distStateListData));
+
   const displayData = useMemo(() => {
     return filterDistStateListData(threshold, sortKey, distStateListData, userSelectedFactors);
   }, [threshold, sortKey, distStateListData, userSelectedFactors]);
@@ -125,7 +129,13 @@ const DistinguishingStatementsList = () => {
       return (
         <div className="mb-37.5 pr-5">
           <div className="mb-5 text-5xl">{t('Distinguishing Statements')}</div>
-          <DistinguishingTypeButtons textSize="xl" className="mb-5" origin={'distinguishing'} />
+          <DistinguishingTypeButtons
+            textSize="xl"
+            className="mb-5"
+            origin={'distinguishing'}
+            cohenData={cohenExcelExport}
+            stephenExportData={stephenExportData}
+          />
           {/* <DistStateListSortByButtons /> */}
           <DistStateListButtons label={thresholdLabel} />
 
@@ -190,6 +200,7 @@ const DistinguishingStatementsList = () => {
             className="mb-6"
             origin={'distinguishing'}
             cohenData={cohenExcelExport}
+            stephenExportData={stephenExportData}
           />
           {/* <DistStateListCohenSortByButtons /> */}
           <DistStateListCohensButton />

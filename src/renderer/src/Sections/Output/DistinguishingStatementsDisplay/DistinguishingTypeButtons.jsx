@@ -50,6 +50,7 @@ const DistinguishingTypeButtons = (props) => {
     } else if (origin === 'distinguishing') {
       console.log('origin is distinguishing, preparing data for export...');
       const data = props.cohenData; //
+      const stephenExportData = props.stephenExportData; // Replace with actual data from store
 
       // console.log('Data to be exported:', JSON.stringify(data, null, 2));
       console.log('Data to be exported:', data.length);
@@ -57,8 +58,8 @@ const DistinguishingTypeButtons = (props) => {
       const dataContent = {
         projectName: projectName,
         type: 'distExcel',
-        // conStephensonData: data,
-        conCohenData: data,
+        distStephensonData: stephenExportData,
+        distCohenData: data,
       };
       const newBlob = new Blob([JSON.stringify(dataContent)], { type: 'text/plain' });
       const arrayBuffer = await new Response(newBlob).arrayBuffer();
