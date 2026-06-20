@@ -75,7 +75,7 @@ const DistinguishingTypeButtons = (props) => {
 
   return (
     <div className={`flex items-center gap-3 w-full justify-between ${props.className}`}>
-      <div className="flex flex-row gap-4">
+      <div className="flex flex-row items-center gap-4">
         <div className={`text-${props.textSize} mb-2  font-bold`}>
           {t('selectMethodForIdentifyingDistinguishingStatements')}:
         </div>
@@ -83,7 +83,7 @@ const DistinguishingTypeButtons = (props) => {
           id="stephensonMethodButton"
           onClick={() => handleOnclick('stephensonMethod')}
           key="f2"
-          className={`min-w-30 ${stephensonMethodButtonActive ? 'bg-primary-button' : 'bg-grey-button'}`}
+          className={`min-w-30 h-10 ${stephensonMethodButtonActive ? 'bg-primary-button' : 'bg-grey-button'}`}
         >
           {t('stephenson')}
         </GeneralButton>
@@ -91,7 +91,7 @@ const DistinguishingTypeButtons = (props) => {
           id="cohenMethodButton"
           onClick={() => handleOnclick('cohenMethod')}
           key="f3"
-          className={`min-w-30 ${cohenMethodButtonActive ? 'bg-primary-button' : 'bg-grey-button'}`}
+          className={`min-w-30 h-10 ${cohenMethodButtonActive ? 'bg-primary-button' : 'bg-grey-button'}`}
         >
           <div>
             {t('cohens')} <i>d</i>
@@ -102,9 +102,9 @@ const DistinguishingTypeButtons = (props) => {
         id="bothMethodsButton"
         onClick={() => handleDownload(props.origin)}
         key="f4"
-        className={`min-w-30 ${stephensonMethodButtonActive && cohenMethodButtonActive ? 'bg-primary-button' : 'bg-grey-button'}`}
+        className={`min-w-30 mr-10 h-10 ${stephensonMethodButtonActive && cohenMethodButtonActive ? 'bg-primary-button' : 'bg-grey-button'}`}
       >
-        {t('Download Data')}
+        {t('Download')}
       </GeneralButton>
     </div>
   );

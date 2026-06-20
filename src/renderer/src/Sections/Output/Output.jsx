@@ -168,22 +168,26 @@ const Output = () => {
     {
       title: t('Factors'),
       content: (
-        <div
-          className={
-            'bg-white flex select-none w-full min-w-0 overflow-hidden h-[calc(100vh-80px)]'
-          }
-        >
-          <FactorsTable
-            gridColDefsFacTable={gridColDefsFacTable}
-            gridRowDataFacTable={gridRowDataFacTable}
-          />
-        </div>
+        <>
+          <div className="text-5xl mt-3">{t('Factors')}</div>
+          <div
+            className={
+              'bg-white flex select-none w-full min-w-0 overflow-hidden h-[calc(100vh-80px)]'
+            }
+          >
+            <FactorsTable
+              gridColDefsFacTable={gridColDefsFacTable}
+              gridRowDataFacTable={gridRowDataFacTable}
+            />
+          </div>
+        </>
       ),
     },
     {
       title: t('Characteristics'),
       content: (
         <div className={window2Class}>
+          <div className="text-5xl mt-0.5 mb-8">{t('Factor Characteristics')}</div>
           <OutputFactorTablesTransitionContainer />
         </div>
       ),
@@ -209,6 +213,7 @@ const Output = () => {
       title: t('Visualizations'),
       content: (
         <>
+          <div className="text-5xl mt-2 mb-8">{t('Factor Visualizations')}</div>
           <ToastContainer transition={Zoom} autoClose={5000} />
           <div className={window2Class}>
             <div className="flex h-12.5 ml-5">
@@ -228,6 +233,7 @@ const Output = () => {
       title: t('Downloads'),
       content: (
         <div className={window2Class}>
+          <div className="text-5xl mb-8">{t('Download Results')}</div>
           <DownloadResultsButtons />
           {displayState && (
             <div className="flex flex-row mt-6.25">

@@ -439,6 +439,7 @@ const pushDistinguishingStatementsToOutput = function (
 
     const factorNumber = sigFactorNumbersArray[j];
 
+    // ading excele chart data
     const formattedDistingStatements = formatDistingArrayForDownload(
       distingStatementsTransferArray01b,
       distingStatementsTransferArray05c,
@@ -495,20 +496,20 @@ const pushDistinguishingStatementsToOutput = function (
   const reducedOutput15 = reduceConsensusArray(listArray15Display, sigFactorNumbersArray.length);
   const reducedOutput2 = reduceConsensusArray(listArray2Display, sigFactorNumbersArray.length);
 
-  console.log('reduce consensus array:', uniq(reducedOutput05));
-  console.log('reduce consensus array:', uniq(reducedOutput01));
+  // console.log('reduce consensus array:', uniq(reducedOutput05));
+  // console.log('reduce consensus array:', uniq(reducedOutput01));
 
-  console.log('reduce consensus arrays:', {
-    reducedOutput0001,
-    reducedOutput0005,
-    reducedOutput001,
-    reducedOutput005,
-    reducedOutput01,
-    reducedOutput05,
-    reducedOutput1,
-    reducedOutput15,
-    reducedOutput2,
-  });
+  // console.log('reduce consensus arrays:', {
+  //   reducedOutput0001,
+  //   reducedOutput0005,
+  //   reducedOutput001,
+  //   reducedOutput005,
+  //   reducedOutput01,
+  //   reducedOutput05,
+  //   reducedOutput1,
+  //   reducedOutput15,
+  //   reducedOutput2,
+  // });
 
   const consensusStatementComparisonArray01b = flatten(consensusStatementComparisonArray01);
   const consensus01 = xor(consensus05, consensusStatementComparisonArray01b);
@@ -577,7 +578,11 @@ const pushDistinguishingStatementsToOutput = function (
     formattedConsensusStatements[0]
   );
 
+  console.log('ttt: ', outputForDataVizWithSig);
+  console.log('ttt-array ', distStatementDataVizArray);
+
   calcState.setState({ distStatementDataVizArray: distStatementDataVizArray });
+  // output for excel chart distinguishing
   calcState.setState({ distStateListData: distStatementsTableArray });
   outputState.setState({ outputForDataViz: outputForDataVizWithSig });
 
