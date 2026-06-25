@@ -34,7 +34,11 @@ const JsonPanel = () => {
   if (!showFirebaseInput && !showSheetsInput && !showNetlifyInput) {
     return (
       <div className="flex flex-col bg-white text-2xl">
-        <p>For EQ Web Sort data, please use the online legacy data converter</p>
+        <div className="text-5xl mt-2 mb-10">{t('EQ Web Sort File Input')}</div>
+
+        <p className="text-xl text-gray-700">
+          For EQ Web Sort data, please use the online legacy data converter
+        </p>
         <a
           href="https://kade-legacy-data-conversion.netlify.app/"
           target="_blank"

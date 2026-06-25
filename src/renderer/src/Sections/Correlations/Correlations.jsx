@@ -39,7 +39,7 @@ const Correlations = () => {
       >
         <div className="justify-self-start" style={{ gridArea: 'header' }}>
           {hasDataBeenConfirmed ? null : (
-            <div className="mt-[50px] ml-5 text-[22px] pt-[60px]">
+            <div className="mt-12.5 ml-5 text-[22px] pt-15">
               {t("Verify Q sorts in section '2. Data'")}
             </div>
           )}
@@ -48,9 +48,7 @@ const Correlations = () => {
           {showCorrelationMatrix ? (
             <CorrelationTable />
           ) : (
-            <div className="mt-[50px] ml-5 text-[22px] pt-[60px]">
-              {t('No correlations calculated')}
-            </div>
+            <div className="mt-12.5 ml-5 text-[22px] pt-15">{t('No correlations calculated')}</div>
           )}
         </div>
         <ErrorNotification />
@@ -71,6 +69,8 @@ const Correlations = () => {
       title: t('Heatmap'),
       content: (
         <div>
+          <div className="text-5xl mt-4">{t('Correlation Heatmap')}</div>
+
           {/* <div className="flex w-[500px] ml-[150px] text-4xl">{`${t('Correlation Heatmap')}`}</div> */}
           <HeatmapMain
             width={numQsorts < 20 ? numQsorts * 60 : numQsorts * 40}

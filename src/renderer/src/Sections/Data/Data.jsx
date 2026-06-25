@@ -63,7 +63,9 @@ const Data = () => {
 
   const InfoPanel = () => {
     return (
-      <div className="flex justify-center mt-9">
+      <div className="flex flex-col mt-9">
+        <div className="text-5xl mb-10">{t('Project Information')}</div>
+
         <section className="mb-8 pl-6 space-y-2">
           <h2 className="text-2xl font-semibold">
             {t('Project Name')}: <span className="font-normal">{projectName}</span>
@@ -81,9 +83,11 @@ const Data = () => {
 
   const PatternPanel = () => {
     return (
-      <div className="flex justify-center mt-9">
+      <div className="flex flex-col mt-9">
+        <div className="text-5xl mb-10">{t('Q Sort Grid Pattern')}</div>
+
         <section className="mb-8 space-y-2 pl-6">
-          <h2 className="text-2xl font-semibold">{t('Q Sort Pattern')}:</h2>
+          {/* <h2 className="text-2xl font-semibold">{t('Q Sort Pattern')}:</h2> */}
           <QsortsPatternList texts={texts} />
         </section>
       </div>
@@ -92,8 +96,9 @@ const Data = () => {
 
   const StatementsPanel = () => {
     return (
-      <div className="flex justify-between items-center mt-4">
-        <section className="flex h-[calc(100vh-200px)] items-center w-full py-2 mb-12">
+      <div className="flex flex-col mt-4 p-4 pt-0">
+        <div className="text-5xl mt-4 ml-1">{t('Statements')}</div>
+        <section className="flex h-[calc(100vh-200px)]  w-full py-2 mb-12">
           <StatementsList statements={statements} />
         </section>
       </div>
@@ -103,14 +108,13 @@ const Data = () => {
   const SortsPanel = () => {
     return (
       <>
-        <div className="flex flex-row gap-1 max-w-[85vw] justify-between mb-6 items-center">
+        <div className="text-5xl mt-8 mb-8 ml-1">{t('Participant Q Sorts')}</div>
+        <div className="flex flex-row gap-2 max-w-[85vw] justify-between mb-6 items-center flex-wrap">
           {showUnforcedConfirmMessage && (
             <>
-              <div className="flex flex-row items-center gap-4 max-w-[60vw] justify-between">
+              <div className="flex flex-row gap-4 max-w-[60vw] ">
                 <div className="flex flex-row items-center gap-4">
-                  <div className="text-[clamp(1.3rem,1.5vw,1.8rem)]">
-                    {t('Display Participant Q Sorts as')}
-                  </div>
+                  <div className="text-[clamp(1.5rem,1.5vw,1.8rem)]">{t('Display sorts as')}</div>
                   <DisplayDataQsortsButton />
                   <DisplayDataSortsGridButton />
                 </div>
@@ -137,18 +141,24 @@ const Data = () => {
 
   const DownloadsPanel = () => {
     return (
-      <section className="py-8 mb-12">
+      <section className="py-3 mb-12">
         {showExportButtons ? (
-          <div className="flex flex-row flex-wrap items-center text-center gap-4">
-            <DownloadDatabookButton />
-            <div className="text-[clamp(1.3rem,1.5vw,1.8rem)] ml-12! font-bold self-center align-center ">
-              {t('Export PQMethod')}
+          <>
+            <div className="text-5xl mb-8 ml-1">{t('Downloads')}</div>
+
+            <div className="flex flex-row flex-wrap w-4/5 items-center justify-between gap-4">
+              <DownloadDatabookButton />
+              <div className="flex flex-row gap-4 mt-1">
+                <div className="text-[clamp(1.3rem,1.5vw,1.8rem)] font-bold self-center align-center ">
+                  {t('Export PQMethod')}
+                </div>
+                <div className="flex flex-row gap-4 mt-1">
+                  <StaFileButton />
+                  <DatFileButton />
+                </div>
+              </div>
             </div>
-            <div className="flex flex-row gap-4 mt-1">
-              <StaFileButton />
-              <DatFileButton />
-            </div>
-          </div>
+          </>
         ) : (
           <div className="flex flex-row flex-wrap items-center text-center gap-4">
             <div className="text-[clamp(1.3rem,1.5vw,1.8rem)] ml-12! font-bold self-center align-center ">
@@ -207,27 +217,27 @@ const Data = () => {
           <input
             type="radio"
             name="my_tabs_6"
-            className={`tab basis-[9vw] text-[clamp(1rem,1.5vw,1.1rem)]  hover:shadow-[inset_0_0_0_4px_#666,_0_0_1px_transparent] ${dataActiveTab === 'tab1' ? 'tab-active bg-primary-button text-black' : 'bg-grey-button'}`}
+            className={`tab basis-[9vw] text-[clamp(1rem,1.5vw,1.1rem)]  hover:shadow-[inset_0_0_0_4px_#666,0_0_1px_transparent] ${dataActiveTab === 'tab1' ? 'tab-active bg-primary-button text-black' : 'bg-grey-button'}`}
             aria-label={tabs[0].title}
             onClick={() => handleTabClick('tab1')}
           />
 
-          <div className="tab-content bg-base-100 border-base-300 p-6">{tabs[0].content}</div>
+          <div className="tab-content bg-base-100 border-base-300 p-6 pt-0">{tabs[0].content}</div>
 
           <input
             type="radio"
             name="my_tabs_6"
-            className={`tab basis-[9vw] text-[clamp(1rem,1.5vw,1.1rem)]  hover:shadow-[inset_0_0_0_4px_#666,_0_0_1px_transparent] ${dataActiveTab === 'tab2' ? 'tab-active bg-primary-button text-black' : 'bg-grey-button'}`}
+            className={`tab basis-[9vw] text-[clamp(1rem,1.5vw,1.1rem)]  hover:shadow-[inset_0_0_0_4px_#666,0_0_1px_transparent] ${dataActiveTab === 'tab2' ? 'tab-active bg-primary-button text-black' : 'bg-grey-button'}`}
             aria-label={tabs[1].title}
             onClick={() => handleTabClick('tab2')}
           />
 
-          <div className="tab-content bg-base-100 border-base-300 p-6">{tabs[1].content}</div>
+          <div className="tab-content bg-base-100 border-base-300 p-6 pt-0">{tabs[1].content}</div>
 
           <input
             type="radio"
             name="my_tabs_6"
-            className={`tab basis-[9vw] text-[clamp(1rem,1.5vw,1.1rem)]  hover:shadow-[inset_0_0_0_4px_#666,_0_0_1px_transparent] ${dataActiveTab === 'tab3' ? 'tab-active bg-primary-button text-black' : 'bg-grey-button'}`}
+            className={`tab basis-[9vw] text-[clamp(1rem,1.5vw,1.1rem)]  hover:shadow-[inset_0_0_0_4px_#666,0_0_1px_transparent] ${dataActiveTab === 'tab3' ? 'tab-active bg-primary-button text-black' : 'bg-grey-button'}`}
             aria-label={tabs[2].title}
             onClick={() => handleTabClick('tab3')}
           />
@@ -237,7 +247,7 @@ const Data = () => {
           <input
             type="radio"
             name="my_tabs_6"
-            className={`tab basis-[9vw] text-[clamp(1rem,1.5vw,1.1rem)]  hover:shadow-[inset_0_0_0_4px_#666,_0_0_1px_transparent] ${areQsortsVerified ? (dataActiveTab === 'tab4' ? 'tab-active bg-primary-button text-black' : 'bg-grey-button') : 'bg-orange-button'}`}
+            className={`tab basis-[9vw] text-[clamp(1rem,1.5vw,1.1rem)]  hover:shadow-[inset_0_0_0_4px_#666,0_0_1px_transparent] ${areQsortsVerified ? (dataActiveTab === 'tab4' ? 'tab-active bg-primary-button text-black' : 'bg-grey-button') : 'bg-orange-button'}`}
             aria-label={tabs[3].title}
             onClick={() => handleTabClick('tab4')}
           />
@@ -246,7 +256,7 @@ const Data = () => {
           <input
             type="radio"
             name="my_tabs_6"
-            className={`tab basis-[9vw] text-[clamp(1rem,1.5vw,1.1rem)]  hover:shadow-[inset_0_0_0_4px_#666,_0_0_1px_transparent] ${dataActiveTab === 'tab5' ? 'tab-active bg-primary-button text-black' : 'bg-grey-button'}`}
+            className={`tab basis-[9vw] text-[clamp(1rem,1.5vw,1.1rem)]  hover:shadow-[inset_0_0_0_4px_#666,0_0_1px_transparent] ${dataActiveTab === 'tab5' ? 'tab-active bg-primary-button text-black' : 'bg-grey-button'}`}
             aria-label={tabs[4].title}
             onClick={() => handleTabClick('tab5')}
           />

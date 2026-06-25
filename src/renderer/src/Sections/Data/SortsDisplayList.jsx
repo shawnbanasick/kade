@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 const SortsDisplayList = (props) => {
   return (
-    <div className="flex pl-8 pt-4 overflow-y-auto h-[calc(100vh-160px)] justify-center">
+    <div className="flex pl-8 pt-4 overflow-y-auto h-[calc(100vh-160px)]">
       <ul>
         {props.sortsDisplayText.map(function (listValue, index) {
           return (

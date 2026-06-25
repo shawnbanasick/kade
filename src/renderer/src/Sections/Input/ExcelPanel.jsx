@@ -7,9 +7,11 @@ const ExcelPanel = () => {
 
   return (
     <div id="ExcelDataWindow">
+      <div className="text-5xl mt-2 mb-10">{t('Excel File Input')}</div>
+
       <div
         id="excelPanelHeader"
-        className="font-['Helvetica'] text-black text-[1.5vw] font-bold h-[30px] mb-5 "
+        className="font-['Helvetica'] text-black text-xl font-bold h-7.5 mb-5 "
       >
         {t('Load a Type 1 OR Type 2 Spreadsheet (XLSX) File')}
       </div>

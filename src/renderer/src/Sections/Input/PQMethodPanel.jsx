@@ -7,9 +7,11 @@ const PQMethodPanel = () => {
 
   return (
     <div id="pqmethodDataWindow">
+      <div className="text-5xl mt-2 mb-10">{t('PQ Method File Input')}</div>
+
       <div
         id="pqmethodDataWindowHeader"
-        className="font-['Helvetica'] text-black  text-[1.5vw] font-bold h-[30px] mb-5"
+        className="font-['Helvetica'] text-black  text-xl font-bold h-7.5 mb-5"
       >
         {t('Load both a statements STA file and Q sorts DAT file')}
       </div>

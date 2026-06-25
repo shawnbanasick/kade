@@ -6,8 +6,8 @@ const UnforcedSortsDisplay = (props) => {
 
   if (props.display === true) {
     return (
-      <div className="flex flex-row font-bold items-baseline justify-end">
-        <div className="mr-[20px] text-[clamp(1.0rem,1.4vw,1.6rem)]">{t('Confirm Q Sorts')}:</div>
+      <div className="flex flex-row font-bold items-center justify-end">
+        <div className="mr-[20px] text-[clamp(1.5rem,1.5vw,1.6rem)]">{t('Confirm Q Sorts')}:</div>
         <UnforcedSortsDisplayButton number={0} />
       </div>
     );
