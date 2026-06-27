@@ -39,7 +39,7 @@ const Output = () => {
   );
   const showTableDataNotSentWarning = outputState((state) => state.showTableDataNotSentWarning);
   const showNotification = outputState((state) => state.notifyOutputDistStateError);
-  const distIdentType = outputState((state) => state.distIdentType);
+  const resultsDistIdentType = outputState((state) => state.resultsDistIdentType);
 
   const notify = async () => {
     await toast.error('Error >>> Reset threshold levels', {
@@ -153,13 +153,13 @@ const Output = () => {
               <div className="text-5xl mt-8">{t('Generate Results')}</div>
               {/* <DistinguishingTypeButtons className="mt-6.25" textSize="2xl" /> */}
               <ResultsDistMethodButtons className="mt-6.25" textSize="2xl" />
-              {distIdentType === 'stephensonMethod' && (
+              {resultsDistIdentType === 'stephensonMethod' && (
                 <div className="mt-6.25">
                   <DistStateSigLevelDrop1 />
                   <DistStateSigLevelDrop2 />
                 </div>
               )}
-              {distIdentType === 'cohenMethod' && (
+              {resultsDistIdentType === 'cohenMethod' && (
                 <div className="mt-6.25">
                   <ResultsCohenButtons1 />
                   <ResultsCohenButtons2 />

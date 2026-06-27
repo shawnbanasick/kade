@@ -5,22 +5,24 @@ import { useTranslation } from 'react-i18next';
 
 const DistinguishingTypeButtons = (props) => {
   const { t } = useTranslation();
-  const stephensonMethodButtonActive = outputState((state) => state.stephensonMethodButtonActive);
-  const cohenMethodButtonActive = outputState((state) => state.cohenMethodButtonActive);
+  const resultsStephensonMethodButtonActive = outputState(
+    (state) => state.resultsStephensonMethodButtonActive
+  );
+  const resultsCohenMethodButtonActive = outputState(
+    (state) => state.resultsCohenMethodButtonActive
+  );
   const projectName = coreState((state) => state.projectName);
-  const conStephensonDataForExport = outputState((state) => state.conStephensonDataForExport);
-  const conCohenDataForExport = outputState((state) => state.conCohenDataForExport);
 
   const handleOnclick = (type) => {
     if (type === 'stephensonMethod') {
-      outputState.setState({ distIdentType: 'stephensonMethod' });
-      outputState.setState({ stephensonMethodButtonActive: true });
-      outputState.setState({ cohenMethodButtonActive: false });
+      outputState.setState({ resultsDistIdentType: 'stephensonMethod' });
+      outputState.setState({ resultsStephensonMethodButtonActive: true });
+      outputState.setState({ resultsCohenMethodButtonActive: false });
     }
     if (type === 'cohenMethod') {
-      outputState.setState({ distIdentType: 'cohenMethod' });
-      outputState.setState({ stephensonMethodButtonActive: false });
-      outputState.setState({ cohenMethodButtonActive: true });
+      outputState.setState({ resultsDistIdentType: 'cohenMethod' });
+      outputState.setState({ resultsStephensonMethodButtonActive: false });
+      outputState.setState({ resultsCohenMethodButtonActive: true });
     }
   };
 
@@ -34,7 +36,7 @@ const DistinguishingTypeButtons = (props) => {
           id="stephensonMethodButton"
           onClick={() => handleOnclick('stephensonMethod')}
           key="f2"
-          className={`min-w-30 h-10 ${stephensonMethodButtonActive ? 'bg-primary-button' : 'bg-grey-button'}`}
+          className={`min-w-30 h-10 ${resultsStephensonMethodButtonActive ? 'bg-primary-button' : 'bg-grey-button'}`}
         >
           {t('stephenson')}
         </GeneralButton>
@@ -42,7 +44,7 @@ const DistinguishingTypeButtons = (props) => {
           id="cohenMethodButton"
           onClick={() => handleOnclick('cohenMethod')}
           key="f3"
-          className={`min-w-30 h-10 ${cohenMethodButtonActive ? 'bg-primary-button' : 'bg-grey-button'}`}
+          className={`min-w-30 h-10 ${resultsCohenMethodButtonActive ? 'bg-primary-button' : 'bg-grey-button'}`}
         >
           <div>
             {t('cohens')} <i>d</i>

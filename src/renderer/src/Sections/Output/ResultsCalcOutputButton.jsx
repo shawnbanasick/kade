@@ -18,11 +18,19 @@ const ResultsCalcOutputButton = () => {
   const sigLevel2 = calcState((state) => state.userSelectedDistStateSigLevel2);
   let userSelectedFactors = outputState((state) => state.userSelectedFactors);
   const updateDisplayOutputTabContent = outputState((state) => state.updateDisplayOutputTabContent);
+  const resultsCohenButtons2Value = outputState((state) => state.resultsCohenButtons2Value);
+
+  console.log('resultsCohenButtons2Value error', resultsCohenButtons2Value);
 
   const handleSubmit = () => {
     if (sigLevel1 <= sigLevel2) {
       outputState.notifyOutputDistStateError = true;
       return;
+    }
+    if (resultsCohenButtons2Value === 999) {
+      //   outputState.notifyOutputCohenError = true;
+      console.log('cohen button error');
+      //   return;
     }
     if (userSelectedFactors.length !== 0) {
       outputDispatch();

@@ -155,7 +155,10 @@ const outputState = create(
     cohens100ButtonActive: false,
     stephensonMethodButtonActive: true,
     cohenMethodButtonActive: false,
+    resultsStephensonMethodButtonActive: true,
+    resultsCohenMethodButtonActive: false,
     distIdentType: 'stephensonMethod',
+    resultsDistIdentType: 'stephensonMethod',
     consensusDisagreeArray: [],
     p0001Active: false,
     p0005Active: false,
@@ -195,6 +198,7 @@ const outputState = create(
     resultsCohen100Button2Active: false,
     displayOutputTabContent: false,
 
+    updateResultsDistIdentType: (inputValue) => set({ resultsDistIdentType: inputValue }),
     updateDisplayOutputTabContent: (inputValue) => set({ displayOutputTabContent: inputValue }),
     updateResultsCohenButtons1Active: (buttonId, isActive) => {
       const buttonKey = `resultsCohen${buttonId}Button1Active`;

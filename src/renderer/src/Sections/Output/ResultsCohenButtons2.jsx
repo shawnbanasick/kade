@@ -22,6 +22,9 @@ const DistStateListButtons = () => {
     (state) => state.updateResultsCohenButtons2Active
   );
   const resultsCohenButtons1Value = outputState((state) => state.resultsCohenButtons1Value);
+  const updateResultsCohenButtons2Value = outputState(
+    (state) => state.updateResultsCohenButtons2Value
+  );
 
   const clearAllButtons = () => {
     updateResultsCohenButtons2Active(10, false);
