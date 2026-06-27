@@ -1,6 +1,8 @@
 import ExcelT1Card from './Excel/ExcelT1Card';
 import ExcelT2Card from './Excel/ExcelT2Card';
 import { useTranslation } from 'react-i18next';
+import DownloadExampleT1 from './Excel/DownloadExampleT1';
+import DownloadExampleT2 from './Excel/DownloadExampleT2';
 
 const ExcelPanel = () => {
   const [t] = useTranslation();
@@ -17,10 +19,16 @@ const ExcelPanel = () => {
       </div>
       <div
         id="excelPanelWindow"
-        className="grid grid-cols-[350px_350px] grid-rows-[350px_75px_120px_1fr] select-none ml-10"
+        className="grid grid-cols-[350px_350px] grid-rows-[450px_75px_120px_1fr] select-none ml-10"
       >
-        <ExcelT1Card />
-        <ExcelT2Card />
+        <div className="flex flex-col gap-3 justify-center items-center">
+          <ExcelT1Card />
+          <DownloadExampleT1 />
+        </div>
+        <div className="flex flex-col gap-3 justify-center items-center">
+          <ExcelT2Card />
+          <DownloadExampleT2 />
+        </div>
       </div>
     </div>
   );

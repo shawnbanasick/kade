@@ -7,8 +7,6 @@ import DistStateListCohensButton from './DistStateListCohensButton';
 import calcCohensData from './calcCohensData';
 import filterDistStateCohenListData from './filterDistStateCohenListData';
 import CohensDynamicTable from './CohensDynamicTable';
-import DistStateListSortByButtons from './DistStateListSortByButtons';
-import DistStateListCohenSortByButtons from './DistStateListCohenSortByButtons';
 import outputState from '../../GlobalState/outputState';
 import calcState from '../../GlobalState/calcState';
 
@@ -18,7 +16,6 @@ const DistinguishingStatementsList = () => {
   const sortKey = outputState((state) => state.distStateListSortKey);
   const threshold = outputState((state) => state.threshold);
   const sortCohensBy = outputState((state) => state.sortCohensBy);
-  const showFactorCorrelationsTable = outputState((state) => state.showFactorCorrelationsTable);
   const distIdentType = outputState((state) => state.distIdentType);
   const {
     cohens10,
@@ -47,8 +44,7 @@ const DistinguishingStatementsList = () => {
   const userSelectedFactors = outputState((state) => state.userSelectedFactors);
   const cohensThreshold = outputState((state) => state.cohensThreshold);
   const distStateListData = calcState((state) => state.distStateListData);
-
-  console.log('xxx', distStateListData);
+  const displayOutputTabContent = outputState((state) => state.displayOutputTabContent);
 
   const stephenExportData = JSON.parse(JSON.stringify(distStateListData));
 
@@ -87,8 +83,6 @@ const DistinguishingStatementsList = () => {
   const displayCohenData = displayCohenDataPrep.returnArray;
   const cohenExcelExport = displayCohenDataPrep.cohenExcelExport;
 
-  // console.log('Cohens data for export:', JSON.stringify(cohenExcelExport, null, 2));
-
   const thresholdLabel = t('Threshold');
 
   const [sortConfigs, setSortConfigs] = useState({});
@@ -124,7 +118,7 @@ const DistinguishingStatementsList = () => {
     return <span style={{ marginLeft: 4 }}>{config.direction === 'asc' ? '↑' : '↓'}</span>;
   };
 
-  if (showFactorCorrelationsTable) {
+  if (displayOutputTabContent) {
     if (distIdentType === 'stephensonMethod') {
       return (
         <div className="mb-37.5 pr-5">
@@ -219,7 +213,11 @@ const DistinguishingStatementsList = () => {
     }
   }
 
-  return <h2 className="mt-12.5 ml-12.5">{t('Select factors for output in the Options tab')}</h2>;
+  return (
+    <h2 className="mt-12.5 text-2xl ml-12.5">
+      {t('Select factors for output in the Options tab')}
+    </h2>
+  );
 };
 
 export default DistinguishingStatementsList;

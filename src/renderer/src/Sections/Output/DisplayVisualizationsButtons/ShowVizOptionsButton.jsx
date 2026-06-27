@@ -9,6 +9,8 @@ const DisplayVisualizationsButtons = () => {
   // hide button is only one factor selected
   const userSelectedFactors = outputState((state) => state.userSelectedFactors);
   const shouldDisplayFactorVizOptions = outputState((state) => state.shouldDisplayFactorVizOptions);
+  const displayOutputTabContent = outputState((state) => state.displayOutputTabContent);
+
   const updateShouldDisplayFactorVizOptions = outputState(
     (state) => state.updateShouldDisplayFactorVizOptions
   );
@@ -25,24 +27,22 @@ const DisplayVisualizationsButtons = () => {
 
   // getState
   const showDownloadOutputButtons = outputState((state) => state.showDownloadOutputButtons);
-  if (showDownloadOutputButtons && shouldDisplay) {
+
+  if (displayOutputTabContent && shouldDisplay) {
     return (
-      <div style={{ display: 'flex' }}>
-        <GeneralButton
-          id="viewVisualizationsDisplayOptions"
-          onClick={handleOpenVizOptions}
-          className="flex justify-center items-center h-[30px] p-1 ml-5! w-fit min-w-[270px] bg-grey-button mt-[20px]"
-        >
-          {t('View Display Options')}
-        </GeneralButton>
-      </div>
+      <>
+        <div className="flex mb-8">
+          <GeneralButton
+            id="viewVisualizationsDisplayOptions"
+            onClick={handleOpenVizOptions}
+            className="flex justify-center items-center h-7.5 p-1 ml-5! w-fit min-w-67.5 bg-grey-button mt-5"
+          >
+            {shouldDisplayFactorVizOptions ? t('Hide Display Options') : t('View Display Options')}
+          </GeneralButton>
+        </div>
+      </>
     );
   }
-  return (
-    <h2 style={{ marginTop: 50, marginLeft: 50 }}>
-      {t('Select factors for output in the Options tab')}
-    </h2>
-  );
 };
 
 export default DisplayVisualizationsButtons;

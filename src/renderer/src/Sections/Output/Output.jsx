@@ -18,11 +18,14 @@ import DownloadDocxOptionsBox from './DownloadResultsButtons/DownloadDocxOptions
 import DocxFormatButtons from './DownloadResultsButtons/DocxFormatButtons';
 import DocxIncludeDataOption from './DownloadResultsButtons/DocxIncludeDataOption';
 import DownloadResultsAsDocx from './DownloadResultsButtons/DownloadResultsAsDocx';
-import DistinguishingTypeButtons from './DistinguishingStatementsDisplay/DistinguishingTypeButtons';
-// import vizState from '../GlobalState/vizState';
 import outputState from '../GlobalState/outputState';
 import calcState from '../GlobalState/calcState';
 import ConsensusStatementsList from './ConsensusStatementsDisplay/ConsensusStatementsList';
+import ResultsCohenButtons1 from './ResultsCohenButtons1';
+import ResultsCohenButtons2 from './ResultsCohenButtons2';
+import ResultsCalcOutputButton from './ResultsCalcOutputButton';
+import ResultsDistMethodButtons from './ResultsDistMethodButtons';
+// import DistinguishingTypeButtons from './DistinguishingStatementsDisplay/DistinguishingTypeButtons';
 
 import i18n from 'i18next';
 
@@ -147,16 +150,23 @@ const Output = () => {
             <div className="text-[25px] ml-12.5 mt-12.5">{t('No Data Click')}</div>
           ) : (
             <>
-              <div className="text-5xl mt-8">{t('Calculate Results')}</div>
-              <DistinguishingTypeButtons className="mt-6.25" textSize="2xl" />
+              <div className="text-5xl mt-8">{t('Generate Results')}</div>
+              {/* <DistinguishingTypeButtons className="mt-6.25" textSize="2xl" /> */}
+              <ResultsDistMethodButtons className="mt-6.25" textSize="2xl" />
               {distIdentType === 'stephensonMethod' && (
                 <div className="mt-6.25">
                   <DistStateSigLevelDrop1 />
                   <DistStateSigLevelDrop2 />
                 </div>
               )}
-              {distIdentType === 'cohenMethod' && <div className="mt-6.25"></div>}
+              {distIdentType === 'cohenMethod' && (
+                <div className="mt-6.25">
+                  <ResultsCohenButtons1 />
+                  <ResultsCohenButtons2 />
+                </div>
+              )}
               <FactorSelectionForOutputButtons />
+              <ResultsCalcOutputButton />
             </>
           )}
 
@@ -169,7 +179,6 @@ const Output = () => {
       title: t('Factors'),
       content: (
         <>
-          <div className="text-5xl mt-3">{t('Factors')}</div>
           <div
             className={
               'bg-white flex select-none w-full min-w-0 overflow-hidden h-[calc(100vh-80px)]'
@@ -187,7 +196,6 @@ const Output = () => {
       title: t('Characteristics'),
       content: (
         <div className={window2Class}>
-          <div className="text-5xl mt-0.5 mb-8">{t('Factor Characteristics')}</div>
           <OutputFactorTablesTransitionContainer />
         </div>
       ),
@@ -213,19 +221,18 @@ const Output = () => {
       title: t('Visualizations'),
       content: (
         <>
-          <div className="text-5xl mt-2 mb-8">{t('Factor Visualizations')}</div>
-          <ToastContainer transition={Zoom} autoClose={5000} />
-          <div className={window2Class}>
-            <div className="flex h-12.5 ml-5">
+          <div className="bg-white select-none h-[calc(100vh-80px)] min-w-[calc(100vw-186px)] overflow-auto box-border">
+            <div className="">
               <DisplayVisualizationsButtons />
               <ShowVizOptionsButton />
             </div>
-            <RefreshFactorVizButton marginTop={50} marginBottom={10} />
+            <RefreshFactorVizButton marginTop={50} marginBottom={50} />
             <FactorVizOptions />
             <RefreshFactorVizButton marginTop={10} marginBottom={50} />
             <div style={{ height: 50 }} />
             <FactorVizDispatch />
           </div>
+          <ToastContainer transition={Zoom} autoClose={5000} />
         </>
       ),
     },
@@ -233,7 +240,6 @@ const Output = () => {
       title: t('Downloads'),
       content: (
         <div className={window2Class}>
-          <div className="text-5xl mb-8">{t('Download Results')}</div>
           <DownloadResultsButtons />
           {displayState && (
             <div className="flex flex-row mt-6.25">

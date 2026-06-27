@@ -21,6 +21,8 @@ const ConsensusStatementsList = () => {
   const distIdentType = outputState((state) => state.distIdentType);
   const threshold = outputState((state) => state.threshold);
   const stephensonSortBy = outputState((state) => state.conStephensonSortBy);
+  const displayOutputTabContent = outputState((state) => state.displayOutputTabContent);
+
   const [sortConfig, setSortConfig] = useState({ key: null, direction: 'asc' });
   const [data1, setData1] = useState([]);
 
@@ -217,6 +219,14 @@ const ConsensusStatementsList = () => {
     sortStatement: 'sortStatement',
   };
   const sortedCohenConsensusStatements = sortRows(filteredCohenConsensusStatements, cohensKeyMap);
+
+  if (!displayOutputTabContent) {
+    return (
+      <h2 className="mt-12.5 text-2xl ml-12.5">
+        {t('Select factors for output in the Options tab')}
+      </h2>
+    );
+  }
 
   if (distIdentType === 'stephensonMethod') {
     return (

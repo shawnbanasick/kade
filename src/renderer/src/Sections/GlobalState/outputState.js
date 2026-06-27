@@ -171,7 +171,41 @@ const outputState = create(
     conStephensonSortBy: 'threshold',
     conStephensonDataForExport: [],
     conCohenDataForExport: [],
+    resultsCohenButtons1Value: 0.5,
+    resultsCohenButtons2Value: 0.8,
+    resultsCohen10Button1Active: false,
+    resultsCohen20Button1Active: false,
+    resultsCohen30Button1Active: false,
+    resultsCohen40Button1Active: false,
+    resultsCohen50Button1Active: true,
+    resultsCohen60Button1Active: false,
+    resultsCohen70Button1Active: false,
+    resultsCohen80Button1Active: false,
+    resultsCohen90Button1Active: false,
+    resultsCohen100Button1Active: false,
+    resultsCohen10Button2Active: false,
+    resultsCohen20Button2Active: false,
+    resultsCohen30Button2Active: false,
+    resultsCohen40Button2Active: false,
+    resultsCohen50Button2Active: false,
+    resultsCohen60Button2Active: false,
+    resultsCohen70Button2Active: false,
+    resultsCohen80Button2Active: true,
+    resultsCohen90Button2Active: false,
+    resultsCohen100Button2Active: false,
+    displayOutputTabContent: false,
 
+    updateDisplayOutputTabContent: (inputValue) => set({ displayOutputTabContent: inputValue }),
+    updateResultsCohenButtons1Active: (buttonId, isActive) => {
+      const buttonKey = `resultsCohen${buttonId}Button1Active`;
+      set({ [buttonKey]: isActive });
+    },
+    updateResultsCohenButtons2Active: (buttonId, isActive) => {
+      const buttonKey = `resultsCohen${buttonId}Button2Active`;
+      set({ [buttonKey]: isActive });
+    },
+    updateResultsCohenButtons1Value: (inputValue) => set({ resultsCohenButtons1Value: inputValue }),
+    updateResultsCohenButtons2Value: (inputValue) => set({ resultsCohenButtons2Value: inputValue }),
     updateConStephensonDataForExport: (inputValue) =>
       set({ conStephensonDataForExport: inputValue }),
     updateConCohenDataForExport: (inputValue) => set({ conCohenDataForExport: inputValue }),

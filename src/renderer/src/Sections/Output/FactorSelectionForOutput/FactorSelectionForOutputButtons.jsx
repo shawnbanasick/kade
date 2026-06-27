@@ -10,10 +10,10 @@ import filter from 'lodash/filter';
 
 const FactorSelectionForOutputButtons = () => {
   const { t } = useTranslation();
-  const updateShowDownloadOutputButtons = outputState(
-    (state) => state.updateShowDownloadOutputButtons
-  );
-  const updateIsOutputButtonGreen = appState((state) => state.updateIsOutputButtonGreen);
+  // const updateShowDownloadOutputButtons = outputState(
+  //   (state) => state.updateShowDownloadOutputButtons
+  // );
+  // const updateIsOutputButtonGreen = appState((state) => state.updateIsOutputButtonGreen);
   const updateOutputFactorSelectButtonsDisabled = outputState(
     (state) => state.updateOutputFactorSelectButtonsDisabled
   );
@@ -43,25 +43,13 @@ const FactorSelectionForOutputButtons = () => {
   const updateHighlightFactor8 = outputState((state) => state.updateHighlightFactor8);
   const sigLevel1 = calcState((state) => state.userSelectedDistStateSigLevel1);
   const sigLevel2 = calcState((state) => state.userSelectedDistStateSigLevel2);
+  const updateDisplayOutputTabContent = outputState((state) => state.updateDisplayOutputTabContent);
 
   const buttonsToRenderArray = [];
   for (let i = 0; i < 8; i++) {
     buttonsToRenderArray.push(i < btnId.length);
   }
   const [show1, show2, show3, show4, show5, show6, show7, show8] = buttonsToRenderArray;
-
-  const handleSubmit = () => {
-    if (sigLevel1 <= sigLevel2) {
-      outputState.notifyOutputDistStateError = true;
-      return;
-    }
-    if (userSelectedFactors.length !== 0) {
-      outputDispatch();
-      updateShowDownloadOutputButtons(true);
-      updateIsOutputButtonGreen(true);
-      updateOutputFactorSelectButtonsDisabled(true);
-    }
-  };
 
   const highlightUpdaters = {
     1: updateHighlightFactor1,
@@ -83,7 +71,6 @@ const FactorSelectionForOutputButtons = () => {
         userSelectedFactors.push(`factor ${btnId[i]}`);
       }
       [1, 2, 3, 4, 5, 6, 7, 8].forEach((n) => highlightUpdaters[n](true));
-
       resetSection6('output');
       updateUserSelectedFactors(userSelectedFactors);
     } else if (factor === 'clearAllFacs') {
@@ -92,6 +79,7 @@ const FactorSelectionForOutputButtons = () => {
       resetSection6('output');
       updateUserSelectedFactors([]);
       updateOutputForDataViz2([]);
+      updateDisplayOutputTabContent(false);
     } else {
       if (!includes(userSelectedFactors, factor)) {
         userSelectedFactors.push(factor);
@@ -156,7 +144,7 @@ const FactorSelectionForOutputButtons = () => {
         <div className="h-[48px] w-[800px]  mt-[30px]">
           {/* StyledWrapper */}
           <div className="flex flex-row h-[40px] items-center w-[900px] items-baseline gap-x-[5px]">
-            <span className="text-[24px] mb-[3px] inline-block">{t('Select Factors')}</span>
+            <span className="text-[24px] mb-[3px] inline-block">2. {t('Select Factors')}</span>
 
             {factors.map(({ show, id, isActive, key, label }) =>
               show ? (
@@ -189,16 +177,16 @@ const FactorSelectionForOutputButtons = () => {
               onClick={handleOnclick}
               className="min-w-35 text-[20px] bg-grey-button h-7.5 p-0! items-center justify-center"
             >
-              {t('Clear')}
+              {t('Reset')}
             </GeneralButton>
 
-            <GeneralButton
+            {/* <GeneralButton
               id="startOutput"
               onClick={handleSubmit}
               className="min-w-35 text-[20px] bg-grey-button h-7.5 p-0! items-center justify-center"
             >
               {t('Calculate')}
-            </GeneralButton>
+            </GeneralButton> */}
           </div>
         </div>
       </div>

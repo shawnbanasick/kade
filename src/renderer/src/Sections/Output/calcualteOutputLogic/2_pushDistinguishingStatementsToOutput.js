@@ -26,6 +26,9 @@ const pushDistinguishingStatementsToOutput = function (
   const chartText1 = i18n.t('Dist State');
   const chartText2 = i18n.t('Consensus Statements');
 
+  const cohens10 = outputState.getState().cohens10;
+  console.log('cohens10: ', cohens10);
+
   // State
   // const maxStatementLength = calcState.maxStatementLength;
   const maxStatementLength = calcState.getState().maxStatementLength;
@@ -283,19 +286,19 @@ const pushDistinguishingStatementsToOutput = function (
         }
       }
 
-      console.log(`Statement ${k + 1} comparisons for Factor ${j + 1}:`, {
-        array0001,
-        array0005,
-        array001,
-        array005,
-        array01,
-        array05,
-        array1,
-        array15,
-        array2,
-      });
+      // console.log(`Statement ${k + 1} comparisons for Factor ${j + 1}:`, {
+      //   array0001,
+      //   array0005,
+      //   array001,
+      //   array005,
+      //   array01,
+      //   array05,
+      //   array1,
+      //   array15,
+      //   array2,
+      // });
 
-      console.log(sigFactorNumbersArray);
+      // console.log(sigFactorNumbersArray);
 
       switch (true) {
         // P < 0.0001 Level
@@ -431,6 +434,10 @@ const pushDistinguishingStatementsToOutput = function (
       distingStatementsTransferArray01b
     );
 
+    console.log(`Factor ${j + 1} Distinguishing Statements:`, {
+      distingStatementsTransferArray05c,
+      distingStatementsTransferArray01b,
+    });
     masterDistingStatementNumbersArray05.push(distingStatementsTransferArray05c);
     masterDistingStatementNumbersArray01.push(distingStatementsTransferArray01b);
 
@@ -452,6 +459,11 @@ const pushDistinguishingStatementsToOutput = function (
 
     outputData.push(formattedDistingStatements[1]);
   } // end of J loop
+
+  console.log('bbb', {
+    masterDistingStatementNumbersArray01,
+    masterDistingStatementNumbersArray05,
+  });
 
   calcState.setState({
     masterDistingStatementNumbersArray01: masterDistingStatementNumbersArray01,

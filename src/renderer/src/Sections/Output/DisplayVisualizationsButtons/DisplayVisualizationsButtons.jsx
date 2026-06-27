@@ -22,16 +22,29 @@ const DisplayVisualizationsButtons = () => {
     updateDisplayFactorVisualizations(shouldShow);
   };
 
+  const displayOutputTabContent = outputState((state) => state.displayOutputTabContent);
+
+  if (!displayOutputTabContent) {
+    return (
+      <h2 className="mt-15 text-2xl ml-12.5">
+        {t('Select factors for output in the Options tab')}
+      </h2>
+    );
+  }
+
   // getState
   if (showDownloadOutputButtons && shouldDisplay) {
     return (
-      <div style={{ display: 'flex' }}>
+      <div className="flex flex-col">
+        <div className="text-5xl mt-2 mb-8">{t('Factor Visualizations')}</div>
         <GeneralButton
           id="displayVisualizationsButton"
           onClick={handleDisplayViz}
-          className="flex justify-center items-center h-[30px] p-1 ml-5! w-fit min-w-[270px] bg-grey-button mt-[20px]"
+          className="flex justify-center items-center h-7.5 p-1 ml-5! w-fit min-w-67.5 bg-grey-button mt-5"
         >
-          {t('Display Composite Factors')}
+          {displayFactorVisualizations
+            ? t('Hide Composite Factors')
+            : t('Display Composite Factors')}
         </GeneralButton>
       </div>
     );

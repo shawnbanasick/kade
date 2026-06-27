@@ -21,6 +21,8 @@ import createXlsxFile from './excelLogic/createXlsxFile';
 import createCsvFile from './csvLogic/createCsvFile';
 import createConExcelFile from './excelLogic/createConExcelFile';
 import createDistExcelFile from './excelLogic/createDistExcelFile';
+import createXlsxFileT1 from './excelLogic/createXlsxFileT1';
+import createXlsxFileT2 from './excelLogic/createXlsxFileT2';
 
 const fs = require('fs');
 
@@ -254,6 +256,12 @@ if (!gotTheLock) {
       }
       if (dataContent.type === 'distExcel') {
         createDistExcelFile(dataContent);
+      }
+      if (dataContent.type === 'ExampleExcelT1') {
+        createXlsxFileT1(dataContent);
+      }
+      if (dataContent.type === 'ExampleExcelT2') {
+        createXlsxFileT2(dataContent);
       }
     });
 

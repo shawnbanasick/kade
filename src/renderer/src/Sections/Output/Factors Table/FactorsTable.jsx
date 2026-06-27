@@ -22,6 +22,7 @@ const FactorsTable = (props) => {
   const gridRef = useRef();
   const gridColDefsFacTable = props.gridColDefsFacTable;
   const gridRowDataFacTable = props.gridRowDataFacTable;
+  const displayOutputTabContent = outputState((state) => state.displayOutputTabContent);
 
   const numStatements = coreState((state) => state.numStatements);
   const showFactorsTable = outputState((state) => state.showFactorCorrelationsTable);
@@ -65,20 +66,28 @@ const FactorsTable = (props) => {
     theme: 'legacy',
   };
 
-  return (
-    <div className="flex flex-col w-full min-w-0 overflow-hidden">
-      <div id="FactorsTable" style={style2} className="ag-theme-fresh">
-        <AgGridReact
-          ref={gridRef}
-          id="factorsTable"
-          columnDefs={gridColDefsFacTable}
-          rowData={gridRowDataFacTable}
-          gridOptions={gridOptions}
-          animateRows={true}
-          enableBrowserTooltips={true}
-        />
+  if (displayOutputTabContent) {
+    return (
+      <div className={`flex flex-col w-full`}>
+        <div className="text-5xl mt-3">{t('Factors')}</div>
+        <div className="flex flex-col overflow-hidden mb-10">
+          <div id="FactorsTable" style={style2} className="ag-theme-fresh">
+            <AgGridReact
+              ref={gridRef}
+              id="factorsTable"
+              columnDefs={gridColDefsFacTable}
+              rowData={gridRowDataFacTable}
+              gridOptions={gridOptions}
+              animateRows={true}
+              enableBrowserTooltips={true}
+            />
+          </div>
+        </div>
       </div>
-    </div>
+    );
+  }
+  return (
+    <h2 className="mt-15 text-2xl ml-12.5!">{t('Select factors for output in the Options tab')}</h2>
   );
 };
 

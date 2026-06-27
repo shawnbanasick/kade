@@ -15,7 +15,7 @@ const GeneralButton = ({ height, width, disabled, onClick, className = '', ...pr
     transition-all duration-300 ease-in-out
     transform-gpu
     focus:outline-none
-    disabled:pointer-events-none disabled:opacity-70
+    disabled:cursor-not-allowed disabled:opacity-30
     hover:shadow-[inset_0_0_0_4px_#666,0_0_1px_transparent]
   `;
 
