@@ -78,8 +78,8 @@ const FactorViz = (props) => {
           <BaseRectangles {...props} />
           <RectangleText {...props} />
           {shouldDisplaySig && <SigSortsViz {...props} />}
-          {shouldDisplayLegend && <LegendRectangle {...props} />}
-          {shouldDisplayLegend && <LegendText {...props} />}
+          {shouldDisplayLegend && <LegendRectangle {...props} showSymbols={shouldDisplaySig} />}
+          {shouldDisplayLegend && <LegendText {...props} showSymbols={shouldDisplaySig} />}{' '}
         </g>
       </svg>
       <DownloadFactorVizButtons {...props} />

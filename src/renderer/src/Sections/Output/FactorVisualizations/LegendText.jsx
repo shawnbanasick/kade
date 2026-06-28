@@ -36,7 +36,7 @@ const LegendText = (props) => {
     const showDistinguishingAs = factorVizOptions.showDistinguishingAs;
     const shouldDisplayConsensus = factorVizOptions.willDisplayConsensusStates;
     const willIndicateDistinguishing = factorVizOptions.willIndicateDistinguishing;
-    let willDisplayDistingCompareSymbols = factorVizOptions.willDisplayDistingCompareSymbols;
+    let willDisplayDistingCompareSymbols = props.willDisplayDistingCompareSymbols;
 
     const xLocation = getXCoords(props);
     const yLocation = getYValue(props) + 5;
@@ -49,23 +49,16 @@ const LegendText = (props) => {
     if (willIndicateDistinguishing === false) {
       consensusYLocation -= 55;
     }
-    if (willDisplayDistingCompareSymbols === false) {
+    if (props.showSymbols === false) {
       consensusYLocation -= 60;
     }
 
-    // let symbol05 = "*";
-    // let symbol01 = "**";
-    // let arrowLeft = "\u003C\u003C";
-    // let arrowRight = "\u003E\u003E";
-    // if (useUnicode) {
-    // symbol05 =  `* `; // "\u25CE";
-    const symbol05 = `*`; // "\u26B9\u0020\u0020";
-    // symbol01 = "\u25C9";
-    const symbol01 = `**`; // "\u26B9\u26B9";
+    const symbol05 = `\uFF0A`; // "\u26B9\u0020\u0020";
+    const symbol01 = `\uFF0A\uFF0A`; // "\u26B9\u26B9";
     const arrowLeft = '\u25C4\u0020';
     const arrowRight = '\u25BA\u0020';
     // }
-    const additionalXLocationValue = 260;
+    const additionalXLocationValue = 230;
 
     const titleStyles = {
       x: xLocation,
@@ -79,33 +72,33 @@ const LegendText = (props) => {
     const astrick05Style = {
       x: xLocation - additionalXLocationValue + 12,
       y: yLocation + 65,
-      fontSize: 20,
+      fontSize: 14,
       fontFamily: 'Arial, sans-serif',
     };
 
     const astrick01Style = {
       x: xLocation - additionalXLocationValue + 12,
       y: yLocation + 95,
-      fontSize: 20,
+      fontSize: 14,
       fontFamily: 'Arial, sans-serif',
     };
 
     const sigSymbolTextStyle1 = {
-      x: xLocation - additionalXLocationValue + 30,
+      x: xLocation - additionalXLocationValue + 50,
       y: yLocation + 65,
       fontSize: 16,
       fontFamily: 'Arial, sans-serif',
     };
 
     const sigSymbolTextStyle2 = {
-      x: xLocation - additionalXLocationValue + 30,
+      x: xLocation - additionalXLocationValue + 50,
       y: yLocation + 95,
       fontSize: 16,
       fontFamily: 'Arial, sans-serif',
     };
 
     const zScoreTextHigherStyle3 = {
-      x: xLocation - additionalXLocationValue + 30,
+      x: xLocation - additionalXLocationValue + 50,
       y: yLocation + 125,
       fontSize: 16,
       fontFamily: 'Arial, sans-serif',
@@ -119,7 +112,7 @@ const LegendText = (props) => {
     };
 
     const zScoreTextLowerStyle5 = {
-      x: xLocation - additionalXLocationValue + 30,
+      x: xLocation - additionalXLocationValue + 50,
       y: yLocation + 155,
       fontSize: 16,
       fontFamily: 'Arial, sans-serif',
@@ -163,7 +156,7 @@ const LegendText = (props) => {
     };
 
     const consensusStatementStyle = {
-      x: xLocation - additionalXLocationValue + 30,
+      x: xLocation - additionalXLocationValue + 50,
       y: yLocation + 14 + consensusYLocation,
       fontSize: 16,
       fontFamily: 'Arial, sans-serif',
@@ -185,7 +178,7 @@ const LegendText = (props) => {
               </text>
             </g>
           )}
-          {willDisplayDistingCompareSymbols && (
+          {props.showSymbols && (
             <g>
               <text {...arrowRightStyle6}>{arrowRight}</text>
               <text {...zScoreTextHigherStyle3}>
@@ -219,7 +212,7 @@ const LegendText = (props) => {
             </text>
           </g>
         )}
-        {willDisplayDistingCompareSymbols && (
+        {props.showSymbols && (
           <g>
             <text {...arrowRightStyle6}>{arrowRight}</text>
             <text {...zScoreTextHigherStyle3}>

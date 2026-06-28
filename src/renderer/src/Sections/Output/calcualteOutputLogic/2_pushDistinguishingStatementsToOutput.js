@@ -27,25 +27,37 @@ const pushDistinguishingStatementsToOutput = function (
   const chartText2 = i18n.t('Consensus Statements');
 
   const cohens10 = outputState.getState().cohens10;
-  console.log('cohens10: ', cohens10);
+  const cohens20 = outputState.getState().cohens20;
+  const cohens30 = outputState.getState().cohens30;
+  const cohens40 = outputState.getState().cohens40;
+  const cohens50 = outputState.getState().cohens50;
+  const cohens60 = outputState.getState().cohens60;
+  const cohens70 = outputState.getState().cohens70;
+  const cohens80 = outputState.getState().cohens80;
+  const cohens90 = outputState.getState().cohens90;
+  const cohens100 = outputState.getState().cohens100;
+
+  // type of dist identification method
+  const resultsDistIdentType = outputState.getState().resultsDistIdentType;
 
   // State
-  // const maxStatementLength = calcState.maxStatementLength;
   const maxStatementLength = calcState.getState().maxStatementLength;
+
+  // Stephenson or Cohen method
+  const distIdentType = outputState.getState().resultsDistIdentType;
 
   // const userSelectedFactors = clone(outputState.userSelectedFactors);
   const userSelectedFactors = cloneDeep(outputState.getState().userSelectedFactors);
 
-  // const userSelectedDistStateSigLevel1 =
-  //   calcState.userSelectedDistStateSigLevel1; // upper level
-  // upper level
+  // upper level  (*** including stupidly reversed logic for Cohen's d)
+  // todo - fix cohen reversal
   const userSelectedDistStateSigLevel1 = calcState.getState().userSelectedDistStateSigLevel1;
+  const resultsCohenButtonsUpperValue = outputState.getState().resultsCohenButtons2Value;
 
-  // const userSelectedDistStateSigLevel2 =
-  // calcState.userSelectedDistStateSigLevel2; // lower level
-
-  // lower level
+  // lower level  (*** including stupidly reversed logic for Cohen's d)
+  // todo - fix cohen reversal
   const userSelectedDistStateSigLevel2 = calcState.getState().userSelectedDistStateSigLevel2;
+  const resultsCohenButtonsLowerValue = outputState.getState().resultsCohenButtons1Value;
 
   // property to count loop iterations for assigning significance * in disting factor output
   formatDistingArrayForDownload.calledTimes = 0;
@@ -274,7 +286,6 @@ const pushDistinguishingStatementsToOutput = function (
           }
 
           // table data
-
           if (
             Math.abs(analysisOutput[j][k].zScore - analysisOutput[m][k].zScore) >=
             sedComparisonValue * userSelectedDistStateSigLevel1 // 2.58
@@ -420,11 +431,11 @@ const pushDistinguishingStatementsToOutput = function (
       }
     }
 
+    // TABLE DATA
     const tempPushObj = {
       factor: `${i18n.t('Factor')} ${j + 1}`,
       distStates: distStatementsTableTempArray,
     };
-
     distStatementsTableArray.push(tempPushObj);
 
     const distingStatementsTransferArray05b = uniq(distingStatementsTransferArray05, true);
@@ -589,6 +600,7 @@ const pushDistinguishingStatementsToOutput = function (
     distStatementDataVizArray,
     formattedConsensusStatements[0]
   );
+  outputState.setState({ outputForDataViz: outputForDataVizWithSig });
 
   console.log('ttt: ', outputForDataVizWithSig);
   console.log('ttt-array ', distStatementDataVizArray);
@@ -596,7 +608,6 @@ const pushDistinguishingStatementsToOutput = function (
   calcState.setState({ distStatementDataVizArray: distStatementDataVizArray });
   // output for excel chart distinguishing
   calcState.setState({ distStateListData: distStatementsTableArray });
-  outputState.setState({ outputForDataViz: outputForDataVizWithSig });
 
   console.log('dispatch - 17 - pushDistinguishingStatements complete');
   return [outputData, sheetNamesXlsx, colSizes];

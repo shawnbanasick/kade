@@ -17,8 +17,6 @@ const createFactorVizDataObjectForProps = (factorVizOptions) => {
 
   // create data object for render mapping
   let customFactorNamesArray;
-  // getState
-  // const userSelectedFactors = outputState.getState().userSelectedFactors;
 
   const positionData = getInstances();
   const numberOfFactors = userSelectedFactors.length;

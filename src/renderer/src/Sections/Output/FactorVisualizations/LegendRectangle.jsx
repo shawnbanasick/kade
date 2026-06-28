@@ -12,11 +12,11 @@ const LegendRectangle = (props) => {
   const factorVizOptions = vizState((state) => state.factorVizOptions);
 
   const getHeight = () => {
-    let legendBoxHeight = 50;
+    let legendBoxHeight = 32;
     // get state from props
     const shouldDisplayConsensus = factorVizOptions.willDisplayConsensusStates;
     const willIndicateDistinguishing = factorVizOptions.willIndicateDistinguishing;
-    const willDisplayDistingCompareSymbols = factorVizOptions.willDisplayDistingCompareSymbols;
+    const willDisplayDistingCompareSymbols = props.showSymbols;
 
     // make adjustments to box size
     if (willIndicateDistinguishing === true) {
@@ -26,7 +26,7 @@ const LegendRectangle = (props) => {
       legendBoxHeight += 50;
     }
     if (shouldDisplayConsensus === true) {
-      legendBoxHeight += 10;
+      legendBoxHeight += 25;
     }
     if (willIndicateDistinguishing === false && shouldDisplayConsensus === true) {
       legendBoxHeight += 40;
@@ -40,7 +40,7 @@ const LegendRectangle = (props) => {
       totalWidth = props.positionData.instances.length * factorVizOptions.willAdjustCardWidthBy;
     }
     const halfWidth = totalWidth / 2;
-    const xCoord = halfWidth - 300;
+    const xCoord = halfWidth - 278;
     return xCoord;
   };
 
@@ -61,7 +61,7 @@ const LegendRectangle = (props) => {
     const legendProps = {
       x: getXCoords(props),
       y: yValue(props),
-      width: 600,
+      width: 560,
       height: getHeight(props),
     };
     return <rect {...styles} {...legendProps} />;

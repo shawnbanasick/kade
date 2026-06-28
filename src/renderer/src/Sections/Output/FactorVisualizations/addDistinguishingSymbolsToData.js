@@ -84,10 +84,10 @@ function addDistinguishingSymbolsToData(outputForDataViz2, distStatementDataVizA
           userSelectedFactors.length > 1
         ) {
           directionSymbol = '>>'; // " >>>"; "&#9658;";  right-pointing pointer
-          directionSymbolUni = '\u25BA'; // "\u25BA";
+          directionSymbolUni = '\u25B6\uFE0E'; // "\u25BA";
         } else if (otherFactorZscores.length === arrowPointerArrayLeft.length) {
           directionSymbol = '<<'; // " <<<";  "&#9668;";  left-pointing pointer
-          directionSymbolUni = '\u25C4';
+          directionSymbolUni = '\u25C0\uFE0E'; // "\u25C4";
         } else {
           directionSymbol = '';
           directionSymbolUni = '';
@@ -99,13 +99,13 @@ function addDistinguishingSymbolsToData(outputForDataViz2, distStatementDataVizA
         let isDistinguishing01 = false;
         let isDistinguishing05 = false;
         if (sigAt01Level === '*') {
-          sigSymbol = '** '; // "**";  "&#9673;";  sig at .01
-          sigSymbolUni = `** `; // "\u26B9\u26B9"; "\u2733\u2733"; \u002A\u002A
+          sigSymbol = '\uFF0A\uFF0A '; // "**";  "&#9673;";  sig at .01
+          sigSymbolUni = `\uFF0A\uFF0A `; // "\u26B9\u26B9"; "\u2733\u2733"; \u002A\u002A
           isDistinguishing01 = true;
           // sigSymbolUni = "\u25C9";
         } else if (sigAt01Level === '') {
-          sigSymbol = '* '; // "*";  "&#9678;";  sig at .05
-          sigSymbolUni = `* `; // "\u26B9";  "\u002A";
+          sigSymbol = '\uFF0A '; // "*";  "&#9678;";  sig at .05
+          sigSymbolUni = `\uFF0A `; // "\u26B9";  "\u002A";
           isDistinguishing05 = true;
           // sigSymbolUni = "\u25CE";
         }
