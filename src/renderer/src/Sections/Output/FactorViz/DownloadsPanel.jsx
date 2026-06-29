@@ -3,13 +3,13 @@ import UserSelectionSwitch from './UserSelectionSwitch';
 import CustomFileNameLocation from './CustomFileNameLocation';
 import { useTranslation } from 'react-i18next';
 
-const DistinguishingPanel = () => {
+const DownloadsPanel = () => {
   const { t } = useTranslation();
 
   return (
     <div className="mt-7.5">
       <span className="text-[22px] select-none">{t('Downloads')}</span>
-      <hr className="w-full mb-[15px]" />
+      <hr className="w-full mb-3.75" />
       <div className="flex items-center mb-3 pl-2.5">
         <div className="select-none text-base">
           {`15. ${t('Add custom name to visualization downloads')}?`}
@@ -33,4 +33,4 @@ const DistinguishingPanel = () => {
   );
 };
 
-export default DistinguishingPanel;
+export default DownloadsPanel;

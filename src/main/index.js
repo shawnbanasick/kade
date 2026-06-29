@@ -78,6 +78,13 @@ async function createWindow() {
     },
   });
 
+  // Prevent Electron from consuming Escape
+  mainWindow.webContents.on('before-input-event', (event, input) => {
+    if (input.key === 'Escape') {
+      event.preventDefault(); // let it fall through to the renderer
+      mainWindow.webContents.send('escape-pressed'); // send a message to the renderer
+    }
+  });
   // Add this right after creating mainWindow
   mainWindow.webContents.on('did-finish-load', () => {
     // Forces the window to paint before showing

@@ -36,11 +36,10 @@ const DisplayVisualizationsButtons = () => {
   if (showDownloadOutputButtons && shouldDisplay) {
     return (
       <div className="flex flex-col">
-        <div className="text-5xl mt-2 mb-8">{t('Factor Visualizations')}</div>
         <GeneralButton
           id="displayVisualizationsButton"
           onClick={handleDisplayViz}
-          className="flex justify-center items-center h-7.5 p-1 ml-5! w-fit min-w-67.5 bg-grey-button mt-5"
+          className="flex justify-center items-center h-7.5 p-1 w-fit min-w-67.5 bg-grey-button"
         >
           {displayFactorVisualizations
             ? t('Hide Composite Factors')

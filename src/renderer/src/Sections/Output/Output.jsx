@@ -25,6 +25,8 @@ import ResultsCohenButtons1 from './ResultsCohenButtons1';
 import ResultsCohenButtons2 from './ResultsCohenButtons2';
 import ResultsCalcOutputButton from './ResultsCalcOutputButton';
 import ResultsDistMethodButtons from './ResultsDistMethodButtons';
+import FactorVizOptionsDrawer from './FactorVisualizations/FactorVizOptionsDrawer';
+
 // import DistinguishingTypeButtons from './DistinguishingStatementsDisplay/DistinguishingTypeButtons';
 
 import i18n from 'i18next';
@@ -40,6 +42,10 @@ const Output = () => {
   const showTableDataNotSentWarning = outputState((state) => state.showTableDataNotSentWarning);
   const showNotification = outputState((state) => state.notifyOutputDistStateError);
   const resultsDistIdentType = outputState((state) => state.resultsDistIdentType);
+  const shouldDisplayFactorVizOptions = outputState((state) => state.shouldDisplayFactorVizOptions);
+  const updateShouldDisplayFactorVizOptions = outputState(
+    (state) => state.updateShouldDisplayFactorVizOptions
+  );
 
   const notify = async () => {
     await toast.error('Error >>> Reset threshold levels', {
@@ -222,13 +228,23 @@ const Output = () => {
       content: (
         <>
           <div className="bg-white select-none h-[calc(100vh-80px)] min-w-[calc(100vw-186px)] overflow-auto box-border">
-            <div className="">
+            <div className="text-5xl mt-2 mb-8">{t('Factor Visualizations')}</div>
+
+            <div className="flex flex-row justify-left w-[80%] ml-6 gap-4 items-center mt-6.25 mb-6">
               <DisplayVisualizationsButtons />
               <ShowVizOptionsButton />
             </div>
-            <RefreshFactorVizButton marginTop={50} marginBottom={50} />
-            <FactorVizOptions />
-            <RefreshFactorVizButton marginTop={10} marginBottom={50} />
+            {/* <div style={{ height: 50 }} /> */}
+            <FactorVizDispatch />
+            <FactorVizOptionsDrawer
+              isOpen={shouldDisplayFactorVizOptions}
+              onClose={() => updateShouldDisplayFactorVizOptions(false)}
+              side="right"
+            >
+              <RefreshFactorVizButton marginTop={50} marginBottom={50} />
+              <FactorVizOptions />
+              <RefreshFactorVizButton marginTop={10} marginBottom={80} />
+            </FactorVizOptionsDrawer>
             <div style={{ height: 50 }} />
             <FactorVizDispatch />
           </div>

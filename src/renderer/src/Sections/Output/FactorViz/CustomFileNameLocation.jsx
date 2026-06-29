@@ -26,7 +26,7 @@ const CustomFileNameLocation = () => {
   };
 
   return (
-    <div className="flex mt-[15px] text-[20px] select-none items-center">
+    <div className="flex mt-3.75 text-[20px] select-none items-center">
       <span>{t('Custom name position')}</span>
       {radioOptions.map(({ label, value }) => (
         <label key={value} className="flex items-center gap-2 ml-4 cursor-pointer text-[20px]">

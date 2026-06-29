@@ -31,11 +31,11 @@ const DisplayVisualizationsButtons = () => {
   if (displayOutputTabContent && shouldDisplay) {
     return (
       <>
-        <div className="flex mb-8">
+        <div className="">
           <GeneralButton
             id="viewVisualizationsDisplayOptions"
             onClick={handleOpenVizOptions}
-            className="flex justify-center items-center h-7.5 p-1 ml-5! w-fit min-w-67.5 bg-grey-button mt-5"
+            className="flex justify-center items-center h-7.5 w-fit min-w-67.5 bg-grey-button"
           >
             {shouldDisplayFactorVizOptions ? t('Hide Display Options') : t('View Display Options')}
           </GeneralButton>

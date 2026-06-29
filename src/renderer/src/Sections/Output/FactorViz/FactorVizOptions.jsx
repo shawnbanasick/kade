@@ -9,7 +9,7 @@ const FactorVizOptions = () => {
   const shouldDisplayFactorVizOptions = outputState((state) => state.shouldDisplayFactorVizOptions);
   return (
     <div className={`${shouldDisplayFactorVizOptions ? 'visible' : 'hidden'}`}>
-      <div className="FactorVizDiv w-[90%] max-w-[920px] h-[1100px] border-[2px] border-[#666] p-[20px] ml-[20px]!">
+      <div className="FactorVizDiv w-[90%] max-w-[920px] mb-8 h-[1100px] border-[2px] border-[#666] p-[20px] ml-[20px]!">
         <GeneralOptionsPanel />
         <CardSettingsPanel />
         <StatementsSettingsPanel />
