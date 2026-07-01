@@ -1,26 +1,20 @@
 import { v4 as uuidv4 } from 'uuid';
 
-const widthValue = (props) => {
-  const shouldAdjustWidth = props.factorVizOptions.willAdjustCardWidth;
-  if (shouldAdjustWidth === true) {
-    const newCardWidth = props.factorVizOptions.willAdjustCardWidthBy;
-    return newCardWidth;
-  }
-  return 110;
+const DEFAULT_WIDTH = 110;
+const DEFAULT_HEIGHT = 110;
+const HEADER_HEIGHT = 26;
+
+const widthValue = (factorVizOptions = {}) => {
+  const { willAdjustCardWidth, willAdjustCardWidthBy } = factorVizOptions;
+  return willAdjustCardWidth === true ? willAdjustCardWidthBy : DEFAULT_WIDTH;
 };
 
-const headerHeight = () => 26;
-
-const heightValue = (props) => {
-  const shouldAdjustHeight = props.factorVizOptions.willAdjustCardHeight;
-  if (shouldAdjustHeight === true) {
-    let cardHeight = props.factorVizOptions.willAdjustCardHeightBy;
-    if (cardHeight < 60) {
-      cardHeight = 60;
-    }
-    return cardHeight;
+const heightValue = (factorVizOptions = {}) => {
+  const { willAdjustCardHeight, willAdjustCardHeightBy } = factorVizOptions;
+  if (willAdjustCardHeight === true) {
+    return Math.max(willAdjustCardHeightBy, 60);
   }
-  return 110;
+  return DEFAULT_HEIGHT;
 };
 
 const styles = {
@@ -30,67 +24,69 @@ const styles = {
 };
 
 const renderSigSortsIndicators = (props) => {
-  const shouldUseUnicode = true; // props.factorVizOptions.shouldUseUnicode;
-  const willDisplayDistingCompareSymbols = props.factorVizOptions.willDisplayDistingCompareSymbols;
-  const willAdjustIndicatorSizeBy = props.factorVizOptions.willAdjustDistIndicatorSizeBy;
+  const { data = [], factorVizOptions = {}, positionData = {} } = props;
 
-  const width = widthValue(props);
-  const height = heightValue(props);
-  const headerHeight1 = headerHeight();
-  // eslint-disable-next-line
+  if (!data.length) return null;
+
+  const {
+    willDisplayDistingCompareSymbols,
+    willAdjustDistIndicatorSizeBy: willAdjustIndicatorSizeBy = 0,
+  } = factorVizOptions;
+
+  const { xPosLoop = [], yPosLoop = [], numRectsArray = [] } = positionData;
+
+  const width = widthValue(factorVizOptions);
+  const height = heightValue(factorVizOptions);
+
   return (coords, index) => {
+    const entry = data[index] ?? {};
     let text;
-    let arrow;
     let symbol;
+    let arrow;
 
-    if (shouldUseUnicode) {
-      if (willDisplayDistingCompareSymbols) {
-        symbol = props.data[index].sigVisualizationUni;
-        arrow = props.data[index].directionSymbolUni;
-        text = symbol + arrow;
-      } else {
-        text = props.data[index].sigVisualizationUni;
-      }
-    } else if (willDisplayDistingCompareSymbols) {
-      symbol = props.data[index].sigVisualization;
-      arrow = props.data[index].directionSymbol;
-      text = symbol + arrow;
+    // Always using unicode (matches original hardcoded `shouldUseUnicode = true`)
+    if (willDisplayDistingCompareSymbols) {
+      symbol = entry.sigVisualizationUni;
+      arrow = entry.directionSymbolUni;
+      text = `${symbol}${arrow}`;
     } else {
-      text = props.data[index].sigVisualization;
+      text = entry.sigVisualizationUni;
     }
 
-    // todo - set user selected custom value for dy for symbols
+    const xBase = (xPosLoop[index] ?? 0) * width;
+    const yBase =
+      (yPosLoop[index] ?? 0) * height + HEADER_HEIGHT + 22 + 1.7 * willAdjustIndicatorSizeBy;
+
     const sigSymbolProps = {
-      x: props.positionData.xPosLoop[index] * width + 20,
-      y:
-        props.positionData.yPosLoop[index] * height +
-        headerHeight1 +
-        22 +
-        1.7 * willAdjustIndicatorSizeBy,
-      key: props.positionData.numRectsArray[index + 1],
-      symbol,
+      x: xBase + 20,
+      y: yBase,
+      key: numRectsArray[index + 1],
       textAnchor: 'left',
       fontSize: willAdjustIndicatorSizeBy + 10,
     };
 
     const sigSymbolProps2 = {
-      x: props.positionData.xPosLoop[index] * width + 10,
-      y:
-        props.positionData.yPosLoop[index] * height +
-        headerHeight1 +
-        22 +
-        1.7 * willAdjustIndicatorSizeBy,
-      arrow,
+      x: xBase + 10,
+      y: yBase,
       textAnchor: 'left',
       fontSize: willAdjustIndicatorSizeBy,
     };
+
     return (
       <text {...styles} {...sigSymbolProps} {...sigSymbolProps2} key={uuidv4()}>
-        {sigSymbolProps.symbol} {sigSymbolProps2.arrow}
+        {symbol} {arrow}
       </text>
     );
   };
 };
 
-// eslint-disable-next-line
-export default (props) => <g>{props.data.map(renderSigSortsIndicators(props))}</g>;
+export default function SigSortsIndicators(props) {
+  const { data = [], factorVizOptions, positionData } = props;
+
+  if (!data.length) return <g />;
+
+  const renderer = renderSigSortsIndicators({ data, factorVizOptions, positionData });
+  if (!renderer) return <g />;
+
+  return <g>{data.map(renderer)}</g>;
+}

@@ -72,7 +72,7 @@ const invertFactor = () => {
     outputState.setState({ showStandardErrorsDifferences: false });
     outputState.setState({ showFactorCharacteristicsTable: false });
     outputState.setState({ showDownloadOutputButtons: false });
-    outputState.setState({ displayFactorVisualizations: false });
+    // outputState.setState({ displayFactorVisualizations: false });
     outputState.setState({ showDocxOptions: false });
   }
 };

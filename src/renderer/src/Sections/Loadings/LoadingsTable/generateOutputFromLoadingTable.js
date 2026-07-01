@@ -15,7 +15,7 @@ const generateOutputFromLoadingTable = (currentLoadingsTable) => {
   outputState.setState({ showFactorCharacteristicsTable: false });
   outputState.setState({ showDownloadOutputButtons: false });
   outputState.setState({ showFactorCorrelationsTable: false });
-  outputState.setState({ displayFactorVisualizations: false });
+  // outputState.setState({ displayFactorVisualizations: false });
   outputState.setState({ shouldDisplayFactorVizOptions: false });
   outputState.setState({ outputFactorSelectButtonsDisabled: false });
   outputState.setState({ showDocxOptions: false });

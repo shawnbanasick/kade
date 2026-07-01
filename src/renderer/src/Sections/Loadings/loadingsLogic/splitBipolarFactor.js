@@ -159,7 +159,7 @@ const splitBipolarFactor = () => {
     outputState.setState({ showStandardErrorsDifferences: false });
     outputState.setState({ showFactorCharacteristicsTable: false });
     outputState.setState({ showDownloadOutputButtons: false });
-    outputState.setState({ displayFactorVisualizations: false });
+    // outputState.setState({ displayFactorVisualizations: false });
     outputState.setState({ showDocxOptions: false });
     loadingState.setState({ bipolarDisabled: true });
     loadingState.setState({ bipolarIndexArray: bipolarIndexArray });

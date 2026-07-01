@@ -35,7 +35,7 @@ const DisplayVisualizationsButtons = () => {
           <GeneralButton
             id="viewVisualizationsDisplayOptions"
             onClick={handleOpenVizOptions}
-            className="flex justify-center items-center h-7.5 w-fit min-w-67.5 bg-grey-button"
+            className="flex justify-center items-center  h-7.5 w-fit min-w-67.5 bg-grey-button"
           >
             {shouldDisplayFactorVizOptions ? t('Hide Display Options') : t('View Display Options')}
           </GeneralButton>

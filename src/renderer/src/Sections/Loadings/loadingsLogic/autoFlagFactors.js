@@ -73,7 +73,7 @@ const autoFlagFactors = () => {
     outputState.setState({ showFactorCharacteristicsTable: false });
     outputState.setState({ showDownloadOutputButtons: false });
     outputState.setState({ shouldDisplayFactorVizOptions: false });
-    outputState.setState({ displayFactorVisualizations: false });
+    // outputState.setState({ displayFactorVisualizations: false });
     outputState.setState({ showDocxOptions: false });
     loadingState.setState({ sendDataToOutputButtonColor: 'orange' });
 

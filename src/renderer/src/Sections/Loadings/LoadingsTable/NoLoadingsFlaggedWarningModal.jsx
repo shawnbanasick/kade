@@ -44,7 +44,7 @@ const NoLoadingsFlaggedWarningModal = () => {
     updateShowFactorCharacteristicsTable(false);
     updateShowDownloadOutputButtons(false);
     updateShouldDisplayFactorVizOptions(false);
-    updateDisplayFactorVisualizations(false);
+    // updateDisplayFactorVisualizations(false);
     updateShowDocxOptions(false);
     updateSendDataToOutputButtonColor('#d6dbe0');
   };

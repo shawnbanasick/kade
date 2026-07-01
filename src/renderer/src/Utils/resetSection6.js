@@ -7,7 +7,7 @@ const resetSection6 = (section) => {
     outputState.setState({ showStandardErrorsDifferences: false });
     outputState.setState({ showFactorCharacteristicsTable: false });
     outputState.setState({ showDownloadOutputButtons: false });
-    outputState.setState({ displayFactorVisualizations: false });
+    // outputState.setState({ displayFactorVisualizations: false });
     outputState.setState({ shouldDisplayFactorVizOptions: false });
 
     outputState.setState({ showDocxOptions: false });
@@ -20,7 +20,7 @@ const resetSection6 = (section) => {
     outputState.setState({ showStandardErrorsDifferences: false });
     outputState.setState({ showFactorCharacteristicsTable: false });
     outputState.setState({ showDownloadOutputButtons: false });
-    outputState.setState({ displayFactorVisualizations: false });
+    // outputState.setState({ displayFactorVisualizations: false });
     outputState.setState({ shouldDisplayFactorVizOptions: false });
 
     outputState.setState({ showDocxOptions: false });

@@ -110,7 +110,7 @@ const initializeOutputState = () => {
   const updateWillIncludeConsensus = outputState((state) => state.updateWillIncludeConsensus);
   const updateWillIncludeRelRanks = outputState((state) => state.updateWillIncludeRelRanks);
 
-  updateDisplayFactorVisualizations(false);
+  updateDisplayFactorVisualizations(true);
   updateDistStateListSortKey('');
   updateDistStateLowerValueText(`p<0.05`);
   updateDistStateUpperValueText(`p<0.01`);

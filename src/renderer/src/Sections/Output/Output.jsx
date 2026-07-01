@@ -46,6 +46,7 @@ const Output = () => {
   const updateShouldDisplayFactorVizOptions = outputState(
     (state) => state.updateShouldDisplayFactorVizOptions
   );
+  const displayOutputTabContent = outputState((state) => state.displayOutputTabContent);
 
   const notify = async () => {
     await toast.error('Error >>> Reset threshold levels', {
@@ -227,15 +228,19 @@ const Output = () => {
       title: t('Visualizations'),
       content: (
         <>
-          <div className="bg-white select-none h-[calc(100vh-80px)] min-w-[calc(100vw-186px)] overflow-auto box-border">
-            <div className="text-5xl mt-2 mb-8">{t('Factor Visualizations')}</div>
-
-            <div className="flex flex-row justify-left w-[80%] ml-6 gap-4 items-center mt-6.25 mb-6">
-              <DisplayVisualizationsButtons />
+          {displayOutputTabContent ? (
+            <div className="flex flex-row justify-left w-[80%] ml-6 gap-8 items-center mt-6.25 mb-6">
+              <div className="text-5xl  ">{t('Factor Visualizations')}</div>
+              {/* <DisplayVisualizationsButtons /> */}
               <ShowVizOptionsButton />
             </div>
-            {/* <div style={{ height: 50 }} /> */}
-            <FactorVizDispatch />
+          ) : (
+            <h2 className="mt-15 text-2xl ml-12.5">
+              {t('Select factors for output in the Options tab')}
+            </h2>
+          )}
+
+          <div className="bg-white select-none h-[calc(100vh-80px)] min-w-[calc(100vw-186px)] overflow-auto box-border">
             <FactorVizOptionsDrawer
               isOpen={shouldDisplayFactorVizOptions}
               onClose={() => updateShouldDisplayFactorVizOptions(false)}
@@ -246,7 +251,7 @@ const Output = () => {
               <RefreshFactorVizButton marginTop={10} marginBottom={80} />
             </FactorVizOptionsDrawer>
             <div style={{ height: 50 }} />
-            <FactorVizDispatch />
+            {displayOutputTabContent && <FactorVizDispatch />}
           </div>
           <ToastContainer transition={Zoom} autoClose={5000} />
         </>

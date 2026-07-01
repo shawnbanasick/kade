@@ -12,22 +12,27 @@ const styles = {
 
 // todo - need to calculate dynamic height here for styles
 const FactorVizDispatch = (props) => {
+  console.log('FactorVizDispatch props:', props);
+
   // getState
   const factorVizOptions = vizState((state) => state.factorVizOptions);
   const factorData = createFactorVizDataObjectForProps(factorVizOptions);
-  const shouldDisplayFactorViz = outputState((state) => state.displayFactorVisualizations);
 
-  if (shouldDisplayFactorViz) {
-    return (
-      <div>
-        {factorData.map((i, index) => (
-          <div key={`key${index.toString()}`}>
-            <FactorViz key={`viz${index}`} {...factorData[index]} {...props} {...styles} />
-          </div>
-        ))}
-      </div>
-    );
+  console.log('FactorVizDispatch factorData:', factorData);
+
+  if (Object.keys(factorData).length === 0 || factorData === undefined || factorData === null) {
+    return null;
   }
+
+  return (
+    <div>
+      {factorData.map((i, index) => (
+        <div key={`key${index.toString()}`}>
+          <FactorViz key={`viz${index}`} {...factorData[index]} {...props} {...styles} />
+        </div>
+      ))}
+    </div>
+  );
   return null;
 };
 

@@ -1,6 +1,15 @@
 import vizState from '../../GlobalState/vizState';
 import { v4 as uuidv4 } from 'uuid';
 
+const DEFAULT_WIDTH = 110;
+const DEFAULT_HEIGHT = 110;
+const DEFAULT_TOP_MARGIN = 15;
+const DEFAULT_FONT_SIZE = 13;
+const DEFAULT_MAX_LINE_LENGTH = 15;
+const DEFAULT_DY_VALUE = '1.4em';
+const DEFAULT_MAX_LINES = 5;
+const MAX_WORDWRAP_ITERATIONS = 15;
+
 const styles = {
   stroke: 'none',
   zindex: 99,
@@ -8,137 +17,129 @@ const styles = {
   fill: 'black',
 };
 
-const widthValue = (props) => {
-  const shouldAdjustWidth = props.factorVizOptions.willAdjustCardWidth;
-  if (shouldAdjustWidth === true) {
-    const cardWidth = props.factorVizOptions.willAdjustCardWidthBy;
-    return cardWidth;
-  }
-  return 110;
+const widthValue = (factorVizOptions = {}) => {
+  const { willAdjustCardWidth, willAdjustCardWidthBy } = factorVizOptions;
+  return willAdjustCardWidth === true ? willAdjustCardWidthBy : DEFAULT_WIDTH;
 };
 
-// const headerHeight = () => {return 20};
-
-const heightValue = (props) => {
-  const shouldAdjustHeight = props.factorVizOptions.willAdjustCardHeight;
-  if (shouldAdjustHeight === true) {
-    let cardHeight = props.factorVizOptions.willAdjustCardHeightBy;
-    if (isNaN(cardHeight || cardHeight < 60)) {
-      cardHeight = 60;
-    }
+const heightValue = (factorVizOptions = {}) => {
+  const { willAdjustCardHeight, willAdjustCardHeightBy } = factorVizOptions;
+  if (willAdjustCardHeight === true) {
+    const cardHeight =
+      isNaN(willAdjustCardHeightBy) || willAdjustCardHeightBy < 60 ? 60 : willAdjustCardHeightBy;
     return cardHeight;
   }
-  return 110;
+  return DEFAULT_HEIGHT;
 };
 
-const topMarginValue = (props) => {
-  const willAdjustTopMargin = props.factorVizOptions.willAdjustTopMargin;
-  if (willAdjustTopMargin === true) {
-    const newMargin = +props.factorVizOptions.willAdjustTopMarginBy;
-    return newMargin;
-  }
-  return 15;
+const topMarginValue = (factorVizOptions = {}) => {
+  const { willAdjustTopMargin, willAdjustTopMarginBy } = factorVizOptions;
+  return willAdjustTopMargin === true ? +willAdjustTopMarginBy : DEFAULT_TOP_MARGIN;
 };
 
-const wordwrap = (text, max, factorVizOptions) => {
+const wordwrap = (text, max, factorVizOptions = {}) => {
+  if (!text) return [];
+
   let lines = [];
   let line;
   let counter = 0;
-  const maxIterations = 15;
-  // special adjustments for asian text because no spaces between words
+
   if (factorVizOptions.willAdjustWidthAsian === true) {
     const newMax = factorVizOptions.willAdjustWidthAsianBy;
-    lines = text.match(new RegExp(`.{1,${newMax}}`, 'g'));
+    lines = text.match(new RegExp(`.{1,${newMax}}`, 'g')) ?? [];
   } else {
     const regex = new RegExp(`.{0,${max}}(?:\\s|$)`, 'g');
     do {
       line = regex.exec(text);
       lines.push(...line);
       counter += 1;
-    } while (line[0].length !== 0 && counter !== maxIterations);
+    } while (line[0].length !== 0 && counter !== MAX_WORDWRAP_ITERATIONS);
   }
-  const lines2 = lines.filter(String);
+
+  const lines2 = lines.filter(Boolean);
 
   if (factorVizOptions.willTrimStatement === true) {
-    const maxNumberLines = factorVizOptions.willTrimStatementBy || 5;
+    const maxNumberLines = factorVizOptions.willTrimStatementBy || DEFAULT_MAX_LINES;
     lines2.length = maxNumberLines;
   }
+
   return lines2;
 };
 
-function statementList(texts, xCoord, factorVizOptions) {
-  // default value
-  let dyValue = '1.4em';
-  // user set custom value for line spacing
-  const shouldUseCustomDyValue = factorVizOptions.willAdjustLineSpacing;
-  if (shouldUseCustomDyValue === true) {
-    const dyValueNum = factorVizOptions.willAdjustLineSpacingBy;
-    dyValue = `${dyValueNum}em`;
-  }
-  // map out locations for multi-line text
+function statementList(texts, xCoord, factorVizOptions = {}) {
+  const { willAdjustLineSpacing, willAdjustLineSpacingBy } = factorVizOptions;
+  const dyValue =
+    willAdjustLineSpacing === true ? `${willAdjustLineSpacingBy}em` : DEFAULT_DY_VALUE;
+
   let mapcounter = 1;
-  const textItems = texts.map((text) => (
-    <tspan key={mapcounter++} dy={dyValue} x={xCoord} textAnchor={'middle'}>
+  return texts.map((text) => (
+    <tspan key={mapcounter++} dy={dyValue} x={xCoord} textAnchor="middle">
       {text}
     </tspan>
   ));
-  return textItems;
 }
 
 const renderRectangleText = (props) => {
+  const { data = [], factorVizOptions = {}, positionData = {} } = props;
+
+  if (!data.length) return null;
+
   const titleHeight = vizState((state) => state.titleHeight);
 
-  // set default size
-  let fontSize = 13;
-  // set custom fontSize by user selection
-  if (props.factorVizOptions.willAdjustCardFontSize === true) {
-    fontSize = props.factorVizOptions.willAdjustCardFontSizeBy;
-  }
+  const fontSize =
+    factorVizOptions.willAdjustCardFontSize === true
+      ? factorVizOptions.willAdjustCardFontSizeBy
+      : DEFAULT_FONT_SIZE;
 
-  // return a function that returns a props object
-  // eslint-disable-next-line
+  const width = widthValue(factorVizOptions);
+  const height = heightValue(factorVizOptions);
+  const topMargin = topMarginValue(factorVizOptions);
+  const { xPosLoop = [], yPosLoop = [] } = positionData;
+
   return (coords, index) => {
-    let texts;
-    let maxLineLength = 15;
-    // set custom line length
-    if (props.factorVizOptions.willAdjustStatementWidth === true) {
-      maxLineLength = props.factorVizOptions.willAdjustStatementWidthBy;
-    }
-    // check if sentences or statement numbers only
-    const willDisplayOnlyStateNums = props.factorVizOptions.willDisplayOnlyStateNums;
-    const willPrependStateNums = props.factorVizOptions.willPrependStateNums;
+    const entry = data[index] ?? {};
 
+    const maxLineLength =
+      factorVizOptions.willAdjustStatementWidth === true
+        ? factorVizOptions.willAdjustStatementWidthBy
+        : DEFAULT_MAX_LINE_LENGTH;
+
+    const { willDisplayOnlyStateNums, willPrependStateNums } = factorVizOptions;
+
+    let rawText;
     if (willDisplayOnlyStateNums === true) {
-      texts = wordwrap(props.data[index].statement, maxLineLength, props.factorVizOptions);
+      rawText = entry.statement;
     } else if (willPrependStateNums === true) {
-      texts = wordwrap(
-        props.data[index].sortStatementAndNums,
-        maxLineLength,
-        props.factorVizOptions
-      );
+      rawText = entry.sortStatementAndNums;
     } else {
-      texts = wordwrap(props.data[index].sortStatement, maxLineLength, props.factorVizOptions);
+      rawText = entry.sortStatement;
     }
 
-    const xCoord = props.positionData.xPosLoop[index] * widthValue(props) + widthValue(props) / 2;
-    // set up statement object
+    const texts = wordwrap(rawText ?? '', maxLineLength, factorVizOptions);
+    const xCoord = (xPosLoop[index] ?? 0) * width + width / 2;
+
     const textProps = {
-      x: props.positionData.xPosLoop[index] * widthValue(props) + widthValue(props) / 2, // (index * widthValue()) + (widthValue() / 2),
-      y:
-        props.positionData.yPosLoop[index] * heightValue(props) +
-        20 +
-        topMarginValue(props) +
-        titleHeight,
-      text: statementList(texts, xCoord, props.factorVizOptions),
+      x: xCoord,
+      y: (yPosLoop[index] ?? 0) * height + 20 + topMargin + titleHeight,
       textAnchor: 'left',
       fontSize,
     };
+
     return (
       <text {...styles} {...textProps} key={uuidv4()}>
-        {textProps.text}
+        {statementList(texts, xCoord, factorVizOptions)}
       </text>
     );
   };
 };
-// eslint-disable-next-line
-export default (props) => <g>{props.data.map(renderRectangleText(props))}</g>;
+
+export default function RectangleText(props) {
+  const { data = [], factorVizOptions, positionData } = props;
+
+  if (!data.length) return <g />;
+
+  const renderer = renderRectangleText({ data, factorVizOptions, positionData });
+  if (!renderer) return <g />;
+
+  return <g>{data.map(renderer)}</g>;
+}

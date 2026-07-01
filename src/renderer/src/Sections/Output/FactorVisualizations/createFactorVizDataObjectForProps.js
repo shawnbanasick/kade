@@ -7,11 +7,9 @@ const capitalizeFirstLetter = (string) => string.charAt(0).toUpperCase() + strin
 
 // exported function
 const createFactorVizDataObjectForProps = (factorVizOptions) => {
-  const shouldDisplayFactorViz = outputState.getState().displayFactorVisualizations;
   const userSelectedFactors = outputState.getState().userSelectedFactors;
 
-  // early return if no display
-  if (shouldDisplayFactorViz === false) {
+  if (userSelectedFactors.length === 0 || userSelectedFactors === undefined) {
     return {};
   }
 

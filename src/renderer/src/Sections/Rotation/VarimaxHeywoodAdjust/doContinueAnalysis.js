@@ -35,7 +35,7 @@ const doContinueAnalysis = () => {
   outputState.setState({ showFactorCharacteristicsTable: false });
   outputState.setState({ showDownloadOutputButtons: false });
   outputState.setState({ showDocxOptions: false });
-  outputState.setState({ displayFactorVisualizations: false });
+  // outputState.setState({ displayFactorVisualizations: false });
   loadingState.setState({ sendDataToOutputButtonColor: '#d6dbe0' });
 
   // remember - calc commun must be a matrix in table format

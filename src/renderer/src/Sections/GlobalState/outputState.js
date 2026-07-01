@@ -6,7 +6,7 @@ import { immer } from 'zustand/middleware/immer';
 
 const outputState = create(
   immer((set, get) => ({
-    displayFactorVisualizations: false,
+    displayFactorVisualizations: true,
     distStateLowerValueText: `p<0.05`,
     distStateUpperValueText: `p<0.01`,
     factorsWithoutLoading: [],
