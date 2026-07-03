@@ -46,9 +46,18 @@ const ScreeContainer = (props) => {
         {...styles}
         numFacs={numFactors}
       />
-      <div className="flex flex-row justify-center w-[80vw] h-[200px]">
+      <div className="flex flex-row justify-center w-[80vw] h-50">
         <TogglePaMean />
-        <DownloadSvgButtons />
+        <DownloadSvgButtons
+          data={data}
+          {...props}
+          means={parallelMeans}
+          p95={parallel95}
+          showMeans={displayParallelMeans}
+          showP95={displayParallel95}
+          {...styles}
+          numFacs={numFactors}
+        />
       </div>
     </div>
   );
