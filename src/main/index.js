@@ -299,6 +299,14 @@ if (!gotTheLock) {
       return result.filePath;
     });
 
+    ipcMain.handle('show-save-drawio-dialog', async (_, defaultPath) => {
+      const { filePath } = await dialog.showSaveDialog({
+        defaultPath,
+        filters: [{ name: 'diagrams.net', extensions: ['drawio'] }],
+      });
+      return filePath;
+    });
+
     ipcMain.on('showSaveDialogSync', saveSvgFile);
     ipcMain.handle('writeFile', (event, filepath, buffer) => {
       var message = {};

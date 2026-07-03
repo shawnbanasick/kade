@@ -20,6 +20,8 @@ if (process.contextIsolated) {
       showSaveSvgDialog: (defaultPath) => ipcRenderer.invoke('show-saveSvg-dialog', defaultPath),
       showSavePngDialog: (defaultPath) => ipcRenderer.invoke('show-savePng-dialog', defaultPath),
       showSaveDocxDialog: (defaultPath) => ipcRenderer.invoke('show-saveDocx-dialog', defaultPath),
+      showSaveDrawioDialog: (defaultPath) =>
+        ipcRenderer.invoke('show-save-drawio-dialog', defaultPath),
     });
 
     contextBridge.exposeInMainWorld('nodeAPI', {
