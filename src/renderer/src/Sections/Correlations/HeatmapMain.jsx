@@ -1,6 +1,18 @@
 import React, { useEffect, useRef } from 'react';
 import * as d3 from 'd3';
 import correlationState from '../GlobalState/correlationState';
+import currentDate from '../../Utils/currentDate1';
+import currentTime from '../../Utils/currentTime1';
+import coreState from '../GlobalState/coreState';
+import { useTranslation } from 'react-i18next';
+import d3ToPng from 'd3-svg-to-png';
+import buildHeatmapDrawio from './buildHeatmapDrawio';
+
+const getDateTime = () => {
+  const date = currentDate();
+  const time = currentTime();
+  return `${date}_${time}`;
+};
 
 const Heatmap = ({
   title = '',
@@ -11,37 +23,114 @@ const Heatmap = ({
 }) => {
   const svgRef = useRef(null);
   const tooltipRef = useRef(null);
+  const { t } = useTranslation();
 
   // Get data from Zustand store
   // Expects: [{"respondent":"US1","US1":100,"US2":54,...}, {...}, ...]
   const correlationData = correlationState((state) => state.gridRowData);
+  const projectName = coreState((state) => state.projectName) ?? '';
+
+  // Function to download the heatmap as PNG
+  const downloadPNG = async () => {
+    const imageEl = document.getElementById(`heatmapImage`);
+
+    if (!imageEl) {
+      console.error(`Image element not found: heatmapImage`);
+      return;
+    }
+
+    const filename = `KADE_${projectName}_${t('heatmap')}_${getDateTime()}`;
+    let fileData;
+    try {
+      fileData = await d3ToPng(imageEl, filename, {
+        backgroundColor: 'white',
+        scale: 3,
+        format: 'png',
+        download: false,
+        quality: 1,
+      });
+    } catch (error) {
+      console.error('Failed to convert to PNG:', error);
+      return;
+    }
+
+    const buffer = fileData?.split(',')?.[1];
+    if (!buffer) {
+      console.error('PNG conversion returned no data.');
+      return;
+    }
+
+    const defaultPath = `${filename}.png`;
+    const filepath = await window.electronAPI?.showSavePngDialog(defaultPath);
+    if (!filepath) {
+      alert('Save operation was canceled.');
+      return;
+    }
+
+    try {
+      const result = await window.electronAPI.savePNG(buffer, filepath);
+      console.log(result);
+    } catch (error) {
+      console.error('Failed to save PNG file:', error);
+    }
+  };
+
+  const downloadDrawio = async () => {
+    const drawioXml = buildHeatmapDrawio({
+      correlationData, // already in scope from correlationState
+      title,
+      subtitle,
+      width,
+      height,
+    });
+
+    if (!drawioXml) return;
+
+    const filename = `KADE_${projectName}_${t('heatmap')}_${getDateTime()}`;
+    const defaultPath = `${filename}.drawio`;
+
+    const encoder = new TextEncoder();
+    const arrayBuffer = encoder.encode(drawioXml).buffer;
+
+    const filepath = await window.electronAPI?.showSaveDrawioDialog?.(defaultPath);
+    if (!filepath) {
+      alert('Save operation was canceled.');
+      return;
+    }
+
+    try {
+      await window.electronAPI.saveSVG(arrayBuffer, filepath);
+    } catch (error) {
+      console.error('Failed to save .drawio file:', error);
+    }
+  };
 
   // Function to download the heatmap as SVG
-  const downloadSVG = () => {
+  const downloadSVG = async () => {
     if (!svgRef.current) return;
-
+    const filename = `KADE_${projectName}_${t('heatmap')}_${getDateTime()}`;
     // Clone the SVG element
     const svgElement = svgRef.current.cloneNode(true);
-
     // Add XML namespaces
     svgElement.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
     svgElement.setAttribute('xmlns:xlink', 'http://www.w3.org/1999/xlink');
+    const svgData = svgElement.outerHTML;
+    const preface = '<?xml version="1.0" standalone="no"?>\r\n';
+    const svgBlob = new Blob([preface, svgData], { type: 'image/svg+xml;charset=utf-8' });
+    const arrayBuffer = await new Response(svgBlob).arrayBuffer();
+    const defaultPath = `${filename}.svg`;
 
-    // Serialize the SVG
-    const svgData = new XMLSerializer().serializeToString(svgElement);
-
-    // Create a blob
-    const blob = new Blob([svgData], { type: 'image/svg+xml;charset=utf-8' });
-
-    // Create download link
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = 'correlation-heatmap.svg';
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    URL.revokeObjectURL(url);
+    const filepath = await window.electronAPI?.showSaveSvgDialog(defaultPath);
+    if (!filepath) {
+      alert('Save operation was canceled.');
+      return;
+    }
+    try {
+      const result = await window.electronAPI.saveSVG(arrayBuffer, filepath);
+      console.log(result);
+    } catch (error) {
+      console.error('Failed to save SVG file:', error);
+    }
   };
 
   // Expose download function to parent component via callback
@@ -207,28 +296,59 @@ const Heatmap = ({
   }, [correlationData, width, height, title, subtitle]);
 
   return (
-    <div className="">
+    <div className="flex flex-col">
       <div className="relative">
-        <svg ref={svgRef}></svg>
+        <svg id="heatmapImage" ref={svgRef}></svg>
         <div
           ref={tooltipRef}
           className="absolute opacity-0 bg-white border-2 border-solid border-gray-800 rounded-md p-2 pointer-events-none shadow-lg"
         />
       </div>
-      <button
-        onClick={downloadSVG}
-        className="mt-4 ml-30! mb-12.5! px-4 py-2 cursor-pointer bg-grey-button text-black rounded-md hover:bg-grey-button-hover transition-colors flex items-center gap-2"
-      >
-        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
-          />
-        </svg>
-        Download SVG
-      </button>
+
+      <div className="flex flex-row gap-4 ml-18 mt-4">
+        <button
+          onClick={downloadPNG}
+          className="mt-4 mb-12.5! px-4 py-2 cursor-pointer bg-grey-button text-black rounded-md hover:bg-grey-button-hover transition-colors flex items-center gap-2"
+        >
+          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
+            />
+          </svg>
+          Download PNG
+        </button>
+        <button
+          onClick={downloadSVG}
+          className="mt-4  mb-12.5! px-4 py-2 cursor-pointer bg-grey-button text-black rounded-md hover:bg-grey-button-hover transition-colors flex items-center gap-2"
+        >
+          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
+            />
+          </svg>
+          Download SVG
+        </button>
+        <button
+          onClick={downloadDrawio}
+          className="mt-4 mb-12.5! px-4 py-2 cursor-pointer bg-grey-button text-black rounded-md hover:bg-grey-button-hover transition-colors flex items-center gap-2"
+        >
+          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
+            />
+          </svg>
+          Download Draw.io
+        </button>
+      </div>
     </div>
   );
 };
