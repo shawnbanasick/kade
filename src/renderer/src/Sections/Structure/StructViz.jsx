@@ -219,18 +219,14 @@ function FlowInner() {
   const handleDownloadDrawio = async () => {
     const filename = `KADE_${projectName}_${t('Hierarchical_Factor_Graph')}_${getDateTime()}`;
     const defaultPath = `${filename}.drawio`;
-
     const drawioXml = exportToDrawio(nodes, edges, { includeLegend: true });
-
     const encoder = new TextEncoder();
     const arrayBuffer = encoder.encode(drawioXml).buffer;
-
     const filepath = await window.electronAPI?.showSaveDrawioDialog?.(defaultPath);
     if (!filepath) {
       alert('Save operation was canceled.');
       return;
     }
-
     try {
       await window.electronAPI.saveSVG(arrayBuffer, filepath);
     } catch (error) {
@@ -240,9 +236,9 @@ function FlowInner() {
 
   return (
     <>
-      <div className="text-5xl mb-5">{t('Hierarchical Factor Graph')}</div>
+      <div className="text-5xl mt-2 mb-5">{t('Hierarchical Factor Graph')}</div>
 
-      <div ref={flowRef} className="relative w-full h-[87%] bg-white">
+      <div ref={flowRef} className="relative w-[95%] h-[82%] bg-white">
         <div className="flex flex-row gap-15 items-end react-flow__panel-top">
           <UserNumberInput
             onChange={handleCorrelationChange}
@@ -324,7 +320,7 @@ function FlowInner() {
         >
           <Background />
           <Controls style={{ display: 'none' }} />
-          <Panel position="top-left" style={{ marginLeft: '600px', marginTop: '100px' }}>
+          <Panel position="top-left" style={{ marginLeft: '557px', marginTop: '100px' }}>
             <EdgeLegend />
           </Panel>
           <Panel position="bottom-left" style={{ marginBottom: '25px', marginLeft: '10px' }}>
@@ -360,6 +356,11 @@ function FlowInner() {
             </div>
           </Panel>
         </ReactFlow>
+      </div>
+      <div className="absolute top-35 left-180 w-50 bg-white rounded-md shadow-md p-2 text-xs text-gray-600">
+        <div className="mb-1 font-semibold">Controls:</div>
+        <div>🖱️ {t('Scroll to zoom')}</div>
+        <div>🖐️ {t('Drag background to pan')}</div>
       </div>
     </>
   );
