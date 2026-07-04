@@ -166,7 +166,63 @@ function FlowInner() {
     structureState.setState({ horizontalSpacing: newValue });
   }, []);
 
-  const handleDownloadSvg = useCallback(() => {
+  const handleDownloadPng = async () => {
+    const container = flowRef.current;
+    if (!container) return;
+
+    const dataUrl = await htmlToImage.toPng(container, {
+      skipFonts: true,
+      skipAutoScale: true,
+      backgroundColor: 'white',
+      filter: (node) => {
+        if (
+          node?.classList?.contains('react-flow__minimap') ||
+          node?.classList?.contains('react-flow__controls') ||
+          node?.classList?.contains('react-flow__background') ||
+          node?.classList?.contains('react-flow__panel-top')
+        ) {
+          return false;
+        }
+        // Exclude button panel - check parent chain for button elements
+        let currentNode = node;
+        while (currentNode) {
+          if (currentNode?.tagName === 'BUTTON') {
+            return false;
+          }
+          if (
+            currentNode?.classList?.contains('react-flow__panel') &&
+            currentNode?.style?.position === 'absolute' &&
+            currentNode?.querySelector('button')
+          ) {
+            return false;
+          }
+          currentNode = currentNode.parentElement;
+        }
+        if (node?.tagName === 'LINK' && node?.rel === 'stylesheet') {
+          return false;
+        }
+        return true;
+      },
+    });
+
+    const filename = `KADE_${projectName}_${t('Hierarchical_Factor_Graph')}_${getDateTime()}`;
+    const defaultPath = `${filename}.png`;
+    const filepath = await window.electronAPI?.showSavePngDialog?.(defaultPath);
+    if (!filepath) {
+      alert('Save operation was canceled.');
+      return;
+    }
+
+    try {
+      const result = await window.electronAPI.savePNG(dataUrl?.split(',')?.[1], filepath);
+      console.log(result);
+    } catch (error) {
+      console.error('Failed to save PNG file:', error);
+    }
+  };
+
+  const handleDownloadSvg = useCallback(async () => {
+    const filename = `KADE_${projectName}_${t('Hierarchical_Factor_Graph')}_${getDateTime()}`;
     const container = flowRef.current;
     if (!container) return;
 
@@ -205,11 +261,20 @@ function FlowInner() {
           return true;
         },
       })
-      .then((dataUrl) => {
-        const link = document.createElement('a');
-        link.href = dataUrl;
-        link.download = 'structure-model.svg';
-        link.click();
+      .then(async (dataUrl) => {
+        const defaultPath = `${filename}.svg`;
+
+        const filepath = await window.electronAPI?.showSaveSvgDialog(defaultPath);
+        if (!filepath) {
+          alert('Save operation was canceled.');
+          return;
+        }
+        try {
+          const result = await window.electronAPI.saveSVG(arrayBuffer, filepath);
+          console.log(result);
+        } catch (error) {
+          console.error('Failed to save SVG file:', error);
+        }
       })
       .catch((err) => {
         console.error('SVG export failed:', err);
@@ -326,6 +391,20 @@ function FlowInner() {
           <Panel position="bottom-left" style={{ marginBottom: '25px', marginLeft: '10px' }}>
             <div className="flex gap-3">
               <button
+                onClick={handleDownloadPng}
+                className="px-4 py-2 bg-grey-button text-black rounded-md hover:shadow-[inset_0_0_0_4px_#666,0_0_1px_transparent] transition-colors flex items-center gap-2"
+              >
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
+                  />
+                </svg>
+                Download PNG
+              </button>{' '}
+              <button
                 onClick={handleDownloadSvg}
                 className="px-4 py-2 bg-grey-button text-black rounded-md hover:shadow-[inset_0_0_0_4px_#666,0_0_1px_transparent] transition-colors flex items-center gap-2"
               >
@@ -351,7 +430,7 @@ function FlowInner() {
                     d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
                   />
                 </svg>
-                Download diagrams.net File
+                Download draw.io
               </button>
             </div>
           </Panel>
