@@ -9,8 +9,10 @@ import ReactFlow, {
 import * as htmlToImage from 'html-to-image';
 import StraightEdgeWithLabel from './StraightEdgeWithLabel';
 import EdgeLegend from './EdgeLegend';
-
-const edgeTypes = { straightWithLabel: StraightEdgeWithLabel };
+import { useTranslation } from 'react-i18next';
+import currentDate from '../../Utils/currentDate1';
+import currentTime from '../../Utils/currentTime1';
+import coreState from '../GlobalState/coreState';
 import 'reactflow/dist/style.css';
 import getNodes from './getNodes';
 import './reactFlow.css';
@@ -18,6 +20,14 @@ import structureState from '../GlobalState/structureState';
 import UserNumberInput from './UserNumberInput';
 import refreshViz from './refreshViz';
 import exportToDrawio from './exportToDrawio';
+
+const edgeTypes = { straightWithLabel: StraightEdgeWithLabel };
+
+const getDateTime = () => {
+  const date = currentDate();
+  const time = currentTime();
+  return `${date}_${time}`;
+};
 
 // adjust text padding in nodes
 const paddingTopVal = 8;
@@ -100,6 +110,7 @@ function FlowInner() {
   const flowRef = useRef(null);
   const [nodeSizeMode, setNodeSizeMode] = useState('constant'); // 'constant' or 'variance'
   const [varianceScaleFactor, setVarianceScaleFactor] = useState(5); // default scaling
+  const { t } = useTranslation();
 
   const edges = structureState((state) => state.initialEdges);
   const updateEdges = structureState((state) => state.updateInitialEdges);
@@ -109,6 +120,7 @@ function FlowInner() {
   const verticalSpacing = structureState((state) => state.verticalSpacing);
   const horizontalSpacing = structureState((state) => state.horizontalSpacing);
   const explainedVarianceArrays = structureState((state) => state.explainedVarianceArrays);
+  const projectName = coreState.getState().projectName;
 
   // Compute width object based on mode
   const widthObj = useMemo(() => {
@@ -204,137 +216,152 @@ function FlowInner() {
       });
   }, []);
 
-  const handleDownloadDrawio = useCallback(() => {
-    const drawioXml = exportToDrawio(nodes, edges);
-    const blob = new Blob([drawioXml], { type: 'application/xml' });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = 'structure-model.drawio';
-    link.click();
-    URL.revokeObjectURL(url);
-  }, [nodes, edges]);
+  const handleDownloadDrawio = async () => {
+    const filename = `KADE_${projectName}_${t('Hierarchical_Factor_Graph')}_${getDateTime()}`;
+    const defaultPath = `${filename}.drawio`;
+
+    const drawioXml = exportToDrawio(nodes, edges, { includeLegend: true });
+
+    const encoder = new TextEncoder();
+    const arrayBuffer = encoder.encode(drawioXml).buffer;
+
+    const filepath = await window.electronAPI?.showSaveDrawioDialog?.(defaultPath);
+    if (!filepath) {
+      alert('Save operation was canceled.');
+      return;
+    }
+
+    try {
+      await window.electronAPI.saveSVG(arrayBuffer, filepath);
+    } catch (error) {
+      console.error('Failed to save .drawio file:', error);
+    }
+  };
 
   return (
-    <div ref={flowRef} className="relative w-full h-[95%] bg-white">
-      <div className="flex flex-row gap-15 items-end react-flow__panel-top">
-        <UserNumberInput
-          onChange={handleCorrelationChange}
-          value={structureCorrelationThreshold}
-          label="Corr. Cutoff"
-          placeholder="Threshold"
-          min={0}
-          max={1}
-          step={0.01}
-          debounceMs={500}
-          className="w-15"
-        />
-        <UserNumberInput
-          onChange={handleVerticalSpacingChange}
-          value={verticalSpacing}
-          label="Vert. Spacing"
-          placeholder="Vertical Spacing"
-          min={0}
-          max={500}
-          step={1}
-          debounceMs={500}
-          className="w-15"
-        />
-        <UserNumberInput
-          onChange={handleHorizontalSpacingChange}
-          value={horizontalSpacing}
-          label="Hori. Spacing"
-          placeholder="Horizontal Spacing"
-          min={0}
-          max={500}
-          step={1}
-          debounceMs={500}
-          className="w-15"
-        />
+    <>
+      <div className="text-5xl mb-5">{t('Hierarchical Factor Graph')}</div>
 
-        {/* Node Size Mode Select */}
-        <div className="form-control flex flex-col p-0 pt-0 ml-5 mr-0 mb-3.5 ">
-          <label className="label mb-2">
-            <span className="label-text font-medium">Node Size:</span>
-          </label>
-          <select
-            value={nodeSizeMode}
-            onChange={(e) => setNodeSizeMode(e.target.value)}
-            className="input input-bordered h-5.5 text-xs px-2 py-0 "
-          >
-            <option value="constant">Constant</option>
-            <option value="variance">Explained Variance</option>
-          </select>
-        </div>
-
-        {/* Variance Scale Factor - only show when variance mode is active */}
-        {nodeSizeMode === 'variance' && (
+      <div ref={flowRef} className="relative w-full h-[87%] bg-white">
+        <div className="flex flex-row gap-15 items-end react-flow__panel-top">
           <UserNumberInput
-            onChange={setVarianceScaleFactor}
-            value={varianceScaleFactor}
-            label="Scale Factor"
-            placeholder="Scale"
-            min={1}
-            max={10}
-            step={0.1}
-            debounceMs={300}
+            onChange={handleCorrelationChange}
+            value={structureCorrelationThreshold}
+            label="Corr. Cutoff"
+            placeholder="Threshold"
+            min={0}
+            max={1}
+            step={0.01}
+            debounceMs={500}
             className="w-15"
           />
-        )}
-      </div>
-      <ReactFlow
-        id="SvgNode"
-        nodes={nodes}
-        edges={edges}
-        edgeTypes={edgeTypes}
-        onEdgesChange={onEdgesChange}
-        onEdgesDelete={onEdgesDelete}
-        deleteKeyCode={['Backspace', 'Delete']}
-        elementsSelectable={true}
-        edgesFocusable={true}
-        edgesUpdatable={true}
-        fitView
-        proOptions={{ hideAttribution: true }}
-      >
-        <Background />
-        <Controls style={{ display: 'none' }} />
-        <Panel position="top-left" style={{ marginLeft: '600px', marginTop: '100px' }}>
-          <EdgeLegend />
-        </Panel>
-        <Panel position="bottom-left" style={{ marginBottom: '25px', marginLeft: '10px' }}>
-          <div className="flex gap-3">
-            <button
-              onClick={handleDownloadSvg}
-              className="px-4 py-2 bg-grey-button text-black rounded-md hover:shadow-[inset_0_0_0_4px_#666,0_0_1px_transparent] transition-colors flex items-center gap-2"
+          <UserNumberInput
+            onChange={handleVerticalSpacingChange}
+            value={verticalSpacing}
+            label="Vert. Spacing"
+            placeholder="Vertical Spacing"
+            min={0}
+            max={500}
+            step={1}
+            debounceMs={500}
+            className="w-15"
+          />
+          <UserNumberInput
+            onChange={handleHorizontalSpacingChange}
+            value={horizontalSpacing}
+            label="Hori. Spacing"
+            placeholder="Horizontal Spacing"
+            min={0}
+            max={500}
+            step={1}
+            debounceMs={500}
+            className="w-15"
+          />
+
+          {/* Node Size Mode Select */}
+          <div className="form-control flex flex-col p-0 pt-0 ml-5 mr-0 mb-3.5 ">
+            <label className="label mb-2">
+              <span className="label-text font-medium">Node Size:</span>
+            </label>
+            <select
+              value={nodeSizeMode}
+              onChange={(e) => setNodeSizeMode(e.target.value)}
+              className="input input-bordered h-5.5 text-xs px-2 py-0 "
             >
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
-                />
-              </svg>
-              Download SVG
-            </button>
-            <button
-              onClick={handleDownloadDrawio}
-              className="px-4 py-2 bg-grey-button text-black rounded-md hover:shadow-[inset_0_0_0_4px_#666,0_0_1px_transparent] transition-colors flex items-center gap-2"
-            >
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
-                />
-              </svg>
-              Download diagrams.net File
-            </button>
+              <option value="constant">Constant</option>
+              <option value="variance">Explained Variance</option>
+            </select>
           </div>
-        </Panel>
-      </ReactFlow>
-    </div>
+
+          {/* Variance Scale Factor - only show when variance mode is active */}
+          {nodeSizeMode === 'variance' && (
+            <UserNumberInput
+              onChange={setVarianceScaleFactor}
+              value={varianceScaleFactor}
+              label="Scale Factor"
+              placeholder="Scale"
+              min={1}
+              max={10}
+              step={0.1}
+              debounceMs={300}
+              className="w-15"
+            />
+          )}
+        </div>
+        <ReactFlow
+          id="SvgNode"
+          nodes={nodes}
+          edges={edges}
+          edgeTypes={edgeTypes}
+          onEdgesChange={onEdgesChange}
+          onEdgesDelete={onEdgesDelete}
+          deleteKeyCode={['Backspace', 'Delete']}
+          elementsSelectable={true}
+          edgesFocusable={true}
+          edgesUpdatable={true}
+          fitView
+          proOptions={{ hideAttribution: true }}
+        >
+          <Background />
+          <Controls style={{ display: 'none' }} />
+          <Panel position="top-left" style={{ marginLeft: '600px', marginTop: '100px' }}>
+            <EdgeLegend />
+          </Panel>
+          <Panel position="bottom-left" style={{ marginBottom: '25px', marginLeft: '10px' }}>
+            <div className="flex gap-3">
+              <button
+                onClick={handleDownloadSvg}
+                className="px-4 py-2 bg-grey-button text-black rounded-md hover:shadow-[inset_0_0_0_4px_#666,0_0_1px_transparent] transition-colors flex items-center gap-2"
+              >
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
+                  />
+                </svg>
+                Download SVG
+              </button>
+              <button
+                onClick={handleDownloadDrawio}
+                className="px-4 py-2 bg-grey-button text-black rounded-md hover:shadow-[inset_0_0_0_4px_#666,0_0_1px_transparent] transition-colors flex items-center gap-2"
+              >
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
+                  />
+                </svg>
+                Download diagrams.net File
+              </button>
+            </div>
+          </Panel>
+        </ReactFlow>
+      </div>
+    </>
   );
 }
 

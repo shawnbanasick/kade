@@ -6,6 +6,15 @@ import ForceGraphDataSelectRadio from './ForceGraphDataSelectRadio';
 import DebouncedNumberInput from './ForceGraphCorrLimitInput';
 import structureState from '../../GlobalState/structureState';
 import { update } from 'lodash';
+import currentDate from '../../../Utils/currentDate1';
+import currentTime from '../../../Utils/currentTime1';
+import coreState from '../../GlobalState/coreState';
+
+const getDateTime = () => {
+  const date = currentDate();
+  const time = currentTime();
+  return `${date}_${time}`;
+};
 
 const ForceGraph = ({
   title = '',
@@ -23,6 +32,11 @@ const ForceGraph = ({
   const [forceStrength, setForceStrength] = useState(-5);
   const showAutoFlags = structureState((state) => state.showAutoFlags);
   const updateShowAutoFlags = structureState((state) => state.updateShowAutoFlags);
+  const projectName = coreState.getState().projectName;
+  const date = currentDate();
+  const time = currentTime();
+  const dateTime = `${date}_${time}`;
+  const completeFileName = `${projectName}-correlation_network_${getDateTime()}`;
 
   const { t } = useTranslation();
 
@@ -31,14 +45,14 @@ const ForceGraph = ({
   let correlationData = data;
 
   const [currentFactorIndex, setCurrentFactorIndex] = useState(0);
-  
+
   // const [showAutoFlags, setShowAutoFlags] = useState(true);
   // const [resetAutoFlag, setResetAutoFlag] = useState(false);
 
   const shapeGenerators = {
-1: (r) => {
-  return `M ${-r},0 A ${r},${r} 0 1,0 ${r},0 A ${r},${r} 0 1,0 ${-r},0 Z`;
-},
+    1: (r) => {
+      return `M ${-r},0 A ${r},${r} 0 1,0 ${r},0 A ${r},${r} 0 1,0 ${-r},0 Z`;
+    },
     2: (r) => {
       const h = r * 1.73;
       return `M 0,${-h} L ${r * 1.5},${h * 0.5} L ${-r * 1.5},${h * 0.5} Z`;
@@ -61,7 +75,7 @@ const ForceGraph = ({
       const skew = r * 0.6;
       return `M ${-w + skew},${-h} L ${w + skew},${-h} L ${w - skew},${h} L ${-w - skew},${h} Z`;
     },
-   6: (r) => `M ${-r},${-r} L ${r},${-r} L ${r},${r} L ${-r},${r} Z`,
+    6: (r) => `M ${-r},${-r} L ${r},${-r} L ${r},${r} L ${-r},${r} Z`,
     7: (r) => {
       // Trapezoid: wide base, narrow top
       const wTop = r * 0.9;
@@ -116,28 +130,39 @@ const ForceGraph = ({
     '#d8b4fe',
   ];
 
-  const downloadSVG = () => {
+  const downloadSVG = async () => {
     if (!svgRef.current) return;
-    const svgElement = svgRef.current.cloneNode(true);
-    svgElement.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
-    svgElement.setAttribute('xmlns:xlink', 'http://www.w3.org/1999/xlink');
-    const svgData = new XMLSerializer().serializeToString(svgElement);
-    const blob = new Blob([svgData], { type: 'image/svg+xml;charset=utf-8' });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = 'correlation-network.svg';
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    URL.revokeObjectURL(url);
+    const svgEl = document.querySelector('#forceGraph');
+    svgEl.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
+    const svgData = svgEl.outerHTML;
+    const preface = '<?xml version="1.0" standalone="no"?>\r\n';
+    const svgContent = new Blob([preface, svgData], {
+      type: 'image/svg+xml;charset=utf-8',
+    });
+
+    // to buffer
+    const arrayBuffer = await new Response(svgContent).arrayBuffer();
+    const defaultPath = `${completeFileName}.svg`;
+
+    const filepath = await window.electronAPI.showSaveSvgDialog(defaultPath);
+    if (!filepath) {
+      alert('Save operation was canceled.');
+      return;
+    }
+
+    try {
+      const result = await window.electronAPI.saveSVG(arrayBuffer, filepath);
+      console.log(result);
+    } catch (error) {
+      console.error('Failed to save file:', error);
+    }
   };
 
   /**
    * Download the current graph state as a draw.io (.drawio) XML file.
    * Reads node positions directly from the live D3 simulation data bound to SVG elements.
    */
-  const downloadDrawio = () => {
+  const downloadDrawio = async () => {
     if (!svgRef.current || !correlationData || correlationData.length === 0) return;
 
     // ── 1. Collect live node positions from rendered SVG ──────────────────────
@@ -183,8 +208,9 @@ const ForceGraph = ({
     const offsetX = minX < 40 ? 40 - minX : 0;
     const offsetY = minY < 40 ? 40 - minY : 0;
 
-    const NODE_W = 60;
-    const NODE_H = 60;
+    // circle size constants (matching D3 node radius) hight and width
+    const NODE_W = 40;
+    const NODE_H = 40;
 
     // ── 4. Build XML ──────────────────────────────────────────────────────────
     // draw.io renders cells in document order — later = on top.
@@ -207,18 +233,18 @@ const ForceGraph = ({
       const baseStyle = isGrayscale ? drawioShapeStyles[factorNum] : 'ellipse;whiteSpace=wrap;'; // color mode always uses ellipse (circle)
 
       // Ensure html=0 is the only html= declaration (strip any from baseStyle first)
-      const labelAlign = isGrayscale && factorNum === 2 ? 'verticalAlign=bottom;spacingBottom=8;' : 'verticalAlign=middle;';
+      const labelAlign =
+        isGrayscale && factorNum === 2
+          ? 'verticalAlign=bottom;spacingBottom=2;'
+          : 'verticalAlign=middle;';
       const cleanBase = baseStyle.replace(/html=\d;?/g, '');
       const style = `${cleanBase}fillColor=${fillColor};strokeColor=${strokeColor};fontStyle=1;fontSize=12;${labelAlign}${dashed}html=0;`;
-      // const cleanBase = baseStyle.replace(/html=\d;?/g, '');
-      // const style = `${cleanBase}fillColor=${fillColor};strokeColor=${strokeColor};fontStyle=1;fontSize=12;${dashed}html=0;`;
+
+      // set circle width and height to 70% of NODE_W/H in grayscale mode, otherwise use full size. Factor 6 (square) gets a wider bounding box in grayscale only; color mode uses uniform circles.
       // Factor 6 (oval) gets a wider bounding box in grayscale only; color mode uses uniform circles
-      let nodeW = isGrayscale ? NODE_W * 0.7 : NODE_W;
-      let nodeH = isGrayscale ? NODE_H * 0.7 : NODE_H;
-      // let nodeW = isGrayscale && factorNum === 6 ? NODE_W * 1.6 : NODE_W;
-      // let nodeH = isGrayscale && factorNum === 6 ? NODE_H * 0.7 : NODE_H;
-      // // nodeW = isGrayscale && factorNum === 1 || factorNum === 2 ? NODE_W * 0.7 : NODE_W;
-      // nodeH = isGrayscale && factorNum === 1 || factorNum === 2 ? NODE_H * 0.7 : NODE_H;
+      let nodeW = isGrayscale ? NODE_W * 0.7 : NODE_W * 0.9;
+      let nodeH = isGrayscale ? NODE_H * 0.7 : NODE_H * 0.9;
+
       const cx = Math.round(pos.x + offsetX - nodeW / 2);
       const cy = Math.round(pos.y + offsetY - nodeH / 2);
 
@@ -242,7 +268,7 @@ const ForceGraph = ({
         edgeColor = l.value < 0 ? '#555555' : '#222222';
         edgeDash = l.value < 0 ? 'dashed=1;dashPattern=4 4;' : '';
       } else {
-        edgeColor = l.value < 0 ? '#2563eb' : '#dc2626';
+        edgeColor = l.value < 0 ? '#dc2626' : '#78bc21';
         edgeDash = '';
       }
 
@@ -289,10 +315,10 @@ const ForceGraph = ({
 
       const fillColor = isGrayscale ? grayscaleColors[0] : factorColors[i - 1];
       const baseStyle = isGrayscale ? drawioShapeStyles[i] : 'ellipse;whiteSpace=wrap;';
-      const labelAlign = isGrayscale && i === 2 ? 'verticalAlign=bottom;spacingBottom=4;' : 'verticalAlign=middle;';
+      const labelAlign =
+        isGrayscale && i === 2 ? 'verticalAlign=bottom;spacingBottom=4;' : 'verticalAlign=middle;';
       const cleanBase = baseStyle.replace(/html=\d;?/g, '');
       const swatchStyle = `${cleanBase}fillColor=${fillColor};strokeColor=#000000;fontSize=10;fontStyle=1;${labelAlign}html=0;`;
-      // const swatchStyle = `${cleanBase}fillColor=${fillColor};strokeColor=#000000;fontSize=10;fontStyle=1;html=0;`;
 
       // Factor 6 (oval) swatch uses a wider bounding box in grayscale only
       const swatchW = LEGEND_SHAPE_SIZE;
@@ -353,7 +379,7 @@ const ForceGraph = ({
     );
 
     // Negative correlation line swatch (dashed in grayscale)
-    const negColor = isGrayscale ? '#555555' : '#2563eb';
+    const negColor = isGrayscale ? '#555555' : '#78bc21';
     const negDash = isGrayscale ? 'dashed=1;dashPattern=4 4;' : '';
     const negCid = cellId++;
     legendXmlCells.push(
@@ -404,15 +430,23 @@ const ForceGraph = ({
       `  </diagram>\n` +
       `</mxfile>`;
 
-    const blob = new Blob([drawioXml], { type: 'application/xml;charset=utf-8' });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = 'correlation-network.drawio';
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    URL.revokeObjectURL(url);
+    const filename = `KADE_${projectName}_${t('Correlation Network')}_${getDateTime()}`;
+    const defaultPath = `${filename}.drawio`;
+
+    const encoder = new TextEncoder();
+    const arrayBuffer = encoder.encode(drawioXml).buffer;
+
+    const filepath = await window.electronAPI?.showSaveDrawioDialog?.(defaultPath);
+    if (!filepath) {
+      alert('Save operation was canceled.');
+      return;
+    }
+
+    try {
+      await window.electronAPI.saveSVG(arrayBuffer, filepath);
+    } catch (error) {
+      console.error('Failed to save .drawio file:', error);
+    }
   };
 
   /** Escape characters that are special in XML attribute values */
@@ -426,7 +460,7 @@ const ForceGraph = ({
 
   const toggleGrayscale = () => {
     setIsGrayscale(!isGrayscale);
-    updateShowAutoFlags(false); // Auto-flags are only designed for color mode, so 
+    updateShowAutoFlags(false); // Auto-flags are only designed for color mode, so
   };
 
   useEffect(() => {
@@ -486,31 +520,30 @@ const ForceGraph = ({
 
     const legendGroup = svg.append('g').attr('class', 'legend-group');
     const legendItemHeight = 35;
-    const legendColumns = 4;
-    const legendColumnWidth = 140;
+    const legendColumns = 8;
+    const legendColumnWidth = 120;
     const legendTotalWidth = legendColumns * legendColumnWidth;
-    const legendX = (width - legendTotalWidth) / 2;
+    const legendX = (window.innerWidth - 780) / 2;
     const legendY = 20;
 
     legendGroup
       .append('text')
-      .attr('x', legendX - 15)
+      .attr('x', legendX - 115)
       .attr('y', legendY)
       .attr('class', 'text-sm font-semibold')
       .attr('fill', '#000')
       .text('Factors:');
 
     for (let i = 1; i <= 8; i++) {
-      const col = (i - 1) % 4;
-      const row = Math.floor((i - 1) / 4);
-      const x = legendX + col * legendColumnWidth;
+      const col = (i - 1) % 8;
+      const row = Math.floor((i - 1) / 8);
+      const x = legendX + col * legendColumnWidth - 104;
       const y = legendY + 20 + row * legendItemHeight;
       const legendItem = legendGroup.append('g').attr('transform', `translate(${x}, ${y})`);
 
       if (isGrayscale) {
         // Use a smaller r for the oval so it fits the legend row height cleanly
         const legendR = 12;
-        // const legendR = i === 1 ? 12 : i === 6 ? 16 : 12;
         legendItem
           .append('path')
           .attr('d', shapeGenerators[i](legendR))
@@ -573,7 +606,7 @@ const ForceGraph = ({
     const linkColorScale = d3
       .scaleLinear()
       .domain([-100, 0, 100])
-      .range(isGrayscale ? ['#555555', '#cccccc', '#222222'] : ['#2563eb', '#e5e7eb', '#dc2626']);
+      .range(isGrayscale ? ['#555555', '#cccccc', '#222222'] : ['#dc2626', '#e5e7eb', '#78bc21']);
 
     const linkWidthScale = d3.scaleLinear().domain([0, 100]).range([1, 8]);
 
@@ -655,10 +688,11 @@ const ForceGraph = ({
       .append('text')
       .text((d) => d.id)
       .attr('text-anchor', 'middle')
-     .attr('dy', (d) => {
-    if (isGrayscale && (d.pca === 2 || d.allPcData?.[currentFactorIndex] === 2)) return '0.45em';
-    return '0.35em';
-  })
+      .attr('dy', (d) => {
+        if (isGrayscale && (d.pca === 2 || d.allPcData?.[currentFactorIndex] === 2))
+          return '0.45em';
+        return '0.35em';
+      })
       .attr('class', 'text-xs font-semibold cursor-default pointer-events-none')
       .attr('fill', '#000');
 
@@ -781,8 +815,8 @@ const ForceGraph = ({
         .select('.legend-group')
         .append('text')
         .attr('class', 'legend-explanation')
-        .attr('x', width / 2 - 45)
-        .attr('y', 120)
+        .attr('x', width / 2 - 145)
+        .attr('y', 76)
         .attr('text-anchor', 'middle')
         .attr('fill', '#666')
         .text('Dashed border indicates an auto-flagged factor loading.');
@@ -790,7 +824,6 @@ const ForceGraph = ({
   }, [showAutoFlags, width]);
 
   const handleSelectionChange = (id, value) => {
-
     if (!svgRef.current || !colorScaleRef.current) return;
     setCurrentFactorIndex(value);
 
@@ -843,43 +876,75 @@ const ForceGraph = ({
   };
 
   return (
-    <div className="h-[calc(100vh-130px)]">
-      <div className="flex w-[calc(85vw-30px)] text-basis h-[80px] items-center">
-        <div className="flex gap-2">
-          <DebouncedNumberInput
-            value={correlationThreshold}
-            label={t('Cutoff')}
-            min={0}
-            max={1}
-            step={0.01}
-            debounceMs={500}
-          />
-          <ForceGraphDataSelectRadio />
-          <PcaScenarios onSelectionChange={handleSelectionChange} isGrayscale={isGrayscale} />
-        </div>
-        <div className="flex flex-row mt-8 ml-6">
-          <button
-            onClick={() => updateShowAutoFlags(!showAutoFlags)}
-            className={`px-4 py-2 rounded-md transition-colors flex items-center justify-center ${
-              showAutoFlags
-                ? 'bg-primary-button text-black hover:shadow-[inset_0_0_0_4px_#666,_0_0_1px_transparent]'
-                : 'bg-grey-button text-black hover:shadow-[inset_0_0_0_4px_#666,_0_0_1px_transparent]'
-            }`}
-          >
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M3 21v-4m0 0V5a2 2 0 012-2h6.5l1 1H21l-3 6 3 6h-8.5l-1-1H5a2 2 0 00-2 2zm9-13.5V9"
-              />
-            </svg>
-            Auto-Flag {showAutoFlags ? 'ON' : 'OFF'}
-          </button>
-          <div className="flex items-center gap-2 mb-0 ml-6">
-            <div className="flex flex-col items-left">
-              <label className="text-md font-medium">Attraction Strength</label>
-                <div className="flex flex-row items-center gap-2">
+    <>
+      <div className="text-5xl mb-5">{t('Correlation Network Force-Directed Graph')}</div>
+
+      <div className="h-[93%]">
+        {/* Controls and legend */}
+        <div className="flex flex-wrap w-[calc(93vw-35px)] text-basis h-auto min-h-20 items-center">
+          <div className="flex gap-8 h-18 items-center justify-center w-full lg:w-[51%] flex-wrap">
+            <DebouncedNumberInput
+              value={correlationThreshold}
+              label={t('Cutoff')}
+              min={0}
+              max={1}
+              step={0.01}
+              debounceMs={500}
+            />
+            <ForceGraphDataSelectRadio />
+
+            {/* Correlation legend */}
+            <div className="flex flex-col gap-2 text-sm border-gray-200">
+              <div className="flex items-center gap-2">
+                <div
+                  className={`w-6 h-0.5 shrink-0 ${isGrayscale ? 'bg-gray-800' : 'bg-green-600'}`}
+                  style={{ height: '4px' }}
+                ></div>
+                <span>Positive Correlation</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <div
+                  className="w-6 shrink-0"
+                  style={
+                    isGrayscale
+                      ? {
+                          backgroundImage:
+                            'repeating-linear-gradient(to right, #9ca3af 0px, #9ca3af 4px, transparent 4px, transparent 8px)',
+                          height: '4px',
+                        }
+                      : { backgroundColor: '#dc2626', height: '4px' }
+                  }
+                ></div>
+                <span>Negative Correlation</span>
+              </div>
+            </div>
+            <PcaScenarios onSelectionChange={handleSelectionChange} isGrayscale={isGrayscale} />
+          </div>
+          <div className="flex w-full lg:w-[49%] items-center justify-center flex-wrap">
+            {/* Autoflag toggle */}
+            <div className="flex flex-row items-center">
+              <button
+                onClick={() => updateShowAutoFlags(!showAutoFlags)}
+                className={`px-4 py-2 h-8 w-45 rounded-md transition-colors flex items-center justify-center mr-8 gap-2  ${
+                  showAutoFlags
+                    ? 'bg-primary-button text-black hover:shadow-[inset_0_0_0_4px_#666,0_0_1px_transparent]'
+                    : 'bg-grey-button text-black hover:shadow-[inset_0_0_0_4px_#666,0_0_1px_transparent]'
+                }`}
+              >
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M3 21v-4m0 0V5a2 2 0 012-2h6.5l1 1H21l-3 6 3 6h-8.5l-1-1H5a2 2 0 00-2 2zm9-13.5V9"
+                  />
+                </svg>
+                Auto-Flag {showAutoFlags ? 'ON' : 'OFF'}
+              </button>
+              <div className="flex items-center gap-2 mb-0 ml-6">
+                <div className="flex flex-col items-left">
+                  <label className="text-md font-medium">Attraction Strength</label>
+                  <div className="flex flex-row items-center gap-2">
                     <input
                       type="range"
                       min={-50}
@@ -888,119 +953,121 @@ const ForceGraph = ({
                       value={forceStrength}
                       onChange={(e) => setForceStrength(Number(e.target.value))}
                       className="w-32"
-                      style={{accentColor:  '#a5d6a7' }}
-                      />
+                      style={{ accentColor: '#a5d6a7' }}
+                    />
                     <span className="text-sm w-8">{100 + forceStrength}</span>
+                  </div>
                 </div>
+              </div>
+            </div>
+            {/* end autoflag toggle */}
+            {/* reset and grayscale buttons div */}
+            <div className="flex flex-col gap-2 items-left ml-6">
+              <button
+                onClick={resetZoom}
+                className="px-4 py-2 h-8 bg-grey-button text-black rounded-md hover:shadow-[inset_0_0_0_4px_#666,0_0_1px_transparent] transition-colors flex items-center gap-2"
+              >
+                <svg
+                  className="w-5 h-5 shrink-0"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
+                  />
+                </svg>
+                Reset View
+              </button>
+              <button
+                onClick={toggleGrayscale}
+                className="px-4 py-2 h-8 w-45 rounded-md transition-colors flex items-center gap-2 bg-grey-button text-black hover:shadow-[inset_0_0_0_4px_#666,0_0_1px_transparent]"
+              >
+                <svg
+                  className="w-5 h-5 shrink-0"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"
+                  />
+                </svg>
+                {isGrayscale ? 'Color Mode' : 'Grayscale Mode'}
+              </button>
+            </div>
+            {/* download buttons div */}
+            <div className="flex flex-col gap-2 items-left ml-6">
+              <button
+                onClick={downloadSVG}
+                className="px-4 py-2 h-8 bg-grey-button text-black rounded-md hover:shadow-[inset_0_0_0_4px_#666,0_0_1px_transparent] transition-colors flex items-center gap-2"
+              >
+                <svg
+                  className="w-5 h-5 shrink-0"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
+                  />
+                </svg>
+                Download SVG
+              </button>
+
+              <button
+                onClick={downloadDrawio}
+                className="px-4 py-2 h-8 bg-grey-button text-black rounded-md hover:shadow-[inset_0_0_0_4px_#666,0_0_1px_transparent] transition-colors flex items-center gap-2"
+                title="Export the current graph layout as a draw.io diagram (.drawio)"
+              >
+                <svg
+                  className="w-5 h-5 shrink-0"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
+                  />
+                </svg>
+                Download draw.io File
+              </button>
             </div>
           </div>
         </div>
-      </div>
-
-      <div className="relative bg-white rounded-lg">
-        <svg ref={svgRef}></svg>
-        <div
-          ref={tooltipRef}
-          className="absolute opacity-0 bg-white border-2 border-solid border-gray-800 rounded-md p-3 pointer-events-none shadow-lg text-sm max-w-xs"
-        />
-        <div className="absolute top-4 right-4 bg-white rounded-md shadow-md p-2 text-xs text-gray-600">
-          <div className="mb-1 font-semibold">Controls:</div>
-          <div>🖱️ {t('Scroll to zoom')}</div>
-          <div>🖐️ {t('Drag background to pan')}</div>
-          <div>👆 {t('Drag nodes to move')}</div>
-        </div>
-      </div>
-
-      <div className="mt-4 flex gap-4 items-center flex-wrap">
-        {/* ── Existing buttons ── */}
-        <button
-          onClick={downloadSVG}
-          className="px-4 py-2 bg-grey-button text-black rounded-md hover:shadow-[inset_0_0_0_4px_#666,0_0_1px_transparent] transition-colors flex items-center gap-2"
-        >
-          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
-            />
-          </svg>
-          Download SVG
-        </button>
-
-        <button
-          onClick={resetZoom}
-          className="px-4 py-2 bg-grey-button text-black rounded-md hover:shadow-[inset_0_0_0_4px_#666,0_0_1px_transparent] transition-colors flex items-center gap-2"
-        >
-          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
-            />
-          </svg>
-          Reset View
-        </button>
-
-        <button
-          onClick={toggleGrayscale}
-          className={`px-4 py-2 rounded-md transition-colors flex items-center gap-2 bg-grey-button text-black hover:shadow-[inset_0_0_0_4px_#666,0_0_1px_transparent] w-50 justify-center`}
-        >
-          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"
-            />
-          </svg>
-          {isGrayscale ? 'Color Mode' : 'Grayscale Mode'}
-        </button>
-
-        {/* ── NEW: Download draw.io button ── */}
-        <button
-          onClick={downloadDrawio}
-          className="px-4 py-2 bg-grey-button text-black rounded-md hover:shadow-[inset_0_0_0_4px_#666,0_0_1px_transparent] transition-colors flex items-center gap-2"
-          title="Export the current graph layout as a draw.io diagram (.drawio)"
-        >
-          {/* draw.io-style icon: grid / diagram symbol */}
-          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M9 3H5a2 2 0 00-2 2v4m6-6h10a2 2 0 012 2v4M9 3v18m0 0h10a2 2 0 002-2V9M9 21H5a2 2 0 01-2-2V9m0 0h18"
-            />
-          </svg>
-          Download diagrams.net File
-        </button>
-
-        {/* Legend */}
-        <div className="flex gap-4 text-sm">
-          <div className="flex items-center gap-2">
-            <div className={`w-4 h-1 ${isGrayscale ? 'bg-gray-800' : 'bg-red-600'}`}></div>
-            <span>Positive correlation</span>
-          </div>
-          <div className="flex items-center gap-2">
+        {/* Graph canvas height and controls overlay */}
+        <div className="h-[90%]">
+          {/* ── Graph canvas ── */}
+          <div className="relative bg-white h-[98%] rounded-lg flex-1 overflow-hidden">
+            <svg id="forceGraph" ref={svgRef}></svg>
             <div
-              className={`w-4 h-1 ${isGrayscale ? 'bg-gray-400' : 'bg-blue-600'}`}
-              style={
-                isGrayscale
-                  ? {
-                      backgroundImage:
-                        'repeating-linear-gradient(to right, currentColor 0px, currentColor 4px, transparent 4px, transparent 8px)',
-                      backgroundColor: 'transparent',
-                      height: '2px',
-                    }
-                  : {}
-              }
-            ></div>
-            <span>Negative correlation</span>
+              ref={tooltipRef}
+              className="absolute bg-white border-2 border-solid border-gray-800 rounded-md p-3 pointer-events-none shadow-lg text-sm max-w-xs"
+            />
+          </div>
+
+          {/* ── Controls overlay ── */}
+          <div className="absolute bottom-25 right-10 w-50 bg-white rounded-md shadow-md p-2 text-xs text-gray-600">
+            <div className="mb-1 font-semibold">Controls:</div>
+            <div>🖱️ {t('Scroll to zoom')}</div>
+            <div>🖐️ {t('Drag background to pan')}</div>
+            <div>👆 {t('Drag nodes to move')}</div>
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

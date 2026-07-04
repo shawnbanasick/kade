@@ -18,7 +18,7 @@ const PcaScenarios = (props) => {
     // setSelected(id);
     updateSelectedPcaScenario(id);
     // updatePcaFilter(+value);
-    updateShowAutoFlags(false)
+    updateShowAutoFlags(false);
   };
 
   if (props.isGrayscale !== resetSelection) {
@@ -68,11 +68,13 @@ const PcaScenarios = (props) => {
   const selectedValue = selectedOption?.value;
 
   return (
-    <div className="flex flex-col h-6.25 mt-1 rounded-lg bg-white p-1 ml-3">
+    <div className="flex flex-col  rounded-lg bg-white ">
       <label className="label mb-2">
-        <span className="label-text font-medium">{t('PCA Scenarios - Select Number of Factors')}: </span>
+        <span className="label-text font-medium">
+          {t('PCA Scenarios - Select Number of Factors')}:{' '}
+        </span>
       </label>
-      <div className="inline-flex flex-wrap gap-4 h-6.25">
+      <div className="inline-flex flex-wrap gap-4 ">
         {options.map((option, index) => {
           // Determine if this button should be scaled
           const shouldScale =
@@ -84,7 +86,7 @@ const PcaScenarios = (props) => {
               key={option.id}
               onClick={() => handleSelection(option.id, option.value)}
               className={`
-                relative ${props.isGrayscale ? colorArrayBW[index] : colorArray[index]} px-3 py-1.5 rounded-md text-sm font-medium transition-all duration-200
+                relative ${props.isGrayscale ? colorArrayBW[index] : colorArray[index]} px-3 rounded-md text-sm font-medium transition-all duration-200
                 ${shouldScale ? 'scale-125  opacity-100 hover:shadow-[inset_0_0_0_4px_#666,0_0_1px_transparent]' : 'text-gray-700 hover:shadow-[inset_0_0_0_4px_#666,0_0_1px_transparent] opacity-50'}
               `}
             >

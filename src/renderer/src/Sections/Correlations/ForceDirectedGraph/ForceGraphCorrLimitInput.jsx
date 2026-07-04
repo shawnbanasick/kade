@@ -38,10 +38,10 @@ const DebouncedNumberInput = ({
   };
 
   return (
-    <div className={`form-control flex flex-col w-15 max-w-xs p-0 pt-0 mr-2 mb-1 ${className}`}>
+    <div className={`form-control flex flex-col w-15 max-w-xs  ${className}`}>
       {label && (
-        <label className="label mt-2">
-          <span className="label-text font-medium mb-1">{label}:</span>
+        <label className="label">
+          <span className="label-text font-medium">{label}:</span>
         </label>
       )}
       <input
@@ -52,7 +52,7 @@ const DebouncedNumberInput = ({
         min={min}
         max={max}
         step={step}
-        className={`input input-bordered w-14 h-[38px]`}
+        className={`input input-bordered w-14 h-9.5`}
       />
     </div>
   );

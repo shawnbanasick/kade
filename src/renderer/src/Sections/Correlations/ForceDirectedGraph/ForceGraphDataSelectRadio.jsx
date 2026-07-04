@@ -10,7 +10,7 @@ const ForceGraphDataSelectRadio = () => {
   const updateShowAutoFlags = structureState((state) => state.updateShowAutoFlags);
   const updateSelectedPcaScenario = structureState((state) => state.updateSelectedPcaScenario);
 
-// setShowAutoFlags(!showAutoFlags)
+  // setShowAutoFlags(!showAutoFlags)
 
   const handleSelection = (value) => {
     setSelected(value);
@@ -26,17 +26,17 @@ const ForceGraphDataSelectRadio = () => {
   ];
 
   return (
-    <div className="flex flex-col rounded-lg bg-white p-2 pb-1 pl-1">
+    <div className="flex flex-col rounded-lg bg-white">
       <label className="label">
         <span className="label-text font-medium">{t('Correlation Links')}: </span>
       </label>
-      <div className="inline-flex gap-1 mt-1 h-10">
+      <div className="inline-flex gap-1  ">
         {options.map((option) => (
           <button
             key={option.id}
             onClick={() => handleSelection(option.id)}
             className={`
-            flex relative px-4 pb-0 rounded-md text-large bg-grey-button transition-all duration-200  w-10 pt-1.5 justify-center
+            flex px-4 rounded-md text-large bg-grey-button transition-all duration-200  w-10 pb-1 items-center justify-center
             ${
               selected === option.id
                 ? `bg-primary-button hover:shadow-[inset_0_0_0_4px_#666,0_0_1px_transparent]`
