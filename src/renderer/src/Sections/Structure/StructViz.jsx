@@ -263,7 +263,6 @@ function FlowInner() {
       })
       .then(async (dataUrl) => {
         const defaultPath = `${filename}.svg`;
-
         const filepath = await window.electronAPI?.showSaveSvgDialog(defaultPath);
         if (!filepath) {
           alert('Save operation was canceled.');
