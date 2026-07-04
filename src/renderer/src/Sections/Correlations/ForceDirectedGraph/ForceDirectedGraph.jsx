@@ -521,14 +521,14 @@ const ForceGraph = ({
     const legendGroup = svg.append('g').attr('class', 'legend-group');
     const legendItemHeight = 35;
     const legendColumns = 8;
-    const legendColumnWidth = 120;
+    const legendColumnWidth = 94;
     const legendTotalWidth = legendColumns * legendColumnWidth;
     const legendX = (window.innerWidth - 780) / 2;
     const legendY = 20;
 
     legendGroup
       .append('text')
-      .attr('x', legendX - 115)
+      .attr('x', legendX - 86)
       .attr('y', legendY)
       .attr('class', 'text-sm font-semibold')
       .attr('fill', '#000')
@@ -537,7 +537,7 @@ const ForceGraph = ({
     for (let i = 1; i <= 8; i++) {
       const col = (i - 1) % 8;
       const row = Math.floor((i - 1) / 8);
-      const x = legendX + col * legendColumnWidth - 104;
+      const x = legendX + col * legendColumnWidth - 70;
       const y = legendY + 20 + row * legendItemHeight;
       const legendItem = legendGroup.append('g').attr('transform', `translate(${x}, ${y})`);
 
@@ -877,12 +877,14 @@ const ForceGraph = ({
 
   return (
     <>
-      <div className="text-5xl mb-5">{t('Correlation Network Force-Directed Graph')}</div>
+      <div className="text-5xl md:text-4xl mb-5">
+        {t('Correlation Network Force-Directed Graph')}
+      </div>
 
       <div className="h-[93%]">
         {/* Controls and legend */}
         <div className="flex flex-wrap w-[calc(93vw-35px)] text-basis h-auto min-h-20 items-center">
-          <div className="flex gap-8 h-18 items-center justify-center w-full lg:w-[51%] flex-wrap">
+          <div className="flex gap-5 h-18 items-center justify-left w-full lg:w-[51%] flex-wrap">
             <DebouncedNumberInput
               value={correlationThreshold}
               label={t('Cutoff')}
@@ -920,12 +922,12 @@ const ForceGraph = ({
             </div>
             <PcaScenarios onSelectionChange={handleSelectionChange} isGrayscale={isGrayscale} />
           </div>
-          <div className="flex w-full lg:w-[49%] items-center justify-center flex-wrap">
+          <div className="flex w-full lg:w-[49%] items-center justify-left mt-2 flex-wrap gap-4">
             {/* Autoflag toggle */}
-            <div className="flex flex-row items-center">
+            <div className="flex flex-row items-center gap-4">
               <button
                 onClick={() => updateShowAutoFlags(!showAutoFlags)}
-                className={`px-4 py-2 h-8 w-45 rounded-md transition-colors flex items-center justify-center mr-8 gap-2  ${
+                className={`px-4 py-2 h-8 w-45 rounded-md transition-colors flex items-center justify-center gap-2  ${
                   showAutoFlags
                     ? 'bg-primary-button text-black hover:shadow-[inset_0_0_0_4px_#666,0_0_1px_transparent]'
                     : 'bg-grey-button text-black hover:shadow-[inset_0_0_0_4px_#666,0_0_1px_transparent]'
@@ -941,9 +943,9 @@ const ForceGraph = ({
                 </svg>
                 Auto-Flag {showAutoFlags ? 'ON' : 'OFF'}
               </button>
-              <div className="flex items-center gap-2 mb-0 ml-6">
-                <div className="flex flex-col items-left">
-                  <label className="text-md font-medium">Attraction Strength</label>
+              <div className="flex items-center gap-2">
+                <div className="flex flex-col items-center">
+                  <label className="text-md font-medium mr-3">Attraction Strength</label>
                   <div className="flex flex-row items-center gap-2">
                     <input
                       type="range"
@@ -955,14 +957,14 @@ const ForceGraph = ({
                       className="w-32"
                       style={{ accentColor: '#a5d6a7' }}
                     />
-                    <span className="text-sm w-8">{100 + forceStrength}</span>
+                    <span className="text-sm w-6">{100 + forceStrength}</span>
                   </div>
                 </div>
               </div>
             </div>
-            {/* end autoflag toggle */}
+            {/* end autoflag toggle and strength slider */}
             {/* reset and grayscale buttons div */}
-            <div className="flex flex-col gap-2 items-left ml-6">
+            <div className="flex flex-col gap-2 items-left">
               <button
                 onClick={resetZoom}
                 className="px-4 py-2 h-8 bg-grey-button text-black rounded-md hover:shadow-[inset_0_0_0_4px_#666,0_0_1px_transparent] transition-colors flex items-center gap-2"
@@ -1003,7 +1005,7 @@ const ForceGraph = ({
               </button>
             </div>
             {/* download buttons div */}
-            <div className="flex flex-col gap-2 items-left ml-6">
+            <div className="flex flex-col gap-2 items-left gap-2">
               <button
                 onClick={downloadSVG}
                 className="px-4 py-2 h-8 bg-grey-button text-black rounded-md hover:shadow-[inset_0_0_0_4px_#666,0_0_1px_transparent] transition-colors flex items-center gap-2"
@@ -1042,7 +1044,7 @@ const ForceGraph = ({
                     d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
                   />
                 </svg>
-                Download draw.io File
+                Download draw.io
               </button>
             </div>
           </div>
