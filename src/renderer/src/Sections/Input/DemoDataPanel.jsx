@@ -9,7 +9,7 @@ const DemoDataPanel = () => {
 
   return (
     <div id="demoDataWindow">
-      <div className="text-5xl mt-2 mb-10">{t('Demo Data Input')}</div>
+      <div className="text-4xl mt-2 mb-10">{t('Demo Data Input')}</div>
 
       <div className="font-['Helvetica'] text-black text-xl font-bold h-7.5 mb-5">
         {t('Choose a demo data file')}.

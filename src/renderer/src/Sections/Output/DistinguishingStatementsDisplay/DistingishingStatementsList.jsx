@@ -122,7 +122,7 @@ const DistinguishingStatementsList = () => {
     if (distIdentType === 'stephensonMethod') {
       return (
         <div className="mb-37.5 pr-5">
-          <div className="mb-5 text-5xl">{t('Distinguishing Statements')}</div>
+          <div className="mb-5 text-4xl">{t('Distinguishing Statements')}</div>
           <DistinguishingTypeButtons
             textSize="xl"
             className="mb-5"
@@ -188,7 +188,7 @@ const DistinguishingStatementsList = () => {
     } else if (distIdentType === 'cohenMethod') {
       return (
         <div className="pb-37.5 pr-5">
-          <div className="mb-5 text-5xl">{t('Distinguishing Statements')}</div>
+          <div className="mb-5 text-4xl">{t('Distinguishing Statements')}</div>
           <DistinguishingTypeButtons
             textSize="xl"
             className="mb-6"

@@ -69,7 +69,7 @@ const Correlations = () => {
       title: t('Heatmap'),
       content: (
         <div>
-          <div className="text-5xl mt-4">{t('Correlation Heatmap')}</div>
+          <div className="text-4xl mt-4">{t('Correlation Heatmap')}</div>
 
           {/* <div className="flex w-[500px] ml-[150px] text-4xl">{`${t('Correlation Heatmap')}`}</div> */}
           <HeatmapMain

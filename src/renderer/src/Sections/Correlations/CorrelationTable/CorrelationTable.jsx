@@ -73,7 +73,7 @@ const CorrelationTable = () => {
 
   return (
     <div id="tableHolder">
-      <div className="text-5xl mb-8 mt-4">{t('Correlation Matrix')}</div>
+      <div className="text-4xl mb-8 mt-4">{t('Correlation Matrix')}</div>
 
       <p style={style1}>
         {t('Click the table headers to re-sort by column')}{' '}

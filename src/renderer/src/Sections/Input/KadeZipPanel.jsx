@@ -6,7 +6,7 @@ const KadeZipPanel = () => {
 
   return (
     <div id="ExcelKadeZipDataWindow">
-      <div className="text-5xl mt-2 mb-10">{t('KADE Zip File Input')}</div>
+      <div className="text-4xl mt-2 mb-10">{t('KADE Zip File Input')}</div>
 
       <div className="font-['Helvetica'] text-black text-xl font-bold h-7.5 mb-5">
         {t('Load a KADE or Ken-Q Analysis (web) Zip output file')}

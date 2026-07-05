@@ -9,7 +9,7 @@ const ExcelPanel = () => {
 
   return (
     <div id="ExcelDataWindow">
-      <div className="text-5xl mt-2 mb-10">{t('Excel File Input')}</div>
+      <div className="text-4xl mt-2 mb-10">{t('Excel File Input')}</div>
 
       <div
         id="excelPanelHeader"

@@ -74,7 +74,7 @@ const PcaScenarios = (props) => {
           {t('PCA Scenarios - Select Number of Factors')}:{' '}
         </span>
       </label>
-      <div className="inline-flex flex-wrap gap-4 ">
+      <div className="inline-flex flex-wrap gap-3">
         {options.map((option, index) => {
           // Determine if this button should be scaled
           const shouldScale =

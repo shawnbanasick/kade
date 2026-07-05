@@ -69,7 +69,7 @@ const FactorsTable = (props) => {
   if (displayOutputTabContent) {
     return (
       <div className={`flex flex-col w-full`}>
-        <div className="text-5xl mt-3">{t('Factors')}</div>
+        <div className="text-4xl">{t('Factor Scores')}</div>
         <div className="flex flex-col overflow-hidden mb-10">
           <div id="FactorsTable" style={style2} className="ag-theme-fresh">
             <AgGridReact

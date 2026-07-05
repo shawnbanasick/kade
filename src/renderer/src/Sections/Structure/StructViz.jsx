@@ -300,7 +300,7 @@ function FlowInner() {
 
   return (
     <>
-      <div className="text-5xl mt-2 mb-5">{t('Hierarchical Factor Graph')}</div>
+      <div className="text-4xl mb-3 mt-3">{t('Hierarchical Factor Graph')}</div>
 
       <div ref={flowRef} className="relative w-[95%] h-[82%] bg-white">
         <div className="flex flex-row gap-15 items-end react-flow__panel-top">

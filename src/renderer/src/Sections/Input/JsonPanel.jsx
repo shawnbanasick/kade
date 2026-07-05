@@ -34,7 +34,7 @@ const JsonPanel = () => {
   if (!showFirebaseInput && !showSheetsInput && !showNetlifyInput) {
     return (
       <div className="flex flex-col bg-white text-2xl">
-        <div className="text-5xl mt-2 mb-10">{t('EQ Web Sort File Input')}</div>
+        <div className="text-4xl mt-2 mb-10">{t('EQ Web Sort File Input')}</div>
 
         <p className="text-xl text-gray-700">
           For EQ Web Sort data, please use the online legacy data converter

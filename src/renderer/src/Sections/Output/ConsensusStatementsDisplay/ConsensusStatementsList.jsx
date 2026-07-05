@@ -231,7 +231,7 @@ const ConsensusStatementsList = () => {
   if (distIdentType === 'stephensonMethod') {
     return (
       <div className="flex flex-col">
-        <div className="mb-5 text-5xl">{t('Consensus Statements')}</div>
+        <div className="mb-5 text-4xl">{t('Consensus Statements')}</div>
         <DistinguishingTypeButtons
           textSize="xl"
           className=""
@@ -282,7 +282,7 @@ const ConsensusStatementsList = () => {
   } else {
     return (
       <div className="flex flex-col">
-        <div className="mb-5 text-5xl">{t('Consensus Statements')}</div>
+        <div className="mb-5 text-4xl">{t('Consensus Statements')}</div>
 
         <DistinguishingTypeButtons
           textSize="xl"

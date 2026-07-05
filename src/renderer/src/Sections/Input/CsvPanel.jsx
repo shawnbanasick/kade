@@ -10,7 +10,7 @@ const CsvPanel = () => {
 
   return (
     <div id="csvDataWindow">
-      <div className="text-5xl mt-2 mb-10">{t('CSV File Input')}</div>
+      <div className="text-4xl mt-2 mb-10">{t('CSV File Input')}</div>
 
       <div
         id="csvPanelHeader"

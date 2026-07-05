@@ -12,7 +12,7 @@ const OutputFactorTablesTransitionContainer = () => {
   if (displayOutputTabContent) {
     return (
       <>
-        <div className="text-5xl mt-0.5 mb-8">{t('Factor Characteristics')}</div>
+        <div className="text-4xl mt-0.5 mb-8">{t('Factor Characteristics')}</div>
         <div className={`${showFactorCorrelationsTable ? 'visible' : 'hidden'}`}>
           <div className="">
             <div className="mb-7.5">

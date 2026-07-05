@@ -9,6 +9,7 @@ import { update } from 'lodash';
 import currentDate from '../../../Utils/currentDate1';
 import currentTime from '../../../Utils/currentTime1';
 import coreState from '../../GlobalState/coreState';
+import d3ToPng from 'd3-svg-to-png';
 
 const getDateTime = () => {
   const date = currentDate();
@@ -28,6 +29,7 @@ const ForceGraph = ({
   const svgRef = useRef(null);
   const tooltipRef = useRef(null);
   const colorScaleRef = useRef(null);
+  const { t } = useTranslation();
   const [isGrayscale, setIsGrayscale] = useState(false);
   const [forceStrength, setForceStrength] = useState(-5);
   const showAutoFlags = structureState((state) => state.showAutoFlags);
@@ -38,16 +40,11 @@ const ForceGraph = ({
   const dateTime = `${date}_${time}`;
   const completeFileName = `${projectName}-correlation_network_${getDateTime()}`;
 
-  const { t } = useTranslation();
-
   const minCorrelation = correlationThreshold * 100;
 
   let correlationData = data;
 
   const [currentFactorIndex, setCurrentFactorIndex] = useState(0);
-
-  // const [showAutoFlags, setShowAutoFlags] = useState(true);
-  // const [resetAutoFlag, setResetAutoFlag] = useState(false);
 
   const shapeGenerators = {
     1: (r) => {
@@ -130,6 +127,22 @@ const ForceGraph = ({
     '#d8b4fe',
   ];
 
+  const [windowSize, setWindowSize] = useState({
+    width: window.innerWidth - 120,
+    height: window.innerHeight - 220,
+  });
+
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowSize({
+        width: window.innerWidth - 190,
+        height: window.innerHeight - 250,
+      });
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   const downloadSVG = async () => {
     if (!svgRef.current) return;
     const svgEl = document.querySelector('#forceGraph');
@@ -155,6 +168,50 @@ const ForceGraph = ({
       console.log(result);
     } catch (error) {
       console.error('Failed to save file:', error);
+    }
+  };
+
+  const downloadPngImage = async () => {
+    if (!svgRef.current) return;
+    const svgEl = document.querySelector('#forceGraph');
+    const dateTime = `${currentDate()}__${currentTime()}`;
+    const cleanFactorName = `correlation_network__`;
+
+    const pngOptions = {
+      customDownloadFileNames: [cleanFactorName],
+    };
+
+    let fileData;
+    try {
+      fileData = await d3ToPng(svgEl, completeFileName, {
+        background: 'white',
+        scale: 3,
+        format: 'png',
+        download: false,
+        quality: 1,
+      });
+    } catch (error) {
+      console.error('Failed to convert SVG to PNG:', error);
+      return;
+    }
+    const buffer = fileData?.split(',')?.[1];
+    if (!buffer) {
+      console.error('PNG conversion returned no data.');
+      return;
+    }
+
+    const defaultPath = `${completeFileName}.png`;
+    const filepath = await window.electronAPI?.showSavePngDialog(defaultPath);
+    if (!filepath) {
+      alert('Save operation was canceled.');
+      return;
+    }
+
+    try {
+      const result = await window.electronAPI.savePNG(buffer, filepath);
+      console.log(result);
+    } catch (error) {
+      console.error('Failed to save PNG file:', error);
     }
   };
 
@@ -494,13 +551,13 @@ const ForceGraph = ({
 
     const svg = d3
       .select(svgRef.current)
-      .attr('width', width)
-      .attr('height', height)
-      .attr('viewBox', [0, 0, width, height]);
+      .attr('width', windowSize.width)
+      .attr('height', windowSize.height)
+      .attr('viewBox', [0, 0, windowSize.width, windowSize.height]);
 
     svg
       .append('text')
-      .attr('x', width / 2)
+      .attr('x', windowSize.width / 2)
       .attr('y', 30)
       .attr('text-anchor', 'middle')
       .attr('class', 'text-xl font-semibold')
@@ -508,7 +565,7 @@ const ForceGraph = ({
 
     svg
       .append('text')
-      .attr('x', width / 2)
+      .attr('x', windowSize.width / 2)
       .attr('y', 55)
       .attr('text-anchor', 'middle')
       .attr('class', 'text-sm text-gray-500')
@@ -523,21 +580,21 @@ const ForceGraph = ({
     const legendColumns = 8;
     const legendColumnWidth = 94;
     const legendTotalWidth = legendColumns * legendColumnWidth;
-    const legendX = (window.innerWidth - 780) / 2;
-    const legendY = 20;
+    const legendX = windowSize.width / 2 - legendTotalWidth / 2;
+    const legendY = 10;
 
     legendGroup
       .append('text')
-      .attr('x', legendX - 86)
+      .attr('x', windowSize.width / 2 - legendTotalWidth / 2 - 120)
       .attr('y', legendY)
       .attr('class', 'text-sm font-semibold')
-      .attr('fill', '#000')
-      .text('Factors:');
+      .attr('fill', '#000');
 
     for (let i = 1; i <= 8; i++) {
       const col = (i - 1) % 8;
       const row = Math.floor((i - 1) / 8);
-      const x = legendX + col * legendColumnWidth - 70;
+      const x = legendX + col * legendColumnWidth;
+
       const y = legendY + 20 + row * legendItemHeight;
       const legendItem = legendGroup.append('g').attr('transform', `translate(${x}, ${y})`);
 
@@ -573,8 +630,8 @@ const ForceGraph = ({
 
     zoomContainer
       .append('rect')
-      .attr('width', width)
-      .attr('height', height - 150)
+      .attr('width', windowSize.width)
+      .attr('height', windowSize.height - 150)
       .attr('transform', `translate(0, 150)`)
       .attr('fill', 'transparent')
       .style('cursor', 'grab');
@@ -621,7 +678,7 @@ const ForceGraph = ({
           .strength((d) => Math.abs(d.value) / 100)
       )
       .force('charge', d3.forceManyBody().strength(forceStrength))
-      .force('center', d3.forceCenter(width / 2, (height - 150) / 2))
+      .force('center', d3.forceCenter(width / 2, (height - 250) / 2))
       .force('collision', d3.forceCollide().radius(30));
 
     const tooltip = d3.select(tooltipRef.current);
@@ -815,7 +872,7 @@ const ForceGraph = ({
         .select('.legend-group')
         .append('text')
         .attr('class', 'legend-explanation')
-        .attr('x', width / 2 - 145)
+        .attr('x', windowSize.width / 2 - 18)
         .attr('y', 76)
         .attr('text-anchor', 'middle')
         .attr('fill', '#666')
@@ -877,14 +934,12 @@ const ForceGraph = ({
 
   return (
     <>
-      <div className="text-5xl md:text-4xl mb-5">
-        {t('Correlation Network Force-Directed Graph')}
-      </div>
+      <div className="text-4xl mb-2 mt-3">{t('Correlation Network Force-Directed Graph')}</div>
 
       <div className="h-[93%]">
         {/* Controls and legend */}
-        <div className="flex flex-wrap w-[calc(93vw-35px)] text-basis h-auto min-h-20 items-center">
-          <div className="flex gap-5 h-18 items-center justify-left w-full lg:w-[51%] flex-wrap">
+        <div className="flex w-full text-basis h-auto min-h-20 items-center flex-wrap">
+          <div className="flex gap-5 items-center justify-left w-full  flex-wrap">
             <DebouncedNumberInput
               value={correlationThreshold}
               label={t('Cutoff')}
@@ -899,7 +954,7 @@ const ForceGraph = ({
             <div className="flex flex-col gap-2 text-sm border-gray-200">
               <div className="flex items-center gap-2">
                 <div
-                  className={`w-6 h-0.5 shrink-0 ${isGrayscale ? 'bg-gray-800' : 'bg-green-600'}`}
+                  className={`w-6 h-0.5 shrink-0 ${isGrayscale ? 'bg-gray-800' : 'bg-[#78bc21]'}`}
                   style={{ height: '4px' }}
                 ></div>
                 <span>Positive Correlation</span>
@@ -921,13 +976,27 @@ const ForceGraph = ({
               </div>
             </div>
             <PcaScenarios onSelectionChange={handleSelectionChange} isGrayscale={isGrayscale} />
-          </div>
-          <div className="flex w-full lg:w-[49%] items-center justify-left mt-2 flex-wrap gap-4">
-            {/* Autoflag toggle */}
-            <div className="flex flex-row items-center gap-4">
+            <div className="flex flex-col items-left">
+              {/* Autoflag toggle */}
+              <div className="flex flex-col items-center">
+                <label className="text-sm font-medium mr-3">Attraction Strength</label>
+                <div className="flex flex-row items-center gap-3">
+                  <input
+                    type="range"
+                    min={-50}
+                    max={-1}
+                    step={1}
+                    value={forceStrength}
+                    onChange={(e) => setForceStrength(Number(e.target.value))}
+                    className="w-32 h-5 mb-2"
+                    style={{ accentColor: '#a5d6a7' }}
+                  />
+                  <span className="text-sm w-6 mb-2">{100 + forceStrength}</span>
+                </div>
+              </div>
               <button
                 onClick={() => updateShowAutoFlags(!showAutoFlags)}
-                className={`px-4 py-2 h-8 w-45 rounded-md transition-colors flex items-center justify-center gap-2  ${
+                className={`px-4 py-2 h-8 w-45 mb-2 rounded-md transition-colors flex items-center justify-center gap-2  ${
                   showAutoFlags
                     ? 'bg-primary-button text-black hover:shadow-[inset_0_0_0_4px_#666,0_0_1px_transparent]'
                     : 'bg-grey-button text-black hover:shadow-[inset_0_0_0_4px_#666,0_0_1px_transparent]'
@@ -943,30 +1012,12 @@ const ForceGraph = ({
                 </svg>
                 Auto-Flag {showAutoFlags ? 'ON' : 'OFF'}
               </button>
-              <div className="flex items-center gap-2">
-                <div className="flex flex-col items-center">
-                  <label className="text-md font-medium mr-3">Attraction Strength</label>
-                  <div className="flex flex-row items-center gap-2">
-                    <input
-                      type="range"
-                      min={-50}
-                      max={-1}
-                      step={1}
-                      value={forceStrength}
-                      onChange={(e) => setForceStrength(Number(e.target.value))}
-                      className="w-32"
-                      style={{ accentColor: '#a5d6a7' }}
-                    />
-                    <span className="text-sm w-6">{100 + forceStrength}</span>
-                  </div>
-                </div>
-              </div>
             </div>
             {/* end autoflag toggle and strength slider */}
             {/* reset and grayscale buttons div */}
             <div className="flex flex-col gap-2 items-left">
               <button
-                onClick={resetZoom}
+                onClick={downloadPngImage}
                 className="px-4 py-2 h-8 bg-grey-button text-black rounded-md hover:shadow-[inset_0_0_0_4px_#666,0_0_1px_transparent] transition-colors flex items-center gap-2"
               >
                 <svg
@@ -979,10 +1030,10 @@ const ForceGraph = ({
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth={2}
-                    d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
+                    d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
                   />
                 </svg>
-                Reset View
+                Download PNG
               </button>
               <button
                 onClick={toggleGrayscale}
@@ -1050,7 +1101,7 @@ const ForceGraph = ({
           </div>
         </div>
         {/* Graph canvas height and controls overlay */}
-        <div className="h-[90%]">
+        <div className="h-[80%]">
           {/* ── Graph canvas ── */}
           <div className="relative bg-white h-[98%] rounded-lg flex-1 overflow-hidden">
             <svg id="forceGraph" ref={svgRef}></svg>
@@ -1061,7 +1112,7 @@ const ForceGraph = ({
           </div>
 
           {/* ── Controls overlay ── */}
-          <div className="absolute bottom-25 right-10 w-50 bg-white rounded-md shadow-md p-2 text-xs text-gray-600">
+          <div className="absolute bottom-10 right-10 w-50 bg-white rounded-md shadow-md p-2 text-xs text-gray-600">
             <div className="mb-1 font-semibold">Controls:</div>
             <div>🖱️ {t('Scroll to zoom')}</div>
             <div>🖐️ {t('Drag background to pan')}</div>

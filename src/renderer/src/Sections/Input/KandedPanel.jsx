@@ -6,7 +6,7 @@ const KandedPanel = () => {
 
   return (
     <div id="ExcelKadeDataWindow">
-      <div className="text-5xl mt-2 mb-10">{t('KADE Excel File Input')}</div>
+      <div className="text-4xl mt-2 mb-10">{t('KADE Excel File Input')}</div>
 
       <div
         id="excelKadePanelHeader"

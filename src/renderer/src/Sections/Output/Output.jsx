@@ -71,7 +71,7 @@ const Output = () => {
     'bg-white flex flex-col select-none min-w-[calc(100vw-166px)] h-[calc(100vh-80px)] overflow-auto box-border';
 
   const window2Class =
-    'pt-[10px] bg-white select-none h-[calc(100vh-80px)] min-w-[calc(100vw-186px)] overflow-auto box-border';
+    'bg-white select-none h-[calc(100vh-80px)] min-w-[calc(100vw-186px)] overflow-auto box-border';
 
   if (showNotification) {
     notify();
@@ -152,13 +152,12 @@ const Output = () => {
     {
       title: t('Results'),
       content: (
-        <div className={window1Class}>
+        <div className={window1Class, "mt-5.5"}>
           {showTableDataNotSentWarning ? (
             <div className="text-[25px] ml-12.5 mt-12.5">{t('No Data Click')}</div>
           ) : (
             <>
-              <div className="text-5xl mt-8">{t('Generate Results')}</div>
-              {/* <DistinguishingTypeButtons className="mt-6.25" textSize="2xl" /> */}
+              <div className="text-4xl">{t('Generate Results')}</div>
               <ResultsDistMethodButtons className="mt-6.25" textSize="2xl" />
               {resultsDistIdentType === 'stephensonMethod' && (
                 <div className="mt-6.25">
@@ -229,8 +228,8 @@ const Output = () => {
       content: (
         <>
           {displayOutputTabContent ? (
-            <div className="flex flex-row justify-left w-[80%] ml-6 gap-8 items-center mt-6.25 mb-6">
-              <div className="text-5xl  ">{t('Factor Visualizations')}</div>
+            <div className="flex flex-row justify-left w-[80%] gap-8 items-center mb-6">
+              <div className="text-4xl  ">{t('Factor Visualizations')}</div>
               {/* <DisplayVisualizationsButtons /> */}
               <ShowVizOptionsButton />
             </div>
