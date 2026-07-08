@@ -28,17 +28,22 @@ const filterArray = (item) => {
 };
 
 function getWidth(numFacsForTableWidth) {
-  let tableWidth = 315 + 15 + 125 * numFacsForTableWidth;
-  let windowWidth = window.innerWidth - 205;
-  if (windowWidth < tableWidth) {
-    return windowWidth + 'px';
+  const tableWidth = 315 + 15 + 125 * numFacsForTableWidth;
+  const container = document.querySelector('#loadingsTableContainer');
+  const parent = container ? container.parentElement : null;
+  // Measure the actual available space in the DOM rather than guessing
+  // from window.innerWidth, which doesn't account for the wrapper's
+  // own width (w-[90%]) and padding/margins stacked on top of it.
+  const availableWidth = parent ? parent.clientWidth : window.innerWidth - 205;
+  if (availableWidth < tableWidth) {
+    return availableWidth + 'px';
   }
   return tableWidth + 'px';
 }
 
 function getHeight(numQsorts) {
   let heightVal1 = 40 + 25 * numQsorts;
-  let heightVal2 = window.innerHeight - 270;
+  let heightVal2 = window.innerHeight - 320;
   if (heightVal1 < heightVal2) {
     return heightVal1 + 'px';
   }
@@ -96,10 +101,6 @@ const LoadingsTable = (props) => {
       table.style.height = getHeight(numQsorts);
     }
   }
-
-  window.addEventListener('resize', () => {
-    resetWidthAndHeight();
-  });
 
   useEffect(() => {
     const handleResize = () => resetWidthAndHeight();
@@ -225,20 +226,21 @@ const LoadingsTable = (props) => {
   };
 
   return (
-    <div className="flex flex-col items-center">
+    <div className="flex flex-col w-[90%] min-w-0 items-center ml-10">
       <div className="flex flex-col items-center">
         <ToastContainer transition={Zoom} />
-        <div className="flex flex-col items-center">
-          <div className="grid grid-cols-[410px_auto] w-[840px] h-[30px]">
-            <span className="mr-[255px]">{props.childTrans.row}</span>
-            <span>{props.childTrans.flagging}</span>
+        <div className="flex flex-col w-full items-center">
+          <div className="w-full mb-2 min-w-0 h-7.5">
+            <span className="">{props.childTrans.row}</span>
+            <span className="ml-42">{props.childTrans.flagging}</span>
           </div>
         </div>
-        <div className="flex flex-row">
-          <div id="rowHighlightingButtonGroup" className="flex flex-row gap-3">
+        {/* Row Highlighting Buttons */}
+        <div className="flex flex-row w-full min-w-0 justify-between px-2 flex-wrap gap-y-2">
+          <div id="rowHighlightingButtonGroup" className="flex flex-row gap-2 min-w-0">
             <GeneralButton
               id="noHighlightingButton"
-              className="wrapper1 min-w-[80px] bg-grey-button h-[30px]"
+              className="wrapper1 min-w-20 bg-grey-button h-7.5"
               disabled={isDisabled}
               onClick={() => highlightRows('none')}
             >
@@ -246,7 +248,7 @@ const LoadingsTable = (props) => {
             </GeneralButton>
             <GeneralButton
               id="colorsHighlightingButton"
-              className="wrapper1 min-w-[80px] bg-grey-button h-[30px]"
+              className="wrapper1 min-w-20 bg-grey-button h-7.5"
               disabled={isDisabled}
               onClick={() => highlightRows('colors')}
             >
@@ -254,33 +256,34 @@ const LoadingsTable = (props) => {
             </GeneralButton>
             <GeneralButton
               id="graysHighlightingButton"
-              className="wrapper1 min-w-[80px] mr-[150px] bg-grey-button h-[30px]"
+              className="wrapper1 min-w-20 bg-grey-button h-7.5"
               onClick={() => highlightRows('grays')}
               disabled={isDisabled}
             >
               {props.childTrans.gray}
             </GeneralButton>
           </div>
-          <div id="flaggingButtonGroup" className="flex flex-row gap-3 h-[30px]">
+          {/* Flagging Buttons */}
+          <div id="flaggingButtonGroup" className="flex flex-row flex-wrap gap-3 h-7.5 min-w-0">
             <GeneralButton
               id="autoflagButton"
               onClick={autoFlagFactors}
               disabled={isDisabled}
-              className={`h-[30px] ${autoflagButtonColor}`}
+              className={`h-7.5 ${autoflagButtonColor}`}
             >
               {props.childTrans.autoflag}
             </GeneralButton>
             <span className="">{props.childTrans.at}</span>
             <SigLevelDropdown data={'allData'} />
             <GeneralButton
-              className="ml-[40px] w-[60px] h-[30px] bg-grey-button"
+              className="w-15 h-7.5 bg-grey-button"
               disabled={isDisabled}
               onClick={flagAllQsorts}
             >
               {props.childTrans.all}
             </GeneralButton>
             <GeneralButton
-              className=" h-[30px] bg-grey-button"
+              className=" h-7.5 bg-grey-button"
               disabled={isDisabled}
               onClick={clearAllCheckboxes}
             >
@@ -288,10 +291,10 @@ const LoadingsTable = (props) => {
             </GeneralButton>
           </div>
         </div>
-        <div className="flex items-center w-[900px] pl-[16px] mt-[3px]">
+        <div className="flex items-center w-full max-w-225 min-w-0 pl-4 mt-0.75">
           <MajorityCommonVarianceCheckbox />
         </div>
-        <div className="flex flex-col items-center">
+        <div className="flex flex-col items-center mb-2">
           <p className="flex items-center text-[16px]   text-center">
             {props.childTrans.default} {props.childTrans.fg} {props.childTrans.click}
           </p>
@@ -313,7 +316,7 @@ const LoadingsTable = (props) => {
             />
           </div>
         </div>
-        <div className="flex flex-row justify-between w-[910px] h-[30px]">
+        <div className="flex flex-row flex-wrap w-full justify-between gap-x-10 gap-y-2 min-w-0 px-2">
           <GeneralButton
             id="generateOutputButton"
             onClick={generateOutput}
@@ -321,13 +324,13 @@ const LoadingsTable = (props) => {
               backgroundColor: sendDataToOutputButtonColor,
               transition: 'background-color 0.3s ease',
             }}
-            className="h-[30px] bg-grey-button w-[260px]"
+            className="h-[30px] bg-grey-button flex-1 min-w-[200px] max-w-[260px]"
           >
             {props.childTrans.send}
           </GeneralButton>
           <GeneralButton
             id="invertFactorsButton"
-            className="ml-[40px] h-[30px] bg-grey-button w-[160px]"
+            className="h-[30px] bg-grey-button flex-1 min-w-[120px] max-w-[160px]"
             disabled={isDisabled}
             onClick={doInvertFactor}
           >
@@ -335,7 +338,7 @@ const LoadingsTable = (props) => {
           </GeneralButton>
           <GeneralButton
             id="splitFactorsButton"
-            className="ml-[40px] h-[30px] bg-grey-button w-[260px]"
+            className="h-[30px] bg-grey-button flex-1 min-w-[160px] max-w-[260px]"
             onClick={doSplitFactor}
           >
             {props.childTrans.split}

@@ -28,13 +28,13 @@ const LoadingsTableTransitionContainer = () => {
   if (showLoadingsTable) {
     return (
       <div>
+        <div className="text-4xl mb-6">{t('Factor Loadings')}</div>
+
         <LoadingsTable childTrans={childTrans} />
       </div>
     );
   }
-  return (
-    <div className="h-[150px] mt-[50px] text-[22px]">{t('No factor loadings calculated')}</div>
-  );
+  return <div className="h-37.5 mt-12.5 text-[22px]">{t('No factor loadings calculated')}</div>;
 };
 
 export default LoadingsTableTransitionContainer;

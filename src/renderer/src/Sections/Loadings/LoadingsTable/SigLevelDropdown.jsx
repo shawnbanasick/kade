@@ -42,22 +42,10 @@ const SigLevelDropdown = () => {
   const selectedOption = sigOptions.find((o) => o.value === localStore.value);
 
   return (
-    <div style={{ height: '30px', position: 'relative' }} ref={dropdownRef}>
+    // <div style={{ height: '30px', position: 'relative' }} ref={dropdownRef}>
+    <div className="relative h-7.5" ref={dropdownRef}>
       <button
-        style={{
-          height: '30px',
-          fontSize: '14px',
-          border: '3px solid red',
-          background: 'white',
-          color: '#000',
-          display: 'flex',
-          alignItems: 'center',
-          gap: '4px',
-          padding: '0 8px',
-          whiteSpace: 'nowrap',
-          fontWeight: '500',
-          boxSizing: 'border-box',
-        }}
+        className="h-7.5 text-sm border-[3px] border-red-500 bg-white text-black flex items-center gap-1 px-2 whitespace-nowrap font-medium box-border"
         onClick={() => setIsOpen((prev) => !prev)}
         onFocus={() => setIsOpen(true)}
       >
@@ -73,37 +61,15 @@ const SigLevelDropdown = () => {
       </button>
 
       {isOpen && (
-        <ul
-          style={{
-            position: 'absolute',
-            zIndex: 50,
-            top: '100%',
-            left: 0,
-            margin: 0,
-            padding: 0,
-            background: 'white',
-            border: '1px solid #d1d5db',
-            boxShadow: '0 4px 6px rgba(0,0,0,0.1)',
-            listStyle: 'none',
-            minWidth: '100%',
-          }}
-        >
+        <ul className="absolute z-50 top-full left-0 m-0 p-0 bg-white border border-gray-300 shadow-md list-none min-w-full">
           {sigOptions.map((option) => (
             <li
               key={option.key}
-              style={{
-                height: '30px',
-                display: 'flex',
-                alignItems: 'center',
-                padding: '0 12px',
-                fontSize: '14px',
-                cursor: 'pointer',
-                whiteSpace: 'nowrap',
-                boxSizing: 'border-box',
-                background: option.value === localStore.value ? '#dbeafe' : 'white',
-                fontWeight: option.value === localStore.value ? '600' : 'normal',
-                color: '#000',
-              }}
+              className={`h-7.5 flex items-center px-3 text-sm cursor-pointer whitespace-nowrap box-border text-black ${
+                option.value === localStore.value
+                  ? 'bg-blue-100 font-semibold'
+                  : 'bg-white font-normal'
+              }`}
               onMouseEnter={(e) => {
                 e.currentTarget.style.background = '#3b82f6';
                 e.currentTarget.style.color = 'white';

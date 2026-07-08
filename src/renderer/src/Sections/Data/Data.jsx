@@ -96,7 +96,7 @@ const Data = () => {
 
   const StatementsPanel = () => {
     return (
-      <div className="flex flex-col mt-4 p-4 pt-0">
+      <div className="flex flex-col mt-4 p-4 pr-0 pt-0">
         <div className="text-4xl mt-4 ml-1">{t('Statements')}</div>
         <section className="flex h-[calc(100vh-200px)]  w-full py-2 mb-12">
           <StatementsList statements={statements} />
@@ -108,11 +108,11 @@ const Data = () => {
   const SortsPanel = () => {
     return (
       <>
-        <div className="text-4xl mt-8 mb-8 ml-1">{t('Participant Q Sorts')}</div>
         <div className="flex flex-row gap-2 max-w-[85vw] justify-between mb-6 items-center flex-wrap">
+          <div className="text-4xl mt-8 mb-8 ml-1">{t('Participant Q Sorts')}</div>
           {showUnforcedConfirmMessage && (
             <>
-              <div className="flex flex-row gap-4 max-w-[60vw] ">
+              <div className="flex flex-row gap-4 max-w-[60vw]">
                 <div className="flex flex-row items-center gap-4">
                   <div className="text-[clamp(1.5rem,1.5vw,1.8rem)]">{t('Display sorts as')}</div>
                   <DisplayDataQsortsButton />

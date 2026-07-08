@@ -14,7 +14,7 @@ const Rotation = () => {
   const optionsTrans = t('Options');
   const varimaxTrans = t('Varimax');
   const judgmentalTrans = t('Judgmental');
-  const numberFactorsKeepTrans = t('Number of factors to keep for rotation');
+  const numberFactorsKeepTrans = t('Select the number of factors to keep for rotation');
   const extractFactorsFirstTrans = t('Extract factors first');
   const updateRotationActiveTabIndex = rotationState((state) => state.updateRotationActiveTabIndex);
   const rotationActiveTabIndex = rotationState((state) => state.rotationActiveTabIndex);
@@ -30,9 +30,10 @@ const Rotation = () => {
       title: optionsTrans,
       content: (
         <div>
+          <div className="text-4xl mb-6">{t('Rotation Options')}</div>
           <div className="grid bg-white max-w-299.25 select-none grid-rows-[50px_120px_150px_1fr] h-[calc(100vh-75px)]">
             {showKeepFacForRotButton ? (
-              <div className="mr-5 mt-2.5 text-[22px]">{numberFactorsKeepTrans}</div>
+              <div className="mr-5 mt-2.5 text-[22px]">{numberFactorsKeepTrans}:</div>
             ) : (
               <div className="mr-5 mt-2.5 text-[22px]">{extractFactorsFirstTrans}</div>
             )}
