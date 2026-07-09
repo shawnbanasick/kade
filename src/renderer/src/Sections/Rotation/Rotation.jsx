@@ -61,7 +61,7 @@ const Rotation = () => {
       title: judgmentalTrans,
       content: (
         <div>
-          <div className="bg-white overflow-auto pl-1.25  h-full">
+          <div className="bg-white overflow-auto  h-full">
             <InitializeJudgementalButton />
             <JudgementalTitleDiv />
           </div>
@@ -114,7 +114,7 @@ const Rotation = () => {
           onClick={() => handleTabClick('tab3')}
         />
 
-        <div className="tab-content h-[calc(100vh-58px)] overflow-auto bg-base-100 border-base-300 p-6 pt-1">
+        <div className="tab-content overflow-auto bg-base-100 border-base-300 pl-6 pr-1 pt-1">
           {tabs[2].content}
         </div>
       </div>

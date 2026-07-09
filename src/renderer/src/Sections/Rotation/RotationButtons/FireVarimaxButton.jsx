@@ -67,7 +67,7 @@ const RotationButtonGroup = () => {
           id="pcaRotationButton"
           disabled={varimaxButtonDisabled}
           onClick={onVarimaxClick}
-          className={`w-[170px] h-[30px] ${varimaxButtonActive ? 'bg-primary-button' : 'bg-grey-button'}`}
+          className={`w-42.5 h-7.5 ${varimaxButtonActive ? 'bg-primary-button' : 'bg-grey-button'}`}
         >
           {varimaxButtonTextTrans}
         </GeneralButton>
