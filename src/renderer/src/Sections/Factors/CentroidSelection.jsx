@@ -10,7 +10,7 @@ const TypeOfCentroidTransitionContainer = () => {
     return (
       <div
         id="typeOfCentroidButtonContainer"
-        className="flex  w-full max-w-200 justify-between px-3"
+        className="flex  w-full max-w-200 mt-5 justify-between px-3"
       >
         <TraditionalCentroidButton />
         {/* <TuckerMacCallumButton /> */}

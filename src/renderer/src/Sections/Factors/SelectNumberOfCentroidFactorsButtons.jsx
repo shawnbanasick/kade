@@ -36,6 +36,8 @@ const SelectNumberOfCentroidFactorsButtons = () => {
     centroid8FactorsActive,
   ];
 
+  console.log('activeButtonColorArray', activeButtonColorArray);
+
   const updateActiveButtonColorArray = [
     updateCentroid1FactorsActive,
     updateCentroid2FactorsActive,
@@ -94,6 +96,11 @@ const SelectNumberOfCentroidFactorsButtons = () => {
   };
 
   const handleExtraction = () => {
+    if (activeButtonColorArray.every((isActive) => isActive === false)) {
+      console.log('no button selected');
+      return;
+    }
+
     if (brownCentroids === true) {
       console.log('brown centroids selected');
 
@@ -155,7 +162,7 @@ const SelectNumberOfCentroidFactorsButtons = () => {
         <GeneralButton
           onClick={handleExtraction}
           disabled={isCentroidFacSelectDisabled}
-          className="flex flex-row items-center text-center bg-grey-button justify-center  w-[120px] ml-[70px]"
+          className="flex flex-row items-center text-center bg-grey-button justify-center  w-30 ml-17.5"
         >{`${t('Extract')}`}</GeneralButton>
       </div>
     );

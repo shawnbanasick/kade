@@ -50,7 +50,7 @@ const UnrotatedFactorTable = () => {
   };
 
   return (
-    <div ref={containerRef} className="w-full min-w-0 max-w-[1400px] overflow-hidden">
+    <div ref={containerRef} className="w-full min-w-0 max-w-350 overflow-hidden animate-fadeIn">
       <div id="unRotatedFactorTable" style={style2} className="ag-theme-fresh">
         <AgGridReact
           ref={gridRef}

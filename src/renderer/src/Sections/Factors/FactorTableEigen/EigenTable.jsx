@@ -33,7 +33,7 @@ const EigenTable = () => {
     gridColDefsFacTableEigenPrepped === undefined ||
     gridRowDataFacTableEigenPrepped === undefined
   ) {
-    return <div>Loading...</div>;
+    return;
   }
 
   const sizeToFit = useCallback(() => {
