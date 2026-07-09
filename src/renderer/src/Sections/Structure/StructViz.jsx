@@ -301,7 +301,6 @@ function FlowInner() {
   return (
     <>
       <div className="text-4xl mb-3 mt-3">{t('Hierarchical Factor Graph')}</div>
-
       <div ref={flowRef} className="relative w-[95%] h-[82%] bg-white">
         <div className="flex flex-row gap-15 items-end react-flow__panel-top">
           <UserNumberInput
@@ -383,12 +382,12 @@ function FlowInner() {
           proOptions={{ hideAttribution: true }}
         >
           <Background />
-          <Controls style={{ display: 'none' }} />
+          <Controls className="hidden" />
           <Panel position="top-left" style={{ marginLeft: '557px', marginTop: '100px' }}>
             <EdgeLegend />
           </Panel>
-          <Panel position="bottom-left" style={{ marginBottom: '25px', marginLeft: '10px' }}>
-            <div className="flex gap-3">
+          <Panel position="bottom-left" className="mb-5 ml-2.5">
+            <div id="hierarchyButtonGroup" className="flex gap-3">
               <button
                 onClick={handleDownloadPng}
                 className="px-4 py-2 bg-grey-button text-black rounded-md hover:shadow-[inset_0_0_0_4px_#666,0_0_1px_transparent] transition-colors flex items-center gap-2"

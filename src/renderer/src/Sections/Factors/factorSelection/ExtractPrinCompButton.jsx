@@ -37,7 +37,9 @@ const PCAButton = () => {
       id="extractPrinCompButton"
       disabled={isDisabled}
       onClick={handleClick}
-      className={`ml-12.5! h-7.5 ${isActive ? 'bg-primary-button' : 'bg-grey-button'}`}
+      className={`h-[30px] ml-10! px-3 whitespace-nowrap w-auto min-w-fit ${
+        isActive ? 'bg-primary-button' : 'bg-grey-button'
+      }`}
     >
       {t('Principal Components')}
     </GeneralButton>

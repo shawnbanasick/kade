@@ -47,7 +47,7 @@ const ResetAnalysisButton = () => {
       {/* Trigger Button */}
       <GeneralButton
         id="resetAnalysisButton"
-        className="bg-grey-button ml-[350px] h-[30px] "
+        className="bg-grey-button ml-60 h-7.5 whitespace-nowrap min-w-fit w-auto px-3"
         onClick={handleOpen}
       >
         {t('Reset Analysis')}
@@ -55,7 +55,7 @@ const ResetAnalysisButton = () => {
 
       {/* Modal */}
       <dialog className={`modal ${modalOpen ? 'modal-open' : ''}`}>
-        <div className="modal-box bg-gray-800 text-neutral-content h-[250px] w-[600px]">
+        <div className="modal-box bg-gray-800 text-neutral-content h-62.5 w-150">
           <div className="text-3xl text-center font-bold mb-4">{t('Reset Analysis')}?</div>
           <div className="mb-6">
             <p className="text-xl mb-2">

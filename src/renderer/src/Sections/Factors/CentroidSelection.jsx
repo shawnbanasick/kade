@@ -8,7 +8,10 @@ const TypeOfCentroidTransitionContainer = () => {
 
   if (showCentroidSelection) {
     return (
-      <div className="flex mt-[25px] w-[800px] justify-start ml-[70px]">
+      <div
+        id="typeOfCentroidButtonContainer"
+        className="flex  w-full max-w-200 justify-between px-3"
+      >
         <TraditionalCentroidButton />
         {/* <TuckerMacCallumButton /> */}
         <Horst55CentroidModal />

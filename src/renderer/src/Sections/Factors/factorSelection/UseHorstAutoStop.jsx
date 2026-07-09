@@ -45,23 +45,23 @@ const UseHorstAutoStop = () => {
 
   return (
     <React.Fragment>
-      <div className="flex mt-[25px] ml-[70px] w-[800px] flex-row justify-start gap-3 items-center">
-        <span className="mr-[10px]">
+      <div className="flex mt-10 ml-17.25 flex-row justify-start gap-3 items-center">
+        <span className="mr-2.5">
           {`${t('Use Horst limit to determine the number of factors to extract')}?  `}
         </span>
         <GeneralButton
-          id="yes"
+          id="useHorstLimitYesButton"
           onClick={handleClick}
           disabled={horstAutoStopYesDisabled}
-          className={`w-[75px] ${horstAutoStopYesActive ? 'bg-primary-button' : 'bg-grey-button'}`}
+          className={`w-18.75 ${horstAutoStopYesActive ? 'bg-primary-button' : 'bg-grey-button'}`}
         >
           {t('Yes')}
         </GeneralButton>
         <GeneralButton
-          id="no"
+          id="useHorstLimitNoButton"
           onClick={handleClick}
           disabled={horstAutoStopNoDisabled}
-          className={`w-[75px] ${horstAutoStopNoActive ? 'bg-primary-button' : 'bg-grey-button'}`}
+          className={`w-18.75 ${horstAutoStopNoActive ? 'bg-primary-button' : 'bg-grey-button'}`}
         >
           {t('No')}
         </GeneralButton>

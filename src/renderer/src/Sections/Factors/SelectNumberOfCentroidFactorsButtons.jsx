@@ -138,8 +138,8 @@ const SelectNumberOfCentroidFactorsButtons = () => {
 
   if (showNumberOfCentroidFacToExtract) {
     return (
-      <div className="flex flex-row gap-3 items-center justify-start mt-[25px] w-[800px] ml-[70px]">
-        <span>{`${t('Select Number of Factors')}: `}</span>
+      <div className="flex flex-row gap-3 items-center justify-start mt-6.25  ml-17.25">
+        <span>{`${t('Select the number of factors')}: `}</span>
         {btnId.map((item, index) => (
           <GeneralButton
             key={`centroidF${item}`}

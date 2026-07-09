@@ -34,7 +34,7 @@ const ScreeContainer = (props) => {
   const numFactors = Number(numFacsFromState) + 1;
 
   return (
-    <div className="mt-10">
+    <div className="mt-10 ml-5">
       <h1>{t('Scree Plot')}</h1>
       <ScreePlot
         data={data}
@@ -46,7 +46,7 @@ const ScreeContainer = (props) => {
         {...styles}
         numFacs={numFactors}
       />
-      <div className="flex flex-row justify-center w-[80vw] h-50">
+      <div className="flex flex-row flex-wrap gap-4 justify-between w-[98%] mt-5 min-h-30 mb-30">
         <TogglePaMean />
         <DownloadSvgButtons
           data={data}

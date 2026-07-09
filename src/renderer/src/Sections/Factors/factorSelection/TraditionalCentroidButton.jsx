@@ -29,7 +29,7 @@ const TraditionalCentroidButton = () => {
       id="traditionalCentroidButton"
       disabled={isDisabled}
       onClick={handleOnclick}
-      className={`h-[30px] w-[250px] ${isActive ? 'bg-primary-button' : 'bg-grey-button'}`}
+      className={`h-7.5 w-62.5 ${isActive ? 'bg-primary-button' : 'bg-grey-button'}`}
     >
       Brown {t('Centroid Factors')}
     </GeneralButton>

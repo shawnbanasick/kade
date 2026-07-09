@@ -35,10 +35,10 @@ const Horst55CentroidModal = () => {
 
   return (
     <GeneralButton
-      id="noFacSelectedModalButton"
+      id="horst55CentroidButton"
       disabled={isDisabled}
       onClick={handleOnclick}
-      className={`h-[30px] w-[250px] ${isActive ? 'bg-primary-button' : 'bg-grey-button'} ml-8!`}
+      className={`h-7.5 w-62.5 ${isActive ? 'bg-primary-button' : 'bg-grey-button'} ml-8!`}
     >
       Horst {t('Centroid Factors')}
     </GeneralButton>

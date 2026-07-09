@@ -18,15 +18,23 @@ function getHeight(numRows) {
 
 const EigenTable = () => {
   const gridRef = useRef();
+  const parallelMeans = factorState((state) => state.parallelMeans);
+  const parallel95 = factorState((state) => state.parallel95);
+  const eigensTranslations = factorState((state) => state.eigensTranslations);
+
   const gridColDefsFacTableEigenPrepped = factorState(
     (state) => state.gridColDefsFacTableEigenPrepped
   );
   const gridRowDataFacTableEigenPrepped = factorState(
     (state) => state.gridRowDataFacTableEigenPrepped
   );
-  const parallelMeans = factorState((state) => state.parallelMeans);
-  const parallel95 = factorState((state) => state.parallel95);
-  const eigensTranslations = factorState((state) => state.eigensTranslations);
+
+  if (
+    gridColDefsFacTableEigenPrepped === undefined ||
+    gridRowDataFacTableEigenPrepped === undefined
+  ) {
+    return <div>Loading...</div>;
+  }
 
   const sizeToFit = useCallback(() => {
     gridRef.current?.api?.sizeColumnsToFit();

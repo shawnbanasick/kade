@@ -18,20 +18,20 @@ const UnrotatedFactorsTransitionContainer = () => {
   const eigenvaluesArray = factorState((state) => state.eigenvaluesArray);
   const parallelMeans = factorState((state) => state.parallelMeans);
   const parallel95 = factorState((state) => state.parallel95);
-    
 
   if (showUnrotatedFactorTable) {
     return (
-      <div className="row-start-3 ml-17.5 mt-10">
+      <div className="row-start-3 ml-1 mt-10">
         <HorstWarningMessage />
-      {hasParallelAnalysisFinished ? <>
-        <UnrotatedFactorTable />
-        <EigenTable  />
-        <ScreeContainer />
-      </> : <span>
-      {('Calculating...')}
-      </span>}
-      
+        {hasParallelAnalysisFinished ? (
+          <>
+            <UnrotatedFactorTable />
+            <EigenTable />
+            <ScreeContainer />
+          </>
+        ) : (
+          <span>{'Calculating...'}</span>
+        )}
       </div>
     );
   }

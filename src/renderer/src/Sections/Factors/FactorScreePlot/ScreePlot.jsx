@@ -9,7 +9,7 @@ import ParallelRefLine from './ParallelRefLine';
 const styles = {
   container: {
     textAlign: 'center',
-    width: '80%',
+    width: '100%',
     height: '82%',
     display: 'flex',
     alignItems: 'left',

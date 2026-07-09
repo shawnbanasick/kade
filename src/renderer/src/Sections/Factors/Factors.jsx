@@ -17,7 +17,7 @@ const Factors = () => {
   const showCentroidError = factorState((state) => state.showCentroidError);
 
   return (
-    <div className="flex flex-col  border-5 border-t-18 border-grey-button w-full h-full text-black  p-1.25 pt-3.75 px-3.75 font-[Helvetica,sans-serif] text-[18px] bg-white box-border select-none animate-fadeIn">
+    <div className="flex flex-col  border-5 border-t-18 border-grey-button w-full h-full text-black  p-1 pt-3.75 px-1.75 pr-0 font-[Helvetica,sans-serif] text-[18px] bg-white box-border select-none animate-fadeIn">
       <div className="text-4xl mb-6">{t('Factor Extractions')}</div>
       <TypeOfAnalysisTransitionContainer />
       <div className="flex flex-col overflow-auto">

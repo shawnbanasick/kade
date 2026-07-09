@@ -1101,9 +1101,12 @@ const ForceGraph = ({
           </div>
         </div>
         {/* Graph canvas height and controls overlay */}
-        <div className="h-[80%]">
+        <div className="h-[90%]" id="svgOuterContainer">
           {/* ── Graph canvas ── */}
-          <div className="relative bg-white h-[98%] rounded-lg flex-1 overflow-hidden">
+          <div
+            id="svgInnerContainer"
+            className="relative bg-white h-full rounded-lg flex-1 overflow-hidden outline-2 outline-gray-100"
+          >
             <svg id="forceGraph" ref={svgRef}></svg>
             <div
               ref={tooltipRef}

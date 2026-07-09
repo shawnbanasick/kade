@@ -26,9 +26,11 @@ const RevealCentroidTypeSelectionButton = () => {
   return (
     <GeneralButton
       id="displayCentroidTypes"
-      disabled={false}
+      disabled={isDisabled}
       onClick={handleClick}
-      className={`h-[30px] ${isActive ? 'bg-primary-button' : 'bg-grey-button'}`}
+      className={`h-7.5 px-3 whitespace-nowrap w-auto min-w-fit ${
+        isActive ? 'bg-primary-button' : 'bg-grey-button'
+      }`}
     >
       {t('Centroid Factors')}
     </GeneralButton>

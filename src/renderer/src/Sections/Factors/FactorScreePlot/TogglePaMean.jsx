@@ -13,23 +13,23 @@ const TogglePaMean = () => {
 
   if (!isActive) {
     return (
-      <div className="flex flex-row justify-center mt-[40px] mr-10">
+      <div id="toggleParallelAnalysisContainer" className="flex flex-row justify-center h-10">
         <GeneralButton
           id="toggleParallelMeans"
-          className={`bg-grey-button mr-[20px]! h-[40px] w-[200px]`}
+          className={`bg-grey-button mr-5! h-10 w-50`}
           onClick={() => updateDisplayParallelMeans(!displayParallelMeans)}
         >
-          <div className="flex flex-row items-center justify-center h-[30px] gap-4">
-          {displayParallelMeans ? t('Hide PA Mean') : t('Display PA Mean')}
+          <div className="flex flex-row items-center justify-center h-7.5 gap-4">
+            {displayParallelMeans ? t('Hide PA Mean') : t('Display PA Mean')}
           </div>
         </GeneralButton>
         <GeneralButton
-          className={`bg-grey-button ml-[20px]! h-[40px]`}
+          className={`bg-grey-button ml-5! h-10`}
           id="downloadPngButtonScree"
           onClick={() => updateDisplayParallel95(!displayParallel95)}
         >
-          <div className="flex flex-row items-center justify-center h-[30px] w-[220px] gap-4">
-          {displayParallel95 ? t('Hide PA 95th Percentile') : t('Display PA 95th Percentile')}
+          <div className="flex flex-row items-center justify-center h-7.5 w-55 gap-4">
+            {displayParallel95 ? t('Hide PA 95th Percentile') : t('Display PA 95th Percentile')}
           </div>
         </GeneralButton>
       </div>

@@ -78,7 +78,7 @@ const Structure = () => {
           onClick={() => updateStructureTabActive('tab2')}
         />
 
-        <div className="tab-content box-border overflow-auto bg-base-100 border-base-300 p-4">
+        <div className="tab-content box-border overflow-auto bg-base-100 border-base-300 p-4 pb-0">
           {tabs[0].content}
         </div>
       </div>
