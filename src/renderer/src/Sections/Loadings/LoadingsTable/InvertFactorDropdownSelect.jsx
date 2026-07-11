@@ -25,17 +25,18 @@ const InvertFactorDropdownSelect = () => {
 
   return (
     <div className="flex items-center">
-      <span className="mr-5 text-[30px]">{`${t('Select the factor to invert')}: `}</span>
+      <span className="mr-5 text-[20px]">{`${t('Select the factor to invert')}: `}</span>
       <select
         value={activeValue}
         onChange={saveDropdownValueToState}
-        className="select select-bordered bg-white text-[14px] w-full max-w-xs"
+        style={{ color: 'black' }}
+        className="select select-bordered bg-white text-[14px] text-black! w-full max-w-xs"
       >
         <option value="" disabled>
           ?
         </option>
         {options.map((num) => (
-          <option key={`factor${num}`} value={num}>
+          <option key={`factor${num}`} value={num} className="text-black!">
             {num}
           </option>
         ))}

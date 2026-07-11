@@ -66,7 +66,7 @@ const loadingsTableDataPrep = (numFactors) => {
 
     {
       headerName: 'highlighting',
-      field: 'highlighting',
+      field: 'highlightingClass',
       pinned: false,
       editable: false,
       cellStyle: {

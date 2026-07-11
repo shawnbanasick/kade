@@ -36,8 +36,6 @@ const SelectNumberOfCentroidFactorsButtons = () => {
     centroid8FactorsActive,
   ];
 
-  console.log('activeButtonColorArray', activeButtonColorArray);
-
   const updateActiveButtonColorArray = [
     updateCentroid1FactorsActive,
     updateCentroid2FactorsActive,

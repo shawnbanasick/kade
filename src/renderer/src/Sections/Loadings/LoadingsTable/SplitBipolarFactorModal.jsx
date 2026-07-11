@@ -11,6 +11,8 @@ const SplitBipolarFactorButtonModal = () => {
   let bipolarFactorsArray = loadingState((state) => state.bipolarFactorsArray);
   let factorToSplit = loadingState((state) => state.factorToSplit);
   const showSplitFactorModal = loadingState((state) => state.showSplitFactorModal);
+  const gridApi = loadingState((state) => state.gridApi);
+  const updateGridKey = loadingState((state) => state.updateGridKey);
 
   const handleClose = () => {
     updateShowSplitFactorModal(false);
@@ -21,13 +23,17 @@ const SplitBipolarFactorButtonModal = () => {
     bipolarFactorsArray.push(factorToSplit);
     updateBipolarFactorsArray([...bipolarFactorsArray]);
     splitBipolarFactor();
+    console.log('gridApi', gridApi);
+    // gridApi?.refreshCells({ force: true });
+    gridApi?.redrawRows();
+    updateGridKey(Math.random());
   };
 
   if (!showSplitFactorModal) return null;
 
   return (
     <dialog className={`modal ${showSplitFactorModal ? 'modal-open' : ''}`}>
-      <div className="modal-box bg-gray-800 text-neutral-content w-[600px]">
+      <div className="modal-box bg-gray-800 text-neutral-content w-150">
         <div className="text-3xl text-center font-bold mb-4">{t('Factor Loadings Table')}</div>
         <div className="mb-6">
           <SplitBipolarFactorDropdownSelect />

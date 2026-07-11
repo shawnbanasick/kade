@@ -146,8 +146,11 @@ const splitBipolarFactor = () => {
     };
 
     projectHistoryArray.push(logMessageObj);
-
     projectHistoryState.setState({ projectHistoryArray: projectHistoryArray });
+
+    console.log('split', columnDefs, dataRows, bipolarIndexArray);
+
+    loadingState.setState({ sendDataToOutputButtonColor: 'orange' });
     loadingState.setState({ gridColDefsLoadingsTable: columnDefs });
     loadingState.setState({ gridRowDataLoadingsTable: dataRows });
     loadingState.setState({ factorToSplit: undefined });
@@ -159,11 +162,10 @@ const splitBipolarFactor = () => {
     outputState.setState({ showStandardErrorsDifferences: false });
     outputState.setState({ showFactorCharacteristicsTable: false });
     outputState.setState({ showDownloadOutputButtons: false });
-    // outputState.setState({ displayFactorVisualizations: false });
     outputState.setState({ showDocxOptions: false });
+
     loadingState.setState({ bipolarDisabled: true });
     loadingState.setState({ bipolarIndexArray: bipolarIndexArray });
-    loadingState.setState({ sendDataToOutputButtonColor: 'orange' });
   }
 };
 

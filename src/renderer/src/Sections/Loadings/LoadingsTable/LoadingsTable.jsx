@@ -4,9 +4,7 @@ import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-alpine.css';
 import { ToastContainer, toast, Zoom } from 'react-toastify';
 import SigLevelDropdown from './SigLevelDropdownSelect2';
-import InvertFactorButton from './InvertFactorButton';
 import autoFlagFactors from '../loadingsLogic/autoFlagFactors';
-import SplitBipolarFactorModal from './SplitBipolarFactorModal';
 import MajorityCommonVarianceCheckbox from './MajorityCommonVarianceCheckbox';
 import GeneralButton from '../../../Utils/GeneralButton';
 import i18n from 'i18next';
@@ -17,6 +15,9 @@ import outputState from '../../GlobalState/outputState';
 import rotationState from '../../GlobalState/rotationState';
 import coreState from '../../GlobalState/coreState';
 import resetSection6 from '../../../Utils/resetSection6';
+
+import InvertFactorButton from './InvertFactorButton';
+import SplitBipolarFactorModal from './SplitBipolarFactorModal';
 
 const filterArray = (item) => {
   let shortened = item;
@@ -94,6 +95,7 @@ const LoadingsTable = (props) => {
   const updateHighlightFactor7 = outputState((state) => state.updateHighlightFactor7);
   const updateHighlightFactor8 = outputState((state) => state.updateHighlightFactor8);
   const updateIsOutputButtonGreen = appState((state) => state.updateIsOutputButtonGreen);
+  const updateShowInvertFactorModal = loadingState((state) => state.updateShowInvertFactorModal);
 
   const gridRef = useRef();
 
@@ -128,6 +130,10 @@ const LoadingsTable = (props) => {
     suppressRowHoverHighlight: false,
     columnHoverHighlight: true,
     theme: 'legacy',
+  };
+
+  const onGridReady = (params) => {
+    loadingState.getState().setGridApi(params.api);
   };
 
   const grabTableLocalState = () => {
@@ -166,7 +172,7 @@ const LoadingsTable = (props) => {
   const doInvertFactor = () => {
     const currentLoadingsTable = grabTableLocalState();
     updateCurrentLoadingsTable(currentLoadingsTable);
-    updateShowSplitFactorModal(true);
+    updateShowInvertFactorModal(true);
   };
 
   const highlightRows = (highlightType) => {
@@ -255,6 +261,19 @@ const LoadingsTable = (props) => {
     marginBottom: 15,
   };
 
+  console.log(
+    'split-table',
+    gridColDefsLoadingsTable,
+    gridRowDataLoadingsTable,
+    bipolarSplitCount1
+  );
+
+  console.log(
+    'new col field:',
+    gridColDefsLoadingsTable[gridColDefsLoadingsTable.length - 1].field
+  );
+  console.log('sample row keys:', Object.keys(gridRowDataLoadingsTable[0]));
+
   return (
     <div className="flex flex-col w-[90%] min-w-0 items-center ml-10">
       <div className="flex flex-col items-center">
@@ -336,7 +355,10 @@ const LoadingsTable = (props) => {
           >
             <AgGridReact
               ref={gridRef}
+              key={loadingState((state) => state.gridKey)}
+              onRowDataUpdated={() => console.log('rowData updated in grid')}
               id="loadingsTable"
+              onGridReady={onGridReady}
               columnDefs={gridColDefsLoadingsTable}
               rowData={gridRowDataLoadingsTable}
               getRowClass={(params) => params.data.highlightingClass}
@@ -355,13 +377,13 @@ const LoadingsTable = (props) => {
               backgroundColor: sendDataToOutputButtonColor,
               transition: 'background-color 0.3s ease',
             }}
-            className="h-[30px] bg-grey-button flex-1 min-w-[200px] max-w-[260px]"
+            className="h-7.5 bg-grey-button flex-1 min-w-50 max-w-65"
           >
             {props.childTrans.send}
           </GeneralButton>
           <GeneralButton
             id="invertFactorsButton"
-            className="h-[30px] bg-grey-button flex-1 min-w-[120px] max-w-[160px]"
+            className="h-7.5 bg-grey-button flex-1 min-w-40 max-w-65"
             disabled={isDisabled}
             onClick={doInvertFactor}
           >
@@ -369,7 +391,7 @@ const LoadingsTable = (props) => {
           </GeneralButton>
           <GeneralButton
             id="splitFactorsButton"
-            className="h-[30px] bg-grey-button flex-1 min-w-[160px] max-w-[260px]"
+            className="h-7.5 bg-grey-button flex-1 min-w-40 max-w-65"
             onClick={doSplitFactor}
           >
             {props.childTrans.split}

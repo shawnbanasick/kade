@@ -31,7 +31,7 @@ const InvertFactorDropdownSelect = () => {
       <select
         value={activeValue}
         onChange={saveDropdownValueToState}
-        className="select select-bordered bg-white text-[14px] w-full max-w-xs"
+        className="select select-bordered bg-white text-[14px] text-black! w-full max-w-xs"
       >
         <option value="" disabled>
           ?

@@ -83,12 +83,16 @@ const loadingState = create(
     userSelectedSigLevel: 1.96,
     temp_gridColDefsLoadingsTable: [],
     temp_gridRowDataLoadingsTable: [],
+    gridApi: null,
+    gridKey: 0,
 
+    updateGridKey: (inputValue) => set({ gridKey: inputValue }),
+    setGridApi: (api) => set({ gridApi: api }),
     updateLoadingSigDropdownValue: (inputValue) => set({ loadingSigDropdownValue: inputValue }),
     updateTempGridColDefsLoadingsTable: (inputValue) =>
-      set({ temp_gridColDefsLoadingsTable: inputValue }),
+      set({ temp_gridColDefsLoadingsTable: [...inputValue] }),
     updateTempGridRowDataLoadingsTable: (inputValue) =>
-      set({ temp_gridRowDataLoadingsTable: inputValue }),
+      set({ temp_gridRowDataLoadingsTable: [...inputValue] }),
     updateAutoflagButtonColor: (inputValue) => set({ autoflagButtonColor: inputValue }),
     updateAutoFlagHistory: (inputValue) => set({ autoFlagHistory: inputValue }),
     updateBipolarDisabled: (inputValue) => set({ bipolarDisabled: inputValue }),
@@ -97,8 +101,10 @@ const loadingState = create(
     updateCurrentLoadingsTable: (inputValue) => set({ currentLoadingsTable: inputValue }),
     updateFactorToInvert: (inputValue) => set({ factorToInvert: inputValue }),
     updateFactorToSplit: (inputValue) => set({ factorToSplit: inputValue }),
-    updateGridColDefsLoadingsTable: (inputValue) => set({ gridColDefsLoadingsTable: inputValue }),
-    updateGridRowDataLoadingsTable: (inputValue) => set({ gridRowDataLoadingsTable: inputValue }),
+    updateGridColDefsLoadingsTable: (inputValue) =>
+      set({ gridColDefsLoadingsTable: [...inputValue] }),
+    updateGridRowDataLoadingsTable: (inputValue) =>
+      set({ gridRowDataLoadingsTable: [...inputValue] }),
     updateHighlighting: (inputValue) => set({ highlighting: inputValue }),
     updateIsLoadingFactorsKept: (inputValue) => set({ isLoadingFactorsKept: inputValue }),
     updateIsLoadingAutoflag: (inputValue) => set({ isLoadingAutoflag: inputValue }),

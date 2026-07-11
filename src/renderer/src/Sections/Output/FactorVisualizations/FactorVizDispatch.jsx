@@ -18,8 +18,6 @@ const FactorVizDispatch = (props) => {
   const factorVizOptions = vizState((state) => state.factorVizOptions);
   const factorData = createFactorVizDataObjectForProps(factorVizOptions);
 
-  console.log('FactorVizDispatch factorData:', factorData);
-
   if (Object.keys(factorData).length === 0 || factorData === undefined || factorData === null) {
     return null;
   }
