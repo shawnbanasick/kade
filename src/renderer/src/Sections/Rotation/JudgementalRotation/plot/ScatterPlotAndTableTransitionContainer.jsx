@@ -72,7 +72,7 @@ const ScatterPlotAndTableTransitionContainer = (props) => {
           </div>
           <SaveRotationButton />
         </div>
-        <div id="scatterPlotDiv" className="flex flex-row w-full h-full gap-8 flex-wrap mt-1.25 ">
+        <div id="scatterPlotDiv" className="flex flex-row w-full h-full gap-8 flex-wrap mt-1.25">
           <div style={{ width: leftContWidth }}>
             <ParticipantPopUp />
             <ScatterPlot

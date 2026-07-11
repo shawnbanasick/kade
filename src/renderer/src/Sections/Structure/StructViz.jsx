@@ -5,6 +5,7 @@ import ReactFlow, {
   applyEdgeChanges,
   ReactFlowProvider,
   Panel,
+  useReactFlow,
 } from 'reactflow';
 import * as htmlToImage from 'html-to-image';
 import StraightEdgeWithLabel from './StraightEdgeWithLabel';
@@ -121,6 +122,17 @@ function FlowInner() {
   const horizontalSpacing = structureState((state) => state.horizontalSpacing);
   const explainedVarianceArrays = structureState((state) => state.explainedVarianceArrays);
   const projectName = coreState.getState().projectName;
+
+  const onInit = useCallback((instance) => {
+    instance.fitView({ padding: 0.2 });
+    // Shift the fitted view to the right by a fixed pixel amount
+    requestAnimationFrame(() => {
+      const viewport = instance.getViewport();
+      const container = flowRef.current;
+      const shiftAmount = container ? container.clientWidth * 0.1 : 100;
+      instance.setViewport({ ...viewport, x: viewport.x + shiftAmount, zoom: 0.8 });
+    });
+  }, []);
 
   // Compute width object based on mode
   const widthObj = useMemo(() => {
@@ -302,7 +314,7 @@ function FlowInner() {
     <>
       <div className="text-4xl mb-3 mt-3">{t('Hierarchical Factor Graph')}</div>
       <div ref={flowRef} className="relative w-[95%] h-[82%] bg-white">
-        <div className="flex flex-row gap-15 items-end react-flow__panel-top">
+        <div className="flex flex-row gap-15 items-end react-flow__panel-top mb-5">
           <UserNumberInput
             onChange={handleCorrelationChange}
             value={structureCorrelationThreshold}
@@ -378,7 +390,7 @@ function FlowInner() {
           elementsSelectable={true}
           edgesFocusable={true}
           edgesUpdatable={true}
-          fitView
+          onInit={onInit}
           proOptions={{ hideAttribution: true }}
         >
           <Background />

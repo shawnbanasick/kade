@@ -229,14 +229,15 @@ const LoadingsTable = (props) => {
     <div className="flex flex-col w-[90%] min-w-0 items-center ml-10">
       <div className="flex flex-col items-center">
         <ToastContainer transition={Zoom} />
-        <div className="flex flex-col w-full items-center">
-          <div className="w-full mb-2 min-w-0 h-7.5">
-            <span className="">{props.childTrans.row}</span>
-            <span className="ml-42">{props.childTrans.flagging}</span>
-          </div>
+        <div className="flex flex-row w-full items-center">
+          <span className="">{props.childTrans.row}</span>
+          <span className="ml-102">{props.childTrans.flagging}</span>
         </div>
         {/* Row Highlighting Buttons */}
-        <div className="flex flex-row w-full min-w-0 justify-between px-2 flex-wrap gap-y-2">
+        <div
+          id="colorAndFlaggingButtonGroupContainer"
+          className="flex flex-row w-full min-w-0 justify-between px-2 flex-wrap gap-y-2"
+        >
           <div id="rowHighlightingButtonGroup" className="flex flex-row gap-2 min-w-0">
             <GeneralButton
               id="noHighlightingButton"
@@ -291,7 +292,7 @@ const LoadingsTable = (props) => {
             </GeneralButton>
           </div>
         </div>
-        <div className="flex items-center w-full max-w-225 min-w-0 pl-4 mt-0.75">
+        <div className="flex items-center w-full max-w-250 min-w-0 pr-15 mt-0.75 justify-end">
           <MajorityCommonVarianceCheckbox />
         </div>
         <div className="flex flex-col items-center mb-2">
