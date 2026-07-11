@@ -79,6 +79,22 @@ const LoadingsTable = (props) => {
   const updateHighlighting = loadingState((state) => state.updateHighlighting);
   const updateOutputButtonsArray = outputState((state) => state.updateOutputButtonsArray);
 
+  const updateOutputFactorSelectButtonsDisabled = outputState(
+    (state) => state.updateOutputFactorSelectButtonsDisabled
+  );
+  const updateUserSelectedFactors = outputState((state) => state.updateUserSelectedFactors);
+  const updateOutputForDataViz2 = outputState((state) => state.updateOutputForDataViz2);
+  const updateDisplayOutputTabContent = outputState((state) => state.updateDisplayOutputTabContent);
+  const updateHighlightFactor1 = outputState((state) => state.updateHighlightFactor1);
+  const updateHighlightFactor2 = outputState((state) => state.updateHighlightFactor2);
+  const updateHighlightFactor3 = outputState((state) => state.updateHighlightFactor3);
+  const updateHighlightFactor4 = outputState((state) => state.updateHighlightFactor4);
+  const updateHighlightFactor5 = outputState((state) => state.updateHighlightFactor5);
+  const updateHighlightFactor6 = outputState((state) => state.updateHighlightFactor6);
+  const updateHighlightFactor7 = outputState((state) => state.updateHighlightFactor7);
+  const updateHighlightFactor8 = outputState((state) => state.updateHighlightFactor8);
+  const updateIsOutputButtonGreen = appState((state) => state.updateIsOutputButtonGreen);
+
   const gridRef = useRef();
 
   const [localStore, setLocalStore] = useState({
@@ -185,6 +201,20 @@ const LoadingsTable = (props) => {
   };
 
   const clearAllCheckboxes = () => {
+    updateOutputFactorSelectButtonsDisabled(false);
+    resetSection6('output');
+    updateUserSelectedFactors([]);
+    updateOutputForDataViz2([]);
+    updateDisplayOutputTabContent(false);
+    updateHighlightFactor1(false);
+    updateHighlightFactor2(false);
+    updateHighlightFactor3(false);
+    updateHighlightFactor4(false);
+    updateHighlightFactor5(false);
+    updateHighlightFactor6(false);
+    updateHighlightFactor7(false);
+    updateHighlightFactor8(false);
+    updateIsOutputButtonGreen(false);
     const currentLoadingsTable = grabTableLocalState();
     for (let i = 0; i < currentLoadingsTable.length; i += 1) {
       for (let k = 0; k < numFacsForTableWidth; k += 1) {

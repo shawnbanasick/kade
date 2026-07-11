@@ -56,7 +56,6 @@ const getDateTime = () => {
 };
 
 const DownloadFactorVizButtons = ({ id, data, positionData } = {}) => {
-  console.log('DownloadFactorVizButtons props:', { id, data, positionData });
   const { t } = useTranslation();
   const factorVizOptions = vizState((state) => state.factorVizOptions) ?? {};
   const projectName = coreState((state) => state.projectName) ?? '';

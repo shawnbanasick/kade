@@ -45,7 +45,6 @@ const DistinguishingStatementsList = () => {
   const cohensThreshold = outputState((state) => state.cohensThreshold);
   const distStateListData = calcState((state) => state.distStateListData);
   const displayOutputTabContent = outputState((state) => state.displayOutputTabContent);
-
   const stephenExportData = JSON.parse(JSON.stringify(distStateListData));
 
   const displayData = useMemo(() => {
@@ -117,6 +116,14 @@ const DistinguishingStatementsList = () => {
     if (config?.key !== colKey) return <span style={{ opacity: 0.3, marginLeft: 4 }}>⇅</span>;
     return <span style={{ marginLeft: 4 }}>{config.direction === 'asc' ? '↑' : '↓'}</span>;
   };
+
+  if (userSelectedFactors.length === 0) {
+    return (
+      <h2 className="mt-12.5 text-2xl ml-12.5">
+        {t('Select factors for output in the Options tab')}
+      </h2>
+    );
+  }
 
   if (displayOutputTabContent) {
     if (distIdentType === 'stephensonMethod') {
