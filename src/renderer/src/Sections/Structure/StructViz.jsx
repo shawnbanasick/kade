@@ -129,7 +129,7 @@ function FlowInner() {
     requestAnimationFrame(() => {
       const viewport = instance.getViewport();
       const container = flowRef.current;
-      const shiftAmount = container ? container.clientWidth * 0.1 : 100;
+      const shiftAmount = container ? container.clientWidth * 0.3 : 175;
       instance.setViewport({ ...viewport, x: viewport.x + shiftAmount, zoom: 0.8 });
     });
   }, []);
