@@ -21,8 +21,10 @@ const FactorsTable = (props) => {
   const { t } = useTranslation();
   const gridRef = useRef();
   const gridColDefsFacTable = props.gridColDefsFacTable;
-
   const gridRowDataFacTable = props.gridRowDataFacTable;
+
+  const newGridRowDataFacTable = gridRowDataFacTable.filter((row) => typeof row.Nm === 'number');
+
   const displayOutputTabContent = outputState((state) => state.displayOutputTabContent);
 
   const numStatements = coreState((state) => state.numStatements);
@@ -86,7 +88,7 @@ const FactorsTable = (props) => {
               ref={gridRef}
               id="factorsTable"
               columnDefs={gridColDefsFacTable}
-              rowData={gridRowDataFacTable}
+              rowData={newGridRowDataFacTable}
               defaultColDef={defaultColDef}
               gridOptions={gridOptions}
               onGridReady={onGridReady}
