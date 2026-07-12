@@ -21,17 +21,12 @@ const FactorsTable = (props) => {
   const { t } = useTranslation();
   const gridRef = useRef();
   const gridColDefsFacTable = props.gridColDefsFacTable;
+
   const gridRowDataFacTable = props.gridRowDataFacTable;
   const displayOutputTabContent = outputState((state) => state.displayOutputTabContent);
 
   const numStatements = coreState((state) => state.numStatements);
   const showFactorsTable = outputState((state) => state.showFactorCorrelationsTable);
-
-  const style2 = {
-    marginTop: 30,
-    width: '100%', // Let the container fill available space
-    height: getHeight(numStatements),
-  };
 
   const sizeToFit = useCallback(() => {
     const api = gridRef.current?.api;
@@ -40,12 +35,22 @@ const FactorsTable = (props) => {
     }
   }, []);
 
+  const onGridReady = useCallback(() => {
+    sizeToFit();
+  }, [sizeToFit]);
+
+  const style2 = {
+    marginTop: 30,
+    width: '100%',
+    height: getHeight(numStatements),
+    overflowX: 'auto',
+  };
+
   useEffect(() => {
     const container = document.getElementById('FactorsTable');
     if (!container) return;
 
     const observer = new ResizeObserver(() => {
-      const width = container.offsetWidth;
       sizeToFit();
     });
 
@@ -53,13 +58,18 @@ const FactorsTable = (props) => {
     return () => observer.disconnect();
   }, [sizeToFit]);
 
-  // Keep the window resize listener for ongoing responsiveness
   useEffect(() => {
     window.addEventListener('resize', sizeToFit);
     return () => window.removeEventListener('resize', sizeToFit);
   }, [sizeToFit]);
 
-  let gridOptions = {
+  const defaultColDef = {
+    flex: 1,
+    minWidth: 120,
+    resizable: true,
+  };
+
+  const gridOptions = {
     suppressRowHoverHighlight: false,
     columnHoverHighlight: true,
     enableSorting: true,
@@ -77,7 +87,9 @@ const FactorsTable = (props) => {
               id="factorsTable"
               columnDefs={gridColDefsFacTable}
               rowData={gridRowDataFacTable}
+              defaultColDef={defaultColDef}
               gridOptions={gridOptions}
+              onGridReady={onGridReady}
               animateRows={true}
               enableBrowserTooltips={true}
             />
