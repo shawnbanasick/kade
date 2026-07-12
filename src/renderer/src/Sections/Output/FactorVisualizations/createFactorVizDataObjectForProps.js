@@ -34,7 +34,7 @@ const createFactorVizDataObjectForProps = (factorVizOptions) => {
   for (let i = 0; i < numberOfFactors; i += 1) {
     let name;
     const factorName = capitalizeFirstLetter(userSelectedFactors[i]);
-    const factorNum = factorName.charAt(factorName.length - 1);
+    const factorNum = factorName.replace('Factor ', '');
     const id = factorName.replace(/\s+/g, '');
 
     if (useCustomNames) {
