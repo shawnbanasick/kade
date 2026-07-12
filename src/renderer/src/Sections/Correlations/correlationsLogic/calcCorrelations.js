@@ -86,10 +86,6 @@ export default function calculateCorrelations(rawSorts, respondentNames) {
     forcedGraphDataNeg.push(tempObjNeg);
   });
 
-  // console.log('forcedGraphDataAll', JSON.stringify(forcedGraphDataAll, null, 2));
-  // console.log('forcedGraphDataPos', JSON.stringify(forcedGraphDataPos, null, 2));
-  // console.log('forcedGraphDataNeg', JSON.stringify(forcedGraphDataNeg, null, 2));
-
   // generate column definitions
   const gridColDefs = [];
   const tempObj2 = {};

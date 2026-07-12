@@ -26,7 +26,6 @@ const SigLevelDropdown = () => {
   const updateSigDropdownValue1 = outputState((state) => state.updateSigDropdownValue1);
 
   const handleChange = (e) => {
-    console.log('SigLevelDropdown handleChange value:', e.target.value);
     updateSigDropdownValue1(e.target.value);
     const lookupArray = [3.891, 3.481, 3.291, 2.807, 2.575, 1.96, 1.645, 1.44];
     const pValuesTextArray = [

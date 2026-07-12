@@ -1,14 +1,4 @@
-const getDiagonalsAndNewDiagonals = (
-  D,
-  U,
-  L,
-  NL,
-  rMatrix,
-  HOLDR,
-  P,
-  breakLoop,
-  K
-) => {
+const getDiagonalsAndNewDiagonals = (D, U, L, NL, rMatrix, HOLDR, P, breakLoop, K) => {
   let S = 0.0;
   for (let i542 = 0; i542 < rMatrix.length; i542 += 1) {
     S = Math.max(S, Math.abs(D[i542]));
@@ -17,19 +7,19 @@ const getDiagonalsAndNewDiagonals = (
     D[i56] = Math.min(1.0, U[i56] - D[i56]);
     U[i56] = D[i56];
   }
-  console.log(JSON.stringify(U));
+  // console.log(JSON.stringify(U));
 
   if (S - P > 0) {
     // * do something
     L += 1;
-    console.log(K, L);
+    // console.log(K, L);
   } else {
     //
     breakLoop = true;
   }
 
   if (L > NL) {
-    console.log("Communality estimates did NOT converge after 30 iterations");
+    console.log('Communality estimates did NOT converge after 30 iterations');
     breakLoop = true;
   }
 

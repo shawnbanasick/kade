@@ -9,21 +9,14 @@ import cloneDeep from 'lodash/cloneDeep';
 
 const mainCorrCalcs = (respondentNames, rawSortsArray) => {
   if (respondentNames.length > 0) {
-    // set up comparison array
-
-    // console.log(coreState.getState().numStatements);
-    // console.log(coreState.getState().qSortPattern);
     let qSortPattern = coreState.getState().qSortPattern;
-    // console.log(('qSortPattern: ', qSortPattern[0]));
     const qSortPatternCopy = qSortPattern.slice();
     qSortPatternCopy.sort((a, b) => b - a);
     const sortedPatternText = qSortPatternCopy.toString();
 
     // do data error checks
     const isForcedQsortPattern = inputState.getState().isForcedQsortPattern;
-    // console.log(JSON.stringify('isForcedQsortPattern: ', isForcedQsortPattern));
     const totalStatements = coreState.getState().numStatements;
-    // console.log(JSON.stringify('totalStatements: ', totalStatements));
 
     const qSortPatternMax = Math.max(...qSortPattern);
     const qSortPatternMin = Math.min(...qSortPattern);
@@ -51,8 +44,6 @@ const mainCorrCalcs = (respondentNames, rawSortsArray) => {
     );
 
     if (isForcedQsortPattern) {
-      // console.log(JSON.stringify('rawSortsArray: ', rawSortsArray));
-
       for (let i = 0, iLen = rawSortsArray.length; i < iLen; i += 1) {
         // convert to string for comparison to q sort pattern
         const participantQsortCopy = rawSortsArray[i].slice();

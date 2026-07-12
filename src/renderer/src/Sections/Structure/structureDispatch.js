@@ -18,8 +18,6 @@ const structureDispatch = () => {
 
   const mainDataObject = coreState.getState().mainDataObject;
   const sortsArray = mainDataObject.map((item) => item.rawSort);
-  // console.log('sortsArray', sortsArray.length);
-  // console.log('sortsArray', JSON.stringify(sortsArray, null, 2));
 
   // dispatch STRUCTURE webWorker
   const worker = new Worker(new URL('./webWorkerPca.js', import.meta.url), { type: 'module' });
@@ -32,9 +30,6 @@ const structureDispatch = () => {
       JSON.stringify([X, numberofPrincipalComps, totalStatements, forcedAll, forcedPos, forcedNeg])
     )
     .then(function (response) {
-      // console.log('response', JSON.stringify(response[0], null, 2));
-      // console.log('response', JSON.stringify(response, null, 2));
-
       let data = [...response[0]];
       let factorIndices = [...response[1]];
       let forcedPos = [...response[2]];

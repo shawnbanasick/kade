@@ -63,12 +63,10 @@ const formatExcelType2Ver2ForDisplay = (dataObject) => {
 
     // QAV#8  Create Q sort Pattern Array
     let qSortPatternArray = calcQsortPatternArray(multiplierArray);
-    //console.log("qSortPatternArray: ", qSortPatternArray);
 
     // QAV#3  Number of Statements
     let numberOfStatements2 = [...multiplierArray];
     const numStatements = calcStatementsNum(numberOfStatements2);
-    //console.log("numStatements: ", numStatements);
 
     // QAV#6  Participant Sorts
     let sortData = cloneDeep(dataObject.sortsArray);
@@ -90,21 +88,15 @@ const formatExcelType2Ver2ForDisplay = (dataObject) => {
     const respondentNames = participantSorts2.namesArray;
     const participantNames = checkUniqueParticipantNames(respondentNames);
 
-    //console.log("participantNames: ", participantNames);
-
     // QAV#5  Number of Participants
     let numberOfParticipants = participantNames.length;
-    //console.log("numberOfParticipants: ", numberOfParticipants);
 
     // QAV#7  Project Statements
     let projectStatements2 = cloneDeep(dataObject.statementsArray);
-    //console.log("projectStatements2: ", [projectStatements2]);
     let projectStatements = transformExcelType2Ver2Statements(projectStatements2);
-    //console.log("projectStatements: ", projectStatements);
 
     // Create Statement Num Array
     let statementNumArray = createStatementNumArray(numStatements);
-    //console.log("statementNumArray: ", statementNumArray);
 
     // Create Excel Type 1 Nonsymmetric Array Text
     /*
@@ -112,15 +104,12 @@ const formatExcelType2Ver2ForDisplay = (dataObject) => {
       participantNames
     );
     */
-    //console.log("nonsymmetricArrayText: ", excelType1NonsymmetricArrayText);
 
     // Create Sorts Display Text
     let sortsDisplayText = createSortsDisplayText(participantNames, participantSorts);
-    //console.log("sortsDisplayText: ", sortsDisplayText);
 
     // Create Main Data Object
     let mainDataObject = createMainDataObject(participantNames, participantSorts);
-    //console.log("mainDataObject: ", JSON.stringify(mainDataObject));
 
     // Create Return Object
     projectHistoryState.setState({ projectHistoryArray: projectHistoryArray });
@@ -137,7 +126,6 @@ const formatExcelType2Ver2ForDisplay = (dataObject) => {
     inputState.setState({ areQsortsLoaded: true });
     inputState.setState({ isQsortPatternLoaded: true });
     inputState.setState({ statementsLoaded: true });
-    //  excelType1NonsymmetricArrayText
   } catch (error) {
     console.log(error);
     console.log(error.message);

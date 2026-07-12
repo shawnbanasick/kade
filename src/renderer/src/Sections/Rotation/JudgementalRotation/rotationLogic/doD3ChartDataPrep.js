@@ -3,14 +3,10 @@ import coreState from '../../../GlobalState/coreState';
 import cloneDeep from 'lodash/cloneDeep';
 
 const doD3ChartDataPrep = (rotFacStateArray) => {
-  console.log('doD3ChartDataPrep - rotFacStateArray:', JSON.stringify(rotFacStateArray));
-
   // getState
   const abFactors = cloneDeep(rotationState.getState().abFactors);
   const step4 = cloneDeep(coreState.getState().respondentNames);
   const fSigCriterionResults = cloneDeep(rotationState.getState().fSigCriterionResults);
-
-  console.log('doD3ChartDataPrep - fSigCriterionResults:', JSON.stringify(fSigCriterionResults));
 
   const rotationFactorA = Math.min(...abFactors);
   const rotationFactorB = Math.max(...abFactors);
@@ -26,9 +22,6 @@ const doD3ChartDataPrep = (rotFacStateArray) => {
   for (let i = 0; i < ilen; i += 1) {
     step1 = chartData[i];
     step3 = fSigCriterionResults[i];
-
-    // console.log('doD3ChartDataPrep - step1:', JSON.stringify(step1));
-    // console.log('doD3ChartDataPrep - step3:', JSON.stringify(step3));
 
     // CONVERT ARRAY TO OBJECT for D3js chart
     tempObj = {
@@ -49,8 +42,6 @@ const doD3ChartDataPrep = (rotFacStateArray) => {
 
   factorNameArrayFrag.push(respondent2, factor1c, factor2c);
   initialTwoFactorTableArray.unshift(factorNameArrayFrag);
-
-  // console.log('dataValuesArray in doD3ChartDataPrep:', JSON.stringify(dataValuesArray));
 
   return dataValuesArray;
 };

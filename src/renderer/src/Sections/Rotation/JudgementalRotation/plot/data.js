@@ -4,7 +4,6 @@ import rotationState from '../../../GlobalState/rotationState';
 const data = () => {
   // getState
   const newRotationVectors = rotationState.getState().d3RotChartData;
-  console.log('data function - newRotationVectors:', JSON.stringify(newRotationVectors));
   rotationState.setState({ newRotationVectors: newRotationVectors });
 };
 

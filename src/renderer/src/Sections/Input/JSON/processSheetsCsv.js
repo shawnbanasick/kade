@@ -73,7 +73,6 @@ const processBlob = (data) => {
   let labelStrippedArray = [];
 
   newArray.forEach((item) => {
-    console.log(item);
     csvPartIdArray.push(item[1].replace('partId:', '').trim());
     csvRandomIdArray.push(item[2].replace('randomId:', '').trim());
     csvUrlUsercodeArray.push(item[3].replace('urlUsercode:', '').trim());
@@ -83,11 +82,6 @@ const processBlob = (data) => {
   inputState.setState({ csvPartIdArray: csvPartIdArray });
   inputState.setState({ csvRandomIdArray: csvRandomIdArray });
   inputState.setState({ csvUrlUsercodeArray: csvUrlUsercodeArray });
-
-  console.log(JSON.stringify(csvPartIdArray));
-  console.log(JSON.stringify(csvRandomIdArray));
-  console.log(JSON.stringify(csvUrlUsercodeArray));
-  console.log(JSON.stringify(labelStrippedArray));
 
   let respondentNames = [...csvRandomIdArray];
 
@@ -99,8 +93,6 @@ const processBlob = (data) => {
     });
     return returnArray;
   });
-
-  console.log(JSON.stringify(sortsArray));
 
   // throw error if can't find names
   if (!sortsArray[0][1]) {

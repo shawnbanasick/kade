@@ -52,7 +52,6 @@ const DistinguishingTypeButtons = (props) => {
       const data = props.cohenData; //
       const stephenExportData = props.stephenExportData; // Replace with actual data from store
 
-      // console.log('Data to be exported:', JSON.stringify(data, null, 2));
       console.log('Data to be exported:', data.length);
 
       const dataContent = {

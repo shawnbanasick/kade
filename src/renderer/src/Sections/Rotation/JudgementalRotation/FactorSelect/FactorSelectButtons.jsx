@@ -146,8 +146,6 @@ const FactorSelectButtons = (props) => {
           // returns dataValuesArray for D3 chart
           const d3Prep = doD3ChartDataPrep(arrayWithCommunalities);
 
-          console.log('arrayWithCommunalities in handleClick:', JSON.stringify(d3Prep));
-
           // mutate state
           updateD3RotChartData(d3Prep);
           updateTempRotFacStateArray(factorMatrixTransposed);

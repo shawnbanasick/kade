@@ -14,15 +14,11 @@ const PcaScenarios = (props) => {
 
   const handleSelection = (id, value) => {
     props.onSelectionChange(id, value);
-    // console.log(id, value);
-    // setSelected(id);
     updateSelectedPcaScenario(id);
-    // updatePcaFilter(+value);
     updateShowAutoFlags(false);
   };
 
   if (props.isGrayscale !== resetSelection) {
-    // setSelected('one');
     updateSelectedPcaScenario('one');
     setResetSelection(props.isGrayscale);
   }
@@ -36,7 +32,6 @@ const PcaScenarios = (props) => {
     { id: 'six', label: '6', value: 5 },
     { id: 'seven', label: '7', value: 6 },
     { id: 'eight', label: '8', value: 7 },
-    // { id: 'none', label: t('Clear'), value: 8 },
   ];
 
   const colorArray = [

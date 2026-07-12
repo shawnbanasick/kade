@@ -1,5 +1,6 @@
 import outputState from '../Sections/GlobalState/outputState';
 import appState from '../Sections/GlobalState/appState';
+import loadingState from '../Sections/GlobalState/loadingState';
 
 const resetAnalysis = () => {
   outputState.setState({
@@ -11,6 +12,7 @@ const resetAnalysis = () => {
     statementNumButtonActive: true,
     zScoreButtonActive: false,
     distStateListSortKey: 'statementNum',
+    displayOutputTabContent: false,
   });
 
   appState.setState({
@@ -18,6 +20,14 @@ const resetAnalysis = () => {
     isRotationButtonGreen: false,
     isFactorsButtonGreen: false,
     isOutputButtonGreen: false,
+  });
+
+  loadingState.setState({
+    autoflagButtonColor: 'bg-grey-button',
+    autoFlagHistory: [],
+    bipolarDisabled: false,
+    bipolarIndexArray: [],
+    bipolarSplitCount: 0,
   });
 
   return;
