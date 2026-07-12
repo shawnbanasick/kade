@@ -148,8 +148,6 @@ const splitBipolarFactor = () => {
     projectHistoryArray.push(logMessageObj);
     projectHistoryState.setState({ projectHistoryArray: projectHistoryArray });
 
-    console.log('split', columnDefs, dataRows, bipolarIndexArray);
-
     loadingState.setState({ sendDataToOutputButtonColor: 'orange' });
     loadingState.setState({ gridColDefsLoadingsTable: columnDefs });
     loadingState.setState({ gridRowDataLoadingsTable: dataRows });

@@ -10,10 +10,6 @@ import filter from 'lodash/filter';
 
 const FactorSelectionForOutputButtons = () => {
   const { t } = useTranslation();
-  // const updateShowDownloadOutputButtons = outputState(
-  //   (state) => state.updateShowDownloadOutputButtons
-  // );
-  // const updateIsOutputButtonGreen = appState((state) => state.updateIsOutputButtonGreen);
   const updateOutputFactorSelectButtonsDisabled = outputState(
     (state) => state.updateOutputFactorSelectButtonsDisabled
   );
@@ -44,72 +40,37 @@ const FactorSelectionForOutputButtons = () => {
   const sigLevel1 = calcState((state) => state.userSelectedDistStateSigLevel1);
   const sigLevel2 = calcState((state) => state.userSelectedDistStateSigLevel2);
   const updateDisplayOutputTabContent = outputState((state) => state.updateDisplayOutputTabContent);
+  const buttonFactorLabels = outputState((state) => state.buttonFactorLabels) || [];
+  const updateDynamicState = outputState((state) => state.updateDynamicState);
+  const highlightedFactors = outputState((state) => state.highlightedFactors);
+  const updateHighlightFactor = outputState((state) => state.updateHighlightFactor);
+  const updateHighlightFactors = outputState((state) => state.updateHighlightFactors);
 
-  const buttonsToRenderArray = [];
-  for (let i = 0; i < 8; i++) {
-    buttonsToRenderArray.push(i < btnId.length);
-  }
-  const [show1, show2, show3, show4, show5, show6, show7, show8] = buttonsToRenderArray;
+  const toggleUserSelectedFactor = outputState((state) => state.toggleUserSelectedFactor);
+  const selectAllFactors = outputState((state) => state.selectAllFactors);
+  const clearAllFactors = outputState((state) => state.clearAllFactors);
 
-  const highlightUpdaters = {
-    1: updateHighlightFactor1,
-    2: updateHighlightFactor2,
-    3: updateHighlightFactor3,
-    4: updateHighlightFactor4,
-    5: updateHighlightFactor5,
-    6: updateHighlightFactor6,
-    7: updateHighlightFactor7,
-    8: updateHighlightFactor8,
-  };
+  const newButtonFactorLabels = buttonFactorLabels.map((item, index) => ({
+    ...item,
+    show: index < btnId.length,
+  }));
 
   const handleOnclick = (event) => {
     const factor = event.target.id;
 
     if (factor === 'selectAllFacs') {
-      userSelectedFactors = [];
-      for (let i = 0; i < btnId.length; i += 1) {
-        userSelectedFactors.push(`factor ${btnId[i]}`);
-      }
-      [1, 2, 3, 4, 5, 6, 7, 8].forEach((n) => highlightUpdaters[n](true));
-      resetSection6('output');
-      updateUserSelectedFactors(userSelectedFactors);
+      selectAllFactors(btnId);
     } else if (factor === 'clearAllFacs') {
-      [1, 2, 3, 4, 5, 6, 7, 8].forEach((n) => highlightUpdaters[n](false));
+      clearAllFactors();
       updateOutputFactorSelectButtonsDisabled(false);
       resetSection6('output');
-      updateUserSelectedFactors([]);
       updateOutputForDataViz2([]);
       updateDisplayOutputTabContent(false);
     } else {
-      if (!includes(userSelectedFactors, factor)) {
-        userSelectedFactors.push(factor);
-        userSelectedFactors.sort();
-        if (factor === 'factor 1') updateHighlightFactor1(true);
-        if (factor === 'factor 2') updateHighlightFactor2(true);
-        if (factor === 'factor 3') updateHighlightFactor3(true);
-        if (factor === 'factor 4') updateHighlightFactor4(true);
-        if (factor === 'factor 5') updateHighlightFactor5(true);
-        if (factor === 'factor 6') updateHighlightFactor6(true);
-        if (factor === 'factor 7') updateHighlightFactor7(true);
-        if (factor === 'factor 8') updateHighlightFactor8(true);
-        resetSection6('output');
-        updateUserSelectedFactors(userSelectedFactors);
-      } else {
-        const filteredArray = filter(userSelectedFactors, (item) => item !== factor);
-        if (factor === 'factor 1') updateHighlightFactor1(false);
-        if (factor === 'factor 2') updateHighlightFactor2(false);
-        if (factor === 'factor 3') updateHighlightFactor3(false);
-        if (factor === 'factor 4') updateHighlightFactor4(false);
-        if (factor === 'factor 5') updateHighlightFactor5(false);
-        if (factor === 'factor 6') updateHighlightFactor6(false);
-        if (factor === 'factor 7') updateHighlightFactor7(false);
-        if (factor === 'factor 8') updateHighlightFactor8(false);
-        updateUserSelectedFactors(filteredArray);
-      }
+      toggleUserSelectedFactor(factor);
     }
   };
 
-  // Reusable class builders
   const numButtonClass = (isActive) =>
     [
       'grid items-center justify-items-center min-h-[28px] w-[50px]',
@@ -126,33 +87,22 @@ const FactorSelectionForOutputButtons = () => {
         : 'bg-[#d6dbe0] shadow-[inset_0_0_0_0px_#666,_0_0_0px_transparent]',
     ].join(' ');
 
-  const factors = [
-    { show: show1, id: 'factor 1', isActive: highlightFactor1, key: 'factor1', label: '1' },
-    { show: show2, id: 'factor 2', isActive: highlightFactor2, key: 'factor2', label: '2' },
-    { show: show3, id: 'factor 3', isActive: highlightFactor3, key: 'factor3', label: '3' },
-    { show: show4, id: 'factor 4', isActive: highlightFactor4, key: 'factor4', label: '4' },
-    { show: show5, id: 'factor 5', isActive: highlightFactor5, key: 'factor5', label: '5' },
-    { show: show6, id: 'factor 6', isActive: highlightFactor6, key: 'factor6', label: '6' },
-    { show: show7, id: 'factor 7', isActive: highlightFactor7, key: 'factor7', label: '7' },
-    { show: show8, id: 'factor 8', isActive: highlightFactor8, key: 'factor8', label: '8' },
-  ];
-
   if (showOutputFactorSelection) {
     return (
       <div>
         {/* Container1 */}
-        <div className="h-[48px] w-[800px]  mt-[30px]">
+        <div className="h-12 w-200  mt-7.5">
           {/* StyledWrapper */}
-          <div className="flex flex-row h-[40px] items-center w-[900px] items-baseline gap-x-[5px]">
-            <span className="text-[24px] mb-[3px] inline-block">2. {t('Select Factors')}</span>
-
-            {factors.map(({ show, id, isActive, key, label }) =>
+          <div className="flex flex-row h-10 items-center w-225 gap-x-1.25">
+            <span className="text-[24px] mb-0.75 inline-block">2. {t('Select Factors')}</span>
+            {newButtonFactorLabels.map(({ show, id, isActive, key, label }) =>
               show ? (
                 <div
                   id={id}
                   key={key}
                   onClick={areDisabled ? undefined : handleOnclick}
-                  className={numButtonClass(isActive)}
+                  // className={numButtonClass(outputState[`highlightFactor${label}`])}
+                  className={numButtonClass(!!highlightedFactors[label])}
                   style={{
                     pointerEvents: areDisabled ? 'none' : 'auto',
                     opacity: areDisabled ? 0.7 : 1,
@@ -179,14 +129,6 @@ const FactorSelectionForOutputButtons = () => {
             >
               {t('Reset')}
             </GeneralButton>
-
-            {/* <GeneralButton
-              id="startOutput"
-              onClick={handleSubmit}
-              className="min-w-35 text-[20px] bg-grey-button h-7.5 p-0! items-center justify-center"
-            >
-              {t('Calculate')}
-            </GeneralButton> */}
           </div>
         </div>
       </div>

@@ -5,7 +5,7 @@ const generateOutputFromLoadingTable = (currentLoadingsTable) => {
   // getState - initialize output select buttons highlighting to false
   const btnId = outputState.getState().outputButtonsArray;
   for (let i = 0; i < btnId.length; i += 1) {
-    outputState[`highlightfactor${btnId[i]}`] = false;
+    outputState[`highlightFactor${btnId[i]}`] = false;
   }
   loadingState.setState({ currentLoadingsTable: currentLoadingsTable });
   loadingState.setState({ notifyDataSentToOutputSuccess: true });
@@ -15,6 +15,7 @@ const generateOutputFromLoadingTable = (currentLoadingsTable) => {
   outputState.setState({ showFactorCharacteristicsTable: false });
   outputState.setState({ showDownloadOutputButtons: false });
   outputState.setState({ showFactorCorrelationsTable: false });
+
   // outputState.setState({ displayFactorVisualizations: false });
   outputState.setState({ shouldDisplayFactorVizOptions: false });
   outputState.setState({ outputFactorSelectButtonsDisabled: false });

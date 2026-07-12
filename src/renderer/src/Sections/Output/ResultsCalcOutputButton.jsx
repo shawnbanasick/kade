@@ -20,8 +20,6 @@ const ResultsCalcOutputButton = () => {
   const updateDisplayOutputTabContent = outputState((state) => state.updateDisplayOutputTabContent);
   const resultsCohenButtons2Value = outputState((state) => state.resultsCohenButtons2Value);
 
-  // console.log('resultsCohenButtons2Value error', resultsCohenButtons2Value);
-
   const handleSubmit = () => {
     if (sigLevel1 <= sigLevel2) {
       outputState.notifyOutputDistStateError = true;

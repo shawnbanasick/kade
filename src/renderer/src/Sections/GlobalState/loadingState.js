@@ -85,7 +85,10 @@ const loadingState = create(
     temp_gridRowDataLoadingsTable: [],
     gridApi: null,
     gridKey: 0,
+    bipolarSplitAdditionalCols: 0,
 
+    updateBipolarSplitAdditionalCols: (inputValue) =>
+      set({ bipolarSplitAdditionalCols: inputValue }),
     updateGridKey: (inputValue) => set({ gridKey: inputValue }),
     setGridApi: (api) => set({ gridApi: api }),
     updateLoadingSigDropdownValue: (inputValue) => set({ loadingSigDropdownValue: inputValue }),

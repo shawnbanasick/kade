@@ -28,22 +28,20 @@ const filterArray = (item) => {
   return null;
 };
 
-function getWidth(numFacsForTableWidth) {
-  const tableWidth = 315 + 15 + 125 * numFacsForTableWidth;
+function getWidth(numFacsForTableWidth, bipolarSplitAdditionalCols) {
+  const tableWidth = 315 + 15 + 125 * (numFacsForTableWidth + +bipolarSplitAdditionalCols);
   const container = document.querySelector('#loadingsTableContainer');
   const parent = container ? container.parentElement : null;
-  // Measure the actual available space in the DOM rather than guessing
-  // from window.innerWidth, which doesn't account for the wrapper's
-  // own width (w-[90%]) and padding/margins stacked on top of it.
   const availableWidth = parent ? parent.clientWidth : window.innerWidth - 205;
+
   if (availableWidth < tableWidth) {
     return availableWidth + 'px';
   }
   return tableWidth + 'px';
 }
 
-function getHeight(numQsorts) {
-  let heightVal1 = 40 + 25 * numQsorts;
+function getHeight(numQsorts = 1) {
+  let heightVal1 = 40 + 26 * numQsorts;
   let heightVal2 = window.innerHeight - 320;
   if (heightVal1 < heightVal2) {
     return heightVal1 + 'px';
@@ -60,7 +58,7 @@ const LoadingsTable = (props) => {
   const sendDataToOutputButtonColor = loadingState((state) => state.sendDataToOutputButtonColor);
   const autoflagButtonColor = loadingState((state) => state.autoflagButtonColor);
   const isDisabled = loadingState((state) => state.bipolarDisabled);
-  const numQsorts = coreState((state) => state.numQsorts);
+  const numQsorts = coreState((state) => state.numQsorts) || 1;
   let numFacsForTableWidth = Number(rotationState((state) => state.numFactorsKeptForRot));
   const updateSendDataToOutputButtonColor = loadingState(
     (state) => state.updateSendDataToOutputButtonColor
@@ -96,6 +94,7 @@ const LoadingsTable = (props) => {
   const updateHighlightFactor8 = outputState((state) => state.updateHighlightFactor8);
   const updateIsOutputButtonGreen = appState((state) => state.updateIsOutputButtonGreen);
   const updateShowInvertFactorModal = loadingState((state) => state.updateShowInvertFactorModal);
+  let bipolarSplitAdditionalCols = loadingState((state) => state.bipolarSplitAdditionalCols) || 0;
 
   const gridRef = useRef();
 
@@ -115,7 +114,7 @@ const LoadingsTable = (props) => {
   function resetWidthAndHeight() {
     const table = document.querySelector('#loadingsTableContainer');
     if (table !== null) {
-      table.style.width = getWidth(numFacsForTableWidth);
+      table.style.width = getWidth(numFacsForTableWidth, bipolarSplitAdditionalCols);
       table.style.height = getHeight(numQsorts);
     }
   }
@@ -241,38 +240,18 @@ const LoadingsTable = (props) => {
     }
   }, [isLoadingsTableInitialRender]);
 
-  useEffect(() => {
-    const outputButtonsArray2 = gridColDefsLoadingsTable.map((item) => item.field);
-    const outputButtonsArray3 = outputButtonsArray2.filter(filterArray);
-    outputButtonsArray3.shift();
-    const outputButtonsArray4 = outputButtonsArray3.map((item) => item.slice(6));
-    updateOutputButtonsArray(outputButtonsArray4);
-  }, [gridColDefsLoadingsTable]);
-
-  const bipolarSplitCount = Number(bipolarSplitCount1);
-  if (bipolarSplitCount > 0) {
-    numFacsForTableWidth += bipolarSplitCount;
-  }
+  const outputButtonsArray2 = gridColDefsLoadingsTable.map((item) => item.field);
+  const outputButtonsArray3 = outputButtonsArray2.filter(filterArray);
+  outputButtonsArray3.shift();
+  const outputButtonsArray4 = outputButtonsArray3.map((item) => item.slice(6));
+  updateOutputButtonsArray(outputButtonsArray4);
 
   const loadingsTableContainerStyle = {
     marginTop: 2,
     height: getHeight(numQsorts),
-    width: getWidth(numFacsForTableWidth),
+    width: getWidth(numFacsForTableWidth, bipolarSplitAdditionalCols),
     marginBottom: 15,
   };
-
-  console.log(
-    'split-table',
-    gridColDefsLoadingsTable,
-    gridRowDataLoadingsTable,
-    bipolarSplitCount1
-  );
-
-  console.log(
-    'new col field:',
-    gridColDefsLoadingsTable[gridColDefsLoadingsTable.length - 1].field
-  );
-  console.log('sample row keys:', Object.keys(gridRowDataLoadingsTable[0]));
 
   return (
     <div className="flex flex-col w-[90%] min-w-0 items-center ml-10">
@@ -356,7 +335,6 @@ const LoadingsTable = (props) => {
             <AgGridReact
               ref={gridRef}
               key={loadingState((state) => state.gridKey)}
-              onRowDataUpdated={() => console.log('rowData updated in grid')}
               id="loadingsTable"
               onGridReady={onGridReady}
               columnDefs={gridColDefsLoadingsTable}

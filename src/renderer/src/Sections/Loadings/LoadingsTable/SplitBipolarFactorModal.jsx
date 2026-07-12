@@ -2,7 +2,21 @@ import splitBipolarFactor from '../loadingsLogic/splitBipolarFactor';
 import SplitBipolarFactorDropdownSelect from './SplitBipolarFactorDropdownSelect';
 import { useTranslation } from 'react-i18next';
 import loadingState from '../../GlobalState/loadingState';
+import outputState from '../../GlobalState/outputState';
 import GeneralButton from '../../../Utils/GeneralButton';
+
+function splitFactorLabel(labels, labelToSplit) {
+  return labels.flatMap((item) => {
+    if (item.label !== labelToSplit) return [item];
+
+    return ['a', 'b'].map((suffix) => ({
+      ...item,
+      id: `${item.id}${suffix}`,
+      key: `${item.key}${suffix}`,
+      label: `${item.label}${suffix}`,
+    }));
+  });
+}
 
 const SplitBipolarFactorButtonModal = () => {
   const { t } = useTranslation();
@@ -13,6 +27,12 @@ const SplitBipolarFactorButtonModal = () => {
   const showSplitFactorModal = loadingState((state) => state.showSplitFactorModal);
   const gridApi = loadingState((state) => state.gridApi);
   const updateGridKey = loadingState((state) => state.updateGridKey);
+  const updateBipolarSplitAdditionalCols = loadingState(
+    (state) => state.updateBipolarSplitAdditionalCols
+  );
+  const updateButtonFactorLabels = outputState((state) => state.updateButtonFactorLabels);
+  const buttonFactorLabels = outputState((state) => state.buttonFactorLabels);
+  const bipolarSplitAdditionalCols = loadingState((state) => state.bipolarSplitAdditionalCols);
 
   const handleClose = () => {
     updateShowSplitFactorModal(false);
@@ -22,11 +42,12 @@ const SplitBipolarFactorButtonModal = () => {
     updateShowSplitFactorModal(false);
     bipolarFactorsArray.push(factorToSplit);
     updateBipolarFactorsArray([...bipolarFactorsArray]);
+    updateBipolarSplitAdditionalCols(bipolarSplitAdditionalCols + 1);
     splitBipolarFactor();
-    console.log('gridApi', gridApi);
-    // gridApi?.refreshCells({ force: true });
     gridApi?.redrawRows();
     updateGridKey(Math.random());
+    const value = splitFactorLabel(buttonFactorLabels, factorToSplit);
+    updateButtonFactorLabels(value);
   };
 
   if (!showSplitFactorModal) return null;

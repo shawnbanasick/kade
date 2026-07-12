@@ -197,7 +197,54 @@ const outputState = create(
     resultsCohen90Button2Active: false,
     resultsCohen100Button2Active: false,
     displayOutputTabContent: false,
+    buttonFactorLabels: [
+      { show: true, id: 'factor 1', isActive: false, key: 'factor1', label: '1' },
+      { show: true, id: 'factor 2', isActive: false, key: 'factor2', label: '2' },
+      { show: true, id: 'factor 3', isActive: false, key: 'factor3', label: '3' },
+      { show: true, id: 'factor 4', isActive: false, key: 'factor4', label: '4' },
+      { show: true, id: 'factor 5', isActive: false, key: 'factor5', label: '5' },
+      { show: true, id: 'factor 6', isActive: false, key: 'factor6', label: '6' },
+      { show: true, id: 'factor 7', isActive: false, key: 'factor7', label: '7' },
+      { show: true, id: 'factor 8', isActive: false, key: 'factor8', label: '8' },
+    ],
+    highlightedFactors: {},
 
+    // for factorSelectionForOutputButtons.jsx
+    toggleUserSelectedFactor: (factor) =>
+      set((state) => {
+        const exists = state.userSelectedFactors.includes(factor);
+        const userSelectedFactors = exists
+          ? state.userSelectedFactors.filter((f) => f !== factor)
+          : [...state.userSelectedFactors, factor].sort();
+
+        return {
+          userSelectedFactors,
+          highlightedFactors: {
+            ...state.highlightedFactors,
+            [factor.replace('factor ', '')]: !exists,
+          },
+        };
+      }),
+
+    selectAllFactors: (btnId) =>
+      set((state) => {
+        const userSelectedFactors = btnId.map((n) => `factor ${n}`);
+        const highlightedFactors = { ...state.highlightedFactors };
+        btnId.forEach((n) => {
+          highlightedFactors[n] = true;
+        });
+        return { userSelectedFactors, highlightedFactors };
+      }),
+
+    clearAllFactors: () =>
+      set((state) => {
+        const highlightedFactors = {};
+        Object.keys(state.highlightedFactors).forEach((n) => {
+          highlightedFactors[n] = false;
+        });
+        return { userSelectedFactors: [], highlightedFactors };
+      }),
+    updateButtonFactorLabels: (inputValue) => set({ buttonFactorLabels: [...inputValue] }),
     updateResultsDistIdentType: (inputValue) => set({ resultsDistIdentType: inputValue }),
     updateDisplayOutputTabContent: (inputValue) => set({ displayOutputTabContent: inputValue }),
     updateResultsCohenButtons1Active: (buttonId, isActive) => {
