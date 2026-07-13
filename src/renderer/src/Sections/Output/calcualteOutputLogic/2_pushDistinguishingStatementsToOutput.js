@@ -26,19 +26,19 @@ const pushDistinguishingStatementsToOutput = function (
   const chartText1 = i18n.t('Dist State');
   const chartText2 = i18n.t('Consensus Statements');
 
-  const cohens10 = outputState.getState().cohens10;
-  const cohens20 = outputState.getState().cohens20;
-  const cohens30 = outputState.getState().cohens30;
-  const cohens40 = outputState.getState().cohens40;
-  const cohens50 = outputState.getState().cohens50;
-  const cohens60 = outputState.getState().cohens60;
-  const cohens70 = outputState.getState().cohens70;
-  const cohens80 = outputState.getState().cohens80;
-  const cohens90 = outputState.getState().cohens90;
-  const cohens100 = outputState.getState().cohens100;
-
   // type of dist identification method
   const resultsDistIdentType = outputState.getState().resultsDistIdentType;
+  const resultsCohenButtons1Value = outputState.getState().resultsCohenButtons1Value;
+  const resultsCohenButtons2Value = outputState.getState().resultsCohenButtons2Value;
+
+  function getCohensData(value) {
+    const state = outputState.getState();
+    const key = `cohens${Math.round(value * 100)}`;
+    return state[key];
+  }
+
+  const cohensData1 = getCohensData(resultsCohenButtons1Value);
+  const cohensData2 = getCohensData(resultsCohenButtons2Value);
 
   // State
   const maxStatementLength = calcState.getState().maxStatementLength;
@@ -204,20 +204,7 @@ const pushDistinguishingStatementsToOutput = function (
           }
 
           /* 
-          begin comparisons
            const lookupArray = [3.891, 3.481, 3.291, 2.807, 2.575, 1.96, 1.645, 1.44, 1.28];
-          
-           const pValuesTextArray = [
-            "P < 0.0001",
-            "P < 0.0005",
-            "P < 0.001",
-            "P < 0.005"
-            "P < 0.01",
-            "P < 0.05",
-            "P < 0.1",
-            "P < 0.15"
-            "P < 0.2"
-          ];
           */
 
           distStatementsTableTempObj.factor = analysisOutput[j][k].factor;
@@ -297,20 +284,6 @@ const pushDistinguishingStatementsToOutput = function (
         }
       }
 
-      // console.log(`Statement ${k + 1} comparisons for Factor ${j + 1}:`, {
-      //   array0001,
-      //   array0005,
-      //   array001,
-      //   array005,
-      //   array01,
-      //   array05,
-      //   array1,
-      //   array15,
-      //   array2,
-      // });
-
-      // console.log(sigFactorNumbersArray);
-
       switch (true) {
         // P < 0.0001 Level
         case array0001.length === sigFactorNumbersArray.length - 1:
@@ -389,18 +362,6 @@ const pushDistinguishingStatementsToOutput = function (
         consensusStatementTransferArray01.push(newStatementNum);
       }
 
-      // console.log('consensus arrays before reduction:', {
-      //   listArray0001,
-      //   listArray0005,
-      //   listArray001,
-      //   listArray005,
-      //   listArray01,
-      //   listArray05,
-      //   listArray1,
-      //   listArray15,
-      //   listArray2,
-      // });
-
       // consensus list statement values
       if (listArray0001.length === 0) {
         listArray0001Display.push(newStatementNum);
@@ -471,17 +432,24 @@ const pushDistinguishingStatementsToOutput = function (
     outputData.push(formattedDistingStatements[1]);
   } // end of J loop
 
-  console.log('bbb', {
-    masterDistingStatementNumbersArray01,
-    masterDistingStatementNumbersArray05,
-  });
+  console.log('bbb', JSON.stringify(masterDistingStatementNumbersArray01));
+  console.log('bbb', JSON.stringify(masterDistingStatementNumbersArray05));
 
-  calcState.setState({
-    masterDistingStatementNumbersArray01: masterDistingStatementNumbersArray01,
-  });
-  calcState.setState({
-    masterDistingStatementNumbersArray05: masterDistingStatementNumbersArray05,
-  });
+  if (resultsDistIdentType === 'cohenMethod') {
+    calcState.setState({
+      masterDistingStatementNumbersArray05: cohensData1.distinguishing,
+    });
+    calcState.setState({
+      masterDistingStatementNumbersArray01: cohensData2.distinguishing,
+    });
+  } else {
+    calcState.setState({
+      masterDistingStatementNumbersArray01: masterDistingStatementNumbersArray01,
+    });
+    calcState.setState({
+      masterDistingStatementNumbersArray05: masterDistingStatementNumbersArray05,
+    });
+  }
 
   // ******
   // develop consensus statement data
@@ -519,26 +487,29 @@ const pushDistinguishingStatementsToOutput = function (
   const reducedOutput15 = reduceConsensusArray(listArray15Display, sigFactorNumbersArray.length);
   const reducedOutput2 = reduceConsensusArray(listArray2Display, sigFactorNumbersArray.length);
 
-  // console.log('reduce consensus array:', uniq(reducedOutput05));
-  // console.log('reduce consensus array:', uniq(reducedOutput01));
-
-  // console.log('reduce consensus arrays:', {
-  //   reducedOutput0001,
-  //   reducedOutput0005,
-  //   reducedOutput001,
-  //   reducedOutput005,
-  //   reducedOutput01,
-  //   reducedOutput05,
-  //   reducedOutput1,
-  //   reducedOutput15,
-  //   reducedOutput2,
-  // });
-
   const consensusStatementComparisonArray01b = flatten(consensusStatementComparisonArray01);
   const consensus01 = xor(consensus05, consensusStatementComparisonArray01b);
 
-  calcState.setState({ consensus05Statements: consensus05 });
-  calcState.setState({ consensus01Statements: consensus01 });
+  console.log(
+    'bbb type',
+    resultsDistIdentType,
+    'bbb 1',
+    resultsCohenButtons1Value,
+    'bbb 2',
+    resultsCohenButtons2Value
+  );
+
+  console.log('consensus bbb - 05: ', JSON.stringify(consensus05));
+  console.log('consensus bbb - 01: ', JSON.stringify(consensus01));
+
+  if (resultsDistIdentType === 'cohenMethod') {
+    calcState.setState({ consensus05Statements: cohensData1.consensus });
+    calcState.setState({ consensus01Statements: cohensData2.consensus });
+  } else {
+    calcState.setState({ consensus05Statements: consensus05 });
+    calcState.setState({ consensus01Statements: consensus01 });
+  }
+
   // for consensus table display - need to know which statements are in which category for display of appropriate significance level
   calcState.setState({ stephConsensus0001: reducedOutput0001 });
   calcState.setState({ stephConsensus0005: reducedOutput0005 });

@@ -22,14 +22,15 @@ const ResultsCalcOutputButton = () => {
 
   const handleSubmit = () => {
     if (sigLevel1 <= sigLevel2) {
+      console.log('button error - sigLevel1 must be greater than sigLevel2');
       outputState.notifyOutputDistStateError = true;
       return;
     }
-    if (resultsCohenButtons2Value === 999) {
-      //   outputState.notifyOutputCohenError = true;
-      console.log('cohen button error');
-      //   return;
-    }
+    // if (resultsCohenButtons2Value === 999) {
+    //   //   outputState.notifyOutputCohenError = true;
+    //   console.log('cohen button error');
+    //   //   return;
+    // }
     if (userSelectedFactors.length !== 0) {
       outputDispatch();
       updateShowDownloadOutputButtons(true);
