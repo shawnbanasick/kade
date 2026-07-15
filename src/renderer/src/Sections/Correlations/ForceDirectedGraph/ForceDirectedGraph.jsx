@@ -42,6 +42,9 @@ const ForceGraph = ({
 
   const minCorrelation = correlationThreshold * 100;
 
+  // set display NODE size
+  const NODE_RADIUS = 16;
+
   let correlationData = data;
 
   const [currentFactorIndex, setCurrentFactorIndex] = useState(0);
@@ -295,7 +298,7 @@ const ForceGraph = ({
           ? 'verticalAlign=bottom;spacingBottom=2;'
           : 'verticalAlign=middle;';
       const cleanBase = baseStyle.replace(/html=\d;?/g, '');
-      const style = `${cleanBase}fillColor=${fillColor};strokeColor=${strokeColor};fontStyle=1;fontSize=12;${labelAlign}${dashed}html=0;`;
+      const style = `${cleanBase}fillColor=${fillColor};strokeColor=${strokeColor};fontFamily=Arial;fontStyle=1;fontSize=12;${labelAlign}${dashed}html=0;`;
 
       // set circle width and height to 70% of NODE_W/H in grayscale mode, otherwise use full size. Factor 6 (square) gets a wider bounding box in grayscale only; color mode uses uniform circles.
       // Factor 6 (oval) gets a wider bounding box in grayscale only; color mode uses uniform circles
@@ -357,7 +360,7 @@ const ForceGraph = ({
     const legendTitleCid = cellId++;
     legendXmlCells.push(
       `<mxCell id="${legendTitleCid}" value="Factors" ` +
-        `style="text;html=0;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=13;fontStyle=1;" ` +
+        `style="text;html=0;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontFamily=Arial;fontSize=13;fontStyle=1;" ` +
         `vertex="1" parent="1">` +
         `<mxGeometry x="${legendBoxX}" y="${legendBoxY}" width="120" height="30" as="geometry"/>` +
         `</mxCell>`
@@ -375,7 +378,7 @@ const ForceGraph = ({
       const labelAlign =
         isGrayscale && i === 2 ? 'verticalAlign=bottom;spacingBottom=4;' : 'verticalAlign=middle;';
       const cleanBase = baseStyle.replace(/html=\d;?/g, '');
-      const swatchStyle = `${cleanBase}fillColor=${fillColor};strokeColor=#000000;fontSize=10;fontStyle=1;${labelAlign}html=0;`;
+      const swatchStyle = `${cleanBase}fillColor=${fillColor};strokeColor=#000000;fontFamily=Arial;fontSize=10;fontStyle=1;${labelAlign}html=0;`;
 
       // Factor 6 (oval) swatch uses a wider bounding box in grayscale only
       const swatchW = LEGEND_SHAPE_SIZE;
@@ -393,7 +396,7 @@ const ForceGraph = ({
       const labelCid = cellId++;
       legendXmlCells.push(
         `<mxCell id="${labelCid}" value="Factor ${i}" ` +
-          `style="text;html=0;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=11;" ` +
+          `style="text;html=0;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontFamily=Arial;fontSize=11;" ` +
           `vertex="1" parent="1">` +
           `<mxGeometry x="${itemX + swatchW + 6}" y="${itemY}" width="90" height="${swatchH}" as="geometry"/>` +
           `</mxCell>`
@@ -407,7 +410,7 @@ const ForceGraph = ({
     const corrTitleCid = cellId++;
     legendXmlCells.push(
       `<mxCell id="${corrTitleCid}" value="Correlation" ` +
-        `style="text;html=0;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=13;fontStyle=1;" ` +
+        `style="text;html=0;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontFamily=Arial;fontSize=13;fontStyle=1;" ` +
         `vertex="1" parent="1">` +
         `<mxGeometry x="${legendBoxX}" y="${corrKeyY}" width="140" height="30" as="geometry"/>` +
         `</mxCell>`
@@ -429,7 +432,7 @@ const ForceGraph = ({
     const posLabelCid = cellId++;
     legendXmlCells.push(
       `<mxCell id="${posLabelCid}" value="Positive" ` +
-        `style="text;html=0;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=11;" ` +
+        `style="text;html=0;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontFamily=Arial;fontSize=11;" ` +
         `vertex="1" parent="1">` +
         `<mxGeometry x="${legendBoxX + 44}" y="${corrKeyY + 37}" width="80" height="26" as="geometry"/>` +
         `</mxCell>`
@@ -452,7 +455,7 @@ const ForceGraph = ({
     const negLabelCid = cellId++;
     legendXmlCells.push(
       `<mxCell id="${negLabelCid}" value="Negative" ` +
-        `style="text;html=0;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=11;" ` +
+        `style="text;html=0;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontFamily=Arial;fontSize=11;" ` +
         `vertex="1" parent="1">` +
         `<mxGeometry x="${legendBoxX + 44}" y="${corrKeyY + 67}" width="80" height="26" as="geometry"/>` +
         `</mxCell>`
@@ -463,7 +466,7 @@ const ForceGraph = ({
       const flagNoteCid = cellId++;
       legendXmlCells.push(
         `<mxCell id="${flagNoteCid}" value="Dashed border = auto-flagged factor loading" ` +
-          `style="text;html=0;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=10;fontStyle=2;" ` +
+          `style="text;html=0;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontFamily=Arial;fontSize=10;fontStyle=2;" ` +
           `vertex="1" parent="1">` +
           `<mxGeometry x="${legendBoxX}" y="${corrKeyY + 100}" width="280" height="26" as="geometry"/>` +
           `</mxCell>`
@@ -520,6 +523,60 @@ const ForceGraph = ({
     updateShowAutoFlags(false); // Auto-flags are only designed for color mode, so
   };
 
+  const renderLegendFactors = (activeFactors) => {
+    if (!svgRef.current) return;
+    const svg = d3.select(svgRef.current);
+    const legendGroup = svg.select('.legend-group');
+    if (legendGroup.empty()) return;
+
+    // clear only the per-factor items, leave the label/explanation text alone
+    legendGroup.selectAll('.legend-item').remove();
+
+    const legendItemHeight = 35;
+    const legendColumns = 8;
+    const legendColumnWidth = 100;
+    const legendTotalWidth = legendColumns * legendColumnWidth;
+    const legendX = windowSize.width / 2 - legendTotalWidth / 2;
+    const legendY = 10;
+
+    activeFactors.forEach((factorNum, idx) => {
+      const col = idx % legendColumns;
+      const row = Math.floor(idx / legendColumns);
+      const x = legendX + col * legendColumnWidth;
+      const y = legendY + 20 + row * legendItemHeight;
+      const legendItem = legendGroup
+        .append('g')
+        .attr('class', 'legend-item')
+        .attr('transform', `translate(${x}, ${y})`);
+
+      if (isGrayscale) {
+        const legendR = 12;
+        legendItem
+          .append('path')
+          .attr('d', shapeGenerators[factorNum](legendR))
+          .attr('fill', grayscaleColors[0])
+          .attr('stroke', '#000')
+          .attr('stroke-width', 1.5);
+      } else {
+        legendItem
+          .append('circle')
+          .attr('r', 12)
+          .attr('fill', colorScaleRef.current(factorNum))
+          .attr('stroke', '#fff')
+          .attr('stroke-width', 1.5);
+      }
+
+      legendItem
+        .append('text')
+        .attr('x', isGrayscale && factorNum === 6 ? 18 : 16)
+        .attr('y', 0)
+        .attr('dy', '0.35em')
+        .attr('class', 'text-xs')
+        .attr('fill', '#000')
+        .text(`Factor ${factorNum}`);
+    });
+  };
+
   useEffect(() => {
     if (!correlationData || correlationData.length === 0 || !svgRef.current) return;
 
@@ -553,7 +610,8 @@ const ForceGraph = ({
       .select(svgRef.current)
       .attr('width', windowSize.width)
       .attr('height', windowSize.height)
-      .attr('viewBox', [0, 0, windowSize.width, windowSize.height]);
+      .attr('viewBox', [0, 0, windowSize.width, windowSize.height])
+      .attr('font-family', 'Arial, sans-serif');
 
     svg
       .append('text')
@@ -578,7 +636,7 @@ const ForceGraph = ({
     const legendGroup = svg.append('g').attr('class', 'legend-group');
     const legendItemHeight = 35;
     const legendColumns = 8;
-    const legendColumnWidth = 94;
+    const legendColumnWidth = 100;
     const legendTotalWidth = legendColumns * legendColumnWidth;
     const legendX = windowSize.width / 2 - legendTotalWidth / 2;
     const legendY = 10;
@@ -590,41 +648,44 @@ const ForceGraph = ({
       .attr('class', 'text-sm font-semibold')
       .attr('fill', '#000');
 
-    for (let i = 1; i <= 8; i++) {
-      const col = (i - 1) % 8;
-      const row = Math.floor((i - 1) / 8);
-      const x = legendX + col * legendColumnWidth;
+    const activeFactors = Array.from(new Set(nodes.map((d) => d.pca))).sort((a, b) => a - b);
+    renderLegendFactors(activeFactors);
 
-      const y = legendY + 20 + row * legendItemHeight;
-      const legendItem = legendGroup.append('g').attr('transform', `translate(${x}, ${y})`);
+    // for (let i = 1; i <= 8; i++) {
+    //   const col = (i - 1) % 8;
+    //   const row = Math.floor((i - 1) / 8);
+    //   const x = legendX + col * legendColumnWidth;
 
-      if (isGrayscale) {
-        // Use a smaller r for the oval so it fits the legend row height cleanly
-        const legendR = 12;
-        legendItem
-          .append('path')
-          .attr('d', shapeGenerators[i](legendR))
-          .attr('fill', grayscaleColors[0])
-          .attr('stroke', '#000')
-          .attr('stroke-width', 1.5);
-      } else {
-        legendItem
-          .append('circle')
-          .attr('r', 12)
-          .attr('fill', colorScale(i))
-          .attr('stroke', '#fff')
-          .attr('stroke-width', 1.5);
-      }
+    //   const y = legendY + 20 + row * legendItemHeight;
+    //   const legendItem = legendGroup.append('g').attr('transform', `translate(${x}, ${y})`);
 
-      legendItem
-        .append('text')
-        .attr('x', isGrayscale && i === 6 ? 22 : 20)
-        .attr('y', 0)
-        .attr('dy', '0.35em')
-        .attr('class', 'text-xs')
-        .attr('fill', '#000')
-        .text(`Factor ${i}`);
-    }
+    //   if (isGrayscale) {
+    //     // Use a smaller r for the oval so it fits the legend row height cleanly
+    //     const legendR = 12;
+    //     legendItem
+    //       .append('path')
+    //       .attr('d', shapeGenerators[i](legendR))
+    //       .attr('fill', grayscaleColors[0])
+    //       .attr('stroke', '#000')
+    //       .attr('stroke-width', 1.5);
+    //   } else {
+    //     legendItem
+    //       .append('circle')
+    //       .attr('r', 12)
+    //       .attr('fill', colorScale(i))
+    //       .attr('stroke', '#fff')
+    //       .attr('stroke-width', 1.5);
+    //   }
+
+    //   legendItem
+    //     .append('text')
+    //     .attr('x', isGrayscale && i === 6 ? 18 : 16)
+    //     .attr('y', 0)
+    //     .attr('dy', '0.35em')
+    //     .attr('class', 'text-xs')
+    //     .attr('fill', '#000')
+    //     .text(`Factor ${i}`);
+    // }
 
     const zoomContainer = svg.append('g').attr('class', `zoom-container`);
 
@@ -711,7 +772,7 @@ const ForceGraph = ({
         .attr('d', (d) => {
           const pcaValue = d.pca || 1;
           const shapeGen = shapeGenerators[pcaValue] || shapeGenerators[1];
-          return shapeGen(15);
+          return shapeGen(NODE_RADIUS);
         })
         .attr('fill', grayscaleColors[0])
         .attr('stroke', '#000')
@@ -725,7 +786,7 @@ const ForceGraph = ({
     } else {
       node
         .append('circle')
-        .attr('r', 20)
+        .attr('r', NODE_RADIUS)
         .attr('fill', (d) => colorScale(d.pca || 1))
         .attr('stroke', (d) => {
           if (!showAutoFlags) return '#fff';
@@ -887,11 +948,14 @@ const ForceGraph = ({
     const shapeSelector = isGrayscale ? 'path.node-shape' : 'circle.node-shape';
     const shapes = d3.select(svgRef.current).select('.zoom-container').selectAll(shapeSelector);
 
+    const activeFactorsSet = new Set();
     shapes.each(function (d) {
       if (d && d.allPcData && d.allPcData[value]) {
         d.pca = d.allPcData[value];
       }
+      if (d && d.pca) activeFactorsSet.add(d.pca);
     });
+    renderLegendFactors(Array.from(activeFactorsSet).sort((a, b) => a - b));
 
     shapes
       .attr('stroke', (d) => {
@@ -921,13 +985,13 @@ const ForceGraph = ({
         .select('.zoom-container')
         .selectAll('path.node-shape')
         .attr('d', (d) => {
-          if (!d || !d.id) return shapeGenerators[1](15);
+          if (!d || !d.id) return shapeGenerators[1](NODE_RADIUS);
           if (d.allPcData && d.allPcData[value]) {
             const factorNum = d.allPcData[value];
             const shapeGen = shapeGenerators[factorNum] || shapeGenerators[1];
-            return shapeGen(15);
+            return shapeGen(NODE_RADIUS);
           }
-          return shapeGenerators[1](15);
+          return shapeGenerators[1](NODE_RADIUS);
         });
     }
   };
