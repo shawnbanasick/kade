@@ -66,7 +66,7 @@ const rotationState = create(
     userSelectedRotFactors: [],
 
     varimaxButtonDisabled: false,
-    varimaxButtonText: 'Varimax Rotation',
+    varimaxButtonText: 'Apply Varimax Rotation',
     varimaxButtonActive: true,
 
     variContinueButtonActive: false,

@@ -16,7 +16,6 @@ const CalculateCorrelationsButton = () => {
   const mainDataObject = coreState((state) => state.mainDataObject);
   const updateShowErrorMessageBar = inputState((state) => state.updateShowErrorMessageBar);
   const updateErrorMessage = inputState((state) => state.updateErrorMessage);
-  const isCorrelationsButtonGreen = appState((state) => state.isCorrelationsButtonGreen);
 
   const handleClick = async () => {
     if (respondentNames) {

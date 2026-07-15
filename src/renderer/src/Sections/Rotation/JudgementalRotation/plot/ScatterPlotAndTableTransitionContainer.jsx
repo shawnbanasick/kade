@@ -9,8 +9,8 @@ import rotationState from '../../../GlobalState/rotationState';
 import { useTranslation } from 'react-i18next';
 
 function getWidthHeight() {
-  let windowWidth = window.innerWidth - 473;
-  const windowHeight = window.innerHeight - 215;
+  let windowWidth = window.innerWidth - 603;
+  const windowHeight = window.innerHeight - 345;
 
   if (windowWidth > windowHeight) {
     return windowHeight;
@@ -54,13 +54,13 @@ const ScatterPlotAndTableTransitionContainer = (props) => {
 
   const degreesText = `${rotationDegrees}\u00B0`;
   const leftContWidth = getWidthHeight();
-  const maxTableHeight = window.innerHeight - 284;
+  const maxTableHeight = window.innerHeight - 374;
   // const maxTableHeight = window.innerHeight / 2 - 120;
 
   if (showScatterPlotTableDiv) {
     return (
       <React.Fragment>
-        <div className="flex items-end w-full h-10 flex-row mb-3" id="RotPlotFactorsSelectDiv ">
+        <div className="flex items-end w-full h-10 flex-row mb-3" id="RotPlotFactorsSelectDiv">
           {/* <div className="flex h-[30px] w-[85px] text-[clamp(0.80rem,1.2cqw,2rem)] justify-baseline items-center"> */}
           <div className="flex h-7 w-21.25 text-[22px] justify-baseline items-center">
             {t('Rotate')}:
@@ -72,7 +72,7 @@ const ScatterPlotAndTableTransitionContainer = (props) => {
           </div>
           <SaveRotationButton />
         </div>
-        <div id="scatterPlotDiv" className="flex flex-row w-full h-full gap-8 flex-wrap mt-1.25">
+        <div id="scatterPlotDiv" className="flex flex-row w-full h-[80%] gap-8 flex-wrap mt-1.25">
           <div style={{ width: leftContWidth }}>
             <ParticipantPopUp />
             <ScatterPlot
@@ -83,7 +83,7 @@ const ScatterPlotAndTableTransitionContainer = (props) => {
               {...scatterPlotStyles}
             />
           </div>
-          <div className="flex flex-col">
+          <div className="flex flex-col h-[75%] mb-12">
             <div id="rotFactorsTableDiv">
               <RotationTable colDefs={colDefs} maxHeight={maxTableHeight} rowData={rowData} />
             </div>

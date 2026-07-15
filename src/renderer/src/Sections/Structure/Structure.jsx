@@ -15,6 +15,9 @@ const Structure = () => {
   const correlationThreshold = correlationState((state) => state.correlationThreshold);
   const factorIndices = correlationState((state) => state.factorIndices);
   const updateIsStructureButtonGreen = appState((state) => state.updateIsStructureButtonGreen);
+  const isDataButtonGreen = appState((state) => state.isDataButtonGreen);
+  const isInputButtonGreen = appState((state) => state.isInputButtonGreen);
+  const isCorrelationsButtonGreen = appState((state) => state.isCorrelationsButtonGreen);
 
   let forcedGraphData;
   if (linkFilter === 'positive') {
@@ -26,7 +29,9 @@ const Structure = () => {
   }
 
   useEffect(() => {
-    updateIsStructureButtonGreen(true);
+    if (isDataButtonGreen && isInputButtonGreen && isCorrelationsButtonGreen) {
+      updateIsStructureButtonGreen(true);
+    }
   }, []);
 
   const tabs = [

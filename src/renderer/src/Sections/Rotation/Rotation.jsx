@@ -61,7 +61,8 @@ const Rotation = () => {
       title: judgmentalTrans,
       content: (
         <div>
-          <div className="bg-white overflow-auto  h-full">
+          <div className="text-4xl mt-6 mb-3">{t('Judgmental Rotation')}</div>
+          <div className="bg-white overflow-auto h-[calc(100vh-140px)]">
             <InitializeJudgementalButton />
             <JudgementalTitleDiv />
           </div>

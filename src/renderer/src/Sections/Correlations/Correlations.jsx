@@ -19,9 +19,13 @@ const Correlations = () => {
   const updateIsCorrelationsButtonGreen = appState(
     (state) => state.updateIsCorrelationsButtonGreen
   );
+  const isDataButtonGreen = appState((state) => state.isDataButtonGreen);
+  const isInputButtonGreen = appState((state) => state.isInputButtonGreen);
 
   useEffect(() => {
-    updateIsCorrelationsButtonGreen(true);
+    if (isDataButtonGreen && isInputButtonGreen) {
+      updateIsCorrelationsButtonGreen(true);
+    }
   }, []);
 
   // Handler for tab clicks

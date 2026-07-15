@@ -26,10 +26,9 @@ const RotationButtonGroup = () => {
   const shouldDisplay = rotationState((state) => state.shouldDisplayFacKept);
   const varimaxButtonActive = rotationState((state) => state.varimaxButtonActive);
   let varimaxButtonDisabled = rotationState((state) => state.varimaxButtonDisabled);
-  const varimaxButtonText = rotationState((state) => state.varimaxButtonText);
   const isDisabled = loadingState((state) => state.bipolarDisabled);
 
-  const varimaxButtonTextTrans = t(varimaxButtonText);
+  const varimaxButtonTextTrans = t('Apply Varimax Rotation');
 
   const onVarimaxClick = () => {
     updateRotationDegrees(0);
@@ -63,11 +62,12 @@ const RotationButtonGroup = () => {
   if (shouldDisplay) {
     return (
       <div>
+        <div className="text-4xl mb-6">{t('Varimax Rotation')}</div>
         <GeneralButton
           id="pcaRotationButton"
           disabled={varimaxButtonDisabled}
           onClick={onVarimaxClick}
-          className={`w-42.5 h-7.5 ${varimaxButtonActive ? 'bg-primary-button' : 'bg-grey-button'}`}
+          className={`w-55 h-7.5 ml-3 ${varimaxButtonActive ? 'bg-primary-button' : 'bg-grey-button'}`}
         >
           {varimaxButtonTextTrans}
         </GeneralButton>

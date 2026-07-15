@@ -596,5 +596,6 @@
   "level": "Level",
   "cohens": "Cohen's",
   "stephenson": "Stephenson",
-  "selectMethodForIdentifyingDistinguishingStatements": "Select Method for Identifying Distinguishing Statements"
+  "selectMethodForIdentifyingDistinguishingStatements": "Select Method for Identifying Distinguishing Statements",
+  "Apply Varimax Rotation": "Apply Varimax Rotation"
 }

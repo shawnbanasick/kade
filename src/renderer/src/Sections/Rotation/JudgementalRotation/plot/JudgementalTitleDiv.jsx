@@ -26,13 +26,13 @@ const JudgementalTitleDiv = () => {
   return (
     <>
       {shouldShowJudgeRotDiv ? (
-        <div id="outmostDiv" className="w-full mt-1 h-[calc(100vh-95px)]">
+        <div id="outmostDiv" className="w-full">
           <div
             id="selectButton"
-            className="flex items-center justify-items-center text-[20px] h-[40px] w-full"
+            className="flex items-center justify-items-center text-[20px] h-10 w-full"
           >
             {/* <div className="w-[85px] text-[clamp(0.80rem,1.2cqw,2rem)]">{t('Factors')}:</div> */}
-            <div className="w-[85px] text-[22px]">{t('Factors')}:</div>
+            <div className="w-21.25 text-[22px]">{t('Factors')}:</div>
             <FactorSelectButtons baselineData={baselineData} />
             <ToastContainer transition={Zoom} />
           </div>
