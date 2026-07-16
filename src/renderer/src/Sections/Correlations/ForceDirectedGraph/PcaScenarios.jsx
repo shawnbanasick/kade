@@ -35,15 +35,14 @@ const PcaScenarios = (props) => {
   ];
 
   const colorArray = [
-    'bg-gray-300', // Gray
-    'bg-sky-300', // Blue
-    'bg-orange-300', // Orange
-    'bg-green-300', // Green
-    'bg-red-300', // Red
-    'bg-cyan-300', // Cyan
-    'bg-pink-300', // Magenta
-    'bg-purple-300', // Purple
-    'bg-gray-300', // Gray
+    'bg-primary-button',
+    'bg-primary-button',
+    'bg-primary-button',
+    'bg-primary-button',
+    'bg-primary-button',
+    'bg-primary-button',
+    'bg-primary-button',
+    'bg-primary-button',
   ];
 
   const colorArrayBW = [
@@ -69,7 +68,7 @@ const PcaScenarios = (props) => {
           {t('PCA Scenarios - Select Number of Factors')}:{' '}
         </span>
       </label>
-      <div className="inline-flex flex-wrap gap-3">
+      <div className="inline-flex flex-wrap gap-1">
         {options.map((option, index) => {
           // Determine if this button should be scaled
           const shouldScale =
@@ -81,8 +80,8 @@ const PcaScenarios = (props) => {
               key={option.id}
               onClick={() => handleSelection(option.id, option.value)}
               className={`
-                relative ${props.isGrayscale ? colorArrayBW[index] : colorArray[index]} px-3 rounded-md text-sm font-medium transition-all duration-200
-                ${shouldScale ? 'scale-125  opacity-100 hover:shadow-[inset_0_0_0_4px_#666,0_0_1px_transparent]' : 'text-gray-700 hover:shadow-[inset_0_0_0_4px_#666,0_0_1px_transparent] opacity-50'}
+                relative h-8 bg-gray-300 px-3 rounded-md text-sm font-medium transition-all duration-200
+                ${shouldScale ? 'bg-primary-button  opacity-100 hover:shadow-[inset_0_0_0_4px_#666,0_0_1px_transparent]' : 'text-gray-700 hover:shadow-[inset_0_0_0_4px_#666,0_0_1px_transparent] opacity-50'}
               `}
             >
               {option.label}

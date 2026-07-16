@@ -264,13 +264,36 @@ const ForceGraph = ({
       return;
     }
     const minX = Math.min(...positions.map((p) => p.x));
+    const maxX = Math.max(...positions.map((p) => p.x));
     const minY = Math.min(...positions.map((p) => p.y));
-    const offsetX = minX < 40 ? 40 - minX : 0;
-    const offsetY = minY < 40 ? 40 - minY : 0;
 
-    // circle size constants (matching D3 node radius) hight and width
+    // circle size constants (matching D3 node radius) height and width
     const NODE_W = 40;
     const NODE_H = 40;
+
+    // Which factors are actually present — legend only shows these
+    const activeFactors = Array.from(
+      new Set(positions.map((p) => Math.max(1, Math.min(8, Math.round(p.pca) || 1))))
+    ).sort((a, b) => a - b);
+
+    // ── Legend geometry (sits ABOVE the graph, centered horizontally over it) ──
+    const LEGEND_ITEM_H = 44;
+    const LEGEND_SHAPE_SIZE = 30;
+    const LEGEND_COL_W = 150;
+
+    const legendBoxY = 20;
+    const legendRowWidth = activeFactors.length * LEGEND_COL_W;
+    const graphCenterX = (minX + maxX) / 2; // center of graph content, pre-offset
+    const legendBoxX = Math.max(20, graphCenterX - legendRowWidth / 2);
+
+    const corrKeyY = legendBoxY + 40 + LEGEND_ITEM_H + 20;
+    const corrBlockBottom = corrKeyY + (showAutoFlags ? 126 : 93); // bottom of key/flag-note text
+    const topMargin = corrBlockBottom + 40; // gap between legend and topmost node
+
+    // Horizontal offset: simple positive-coords clamp (unchanged behavior)
+    const offsetX = minX < 40 ? 40 - minX : 0;
+    // Vertical offset: always reserve space for the legend block above the graph
+    const offsetY = topMargin - minY;
 
     // ── 4. Build XML ──────────────────────────────────────────────────────────
     // draw.io renders cells in document order — later = on top.
@@ -345,18 +368,9 @@ const ForceGraph = ({
     });
 
     // ── 5. Build legend cells ─────────────────────────────────────────────────
-    // Place the legend in a box to the right of the graph content.
-    const maxNodeX = Math.max(...positions.map((p) => p.x + offsetX)) + NODE_W;
-    const legendBoxX = maxNodeX + 60;
-    const legendBoxY = 20;
-    const LEGEND_ITEM_H = 44; // vertical spacing between legend rows
-    const LEGEND_SHAPE_SIZE = 30; // width & height of each factor swatch
-    const LEGEND_COL_W = 150; // column width (2 columns)
-    const LEGEND_COLS = 2;
-
     const legendXmlCells = [];
 
-    // Legend container / title label
+    // Legend title
     const legendTitleCid = cellId++;
     legendXmlCells.push(
       `<mxCell id="${legendTitleCid}" value="Factors" ` +
@@ -366,47 +380,41 @@ const ForceGraph = ({
         `</mxCell>`
     );
 
-    // One row per factor (1–8), laid out in 2 columns
-    for (let i = 1; i <= 8; i++) {
-      const col = (i - 1) % LEGEND_COLS;
-      const row = Math.floor((i - 1) / LEGEND_COLS);
-      const itemX = legendBoxX + col * LEGEND_COL_W;
-      const itemY = legendBoxY + 40 + row * LEGEND_ITEM_H;
+    // Single row, one item per active factor
+    activeFactors.forEach((factorNum, idx) => {
+      const itemX = legendBoxX + idx * LEGEND_COL_W;
+      const itemY = legendBoxY + 40;
 
-      const fillColor = isGrayscale ? grayscaleColors[0] : factorColors[i - 1];
-      const baseStyle = isGrayscale ? drawioShapeStyles[i] : 'ellipse;whiteSpace=wrap;';
+      const fillColor = isGrayscale ? grayscaleColors[0] : factorColors[factorNum - 1];
+      const baseStyle = isGrayscale ? drawioShapeStyles[factorNum] : 'ellipse;whiteSpace=wrap;';
       const labelAlign =
-        isGrayscale && i === 2 ? 'verticalAlign=bottom;spacingBottom=4;' : 'verticalAlign=middle;';
+        isGrayscale && factorNum === 2
+          ? 'verticalAlign=bottom;spacingBottom=4;'
+          : 'verticalAlign=middle;';
       const cleanBase = baseStyle.replace(/html=\d;?/g, '');
       const swatchStyle = `${cleanBase}fillColor=${fillColor};strokeColor=#000000;fontFamily=Arial;fontSize=10;fontStyle=1;${labelAlign}html=0;`;
 
-      // Factor 6 (oval) swatch uses a wider bounding box in grayscale only
       const swatchW = LEGEND_SHAPE_SIZE;
       const swatchH = LEGEND_SHAPE_SIZE;
 
-      // Shape swatch
       const swatchCid = cellId++;
       legendXmlCells.push(
-        `<mxCell id="${swatchCid}" value="${i}" style="${escapeXml(swatchStyle)}" vertex="1" parent="1">` +
+        `<mxCell id="${swatchCid}" value="${factorNum}" style="${escapeXml(swatchStyle)}" vertex="1" parent="1">` +
           `<mxGeometry x="${itemX}" y="${itemY}" width="${swatchW}" height="${swatchH}" as="geometry"/>` +
           `</mxCell>`
       );
 
-      // Label next to swatch (offset accounts for wider oval swatch)
       const labelCid = cellId++;
       legendXmlCells.push(
-        `<mxCell id="${labelCid}" value="Factor ${i}" ` +
+        `<mxCell id="${labelCid}" value="Factor ${factorNum}" ` +
           `style="text;html=0;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontFamily=Arial;fontSize=11;" ` +
           `vertex="1" parent="1">` +
           `<mxGeometry x="${itemX + swatchW + 6}" y="${itemY}" width="90" height="${swatchH}" as="geometry"/>` +
           `</mxCell>`
       );
-    }
+    });
 
-    // Correlation key — positioned below the factor legend
-    const corrKeyY = legendBoxY + 40 + Math.ceil(8 / LEGEND_COLS) * LEGEND_ITEM_H + 20;
-
-    // Key title
+    // Correlation key title
     const corrTitleCid = cellId++;
     legendXmlCells.push(
       `<mxCell id="${corrTitleCid}" value="Correlation" ` +
@@ -416,7 +424,6 @@ const ForceGraph = ({
         `</mxCell>`
     );
 
-    // Positive correlation line swatch
     const posColor = isGrayscale ? '#222222' : '#dc2626';
     const posCid = cellId++;
     legendXmlCells.push(
@@ -438,7 +445,6 @@ const ForceGraph = ({
         `</mxCell>`
     );
 
-    // Negative correlation line swatch (dashed in grayscale)
     const negColor = isGrayscale ? '#555555' : '#78bc21';
     const negDash = isGrayscale ? 'dashed=1;dashPattern=4 4;' : '';
     const negCid = cellId++;
@@ -461,7 +467,6 @@ const ForceGraph = ({
         `</mxCell>`
     );
 
-    // Auto-flag note (only when flags are visible)
     if (showAutoFlags) {
       const flagNoteCid = cellId++;
       legendXmlCells.push(
@@ -533,15 +538,18 @@ const ForceGraph = ({
     legendGroup.selectAll('.legend-item').remove();
 
     const legendItemHeight = 35;
-    const legendColumns = 8;
+    const maxColumns = 8;
     const legendColumnWidth = 100;
-    const legendTotalWidth = legendColumns * legendColumnWidth;
-    const legendX = windowSize.width / 2 - legendTotalWidth / 2;
+
+    // use however many columns are actually needed, capped at maxColumns
+    const activeColumns = Math.min(activeFactors.length, maxColumns);
+    const legendTotalWidth = activeColumns * legendColumnWidth;
+    const legendX = width / 2 - legendTotalWidth / 2; // now hugs just the active items
     const legendY = 10;
 
     activeFactors.forEach((factorNum, idx) => {
-      const col = idx % legendColumns;
-      const row = Math.floor(idx / legendColumns);
+      const col = idx % maxColumns;
+      const row = Math.floor(idx / maxColumns);
       const x = legendX + col * legendColumnWidth;
       const y = legendY + 20 + row * legendItemHeight;
       const legendItem = legendGroup
@@ -647,45 +655,6 @@ const ForceGraph = ({
       .attr('y', legendY)
       .attr('class', 'text-sm font-semibold')
       .attr('fill', '#000');
-
-    const activeFactors = Array.from(new Set(nodes.map((d) => d.pca))).sort((a, b) => a - b);
-    renderLegendFactors(activeFactors);
-
-    // for (let i = 1; i <= 8; i++) {
-    //   const col = (i - 1) % 8;
-    //   const row = Math.floor((i - 1) / 8);
-    //   const x = legendX + col * legendColumnWidth;
-
-    //   const y = legendY + 20 + row * legendItemHeight;
-    //   const legendItem = legendGroup.append('g').attr('transform', `translate(${x}, ${y})`);
-
-    //   if (isGrayscale) {
-    //     // Use a smaller r for the oval so it fits the legend row height cleanly
-    //     const legendR = 12;
-    //     legendItem
-    //       .append('path')
-    //       .attr('d', shapeGenerators[i](legendR))
-    //       .attr('fill', grayscaleColors[0])
-    //       .attr('stroke', '#000')
-    //       .attr('stroke-width', 1.5);
-    //   } else {
-    //     legendItem
-    //       .append('circle')
-    //       .attr('r', 12)
-    //       .attr('fill', colorScale(i))
-    //       .attr('stroke', '#fff')
-    //       .attr('stroke-width', 1.5);
-    //   }
-
-    //   legendItem
-    //     .append('text')
-    //     .attr('x', isGrayscale && i === 6 ? 18 : 16)
-    //     .attr('y', 0)
-    //     .attr('dy', '0.35em')
-    //     .attr('class', 'text-xs')
-    //     .attr('fill', '#000')
-    //     .text(`Factor ${i}`);
-    // }
 
     const zoomContainer = svg.append('g').attr('class', `zoom-container`);
 
@@ -998,7 +967,7 @@ const ForceGraph = ({
 
   return (
     <>
-      <div className="text-4xl mb-2 mt-3">{t('Correlation Network Force-Directed Graph')}</div>
+      <div className="text-4xl mb-2 mt-3">{t('Correlation Network Graph')}</div>
 
       <div className="h-[93%]">
         {/* Controls and legend */}
