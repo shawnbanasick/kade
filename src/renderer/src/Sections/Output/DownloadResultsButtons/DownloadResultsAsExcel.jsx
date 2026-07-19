@@ -26,11 +26,11 @@ const DownloadResultsAsExcel = () => {
     <GeneralButton
       id="downloadResultsAsExcelButton"
       onClick={handleClick}
-      className="w-fit min-w-[250px]  bg-grey-button"
+      className="w-fit min-w-62.5  bg-grey-button"
     >
       <div className="flex flex-row justify-center items-center text-[22px]  h-full w-full">
-        <div className="flex justify-center  items-center mr-[10px]">
-          <img src={XlsxIcon} alt="xlsx Icon" className="h-[30px]" />
+        <div className="flex justify-center  items-center mr-2.5">
+          <img src={XlsxIcon} alt="xlsx Icon" className="h-7.5" />
         </div>
         {t('Spreadsheet')}
       </div>

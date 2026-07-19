@@ -23,6 +23,7 @@ import createConExcelFile from './excelLogic/createConExcelFile';
 import createDistExcelFile from './excelLogic/createDistExcelFile';
 import createXlsxFileT1 from './excelLogic/createXlsxFileT1';
 import createXlsxFileT2 from './excelLogic/createXlsxFileT2';
+import createResultsXlsxFile from './excelLogic/createResultsXlsxFile';
 
 const fs = require('fs');
 
@@ -46,6 +47,8 @@ function getIcon() {
 }
 
 async function createWindow() {
+  // Add this near the top of your entry file
+
   const mainWindowStateKeeper = await windowStateKeeper('main');
 
   let splash = new BrowserWindow({
@@ -247,28 +250,41 @@ if (!gotTheLock) {
     });
 
     ipcMain.handle('large-data', async (event, arrayBuffer, path) => {
-      const dataContent = JSON.parse(Buffer.from(arrayBuffer).toString('utf-8'));
+      try {
+        const dataContent = JSON.parse(Buffer.from(arrayBuffer).toString('utf-8'));
 
-      if (dataContent.type === 'docx') {
-        exportDocx(dataContent);
-      }
-      if (dataContent.type === 'xlsx') {
-        createXlsxFile(dataContent);
-      }
-      if (dataContent.type === 'csv') {
-        createCsvFile(dataContent);
-      }
-      if (dataContent.type === 'ConExcel') {
-        createConExcelFile(dataContent);
-      }
-      if (dataContent.type === 'distExcel') {
-        createDistExcelFile(dataContent);
-      }
-      if (dataContent.type === 'ExampleExcelT1') {
-        createXlsxFileT1(dataContent);
-      }
-      if (dataContent.type === 'ExampleExcelT2') {
-        createXlsxFileT2(dataContent);
+        switch (dataContent.type) {
+          case 'docx':
+            await exportDocx(dataContent);
+            break;
+          case 'xlsx':
+            await createXlsxFile(dataContent);
+            break;
+          case 'csv':
+            await createCsvFile(dataContent);
+            break;
+          case 'ConExcel':
+            await createConExcelFile(dataContent);
+            break;
+          case 'distExcel':
+            await createDistExcelFile(dataContent);
+            break;
+          case 'ExampleExcelT1':
+            await createXlsxFileT1(dataContent);
+            break;
+          case 'ExampleExcelT2':
+            await createXlsxFileT2(dataContent);
+            break;
+          case 'ExcelResults':
+            await createResultsXlsxFile(dataContent);
+            break;
+          default:
+            console.warn('Unknown large-data type:', dataContent.type);
+        }
+      } catch (err) {
+        console.error('Error in large-data handler:', err);
+        // optionally rethrow so the renderer's invoke() promise rejects and the UI can show an error
+        throw err;
       }
     });
 

@@ -406,10 +406,6 @@ const pushDistinguishingStatementsToOutput = function (
       distingStatementsTransferArray01b
     );
 
-    console.log(`Factor ${j + 1} Distinguishing Statements:`, {
-      distingStatementsTransferArray05c,
-      distingStatementsTransferArray01b,
-    });
     masterDistingStatementNumbersArray05.push(distingStatementsTransferArray05c);
     masterDistingStatementNumbersArray01.push(distingStatementsTransferArray01b);
 
@@ -432,9 +428,6 @@ const pushDistinguishingStatementsToOutput = function (
     outputData.push(formattedDistingStatements[1]);
   } // end of J loop
 
-  console.log('bbb', JSON.stringify(masterDistingStatementNumbersArray01));
-  console.log('bbb', JSON.stringify(masterDistingStatementNumbersArray05));
-
   if (resultsDistIdentType === 'cohenMethod') {
     calcState.setState({
       masterDistingStatementNumbersArray05: cohensData1.distinguishing,
@@ -454,11 +447,6 @@ const pushDistinguishingStatementsToOutput = function (
   // ******
   // develop consensus statement data
   // ******
-
-  console.log('consensus arrays before reduction2 : ', {
-    consensusStatementComparisonArray05,
-    consensusStatementComparisonArray01,
-  });
 
   do {
     consensusStatementComparisonArray05 = reduceDistingArray(consensusStatementComparisonArray05);
@@ -489,18 +477,6 @@ const pushDistinguishingStatementsToOutput = function (
 
   const consensusStatementComparisonArray01b = flatten(consensusStatementComparisonArray01);
   const consensus01 = xor(consensus05, consensusStatementComparisonArray01b);
-
-  console.log(
-    'bbb type',
-    resultsDistIdentType,
-    'bbb 1',
-    resultsCohenButtons1Value,
-    'bbb 2',
-    resultsCohenButtons2Value
-  );
-
-  console.log('consensus bbb - 05: ', JSON.stringify(consensus05));
-  console.log('consensus bbb - 01: ', JSON.stringify(consensus01));
 
   if (resultsDistIdentType === 'cohenMethod') {
     calcState.setState({ consensus05Statements: cohensData1.consensus });
@@ -572,9 +548,6 @@ const pushDistinguishingStatementsToOutput = function (
     formattedConsensusStatements[0]
   );
   outputState.setState({ outputForDataViz: outputForDataVizWithSig });
-
-  console.log('ttt: ', outputForDataVizWithSig);
-  console.log('ttt-array ', distStatementDataVizArray);
 
   calcState.setState({ distStatementDataVizArray: distStatementDataVizArray });
   // output for excel chart distinguishing

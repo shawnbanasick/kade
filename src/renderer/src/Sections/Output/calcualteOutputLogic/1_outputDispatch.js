@@ -89,6 +89,8 @@ const outputDispatch = () => {
 
     const step18 = pushCribSheetsToOutput(...step17);
 
+    console.log('outputData', JSON.stringify(step18[0][0], null, 2));
+
     calcState.setState({ outputData: step18[0] });
     calcState.setState({ sheetNamesXlsx: step18[1] });
     calcState.setState({ colSizes: step18[2] });

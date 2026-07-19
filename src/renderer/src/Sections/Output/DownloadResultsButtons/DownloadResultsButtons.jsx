@@ -3,6 +3,7 @@ import DownloadResultsAsCsv from './DownloadResultsAsCsv';
 import { useTranslation } from 'react-i18next';
 import outputState from '../../GlobalState/outputState';
 import DownloadDocxFile from './DownloadDocxFile';
+import DownloadNewExcel from './DownloadNewExcel';
 
 const DownloadResultsButtons = () => {
   const { t } = useTranslation();
@@ -26,6 +27,7 @@ const DownloadResultsButtons = () => {
           <DownloadResultsAsExcel />
           <DownloadResultsAsCsv />
           <DownloadDocxFile />
+          <DownloadNewExcel />
         </div>
       </div>
     </>

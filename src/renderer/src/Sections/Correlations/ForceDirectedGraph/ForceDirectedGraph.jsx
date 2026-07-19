@@ -1028,30 +1028,8 @@ const ForceGraph = ({
                 </div>
               </div>
               <button
-                onClick={() => updateShowAutoFlags(!showAutoFlags)}
-                className={`px-4 py-2 h-8 w-45 mb-2 rounded-md transition-colors flex items-center justify-center gap-2  ${
-                  showAutoFlags
-                    ? 'bg-primary-button text-black hover:shadow-[inset_0_0_0_4px_#666,0_0_1px_transparent]'
-                    : 'bg-grey-button text-black hover:shadow-[inset_0_0_0_4px_#666,0_0_1px_transparent]'
-                }`}
-              >
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M3 21v-4m0 0V5a2 2 0 012-2h6.5l1 1H21l-3 6 3 6h-8.5l-1-1H5a2 2 0 00-2 2zm9-13.5V9"
-                  />
-                </svg>
-                Auto-Flag {showAutoFlags ? 'ON' : 'OFF'}
-              </button>
-            </div>
-            {/* end autoflag toggle and strength slider */}
-            {/* reset and grayscale buttons div */}
-            <div className="flex flex-col gap-2 items-left">
-              <button
                 onClick={downloadPngImage}
-                className="px-4 py-2 h-8 bg-grey-button text-black rounded-md hover:shadow-[inset_0_0_0_4px_#666,0_0_1px_transparent] transition-colors flex items-center gap-2"
+                className="px-4 py-2 h-8 mb-2 bg-grey-button text-black rounded-md hover:shadow-[inset_0_0_0_4px_#666,0_0_1px_transparent] transition-colors flex items-center gap-2"
               >
                 <svg
                   className="w-5 h-5 shrink-0"
@@ -1068,28 +1046,28 @@ const ForceGraph = ({
                 </svg>
                 Download PNG
               </button>
+            </div>
+            {/* end autoflag toggle and strength slider */}
+            {/* reset and grayscale buttons div */}
+            <div className="flex flex-col gap-2 items-left">
               <button
-                onClick={toggleGrayscale}
-                className="px-4 py-2 h-8 w-45 rounded-md transition-colors flex items-center gap-2 bg-grey-button text-black hover:shadow-[inset_0_0_0_4px_#666,0_0_1px_transparent]"
+                onClick={() => updateShowAutoFlags(!showAutoFlags)}
+                className={`px-4 py-2 h-8 w-45 rounded-md transition-colors flex items-center justify-center gap-2  ${
+                  showAutoFlags
+                    ? 'bg-primary-button text-black hover:shadow-[inset_0_0_0_4px_#666,0_0_1px_transparent]'
+                    : 'bg-grey-button text-black hover:shadow-[inset_0_0_0_4px_#666,0_0_1px_transparent]'
+                }`}
               >
-                <svg
-                  className="w-5 h-5 shrink-0"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth={2}
-                    d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"
+                    d="M3 21v-4m0 0V5a2 2 0 012-2h6.5l1 1H21l-3 6 3 6h-8.5l-1-1H5a2 2 0 00-2 2zm9-13.5V9"
                   />
                 </svg>
-                {isGrayscale ? 'Color Mode' : 'Grayscale Mode'}
+                Auto-Flag {showAutoFlags ? 'ON' : 'OFF'}
               </button>
-            </div>
-            {/* download buttons div */}
-            <div className="flex flex-col gap-2 items-left gap-2">
               <button
                 onClick={downloadSVG}
                 className="px-4 py-2 h-8 bg-grey-button text-black rounded-md hover:shadow-[inset_0_0_0_4px_#666,0_0_1px_transparent] transition-colors flex items-center gap-2"
@@ -1109,7 +1087,28 @@ const ForceGraph = ({
                 </svg>
                 Download SVG
               </button>
-
+            </div>
+            {/* download buttons div */}
+            <div className="flex flex-col gap-2 items-left gap-2">
+              <button
+                onClick={toggleGrayscale}
+                className="px-4 py-2 h-8 w-47 rounded-md transition-colors flex items-center gap-2 bg-grey-button text-black hover:shadow-[inset_0_0_0_4px_#666,0_0_1px_transparent]"
+              >
+                <svg
+                  className="w-5 h-5 shrink-0"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"
+                  />
+                </svg>
+                {isGrayscale ? 'Color Mode' : 'Grayscale Mode'}
+              </button>
               <button
                 onClick={downloadDrawio}
                 className="px-4 py-2 h-8 bg-grey-button text-black rounded-md hover:shadow-[inset_0_0_0_4px_#666,0_0_1px_transparent] transition-colors flex items-center gap-2"

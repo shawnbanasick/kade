@@ -7,9 +7,9 @@ const downloadExcelDispatch = async () => {
   // initialize output cascade
 
   const dataXlsx = cloneDeep(calcState.getState().outputData);
+  const projectName = coreState.getState().projectName;
   const colSizes = cloneDeep(calcState.getState().colSizes);
   const sheetNamesXlsx = cloneDeep(calcState.getState().sheetNamesXlsx);
-  const projectName = coreState.getState().projectName;
 
   const dataContent = {
     projectName,
