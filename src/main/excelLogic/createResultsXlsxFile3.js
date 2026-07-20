@@ -1,6 +1,12 @@
 import ExcelJS from 'exceljs';
 
-const createResultsExcelSheets3 = async (workbook, correlationMatrixArray, unrotatedArray) => {
+const createResultsExcelSheets3 = async (
+  workbook,
+  correlationMatrixArray,
+  unrotatedArray,
+  cumulComArray,
+  factorMatrixArray
+) => {
   // 3. Correlation Matrix worksheet
   const correlationsWorksheet = workbook.addWorksheet(correlationMatrixArray[0][0]);
   correlationsWorksheet.columns = [{ width: 10 }, { width: 20 }];
@@ -27,6 +33,58 @@ const createResultsExcelSheets3 = async (workbook, correlationMatrixArray, unrot
 
   for (let i = 4; i < unrotatedArray.length; i++) {
     const row = unrotatedWorksheet.addRow(unrotatedArray[i]);
+    let spacerCol = row.getCell(1);
+    spacerCol.value = '';
+    // number column
+    let numCol = row.getCell(2);
+    numCol.alignment = { horizontal: 'center' };
+    numCol.value = unrotatedArray?.[i]?.[0];
+    // iterate through name and factors and add them to the row
+    for (let j = 1; j < unrotatedArray?.[i].length; j++) {
+      let qSortVal = row.getCell(2 + j);
+      qSortVal.value = unrotatedArray?.[i]?.[j];
+      if (j === 1 || i === 4) {
+        qSortVal.font = { bold: true };
+        qSortVal.alignment = { horizontal: 'center' };
+      }
+    }
+  }
+
+  // 5. Cumulative Contributions worksheet
+  const cumulComWorksheet = workbook.addWorksheet(cumulComArray[0][0]);
+  cumulComWorksheet.columns = [{ width: 10 }, { width: 10 }, { width: 50 }];
+
+  for (let i = 4; i < cumulComArray.length; i++) {
+    const row = cumulComWorksheet.addRow(cumulComArray[i]);
+    if (i === cumulComArray.length - 1) {
+      const text = cumulComArray[i].shift();
+      cumulComArray[i].shift();
+      cumulComArray[i].unshift(text);
+      cumulComArray[i].unshift('');
+    }
+    let spacerCol = row.getCell(1);
+    spacerCol.value = '';
+    // number column
+    let numCol = row.getCell(2);
+    numCol.alignment = { horizontal: 'center' };
+    numCol.value = cumulComArray?.[i]?.[0];
+    // iterate through name and factors and add them to the row
+    for (let j = 1; j < cumulComArray?.[i].length; j++) {
+      let qSortVal = row.getCell(2 + j);
+      qSortVal.value = cumulComArray?.[i]?.[j];
+      if (j === 1 || i === 4) {
+        qSortVal.font = { bold: true };
+        qSortVal.alignment = { horizontal: 'center' };
+      }
+    }
+  }
+
+  // 6. Factor Matrix worksheet
+  const factorMatrixWorksheet = workbook.addWorksheet(factorMatrixArray[0][0]);
+  factorMatrixWorksheet.columns = [{ width: 10 }, { width: 10 }, { width: 50 }];
+
+  for (let i = 4; i < unrotatedArray.length; i++) {
+    const row = factorMatrixWorksheet.addRow(unrotatedArray[i]);
     let spacerCol = row.getCell(1);
     spacerCol.value = '';
     // number column

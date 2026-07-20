@@ -4,6 +4,8 @@ import currentTime1 from '../../renderer/src/Utils/currentTime1';
 import ExcelJS from 'exceljs';
 import createResultsXlsxFile2 from './createResultsXlsxFile2';
 import createResultsXlsxFile3 from './createResultsXlsxFile3';
+import createResultsXlsxFile4 from './createResultsXlsxFile4';
+import createResultsXlsxFile5 from './createResultsXlsxFile5';
 
 const createResultsExcelFile = async (dataContent) => {
   try {
@@ -200,7 +202,9 @@ const createResultsExcelFile = async (dataContent) => {
 
     // add Basic data sheets - statements and sorts,
     workbook = await createResultsXlsxFile2(workbook, data[1], data[2]);
-    workbook = await createResultsXlsxFile3(workbook, data[3], data[4]);
+    workbook = await createResultsXlsxFile3(workbook, data[3], data[4], data[5], data[6]);
+    workbook = await createResultsXlsxFile4(workbook, data[7], data[8], data[9]);
+    workbook = await createResultsXlsxFile5(workbook, data[10]);
 
     // File Download
     const timeStamp = `${currentDate1()}_${currentTime1()}`;
