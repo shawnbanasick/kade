@@ -2,6 +2,8 @@ import { dialog } from 'electron';
 import currentDate1 from '../../renderer/src/Utils/currentDate1';
 import currentTime1 from '../../renderer/src/Utils/currentTime1';
 import ExcelJS from 'exceljs';
+import createResultsXlsxFile2 from './createResultsXlsxFile2';
+import createResultsXlsxFile3 from './createResultsXlsxFile3';
 
 const createResultsExcelFile = async (dataContent) => {
   try {
@@ -13,7 +15,7 @@ const createResultsExcelFile = async (dataContent) => {
       return (epoch - new Date(Date.UTC(1899, 11, 30))) / (24 * 60 * 60 * 1000);
     };
 
-    const workbook = new ExcelJS.Workbook();
+    let workbook = new ExcelJS.Workbook();
     const data = [...dataContent.data];
 
     // console.log('data in createResultsExcelFile:', dataContent);
@@ -195,6 +197,10 @@ const createResultsExcelFile = async (dataContent) => {
       historyCell.font = { name: 'Arial', size: 14, bold: false, color: { argb: '000000' } };
       historyCell.alignment = { horizontal: 'left' };
     }
+
+    // add Basic data sheets - statements and sorts,
+    workbook = await createResultsXlsxFile2(workbook, data[1], data[2]);
+    workbook = await createResultsXlsxFile3(workbook, data[3], data[4]);
 
     // File Download
     const timeStamp = `${currentDate1()}_${currentTime1()}`;
