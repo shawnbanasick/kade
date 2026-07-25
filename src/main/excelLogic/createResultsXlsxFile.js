@@ -11,6 +11,7 @@ import createResultsXlsxFile7 from './createResultsXlsxFile7';
 import createResultsXlsxFile8 from './createResultsXlsxFile8';
 import createResultsXlsxFile9 from './createResultsXlsxFile9';
 import createResultsXlsxFile10 from './createResultsXlsxFile10';
+import createResultsXlsxFile11 from './createResultsXlsxFile11';
 
 const createResultsExcelFile = async (dataContent) => {
   try {
@@ -264,6 +265,13 @@ const createResultsExcelFile = async (dataContent) => {
     dataIndex = dataIndex + 1;
     const consensusData = data[dataIndex];
     workbook = await createResultsXlsxFile10(workbook, consensusData);
+
+    // add relative ranks sheet
+    for (let i = 0; i < userSelectedFactors.length; i++) {
+      dataIndex = dataIndex + 1;
+      const relativeRanksData = data[dataIndex];
+      workbook = await createResultsXlsxFile11(workbook, relativeRanksData, userSelectedFactors[i]);
+    }
 
     // File Download
     const timeStamp = `${currentDate1()}_${currentTime1()}`;
