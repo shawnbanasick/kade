@@ -66,7 +66,9 @@ const calcState = create(
     stephConsensus1: [],
     stephConsensus15: [],
     stephConsensus2: [],
+    powerSetDiffsNumber: 0,
 
+    updatePowerSetDiffsNumber: (inputValue) => set({ powerSetDiffsNumber: inputValue }),
     updateAnalysisOutput: (inputValue) => set({ analysisOutput: inputValue }),
     updateColSizes: (inputValue) => set({ colSizes: inputValue }),
     updateCompositeFactorMasterArray: (inputValue) =>

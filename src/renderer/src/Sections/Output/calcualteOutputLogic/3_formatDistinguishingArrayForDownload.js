@@ -13,9 +13,12 @@ const formatDistingArrayForDownload = (
   // getState
   const distStateUpperValueText = outputState.getState().distStateUpperValueText;
   const distStateLowerValueText = outputState.getState().distStateLowerValueText;
+
+  // modify according to stephenson or cohen's d
   const chartText2 = `(${distStateLowerValueText}; ${i18n.t(
     'Asterisk Indicates Significance at'
   )} ${distStateUpperValueText})`;
+
   const chartText3 = i18n.t('Both the Factor Q Sort Value and the Z Score Z SCR are Shown');
   const chartText4 = i18n.t('Significance');
   const chartText5 = i18n.t('Statement');

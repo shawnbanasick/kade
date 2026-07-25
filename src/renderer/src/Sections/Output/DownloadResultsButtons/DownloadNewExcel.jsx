@@ -17,6 +17,7 @@ const DownloadResultsAsExcel = () => {
   const dataXlsxPrep = calcState((state) => state.outputData);
   const dataXlsx = cloneDeep(dataXlsxPrep);
   const projectName = coreState((state) => state.projectName);
+  const powerSetDiffsNumber = calcState((state) => state.powerSetDiffsNumber);
 
   console.log('dataXlsxPrep in DownloadResultsAsExcel:', dataXlsxPrep);
 
@@ -35,6 +36,8 @@ const DownloadResultsAsExcel = () => {
       type: 'ExcelResults',
       data: dataXlsx,
       projectName: projectName,
+      userSelectedFactors: userSelectedFactors,
+      powerSetDiffsNumber: powerSetDiffsNumber,
     };
 
     const newBlob = new Blob([JSON.stringify(dataContent)], { type: 'text/plain' });

@@ -25,6 +25,9 @@ const pushFactorPowerSetDiffsToOutput = function (
       factorPairs.push([analysisOutput[i], analysisOutput[j + 1]]);
     }
   }
+
+  calcState.setState({ powerSetDiffsNumber: factorPairs.length });
+
   // let diffArraySorted;
   const namesComboArray = [];
   const sheetHeader1Array = [];

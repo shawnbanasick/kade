@@ -1,14 +1,7 @@
 import ExcelJS from 'exceljs';
 
-const createResultsExcelSheets5 = async (
-  workbook,
-  factorScoreCorrelationsArray
-  //   freeDistArray,
-  //   ranksArray
-) => {
-  console.log('factorScoreCorrelationsArray:', factorScoreCorrelationsArray);
-
-  // 7. Factor Loadings Table worksheet
+const createResultsExcelSheets5 = async (workbook, factorScoreCorrelationsArray) => {
+  // 10. Factor Score Correlations worksheet
   const factorScoreCorrelationsWorksheet = workbook.addWorksheet(
     factorScoreCorrelationsArray[0][0]
   );

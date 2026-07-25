@@ -6,6 +6,11 @@ import createResultsXlsxFile2 from './createResultsXlsxFile2';
 import createResultsXlsxFile3 from './createResultsXlsxFile3';
 import createResultsXlsxFile4 from './createResultsXlsxFile4';
 import createResultsXlsxFile5 from './createResultsXlsxFile5';
+import createResultsXlsxFile6 from './createResultsXlsxFile6';
+import createResultsXlsxFile7 from './createResultsXlsxFile7';
+import createResultsXlsxFile8 from './createResultsXlsxFile8';
+import createResultsXlsxFile9 from './createResultsXlsxFile9';
+import createResultsXlsxFile10 from './createResultsXlsxFile10';
 
 const createResultsExcelFile = async (dataContent) => {
   try {
@@ -19,6 +24,8 @@ const createResultsExcelFile = async (dataContent) => {
 
     let workbook = new ExcelJS.Workbook();
     const data = [...dataContent.data];
+    const userSelectedFactors = [...dataContent.userSelectedFactors];
+    const powerSetDiffsNumber = dataContent.powerSetDiffsNumber;
 
     // console.log('data in createResultsExcelFile:', dataContent);
     const overviewText = data?.[0]?.[0]?.[0];
@@ -205,6 +212,58 @@ const createResultsExcelFile = async (dataContent) => {
     workbook = await createResultsXlsxFile3(workbook, data[3], data[4], data[5], data[6]);
     workbook = await createResultsXlsxFile4(workbook, data[7], data[8], data[9]);
     workbook = await createResultsXlsxFile5(workbook, data[10]);
+    // simple counter to track progress through the data array, starting at 11 because the first 11 elements are used for the overview and basic data sheets
+    let dataIndex = 10;
+    // add factor contributor weights, factor contributor correlations, and factors
+    let factorData = [];
+    for (let i = 0; i < userSelectedFactors.length; i++) {
+      const factorIndex = userSelectedFactors[i];
+      dataIndex = dataIndex + 1;
+      const factorData1 = data[dataIndex];
+      factorData.push([...factorData1]);
+      dataIndex = dataIndex + 1;
+      const factorData2 = data[dataIndex];
+      factorData.push([...factorData2]);
+      dataIndex = dataIndex + 1;
+      const factorData3 = data[dataIndex];
+      factorData.push([...factorData3]);
+      workbook = await createResultsXlsxFile6(workbook, factorData, userSelectedFactors[i]);
+    }
+    // add power set differences sheets
+    if (powerSetDiffsNumber > 0) {
+      for (let i = 0; i < powerSetDiffsNumber; i++) {
+        dataIndex = dataIndex + 1;
+        const powerSetDiffData = data[dataIndex];
+
+        workbook = await createResultsXlsxFile7(workbook, powerSetDiffData);
+      }
+    }
+
+    // add consensus vs. disagreement, factor characteristics, and standard errors sheets
+    dataIndex = dataIndex + 1;
+    let conDisData = data[dataIndex];
+    dataIndex = dataIndex + 1;
+    let factorCharData = data[dataIndex];
+    dataIndex = dataIndex + 1;
+    let stdErrData = data[dataIndex];
+    workbook = await createResultsXlsxFile8(workbook, conDisData, factorCharData, stdErrData);
+
+    // add distinguishing statements by factor sheets
+    for (let i = 0; i < userSelectedFactors.length; i++) {
+      const factorIndex = userSelectedFactors[i];
+      dataIndex = dataIndex + 1;
+      const factorDistinguishingData = data[dataIndex];
+      workbook = await createResultsXlsxFile9(
+        workbook,
+        factorDistinguishingData,
+        userSelectedFactors[i]
+      );
+    }
+
+    // add consensus statements sheet
+    dataIndex = dataIndex + 1;
+    const consensusData = data[dataIndex];
+    workbook = await createResultsXlsxFile10(workbook, consensusData);
 
     // File Download
     const timeStamp = `${currentDate1()}_${currentTime1()}`;
