@@ -184,10 +184,6 @@
   "Confirm Q Sorts": "Confirm Q Sorts",
   "Sorts Verified": "Sorts Verified",
 
-  "Structure Panel": "************************* Structure Panel *******************",
-  "Structure": "Structure",
-  "Structure Analysis": "Structure Analysis",
-
   "Factors Panel": "**************************** Factors Panel **********************",
   "Factor Extraction": "Factors",
   "Factor": "Factor ",
@@ -576,6 +572,10 @@
   "The 'version' tab is missing from the spreadsheet": "The 'version' tab is missing from the spreadsheet",
   "Sort Values": "Sort Values",
 
+  "Structure Panel": "************************* Structure Panel *******************",
+  "Structure": "Structure",
+  "Structure Analysis": "Structure Analysis",
+
   "*** Version 1.4.0 ***": "*** Version 1.4.0 ***",
   "Statement Length": "Statement Length",
   "This will remove the current analysis and cannot be reversed": "This will remove the current analysis and cannot be reversed.",
@@ -597,5 +597,14 @@
   "cohens": "Cohen's",
   "stephenson": "Stephenson",
   "selectMethodForIdentifyingDistinguishingStatements": "Select Method for Identifying Distinguishing Statements",
-  "Apply Varimax Rotation": "Apply Varimax Rotation"
+  "Apply Varimax Rotation": "Apply Varimax Rotation",
+  "Excel File Input": "Excel File Input",
+  "Download Type 1 Template": "Download Type 1 Template",
+  "Download Type 2 Template": "Download Type 2 Template",
+  "KADE XLSX": "KADE XLSX",
+  "KADE Excel File Input": "KADE Results File Input",
+  "KADE Zip File Input": "KADE Results Zip File Input",
+  "CSV File Input": "CSV File Input",
+  "Load both a statements text file and a Q sorts CSV file": "Load both a statements text file and a Q sorts CSV file",
+  "Number of Statements in Each Column": "Number of Statements in Each Column"
 }

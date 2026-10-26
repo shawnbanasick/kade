@@ -48,7 +48,7 @@ function Input() {
       content: <CsvPanel />,
     },
     {
-      title: 'EQ Web Sort',
+      title: 'Quince',
       content: <JsonPanel />,
     },
     {

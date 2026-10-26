@@ -1,8 +1,8 @@
 import { resolve } from 'path';
+import { codeInspectorPlugin } from 'code-inspector-plugin';
 import { defineConfig, externalizeDepsPlugin } from 'electron-vite';
 import react from '@vitejs/plugin-react';
 import tailwindcss from '@tailwindcss/vite';
-import { codeInspectorPlugin } from 'code-inspector-plugin';
 
 export default defineConfig({
   main: {
@@ -60,11 +60,11 @@ export default defineConfig({
       },
     },
     plugins: [
-      react(),
       tailwindcss(),
       codeInspectorPlugin({
         bundler: 'vite',
       }),
+      react(),
     ],
     worker: {
       format: 'es',

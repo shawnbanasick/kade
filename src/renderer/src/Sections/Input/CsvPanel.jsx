@@ -16,7 +16,7 @@ const CsvPanel = () => {
         id="csvPanelHeader"
         className="font-['Helvetica'] text-black text-xl font-bold h-7.5 mb-5"
       >
-        {t('Load both a statements file and a Q sorts CSV file')}
+        {t('Load both a statements text file and a Q sorts CSV file')}
       </div>
       <div
         id="csvPanelWindow"

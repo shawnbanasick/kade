@@ -7,6 +7,9 @@ function Drawer({ isOpen, onClose, children, side = 'right' }) {
   );
   // Close on Escape
   useEffect(() => {
+    // Remove any existing listeners first
+    window.electron.ipcRenderer.removeAllListeners('escape-pressed');
+
     window.electron.ipcRenderer.on('escape-pressed', onClose);
     return () => window.electron.ipcRenderer.removeListener('escape-pressed', onClose);
   }, [onClose]);

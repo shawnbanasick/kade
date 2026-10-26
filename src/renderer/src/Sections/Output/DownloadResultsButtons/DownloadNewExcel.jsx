@@ -19,12 +19,6 @@ const DownloadResultsAsExcel = () => {
   const projectName = coreState((state) => state.projectName);
   const powerSetDiffsNumber = calcState((state) => state.powerSetDiffsNumber);
 
-  console.log('dataXlsxPrep in DownloadResultsAsExcel:', dataXlsxPrep);
-
-  //   console.log('dataXlsx in DownloadResultsAsExcel:', dataXlsx[0][0][0]);
-  //   console.log('projectName in DownloadResultsAsExcel:', dataXlsx[0][2][0]);
-  //   console.log('projectName in DownloadResultsAsExcel:', dataXlsx[0][2][1]);
-
   const handleClick = async () => {
     console.log('DownloadResultsAsExcel button clicked');
     if (userSelectedFactors.length === 0) {

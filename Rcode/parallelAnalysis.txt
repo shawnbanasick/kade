@@ -66,3 +66,13 @@ t_results <- t(pretty_results[, -1])
 colnames(t_results) <- paste0("F", pretty_results$Factor)
 
 print(t_results)
+
+RESET
+# 1. Clear all data, variables, and objects from your active R memory
+rm(list = ls())
+
+# 2. Force close any active plot windows
+graphics.off()
+
+# 3. Trigger garbage collection to fully free up system RAM
+gc()
