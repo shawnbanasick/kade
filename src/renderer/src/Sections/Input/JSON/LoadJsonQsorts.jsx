@@ -3,11 +3,12 @@ import convertJSONToData from './convertJSONToData';
 import revertLoadButtonsColors from '../DemoData/revertLoadButtonsColors';
 import throwDataAlreadyLoadedInputErrorModal from '../ErrorChecking/throwDataAlreadyLoadedInputErrorModal';
 import throwNoSortsInputErrorModal from '../ErrorChecking/throwNoSortsInputError';
-import LoadButton from '../DemoData/LoadButton';
+// import LoadButton from '../DemoData/LoadButton';
 import { useTranslation } from 'react-i18next';
 import inputState from '../../GlobalState/inputState';
 import coreState from '../../GlobalState/coreState';
 import appState from '../../GlobalState/appState';
+import NewLoadButton from '../../../Utils/NewLoadButton';
 
 function notifyWarning() {
   toast.warn('Select Participant Id to complete JSON import', {
@@ -88,23 +89,21 @@ const LoadJsonQsortsFile = () => {
   };
 
   return (
-    <>
-      <div className="mt-[18px]">
-        <LoadButton isactive={isLoadJsonQsortsButtonGreen} onClick={() => handleClick()}>
-          <div className="flex flex-row justify-center items-center h-full w-full">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 20 20"
-              className="rotate-180 mr-5 h-4.25 w-4.25 fill-current"
-            >
-              <path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z" />
-            </svg>
-            <p>{t('Load JSON File')}</p>
-          </div>
-        </LoadButton>
+    <NewLoadButton
+      className={`${isLoadJsonQsortsButtonGreen ? 'bg-primary-button' : 'bg-grey-button'}`}
+      onClick={() => handleClick()}
+    >
+      <div className="flex flex-row justify-center items-center h-full w-full gap-3">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 20 20"
+          className="rotate-180 mr-5 h-4.25 w-4.25 fill-current"
+        >
+          <path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z" />
+        </svg>
+        <div className="font-sans text-sm font-bold">{t('Import Sorts')}</div>
       </div>
-      <ToastContainer transition={Slide} />
-    </>
+    </NewLoadButton>
   );
 };
 

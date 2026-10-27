@@ -92,7 +92,7 @@ const CsvPanel = () => {
             </div>
           </div>
         </div>
-        <ProjectNameInput id="projectNameInput" />
+        <ProjectNameInput id="projectNameInput" numbering="3" />
         <RadioExampleRadioGroup id="forcedUnforcedRadio" numbering="4" />
         <QsortDesignInputElement id="qsortDesignInputElement" numbering="5" />
       </div>

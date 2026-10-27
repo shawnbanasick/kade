@@ -86,16 +86,6 @@
   "Select Participant ID": "Select Participant ID",
   "Download JSON data as CSV": "Download JSON data as CSV",
   "Q Sort Pattern": "Q Sort Pattern",
-  "No Statements Loaded": "No Statements Loaded",
-  "Load both a statements STA file and Q sorts DAT file": "Load both a statements STA file and Q sorts DAT file.",
-  "Load STA File": "Load STA File",
-  "Load DAT File": "Load DAT File",
-  "Load Lipset": "Load Lipset",
-  "Load Buzzwords": "Load Buzzwords",
-  "Load Motivational": "Load Motivational",
-  "Load iPad Survey": "Load iPad Survey",
-  "loaded from demo data": "loaded from demo data",
-  "data loaded from XLSX Type 1 file": "data loaded from XLSX Type 1 file",
   "Netlify": "Netlify",
 
   "Input Panel Errors": "******************* Input Panel Errors ************************",
@@ -613,5 +603,16 @@
   "Load CSV File": "Import CSV Data",
   "Load KADE Zip File": "Import KADE Zip File",
   "Load a KADE or Ken-Q Analysis (web) Zip output file": "Import a KADE or Ken-Q Analysis (web) Zip output file",
+  "No Statements Loaded": "No Statements Loaded",
+  "Load both a statements STA file and Q sorts DAT file": "Import both a statements STA file and Q sorts DAT file.",
+  "Load STA File": "Import STA File",
+  "Load DAT File": "Import DAT File",
+  "Load Lipset": "Load Lipset",
+  "Load Buzzwords": "Load Buzzwords",
+  "Load Motivational": "Load Motivational",
+  "Load iPad Survey": "Load iPad Survey",
+  "loaded from demo data": "loaded from demo data",
+  "data loaded from XLSX Type 1 file": "data imported from XLSX Type 1 file",
+
   "Number of Statements in Each Column": "Number of Statements in Each Column"
 }

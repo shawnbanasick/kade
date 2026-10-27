@@ -6,6 +6,11 @@ import quinceImage2 from '../../Sections/images/quince-input-2.png';
 import quinceImage3 from '../../Sections/images/quince-input-3.png';
 import quinceImage4 from '../../Sections/images/pqMethod-input-sta.png';
 import quinceImage5 from '../../Sections/images/Excel2.png';
+import ProjectNameInput from './CSV/ProjectNameInput';
+import RadioExampleRadioGroup from './CSV/ForcedUnforcedRadio';
+import QsortDesignInputElement from './CSV/QsortDesignInputElement';
+import LoadCsvStatements from './CSV/LoadCsvStatements';
+import LoadJsonQsorts from './JSON/LoadJsonQsorts';
 
 const JsonPanel = () => {
   const { t } = useTranslation();
@@ -92,7 +97,7 @@ const JsonPanel = () => {
         {steps.map((step, index) => (
           <div
             key={index}
-            className="flex w-[282px] flex-col overflow-hidden rounded-lg border border-gray-200 bg-white shadow-sm"
+            className="flex w-[282px] flex-col items-center rounded-lg border border-gray-200 bg-white shadow-sm"
           >
             {/* Image area (click to enlarge) */}
             <div className="bg-gray-50 p-4">
@@ -120,8 +125,15 @@ const JsonPanel = () => {
               </div>
               <p className="text-sm leading-relaxed text-gray-600">{step.text}</p>
             </div>
+            {index === 3 && <LoadCsvStatements />}
+            {index === 4 && <LoadJsonQsorts />}
           </div>
         ))}
+        <div className="flex flex-row flex-wrap gap-4">
+          <ProjectNameInput numbering="6" />
+          <RadioExampleRadioGroup numbering="7" />
+          <QsortDesignInputElement numbering="8" />
+        </div>
       </div>
 
       {/* Modal */}

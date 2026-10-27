@@ -1,35 +1,35 @@
-import { useState } from 'react';
+import { useId } from 'react';
 import { useTranslation } from 'react-i18next';
 import inputState from '../../GlobalState/inputState';
 import coreState from '../../GlobalState/coreState';
 
-const RadioExampleRadioGroup = (props) => {
+const RadioExampleRadioGroup = ({ numbering }) => {
   const { t } = useTranslation();
+
+  // Unique per component instance
+  const uid = useId();
+  const groupName = `qsort-type-${uid}`;
+  const forcedId = `forced-${uid}`;
+  const unforcedId = `unforced-${uid}`;
+
   const unforcedRadioButtonState = inputState((state) => state.unforcedRadioButtonState);
   const updateShowForcedInput = inputState((state) => state.updateShowForcedInput);
   const updateIsForcedQsortPattern = inputState((state) => state.updateIsForcedQsortPattern);
   const updateUnforcedRadioButtonState = inputState(
     (state) => state.updateUnforcedRadioButtonState
   );
-  const oldQsortPattern = coreState((state) => state.oldQsortPattern);
   const dataOrigin = inputState((state) => state.dataOrigin);
+  const oldQsortPattern = coreState((state) => state.oldQsortPattern);
   const updateQsortPattern = coreState((state) => state.updateQSortPattern);
-
-  const [localStore, setLocalStore] = useState({
-    value: unforcedRadioButtonState,
-  });
 
   const handleChange = (e) => {
     const valueIn = e.target.value;
-    setLocalStore({ value: valueIn });
 
-    // if "UNFORCED" is selected
     if (valueIn === 'unforced') {
       updateShowForcedInput(true);
       updateIsForcedQsortPattern(false);
       updateUnforcedRadioButtonState('unforced');
     } else {
-      // getState - if FORCED is selected
       updateShowForcedInput(false);
       updateIsForcedQsortPattern(true);
       updateUnforcedRadioButtonState('forced');
@@ -41,31 +41,31 @@ const RadioExampleRadioGroup = (props) => {
 
   return (
     <div className="flex items-center h-10 col-span-2 pl-2 text-black font-sans text-xl">
-      <span className="pr-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full  bg-primary-button text-sm font-bold text-black">
-        {props.numbering}
+      <span className="pr-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary-button text-sm font-bold text-black">
+        {numbering}
       </span>
       <div className="pr-2.5 pl-2.5">{t('Q sorts are')}</div>
-      <div className="flex items-center pt-1 gap-2.5">
-        <label className="flex items-center gap-0.5 cursor-pointer">
+      <div className="flex items-center pt-1 gap-2.5" role="radiogroup">
+        <label htmlFor={forcedId} className="flex items-center gap-0.5 cursor-pointer">
           <input
             type="radio"
-            name="radioGroup"
-            id="forcedButton"
+            id={forcedId}
+            name={groupName}
             value="forced"
-            checked={localStore.value === 'forced'}
-            onChange={(e) => handleChange(e)}
+            checked={unforcedRadioButtonState === 'forced'}
+            onChange={handleChange}
             className="cursor-pointer"
           />
           <span>{t('Forced')}</span>
         </label>
-        <label className="flex items-center gap-0.5 cursor-pointer">
+        <label htmlFor={unforcedId} className="flex items-center gap-0.5 cursor-pointer">
           <input
             type="radio"
-            id="unforcedButton"
-            name="radioGroup"
+            id={unforcedId}
+            name={groupName}
             value="unforced"
-            checked={localStore.value === 'unforced'}
-            onChange={(e) => handleChange(e)}
+            checked={unforcedRadioButtonState === 'unforced'}
+            onChange={handleChange}
             className="cursor-pointer"
           />
           <span>{t('Unforced')}</span>

@@ -3,7 +3,7 @@ import coreState from '../../GlobalState/coreState';
 import inputState from '../../GlobalState/inputState';
 import { useTranslation } from 'react-i18next';
 
-const ProjectNameInput = () => {
+const ProjectNameInput = (props) => {
   const { t } = useTranslation();
   const [projectName, setProjectName] = useState('');
   const updateHasAddedProjectName = inputState((state) => state.updateHasAddedProjectName);
@@ -26,7 +26,7 @@ const ProjectNameInput = () => {
         className={`flex flex-row row-start-2 items-center text-black text-[20px] font-bold pl-[5px] mb-[10px] gap-3 `}
       >
         <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full  bg-primary-button text-sm font-bold text-black">
-          3
+          {props.numbering}
         </span>
         <label htmlFor="projectNameInput" className="text-[20px] text-left text-black font-bold">
           Project Name:
