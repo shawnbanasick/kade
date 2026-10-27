@@ -8,7 +8,7 @@ const DemoDataPanel = () => {
   const { t } = useTranslation();
 
   return (
-    <div id="demoDataWindow">
+    <div id="demoDataWindow" className="flex flex-col h-full overflow-y-auto pb-20">
       <div className="text-4xl mt-2 mb-10">{t('Demo Data Input')}</div>
 
       <div className="font-['Helvetica'] text-black text-xl font-bold h-7.5 mb-5">

@@ -21,14 +21,16 @@ const ProjectNameInput = () => {
   };
 
   return (
-    <div className="flex flex-col">
-      <label htmlFor="projectNameInput" className="ml-9 text-[20px] text-left text-black font-bold">
-        Project Name:
-      </label>
+    <div className="flex flex-row">
       <div
         className={`flex flex-row row-start-2 items-center text-black text-[20px] font-bold pl-[5px] mb-[10px] gap-3 `}
       >
-        3.
+        <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full  bg-primary-button text-sm font-bold text-black">
+          3
+        </span>
+        <label htmlFor="projectNameInput" className="text-[20px] text-left text-black font-bold">
+          Project Name:
+        </label>
         <input
           className={`text-[20px] h-[30px] w-[355px] p-2 m-[3px] text-black bg-white border border-black rounded-sm`}
           onChange={(e) => handleChange(e)}

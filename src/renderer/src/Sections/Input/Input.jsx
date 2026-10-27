@@ -40,7 +40,7 @@ function Input() {
       content: <Excel3Panel />,
     },
     {
-      title: 'KADE ZIP',
+      title: 'KADE Zip',
       content: <KadeZipPanel />,
     },
     {
@@ -81,7 +81,10 @@ function Input() {
         text-[clamp(1rem,1.5vw,1.1rem)] 
       `}
       >
-        <div className="tabs tabs-box flex bg-grey-button h-full rounded-none">
+        <div
+          id="innerContainer"
+          className="tabs tabs-box flex !pt-2 !items-center bg-grey-button h-full rounded-none gap-1"
+        >
           <input
             type="radio"
             name="my_tabs_6"
@@ -90,7 +93,7 @@ function Input() {
             onClick={() => handleTabClick('tab1')}
           />
 
-          <div className="tab-content bg-base-100 border-base-300 p-6">{tabs[0].content}</div>
+          <div className="tab-content bg-base-100 border-base-300 pt-6 pl-6">{tabs[0].content}</div>
 
           <input
             type="radio"
@@ -100,7 +103,7 @@ function Input() {
             onClick={() => handleTabClick('tab2')}
           />
 
-          <div className="tab-content bg-base-100 border-base-300 p-6">{tabs[1].content}</div>
+          <div className="tab-content bg-base-100 border-base-300 pt-6 pl-6">{tabs[1].content}</div>
 
           <input
             type="radio"
@@ -110,7 +113,7 @@ function Input() {
             onClick={() => handleTabClick('tab3')}
           />
 
-          <div className="tab-content bg-base-100 border-base-300 p-6">{tabs[2].content}</div>
+          <div className="tab-content bg-base-100 border-base-300 pt-6 pl-6">{tabs[2].content}</div>
 
           <input
             type="radio"
@@ -120,7 +123,7 @@ function Input() {
             onClick={() => handleTabClick('tab4')}
           />
 
-          <div className="tab-content bg-base-100 border-base-300 p-6">{tabs[3].content}</div>
+          <div className="tab-content bg-base-100 border-base-300 pt-6 pl-6">{tabs[3].content}</div>
 
           <input
             type="radio"
@@ -130,7 +133,7 @@ function Input() {
             onClick={() => handleTabClick('tab5')}
           />
 
-          <div className="tab-content bg-base-100 border-base-300 p-6">{tabs[4].content}</div>
+          <div className="tab-content bg-base-100 border-base-300 pt-6 pl-6">{tabs[4].content}</div>
 
           <input
             type="radio"
@@ -140,7 +143,7 @@ function Input() {
             onClick={() => handleTabClick('tab6')}
           />
 
-          <div className="tab-content bg-base-100 border-base-300 p-6">{tabs[5].content}</div>
+          <div className="tab-content bg-base-100 border-base-300 pt-6 pl-6">{tabs[5].content}</div>
 
           <input
             type="radio"
@@ -150,7 +153,7 @@ function Input() {
             onClick={() => handleTabClick('tab7')}
           />
 
-          <div className="tab-content bg-base-100 border-base-300 p-6">{tabs[6].content}</div>
+          <div className="tab-content bg-base-100 border-base-300 pt-6 pl-6">{tabs[6].content}</div>
         </div>
       </div>
     </React.Fragment>

@@ -6,7 +6,7 @@ const PQMethodPanel = () => {
   const { t } = useTranslation();
 
   return (
-    <div id="pqmethodDataWindow">
+    <div id="pqmethodDataWindow" className="flex flex-col h-full overflow-y-auto pb-10">
       <div className="text-4xl mt-2 mb-10">{t('PQ Method File Input')}</div>
 
       <div

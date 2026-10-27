@@ -40,10 +40,12 @@ const RadioExampleRadioGroup = (props) => {
   };
 
   return (
-    <div className="flex items-baseline h-10 col-span-2 pl-2 text-black font-sans text-xl">
-      <div className="pr-3.5 font-bold">4</div>
-      <div className="pr-2.5">{t('Q sorts are')}</div>
-      <div className="flex items-center gap-2.5">
+    <div className="flex items-center h-10 col-span-2 pl-2 text-black font-sans text-xl">
+      <span className="pr-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full  bg-primary-button text-sm font-bold text-black">
+        {props.numbering}
+      </span>
+      <div className="pr-2.5 pl-2.5">{t('Q sorts are')}</div>
+      <div className="flex items-center pt-1 gap-2.5">
         <label className="flex items-center gap-0.5 cursor-pointer">
           <input
             type="radio"

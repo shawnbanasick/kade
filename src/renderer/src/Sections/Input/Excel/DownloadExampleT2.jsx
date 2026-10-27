@@ -33,7 +33,7 @@ const DownloadExampleT2 = () => {
 
   return (
     <NewLoadButton
-      className={`w-87.5 h-18.75 ml-10 rounded-lg border-2 border-black bg-[#F0F0F0] hover:bg-[#E0E0E0] active:bg-[#D0D0D0]`}
+      className={`w-87.5 h-18.75 rounded-lg bg-[#F0F0F0] hover:bg-[#E0E0E0] active:bg-[#D0D0D0]`}
       onClick={handleClick}
     >
       <div
@@ -48,7 +48,7 @@ const DownloadExampleT2 = () => {
         >
           <path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z" />
         </svg>
-        <div className="font-sans text-lg font-bold">{t('Download Type 2 Template')}</div>
+        <div className="font-sans text-sm font-bold">{t('Download Type 2 Template')}</div>
       </div>
     </NewLoadButton>
   );

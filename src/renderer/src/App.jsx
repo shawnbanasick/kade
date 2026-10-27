@@ -208,7 +208,7 @@ const App = () => {
               active={viewInput}
               onClick={() => handleClick('viewInput')}
             >
-              <p className="title">{`1. ${t('Input')}`}</p>
+              <p className="title">{`1. ${t('Import')}`}</p>
             </FileButton>
             <FileButton
               className={`${isDataButtonGreenCombined}`}
