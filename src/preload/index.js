@@ -60,9 +60,15 @@ if (process.contextIsolated) {
       txtData: (content) => {
         ipcRenderer.on('txtData', content);
       },
-      jsonData: (content) => {
-        ipcRenderer.on('jsonData', content);
+      jsonData: (callback) => {
+        const listener = (_event, content) => callback(content);
+        ipcRenderer.on('jsonData', listener);
+        return () => ipcRenderer.removeListener('jsonData', listener);
       },
+      // jsonData: (content) => {
+      //   ipcRenderer.on('jsonData', content);
+      // },
+
       openDialog: (method, params) => ipcRenderer.invoke(method, params),
       getPath: () => ipcRenderer.invoke('getPath'),
       writeFile: (filepath, blob) => ipcRenderer.invoke('writeFile', filepath, blob),

@@ -5,11 +5,11 @@ async function openJsonFile() {
   const options = {
     //   // const files = await dialog.showOpenDialog(mainWindow, {
     properties: ['openFile'],
-    title: 'Open JSON File',
+    title: 'Open Quince Database File',
     filters: [
       {
-        name: 'JSON',
-        extensions: ['json', 'JSON'],
+        name: 'CSV',
+        extensions: ['csv', 'csv'],
       },
     ],
   };
@@ -20,7 +20,7 @@ async function openJsonFile() {
       if (!result.canceled) {
         let paths = result.filePaths;
         if (paths && paths.length > 0) {
-          const content = fs.readFileSync(paths[0], 'utf-8').toString();
+          const content = fs.readFileSync(paths[0], 'utf-8').replace(/^\uFEFF/, '');
           window.webContents.send('jsonData', content);
         }
       }

@@ -1,14 +1,17 @@
+import React, { useEffect } from 'react';
 import { ToastContainer, toast, Slide } from 'react-toastify';
 import convertJSONToData from './convertJSONToData';
 import revertLoadButtonsColors from '../DemoData/revertLoadButtonsColors';
 import throwDataAlreadyLoadedInputErrorModal from '../ErrorChecking/throwDataAlreadyLoadedInputErrorModal';
 import throwNoSortsInputErrorModal from '../ErrorChecking/throwNoSortsInputError';
+import Papa from 'papaparse';
 // import LoadButton from '../DemoData/LoadButton';
 import { useTranslation } from 'react-i18next';
 import inputState from '../../GlobalState/inputState';
 import coreState from '../../GlobalState/coreState';
 import appState from '../../GlobalState/appState';
 import NewLoadButton from '../../../Utils/NewLoadButton';
+import parseQsortRecord from './parseQsortRecord';
 
 function notifyWarning() {
   toast.warn('Select Participant Id to complete JSON import', {
@@ -16,6 +19,7 @@ function notifyWarning() {
   });
 }
 
+// main function
 const LoadJsonQsortsFile = () => {
   const { t } = useTranslation();
   const isLoadJsonQsortsButtonGreen = inputState((state) => state.isLoadJsonQsortsButtonGreen);
@@ -36,51 +40,30 @@ const LoadJsonQsortsFile = () => {
   const updateShowCsvErrorModal = inputState((state) => state.updateShowCsvErrorModal);
   const areStatementsLoaded = inputState((state) => state.areStatementsLoaded);
 
-  let isNoError = true;
+  useEffect(() => {
+    const unsubscribe = window.bridge.jsonData((content) => {
+      Papa.parse(content, {
+        header: true,
+        delimiter: Papa.RECORD_SEP,
+        skipEmptyLines: true,
+        complete: (results) => {
+          const cleanedData = results.data.map((row) => {
+            const cleanedRow = parseQsortRecord(row);
+            return cleanedRow;
+          });
+          console.log('results', JSON.stringify(cleanedData[0]));
+        },
+      });
+    });
+    return unsubscribe; // removes the listener on unmount
+  }, []);
 
   const handleClick = async () => {
     if (isDataAlreadyLoaded) {
       throwDataAlreadyLoadedInputErrorModal();
     } else {
       try {
-        const processJson = (results) => {
-          const resultsArray = [];
-          const resultsKeys = Object.keys(results);
-
-          for (let k = 0; k < resultsKeys.length; k += 1) {
-            resultsArray.push(results[resultsKeys[k]]);
-          }
-
-          const testValue = Object.prototype.hasOwnProperty.call(resultsArray[0], 'sort');
-
-          if (!testValue) {
-            throwNoSortsInputErrorModal(`Can't find the key named "sort" in JSON object`);
-            isNoError = false;
-          }
-
-          if (isNoError === true) {
-            const csvData = convertJSONToData(results);
-            const columnHeaders = csvData[0][0];
-
-            revertLoadButtonsColors('json');
-            updateJsonParticipantId(columnHeaders);
-            updateShowJsonParticipantIdDropdown(true);
-            updateCsvData(csvData);
-            updateJsonObj(results);
-            updateDataOrigin('json');
-            updateAreQsortsLoaded(true);
-            updateIsInputButtonGreen(areStatementsLoaded);
-            updateIsDataButtonGreen(areStatementsLoaded);
-            updateDisabledSheetsButton(true);
-            notifyWarning();
-            updateIsDataAlreadyLoaded(true);
-          }
-        };
-
         await window.electronAPI.openJsonFile();
-        window.bridge.jsonData((event, jsonData) => {
-          processJson(JSON.parse(jsonData));
-        });
       } catch (error) {
         updateCsvErrorMessage1(error.message);
         updateShowCsvErrorModal(true);

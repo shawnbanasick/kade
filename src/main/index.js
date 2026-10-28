@@ -263,6 +263,9 @@ if (!gotTheLock) {
           case 'csv':
             await createCsvFile(dataContent);
             break;
+          case 'json':
+            await createJsonFile(dataContent);
+            break;
           case 'ConExcel':
             await createConExcelFile(dataContent);
             break;
