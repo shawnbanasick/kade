@@ -12,6 +12,7 @@ if (process.contextIsolated) {
       openZipFile: () => ipcRenderer.send('dialog:openZipFile'),
       openCsvFile: () => ipcRenderer.send('dialog:openCsvFile'),
       openTxtFile: () => ipcRenderer.send('dialog:openTxtFile'),
+      openXmlFile: () => ipcRenderer.send('dialog:openXmlFile'),
       openQuinceSortFile: () => ipcRenderer.send('dialog:openQuinceSortFile'),
       saveImgFile: () => ipcRenderer.send('showSaveDialogSync'),
       saveSVG: (imgContent, filePath) => ipcRenderer.invoke('save-svg', imgContent, filePath),
@@ -64,6 +65,11 @@ if (process.contextIsolated) {
         const listener = (_event, content) => callback(content);
         ipcRenderer.on('quinceData', listener);
         return () => ipcRenderer.removeListener('quinceData', listener);
+      },
+      xmlData: (callback) => {
+        const listener = (_event, content) => callback(content);
+        ipcRenderer.on('xmlData', listener);
+        return () => ipcRenderer.removeListener('xmlData', listener);
       },
 
       openDialog: (method, params) => ipcRenderer.invoke(method, params),

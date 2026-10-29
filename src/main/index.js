@@ -12,6 +12,7 @@ import openExcelFile from './openFileLogic/openExcelFile';
 import openZipFile from './openFileLogic/openZipFile';
 import openCsvFile from './openFileLogic/openCsvFile';
 import openTxtFile from './openFileLogic/openTxtFile';
+import openXmlFile from './openFileLogic/openXmlFile';
 import openQuinceSortFile from './openFileLogic/openQuinceSortFile';
 import saveSvgFile from './openFileLogic/saveSvgFile';
 import exportDocx from './docxLogic/exportDocx';
@@ -200,6 +201,7 @@ if (!gotTheLock) {
     ipcMain.on('dialog:openExcelFile', openExcelFile);
     ipcMain.on('dialog:openZipFile', openZipFile);
     ipcMain.on('dialog:openTxtFile', openTxtFile);
+    ipcMain.on('dialog:openXmlFile', openXmlFile);
     ipcMain.on('dialog:openQuinceSortFile', openQuinceSortFile);
     ipcMain.on('dialog:openCsvFile', openCsvFile);
 

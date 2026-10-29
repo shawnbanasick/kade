@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 // import revertLoadButtonsColors from '../DemoData/revertLoadButtonsColors';
 import throwNoStatementsInputErrorModal from '../ErrorChecking/throwNoStatementsInputErrorModal';
 import NewLoadButton from '../../../Utils/NewLoadButton';
@@ -23,11 +24,20 @@ const LoadQuinceStatements = () => {
   const updateIsInputButtonGreen = appState((state) => state.updateIsInputButtonGreen);
   const updateIsDataButtonGreen = appState((state) => state.updateIsDataButtonGreen);
 
+  function parseStatements(xmlString) {
+    const doc = new DOMParser().parseFromString(xmlString, 'application/xml');
+
+    if (doc.querySelector('parsererror')) {
+      throw new Error('Invalid XML');
+    }
+
+    return Array.from(doc.getElementsByTagName('statement'), (el) => el.textContent.trim());
+  }
+
   const processBlob = (data) => {
-    // split into lines
-    const lines = data.split(/[\r\n]+/g);
-    // remove empty strings
-    const lines2 = lines.filter((e) => e === 0 || e);
+    // console.log('data', parseStatements(data));
+
+    const lines2 = parseStatements(data);
 
     if (lines2.length > 1) {
       updateStatements(lines2);
@@ -41,29 +51,27 @@ const LoadQuinceStatements = () => {
         updateIsInputButtonGreen(areQsortsLoaded);
         updateIsDataButtonGreen(areQsortsLoaded);
       }, 50);
-
-      /*
-        coreState.statements = lines2;
-        coreState.numStatements = lines2.length;
-        inputState.statementsLoaded = true;
-        inputState.notifyDataUploadSuccess = true;
-        inputState.areStatementsLoaded = true;
-        inputState.statementsLoaded = true;
-        inputState.isLoadJsonTextButtonGreen = true;
-        appState.isInputButtonGreen = areQsortsLoaded;
-        appState.isDataButtonGreen = areQsortsLoaded;
-        */
     } else {
       throwNoStatementsInputErrorModal(`Can't find any statements in the file!`);
     }
   };
 
+  useEffect(() => {
+    const unsubscribe = window.bridge.xmlData((content) => {
+      processBlob(content);
+    });
+
+    return () => {
+      unsubscribe();
+    };
+  }, []);
+
   const handleClick = async () => {
     // check to see if data loaded and correlations started - true ==> throw error
 
-    await window.electronAPI.openTxtFile();
-    window.bridge.txtData((event, txtData) => {
-      processBlob(txtData);
+    await window.electronAPI.openXmlFile();
+    window.bridge.xmlData((event, xmlData) => {
+      processBlob(xmlData);
     });
   };
 

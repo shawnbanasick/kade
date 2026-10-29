@@ -1,4 +1,4 @@
-// import revertLoadButtonsColors from '../DemoData/revertLoadButtonsColors';
+import { useEffect } from 'react';
 import throwNoStatementsInputErrorModal from '../ErrorChecking/throwNoStatementsInputErrorModal';
 import NewLoadButton from '../../../Utils/NewLoadButton';
 import { useTranslation } from 'react-i18next';
@@ -23,47 +23,60 @@ const LoadConfigXml = () => {
   const updateIsInputButtonGreen = appState((state) => state.updateIsInputButtonGreen);
   const updateIsDataButtonGreen = appState((state) => state.updateIsDataButtonGreen);
 
+  // parseSurvey.js
+  const unmarkup = (s = '') => s.replace(/\{\{\{(\/?\w+\/?)\}\}\}/g, '<$1>'); // {{{b}}} -> <b>, {{{br/}}} -> <br/>
+
+  const parseSurvey = (xmlString) => {
+    // The XML declaration must be the very first characters, so trim leading whitespace
+    const doc = new DOMParser().parseFromString(xmlString.trim(), 'application/xml');
+
+    const err = doc.querySelector('parsererror');
+    if (err) throw new Error('Invalid XML: ' + err.textContent);
+
+    const items = doc.querySelectorAll('item[id="survey"]');
+
+    return Array.from(items).map((item, index) => {
+      const input = item.querySelector('input');
+      const type = input.getAttribute('type'); // text | select | radio | information
+      const raw = input.textContent.trim();
+
+      return {
+        key: `q${index}`, // your own stable id
+        type,
+        label: item.querySelector('label')?.textContent.trim() ?? '',
+        note: unmarkup(item.querySelector('note')?.textContent.trim() ?? ''),
+        required: input.getAttribute('required') === 'true',
+        options: raw
+          ? raw
+              .split(';;;')
+              .map((o) => o.trim())
+              .filter(Boolean)
+          : [],
+      };
+    });
+  };
+
   const processBlob = (data) => {
     // split into lines
-    const lines = data.split(/[\r\n]+/g);
-    // remove empty strings
-    const lines2 = lines.filter((e) => e === 0 || e);
-
-    if (lines2.length > 1) {
-      updateStatements(lines2);
-      updateNumStatements(lines2.length);
-      updateStatementsLoaded(true);
-      updateAreStatementsLoaded(true);
-      updateStatementsLoaded(true);
-      updateIsLoadCsvTextButtonGreen(true);
-      setTimeout(() => {
-        updateNotifyDataUploadSuccess(true);
-        updateIsInputButtonGreen(areQsortsLoaded);
-        updateIsDataButtonGreen(areQsortsLoaded);
-      }, 50);
-
-      /*
-        coreState.statements = lines2;
-        coreState.numStatements = lines2.length;
-        inputState.statementsLoaded = true;
-        inputState.notifyDataUploadSuccess = true;
-        inputState.areStatementsLoaded = true;
-        inputState.statementsLoaded = true;
-        inputState.isLoadJsonTextButtonGreen = true;
-        appState.isInputButtonGreen = areQsortsLoaded;
-        appState.isDataButtonGreen = areQsortsLoaded;
-        */
-    } else {
-      throwNoStatementsInputErrorModal(`Can't find any statements in the file!`);
-    }
+    console.log('data', parseSurvey(data));
   };
+
+  useEffect(() => {
+    const unsubscribe = window.bridge.xmlData((content) => {
+      processBlob(content);
+    });
+
+    return () => {
+      unsubscribe();
+    };
+  }, []);
 
   const handleClick = async () => {
     // check to see if data loaded and correlations started - true ==> throw error
 
-    await window.electronAPI.openTxtFile();
-    window.bridge.txtData((event, txtData) => {
-      processBlob(txtData);
+    await window.electronAPI.openXmlFile();
+    window.bridge.xmlData((event, xmlData) => {
+      processBlob(xmlData);
     });
   };
 
