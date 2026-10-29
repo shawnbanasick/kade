@@ -6,11 +6,13 @@ import quinceImage2 from '../../Sections/images/quince-input-2.png';
 import quinceImage3 from '../../Sections/images/quince-input-3.png';
 import quinceImage4 from '../../Sections/images/pqMethod-input-sta.png';
 import quinceImage5 from '../../Sections/images/Excel2.png';
-import ProjectNameInput from './CSV/ProjectNameInput';
 import RadioExampleRadioGroup from './CSV/ForcedUnforcedRadio';
 import QsortDesignInputElement from './CSV/QsortDesignInputElement';
 import LoadCsvStatements from './CSV/LoadCsvStatements';
 import LoadJsonQsorts from './JSON/LoadJsonQsorts';
+import IdRadioButtons from './JSON/IdRadioButtons';
+import QuinceForcedUnforcedRadio from './JSON/QuinceForcedUnforcedRadio';
+import ForcedInput from './JSON/ForcedInput';
 
 const JsonPanel = () => {
   const { t } = useTranslation();
@@ -50,6 +52,36 @@ const JsonPanel = () => {
       alt: 'Excel Type 2 sample - step 5',
       title: 'Step 5: Load the Q sorts data file',
       text: 'Load the CSV Baserow file you downloaded here.',
+    },
+    {
+      // image: quinceImage5,
+      alt: 'Choose ID - step 7',
+      title: 'Step 6: Set ID Value',
+      text: 'Select an ID for participants in the study.',
+    },
+    {
+      // image: quinceImage5,
+      alt: 'Forced - step 7',
+      title: 'Step 7: Are Q Sorts Forced?',
+      text: 'Indicate whether the Q sorts are forced or unforced.',
+    },
+    {
+      // image: quinceImage5,
+      alt: 'Input Sort Pattern - step 8',
+      title: 'Step 8: Q Sort Pattern',
+      text: 'Input the sort pattern for the study. This is the number of statements per column, from left to right.',
+    },
+    {
+      // image: quinceImage5,
+      alt: 'Submit Export Project Data - step 9',
+      title: 'Step 9: Submit Project Data',
+      text: 'Submit the project data and begin analysis.',
+    },
+    {
+      // image: quinceImage5,
+      alt: 'Export Project Data - step 10',
+      title: 'Step 10: Export the project data',
+      text: '(OPTIONAL) Export the other project data (comments, survey answers, etc.).',
     },
   ];
 
@@ -97,25 +129,30 @@ const JsonPanel = () => {
         {steps.map((step, index) => (
           <div
             key={index}
-            className="flex w-[282px] flex-col items-center rounded-lg border border-gray-200 bg-white shadow-sm"
+            className="flex w-[300px] min-h-[400px] flex-col items-center rounded-lg border border-gray-200 bg-white shadow-sm"
           >
             {/* Image area (click to enlarge) */}
-            <div className="bg-gray-50 p-4">
-              <button
-                type="button"
-                onClick={() => setActiveIndex(index)}
-                aria-label={`Enlarge image: ${step.title}`}
-                className="block cursor-zoom-in focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2"
-              >
-                <img
-                  className="h-[205px] w-[250px] outline outline-1 outline-gray-300"
-                  alt={step.alt}
-                  src={step.image}
-                />
-              </button>
+            <div className="bg-gray-50 p-2">
+              {index < 5 && (
+                <button
+                  type="button"
+                  onClick={() => setActiveIndex(index)}
+                  aria-label={`Enlarge image: ${step.title}`}
+                  className="block cursor-zoom-in focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2"
+                >
+                  <img
+                    className="h-[205px] w-[250px] outline outline-1 outline-gray-300"
+                    alt={step.alt}
+                    src={step.image}
+                  />
+                </button>
+              )}
+              {index === 5 && <IdRadioButtons />}
+              {index === 6 && <QuinceForcedUnforcedRadio />}
             </div>
 
             {/* Text area */}
+            {index === 7 && <ForcedInput />}
             <div className="flex flex-col gap-2 p-4">
               <div className="flex items-center gap-2">
                 <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary-button text-sm font-bold text-black">
@@ -129,11 +166,9 @@ const JsonPanel = () => {
             {index === 4 && <LoadJsonQsorts />}
           </div>
         ))}
-        <div className="flex flex-row flex-wrap gap-4">
-          <ProjectNameInput numbering="6" />
-          <RadioExampleRadioGroup numbering="7" />
-          <QsortDesignInputElement numbering="8" />
-        </div>
+        {/* <div className="flex flex-row flex-wrap gap-4"> */}
+        <QsortDesignInputElement numbering="9" />
+        {/* </div> */}
       </div>
 
       {/* Modal */}
