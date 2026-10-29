@@ -18,7 +18,7 @@ export function renderError(container, message) {
     .append('div')
     .attr(
       'class',
-      'text-red-400 bg-red-950/40 border border-red-900 rounded-md px-3.5 py-2.5 text-[13px] max-w-xs'
+      'text-black bg-yellow-200 border-1 border-red-900 rounded-md px-3.5 py-2.5 text-[13px] max-w-xs'
     )
     .text(`⚠ ${message}`);
 }

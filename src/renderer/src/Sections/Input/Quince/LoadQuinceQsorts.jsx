@@ -41,7 +41,7 @@ const LoadQuinceQsorts = () => {
   const areStatementsLoaded = inputState((state) => state.areStatementsLoaded);
 
   useEffect(() => {
-    const unsubscribe = window.bridge.jsonData((content) => {
+    const unsubscribe = window.bridge.quinceData((content) => {
       Papa.parse(content, {
         header: true,
         delimiter: Papa.RECORD_SEP,
@@ -63,7 +63,7 @@ const LoadQuinceQsorts = () => {
       throwDataAlreadyLoadedInputErrorModal();
     } else {
       try {
-        await window.electronAPI.openJsonFile();
+        await window.electronAPI.openQuinceSortFile();
       } catch (error) {
         updateCsvErrorMessage1(error.message);
         updateShowCsvErrorModal(true);

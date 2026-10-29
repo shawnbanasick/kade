@@ -8,7 +8,6 @@ import quinceImage4 from '../../Sections/images/pqMethod-input-sta.png';
 import quinceImage5 from '../../Sections/images/Excel2.png';
 // import RadioExampleRadioGroup from './CSV/ForcedUnforcedRadio';
 import QsortDesignInputElement from './CSV/QsortDesignInputElement';
-import LoadJsonQsorts from './Quince/LoadJsonQsorts';
 import LoadQuinceQsorts from './Quince/LoadQuinceQsorts';
 import IdRadioButtons from './Quince/IdRadioButtons';
 import QuinceForcedUnforcedRadio from './Quince/QuinceForcedUnforcedRadio';
@@ -112,7 +111,7 @@ const JsonPanel = () => {
   }, [activeIndex]);
 
   return (
-    <div id="jsonDataWindow" className="overflow-y-auto h-full mb-10 pb-8">
+    <div id="quinceDataWindow" className="overflow-y-auto h-full mb-10 pb-8">
       <div className="text-4xl mt-2 mb-10">{t('Quince Data Import')}</div>
       <p
         id="pqmethodDataWindowHeader"
@@ -175,7 +174,7 @@ const JsonPanel = () => {
           </div>
         ))}
         {/* <div className="flex flex-row flex-wrap gap-4"> */}
-        <QsortDesignInputElement numbering="9" />
+        {/* <QsortDesignInputElement numbering="9" /> */}
         {/* </div> */}
       </div>
 

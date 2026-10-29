@@ -21,7 +21,7 @@ async function openJsonFile() {
         let paths = result.filePaths;
         if (paths && paths.length > 0) {
           const content = fs.readFileSync(paths[0], 'utf-8').replace(/^\uFEFF/, '');
-          window.webContents.send('jsonData', content);
+          window.webContents.send('quinceData', content);
         }
       }
     })

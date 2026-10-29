@@ -12,7 +12,7 @@ if (process.contextIsolated) {
       openZipFile: () => ipcRenderer.send('dialog:openZipFile'),
       openCsvFile: () => ipcRenderer.send('dialog:openCsvFile'),
       openTxtFile: () => ipcRenderer.send('dialog:openTxtFile'),
-      openJsonFile: () => ipcRenderer.send('dialog:openJsonFile'),
+      openQuinceSortFile: () => ipcRenderer.send('dialog:openQuinceSortFile'),
       saveImgFile: () => ipcRenderer.send('showSaveDialogSync'),
       saveSVG: (imgContent, filePath) => ipcRenderer.invoke('save-svg', imgContent, filePath),
       savePNG: (imgContent, filePath) => ipcRenderer.invoke('save-png', imgContent, filePath),
@@ -60,14 +60,11 @@ if (process.contextIsolated) {
       txtData: (content) => {
         ipcRenderer.on('txtData', content);
       },
-      jsonData: (callback) => {
+      quinceData: (callback) => {
         const listener = (_event, content) => callback(content);
-        ipcRenderer.on('jsonData', listener);
-        return () => ipcRenderer.removeListener('jsonData', listener);
+        ipcRenderer.on('quinceData', listener);
+        return () => ipcRenderer.removeListener('quinceData', listener);
       },
-      // jsonData: (content) => {
-      //   ipcRenderer.on('jsonData', content);
-      // },
 
       openDialog: (method, params) => ipcRenderer.invoke(method, params),
       getPath: () => ipcRenderer.invoke('getPath'),
