@@ -6,16 +6,17 @@ import quinceImage2 from '../../Sections/images/quince-input-2.png';
 import quinceImage3 from '../../Sections/images/quince-input-3.png';
 import quinceImage4 from '../../Sections/images/pqMethod-input-sta.png';
 import quinceImage5 from '../../Sections/images/Excel2.png';
-import RadioExampleRadioGroup from './CSV/ForcedUnforcedRadio';
+// import RadioExampleRadioGroup from './CSV/ForcedUnforcedRadio';
 import QsortDesignInputElement from './CSV/QsortDesignInputElement';
-import LoadJsonQsorts from './JSON/LoadJsonQsorts';
-import IdRadioButtons from './JSON/IdRadioButtons';
-import QuinceForcedUnforcedRadio from './JSON/QuinceForcedUnforcedRadio';
-import ForcedInput from './JSON/ForcedInput';
-import SubmitQuinceButton from './JSON/SubmitQuinceButton';
-import ExportQuinceData from './JSON/ExportQuinceData';
-import LoadConfigXml from './JSON/LoadConfigXml';
-import LoadQuinceStatements from './JSON/LoadQuinceStatements';
+import LoadJsonQsorts from './Quince/LoadJsonQsorts';
+import LoadQuinceQsorts from './Quince/LoadQuinceQsorts';
+import IdRadioButtons from './Quince/IdRadioButtons';
+import QuinceForcedUnforcedRadio from './Quince/QuinceForcedUnforcedRadio';
+import ForcedInput from './Quince/ForcedInput';
+import SubmitQuinceButton from './Quince/SubmitQuinceButton';
+import ExportQuinceData from './Quince/ExportQuinceData';
+import LoadConfigXml from './Quince/LoadConfigXml';
+import LoadQuinceStatements from './Quince/LoadQuinceStatements';
 
 const JsonPanel = () => {
   const { t } = useTranslation();
@@ -169,7 +170,7 @@ const JsonPanel = () => {
               <div className="text-sm text-balanced leading-relaxed text-gray-600">{step.text}</div>
             </div>
             {index === 3 && <LoadQuinceStatements />}
-            {index === 4 && <LoadJsonQsorts />}
+            {index === 4 && <LoadQuinceQsorts />}
             {index === 9 && <LoadConfigXml />}
           </div>
         ))}

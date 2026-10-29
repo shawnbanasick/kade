@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { ToastContainer, toast, Zoom } from 'react-toastify';
 import inputState from '../GlobalState/inputState';
-import JsonPanel from './JsonPanel';
 import ExcelPanel from './ExcelPanel';
 import Excel3Panel from './KandedPanel';
 import PQMethodPanel from './PQMethodPanel';

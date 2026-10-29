@@ -1,8 +1,8 @@
-import GeneralButton from './../../../Utils/GeneralButton';
+import GeneralButton from '../../../Utils/GeneralButton';
 import { useTranslation } from 'react-i18next';
 import inputState from '../../GlobalState/inputState';
 
-const ExportQuinceData = () => {
+const SubmitQuinceButton = () => {
   const { t } = useTranslation();
   // getState
   const isActive = inputState((state) => state.isShowNetlifyInputButtonGreen);
@@ -35,12 +35,12 @@ const ExportQuinceData = () => {
         id="NetlifyButton"
         onClick={handleOnclick}
         disabled={isDisabled}
-        className={`min-w-[120px] ${isActive ? 'bg-primary-button' : 'bg-gray-300 outline outline-1 outline-gray-400'}`}
+        className={`min-w-[120px] ${isActive ? 'bg-primary-button' : 'bg-orange-button'}`}
       >
-        {t('Export Quince Data')}
+        {t('Submit Quince Data')}
       </GeneralButton>
     </div>
   );
 };
 
-export default ExportQuinceData;
+export default SubmitQuinceButton;

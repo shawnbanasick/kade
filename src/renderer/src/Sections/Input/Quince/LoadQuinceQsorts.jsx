@@ -20,7 +20,7 @@ function notifyWarning() {
 }
 
 // main function
-const LoadJsonQsortsFile = () => {
+const LoadQuinceQsorts = () => {
   const { t } = useTranslation();
   const isLoadJsonQsortsButtonGreen = inputState((state) => state.isLoadJsonQsortsButtonGreen);
   const isDataAlreadyLoaded = inputState((state) => state.isDataAlreadyLoaded);
@@ -90,4 +90,4 @@ const LoadJsonQsortsFile = () => {
   );
 };
 
-export default LoadJsonQsortsFile;
+export default LoadQuinceQsorts;
