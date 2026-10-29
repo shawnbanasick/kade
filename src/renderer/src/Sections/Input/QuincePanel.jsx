@@ -8,11 +8,14 @@ import quinceImage4 from '../../Sections/images/pqMethod-input-sta.png';
 import quinceImage5 from '../../Sections/images/Excel2.png';
 import RadioExampleRadioGroup from './CSV/ForcedUnforcedRadio';
 import QsortDesignInputElement from './CSV/QsortDesignInputElement';
-import LoadCsvStatements from './CSV/LoadCsvStatements';
 import LoadJsonQsorts from './JSON/LoadJsonQsorts';
 import IdRadioButtons from './JSON/IdRadioButtons';
 import QuinceForcedUnforcedRadio from './JSON/QuinceForcedUnforcedRadio';
 import ForcedInput from './JSON/ForcedInput';
+import SubmitQuinceButton from './JSON/SubmitQuinceButton';
+import ExportQuinceData from './JSON/ExportQuinceData';
+import LoadConfigXml from './JSON/LoadConfigXml';
+import LoadQuinceStatements from './JSON/LoadQuinceStatements';
 
 const JsonPanel = () => {
   const { t } = useTranslation();
@@ -22,48 +25,49 @@ const JsonPanel = () => {
 
   // Replace the boilerplate below with real instructions.
   // To localize later, swap each string for t('your.translation.key').
+  // todo - add translations
   const steps = [
     {
       image: quinceImage1,
       alt: 'Excel Type 2 sample - step 1',
-      title: 'Step 1: Log in to Baserow and select your database',
-      text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+      title: 'Step 1: Log in to Baserow',
+      text: '(CLICK IMAGE TO ENLARGE) Log in to Baserow and open the project you want to export data from. Click on the three dots that become visible when you hover over the database name. Then select "Export table" from the menu.',
     },
     {
       image: quinceImage2,
       alt: 'Excel Type 2 sample - step 2',
-      title: 'Step 2: Select format and prepare download',
-      text: 'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
+      title: 'Step 2: Select format',
+      text: 'Click on the "Column separator" dropdown and select "record separator". Then click on the "Export" button.',
     },
     {
       image: quinceImage3,
       alt: 'Excel Type 2 sample - step 3',
-      title: 'Step 3: Download the file',
-      text: 'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.',
+      title: 'Step 3: Download data',
+      text: 'After a few moments, the button text will change from Export to Download. Click on the Download button to download the CSV file.',
     },
     {
       image: quinceImage4,
       alt: 'Excel Type 2 sample - step 4',
-      title: 'Step 4: Load statemens text file',
-      text: 'Load your statements as a .txt file, with each statement on a separate line.',
+      title: 'Step 4: Import statements.xml data',
+      text: 'Import the same statements.xml file that you used in your Quince project.',
     },
     {
       image: quinceImage5,
       alt: 'Excel Type 2 sample - step 5',
       title: 'Step 5: Load the Q sorts data file',
-      text: 'Load the CSV Baserow file you downloaded here.',
+      text: 'Load the Baserow CSV file you downloaded in Step 3.',
     },
     {
       // image: quinceImage5,
       alt: 'Choose ID - step 7',
       title: 'Step 6: Set ID Value',
-      text: 'Select an ID for participants in the study.',
+      text: 'Select an ID for participants in the study.Not all studies will have a Participant ID  or URL usercode value, but if your study does, select the appropriate column from the dropdown.',
     },
     {
       // image: quinceImage5,
       alt: 'Forced - step 7',
       title: 'Step 7: Are Q Sorts Forced?',
-      text: 'Indicate whether the Q sorts are forced or unforced.',
+      text: 'Indicate whether the participants were forced to place statements in a specific pattern, or if they were allowed to place them freely.',
     },
     {
       // image: quinceImage5,
@@ -75,13 +79,13 @@ const JsonPanel = () => {
       // image: quinceImage5,
       alt: 'Submit Export Project Data - step 9',
       title: 'Step 9: Submit Project Data',
-      text: 'Submit the project data and begin analysis.',
+      text: 'Submit the project data to begin the analysis process.',
     },
     {
       // image: quinceImage5,
       alt: 'Export Project Data - step 10',
       title: 'Step 10: Export the project data',
-      text: '(OPTIONAL) Export the other project data (comments, survey answers, etc.).',
+      text: '(OPTIONAL) Export the other project data (comments, survey question answers, etc.).',
     },
   ];
 
@@ -113,7 +117,7 @@ const JsonPanel = () => {
         id="pqmethodDataWindowHeader"
         className="mb-6 font-['Helvetica'] text-xl leading-relaxed text-black"
       >
-        {t('Quince is free Q sorting software for desktop and mobile devices')}
+        {t('Quince is free software for  Q sorting on desktops, notebooks, and mobile phones')}
         {' - '}
         <a
           target="_blank"
@@ -149,6 +153,8 @@ const JsonPanel = () => {
               )}
               {index === 5 && <IdRadioButtons />}
               {index === 6 && <QuinceForcedUnforcedRadio />}
+              {index === 8 && <SubmitQuinceButton />}
+              {index === 9 && <ExportQuinceData />}
             </div>
 
             {/* Text area */}
@@ -160,10 +166,11 @@ const JsonPanel = () => {
                 </span>
                 <h3 className="text-sm font-semibold text-gray-900">{step.title}</h3>
               </div>
-              <p className="text-sm leading-relaxed text-gray-600">{step.text}</p>
+              <div className="text-sm text-balanced leading-relaxed text-gray-600">{step.text}</div>
             </div>
-            {index === 3 && <LoadCsvStatements />}
+            {index === 3 && <LoadQuinceStatements />}
             {index === 4 && <LoadJsonQsorts />}
+            {index === 9 && <LoadConfigXml />}
           </div>
         ))}
         {/* <div className="flex flex-row flex-wrap gap-4"> */}

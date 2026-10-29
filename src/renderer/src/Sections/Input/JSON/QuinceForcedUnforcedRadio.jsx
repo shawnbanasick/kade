@@ -10,7 +10,7 @@ const QuinceForcedUnforcedRadio = () => {
     {
       id: 'forced',
       title: 'Forced',
-      description: '(Default option) The number of statements in each column was limited.',
+      description: 'The number of statements in each column was limited.',
     },
     {
       id: 'unforced',
@@ -21,7 +21,7 @@ const QuinceForcedUnforcedRadio = () => {
 
   return (
     <div className="max-w-md mx-auto  p-4 bg-white rounded-xl shadow-sm border border-gray-100 space-y-3">
-      <div className="space-y-3">
+      <div className="space-y-7">
         {options.map((option) => (
           <label
             key={option.id}

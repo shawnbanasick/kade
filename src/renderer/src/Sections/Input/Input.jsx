@@ -9,6 +9,7 @@ import KadeZipPanel from './KadeZipPanel';
 import DemoDataPanel from './DemoDataPanel';
 import CsvPanel from './CsvPanel';
 import { useTranslation } from 'react-i18next';
+import QuincePanel from './QuincePanel';
 
 function Input() {
   const showNotification = inputState((state) => state.notifyDataUploadSuccess);
@@ -49,7 +50,7 @@ function Input() {
     },
     {
       title: 'Quince',
-      content: <JsonPanel />,
+      content: <QuincePanel />,
     },
     {
       title: t('PQMethod'),
