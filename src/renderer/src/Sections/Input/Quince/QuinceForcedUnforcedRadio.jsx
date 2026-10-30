@@ -5,16 +5,15 @@ import inputState from '../../GlobalState/inputState';
 const QuinceForcedUnforcedRadio = () => {
   const { t } = useTranslation();
 
-  const quinceForcedUnforcedState = inputState((state) => state.quinceForcedUnforcedState);
-  const updateQuinceForcedUnforcedState = inputState((state) => ({
-    updateQuinceForcedUnforcedState: state.updateQuinceForcedUnforcedState,
-  }));
+  const updateQuinceForcedUnforcedState = inputState(
+    (state) => state.updateQuinceForcedUnforcedState
+  );
   const [selected, setSelected] = useState('forced');
 
   const handleChange = (event) => {
     console.log('Selected value:', event.target.value);
     const selectedValue = event.target.value;
-
+    updateQuinceForcedUnforcedState(selectedValue);
     setSelected(selectedValue);
   };
 

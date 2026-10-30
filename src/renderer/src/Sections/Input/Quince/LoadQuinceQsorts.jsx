@@ -55,7 +55,7 @@ const LoadQuinceQsorts = () => {
           });
           processQuinceQsorts(cleanedData);
           setNumDataRecords(cleanedData.length);
-          console.log('cleanedData', JSON.stringify(cleanedData[0], null, 2));
+          //   console.log('cleanedData', JSON.stringify(cleanedData[0], null, 2));
         },
       });
     });

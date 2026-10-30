@@ -14,11 +14,13 @@ const processCsvQsorts = (data) => {
 
   // check if statements are loaded
   const areStatementsLoaded = inputState.getState().areStatementsLoaded;
+  const selectedIdMethod = inputState.getState().quinceIdMethod;
 
   const partIdArray = [];
   const urlUsercodeArray = [];
   const randomIdArray = [];
-  const lines3 = [];
+  const lines3Prep = [];
+
   data.forEach((row, index) => {
     randomIdArray.push(row.randomId);
     if (
@@ -41,13 +43,36 @@ const processCsvQsorts = (data) => {
     } else {
       urlUsercodeArray.push(row.urlUsercode);
     }
-    lines3.push(row.sort);
+    lines3Prep.push(row.sort);
   });
 
-  console.log('lines3', JSON.stringify(lines3));
+  if (selectedIdMethod === 'partId') {
+    coreState.setState({ respondentNames: partIdArray });
+    lines3Prep.forEach((sort, index) => {
+      sort.unshift(partIdArray[index]);
+    });
+  }
+
+  if (selectedIdMethod === 'randomId') {
+    coreState.setState({ respondentNames: randomIdArray });
+    lines3Prep.forEach((sort, index) => {
+      sort.unshift(randomIdArray[index]);
+    });
+  }
+
+  if (selectedIdMethod === 'urlUsercode') {
+    coreState.setState({ respondentNames: urlUsercodeArray });
+    lines3Prep.forEach((sort, index) => {
+      sort.unshift(urlUsercodeArray[index]);
+    });
+  }
+
+  console.log('lines3Prep', JSON.stringify(lines3Prep));
   console.log('partIdArray', JSON.stringify(partIdArray));
   console.log('urlUsercodeArray', JSON.stringify(urlUsercodeArray));
   console.log('randomIdArray', JSON.stringify(randomIdArray));
+
+  const lines3 = [...lines3Prep];
 
   // ERROR CHECK 1 - no sorts in file
   if (lines3.length < 2) {

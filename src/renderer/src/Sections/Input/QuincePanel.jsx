@@ -1,27 +1,45 @@
-// import inputState from '../GlobalState/inputState';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import inputState from '../GlobalState/inputState';
+
 import quinceImage1 from '../../Sections/images/quince-input-1.png';
 import quinceImage2 from '../../Sections/images/quince-input-2.png';
 import quinceImage3 from '../../Sections/images/quince-input-3.png';
 import quinceImage4 from '../../Sections/images/pqMethod-input-sta.png';
 import quinceImage5 from '../../Sections/images/Excel2.png';
-// import RadioExampleRadioGroup from './CSV/ForcedUnforcedRadio';
-import QsortDesignInputElement from './CSV/QsortDesignInputElement';
 import LoadQuinceQsorts from './Quince/LoadQuinceQsorts';
 import IdRadioButtons from './Quince/IdRadioButtons';
 import QuinceForcedUnforcedRadio from './Quince/QuinceForcedUnforcedRadio';
 import ForcedInput from './Quince/ForcedInput';
-import SubmitQuinceButton from './Quince/SubmitQuinceButton';
 import ExportQuinceData from './Quince/ExportQuinceData';
 import LoadConfigXml from './Quince/LoadConfigXml';
 import LoadQuinceStatements from './Quince/LoadQuinceStatements';
+// import SubmitQuinceButton from './Quince/SubmitQuinceButton';
+// import RadioExampleRadioGroup from './CSV/ForcedUnforcedRadio';
+// import QsortDesignInputElement from './CSV/QsortDesignInputElement';
 
 const JsonPanel = () => {
   const { t } = useTranslation();
 
+  const quinceForcedUnforcedState = inputState((state) => state.quinceForcedUnforcedState);
+  console.log('quinceForcedUnforcedState', quinceForcedUnforcedState);
+
   // Index of the step whose image is enlarged, or null when the modal is closed.
   const [activeIndex, setActiveIndex] = useState(null);
+
+  let step7Text = t('This step is not required for forced Q Sorts.');
+  let step7ImageArea = (
+    <div className="flex flex-col gap-4 items-center justify-center bg-gray-50 p-2 h-[205px] w-[250px]">
+      <div>Not Required</div>
+      <div>Skip this step</div>
+    </div>
+  );
+
+  if (quinceForcedUnforcedState === 'unforced') {
+    step7Text = t(
+      'Input the sort pattern for the study. This is the number of statements per column, from left to right.'
+    );
+  }
 
   // Replace the boilerplate below with real instructions.
   // To localize later, swap each string for t('your.translation.key').
@@ -147,19 +165,22 @@ const JsonPanel = () => {
               )}
               {index === 4 && <IdRadioButtons />}
               {index === 5 && <QuinceForcedUnforcedRadio />}
+              {index === 6 &&
+                (quinceForcedUnforcedState === 'unforced' ? <ForcedInput /> : step7ImageArea)}
               {index === 8 && <ExportQuinceData />}
             </div>
 
             {/* Text area */}
-            {index === 6 && <ForcedInput />}
             <div className="flex flex-col gap-2 p-4">
-              <div className="flex items-center gap-2">
+              <div className="flex items-center justify-start gap-2">
                 <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary-button text-sm font-bold text-black">
                   {index + 1}
                 </span>
                 <h3 className="text-sm font-semibold text-gray-900">{step.title}</h3>
               </div>
-              <div className="text-sm text-balanced leading-relaxed text-gray-600">{step.text}</div>
+              <div className="text-sm text-balanced leading-relaxed text-gray-600">
+                {index === 6 ? step7Text : step.text}
+              </div>
             </div>
             {index === 3 && <LoadQuinceStatements />}
             {index === 7 && <LoadQuinceQsorts />}

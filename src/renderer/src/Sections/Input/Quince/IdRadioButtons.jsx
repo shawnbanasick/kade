@@ -5,10 +5,9 @@ import inputState from '../../GlobalState/inputState';
 const IdRadioButtons = () => {
   const { t } = useTranslation();
 
+  const quinceIdMethod = inputState((state) => state.quinceIdMethod);
   const [selected, setSelected] = useState('randomId');
-  const updateQuinceIdMethod = inputState((state) => ({
-    updateQuinceIdMethod: state.updateQuinceIdMethod,
-  }));
+  const updateQuinceIdMethod = inputState((state) => state.updateQuinceIdMethod);
 
   const handleChange = (event) => {
     console.log('Selected value:', event.target.value);

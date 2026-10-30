@@ -1,16 +1,16 @@
-import { useState, useEffect } from 'react';
-// import S1DataSlice from '../../State/S1DataSlice';
+import { useState, useEffect, useMemo } from 'react';
+import coreState from '../../GlobalState/coreState';
+
 import { renderRectColumnChart } from './rect-column-chart.js';
 
 const ForcedInput = () => {
-  //   const { showForcedInput, setQSortPattern } = S1DataSlice();
-
   const showForcedInput = true; // Replace with actual state from S1DataSlice
 
   const [qSortPatternInput, setQSortPatternInput] = useState([]);
   const [qSortInputText, setQSortInputText] = useState('');
 
-  // create q sort array from input text
+  const numStatements = coreState((state) => state.numStatements);
+
   function repeatByCounts(values, counts) {
     if (!Array.isArray(values) || !Array.isArray(counts)) {
       return [];
@@ -44,6 +44,14 @@ const ForcedInput = () => {
     }
   }, [showForcedInput, qSortPatternInput]);
 
+  // Sum of the comma separated numbers entered so far
+  const enteredTotal = useMemo(
+    () => qSortPatternInput.reduce((sum, n) => sum + (Number.isFinite(n) ? n : 0), 0),
+    [qSortPatternInput]
+  );
+
+  const isComplete = qSortInputText.trim() !== '' && enteredTotal === Number(numStatements);
+
   const handleChange = (e) => {
     const array = e.target.value;
     setQSortInputText(array);
@@ -67,12 +75,16 @@ const ForcedInput = () => {
         </label>
         <input
           type="text"
-          onChange={(e) => handleChange(e)}
-          className="input input-bordered rounded-md w-[280px] p-2 text-sm!"
+          onChange={handleChange}
+          className={`input input-bordered rounded-md w-[280px] p-2 text-sm! outline-2 outline-offset-0 focus:outline-2 ${
+            isComplete
+              ? 'border-[#a5d6a7] outline-[#a5d6a7] focus:outline-[#a5d6a7]'
+              : 'border-[#ffa500] outline-[#ffa500] focus:outline-[#ffa500]'
+          }`}
           placeholder=""
           value={qSortInputText}
         />
-        <div id="chart" className=" min-h-[100px] mt-1 rounded-xl"></div>
+        <div id="chart" className=" min-h-[105px] mt-1 rounded-xl"></div>
       </div>
     );
   } else {
