@@ -110,6 +110,9 @@ const processCsvQsorts = (data) => {
   // Construct MAIN DATA OBJECT ARRAY
   let mainDataObjectArray = createMainDataObjectArray(lines2);
   let mainDataObject = [...mainDataObjectArray[0]];
+
+  console.log('mainDataObject', JSON.stringify(mainDataObject));
+
   let respondentNames = [...mainDataObjectArray[1]];
 
   const sortsDisplayTextArray = sortsDisplayText(mainDataObject);

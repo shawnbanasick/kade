@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 import StatementsList from './StatementsList';
 import QsortsPatternList from './QsortsPatternList';
 import ParticipantsQsortsGrid from './ParticipantQsortsGrid';
@@ -14,259 +15,187 @@ import StaFileButton from './ExportSTA';
 import coreState from '../GlobalState/coreState';
 import inputState from '../GlobalState/inputState';
 import dataDisplayState from '../GlobalState/dataDisplayState';
-import { useTranslation } from 'react-i18next';
+
+/* -------------------------------------------------------------------------- */
+/*  Panels                                                                    */
+/*  Defined at module scope so React keeps the same component type between    */
+/*  renders. That preserves DOM and scroll position when store values change. */
+/*  Each panel reads only the state it needs.                                 */
+/* -------------------------------------------------------------------------- */
+
+const InfoPanel = () => {
+  const { t } = useTranslation();
+  const projectName = coreState((state) => state.projectName);
+  const numQsorts = coreState((state) => state.numQsorts);
+  const numStatements = coreState((state) => state.numStatements);
+
+  return (
+    <div className="flex flex-col mt-9">
+      <div className="text-4xl mb-10">{t('Project Information')}</div>
+      <section className="mb-8 pl-6 space-y-2">
+        <h2 className="text-2xl font-semibold">
+          {t('Project Name')}: <span className="font-normal">{projectName}</span>
+        </h2>
+        <h2 className="text-2xl font-semibold">
+          {t('Participants')}: <span className="font-normal">{numQsorts}</span>
+        </h2>
+        <h2 className="text-2xl font-semibold">
+          {t('Number of Statements')}: <span className="font-normal">{numStatements}</span>
+        </h2>
+      </section>
+    </div>
+  );
+};
+
+const PatternPanel = () => {
+  const { t } = useTranslation();
+  const multiplierArray = coreState((state) => state.multiplierArray);
+  const texts = useMemo(() => calcPatternArray([...multiplierArray]), [multiplierArray]);
+
+  return (
+    <div className="flex flex-col mt-9">
+      <div className="text-4xl mb-10">{t('Q Sort Grid Pattern')}</div>
+      <section className="mb-8 space-y-2 pl-6">
+        <QsortsPatternList texts={texts} />
+      </section>
+    </div>
+  );
+};
+
+// Fixed header + ONE scrolling region. min-h-0 lets the flex child shrink
+// below its content height so overflow-y-auto can actually engage.
+const StatementsPanel = () => {
+  const { t } = useTranslation();
+  const statements = coreState((state) => state.statements);
+
+  return (
+    <div className="flex flex-col h-full min-h-0 p-4 pr-0 pt-0">
+      <div className="text-4xl mt-4  ml-1 shrink-0">{t('Statements')}</div>
+      <div className="flex-1 min-h-0 overflow-y-auto py-4">
+        <StatementsList statements={statements} />
+      </div>
+    </div>
+  );
+};
+
+const SortsPanel = () => {
+  const { t } = useTranslation();
+  const mainDataObject = coreState((state) => state.mainDataObject);
+  const statements = coreState((state) => state.statements);
+  const qSortPattern = coreState((state) => state.qSortPattern);
+  const multiplierArray = coreState((state) => state.multiplierArray);
+  const showQsortsSpreadsheet = dataDisplayState((state) => state.showQsortsSpreadsheet);
+  const showQsorts = dataDisplayState((state) => state.showQsorts);
+
+  // Expensive: only recompute when the underlying data changes.
+  const [sortsDisplayText, respondentNames, numUnforcedParts] = useMemo(() => {
+    const statementNumArray = statements.map((_, index) => index + 1);
+    return generateDisplaySortMaps(
+      qSortPattern,
+      mainDataObject,
+      statementNumArray,
+      multiplierArray
+    );
+  }, [qSortPattern, mainDataObject, statements, multiplierArray]);
+
+  return (
+    <div className="flex flex-col h-full min-h-0 pr-0 pt-0">
+      <div className="flex flex-row gap-2 max-w-[85vw] justify-between mb-6 items-center flex-wrap shrink-0">
+        <div className="text-4xl mt-8 mb-8 ml-1">{t('Participant Q Sorts')}</div>
+        <div className="flex flex-row gap-4 max-w-[60vw]">
+          <div className="flex flex-row items-center gap-4">
+            <div className="text-[clamp(1.5rem,1.5vw,1.8rem)]">{t('Display sorts as')}</div>
+            <DisplayDataQsortsButton />
+            <DisplayDataSortsGridButton />
+          </div>
+        </div>
+        <UnforcedSortsDisplay number={numUnforcedParts} display={numUnforcedParts === 0} />
+      </div>
+
+      <div className="flex-1 min-h-0 overflow-y-auto">
+        <section>
+          {showQsortsSpreadsheet && <ParticipantsQsortsGrid data={mainDataObject} />}
+          {showQsorts && (
+            <SortsDisplayList
+              sortsDisplayText={sortsDisplayText}
+              respondentNames={respondentNames}
+            />
+          )}
+        </section>
+      </div>
+    </div>
+  );
+};
+
+const DownloadsPanel = () => {
+  const { t } = useTranslation();
+  const showExportButtons = inputState((state) => state.showExportButtons);
+
+  return (
+    <section className="py-3 mb-12">
+      {showExportButtons ? (
+        <>
+          <div className="text-4xl mb-8 ml-1">{t('Downloads')}</div>
+          <div className="flex flex-row flex-wrap w-4/5 items-center justify-between gap-4">
+            <DownloadDatabookButton />
+            <div className="flex flex-row gap-4 mt-1">
+              <div className="text-[clamp(1.3rem,1.5vw,1.8rem)] font-bold self-center">
+                {t('Export PQMethod')}
+              </div>
+              <div className="flex flex-row gap-4 mt-1">
+                <StaFileButton />
+                <DatFileButton />
+              </div>
+            </div>
+          </div>
+        </>
+      ) : (
+        <div className="flex flex-row flex-wrap items-center text-center gap-4">
+          <div className="text-[clamp(1.3rem,1.5vw,1.8rem)] ml-12! font-bold self-center">
+            {t('Please verify Q Sorts to enable exports')}
+          </div>
+        </div>
+      )}
+    </section>
+  );
+};
+
+/* -------------------------------------------------------------------------- */
+/*  Data (tab shell)                                                          */
+/* -------------------------------------------------------------------------- */
+
+const TAB_BASE =
+  'tab basis-[9vw] text-[clamp(1rem,1.5vw,1.1rem)] hover:shadow-[inset_0_0_0_4px_#666,0_0_1px_transparent]';
+
+// Bounded height + overflow-hidden so each panel's inner scroller takes over.
+// Adjust 2.5rem to match your tab bar height.
+const CONTENT_BASE =
+  'tab-content bg-base-100 border-base-300 pl-6 pt-6 h-[calc(100%-2.5rem)] overflow-hidden';
 
 const Data = () => {
   const { t } = useTranslation();
 
-  const mainDataObject = coreState((state) => state.mainDataObject);
-  const statements = coreState((state) => state.statements);
-  const projectName = coreState((state) => state.projectName);
-  const numQsorts = coreState((state) => state.numQsorts);
-  const numStatements = coreState((state) => state.numStatements);
-  const qSortPattern = coreState((state) => state.qSortPattern);
-  const multiplierArray = coreState((state) => state.multiplierArray);
   const areQsortsLoaded = inputState((state) => state.areQsortsLoaded);
   const isQsortPatternLoaded = inputState((state) => state.isQsortPatternLoaded);
-  const showExportButtons = inputState((state) => state.showExportButtons);
-  const showQsortsSpreadsheet = dataDisplayState((state) => state.showQsortsSpreadsheet);
-  const showQsorts = dataDisplayState((state) => state.showQsorts);
+  const areQsortsVerified = inputState((state) => state.areQsortsVerified);
   const dataActiveTab = dataDisplayState((state) => state.dataActiveTab);
   const updateDataActiveTab = dataDisplayState((state) => state.updateDataActiveTab);
-  const areQsortsVerified = inputState((state) => state.areQsortsVerified);
-
-  let showUnforcedConfirmMessage = false;
-
-  let texts = calcPatternArray([...multiplierArray]);
-
-  const statementNumArray = statements.map((item, index) => {
-    return index + 1;
-  });
-
-  let sortMapsArray = generateDisplaySortMaps(
-    qSortPattern,
-    mainDataObject,
-    statementNumArray,
-    multiplierArray
-  );
-
-  let numUnforcedParts = sortMapsArray[2];
-
-  let displayForcedComfirmMessage = false;
-  if (numUnforcedParts > 0) {
-    showUnforcedConfirmMessage = true;
-    displayForcedComfirmMessage = false;
-  } else {
-    displayForcedComfirmMessage = true;
-    showUnforcedConfirmMessage = true;
-  }
-
-  const InfoPanel = () => {
-    return (
-      <div className="flex flex-col mt-9">
-        <div className="text-4xl mb-10">{t('Project Information')}</div>
-
-        <section className="mb-8 pl-6 space-y-2">
-          <h2 className="text-2xl font-semibold">
-            {t('Project Name')}: <span className="font-normal">{projectName}</span>
-          </h2>
-          <h2 className="text-2xl font-semibold">
-            {t('Participants')}: <span className="font-normal">{numQsorts}</span>
-          </h2>
-          <h2 className="text-2xl font-semibold">
-            {t('Number of Statements')}: <span className="font-normal">{numStatements}</span>
-          </h2>
-        </section>
-      </div>
-    );
-  };
-
-  const PatternPanel = () => {
-    return (
-      <div className="flex flex-col mt-9">
-        <div className="text-4xl mb-10">{t('Q Sort Grid Pattern')}</div>
-
-        <section className="mb-8 space-y-2 pl-6">
-          {/* <h2 className="text-2xl font-semibold">{t('Q Sort Pattern')}:</h2> */}
-          <QsortsPatternList texts={texts} />
-        </section>
-      </div>
-    );
-  };
-
-  const StatementsPanel = () => {
-    return (
-      <div className="flex flex-col mt-4 p-4 pr-0 pt-0">
-        <div className="text-4xl mt-4 ml-1">{t('Statements')}</div>
-        <section className="flex h-[calc(100vh-200px)]  w-full py-2 mb-12">
-          <StatementsList statements={statements} />
-        </section>
-      </div>
-    );
-  };
-
-  const SortsPanel = () => {
-    return (
-      <div className="flex flex-col pr-0 pt-0 h-[100%]">
-        <div className="flex flex-row gap-2 max-w-[85vw] justify-between mb-6 items-center flex-wrap">
-          <div className="text-4xl mt-8 mb-8 ml-1">{t('Participant Q Sorts')}</div>
-          {showUnforcedConfirmMessage && (
-            <>
-              <div className="flex flex-row gap-4 max-w-[60vw]">
-                <div className="flex flex-row items-center gap-4">
-                  <div className="text-[clamp(1.5rem,1.5vw,1.8rem)]">{t('Display sorts as')}</div>
-                  <DisplayDataQsortsButton />
-                  <DisplayDataSortsGridButton />
-                </div>
-              </div>
-              <UnforcedSortsDisplay
-                number={numUnforcedParts}
-                display={displayForcedComfirmMessage}
-              />
-            </>
-          )}
-        </div>
-        <div className="flex-1 overflow-y-auto">
-          <section className="">
-            {showQsortsSpreadsheet && <ParticipantsQsortsGrid data={mainDataObject} />}
-            {showQsorts && (
-              <SortsDisplayList
-                sortsDisplayText={sortMapsArray[0]}
-                respondentNames={sortMapsArray[1]}
-              />
-            )}
-          </section>
-        </div>
-      </div>
-    );
-  };
-
-  const DownloadsPanel = () => {
-    return (
-      <section className="py-3 mb-12">
-        {showExportButtons ? (
-          <>
-            <div className="text-4xl mb-8 ml-1">{t('Downloads')}</div>
-
-            <div className="flex flex-row flex-wrap w-4/5 items-center justify-between gap-4">
-              <DownloadDatabookButton />
-              <div className="flex flex-row gap-4 mt-1">
-                <div className="text-[clamp(1.3rem,1.5vw,1.8rem)] font-bold self-center align-center ">
-                  {t('Export PQMethod')}
-                </div>
-                <div className="flex flex-row gap-4 mt-1">
-                  <StaFileButton />
-                  <DatFileButton />
-                </div>
-              </div>
-            </div>
-          </>
-        ) : (
-          <div className="flex flex-row flex-wrap items-center text-center gap-4">
-            <div className="text-[clamp(1.3rem,1.5vw,1.8rem)] ml-12! font-bold self-center align-center ">
-              {t('Please verify Q Sorts to enable exports')}
-            </div>
-          </div>
-        )}
-      </section>
-    );
-  };
-
-  // Handler for tab clicks
-  const handleTabClick = (tabId) => {
-    updateDataActiveTab(tabId);
-  };
 
   const tabs = [
-    {
-      title: t('Info'),
-      content: <InfoPanel />,
-    },
-    {
-      title: t('Pattern'),
-      content: <PatternPanel />,
-    },
-    {
-      title: t('Statements'),
-      content: <StatementsPanel />,
-    },
-    {
-      title: t('Q Sorts'),
-      content: <SortsPanel />,
-    },
-    {
-      title: t('Downloads'),
-      content: <DownloadsPanel />,
-    },
+    { id: 'tab1', title: t('Info'), Panel: InfoPanel },
+    { id: 'tab2', title: t('Pattern'), Panel: PatternPanel },
+    { id: 'tab3', title: t('Statements'), Panel: StatementsPanel },
+    { id: 'tab4', title: t('Q Sorts'), Panel: SortsPanel, needsVerification: true },
+    { id: 'tab5', title: t('Downloads'), Panel: DownloadsPanel },
   ];
 
-  // todo - add "areStatementsLoaded" and "isQsortPatternLoaded" to the condition below, so that the user cannot access the Data section until all three are loaded
-  if (areQsortsLoaded && isQsortPatternLoaded) {
-    return (
-      <div
-        className={`
-        bg-white
-        w-[calc(100vw-135px)]
-        box-border
-        h-full
-        transition-[visibility,opacity]
-        duration-500
-        text-black
-        text-[clamp(1rem,1.5vw,1.1rem)] 
-      `}
-      >
-        <div className="tabs tabs-box flex bg-grey-button h-full rounded-none">
-          <input
-            type="radio"
-            name="my_tabs_6"
-            className={`tab basis-[9vw] text-[clamp(1rem,1.5vw,1.1rem)]  hover:shadow-[inset_0_0_0_4px_#666,0_0_1px_transparent] ${dataActiveTab === 'tab1' ? 'tab-active bg-primary-button text-black' : 'bg-grey-button'}`}
-            aria-label={tabs[0].title}
-            onClick={() => handleTabClick('tab1')}
-          />
+  const tabColor = ({ id, needsVerification }) => {
+    if (needsVerification && !areQsortsVerified) return 'bg-orange-button';
+    return dataActiveTab === id ? 'tab-active bg-primary-button text-black' : 'bg-grey-button';
+  };
 
-          <div className="tab-content bg-base-100 border-base-300 pl-6 pt-6">{tabs[0].content}</div>
-
-          <input
-            type="radio"
-            name="my_tabs_6"
-            className={`tab basis-[9vw] text-[clamp(1rem,1.5vw,1.1rem)]  hover:shadow-[inset_0_0_0_4px_#666,0_0_1px_transparent] ${dataActiveTab === 'tab2' ? 'tab-active bg-primary-button text-black' : 'bg-grey-button'}`}
-            aria-label={tabs[1].title}
-            onClick={() => handleTabClick('tab2')}
-          />
-
-          <div className="tab-content bg-base-100 border-base-300 pl-6 pt-6">{tabs[1].content}</div>
-
-          <input
-            type="radio"
-            name="my_tabs_6"
-            className={`tab basis-[9vw] text-[clamp(1rem,1.5vw,1.1rem)]  hover:shadow-[inset_0_0_0_4px_#666,0_0_1px_transparent] ${dataActiveTab === 'tab3' ? 'tab-active bg-primary-button text-black' : 'bg-grey-button'}`}
-            aria-label={tabs[2].title}
-            onClick={() => handleTabClick('tab3')}
-          />
-
-          <div className="tab-content bg-base-100 border-base-300 pl-6 pt-6">{tabs[2].content}</div>
-
-          <input
-            type="radio"
-            name="my_tabs_6"
-            className={`tab basis-[9vw] text-[clamp(1rem,1.5vw,1.1rem)] hover:shadow-[inset_0_0_0_4px_#666,0_0_1px_transparent] ${areQsortsVerified ? (dataActiveTab === 'tab4' ? 'tab-active bg-primary-button text-black' : 'bg-grey-button') : 'bg-orange-button'}`}
-            aria-label={tabs[3].title}
-            onClick={() => handleTabClick('tab4')}
-          />
-          <div className="tab-content bg-base-100 border-base-300 pt-6 pl-6">{tabs[3].content}</div>
-
-          <input
-            type="radio"
-            name="my_tabs_6"
-            className={`tab basis-[9vw] text-[clamp(1rem,1.5vw,1.1rem)]  hover:shadow-[inset_0_0_0_4px_#666,0_0_1px_transparent] ${dataActiveTab === 'tab5' ? 'tab-active bg-primary-button text-black' : 'bg-grey-button'}`}
-            aria-label={tabs[4].title}
-            onClick={() => handleTabClick('tab5')}
-          />
-          <div className="tab-content bg-base-100 border-base-300 pt-6 pl-6">{tabs[4].content}</div>
-        </div>
-      </div>
-    );
-  } else {
+  // todo - also require "areStatementsLoaded" so Data is inaccessible until all three are loaded
+  if (!(areQsortsLoaded && isQsortPatternLoaded)) {
     return (
       <div className="m-12 p-8 bg-white rounded-lg shadow-md">
         <h2 className="text-3xl font-bold mb-4 text-gray-800">{t('No data loaded')}</h2>
@@ -278,6 +207,28 @@ const Data = () => {
       </div>
     );
   }
+
+  return (
+    <div className="bg-white box-border h-full text-black text-[clamp(1rem,1.5vw,1.1rem)]">
+      <div className="tabs tabs-box flex bg-grey-button h-full rounded-none">
+        {tabs.map((tab) => (
+          <React.Fragment key={tab.id}>
+            <input
+              type="radio"
+              name="data_tabs"
+              className={`${TAB_BASE} ${tabColor(tab)}`}
+              aria-label={tab.title}
+              checked={dataActiveTab === tab.id}
+              onChange={() => updateDataActiveTab(tab.id)}
+            />
+            <div className={CONTENT_BASE}>
+              <tab.Panel />
+            </div>
+          </React.Fragment>
+        ))}
+      </div>
+    </div>
+  );
 };
 
 export default Data;
