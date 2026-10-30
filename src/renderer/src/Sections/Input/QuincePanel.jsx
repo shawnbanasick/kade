@@ -52,39 +52,33 @@ const JsonPanel = () => {
       text: 'Import the same statements.xml file that you used in your Quince project.',
     },
     {
-      image: quinceImage5,
-      alt: 'Excel Type 2 sample - step 5',
-      title: 'Step 5: Load the Q sorts data file',
-      text: 'Load the Baserow CSV file you downloaded in Step 3.',
-    },
-    {
       // image: quinceImage5,
-      alt: 'Choose ID - step 7',
-      title: 'Step 6: Set ID Value',
+      alt: 'Choose ID - step 5',
+      title: 'Step 5: Set ID Value',
       text: 'Select an ID for participants in the study.Not all studies will have a Participant ID  or URL usercode value, but if your study does, select the appropriate column from the dropdown.',
     },
     {
       // image: quinceImage5,
-      alt: 'Forced - step 7',
-      title: 'Step 7: Are Q Sorts Forced?',
+      alt: 'Forced - step 6',
+      title: 'Step 6: Are Q Sorts Forced?',
       text: 'Indicate whether the participants were forced to place statements in a specific pattern, or if they were allowed to place them freely.',
     },
     {
       // image: quinceImage5,
-      alt: 'Input Sort Pattern - step 8',
-      title: 'Step 8: Q Sort Pattern',
+      alt: 'Input Sort Pattern - step 7',
+      title: 'Step 7: Q Sort Pattern',
       text: 'Input the sort pattern for the study. This is the number of statements per column, from left to right.',
     },
     {
-      // image: quinceImage5,
-      alt: 'Submit Export Project Data - step 9',
-      title: 'Step 9: Submit Project Data',
-      text: 'Submit the project data to begin the analysis process.',
+      image: quinceImage5,
+      alt: 'Excel Type 2 sample - step 8',
+      title: 'Step 8: Import the Quince Data',
+      text: 'Load the Baserow CSV file you downloaded in Step 3.',
     },
     {
       // image: quinceImage5,
-      alt: 'Export Project Data - step 10',
-      title: 'Step 10: Export the project data',
+      alt: 'Export Project Data - step 9',
+      title: 'Step 9: Export the project data',
       text: '(OPTIONAL) Export the other project data (comments, survey question answers, etc.).',
     },
   ];
@@ -137,7 +131,7 @@ const JsonPanel = () => {
           >
             {/* Image area (click to enlarge) */}
             <div className="bg-gray-50 p-2">
-              {index < 5 && (
+              {step.image && (
                 <button
                   type="button"
                   onClick={() => setActiveIndex(index)}
@@ -151,14 +145,13 @@ const JsonPanel = () => {
                   />
                 </button>
               )}
-              {index === 5 && <IdRadioButtons />}
-              {index === 6 && <QuinceForcedUnforcedRadio />}
-              {index === 8 && <SubmitQuinceButton />}
-              {index === 9 && <ExportQuinceData />}
+              {index === 4 && <IdRadioButtons />}
+              {index === 5 && <QuinceForcedUnforcedRadio />}
+              {index === 8 && <ExportQuinceData />}
             </div>
 
             {/* Text area */}
-            {index === 7 && <ForcedInput />}
+            {index === 6 && <ForcedInput />}
             <div className="flex flex-col gap-2 p-4">
               <div className="flex items-center gap-2">
                 <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary-button text-sm font-bold text-black">
@@ -169,8 +162,8 @@ const JsonPanel = () => {
               <div className="text-sm text-balanced leading-relaxed text-gray-600">{step.text}</div>
             </div>
             {index === 3 && <LoadQuinceStatements />}
-            {index === 4 && <LoadQuinceQsorts />}
-            {index === 9 && <LoadConfigXml />}
+            {index === 7 && <LoadQuinceQsorts />}
+            {index === 8 && <LoadConfigXml />}
           </div>
         ))}
         {/* <div className="flex flex-row flex-wrap gap-4"> */}

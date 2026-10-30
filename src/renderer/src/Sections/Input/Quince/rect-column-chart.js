@@ -82,7 +82,7 @@ export function renderRectColumnChart(containerSelector, data, options = {}) {
     .filter((d) => Number.isFinite(d.count) && d.count > 0);
 
   if (visible.length === 0) {
-    renderError(container, 'No values to display.');
+    renderError(container, 'Input the number of statements.');
     return null;
   }
 

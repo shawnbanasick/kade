@@ -107,7 +107,7 @@ const Data = () => {
 
   const SortsPanel = () => {
     return (
-      <>
+      <div className="flex flex-col pr-0 pt-0 h-[100%]">
         <div className="flex flex-row gap-2 max-w-[85vw] justify-between mb-6 items-center flex-wrap">
           <div className="text-4xl mt-8 mb-8 ml-1">{t('Participant Q Sorts')}</div>
           {showUnforcedConfirmMessage && (
@@ -126,16 +126,18 @@ const Data = () => {
             </>
           )}
         </div>
-        <section className="h-[calc(100vh-200px)]">
-          {showQsortsSpreadsheet && <ParticipantsQsortsGrid data={mainDataObject} />}
-          {showQsorts && (
-            <SortsDisplayList
-              sortsDisplayText={sortMapsArray[0]}
-              respondentNames={sortMapsArray[1]}
-            />
-          )}
-        </section>
-      </>
+        <div className="flex-1 overflow-y-auto">
+          <section className="">
+            {showQsortsSpreadsheet && <ParticipantsQsortsGrid data={mainDataObject} />}
+            {showQsorts && (
+              <SortsDisplayList
+                sortsDisplayText={sortMapsArray[0]}
+                respondentNames={sortMapsArray[1]}
+              />
+            )}
+          </section>
+        </div>
+      </div>
     );
   };
 
@@ -198,6 +200,7 @@ const Data = () => {
     },
   ];
 
+  // todo - add "areStatementsLoaded" and "isQsortPatternLoaded" to the condition below, so that the user cannot access the Data section until all three are loaded
   if (areQsortsLoaded && isQsortPatternLoaded) {
     return (
       <div
@@ -206,7 +209,6 @@ const Data = () => {
         w-[calc(100vw-135px)]
         box-border
         h-full
-        overflow-y-auto
         transition-[visibility,opacity]
         duration-500
         text-black
@@ -222,7 +224,7 @@ const Data = () => {
             onClick={() => handleTabClick('tab1')}
           />
 
-          <div className="tab-content bg-base-100 border-base-300 p-6 pt-0">{tabs[0].content}</div>
+          <div className="tab-content bg-base-100 border-base-300 pl-6 pt-6">{tabs[0].content}</div>
 
           <input
             type="radio"
@@ -232,7 +234,7 @@ const Data = () => {
             onClick={() => handleTabClick('tab2')}
           />
 
-          <div className="tab-content bg-base-100 border-base-300 p-6 pt-0">{tabs[1].content}</div>
+          <div className="tab-content bg-base-100 border-base-300 pl-6 pt-6">{tabs[1].content}</div>
 
           <input
             type="radio"
@@ -242,16 +244,16 @@ const Data = () => {
             onClick={() => handleTabClick('tab3')}
           />
 
-          <div className="tab-content bg-base-100 border-base-300 p-1 ">{tabs[2].content}</div>
+          <div className="tab-content bg-base-100 border-base-300 pl-6 pt-6">{tabs[2].content}</div>
 
           <input
             type="radio"
             name="my_tabs_6"
-            className={`tab basis-[9vw] text-[clamp(1rem,1.5vw,1.1rem)]  hover:shadow-[inset_0_0_0_4px_#666,0_0_1px_transparent] ${areQsortsVerified ? (dataActiveTab === 'tab4' ? 'tab-active bg-primary-button text-black' : 'bg-grey-button') : 'bg-orange-button'}`}
+            className={`tab basis-[9vw] text-[clamp(1rem,1.5vw,1.1rem)] hover:shadow-[inset_0_0_0_4px_#666,0_0_1px_transparent] ${areQsortsVerified ? (dataActiveTab === 'tab4' ? 'tab-active bg-primary-button text-black' : 'bg-grey-button') : 'bg-orange-button'}`}
             aria-label={tabs[3].title}
             onClick={() => handleTabClick('tab4')}
           />
-          <div className="tab-content bg-base-100 border-base-300 p-1 pl-6">{tabs[3].content}</div>
+          <div className="tab-content bg-base-100 border-base-300 pt-6 pl-6">{tabs[3].content}</div>
 
           <input
             type="radio"
@@ -260,7 +262,7 @@ const Data = () => {
             aria-label={tabs[4].title}
             onClick={() => handleTabClick('tab5')}
           />
-          <div className="tab-content bg-base-100 border-base-300 p-6">{tabs[4].content}</div>
+          <div className="tab-content bg-base-100 border-base-300 pt-6 pl-6">{tabs[4].content}</div>
         </div>
       </div>
     );

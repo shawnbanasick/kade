@@ -13,7 +13,7 @@ const UnforcedSortsDisplay = (props) => {
     );
   } else {
     return (
-      <div className="flex flex-row font-bold ">
+      <div className="flex flex-row items-center font-bold ">
         <div className="mr-[10px] mt-2 text-[clamp(1.3rem,1.5vw,1.8rem)]">
           {t('Confirm Q Sorts')}:
         </div>

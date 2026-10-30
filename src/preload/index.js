@@ -67,7 +67,10 @@ if (process.contextIsolated) {
         return () => ipcRenderer.removeListener('quinceData', listener);
       },
       xmlData: (callback) => {
-        const listener = (_event, content) => callback(content);
+        const listener = (_event, content) => {
+          if (!content) return;
+          callback(content);
+        };
         ipcRenderer.on('xmlData', listener);
         return () => ipcRenderer.removeListener('xmlData', listener);
       },

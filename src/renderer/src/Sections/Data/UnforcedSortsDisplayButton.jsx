@@ -73,7 +73,7 @@ const UnforcedSortsDisplayButton = (props) => {
             {`${areQsortsVerified ? t('Sorts Verified') : t('Click after Verifying Q Sorts')}`}
           </div>
         </GeneralButton>
-        <div className="flex flex-row items-center ml-8 text-2xl">
+        <div className="flex flex-row items-center ml-8 mt-4 text-2xl">
           {t('Unforced Q sorts')}:{` ${props.number}`}
         </div>
       </div>

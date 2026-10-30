@@ -1,10 +1,22 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import inputState from '../../GlobalState/inputState';
 
 const QuinceForcedUnforcedRadio = () => {
   const { t } = useTranslation();
 
+  const quinceForcedUnforcedState = inputState((state) => state.quinceForcedUnforcedState);
+  const updateQuinceForcedUnforcedState = inputState((state) => ({
+    updateQuinceForcedUnforcedState: state.updateQuinceForcedUnforcedState,
+  }));
   const [selected, setSelected] = useState('forced');
+
+  const handleChange = (event) => {
+    console.log('Selected value:', event.target.value);
+    const selectedValue = event.target.value;
+
+    setSelected(selectedValue);
+  };
 
   const options = [
     {
@@ -41,7 +53,7 @@ const QuinceForcedUnforcedRadio = () => {
               value={option.id}
               checked={selected === option.id}
               disabled={option.disabled}
-              onChange={(e) => setSelected(e.target.value)}
+              onChange={(e) => handleChange(e)}
               className="mt-2 h-4 w-4 text-indigo-600 border-gray-300 focus:ring-blue-400 accent-blue-500 disabled:cursor-not-allowed"
             />
             <div className="ml-3 w-40">

@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Q-sort CSV Simulator</title>
+<style>
+:root{--bg:#f6f6f3;--card:#fff;--tx:#1d1d1b;--mu:#6b6b66;--bd:#dcdcd5;--ac:#2f5d50;--ac2:#e4eee9;color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#161715;--card:#202220;--tx:#ececE6;--mu:#9a9a92;--bd:#34362f;--ac:#7fc4ad;--ac2:#25332e;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#161715;--card:#202220;--tx:#ececE6;--mu:#9a9a92;--bd:#34362f;--ac:#7fc4ad;--ac2:#25332e;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font:14px/1.4 system-ui,-apple-system,"Segoe UI",sans-serif}
+header{padding:14px 18px;border-bottom:1px solid var(--bd)}
+h1{font-size:18px;margin:0}header p{margin:2px 0 0;color:var(--mu);font-size:13px}
+main{display:grid;grid-template-columns:minmax(300px,380px) 1fr;gap:14px;padding:14px 18px;max-width:1400px;margin:auto}
+@media(max-width:820px){main{grid-template-columns:1fr}}
+details{background:var(--card);border:1px solid var(--bd);border-radius:8px;margin-bottom:8px}
+summary{cursor:pointer;padding:9px 12px;font-weight:600}
+.b{padding:2px 12px 12px;display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.b .w{grid-column:1/-1}
+.b.one{grid-template-columns:1fr}
+label{display:flex;flex-direction:column;font-size:12px;color:var(--mu);gap:2px}
+input,select,textarea,button{font:inherit;color:var(--tx);background:var(--bg);border:1px solid var(--bd);border-radius:6px;padding:5px 7px;min-width:0}
+input[type=checkbox]{width:auto}
+textarea{resize:vertical;width:100%}
+button{cursor:pointer}button.p{background:var(--ac);color:var(--bg);border-color:var(--ac);font-weight:600;padding:8px 14px}
+.bar{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:8px}
+.tabs button.on{background:var(--ac2);border-color:var(--ac)}
+.st{color:var(--mu);font-size:12px}.err{color:#c0392b}
+.sc{overflow:auto;max-height:70vh;background:var(--card);border:1px solid var(--bd);border-radius:8px}
+table{border-collapse:collapse;font-size:12px;white-space:nowrap}
+th,td{border-bottom:1px solid var(--bd);padding:4px 8px;text-align:left;max-width:260px;overflow:hidden;text-overflow:ellipsis}
+th{position:sticky;top:0;background:var(--ac2)}
+pre{margin:0;padding:10px;white-space:pre-wrap;word-break:break-all;font:12px/1.5 ui-monospace,Menlo,monospace}
+.rs td{border:0;padding:2px 3px}.rs input,.rs select{width:100%}
+.sep{color:var(--ac);font-weight:700}
+</style>
+</head>
+<body>
+<header><h1>Q-sort CSV Simulator</h1><p>Generates export files with a record-separator (0x1E) delimiter, in the same layout as your Demo Database export.</p></header>
+<main>
+<section>
+<details open><summary>Records</summary><div class="b one">
+<label>Number of records<input id="n" type="number" min="1" max="100000" value="20"></label>
+<label>First ID<input id="id0" type="number" value="2926"></label>
+<label class="w">Project name<input id="proj" value="Demo Project - 2026-8-14@18:24"></label>
+<label>Start date/time<input id="start" type="datetime-local" value="2026-10-03T14:38:40"></label>
+<label>Min gap between records (minutes)<input id="gmin" type="number" min="0" value="1"></label>
+<label>Max gap between records (minutes)<input id="gmax" type="number" min="0" value="10"></label>
+<label>% mobile<input id="mob" type="number" min="0" max="100" value="10"></label>
+<label>Part ID<select id="pid"><option value="none">no part ID</option><option value="gen">generated (P0001…)</option></select></label>
+<label>% of generated part IDs set to “null”<input id="pn" type="number" min="0" max="100" value="10"></label>
+<label>URL usercode<select id="ucm"><option value="none">no usercode set</option><option value="gen">generated (U0001…)</option></select></label>
+<label>% of generated usercodes set to “null”<input id="un" type="number" min="0" max="100" value="10"></label>
+<label>Random seed<input id="seed" type="number" value="12345"></label>
+<button id="dice" type="button">🎲 New random seed</button>
+</div></details>
+
+<details open><summary>Q-sort</summary><div class="b">
+<label class="w">Distribution (records per column, left to right)<input id="dist" value="2,3,4,5,5,5,4,3,2"></label>
+<div class="w st" id="dinfo"></div>
+<label>Viewpoints (factors)<input id="F" type="number" min="1" max="10" value="3"></label>
+<label>Noise (0 = identical, 3 = random)<input id="noise" type="number" min="0" max="10" step="0.1" value="1"></label>
+<label>Pile-size spread (±)<input id="spread" type="number" min="0" max="20" value="1"></label>
+<label>Pile list format<select id="lf"><option value="c">7,5,15,</option><option value="s">s7, s5, s15</option></select></label>
+</div></details>
+
+<details><summary>Time per page (seconds, min / max)</summary><div class="b"><table class="rs w" id="tt"></table></div></details>
+
+<details><summary>Comments &amp; free text</summary><div class="b">
+<label>% with a comment<input id="cr" type="number" min="0" max="100" value="30"></label><span></span>
+<label class="w">Sample texts (one per line)<textarea id="smp" rows="5">Felt strongly about this one
+Hard to place
+Matches my own experience
+Not relevant to my situation
+Depends on context</textarea></label>
+</div></details>
+
+<details><summary>Survey items</summary><div class="b"><div class="w" style="overflow:auto"><table class="rs" id="sv"></table></div>
+<button class="w" id="addit">+ Add item</button></div></details>
+
+<details><summary>File format</summary><div class="b">
+<label>Delimiter (char code)<input id="delim" type="number" min="1" max="255" value="30"></label>
+<label>Line ending<select id="eol"><option value="crlf">CRLF</option><option value="lf">LF</option></select></label>
+<label>Total value columns<input id="cols" type="number" min="1" max="1000" value="150"></label>
+<label>UTF-8 BOM<select id="bom"><option value="1">yes</option><option value="0">no</option></select></label>
+<label class="w">File name<input id="fn" value="export_-_Demo_Database_sim.csv"></label>
+</div></details>
+</section>
+
+<section>
+<div class="bar"><button class="p" id="gen">Generate</button><button class="p" id="dl">Download CSV</button><span class="st" id="msg"></span></div>
+<div class="bar tabs"><button data-t="tab" class="on">Table</button><button data-t="raw">Raw (␞ = separator)</button><span class="st" id="sum"></span></div>
+<div class="sc" id="tab"></div>
+<div class="sc" id="raw" hidden><pre id="rawp"></pre></div>
+</section>
+</main>
+<script>
+const $=id=>document.getElementById(id);
+const PAGES=[["Consent",2,130],["Welcome",1,4],["Presort",6,140],["Refine",15,130],["Sort",1,400],["Postsort",7,30],["Survey",10,50]];
+const TY={info:"Info (no answer)",text:"Free text",single:"Single choice",multi:"Multiple choice",matrix:"Rating grid"};
+let items=[{t:"info"},{t:"text",r:40},{t:"text",r:40},{t:"single",a:5,o:1,r:60},{t:"multi",a:3,o:0,r:50},{t:"multi",a:4,o:1,r:90},{t:"matrix",a:4,b:2,r:50},{t:"matrix",a:4,b:7,r:50},{t:"matrix",a:4,b:10,r:50}];
+let out=null,timer;
+
+$("tt").innerHTML=PAGES.map((p,i)=>`<tr><td>${p[0]}</td><td><input type="number" min="0" id="t${i}a" value="${p[1]}"></td><td><input type="number" min="0" id="t${i}b" value="${p[2]}"></td></tr>`).join("");
+
+function rSurvey(){
+  $("sv").innerHTML="<tr><td></td><td>Type</td><td>#opts/rows</td><td>Max</td><td>Other</td><td>Resp %</td><td></td></tr>"+items.map((it,i)=>{
+    const has=it.t!=="info",ch=it.t==="single"||it.t==="multi",mx=it.t==="matrix";
+    return `<tr data-i="${i}"><td>${i+1}</td><td><select data-k="t">${Object.entries(TY).map(([k,v])=>`<option value="${k}"${k===it.t?" selected":""}>${v}</option>`).join("")}</select></td>
+    <td><input data-k="a" type="number" min="1" value="${it.a||""}" ${ch||mx?"":"disabled"} style="width:56px"></td>
+    <td><input data-k="b" type="number" min="1" value="${it.b||""}" ${mx?"":"disabled"} style="width:56px"></td>
+    <td><input data-k="o" type="checkbox" ${it.o?"checked":""} ${ch?"":"disabled"}></td>
+    <td><input data-k="r" type="number" min="0" max="100" value="${has?(it.r??70):""}" ${has?"":"disabled"} style="width:56px"></td>
+    <td><button data-del="${i}">✕</button></td></tr>`}).join("");
+}
+$("sv").addEventListener("change",e=>{
+  const tr=e.target.closest("tr[data-i]");if(!tr)return;const it=items[+tr.dataset.i],k=e.target.dataset.k;
+  if(!k)return;it[k]=e.target.type==="checkbox"?+e.target.checked:k==="t"?e.target.value:+e.target.value;
+  if(k==="t"){it.a=it.a||(it.t==="matrix"?4:it.t==="single"?5:3);it.b=it.b||7;it.r=it.r??70;rSurvey()}
+  sched();
+});
+$("sv").addEventListener("click",e=>{const d=e.target.dataset.del;if(d!==undefined){items.splice(+d,1);rSurvey();sched()}});
+$("addit").onclick=()=>{items.push({t:"single",a:4,o:0,r:70});rSurvey();sched()};
+
+function cfg(){
+  const g=id=>+$(id).value,dist=$("dist").value.split(/[,\s]+/).filter(Boolean).map(Number);
+  const ok=dist.length>0&&dist.every(x=>Number.isInteger(x)&&x>=0)&&dist.reduce((a,b)=>a+b,0)>0;
+  const N=ok?dist.reduce((a,b)=>a+b,0):0,k=dist.length,lo=-Math.floor(k/2);
+  $("dinfo").className="w st"+(ok?"":" err");
+  $("dinfo").textContent=ok?`${N} statements · columns ${lo} to ${lo+k-1}`:"Enter whole numbers separated by commas, e.g. 2,3,4,5,5,5,4,3,2";
+  return{ok,dist,n:Math.max(1,Math.min(100000,g("n"))),id0:g("id0"),proj:$("proj").value,start:new Date($("start").value||Date.now()),
+    gmin:g("gmin"),gmax:Math.max(g("gmin"),g("gmax")),mob:g("mob"),pid:$("pid").value,pn:g("pn"),ucm:$("ucm").value,un:g("un"),seed:g("seed"),
+    F:Math.max(1,g("F")),noise:g("noise"),spread:g("spread"),lf:$("lf").value,
+    tm:PAGES.map((_,i)=>[g("t"+i+"a"),Math.max(g("t"+i+"a"),g("t"+i+"b"))]),
+    cr:g("cr"),smp:$("smp").value.split(/\r?\n/).filter(Boolean).concat($("smp").value.trim()?[]:["ok"]),
+    delim:g("delim"),eol:$("eol").value==="crlf"?"\r\n":"\n",cols:g("cols"),bom:$("bom").value==="1"};
+}
+
+function rng(s){let a=s>>>0;return()=>{a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
+
+function gen(c){
+  const R=rng(c.seed),int=(a,b)=>a+Math.floor(R()*(b-a+1)),norm=()=>Math.sqrt(-2*Math.log(1-R()))*Math.cos(2*Math.PI*R()),
+  pick=a=>a[int(0,a.length-1)],shuf=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=int(0,i);[a[i],a[j]]=[a[j],a[i]]}return a},
+  p2=n=>String(n).padStart(2,"0"),hex=n=>Array.from({length:n},()=>int(0,15).toString(16)).join(""),
+  hms=s=>`${p2(Math.floor(s/3600))}:${p2(Math.floor(s/60)%60)}:${p2(s%60)}`,cl=(v,a,b)=>Math.max(a,Math.min(b,v));
+  const k=c.dist.length,N=c.dist.reduce((a,b)=>a+b,0),lo=-Math.floor(k/2),hi=lo+k-1,vals=[];
+  c.dist.forEach((n,i)=>{for(let j=0;j<n;j++)vals.push(lo+i)});
+  const Z=Array.from({length:c.F},()=>Array.from({length:N},norm)),ids=Array.from({length:N},(_,i)=>i+1);
+  let t=c.start.getTime();const rows=[];
+  for(let r=0;r<c.n;r++){
+    const d=new Date(t),mobile=R()*100<c.mob,lat=pick(Z).map(z=>z+c.noise*norm());
+    const ord=lat.map((_,i)=>i).sort((a,b)=>lat[a]-lat[b]),sort=Array(N);ord.forEach((s,rk)=>sort[s]=vals[rk]);
+    const nP=cl(Math.round(N/3)+int(-c.spread,c.spread),0,N),nG=cl(Math.round(N/3)+int(-c.spread,c.spread),0,N-nP),nU=N-nP-nG;
+    const rank=sort.map((v,i)=>[v+R()*.5,i]).sort((a,b)=>b[0]-a[0]).map(x=>x[1]),pile=Array(N);
+    rank.forEach((s,i)=>pile[s]=i<nP?"p":i>=N-nG?"n":"u");
+    const lst=ch=>{const l=shuf(ids.filter(i=>pile[i-1]===ch));return c.lf==="s"?l.map(i=>"s"+i).join(", "):l.length?l.join(",")+",":""};
+    const cm=v=>shuf(ids.filter(i=>sort[i-1]===v)).map(i=>`${v>0?"column"+v:"columnN"+(-v)}: (s${i}): ${R()*100<c.cr?pick(c.smp):"no response"}`);
+    const tm=c.tm.map(([a,b])=>hms(Math.round(a+(b-a)*R()**2)));
+    const f=[String(c.id0+r),`(projectName): ${c.proj}`,`(randomId): ${hex(8)}-${hex(3)}`,
+      `(partId): ${c.pid==="gen"?(R()*100<c.pn?"null":"P"+String(c.id0+r).padStart(4,"0")):"no part ID"}`,`(urlUsercode): ${c.ucm==="gen"?(R()*100<c.un?"null":"U"+String(c.id0+r).padStart(4,"0")):"no usercode set"}`,
+      `(dateTime): ${d.getFullYear()}/${d.getMonth()+1}/${d.getDate()}@${d.getHours()}:${p2(d.getMinutes())}:${p2(d.getSeconds())}`,
+      `(desktop/mobile): ${mobile?"mobile":"desktop"}`];
+    ["Consent","Welcome","Presort","Refine","Sort","Postsort","Survey"].forEach((n,i)=>f.push(`(timeOn${n}Page): ${tm[i]}`));
+    f.push(`(numPos): ${nP}`,`(numNeu): ${nU}`,`(numNeg): ${nG}`,`(pos): ${lst("p")}`,`(neu): ${lst("u")}`,`(neg): ${lst("n")}`,
+      "sort: "+sort.join("|"),"presortTrace: "+ids.map(i=>`${i}*${pile[i-1]}*${sort[i-1]}`).join("|"),...cm(hi),...cm(lo));
+    items.forEach((it,i)=>{
+      let v="no response";const on=R()*100<(it.r??70);
+      if(it.t==="info")v="info - n.a.";
+      else if(on&&it.t==="text")v=pick(c.smp);
+      else if(on&&it.t==="single"){const o=int(1,it.a);v=it.o&&o===it.a?`${o}-${pick(c.smp)}`:String(o)}
+      else if(on&&it.t==="multi"){let s=ids.slice(0,it.a).filter(()=>R()<.5);if(!s.length)s=[int(1,it.a)];
+        v=s.join(",");if(it.o&&s.includes(it.a))v+="-"+pick(c.smp)}
+      else if(on&&it.t==="matrix")v=Array.from({length:it.a},()=>R()<.15?"nr":int(1,it.b)).join(",");
+      f.push(`itemNum${i+1}: ${v}`);
+    });
+    rows.push(f);t+=(int(c.gmin,c.gmax)*60+int(0,59))*1000;
+  }
+  const cols=Math.max(c.cols,...rows.map(f=>f.length-1));
+  rows.forEach(f=>{while(f.length<cols+1)f.push("")});
+  return{head:["id",...Array.from({length:cols},(_,i)=>"r"+(i+1))],rows};
+}
+
+function csv(c,o){const d=String.fromCharCode(c.delim);return(c.bom?"\uFEFF":"")+[o.head,...o.rows].map(r=>r.join(d)).join(c.eol)+c.eol}
+
+function run(){
+  const c=cfg();if(!c.ok){$("msg").textContent="Fix the distribution first.";$("msg").className="st err";return}
+  $("msg").className="st";
+  out=gen(c);const used=out.rows[0].reduce((n,v,i)=>v?i:n,0);
+  const dev=out.rows.filter(r=>r[6].endsWith("mobile")).length;
+  $("sum").textContent=`${out.rows.length} records · ${used} filled + ${out.head.length-1-used} empty columns · ${dev} mobile`;
+  const show=out.rows.slice(0,25),ks=out.rows[0].slice(0,used+1).map((v,i)=>i?v.split(":")[0]:"id");
+  $("tab").innerHTML="<table><tr>"+ks.map(k=>`<th>${k}</th>`).join("")+"</tr>"+show.map(r=>"<tr>"+r.slice(0,used+1).map((v,i)=>`<td title="${v.replace(/"/g,"&quot;")}">${(i?v.replace(/^[^:]*:\s*/,""):v).replace(/</g,"&lt;")}</td>`).join("")+"</tr>").join("")+"</table>";
+  const d=String.fromCharCode(c.delim);
+  $("rawp").innerHTML=[out.head,...out.rows.slice(0,4)].map(r=>{const e=r.length-r.filter((_,i)=>i<=used||r[i]).length,t=r.slice(0,used+1).join("\u0001").replace(/&/g,"&amp;").replace(/</g,"&lt;").split("\u0001").join(`<span class="sep">␞</span>`);
+    return t+(r.length>used+1?`<span class="st"> ␞ … (${r.length-used-1} more fields)</span>`:"")}).join("\n\n");
+}
+function sched(){clearTimeout(timer);const n=+$("n").value;if(n<=5000)timer=setTimeout(run,250);else{$("msg").textContent="Large run: press Generate."}}
+
+document.querySelectorAll("main input,main select,main textarea").forEach(e=>{if(e.closest("#sv"))return;e.addEventListener("input",sched)});
+$("gen").onclick=run;
+$("dice").onclick=()=>{$("seed").value=Math.floor(Math.random()*1e9);run()};
+document.querySelectorAll(".tabs [data-t]").forEach(b=>b.onclick=()=>{document.querySelectorAll(".tabs [data-t]").forEach(x=>x.classList.toggle("on",x===b));$("tab").hidden=b.dataset.t!=="tab";$("raw").hidden=b.dataset.t!=="raw"});
+$("dl").onclick=async()=>{
+  run();if(!out)return;const c=cfg(),blob=new Blob([csv(c,out)],{type:"text/csv"}),name=$("fn").value||"export.csv";
+  try{
+    let dls=null;if(window.claude&&claude.use)dls=await claude.use("downloads");
+    if(dls){await dls.save({filename:name,data:blob});$("msg").textContent="Saved "+name}
+    else{const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=name;document.body.appendChild(a);a.click();a.remove();$("msg").textContent="Downloaded "+name}
+  }catch(e){$("msg").textContent=e&&e.code==="declined"?"Download cancelled.":"Download failed: "+(e&&e.message||e)}
+};
+rSurvey();run();
+</script>
+</body>
+</html>

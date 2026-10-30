@@ -74,6 +74,11 @@ const inputState = create(
 
     unforcedRadioButtonState: 'forced',
 
+    quinceIdMethod: 'randomId',
+    quinceForcedUnforcedState: 'forced',
+
+    updateQuinceForcedUnforcedState: (inputValue) => set({ quinceForcedUnforcedState: inputValue }),
+    updateQuinceIdMethod: (inputValue) => set({ quinceIdMethod: inputValue }),
     updateInputActiveTab: (inputValue) => set({ inputActiveTab: inputValue }),
     updateAreStatementsLoaded: (inputValue) => set({ areStatementsLoaded: inputValue }),
     updateAreQsortsLoaded: (inputValue) => set({ areQsortsLoaded: inputValue }),
@@ -97,8 +102,8 @@ const inputState = create(
     updateIsLoadExcelT2ButtonGreen: (inputValue) => set({ isLoadExcelT2ButtonGreen: inputValue }),
     updateIsLoadExcelT1ButtonGreen: (inputValue) => set({ isLoadExcelT1ButtonGreen: inputValue }),
     updateIsLoadJsonTextButtonGreen: (inputValue) => set({ isLoadJsonTextButtonGreen: inputValue }),
-    updateIsLoadJsonQsortsButtonGreen: (inputValue) =>
-      set({ isLoadJsonQsortsButtonGreen: inputValue }),
+    updateIsLoadQuinceQsortsButtonGreen: (inputValue) =>
+      set({ isLoadQuinceQsortsButtonGreen: inputValue }),
     updateIsLoadSheetsCsvButtonGreen: (inputValue) =>
       set({ isLoadSheetsCsvButtonGreen: inputValue }),
     updateIsLoadNetlifyCsvButtonGreen: (inputValue) =>

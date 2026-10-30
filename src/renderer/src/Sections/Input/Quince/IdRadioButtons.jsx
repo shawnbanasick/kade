@@ -1,20 +1,31 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import inputState from '../../GlobalState/inputState';
 
 const IdRadioButtons = () => {
   const { t } = useTranslation();
 
-  const [selected, setSelected] = useState('option1');
+  const [selected, setSelected] = useState('randomId');
+  const updateQuinceIdMethod = inputState((state) => ({
+    updateQuinceIdMethod: state.updateQuinceIdMethod,
+  }));
+
+  const handleChange = (event) => {
+    console.log('Selected value:', event.target.value);
+    const selectedValue = event.target.value;
+    setSelected(selectedValue);
+    updateQuinceIdMethod(selectedValue);
+  };
 
   const options = [
-    { id: 'option1', title: 'Random ID', description: 'Default option' },
+    { id: 'randomId', title: 'Random ID', description: 'Default option' },
     {
-      id: 'option2',
+      id: 'partId',
       title: 'Participant ID',
       description: 'Available',
     },
     {
-      id: 'option3',
+      id: 'urlUsercode',
       title: 'URL Usercode',
       description: 'Available',
     },
@@ -22,12 +33,12 @@ const IdRadioButtons = () => {
 
   return (
     <div className="max-w-md mx-auto p-4 bg-white rounded-xl shadow-sm border border-gray-100 space-y-3">
-      <div className="space-y-1">
+      <div className="space-y-6.5">
         {options.map((option) => (
           <label
             key={option.id}
             htmlFor={!option.disabled ? option.id : undefined}
-            className={`flex items-start p-2.5 rounded-lg border transition-colors ${
+            className={`flex items-center p-2.5 rounded-lg border transition-colors ${
               option.disabled
                 ? 'border-gray-200 bg-gray-50 opacity-60 cursor-not-allowed'
                 : selected === option.id
@@ -42,19 +53,14 @@ const IdRadioButtons = () => {
               value={option.id}
               checked={selected === option.id}
               disabled={option.disabled}
-              onChange={(e) => setSelected(e.target.value)}
-              className="mt-2 h-4 w-4 text-indigo-600 border-gray-300 focus:ring-blue-400 accent-blue-500 disabled:cursor-not-allowed"
+              onChange={(e) => handleChange(e)}
+              className="mt-0.5 h-4 w-4 text-indigo-600 border-gray-300 focus:ring-blue-400 accent-blue-500 disabled:cursor-not-allowed"
             />
             <div className="ml-3 w-40">
               <span
                 className={`block text-xs font-medium ${option.disabled ? 'text-gray-400' : 'text-gray-900'}`}
               >
                 {option.title}
-              </span>
-              <span
-                className={`block text-xs ${option.disabled ? 'text-gray-400' : 'text-gray-500'}`}
-              >
-                {option.description}
               </span>
             </div>
           </label>
