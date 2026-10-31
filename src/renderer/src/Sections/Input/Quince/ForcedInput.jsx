@@ -1,39 +1,41 @@
 import { useState, useEffect, useMemo } from 'react';
+
 import coreState from '../../GlobalState/coreState';
+import inputState from '../../GlobalState/inputState';
 
 import { renderRectColumnChart } from './rect-column-chart.js';
+
+const values = [-6, -5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13];
 
 const ForcedInput = () => {
   const showForcedInput = true; // Replace with actual state from S1DataSlice
 
   const [qSortPatternInput, setQSortPatternInput] = useState([]);
-  const [qSortInputText, setQSortInputText] = useState('');
+
+  const quinceQsortInputText = inputState((state) => state.quinceQsortInputText);
+  const setQuinceQsortInputText = inputState((state) => state.updateQuinceQsortInputText);
 
   const numStatements = coreState((state) => state.numStatements);
   const updateQSortPattern = coreState((state) => state.updateQSortPattern);
+  const isQuinceQsortImportButtonDisabled = inputState(
+    (state) => state.isQuinceQsortImportButtonDisabled
+  );
+  const updateIsQuinceQsortImportButtonDisabled = inputState(
+    (state) => state.updateIsQuinceQsortImportButtonDisabled
+  );
+  const quinceForcedUnforcedState = inputState((state) => state.quinceForcedUnforcedState);
 
   function repeatByCounts(values, counts) {
-    if (!Array.isArray(values) || !Array.isArray(counts)) {
-      return [];
-    }
+    if (!Array.isArray(values) || !Array.isArray(counts)) return [];
 
     const n = Math.min(values.length, counts.length);
-    let total = 0;
+    const result = [];
     for (let i = 0; i < n; i++) {
-      total += counts[i];
-    }
-    const result = new Array(total);
-    let k = 0;
-    for (let i = 0; i < n; i++) {
-      const v = values[i];
-      for (let j = 0; j < counts[i]; j++) {
-        result[k++] = v;
-      }
+      const c = Number.isInteger(counts[i]) && counts[i] > 0 ? counts[i] : 0;
+      for (let j = 0; j < c; j++) result.push(values[i]);
     }
     return result;
   }
-
-  const values = [-6, -5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13];
 
   useEffect(() => {
     if (showForcedInput) {
@@ -47,19 +49,32 @@ const ForcedInput = () => {
 
   // Sum of the comma separated numbers entered so far
   const enteredTotal = useMemo(
-    () => qSortPatternInput.reduce((sum, n) => sum + (Number.isFinite(n) ? n : 0), 0),
+    () =>
+      (Array.isArray(qSortPatternInput) ? qSortPatternInput : []).reduce(
+        (sum, n) => sum + (Number.isFinite(n) ? n : 0),
+        0
+      ),
     [qSortPatternInput]
   );
 
-  const isComplete = qSortInputText.trim() !== '' && enteredTotal === Number(numStatements);
+  const isComplete =
+    (quinceQsortInputText?.trim() ?? '') !== '' && enteredTotal === Number(numStatements);
+
+  useEffect(() => {
+    if (quinceForcedUnforcedState === 'forced') {
+      updateIsQuinceQsortImportButtonDisabled(false);
+    } else if (quinceForcedUnforcedState === 'unforced') {
+      updateIsQuinceQsortImportButtonDisabled(!isComplete);
+    }
+  }, [quinceForcedUnforcedState, isComplete, updateIsQuinceQsortImportButtonDisabled]);
 
   const handleChange = (e) => {
-    const array = e.target.value;
-    setQSortInputText(array);
-    setQSortPatternInput(array.split(',').map(Number));
-    const qSortPatternArray2 = array.split(',');
-    const qSortPatternArray = repeatByCounts(values, qSortPatternArray2.map(Number));
-    updateQSortPattern(qSortPatternArray);
+    const text = e.target.value;
+    setQuinceQsortInputText(text);
+
+    const counts = text.split(',').map((s) => Number(s.trim()));
+    setQSortPatternInput(counts);
+    updateQSortPattern(repeatByCounts(values, counts));
   };
 
   if (showForcedInput) {
@@ -82,7 +97,7 @@ const ForcedInput = () => {
               : 'border-[#ffa500] outline-[#ffa500] focus:outline-[#ffa500]'
           }`}
           placeholder=""
-          value={qSortInputText}
+          value={quinceQsortInputText ?? ''}
         />
         <div id="chart" className=" min-h-[105px] mt-1 rounded-xl"></div>
       </div>

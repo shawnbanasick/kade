@@ -71,11 +71,6 @@ const processCsvQsorts = (data) => {
     });
   }
 
-  console.log('lines3Prep', JSON.stringify(lines3Prep));
-  console.log('partIdArray', JSON.stringify(partIdArray));
-  console.log('urlUsercodeArray', JSON.stringify(urlUsercodeArray));
-  console.log('randomIdArray', JSON.stringify(randomIdArray));
-
   const lines3 = [...lines3Prep];
 
   // ERROR CHECK 1 - no sorts in file
@@ -94,8 +89,6 @@ const processCsvQsorts = (data) => {
 
   // remove empty arrays
   const lines2 = filterLines(lines3);
-
-  console.log('lines2', JSON.stringify(lines2));
 
   // set default dataset value
   const numberSorts = lines2.length;

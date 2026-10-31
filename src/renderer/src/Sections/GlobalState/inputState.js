@@ -76,7 +76,16 @@ const inputState = create(
 
     quinceIdMethod: 'randomId',
     quinceForcedUnforcedState: 'forced',
+    isQuinceQsortImportButtonDisabled: false,
+    numQuinceQsortsLoaded: 0,
+    quinceQsortInputText: '',
 
+    updateQuinceQsortInputText: (inputValue) => set({ quinceQsortInputText: inputValue }),
+    updateIsQuinceQsortImportButtonDisabled: (inputValue) =>
+      set({ isQuinceQsortImportButtonDisabled: inputValue }),
+    updateNumQuinceQsortsLoaded: (inputValue) => set({ numQuinceQsortsLoaded: inputValue }),
+    updateIsQuinceQsortImportButtonDisabled: (inputValue) =>
+      set({ isQuinceQsortImportButtonDisabled: inputValue }),
     updateQuinceForcedUnforcedState: (inputValue) => set({ quinceForcedUnforcedState: inputValue }),
     updateQuinceIdMethod: (inputValue) => set({ quinceIdMethod: inputValue }),
     updateInputActiveTab: (inputValue) => set({ inputActiveTab: inputValue }),
