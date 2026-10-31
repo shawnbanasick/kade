@@ -22,7 +22,6 @@ const JsonPanel = () => {
   const { t } = useTranslation();
 
   const quinceForcedUnforcedState = inputState((state) => state.quinceForcedUnforcedState);
-  console.log('quinceForcedUnforcedState', quinceForcedUnforcedState);
 
   // Index of the step whose image is enlarged, or null when the modal is closed.
   const [activeIndex, setActiveIndex] = useState(null);

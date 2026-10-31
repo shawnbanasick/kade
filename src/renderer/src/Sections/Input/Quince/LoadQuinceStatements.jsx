@@ -45,7 +45,7 @@ const LoadQuinceStatements = () => {
       setTimeout(() => {
         // read the *current* value, not a stale closure
         const qsortsLoaded = inputState.getState().areQsortsLoaded;
-        updateNotifyDataUploadSuccess(true);
+        // updateNotifyDataUploadSuccess(true);
         updateIsInputButtonGreen(qsortsLoaded);
         updateIsDataButtonGreen(qsortsLoaded);
       }, 50);

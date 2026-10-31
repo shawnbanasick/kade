@@ -62,8 +62,7 @@ const PatternPanel = () => {
   );
 };
 
-// Fixed header + ONE scrolling region. min-h-0 lets the flex child shrink
-// below its content height so overflow-y-auto can actually engage.
+// min-h-0 lets the flex child shrink below its content height so overflow-y-auto can engage.
 const StatementsPanel = () => {
   const { t } = useTranslation();
   const statements = coreState((state) => state.statements);

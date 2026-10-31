@@ -21,7 +21,7 @@ function getWidth(numQsorts, width1, width2) {
 
 // HELPER FUNCTION
 function getHeight(numQsorts) {
-  let heightVal = 40 + 25 * numQsorts;
+  let heightVal = 40 + 25.5 * numQsorts;
   let y = window.innerHeight - 230;
   if (y < heightVal) {
     y += 'px';

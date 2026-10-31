@@ -21,6 +21,8 @@ function weightRawSorts(significantFactors) {
     rawSorts.push(mainDataObject[k].posShiftSort);
   }
 
+  console.log('rawSorts', JSON.stringify(rawSorts));
+
   const weightedSorts = [];
   // normalize weights by sort
   const normalizedSorts = [];

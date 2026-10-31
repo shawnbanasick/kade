@@ -1,20 +1,24 @@
+import i18n from 'i18next';
+
 import coreState from '../../GlobalState/coreState';
 import appState from '../../GlobalState/appState';
 import inputState from '../../GlobalState/inputState';
 import projectHistoryState from '../../GlobalState/projectHistoryState';
+
 import sortsDisplayText from '../logic/sortsDisplayText';
-// import revertLoadButtonsColors from '../DemoData/revertLoadButtonsColors';
 import filterLines from '../CSV/filterLines';
 import createMainDataObjectArray from '../CSV/createMainDataObjectArray';
 import calcMultiplierArray from '../CSV/calcMultiplierArray';
+// import revertLoadButtonsColors from '../DemoData/revertLoadButtonsColors';
 
 const processCsvQsorts = (data) => {
-  // todo - integrate this properly
   const hasInputError = false;
 
   // check if statements are loaded
   const areStatementsLoaded = inputState.getState().areStatementsLoaded;
   const selectedIdMethod = inputState.getState().quinceIdMethod;
+  const quinceForcedUnforcedState = inputState.getState().quinceForcedUnforcedState;
+  const qSortPattern = coreState.getState().qSortPattern;
 
   const partIdArray = [];
   const urlUsercodeArray = [];
@@ -78,11 +82,12 @@ const processCsvQsorts = (data) => {
   if (lines3.length < 2) {
     // throw new Error("Can't find any Q sorts in the file!");
     inputState.setState({ showErrorMessageBar: true });
-    inputState.setState({ errorMessage: "Can't find any Q sorts in the file!" });
-    inputState.setState({ errorStackTrace: "Error in 'processCsvQsorts' function." });
+    inputState.setState({ errorMessage: i18n.t("Can't find any Q sorts in the file!") });
+    inputState.setState({ errorStackTrace: i18n.t("Error in 'processCsvQsorts' function.") });
     inputState.setState({
-      extendedErrorMessage:
-        'KADE was unable to find any Q sorts listed in the selected file. Please check the file and try again.',
+      extendedErrorMessage: i18n.t(
+        'KADE was unable to find any Q sorts listed in the selected file. Please check the file and try again.'
+      ),
     });
     return;
   }
@@ -99,20 +104,25 @@ const processCsvQsorts = (data) => {
   let maxLength;
   if (lines2.length < 1) {
     throwErrorTemplate(
-      'unable to load file data',
-      "Couldn't find sorts data - confirm that data begins in row 1, column 1",
-      "error in 'processCsvQsorts'"
+      i18n.t('unable to load file data'),
+      i18n.t("Couldn't find sorts data - confirm that data begins in row 1, column 1"),
+      i18n.t("error in 'processCsvQsorts'")
     );
     return null;
   }
 
-  // todo - check if other data import methods check to see if min value is above zero
+  // todo - check if other data import methods - confirm min value is above zero
   // Construct MAIN DATA OBJECT ARRAY
-  let mainDataObjectArray = createMainDataObjectArray(lines2);
+  let inputMinValue = 0;
+  if (quinceForcedUnforcedState === 'unforced') {
+    inputMinValue = Math.min(...qSortPattern);
+  }
+  let mainDataObjectArray = createMainDataObjectArray(
+    lines2,
+    quinceForcedUnforcedState,
+    inputMinValue
+  );
   let mainDataObject = [...mainDataObjectArray[0]];
-
-  console.log('mainDataObject', JSON.stringify(mainDataObject));
-
   let respondentNames = [...mainDataObjectArray[1]];
 
   const sortsDisplayTextArray = sortsDisplayText(mainDataObject);
@@ -124,7 +134,7 @@ const processCsvQsorts = (data) => {
     const statementNumArray = Array.from({ length: qSortPattern.length }, (_, i) => i + 1);
 
     const logMessageObj1 = {
-      logMessage: `${data[1]} data loaded from CSV file`,
+      logMessage: `${i18n.t('Data loaded from Quince CSV file:')} ${data[1]?.projectName}`,
       logType: 'csvInput',
     };
 

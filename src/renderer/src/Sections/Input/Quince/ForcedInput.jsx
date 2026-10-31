@@ -10,6 +10,7 @@ const ForcedInput = () => {
   const [qSortInputText, setQSortInputText] = useState('');
 
   const numStatements = coreState((state) => state.numStatements);
+  const updateQSortPattern = coreState((state) => state.updateQSortPattern);
 
   function repeatByCounts(values, counts) {
     if (!Array.isArray(values) || !Array.isArray(counts)) {
@@ -58,8 +59,7 @@ const ForcedInput = () => {
     setQSortPatternInput(array.split(',').map(Number));
     const qSortPatternArray2 = array.split(',');
     const qSortPatternArray = repeatByCounts(values, qSortPatternArray2.map(Number));
-
-    // setQSortPattern([...qSortPatternArray]);
+    updateQSortPattern(qSortPatternArray);
   };
 
   if (showForcedInput) {
