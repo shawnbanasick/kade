@@ -58,6 +58,72 @@ const CsvPanel = () => {
               {/* <p className="text-sm leading-relaxed text-gray-600">{step.text}</p> */}
             </div>
           </div>
+
+          <div className="flex w-[282px] flex-col overflow-hidden rounded-lg border border-gray-200 bg-white shadow-sm">
+            {/* Image area (click to enlarge) */}
+            <div className="bg-gray-50 p-4">
+              <button
+                type="button"
+                // aria-label={`Enlarge image: ${step.title}`}
+                className="block cursor-zoom-in focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2"
+              >
+                <img
+                  className="h-[205px] w-[250px] outline outline-1 outline-gray-300"
+                  alt={t('Statements Text File Example')}
+                  src={statementsTextImage}
+                />
+              </button>
+            </div>
+
+            {/* Text area */}
+            <div className="flex flex-col gap-2 p-4">
+              <div className="flex items-center gap-2">
+                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full  bg-primary-button text-sm font-bold text-black">
+                  1
+                </span>
+                <h3 className="text-sm font-semibold text-gray-900">
+                  {t(
+                    'Statements must be saved as plain text (Unicode) with the extension ".txt". One statement per line.'
+                  )}
+                </h3>
+              </div>
+              <LoadCsvStatements />
+              {/* <p className="text-sm leading-relaxed text-gray-600">{step.text}</p> */}
+            </div>
+          </div>
+          <div className="flex w-[282px] flex-col overflow-hidden rounded-lg border border-gray-200 bg-white shadow-sm">
+            {/* Image area (click to enlarge) */}
+            <div className="bg-gray-50 p-4">
+              <button
+                type="button"
+                // aria-label={`Enlarge image: ${step.title}`}
+                className="block cursor-zoom-in focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-2"
+              >
+                <img
+                  className="h-[205px] w-[250px] outline outline-1 outline-gray-300"
+                  alt={t('Statements Text File Example')}
+                  src={statementsTextImage}
+                />
+              </button>
+            </div>
+
+            {/* Text area */}
+            <div className="flex flex-col gap-2 p-4">
+              <div className="flex items-center gap-2">
+                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full  bg-primary-button text-sm font-bold text-black">
+                  1
+                </span>
+                <h3 className="text-sm font-semibold text-gray-900">
+                  {t(
+                    'Statements must be saved as plain text (Unicode) with the extension ".txt". One statement per line.'
+                  )}
+                </h3>
+              </div>
+              <LoadCsvStatements />
+              {/* <p className="text-sm leading-relaxed text-gray-600">{step.text}</p> */}
+            </div>
+          </div>
+
           <div className="flex w-[282px] flex-col overflow-hidden rounded-lg border border-gray-200 bg-white shadow-sm">
             {/* Image area (click to enlarge) */}
             <div className="bg-gray-50 p-4">

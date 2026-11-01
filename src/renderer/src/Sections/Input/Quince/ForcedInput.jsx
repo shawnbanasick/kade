@@ -10,7 +10,7 @@ const values = [-6, -5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12
 const ForcedInput = () => {
   const showForcedInput = true; // Replace with actual state from S1DataSlice
 
-  const [qSortPatternInput, setQSortPatternInput] = useState([]);
+  // const [qSortPatternInput, setQSortPatternInput] = useState([]);
 
   const quinceQsortInputText = inputState((state) => state.quinceQsortInputText);
   const setQuinceQsortInputText = inputState((state) => state.updateQuinceQsortInputText);
@@ -24,6 +24,7 @@ const ForcedInput = () => {
     (state) => state.updateIsQuinceQsortImportButtonDisabled
   );
   const quinceForcedUnforcedState = inputState((state) => state.quinceForcedUnforcedState);
+  const updateIsPatternInputComplete = inputState((state) => state.updateIsPatternInputComplete);
 
   function repeatByCounts(values, counts) {
     if (!Array.isArray(values) || !Array.isArray(counts)) return [];
@@ -36,6 +37,11 @@ const ForcedInput = () => {
     }
     return result;
   }
+
+  const qSortPatternInput = useMemo(
+    () => (quinceQsortInputText ?? '').split(',').map((s) => Number(s.trim())),
+    [quinceQsortInputText]
+  );
 
   useEffect(() => {
     if (showForcedInput) {
@@ -63,18 +69,23 @@ const ForcedInput = () => {
   useEffect(() => {
     if (quinceForcedUnforcedState === 'forced') {
       updateIsQuinceQsortImportButtonDisabled(false);
+      updateIsPatternInputComplete(true);
     } else if (quinceForcedUnforcedState === 'unforced') {
       updateIsQuinceQsortImportButtonDisabled(!isComplete);
+      console.log('isComplete:', isComplete);
+      updateIsPatternInputComplete(isComplete);
     }
   }, [quinceForcedUnforcedState, isComplete, updateIsQuinceQsortImportButtonDisabled]);
 
   const handleChange = (e) => {
     const text = e.target.value;
     setQuinceQsortInputText(text);
-
-    const counts = text.split(',').map((s) => Number(s.trim()));
-    setQSortPatternInput(counts);
-    updateQSortPattern(repeatByCounts(values, counts));
+    updateQSortPattern(
+      repeatByCounts(
+        values,
+        text.split(',').map((s) => Number(s.trim()))
+      )
+    );
   };
 
   if (showForcedInput) {

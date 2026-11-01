@@ -1,18 +1,15 @@
-import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
+
 import inputState from '../../GlobalState/inputState';
 
 const IdRadioButtons = () => {
   const { t } = useTranslation();
 
   const quinceIdMethod = inputState((state) => state.quinceIdMethod);
-  const [selected, setSelected] = useState('randomId');
   const updateQuinceIdMethod = inputState((state) => state.updateQuinceIdMethod);
 
   const handleChange = (event) => {
-    console.log('Selected value:', event.target.value);
     const selectedValue = event.target.value;
-    setSelected(selectedValue);
     updateQuinceIdMethod(selectedValue);
   };
 
@@ -40,7 +37,7 @@ const IdRadioButtons = () => {
             className={`flex items-center p-2.5 rounded-lg border transition-colors ${
               option.disabled
                 ? 'border-gray-200 bg-gray-50 opacity-60 cursor-not-allowed'
-                : selected === option.id
+                : quinceIdMethod === option.id
                   ? 'border-blue-400 bg-blue-50/50 cursor-pointer'
                   : 'border-gray-200 hover:bg-gray-50 cursor-pointer'
             }`}
@@ -50,7 +47,7 @@ const IdRadioButtons = () => {
               id={option.id}
               name="compact-options-labels"
               value={option.id}
-              checked={selected === option.id}
+              checked={quinceIdMethod === option.id}
               disabled={option.disabled}
               onChange={(e) => handleChange(e)}
               className="mt-0.5 h-4 w-4 text-indigo-600 border-gray-300 focus:ring-blue-400 accent-blue-500 disabled:cursor-not-allowed"

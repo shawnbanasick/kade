@@ -79,7 +79,9 @@ const inputState = create(
     isQuinceQsortImportButtonDisabled: false,
     numQuinceQsortsLoaded: 0,
     quinceQsortInputText: '',
+    isPatternInputComplete: false,
 
+    updateIsPatternInputComplete: (inputValue) => set({ isPatternInputComplete: inputValue }),
     updateQuinceQsortInputText: (inputValue) => set({ quinceQsortInputText: inputValue }),
     updateIsQuinceQsortImportButtonDisabled: (inputValue) =>
       set({ isQuinceQsortImportButtonDisabled: inputValue }),

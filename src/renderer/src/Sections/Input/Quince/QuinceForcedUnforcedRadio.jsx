@@ -11,10 +11,12 @@ const QuinceForcedUnforcedRadio = () => {
   const updateIsQuinceQsortImportButtonDisabled = inputState(
     (state) => state.updateIsQuinceQsortImportButtonDisabled
   );
+
+  const unforcedRadioButtonState = inputState((state) => state.quinceForcedUnforcedState);
   // const isQuinceQsortImportButtonDisabled = inputState(
   //   (state) => state.isQuinceQsortImportButtonDisabled
   // );
-  const [selected, setSelected] = useState('forced');
+  // const [selected, setSelected] = useState('forced');
 
   const handleChange = (event) => {
     const selectedValue = event.target.value;
@@ -24,7 +26,7 @@ const QuinceForcedUnforcedRadio = () => {
       updateIsQuinceQsortImportButtonDisabled(true);
     }
     updateQuinceForcedUnforcedState(selectedValue);
-    setSelected(selectedValue);
+    // setSelected(selectedValue);
   };
 
   const options = [
@@ -50,7 +52,7 @@ const QuinceForcedUnforcedRadio = () => {
             className={`flex items-start p-2.5 rounded-lg border transition-colors ${
               option.disabled
                 ? 'border-gray-200 bg-gray-50 opacity-60 cursor-not-allowed'
-                : selected === option.id
+                : unforcedRadioButtonState === option.id
                   ? 'border-blue-400 bg-blue-50/50 cursor-pointer'
                   : 'border-gray-200 hover:bg-gray-50 cursor-pointer'
             }`}
@@ -60,7 +62,7 @@ const QuinceForcedUnforcedRadio = () => {
               id={option.id}
               name="forced-unforced-options-labels"
               value={option.id}
-              checked={selected === option.id}
+              checked={unforcedRadioButtonState === option.id}
               disabled={option.disabled}
               onChange={(e) => handleChange(e)}
               className="mt-2 h-4 w-4 text-indigo-600 border-gray-300 focus:ring-blue-400 accent-blue-500 disabled:cursor-not-allowed"
