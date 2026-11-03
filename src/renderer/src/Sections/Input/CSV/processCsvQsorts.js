@@ -1,29 +1,20 @@
 import coreState from '../../GlobalState/coreState';
 import appState from '../../GlobalState/appState';
-import Papa from 'papaparse';
 import inputState from '../../GlobalState/inputState';
 import projectHistoryState from '../../GlobalState/projectHistoryState';
 // import getInputState from '../../GlobalState/getInputState';
 import sortsDisplayText from '../logic/sortsDisplayText';
-import revertLoadButtonsColors from '../DemoData/revertLoadButtonsColors';
-// import throwErrorTemplate from '../throwErrorTemplate';
+// import revertLoadButtonsColors from '../DemoData/revertLoadButtonsColors';
 import filterLines from './filterLines';
 import createMainDataObjectArray from './createMainDataObjectArray';
 import calcMultiplierArray from './calcMultiplierArray';
 
-const processCsvQsorts = (data) => {
+const processCsvQsorts = (lines3) => {
   // todo - integrate this properly
   const hasInputError = false;
 
   // check if statements are loaded
   const areStatementsLoaded = inputState.getState().areStatementsLoaded;
-
-  // parse file
-  const parsedFile = Papa.parse(data);
-  const lines3 = parsedFile.data;
-
-  // remove the first (header) line
-  lines3.shift();
 
   // ERROR CHECK 1 - no sorts in file
   if (lines3.length < 2) {
@@ -70,7 +61,7 @@ const processCsvQsorts = (data) => {
     const statementNumArray = Array.from({ length: qSortPattern.length }, (_, i) => i + 1);
 
     const logMessageObj1 = {
-      logMessage: `${data[1]} data loaded from CSV file`,
+      logMessage: `Data loaded from CSV file`,
       logType: 'csvInput',
     };
 

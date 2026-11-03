@@ -31,7 +31,6 @@ const LoadQuinceStatements = () => {
   );
   const updateIsInputButtonGreen = appState((state) => state.updateIsInputButtonGreen);
   const updateIsDataButtonGreen = appState((state) => state.updateIsDataButtonGreen);
-  // const updateNotifyDataUploadSuccess = inputState((state) => state.updateNotifyDataUploadSuccess);
 
   const processBlob = (data) => {
     const statements = parseStatements(data);
@@ -88,7 +87,6 @@ const LoadQuinceStatements = () => {
             <path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z" />
           </svg>
         ) : null}
-
         <div className="font-sans text-sm font-bold">{buttonText}</div>
       </div>
     </NewLoadButton>

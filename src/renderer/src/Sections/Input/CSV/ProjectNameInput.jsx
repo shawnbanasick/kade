@@ -21,22 +21,19 @@ const ProjectNameInput = (props) => {
   };
 
   return (
-    <div className="flex flex-row">
+    <div className="flex h-50">
       <div
-        className={`flex flex-row row-start-2 items-center text-black text-[20px] font-bold pl-[5px] mb-[10px] gap-3 `}
+        className={`flex flex-col items-left justify-center text-black text-[20px] font-bold gap-3 `}
       >
-        <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full  bg-primary-button text-sm font-bold text-black">
-          {props.numbering}
-        </span>
         <label htmlFor="projectNameInput" className="text-[20px] text-left text-black font-bold">
           Project Name:
         </label>
         <input
-          className={`text-[20px] h-[30px] w-[355px] p-2 m-[3px] text-black bg-white border border-black rounded-sm`}
+          className={`text-[20px] h-[30px] w-[250px] p-2  text-black bg-white border border-black rounded-sm`}
           onChange={(e) => handleChange(e)}
           label="Project Name:"
           id="projectNameInput"
-          placeholder={t('Input Project Name')}
+          placeholder={'my project'}
           value={projectName}
         />
       </div>

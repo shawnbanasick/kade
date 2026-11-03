@@ -12,9 +12,9 @@ const RadioExampleRadioGroup = ({ numbering }) => {
   const forcedId = `forced-${uid}`;
   const unforcedId = `unforced-${uid}`;
 
-  const unforcedRadioButtonState = inputState((state) => state.unforcedRadioButtonState);
   const updateShowForcedInput = inputState((state) => state.updateShowForcedInput);
   const updateIsForcedQsortPattern = inputState((state) => state.updateIsForcedQsortPattern);
+  const unforcedRadioButtonState = inputState((state) => state.unforcedRadioButtonState);
   const updateUnforcedRadioButtonState = inputState(
     (state) => state.updateUnforcedRadioButtonState
   );

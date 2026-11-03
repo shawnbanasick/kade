@@ -20,11 +20,12 @@ const quinceCheckForUnforced = (testSortArray) => {
     const same = isEqual(first, sortedItem);
     if (!same) {
       console.log('unforcedTest failed for index:', index);
+      return same;
     }
     return same;
   });
 
-  return passesTest;
+  //   return passesTest;
 };
 
 export default quinceCheckForUnforced;

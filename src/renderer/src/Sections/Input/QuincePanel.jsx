@@ -36,7 +36,7 @@ const JsonPanel = () => {
 
   if (quinceForcedUnforcedState === 'unforced') {
     step7Text = t(
-      'Input the sort pattern for the study. This is the number of statements per column, from left to right.'
+      'Input the sort pattern for the project. This is the number of statements per column, from left to right.'
     );
   }
 

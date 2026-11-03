@@ -19,11 +19,8 @@ const LoadQuinceQsorts = () => {
   const isQuinceQsortImportButtonDisabled = inputState(
     (state) => state.isQuinceQsortImportButtonDisabled
   );
-  const isPatternInputComplete = inputState((state) => state.isPatternInputComplete);
 
   const [showErrorModal, setShowErrorModal] = useState(false);
-  const [errorMessage, setErrorMessage] = useState('');
-  console.log('pattern input complete', isPatternInputComplete);
 
   // Listen for data sent from the main process
   useEffect(() => {
@@ -34,10 +31,9 @@ const LoadQuinceQsorts = () => {
         skipEmptyLines: true,
         complete: (results) => {
           const cleanedData = results.data.map((row) => parseQsortRecord(row));
-
           // Read fresh state at the moment the data arrives
           const { isPatternInputComplete, updateNumQuinceQsortsLoaded } = inputState.getState();
-
+          // isPatternInputComplete is a stand in for checking if the user has selected "forced" or "unforced" in the radio button. If they have selected "unforced", we need to check for unforced Q sorts in the data and throw an error if any are found.
           if (isPatternInputComplete === false) {
             const passesTest = quinceCheckForUnforced(cleanedData);
             if (!passesTest) {
@@ -45,7 +41,6 @@ const LoadQuinceQsorts = () => {
               return;
             }
           }
-
           processQuinceQsorts(cleanedData);
           updateNumQuinceQsortsLoaded(cleanedData.length);
         },
@@ -62,7 +57,7 @@ const LoadQuinceQsorts = () => {
     try {
       await window.electronAPI.openQuinceSortFile();
     } catch (error) {
-      setErrorMessage(error.message);
+      console.error('Error opening Quince sort file:', error);
       setShowErrorModal(true);
     }
   };

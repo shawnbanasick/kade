@@ -13,10 +13,6 @@ const QuinceForcedUnforcedRadio = () => {
   );
 
   const unforcedRadioButtonState = inputState((state) => state.quinceForcedUnforcedState);
-  // const isQuinceQsortImportButtonDisabled = inputState(
-  //   (state) => state.isQuinceQsortImportButtonDisabled
-  // );
-  // const [selected, setSelected] = useState('forced');
 
   const handleChange = (event) => {
     const selectedValue = event.target.value;
@@ -26,7 +22,6 @@ const QuinceForcedUnforcedRadio = () => {
       updateIsQuinceQsortImportButtonDisabled(true);
     }
     updateQuinceForcedUnforcedState(selectedValue);
-    // setSelected(selectedValue);
   };
 
   const options = [

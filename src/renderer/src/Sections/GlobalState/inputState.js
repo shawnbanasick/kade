@@ -73,6 +73,9 @@ const inputState = create(
     inputActiveTab: 'tab1',
 
     unforcedRadioButtonState: 'forced',
+    csvUnforcedRadioButtonState: 'forced',
+    isCsvQsortImportButtonDisabled: false,
+    numCsvQsortsLoaded: 0,
 
     quinceIdMethod: 'randomId',
     quinceForcedUnforcedState: 'forced',
@@ -81,6 +84,11 @@ const inputState = create(
     quinceQsortInputText: '',
     isPatternInputComplete: false,
 
+    updateNumCsvQsortsLoaded: (inputValue) => set({ numCsvQsortsLoaded: inputValue }),
+    updateIsCsvQsortImportButtonDisabled: (inputValue) =>
+      set({ isCsvQsortImportButtonDisabled: inputValue }),
+    updateCsvUnforcedRadioButtonState: (inputValue) =>
+      set({ csvUnforcedRadioButtonState: inputValue }),
     updateIsPatternInputComplete: (inputValue) => set({ isPatternInputComplete: inputValue }),
     updateQuinceQsortInputText: (inputValue) => set({ quinceQsortInputText: inputValue }),
     updateIsQuinceQsortImportButtonDisabled: (inputValue) =>

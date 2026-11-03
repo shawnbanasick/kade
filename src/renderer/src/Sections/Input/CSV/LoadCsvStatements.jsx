@@ -10,13 +10,14 @@ const LoadCsvStatements = () => {
   const { t } = useTranslation();
   const isLoadCsvTextButtonGreen = inputState((state) => state.isLoadCsvTextButtonGreen);
   const areQsortsLoaded = inputState((state) => state.areQsortsLoaded);
-  // revertLoadButtonsColors('json');
 
   const updateStatements = coreState((state) => state.updateStatements);
+  const numStatements = coreState((state) => state.numStatements); // <-- persisted count
   const updateNumStatements = coreState((state) => state.updateNumStatements);
   const updateStatementsLoaded = inputState((state) => state.updateStatementsLoaded);
   const updateNotifyDataUploadSuccess = inputState((state) => state.updateNotifyDataUploadSuccess);
   const updateAreStatementsLoaded = inputState((state) => state.updateAreStatementsLoaded);
+  const areStatementsLoaded = inputState((state) => state.areStatementsLoaded); // <-- statements, not qsorts
   const updateIsLoadCsvTextButtonGreen = inputState(
     (state) => state.updateIsLoadCsvTextButtonGreen
   );
@@ -59,13 +60,15 @@ const LoadCsvStatements = () => {
   };
 
   const handleClick = async () => {
-    // check to see if data loaded and correlations started - true ==> throw error
-
     await window.electronAPI.openTxtFile();
     window.bridge.txtData((event, txtData) => {
       processBlob(txtData);
     });
   };
+
+  const buttonText = areStatementsLoaded
+    ? `${t('Statements imported:')} ${numStatements} `
+    : t('Load TXT File');
 
   return (
     <NewLoadButton
@@ -73,14 +76,16 @@ const LoadCsvStatements = () => {
       className={`${isLoadCsvTextButtonGreen ? 'bg-primary-button' : 'bg-grey-button'}`}
     >
       <div className="flex flex-row justify-center items-center h-full w-full gap-3">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 20 20"
-          className="rotate-180 h-[17px] w-[17px] fill-current"
-        >
-          <path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z" />
-        </svg>
-        <div className="font-sans text-sm font-bold">{t('Load TXT File')}</div>
+        {!areStatementsLoaded ? (
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 20 20"
+            className="rotate-180 h-[17px] w-[17px] fill-current"
+          >
+            <path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z" />
+          </svg>
+        ) : null}
+        <div className="font-sans text-sm font-bold">{buttonText}</div>
       </div>
     </NewLoadButton>
   );

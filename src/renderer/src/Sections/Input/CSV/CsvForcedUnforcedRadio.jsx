@@ -1,0 +1,93 @@
+import { useTranslation } from 'react-i18next';
+import inputState from '../../GlobalState/inputState';
+
+const CsvForcedUnforcedRadio = () => {
+  const { t } = useTranslation();
+
+  //   const updateQuinceForcedUnforcedState = inputState(
+  //     (state) => state.updateQuinceForcedUnforcedState
+  //   );
+
+  const updateIsCsvQsortImportButtonDisabled = inputState(
+    (state) => state.updateIsCsvQsortImportButtonDisabled
+  );
+
+  const updateIsForcedQsortPattern = inputState((state) => state.updateIsForcedQsortPattern);
+  const csvUnforcedRadioButtonState = inputState((state) => state.csvUnforcedRadioButtonState);
+
+  //   const unforcedRadioButtonState = inputState((state) => state.quinceForcedUnforcedState);
+  // const isQuinceQsortImportButtonDisabled = inputState(
+  //   (state) => state.isQuinceQsortImportButtonDisabled
+  // );
+  // const [selected, setSelected] = useState('forced');
+
+  const handleChange = (event) => {
+    const selectedValue = event.target.value.replace('csv-', '');
+    console.log('selectedValue:', selectedValue);
+    if (selectedValue === 'forced') {
+      updateIsCsvQsortImportButtonDisabled(false);
+    } else if (selectedValue === 'unforced') {
+      updateIsCsvQsortImportButtonDisabled(true);
+    }
+    updateIsForcedQsortPattern(selectedValue);
+    // setSelected(selectedValue);
+  };
+
+  const options = [
+    {
+      id: 'csv-forced',
+      title: 'Forced',
+      description: 'The number of statements in each column was limited.',
+    },
+    {
+      id: 'csv-unforced',
+      title: 'Free Placement',
+      description: 'No limit on the number of statements per column.',
+    },
+  ];
+
+  return (
+    <div className="max-w-md mx-auto  p-4 bg-white rounded-xl shadow-sm border border-gray-100 space-y-3">
+      <div className="space-y-7">
+        {options.map((option) => (
+          <label
+            key={option.id}
+            // htmlFor={!option.disabled ? option.id : undefined}
+            className={`flex items-start p-2.5 rounded-lg border transition-colors ${
+              option.disabled
+                ? 'border-gray-200 bg-gray-50 opacity-60 cursor-not-allowed'
+                : csvUnforcedRadioButtonState === option.id.replace('csv-', '')
+                  ? 'border-blue-400 bg-blue-50/50 cursor-pointer'
+                  : 'border-gray-200 hover:bg-gray-50 cursor-pointer'
+            }`}
+          >
+            <input
+              type="radio"
+              id={option.id}
+              name="csv-forced-unforced-options-labels"
+              value={option.id}
+              checked={csvUnforcedRadioButtonState === option.id.replace('csv-', '')}
+              disabled={option.disabled}
+              onChange={(e) => handleChange(e)}
+              className="mt-2 h-4 w-4 text-blue-600 border-gray-300 focus:ring-blue-400 accent-blue-500 disabled:cursor-not-allowed"
+            />
+            <div className="ml-3 w-40">
+              <span
+                className={`block text-xs font-medium ${option.disabled ? 'text-gray-400' : 'text-gray-900'}`}
+              >
+                {option.title}
+              </span>
+              <span
+                className={`block text-xs ${option.disabled ? 'text-gray-400' : 'text-gray-500'}`}
+              >
+                {option.description}
+              </span>
+            </div>
+          </label>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+export default CsvForcedUnforcedRadio;

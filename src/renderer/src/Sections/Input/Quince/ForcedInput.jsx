@@ -72,7 +72,6 @@ const ForcedInput = () => {
       updateIsPatternInputComplete(true);
     } else if (quinceForcedUnforcedState === 'unforced') {
       updateIsQuinceQsortImportButtonDisabled(!isComplete);
-      console.log('isComplete:', isComplete);
       updateIsPatternInputComplete(isComplete);
     }
   }, [quinceForcedUnforcedState, isComplete, updateIsQuinceQsortImportButtonDisabled]);
