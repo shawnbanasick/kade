@@ -20,13 +20,21 @@ const ExportQuinceData = () => {
     (state) => state.updateIsShowNetlifyInputButtonGreen
   );
 
-  const handleOnclick = () => {
-    updateShowSheetsInput(false);
-    updateShowNetlifyInput(true);
-    updateShowFirebaseInput(false);
-    updateIsShowSheetsInputButtonGreen(false);
-    updateIsShowFirebaseInputButtonGreen(false);
-    updateIsShowNetlifyInputButtonGreen(true);
+  const handleOnclick = async () => {
+    const data = [1, 2, 3, 4, 5]; // Example data to export
+    const dataContent = {
+      type: 'QuinceResults',
+      // docOptions,
+      // translatedTextObj,
+      data: [...data],
+    };
+    const newBlob = new Blob([JSON.stringify(dataContent)], { type: 'text/plain' });
+    const arrayBuffer = await new Response(newBlob).arrayBuffer();
+    try {
+      window.bridge.sendLargeData('large-data', arrayBuffer, 'path');
+    } catch (error) {
+      console.error('Failed to export Quince data:', error);
+    }
   };
 
   return (

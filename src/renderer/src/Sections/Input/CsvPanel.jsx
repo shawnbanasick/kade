@@ -43,17 +43,17 @@ const CsvPanel = () => {
   return (
     <div id="csvPanelContainer" className="flex flex-col gap-4 h-full overflow-y-auto pb-10">
       <div id="csvDataWindow" className="flex flex-col gap-4">
-        <div className="text-4xl mt-2 mb-10">{t('CSV File Input')}</div>
+        <div className="text-4xl mt-2 mb-6">{t('CSV File Input')}</div>
 
         <div
           id="csvPanelHeader"
-          className="font-['Helvetica'] text-black text-xl font-bold h-7.5 mb-5"
+          className="font-['Helvetica'] text-black text-xl font-bold h-7.5 mb-3"
         >
           {t('Load both a statements text file and a Q sorts CSV file')}
         </div>
       </div>
 
-      <div className="flex flex-col gap-5 ml-10 outline-offset-0 p-4 rounded-lg ">
+      <div className="flex flex-col gap-5 outline-offset-0 rounded-lg ">
         <div className="flex flex-row flex-wrap gap-4">
           {/* -- PROJECT NAME CARD -- */}
           <div className="flex w-[282px] flex-col overflow-hidden rounded-lg border border-gray-200 bg-white shadow-sm">

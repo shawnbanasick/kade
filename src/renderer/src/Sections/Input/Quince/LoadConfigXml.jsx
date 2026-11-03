@@ -1,5 +1,4 @@
 import { useEffect } from 'react';
-import throwNoStatementsInputErrorModal from '../ErrorChecking/throwNoStatementsInputErrorModal';
 import NewLoadButton from '../../../Utils/NewLoadButton';
 import { useTranslation } from 'react-i18next';
 import coreState from '../../GlobalState/coreState';
@@ -8,20 +7,17 @@ import appState from '../../GlobalState/appState';
 
 const LoadConfigXml = () => {
   const { t } = useTranslation();
-  const isLoadCsvTextButtonGreen = inputState((state) => state.isLoadCsvTextButtonGreen);
-  const areQsortsLoaded = inputState((state) => state.areQsortsLoaded);
-  // revertLoadButtonsColors('json');
-
-  const updateStatements = coreState((state) => state.updateStatements);
-  const updateNumStatements = coreState((state) => state.updateNumStatements);
-  const updateStatementsLoaded = inputState((state) => state.updateStatementsLoaded);
-  const updateNotifyDataUploadSuccess = inputState((state) => state.updateNotifyDataUploadSuccess);
-  const updateAreStatementsLoaded = inputState((state) => state.updateAreStatementsLoaded);
-  const updateIsLoadCsvTextButtonGreen = inputState(
-    (state) => state.updateIsLoadCsvTextButtonGreen
+  const isLoadConfigXmlButtonGreen = inputState((state) => state.isLoadConfigXmlButtonGreen);
+  const updateIsLoadConfigXmlButtonGreen = inputState(
+    (state) => state.updateIsLoadConfigXmlButtonGreen
   );
-  const updateIsInputButtonGreen = appState((state) => state.updateIsInputButtonGreen);
-  const updateIsDataButtonGreen = appState((state) => state.updateIsDataButtonGreen);
+  // const updateNotifyDataUploadSuccess = inputState((state) => state.updateNotifyDataUploadSuccess);
+  // const updateAreStatementsLoaded = inputState((state) => state.updateAreStatementsLoaded);
+  // const updateIsLoadCsvTextButtonGreen = inputState(
+  //   (state) => state.updateIsLoadCsvTextButtonGreen
+  // );
+  // const updateIsInputButtonGreen = appState((state) => state.updateIsInputButtonGreen);
+  // const updateIsDataButtonGreen = appState((state) => state.updateIsDataButtonGreen);
 
   // parseSurvey.js
   const unmarkup = (s = '') => s.replace(/\{\{\{(\/?\w+\/?)\}\}\}/g, '<$1>'); // {{{b}}} -> <b>, {{{br/}}} -> <br/>
@@ -34,6 +30,8 @@ const LoadConfigXml = () => {
     if (err) throw new Error('Invalid XML: ' + err.textContent);
 
     const items = doc.querySelectorAll('item[id="survey"]');
+
+    // console.log('items', items);
 
     return Array.from(items).map((item, index) => {
       const input = item.querySelector('input');
@@ -57,8 +55,8 @@ const LoadConfigXml = () => {
   };
 
   const processBlob = (data) => {
-    // split into lines
-    console.log('data', parseSurvey(data));
+    const newData = parseSurvey(data);
+    console.log('data', newData);
   };
 
   useEffect(() => {
@@ -72,18 +70,13 @@ const LoadConfigXml = () => {
   }, []);
 
   const handleClick = async () => {
-    // check to see if data loaded and correlations started - true ==> throw error
-
     await window.electronAPI.openXmlFile();
-    window.bridge.xmlData((event, xmlData) => {
-      processBlob(xmlData);
-    });
   };
 
   return (
     <NewLoadButton
       onClick={handleClick}
-      className={`${isLoadCsvTextButtonGreen ? 'bg-primary-button' : 'bg-grey-button'}`}
+      className={`${isLoadConfigXmlButtonGreen ? 'bg-primary-button' : 'bg-grey-button'}`}
     >
       <div className="flex flex-row justify-center items-center h-full w-full gap-3">
         <svg

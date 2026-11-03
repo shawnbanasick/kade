@@ -25,6 +25,7 @@ import createDistExcelFile from './excelLogic/createDistExcelFile';
 import createXlsxFileT1 from './excelLogic/createXlsxFileT1';
 import createXlsxFileT2 from './excelLogic/createXlsxFileT2';
 import createResultsXlsxFile from './excelLogic/createResultsXlsxFile';
+// import createQuinceOtherResultsFile from './quinceLogic/createQuinceOtherResultsFile';
 
 const fs = require('fs');
 
@@ -283,6 +284,9 @@ if (!gotTheLock) {
           case 'ExcelResults':
             await createResultsXlsxFile(dataContent);
             break;
+          // case 'QuinceResults':
+          //   await createQuinceOtherResultsFile(dataContent);
+          //   break;
           default:
             console.warn('Unknown large-data type:', dataContent.type);
         }
