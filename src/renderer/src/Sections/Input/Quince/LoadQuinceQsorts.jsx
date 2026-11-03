@@ -19,6 +19,7 @@ const LoadQuinceQsorts = () => {
   const isQuinceQsortImportButtonDisabled = inputState(
     (state) => state.isQuinceQsortImportButtonDisabled
   );
+  const updateNotifyDataUploadSuccess = inputState((state) => state.updateNotifyDataUploadSuccess);
 
   const [showErrorModal, setShowErrorModal] = useState(false);
 
@@ -43,11 +44,12 @@ const LoadQuinceQsorts = () => {
           }
           processQuinceQsorts(cleanedData);
           updateNumQuinceQsortsLoaded(cleanedData.length);
+          updateNotifyDataUploadSuccess(true);
         },
       });
     });
     return unsubscribe; // removes the listener on unmount
-  }, [updateNumQuinceQsortsLoaded]);
+  }, [updateNumQuinceQsortsLoaded, updateNotifyDataUploadSuccess]);
 
   const handleClick = async () => {
     if (isDataAlreadyLoaded) {

@@ -190,11 +190,12 @@ const CsvPanel = () => {
                 <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full  bg-primary-button text-sm font-bold text-black">
                   5
                 </span>
-                <h3 className="text-sm font-semibold text-gray-900">
-                  {t(
-                    'Q sorts must be saved as a CSV file with the extension ".csv". The participant sorts must be in rows.'
-                  )}
-                </h3>
+                <h3 className="text-sm font-semibold text-gray-900">{t('Import Q Sorts')}</h3>
+              </div>
+              <div className="text-sm text-balanced leading-relaxed text-gray-600">
+                {t(
+                  'Q sorts must be saved as a CSV file with the extension ".csv". The participant sorts must be in rows.'
+                )}
               </div>
               <LoadCsvQsorts disabled={buttonDisabled} />
             </div>

@@ -15,7 +15,7 @@ const LoadCsvStatements = () => {
   const numStatements = coreState((state) => state.numStatements); // <-- persisted count
   const updateNumStatements = coreState((state) => state.updateNumStatements);
   const updateStatementsLoaded = inputState((state) => state.updateStatementsLoaded);
-  const updateNotifyDataUploadSuccess = inputState((state) => state.updateNotifyDataUploadSuccess);
+  // const updateNotifyDataUploadSuccess = inputState((state) => state.updateNotifyDataUploadSuccess);
   const updateAreStatementsLoaded = inputState((state) => state.updateAreStatementsLoaded);
   const areStatementsLoaded = inputState((state) => state.areStatementsLoaded); // <-- statements, not qsorts
   const updateIsLoadCsvTextButtonGreen = inputState(
@@ -38,7 +38,7 @@ const LoadCsvStatements = () => {
       updateStatementsLoaded(true);
       updateIsLoadCsvTextButtonGreen(true);
       setTimeout(() => {
-        updateNotifyDataUploadSuccess(true);
+        // updateNotifyDataUploadSuccess(true);
         updateIsInputButtonGreen(areQsortsLoaded);
         updateIsDataButtonGreen(areQsortsLoaded);
       }, 50);

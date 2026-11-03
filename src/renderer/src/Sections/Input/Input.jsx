@@ -1,4 +1,3 @@
-import React, { useState, useEffect } from 'react';
 import { ToastContainer, toast, Zoom } from 'react-toastify';
 import inputState from '../GlobalState/inputState';
 import ExcelPanel from './ExcelPanel';
@@ -19,7 +18,26 @@ function Input() {
   // put here to be able to use React hook for t
   const notify = async () => {
     await new Promise((resolve) => setTimeout(resolve, 50));
-    await toast.success(t('File Load Success'));
+    await toast.success(
+      <div>
+        {t('Data Loaded Successfully!')}
+        <br />
+        {t("Click the orange '2. Data' tab to continue")}
+      </div>,
+      {
+        autoClose: false,
+        position: 'bottom-right',
+        closeOnClick: true,
+        draggable: true,
+        theme: 'light',
+        style: {
+          background: '#fff',
+          color: 'dark-gray',
+          outline: '1px solid #ccc',
+          boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
+        },
+      }
+    );
     await updateNotifyDataUploadSuccess(false);
   };
 
@@ -66,7 +84,7 @@ function Input() {
   }
 
   return (
-    <React.Fragment>
+    <>
       <ToastContainer transition={Zoom} />
       <div
         className={`
@@ -156,7 +174,7 @@ function Input() {
           <div className="tab-content bg-base-100 border-base-300 pt-6 pl-6">{tabs[6].content}</div>
         </div>
       </div>
-    </React.Fragment>
+    </>
   );
 }
 
