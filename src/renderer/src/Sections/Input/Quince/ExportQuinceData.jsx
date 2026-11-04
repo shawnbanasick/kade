@@ -19,14 +19,35 @@ const ExportQuinceData = () => {
   const updateIsShowNetlifyInputButtonGreen = inputState(
     (state) => state.updateIsShowNetlifyInputButtonGreen
   );
+  const quinceRawData = inputState((state) => state.quinceRawData);
+
+  console.log('quinceRawData in ExportQuinceData.jsx:', JSON.stringify(quinceRawData));
+  // console.log('quinceRawData columns in ExportQuinceData.jsx:', quinceRawData[0].columns);
+
+  const translatedTextObj = {
+    randomId: t('Random ID'),
+    urlUsercode: t('URL Usercode'),
+    participantId: t('Participant ID'),
+    deviceType: t('Device Type'),
+    dateTime: t('Date and Time'),
+    timeWelcome: t('Welcome Page'),
+    timeConsent: t('Consent Page'),
+    timePresort: t('Pre-sort Page'),
+    timeRefine: t('Refinement Page'),
+    timeSort: t('Sort Page'),
+    timePostsort: t('Post-sort Page'),
+    timeSurvey: t('Survey Page'),
+    pos: t('Pre-sort Positive'),
+    neg: t('Pre-sort Negative'),
+    neu: t('Pre-sort Neutral'),
+  };
 
   const handleOnclick = async () => {
-    const data = [1, 2, 3, 4, 5]; // Example data to export
     const dataContent = {
       type: 'QuinceResults',
       // docOptions,
-      // translatedTextObj,
-      data: [...data],
+      translatedTextObj,
+      data: quinceRawData,
     };
     const newBlob = new Blob([JSON.stringify(dataContent)], { type: 'text/plain' });
     const arrayBuffer = await new Response(newBlob).arrayBuffer();

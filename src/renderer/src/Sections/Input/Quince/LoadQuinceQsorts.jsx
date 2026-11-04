@@ -20,6 +20,7 @@ const LoadQuinceQsorts = () => {
     (state) => state.isQuinceQsortImportButtonDisabled
   );
   const updateNotifyDataUploadSuccess = inputState((state) => state.updateNotifyDataUploadSuccess);
+  const updateQuinceRawData = inputState((state) => state.updateQuinceRawData);
 
   const [showErrorModal, setShowErrorModal] = useState(false);
 
@@ -42,6 +43,7 @@ const LoadQuinceQsorts = () => {
               return;
             }
           }
+          updateQuinceRawData([...cleanedData]);
           processQuinceQsorts(cleanedData);
           updateNumQuinceQsortsLoaded(cleanedData.length);
           updateNotifyDataUploadSuccess(true);

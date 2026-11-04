@@ -83,9 +83,10 @@ const inputState = create(
     numQuinceQsortsLoaded: 0,
     quinceQsortInputText: '',
     isPatternInputComplete: false,
-
     isLoadConfigXmlButtonGreen: false,
+    quinceRawData: [],
 
+    updateQuinceRawData: (inputValue) => set({ quinceRawData: inputValue }),
     updateIsLoadConfigXmlButtonGreen: (inputValue) =>
       set({ isLoadConfigXmlButtonGreen: inputValue }),
     updateNumCsvQsortsLoaded: (inputValue) => set({ numCsvQsortsLoaded: inputValue }),
