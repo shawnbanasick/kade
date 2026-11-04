@@ -3,6 +3,42 @@ import currentDate1 from '../../renderer/src/Utils/currentDate1';
 import currentTime1 from '../../renderer/src/Utils/currentTime1';
 import ExcelJS from 'exceljs';
 
+// "column4" -> "column +4", "columnN4" -> "column -4"
+function formatKey(key) {
+  let rest = key.replace(/^column\s*/i, '');
+  if (/^N/i.test(rest)) rest = '-' + rest.slice(1);
+  else if (/^P/i.test(rest)) rest = '+' + rest.slice(1);
+  else if (/^\d/.test(rest)) rest = '+' + rest;
+  return `column ${rest}`;
+}
+
+// "(s30) 1111", or "(s30) no response" when the value is empty
+function formatCellText(item) {
+  const raw = item?.value;
+  const hasValue = raw !== null && raw !== undefined && String(raw).trim() !== '';
+  const value = hasValue ? String(raw) : 'no response';
+  return item?.slot ? `(${item.slot}) ${value}` : value;
+}
+
+// Scans all rows and returns [{ key, index, header }, ...] for every dynamic column
+function getDynamicColumnDefs(data) {
+  const maxLengths = new Map(); // keeps first-seen order
+  data.forEach((item) => {
+    Object.entries(item?.columns || {}).forEach(([key, arr]) => {
+      const len = Array.isArray(arr) ? arr.length : 0;
+      maxLengths.set(key, Math.max(maxLengths.get(key) ?? 0, len));
+    });
+  });
+
+  const defs = [];
+  maxLengths.forEach((len, key) => {
+    for (let i = 0; i < len; i++) {
+      defs.push({ key, index: i, header: `${formatKey(key)} #${i + 1}` });
+    }
+  });
+  return defs;
+}
+
 const createQuinceExportExcelFile = async (dataContent) => {
   //   console.log('Data received for Quince Excel file:', JSON.stringify(dataContent.data));
 
@@ -48,7 +84,7 @@ const createQuinceExportExcelFile = async (dataContent) => {
     },
     border: thinBorder,
   };
-  mainWorksheet.columns = [
+  const fixedColumns = [
     { header: textObject?.randomId || 'Random Id', key: 'pName', width: 20 },
     { header: textObject?.participantId || 'Participant Id', key: 'pId', width: 20 },
     { header: textObject?.urlUsercode || 'URL Usercode', key: 'urlUsercode', width: 20 },
@@ -69,6 +105,20 @@ const createQuinceExportExcelFile = async (dataContent) => {
     { header: textObject?.neu || 'Pre-sort Neutral', key: 'neu', width: 50 },
     { header: textObject?.pos || 'Pre-sort Positive', key: 'pos', width: 50 },
   ];
+
+  const dynamicDefs = getDynamicColumnDefs(data);
+  const dynamicColumns = dynamicDefs.map((def) => ({
+    header: def.header,
+    key: `${def.key}__${def.index}`,
+    width: 20,
+  }));
+
+  mainWorksheet.columns = [...fixedColumns, ...dynamicColumns];
+
+  mainWorksheet.getRow(1).eachCell((cell) => {
+    Object.assign(cell, headerStyle);
+  });
+
   mainWorksheet.getRow(1).eachCell((cell) => {
     Object.assign(cell, headerStyle);
   });
@@ -176,10 +226,13 @@ const createQuinceExportExcelFile = async (dataContent) => {
         ? `(${item.items?.pos.length}) ${item.items?.pos.join(', ')}`
         : 'no info';
 
-    // if (item?.columns.length > 0) {
-    //     item?columns.forEach((col, colIndex) => {
-
-    // }
+    // DYNAMIC COLUMNS (column +4 #1, column -4 #1, ...) appended after the fixed columns
+    dynamicDefs.forEach((def, i) => {
+      const dynCell = mainWorksheet.getCell(index + 2, fixedColumns.length + 1 + i);
+      const entry = item?.columns?.[def.key]?.[def.index];
+      dynCell.value = entry ? formatCellText(entry) : '';
+      dynCell.alignment = centered;
+    });
   });
 
   /*
