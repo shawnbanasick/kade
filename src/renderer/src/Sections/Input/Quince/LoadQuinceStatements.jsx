@@ -76,15 +76,9 @@ const LoadQuinceStatements = () => {
     : t('Import statements.xml');
 
   return (
-    <button
+    <NewLoadButton
       onClick={handleClick}
-      className={`text-center font-normal text-[calc(10px+1vw)] font-[Helvetica,sans-serif]
-        rounded mr-[3px] mb-[3px]
-        no-underline text-black
-        transition-[box-shadow] duration-300
-        transform translate-z-0
-        h-[60px] px-[15px] w-[250px]    
-        ${isQuinceStatementsXMLButtonGreen ? 'bg-primary-button' : 'bg-grey-button'}`}
+      className={`${isQuinceStatementsXMLButtonGreen ? 'bg-primary-button' : 'bg-grey-button'}`}
       id="LoadQuinceStatementsButton"
     >
       <div className="flex flex-row justify-center items-center h-full w-full gap-3">
@@ -99,7 +93,7 @@ const LoadQuinceStatements = () => {
         ) : null}
         <div className="font-sans text-sm font-bold">{buttonText}</div>
       </div>
-    </button>
+    </NewLoadButton>
   );
 };
 

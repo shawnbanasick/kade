@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import inputState from '../../GlobalState/inputState';
+import NewLoadButton from '../../../Utils/NewLoadButton';
 
 const LoadConfigXml = () => {
   const { t } = useTranslation();
@@ -78,16 +79,10 @@ const LoadConfigXml = () => {
   const buttonText = isLoadConfigXmlButtonGreen ? t('Config.xml Loaded') : t('Load config.xml');
 
   return (
-    <button
+    <NewLoadButton
       onClick={handleClick}
       // className={`${isLoadConfigXmlButtonGreen ? 'bg-primary-button' : 'bg-grey-button'}`}
-      className={`text-center font-normal text-[calc(10px+1vw)] font-[Helvetica,sans-serif]
-        rounded mr-[3px] mb-[3px]
-        no-underline text-black
-        transition-[box-shadow] duration-300
-        transform translate-z-0
-        h-[60px] px-[15px] w-[250px]    
-        ${isLoadConfigXmlButtonGreen ? 'bg-primary-button' : 'bg-grey-button'}`}
+      className={` ${isLoadConfigXmlButtonGreen ? 'bg-primary-button' : 'bg-grey-button'}`}
       id="LoadConfigXmlButton"
     >
       <div className="flex flex-row justify-center items-center h-full w-full gap-3">
@@ -102,7 +97,7 @@ const LoadConfigXml = () => {
         )}
         <div className="font-sans text-sm font-bold">{buttonText}</div>
       </div>
-    </button>
+    </NewLoadButton>
   );
 };
 
