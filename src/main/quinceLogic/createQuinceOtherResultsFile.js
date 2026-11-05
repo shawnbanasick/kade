@@ -2,8 +2,8 @@ import generateExcelFile from './generateExcelFile';
 
 const createQuinceOtherResultsFile = (dataContent) => {
   // Placeholder function for creating Quince other results file
-  console.log('Data received for Quince other results file:', JSON.stringify(dataContent.data));
-  console.log('Creating Quince other results file...');
+  // console.log('Data received for Quince other results file:', JSON.stringify(dataContent.data));
+  // console.log('Creating Quince other results file...');
 
   generateExcelFile(dataContent);
 

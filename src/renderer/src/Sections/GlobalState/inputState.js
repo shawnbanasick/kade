@@ -84,8 +84,20 @@ const inputState = create(
     quinceQsortInputText: '',
     isPatternInputComplete: false,
     isLoadConfigXmlButtonGreen: false,
+    isQuinceStatementsXMLButtonGreen: false,
     quinceRawData: [],
 
+    quinceExportConfigXmlData: [],
+    isImportConfigXmlButtonDisabled: true,
+    isImportConfigXmlButtonGreen: false,
+
+    updateIsQuinceStatementsXMLButtonGreen: (inputValue) =>
+      set({ isQuinceStatementsXMLButtonGreen: inputValue }),
+    updateIsImportConfigXmlButtonDisabled: (inputValue) =>
+      set({ isImportConfigXmlButtonDisabled: inputValue }),
+    updateIsImportConfigXmlButtonGreen: (inputValue) =>
+      set({ isImportConfigXmlButtonGreen: inputValue }),
+    updateQuinceExportConfigXmlData: (inputValue) => set({ quinceExportConfigXmlData: inputValue }),
     updateQuinceRawData: (inputValue) => set({ quinceRawData: inputValue }),
     updateIsLoadConfigXmlButtonGreen: (inputValue) =>
       set({ isLoadConfigXmlButtonGreen: inputValue }),

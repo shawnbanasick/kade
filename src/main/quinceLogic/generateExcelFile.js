@@ -39,6 +39,29 @@ function getDynamicColumnDefs(data) {
   return defs;
 }
 
+// "1*p*3|2*u*0|..." -> [{ statement: 1, initial: 'p', final: 3 }, ...]
+function parseTrace(trace) {
+  if (typeof trace !== 'string' || !trace.trim()) return [];
+  return trace
+    .split('|')
+    .map((part) => {
+      const [num, initial, final] = part.split('*');
+      return {
+        statement: Number(num),
+        initial: initial?.trim().toLowerCase(),
+        final: Number(final),
+      };
+    })
+    .filter(
+      (e) =>
+        Number.isFinite(e.statement) &&
+        ['p', 'u', 'n'].includes(e.initial) &&
+        Number.isFinite(e.final)
+    );
+}
+
+const INITIAL_LABELS = { p: 'Positive', u: 'Uncertain', n: 'Negative' };
+
 const createQuinceExportExcelFile = async (dataContent) => {
   //   console.log('Data received for Quince Excel file:', JSON.stringify(dataContent.data));
 
@@ -114,6 +137,7 @@ const createQuinceExportExcelFile = async (dataContent) => {
   }));
 
   mainWorksheet.columns = [...fixedColumns, ...dynamicColumns];
+  mainWorksheet.views = [{ state: 'frozen', xSplit: 1, ySplit: 1 }];
 
   mainWorksheet.getRow(1).eachCell((cell) => {
     Object.assign(cell, headerStyle);
@@ -235,826 +259,472 @@ const createQuinceExportExcelFile = async (dataContent) => {
     });
   });
 
-  /*
-  const headerCell = nameWorksheet.getCell('A1');
-  headerCell.font = { name: 'Arial', size: 16, bold: true, color: { argb: '0000000' } };
-  headerCell.alignment = { horizontal: 'center' };
-  headerCell.fill = {
-      type: 'pattern',
-      pattern: 'solid',
-      fgColor: { argb: 'd1e5f2' },
-      };
-      
-  const nameCell = nameWorksheet.getCell('A2');
-  nameCell.font = { name: 'Arial', size: 16, bold: false, color: { argb: '000000' } };
-  nameCell.alignment = { horizontal: 'center' };
-  nameCell.fill = {
-    type: 'pattern',
-    pattern: 'solid',
-    fgColor: { argb: 'FFEE8C' },
-  };
-
-  // 2. sorts worksheet
+  // ===== SORTS WORKSHEET =====
   const sortsWorksheet = workbook.addWorksheet('sorts');
+
+  // Number of statements = longest sort array minus the participant ID
+  const statementCount = data.reduce(
+    (max, item) => Math.max(max, Array.isArray(item?.sort) ? item.sort.length - 1 : 0),
+    0
+  );
+
+  const prefixCount = 3; // participant, partId, urlUsercode
+
   sortsWorksheet.columns = [
-    { header: 'Participant Name and Statement Number', key: 'partName', width: 30 },
+    { header: 'participant', key: 'participant', width: 20 },
+    { header: textObject?.participantId || 'Participant Id', key: 'partId', width: 20 },
+    { header: textObject?.urlUsercode || 'URL Usercode', key: 'urlUsercode', width: 20 },
+    ...Array.from({ length: statementCount }, (_, i) => ({
+      header: `s${i + 1}`,
+      key: `s${i + 1}`,
+      width: 6,
+    })),
   ];
-  const sortsHeaderCell = sortsWorksheet.getCell('A1');
-  sortsHeaderCell.font = { name: 'Arial', size: 16, bold: true, color: { argb: '0000000' } };
-  sortsHeaderCell.alignment = { horizontal: 'center', wrapText: true };
-  sortsHeaderCell.fill = {
-    type: 'pattern',
-    pattern: 'solid',
-    fgColor: { argb: 'd1e5f2' },
+
+  // Style the header row (reuses headerStyle from above)
+  sortsWorksheet.getRow(1).eachCell((cell) => {
+    Object.assign(cell, headerStyle);
+  });
+
+  // Add one row per participant
+  data.forEach((item) => {
+    if (!Array.isArray(item?.sort) || item.sort.length === 0) return;
+    const [participant, ...values] = item.sort;
+
+    const partId =
+      item?.partId === undefined || item?.partId === null ? 'no participant ID' : item.partId;
+    const urlUsercode =
+      item?.urlUsercode === undefined || item?.urlUsercode === null
+        ? 'no URL Usercode'
+        : item.urlUsercode;
+
+    const row = sortsWorksheet.addRow([participant, partId, urlUsercode, ...values]);
+    row.eachCell((cell, colNumber) => {
+      if (colNumber > prefixCount) cell.alignment = centered;
+    });
+  });
+
+  // Freeze the header row and the three identifier columns
+  sortsWorksheet.views = [{ state: 'frozen', xSplit: prefixCount, ySplit: 1 }];
+
+  // ===== PRESORT-UNUSUAL WORKSHEET =====
+  const unusualWorksheet = workbook.addWorksheet('presort-unusual');
+
+  // 1. Work out the final-value scale (min/max) for each project (used internally)
+  const scaleByProject = new Map();
+  data.forEach((item) => {
+    const key = item?.projectName || '';
+    parseTrace(item?.presortTrace).forEach(({ final }) => {
+      const s = scaleByProject.get(key) || { min: Infinity, max: -Infinity };
+      s.min = Math.min(s.min, final);
+      s.max = Math.max(s.max, final);
+      scaleByProject.set(key, s);
+    });
+  });
+
+  const finalSide = (value, scale) => {
+    const mid = (scale.min + scale.max) / 2;
+    if (value > mid) return 'p';
+    if (value < mid) return 'n';
+    return 'u';
   };
 
-  // 3. statements worksheet
-  const statementsWorksheet = workbook.addWorksheet('statements');
-  const stateNumColumn = statementsWorksheet.getColumn('A');
-
-  stateNumColumn.width = 20;
-  stateNumColumn.font = { name: 'Arial', size: 12, bold: false, color: { argb: '0000000' } };
-  stateNumColumn.alignment = { horizontal: 'center' };
-  stateNumColumn.values = [
-    'Number',
-    1,
-    2,
-    3,
-    4,
-    5,
-    6,
-    7,
-    8,
-    9,
-    10,
-    11,
-    12,
-    13,
-    14,
-    15,
-    16,
-    17,
-    18,
-    19,
-    20,
+  unusualWorksheet.columns = [
+    { header: 'Participant #', key: 'num', width: 14 },
+    { header: textObject?.randomId || 'Random Id', key: 'randomId', width: 20 },
+    { header: textObject?.participantId || 'Participant Id', key: 'partId', width: 20 },
+    { header: textObject?.urlUsercode || 'URL Usercode', key: 'urlUsercode', width: 20 },
+    { header: 'Statement', key: 'statement', width: 12 },
+    { header: 'Initial (pre-sort)', key: 'initial', width: 20 },
+    { header: 'Final value', key: 'final', width: 14 },
+    { header: 'Pattern', key: 'pattern', width: 28 },
   ];
-  const stateRow1 = statementsWorksheet.getRow(1);
-  stateRow1.fill = {
+  unusualWorksheet.getRow(1).eachCell((cell) => {
+    Object.assign(cell, headerStyle);
+  });
+
+  // Fill used to flag participants with unusual placements
+  const flagFill = {
     type: 'pattern',
     pattern: 'solid',
-    fgColor: { argb: 'd1e5f2' },
+    fgColor: { argb: 'FFF8CBAD' }, // light orange
   };
 
-  const cell2 = statementsWorksheet.getCell('B1');
-  cell2.value = 'Statements';
-  cell2.alignment = { horizontal: 'center' };
-  const stateColumn2 = (statementsWorksheet.getColumn('B').width = 150);
+  // 2. Add rows
+  data.forEach((item, index) => {
+    const scale = scaleByProject.get(item?.projectName || '');
+    const entries = parseTrace(item?.presortTrace);
+    if (!scale || entries.length === 0) return;
 
-  // 3. pattern worksheet
-  const patternWorksheet = workbook.addWorksheet('pattern');
-  const patternRow1 = patternWorksheet.getRow(1);
-  for (let c = 1; c <= 20; c++) {
-    const cell = patternRow1.getCell(c);
-    cell.value = -7 + c;
-    cell.fill = {
-      type: 'pattern',
-      pattern: 'solid',
-      fgColor: { argb: 'd1e5f2' },
+    const participantNum = index + 1;
+    const randomId = item?.randomId || '';
+    const partId =
+      item?.partId === undefined || item?.partId === null ? 'no participant ID' : item.partId;
+    const urlUsercode =
+      item?.urlUsercode === undefined || item?.urlUsercode === null
+        ? 'no URL Usercode'
+        : item.urlUsercode;
+
+    const unusual = entries.filter((e) => {
+      const side = finalSide(e.final, scale);
+      return (e.initial === 'p' && side === 'n') || (e.initial === 'n' && side === 'p');
+    });
+
+    const styleRow = (row, flagged) => {
+      row.eachCell((cell, col) => {
+        if (col === 1 || col > 4) cell.alignment = centered;
+      });
+      if (flagged) row.getCell(2).fill = flagFill; // randomId cell
     };
-    cell.alignment = { horizontal: 'center' };
-    cell.border = {
-      top: { style: 'thin' },
-      left: { style: 'thin' },
-      bottom: { style: 'thin' },
-      right: { style: 'thin' },
-    };
+
+    if (unusual.length === 0) {
+      const row = unusualWorksheet.addRow({
+        num: participantNum,
+        randomId,
+        partId,
+        urlUsercode,
+        pattern: 'no unusual statements',
+      });
+      styleRow(row, false);
+      return;
+    }
+
+    unusual.forEach((e) => {
+      const row = unusualWorksheet.addRow({
+        num: participantNum,
+        randomId,
+        partId,
+        urlUsercode,
+        statement: e.statement,
+        initial: INITIAL_LABELS[e.initial],
+        final: e.final,
+        pattern: e.initial === 'p' ? 'Positive → Negative side' : 'Negative → Positive side',
+      });
+      styleRow(row, true);
+    });
+  });
+
+  unusualWorksheet.views = [{ state: 'frozen', xSplit: 4, ySplit: 1 }];
+
+  // ===== SURVEY HELPERS =====
+  const NO_RESPONSE = 'no response';
+  const PCT = '0.0%';
+
+  const isRating = (type) => /^rating\d+$/.test(type);
+
+  // q0 -> itemNum1, q1 -> itemNum2, ...
+  const itemKey = (q) => `itemNum${Number(String(q.key).replace(/\D/g, '')) + 1}`;
+
+  // Strips {{{b}}}...{{{/b}}} and <b>...</b> markup from labels, notes, and options
+  const cleanLabel = (s) =>
+    String(s ?? '')
+      .replace(/\{\{\{\/?[a-z]+\}\}\}/gi, '')
+      .replace(/<[^>]*>/g, '')
+      .replace(/\s+/g, ' ')
+      .trim();
+
+  // 2 | [1,2] | "1,2,nr,1" | "4-some text" -> [{ num, text } | null, ...]
+  function parseTokens(raw) {
+    const parts = Array.isArray(raw) ? raw : typeof raw === 'string' ? raw.split(',') : [raw];
+    return parts.map((p) => {
+      if (p === null || p === undefined) return null;
+      const s = String(p).trim();
+      if (s === '' || /^(nr|no response)$/i.test(s)) return null;
+      const m = s.match(/^(\d+)\s*-\s*(.*)$/);
+      if (m) return { num: Number(m[1]), text: m[2].trim() };
+      if (/^\d+$/.test(s)) return { num: Number(s), text: '' };
+      return { num: null, text: s };
+    });
   }
-  const patternRow2 = patternWorksheet.getRow(2);
-  for (let d = 1; d <= 20; d++) {
-    const cell2 = patternRow2.getCell(d);
-    cell2.fill = {
-      type: 'pattern',
-      pattern: 'solid',
-      fgColor: { argb: 'FFEE8C' },
-    };
-    cell2.border = {
-      top: { style: 'thin' },
-      left: { style: 'thin' },
-      bottom: { style: 'thin' },
-      right: { style: 'thin' },
-    };
+
+  // Option number(s) -> readable text, e.g. "2 - Sophomore" or "4 - Other (...): typed text"
+  const describeChoice = (q) => (t) => {
+    const label = t.num >= 1 ? q.options[t.num - 1] : undefined;
+    const base = label ? `${t.num} - ${cleanLabel(label)}` : String(t.num ?? '');
+    return t.text ? (base ? `${base}: ${t.text}` : t.text) : base;
+  };
+
+  // Cell value(s) for the survey-responses sheet (one value, or one per statement for ratings)
+  function answerCells(q, raw) {
+    if (q.type === 'text' || q.type === 'textarea') {
+      const s = raw === null || raw === undefined ? '' : String(raw).trim();
+      return [s === '' || /^no response$/i.test(s) ? NO_RESPONSE : s];
+    }
+    const tokens = parseTokens(raw);
+    if (isRating(q.type)) {
+      return q.options.map((_, i) =>
+        tokens[i] && tokens[i].num !== null ? tokens[i].num : NO_RESPONSE
+      );
+    }
+    // radio, select, checkbox
+    const chosen = (q.type === 'checkbox' ? tokens : tokens.slice(0, 1)).filter(Boolean);
+    return [chosen.length ? chosen.map(describeChoice(q)).join('; ') : NO_RESPONSE];
   }
-  // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-  // EXAMPLE - sorts
-  const exSortsWorksheet = workbook.addWorksheet('EXAMPLE-sorts');
-  exSortsWorksheet.columns = [
-    { header: 'Participant Name and Statement Number', key: 'partName', width: 30 },
-  ];
-  const exSortsHeaderCell = exSortsWorksheet.getCell('A1');
-  exSortsHeaderCell.font = { name: 'Arial', size: 16, bold: true, color: { argb: '0000000' } };
-  // exSortsHeaderCell.alignment = { horizontal: "center", wrapText: true };
-  exSortsHeaderCell.fill = {
-    type: 'pattern',
-    pattern: 'solid',
-    fgColor: { argb: 'd1e5f2' },
-  };
-  const exSortsColA = exSortsWorksheet.getColumn('A');
-  exSortsColA.alignment = { horizontal: 'center', wrapText: true };
-  exSortsColA.values = [
-    'Respondent Name and Statement Number',
-    -4,
-    -4,
-    -3,
-    -3,
-    -3,
-    -2,
-    -2,
-    -2,
-    -2,
-    -1,
-    -1,
-    -1,
-    -1,
-    -1,
-    0,
-    0,
-    0,
-    0,
-    0,
-    1,
-    1,
-    1,
-    1,
-    1,
-    2,
-    2,
-    2,
-    2,
-    3,
-    3,
-    3,
-    4,
-    4,
-  ];
+  function addSurveySheets({ workbook, data, questions, headerStyle, textObject }) {
+    const centered = { horizontal: 'center', vertical: 'middle' };
+    const reportQs = (questions || []).filter((q) => q?.type && q.type !== 'information');
+    if (reportQs.length === 0) return;
 
-  const exSortsColB = exSortsWorksheet.getColumn('B');
-  exSortsColB.alignment = { horizontal: 'center', wrapText: true };
-  exSortsColB.values = [
-    'US1',
-    16,
-    20,
-    17,
-    18,
-    30,
-    3,
-    5,
-    31,
-    32,
-    1,
-    8,
-    10,
-    15,
-    19,
-    2,
-    4,
-    7,
-    9,
-    26,
-    6,
-    11,
-    12,
-    24,
-    25,
-    13,
-    22,
-    28,
-    29,
-    14,
-    21,
-    23,
-    27,
-    33,
-  ];
+    const styleHeaderRow = (row) => row.eachCell((cell) => Object.assign(cell, headerStyle));
 
-  const exSortsColC = exSortsWorksheet.getColumn('C');
-  exSortsColC.alignment = { horizontal: 'center', wrapText: true };
-  exSortsColC.values = [
-    'US2',
-    30,
-    9,
-    16,
-    32,
-    4,
-    18,
-    31,
-    19,
-    22,
-    3,
-    1,
-    12,
-    29,
-    14,
-    20,
-    17,
-    10,
-    2,
-    24,
-    8,
-    15,
-    7,
-    26,
-    23,
-    5,
-    11,
-    25,
-    27,
-    6,
-    28,
-    21,
-    13,
-    33,
-  ];
-
-  const exSortsColD = exSortsWorksheet.getColumn('D');
-  exSortsColD.alignment = { horizontal: 'center', wrapText: true };
-  exSortsColD.values = [
-    'US3',
-    10,
-    7,
-    16,
-    8,
-    11,
-    22,
-    3,
-    2,
-    25,
-    30,
-    18,
-    31,
-    5,
-    28,
-    29,
-    20,
-    15,
-    23,
-    6,
-    9,
-    19,
-    27,
-    21,
-    33,
-    1,
-    14,
-    17,
-    24,
-    12,
-    26,
-    13,
-    32,
-    4,
-  ];
-
-  const exSortsColE = exSortsWorksheet.getColumn('E');
-  exSortsColE.alignment = { horizontal: 'center', wrapText: true };
-  exSortsColE.values = [
-    'US4',
-    10,
-    16,
-    7,
-    3,
-    15,
-    8,
-    20,
-    14,
-    24,
-    11,
-    5,
-    27,
-    17,
-    4,
-    25,
-    29,
-    9,
-    33,
-    12,
-    22,
-    2,
-    31,
-    23,
-    26,
-    30,
-    18,
-    28,
-    32,
-    6,
-    1,
-    13,
-    19,
-    21,
-  ];
-
-  const exSortsColF = exSortsWorksheet.getColumn('F');
-  exSortsColF.alignment = { horizontal: 'center', wrapText: true };
-  exSortsColF.values = [
-    'JP5',
-    9,
-    1,
-    24,
-    25,
-    26,
-    30,
-    18,
-    32,
-    19,
-    4,
-    33,
-    2,
-    13,
-    21,
-    15,
-    20,
-    17,
-    12,
-    28,
-    5,
-    29,
-    31,
-    23,
-    6,
-    16,
-    8,
-    11,
-    22,
-    3,
-    14,
-    27,
-    10,
-    7,
-  ];
-
-  const exSortsColG = exSortsWorksheet.getColumn('G');
-  exSortsColG.alignment = { horizontal: 'center', wrapText: true };
-  exSortsColG.values = [
-    'CA6',
-    24,
-    15,
-    33,
-    2,
-    22,
-    9,
-    21,
-    10,
-    7,
-    20,
-    17,
-    12,
-    29,
-    23,
-    18,
-    8,
-    3,
-    14,
-    27,
-    1,
-    19,
-    13,
-    31,
-    11,
-    25,
-    26,
-    30,
-    32,
-    4,
-    5,
-    16,
-    28,
-    6,
-  ];
-
-  const exSortsColH = exSortsWorksheet.getColumn('H');
-  exSortsColH.alignment = { horizontal: 'center', wrapText: true };
-  exSortsColH.values = [
-    'UK7',
-    24,
-    15,
-    29,
-    23,
-    8,
-    33,
-    21,
-    3,
-    26,
-    22,
-    10,
-    7,
-    12,
-    31,
-    2,
-    9,
-    27,
-    19,
-    5,
-    13,
-    11,
-    30,
-    4,
-    6,
-    20,
-    18,
-    14,
-    1,
-    17,
-    25,
-    32,
-    16,
-    28,
-  ];
-
-  const exSortsColI = exSortsWorksheet.getColumn('I');
-  exSortsColI.alignment = { horizontal: 'center', wrapText: true };
-  exSortsColI.values = [
-    'US8',
-    27,
-    5,
-    19,
-    4,
-    25,
-    31,
-    30,
-    1,
-    32,
-    8,
-    10,
-    12,
-    9,
-    14,
-    29,
-    3,
-    7,
-    17,
-    16,
-    26,
-    13,
-    11,
-    20,
-    18,
-    33,
-    21,
-    22,
-    2,
-    24,
-    23,
-    28,
-    15,
-    6,
-  ];
-
-  const exSortsColJ = exSortsWorksheet.getColumn('J');
-  exSortsColJ.alignment = { horizontal: 'center', wrapText: true };
-  exSortsColJ.values = [
-    'FR9',
-    5,
-    28,
-    22,
-    23,
-    6,
-    12,
-    9,
-    16,
-    24,
-    27,
-    30,
-    32,
-    18,
-    15,
-    10,
-    29,
-    3,
-    26,
-    11,
-    4,
-    25,
-    13,
-    20,
-    2,
-    19,
-    8,
-    7,
-    17,
-    31,
-    1,
-    21,
-    14,
-    33,
-  ];
-
-  const exSortsColL = (exSortsWorksheet.getColumn('L').width = 100);
-  const exSortsExplan1 = exSortsWorksheet.getCell('L2');
-  exSortsExplan1.value = 'Do not change the blue cells';
-  exSortsExplan1.fill = {
-    type: 'pattern',
-    pattern: 'solid',
-    fgColor: { argb: 'ffa500' },
-  };
-  const exSortsExplan3 = exSortsWorksheet.getCell('L3');
-  exSortsExplan3.fill = {
-    type: 'pattern',
-    pattern: 'solid',
-    fgColor: { argb: 'ffa500' },
-  };
-  const exSortsExplan4 = exSortsWorksheet.getCell('L4');
-  exSortsExplan4.value =
-    '1) add all of your possible sort values from lowest to highest in column A';
-  exSortsExplan4.fill = {
-    type: 'pattern',
-    pattern: 'solid',
-    fgColor: { argb: 'ffa500' },
-  };
-  const exSortsExplan5 = exSortsWorksheet.getCell('L5');
-  exSortsExplan5.value = '2) add participant names in row 1';
-  exSortsExplan5.fill = {
-    type: 'pattern',
-    pattern: 'solid',
-    fgColor: { argb: 'ffa500' },
-  };
-  const exSortsExplan6 = exSortsWorksheet.getCell('L6');
-  exSortsExplan6.value = '3) add participant sorts in columns';
-  exSortsExplan6.fill = {
-    type: 'pattern',
-    pattern: 'solid',
-    fgColor: { argb: 'ffa500' },
-  };
-
-  // EXAMPLE - statements
-  const exStatementsWorksheet = workbook.addWorksheet('EXAMPLE-statements');
-  const exStateNumColumn = exStatementsWorksheet.getColumn('A');
-  const exStateA1 = exStatementsWorksheet.getCell('A1');
-  exStateA1.fill = {
-    type: 'pattern',
-    pattern: 'solid',
-    fgColor: { argb: 'd1e5f2' },
-  };
-
-  const exStateB1 = exStatementsWorksheet.getCell('B1');
-  exStateB1.fill = {
-    type: 'pattern',
-    pattern: 'solid',
-    fgColor: { argb: 'd1e5f2' },
-  };
-
-  exStateNumColumn.width = 20;
-  exStateNumColumn.font = { name: 'Arial', size: 12, bold: false, color: { argb: '0000000' } };
-  exStateNumColumn.alignment = { horizontal: 'center' };
-  exStateNumColumn.values = [
-    'Number',
-    1,
-    2,
-    3,
-    4,
-    5,
-    6,
-    7,
-    8,
-    9,
-    10,
-    11,
-    12,
-    13,
-    14,
-    15,
-    16,
-    17,
-    18,
-    19,
-    20,
-    21,
-    22,
-    23,
-    24,
-    25,
-    26,
-    27,
-    28,
-    29,
-    30,
-    31,
-    32,
-    33,
-  ];
-  const exStateRow1 = statementsWorksheet.getRow(1);
-  exStateRow1.fill = {
-    type: 'pattern',
-    pattern: 'solid',
-    fgColor: { argb: 'd1e5f2' },
-  };
-
-  const exStateColumn2 = exStatementsWorksheet.getColumn('B');
-  exStateColumn2.width = 80;
-  exStateColumn2.values = [
-    'Statements',
-    'We accept improvements in status and power of lower class',
-    'All men expected to try to improve selves',
-    'Success in life by a previously deprived person is resented',
-    'Men can expect fair treatment according to merit',
-    'Lower-class not revolutionary',
-    'Political goals relatively moderate, even conservative',
-    'Those born to high place in society should retain it',
-    'Person with wealth deserves place in high society',
-    'We try to eliminate privileged classes',
-    'We accept aristocratic-type titles and other honors',
-    'The government has its secrets,  this is generally accepted',
-    'Emphasis on publicity in political matters: no secrets',
-    'Encouraged to think of ourselves as competing for success',
-    'Social status equated with manner of speech',
-    'We take law into our own hands,  mob action and vigilantes',
-    'Close ties to Mother Country,  as Britain still is for many',
-    'We prefer companionship and helping hand',
-    'Some disdain for acquiring wealth for its own sake',
-    'High value placed on protecting and promoting underdog',
-    'We like the idea of a welfare state',
-    'We value the race for success',
-    'Corrupt means of achieving success are accepted',
-    'One law for the rich, another for the poor',
-    'Lack of respect for the police, and law enforcement',
-    'Trust in police has sunk deeply into our national character',
-    'Worth of a man is judged by what he is, not by education',
-    'Deep respect for the rich, the educated',
-    "We are tolerant of popular opinion, don't like extremes",
-    'Poor on earth will enjoy higher status in after-life',
-    'Respect for civil liberties and minority rights',
-    'Virtue tends to be its own reward',
-    'Position of depressed classes must be raised',
-    'Emphasis is on getting ahead',
-  ];
-  const exCell2 = exStatementsWorksheet.getCell('B1');
-  exCell2.alignment = { horizontal: 'center' };
-  const exCell3 = exStatementsWorksheet.getCell('D4');
-  exCell3.value = '1) One statement per line';
-  exCell3.fill = {
-    type: 'pattern',
-    pattern: 'solid',
-    fgColor: { argb: 'ffa500' },
-  };
-  const exCol1 = exStatementsWorksheet.getColumn('D');
-  exCol1.width = 30;
-
-  // EXAMPLE - Pattern
-  const exPatternWorksheet = workbook.addWorksheet('EXAMPLE-pattern');
-  const exPatternRow1 = exPatternWorksheet.getRow(1);
-  for (let c = 1; c <= 20; c++) {
-    const exCell = exPatternRow1.getCell(c);
-    exCell.value = -7 + c;
-    exCell.fill = {
-      type: 'pattern',
-      pattern: 'solid',
-      fgColor: { argb: 'd1e5f2' },
+    // Unique, legal sheet names (max 31 chars)
+    const used = new Set(workbook.worksheets.map((w) => w.name.toLowerCase()));
+    const uniqueName = (base) => {
+      const clean =
+        base
+          .replace(/[\\\/\?\*\[\]:]/g, '-')
+          .replace(/^'+|'+$/g, '')
+          .trim() || 'sheet';
+      let name = clean.slice(0, 31);
+      for (let n = 2; used.has(name.toLowerCase()); n++) {
+        const suffix = ` (${n})`;
+        name = clean.slice(0, 31 - suffix.length) + suffix;
+      }
+      used.add(name.toLowerCase());
+      return name;
     };
-    exCell.alignment = { horizontal: 'center' };
-    exCell.border = {
-      top: { style: 'thin' },
-      left: { style: 'thin' },
-      bottom: { style: 'thin' },
-      right: { style: 'thin' },
+
+    // ---------- 1. SURVEY-RESPONSES SHEET ----------
+    const respWs = workbook.addWorksheet(uniqueName('survey-responses'));
+    const colDefs = [
+      { header: 'Participant #', width: 14 },
+      { header: textObject?.randomId || 'Random Id', width: 20 },
+      { header: textObject?.participantId || 'Participant Id', width: 20 },
+      { header: textObject?.urlUsercode || 'URL Usercode', width: 20 },
+    ];
+    const notes = {}; // column number -> header note
+    const ratingCols = new Set();
+
+    reportQs.forEach((q) => {
+      if (isRating(q.type)) {
+        q.options.forEach((opt, i) => {
+          colDefs.push({ header: `${q.key}.${i + 1}`, width: 12 });
+          const colNum = colDefs.length;
+          ratingCols.add(colNum);
+          notes[colNum] = `${cleanLabel(q.label)}\n${cleanLabel(opt)}`;
+        });
+      } else {
+        colDefs.push({
+          header: q.key,
+          width: q.type === 'textarea' || q.type === 'text' ? 35 : 28,
+        });
+        notes[colDefs.length] = cleanLabel(q.label);
+      }
+    });
+
+    respWs.columns = colDefs;
+    styleHeaderRow(respWs.getRow(1));
+    Object.entries(notes).forEach(([col, text]) => {
+      respWs.getRow(1).getCell(Number(col)).note = text; // hover a header to see the question
+    });
+
+    data.forEach((item, index) => {
+      const partId =
+        item?.partId === undefined || item?.partId === null ? 'no participant ID' : item.partId;
+      const urlUsercode =
+        item?.urlUsercode === undefined || item?.urlUsercode === null
+          ? 'no URL Usercode'
+          : item.urlUsercode;
+      const answers = reportQs.flatMap((q) => answerCells(q, item?.itemNums?.[itemKey(q)]));
+      const row = respWs.addRow([index + 1, item?.randomId || '', partId, urlUsercode, ...answers]);
+      row.eachCell({ includeEmpty: true }, (cell, col) => {
+        cell.alignment =
+          col === 1 || ratingCols.has(col) ? centered : { vertical: 'top', wrapText: true };
+      });
+    });
+    respWs.views = [{ state: 'frozen', xSplit: 4, ySplit: 1 }];
+
+    // ---------- 2. ONE SUMMARY SHEET PER QUESTION ----------
+    const writeTitle = (ws, q, span) => {
+      const title = ws.addRow([cleanLabel(q.label)]);
+      ws.mergeCells(title.number, 1, title.number, span);
+      title.getCell(1).font = { name: 'Arial', size: 12, bold: true };
+      title.getCell(1).alignment = { wrapText: true, vertical: 'middle' };
+      title.height = 34;
+      const noteText = cleanLabel(q.note);
+      if (noteText) {
+        const r = ws.addRow([noteText]);
+        ws.mergeCells(r.number, 1, r.number, span);
+        r.getCell(1).font = { name: 'Arial', italic: true };
+        r.getCell(1).alignment = { wrapText: true };
+      }
+      ws.addRow([]);
     };
+
+    const bold = (row) => (row.getCell(1).font = { name: 'Arial', bold: true });
+
+    reportQs.forEach((q) => {
+      const baseName = `${q.key} ${cleanLabel(q.label).replace(/^\d+\.\s*/, '')}`;
+      const ws = workbook.addWorksheet(uniqueName(baseName));
+      const raws = data.map((item) => item?.itemNums?.[itemKey(q)]);
+
+      // ----- radio / select / checkbox -----
+      if (['radio', 'select', 'checkbox'].includes(q.type)) {
+        const counts = q.options.map(() => 0);
+        const others = [];
+        let responded = 0;
+
+        raws.forEach((raw, idx) => {
+          const tokens = parseTokens(raw);
+          const chosen = (q.type === 'checkbox' ? tokens : tokens.slice(0, 1)).filter(
+            (t) => t && t.num >= 1 && t.num <= q.options.length
+          );
+          if (chosen.length === 0) return;
+          responded++;
+          chosen.forEach((t) => {
+            counts[t.num - 1]++;
+            if (t.text) others.push([t.text, idx + 1]);
+          });
+        });
+
+        ws.getColumn(1).width = 60;
+        ws.getColumn(2).width = 14;
+        ws.getColumn(3).width = 14;
+        writeTitle(ws, q, 3);
+        styleHeaderRow(ws.addRow(['Option', 'Count', 'Percent']));
+
+        q.options.forEach((opt, i) => {
+          const row = ws.addRow([
+            cleanLabel(opt),
+            counts[i],
+            responded ? counts[i] / responded : 0,
+          ]);
+          row.getCell(3).numFmt = PCT;
+          row.getCell(2).alignment = centered;
+          row.getCell(3).alignment = centered;
+        });
+
+        ws.addRow([]);
+        [
+          ['Responded', responded],
+          ['No response', data.length - responded],
+          ['Total participants', data.length],
+        ].forEach(([label, n]) => {
+          const row = ws.addRow([label, n]);
+          row.getCell(2).alignment = centered;
+        });
+
+        if (others.length > 0) {
+          ws.addRow([]);
+          bold(ws.addRow(['Text entered with "Other" options']));
+          styleHeaderRow(ws.addRow(['Text', 'Participant #']));
+          others.forEach(([text, num]) => {
+            const row = ws.addRow([text, num]);
+            row.getCell(1).alignment = { wrapText: true, vertical: 'top' };
+            row.getCell(2).alignment = centered;
+          });
+        }
+        return;
+      }
+
+      // ----- text / textarea -----
+      if (q.type === 'text' || q.type === 'textarea') {
+        const freq = new Map();
+        let responded = 0;
+        raws.forEach((raw) => {
+          const s = raw === null || raw === undefined ? '' : String(raw).trim();
+          if (s === '' || /^no response$/i.test(s)) return;
+          responded++;
+          const key = s.toLowerCase();
+          const entry = freq.get(key) || { text: s, count: 0 };
+          entry.count++;
+          freq.set(key, entry);
+        });
+
+        ws.getColumn(1).width = 70;
+        ws.getColumn(2).width = 14;
+        ws.getColumn(3).width = 14;
+        writeTitle(ws, q, 3);
+        styleHeaderRow(ws.addRow(['Response', 'Count', 'Percent']));
+
+        [...freq.values()]
+          .sort((a, b) => b.count - a.count)
+          .forEach((e) => {
+            const row = ws.addRow([e.text, e.count, responded ? e.count / responded : 0]);
+            row.getCell(1).alignment = { wrapText: true, vertical: 'top' };
+            row.getCell(2).alignment = centered;
+            row.getCell(3).alignment = centered;
+            row.getCell(3).numFmt = PCT;
+          });
+
+        ws.addRow([]);
+        [
+          ['Responded', responded],
+          ['No response', data.length - responded],
+          ['Total participants', data.length],
+        ].forEach(([label, n]) => {
+          const row = ws.addRow([label, n]);
+          row.getCell(2).alignment = centered;
+        });
+        return;
+      }
+
+      // ----- rating2 / rating7 / rating10 ... -----
+      if (isRating(q.type)) {
+        const K = Number(q.type.replace('rating', ''));
+        const parsed = raws.map(parseTokens);
+
+        const stats = q.options.map((_, i) => {
+          const counts = Array(K).fill(0);
+          let noResp = 0;
+          parsed.forEach((tokens) => {
+            const t = tokens[i];
+            if (t && t.num >= 1 && t.num <= K) counts[t.num - 1]++;
+            else noResp++;
+          });
+          const n = counts.reduce((a, b) => a + b, 0);
+          const sum = counts.reduce((a, c, idx) => a + c * (idx + 1), 0);
+          return { counts, noResp, n, mean: n ? sum / n : '' };
+        });
+
+        const scale = Array.from({ length: K }, (_, i) => i + 1);
+        const span = 3 + K + 1;
+        ws.getColumn(1).width = 60;
+        for (let c = 2; c <= span; c++) ws.getColumn(c).width = 11;
+        writeTitle(ws, q, span);
+
+        // Counts table
+        bold(ws.addRow(['Counts']));
+        styleHeaderRow(ws.addRow(['Statement', 'n', 'Mean', ...scale, 'No response']));
+        q.options.forEach((opt, i) => {
+          const s = stats[i];
+          const row = ws.addRow([cleanLabel(opt), s.n, s.mean, ...s.counts, s.noResp]);
+          row.getCell(1).alignment = { wrapText: true, vertical: 'middle' };
+          row.getCell(3).numFmt = '0.00';
+          for (let c = 2; c <= span; c++) row.getCell(c).alignment = centered;
+        });
+
+        // Percent table (of those who answered that statement)
+        ws.addRow([]);
+        bold(ws.addRow(['Percent of respondents']));
+        styleHeaderRow(ws.addRow(['Statement', 'n', 'Mean', ...scale]));
+        q.options.forEach((opt, i) => {
+          const s = stats[i];
+          const row = ws.addRow([
+            cleanLabel(opt),
+            s.n,
+            s.mean,
+            ...s.counts.map((c) => (s.n ? c / s.n : 0)),
+          ]);
+          row.getCell(1).alignment = { wrapText: true, vertical: 'middle' };
+          row.getCell(3).numFmt = '0.00';
+          for (let c = 2; c <= 3 + K; c++) row.getCell(c).alignment = centered;
+          for (let c = 4; c <= 3 + K; c++) row.getCell(c).numFmt = PCT;
+        });
+      }
+    });
   }
-  const exPatternRow2 = exPatternWorksheet.getRow(2);
-  exPatternRow2.alignment = { horizontal: 'center' };
-  exPatternRow2.values = [0, 0, 2, 3, 4, 5, 5, 5, 4, 3, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-  for (let d = 1; d <= 20; d++) {
-    const exCell2 = exPatternRow2.getCell(d);
-    exCell2.fill = {
-      type: 'pattern',
-      pattern: 'solid',
-      fgColor: { argb: 'FFEE8C' },
-    };
-    exCell2.border = {
-      top: { style: 'thin' },
-      left: { style: 'thin' },
-      bottom: { style: 'thin' },
-      right: { style: 'thin' },
-    };
-  }
-  const exPatternCellB5 = exPatternWorksheet.getCell('B5');
-  exPatternCellB5.value = 'Do not change the blue cells';
-  exPatternCellB5.fill = {
-    type: 'pattern',
-    pattern: 'solid',
-    fgColor: { argb: 'ffa500' },
-  };
-  const exPatternCellB6 = exPatternWorksheet.getCell('B6');
-  exPatternCellB6.fill = {
-    type: 'pattern',
-    pattern: 'solid',
-    fgColor: { argb: 'ffa500' },
-  };
-  const exPatternCellB7 = exPatternWorksheet.getCell('B7');
-  exPatternCellB7.value = '1) add the number of statements in each column';
-  exPatternCellB7.fill = {
-    type: 'pattern',
-    pattern: 'solid',
-    fgColor: { argb: 'ffa500' },
-  };
-  const exPatternCellB8 = exPatternWorksheet.getCell('B8');
-  exPatternCellB8.value = '2) input a zero if there are no statements in that column';
-  exPatternCellB8.fill = {
-    type: 'pattern',
-    pattern: 'solid',
-    fgColor: { argb: 'ffa500' },
-  };
 
-  // VERSION
-  const versionWorksheet = workbook.addWorksheet('version');
-  const verCellA1 = versionWorksheet.getCell('A1');
-  verCellA1.value = 'Version';
-  verCellA1.fill = {
-    type: 'pattern',
-    pattern: 'solid',
-    fgColor: { argb: 'd1e5f2' },
-  };
-  verCellA1.alignment = { horizontal: 'center' };
-  const verCellA2 = versionWorksheet.getCell('A2');
-  verCellA2.value = 2;
-  verCellA2.fill = {
-    type: 'pattern',
-    pattern: 'solid',
-    fgColor: { argb: 'd1e5f2' },
-  };
-  verCellA2.alignment = { horizontal: 'center' };
-  verCellA1.border = {
-    top: { style: 'thin' },
-    left: { style: 'thin' },
-    bottom: { style: 'thin' },
-    right: { style: 'thin' },
-  };
-  verCellA2.border = {
-    top: { style: 'thin' },
-    left: { style: 'thin' },
-    bottom: { style: 'thin' },
-    right: { style: 'thin' },
-  };
-  const verCellA5 = versionWorksheet.getCell('A5');
-  verCellA5.value = 'Do not change the version number';
-  verCellA5.fill = {
-    type: 'pattern',
-    pattern: 'solid',
-    fgColor: { argb: 'ffa500' },
-  };
-  const verCellA6 = versionWorksheet.getCell('A6');
-  verCellA6.value = 'Do not delete this sheet';
-  verCellA6.fill = {
-    type: 'pattern',
-    pattern: 'solid',
-    fgColor: { argb: 'ffa500' },
-  };
+  addSurveySheets({
+    workbook,
+    data,
+    questions: dataContent?.surveyQuestions || [],
+    headerStyle,
+    textObject,
+  });
 
-  // TYPE
-  const typeWorksheet = workbook.addWorksheet('type');
-  const typeCellA1 = typeWorksheet.getCell('A1');
-  typeCellA1.value = 'Type';
-  typeCellA1.fill = {
-    type: 'pattern',
-    pattern: 'solid',
-    fgColor: { argb: 'd1e5f2' },
-  };
-  typeCellA1.alignment = { horizontal: 'center' };
-  const typeCellA2 = typeWorksheet.getCell('A2');
-  typeCellA2.value = 1;
-  typeCellA2.fill = {
-    type: 'pattern',
-    pattern: 'solid',
-    fgColor: { argb: 'd1e5f2' },
-  };
-  typeCellA2.alignment = { horizontal: 'center' };
-  typeCellA1.border = {
-    top: { style: 'thin' },
-    left: { style: 'thin' },
-    bottom: { style: 'thin' },
-    right: { style: 'thin' },
-  };
-  typeCellA2.border = {
-    top: { style: 'thin' },
-    left: { style: 'thin' },
-    bottom: { style: 'thin' },
-    right: { style: 'thin' },
-  };
-  const typeCellA5 = typeWorksheet.getCell('A5');
-  typeCellA5.value = 'Do not change the type number';
-  typeCellA5.fill = {
-    type: 'pattern',
-    pattern: 'solid',
-    fgColor: { argb: 'ffa500' },
-  };
-  const typeCellA6 = typeWorksheet.getCell('A6');
-  typeCellA6.value = 'Do not delete this sheet';
-  typeCellA6.fill = {
-    type: 'pattern',
-    pattern: 'solid',
-    fgColor: { argb: 'ffa500' },
-  };
-
-  */
-
+  // ===== SAVE FILE =====
   const timeStamp = `${currentDate1()}_${currentTime1()}`;
 
   let nameFile = `KADE_Quince_OtherData_Exported_${timeStamp}.xlsx`;

@@ -1,6 +1,14 @@
 import React from 'react';
 
-const LoadButton = ({ isActive = false, disabled = false, onClick, children, className = '' }) => {
+const NewLoadButton = ({
+  isActive = false,
+  disabled = false,
+  onClick,
+  children,
+  className = '',
+}) => {
+  console.log(className);
+
   return (
     <button
       type="button"
@@ -34,4 +42,4 @@ const LoadButton = ({ isActive = false, disabled = false, onClick, children, cla
   );
 };
 
-export default LoadButton;
+export default NewLoadButton;

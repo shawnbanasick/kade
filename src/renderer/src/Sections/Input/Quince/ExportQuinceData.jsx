@@ -6,23 +6,16 @@ const ExportQuinceData = () => {
   const { t } = useTranslation();
   // getState
   const isActive = inputState((state) => state.isShowNetlifyInputButtonGreen);
-  const isDisabled = inputState((state) => state.disabledNetlifyButton);
-  const updateShowSheetsInput = inputState((state) => state.updateShowSheetsInput);
-  const updateShowNetlifyInput = inputState((state) => state.updateShowNetlifyInput);
-  const updateShowFirebaseInput = inputState((state) => state.updateShowFirebaseInput);
-  const updateIsShowSheetsInputButtonGreen = inputState(
-    (state) => state.updateIsShowSheetsInputButtonGreen
-  );
-  const updateIsShowFirebaseInputButtonGreen = inputState(
-    (state) => state.updateIsShowFirebaseInputButtonGreen
-  );
-  const updateIsShowNetlifyInputButtonGreen = inputState(
-    (state) => state.updateIsShowNetlifyInputButtonGreen
-  );
+  const isDisabled = inputState((state) => state.isImportConfigXmlButtonDisabled);
   const quinceRawData = inputState((state) => state.quinceRawData);
+  const quinceExportConfigXmlData = inputState((state) => state.quinceExportConfigXmlData);
 
-  console.log('quinceRawData in ExportQuinceData.jsx:', JSON.stringify(quinceRawData));
-  // console.log('quinceRawData columns in ExportQuinceData.jsx:', quinceRawData[0].columns);
+  // console.log('quinceRawData in ExportQuinceData.jsx:', JSON.stringify(quinceRawData[0].sort));
+  // console.log('quinceRawData columns in ExportQuinceData.jsx:', JSON.stringify(quinceRawData[0].columns));
+  console.log(
+    'quinceRawData presortTrace in ExportQuinceData.jsx:',
+    JSON.stringify(quinceRawData?.[0], null, 2)
+  );
 
   const translatedTextObj = {
     randomId: t('Random ID'),
@@ -48,6 +41,7 @@ const ExportQuinceData = () => {
       // docOptions,
       translatedTextObj,
       data: quinceRawData,
+      surveyQuestions: quinceExportConfigXmlData,
     };
     const newBlob = new Blob([JSON.stringify(dataContent)], { type: 'text/plain' });
     const arrayBuffer = await new Response(newBlob).arrayBuffer();

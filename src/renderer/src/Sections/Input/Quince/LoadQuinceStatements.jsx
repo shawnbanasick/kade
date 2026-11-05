@@ -19,16 +19,19 @@ function parseStatements(xmlString) {
 const LoadQuinceStatements = () => {
   const { t } = useTranslation();
 
-  const isLoadCsvTextButtonGreen = inputState((state) => state.isLoadCsvTextButtonGreen);
   const areStatementsLoaded = inputState((state) => state.areStatementsLoaded); // <-- statements, not qsorts
   const numStatements = coreState((state) => state.numStatements); // <-- persisted count
   const updateStatements = coreState((state) => state.updateStatements);
   const updateNumStatements = coreState((state) => state.updateNumStatements);
   const updateStatementsLoaded = inputState((state) => state.updateStatementsLoaded);
   const updateAreStatementsLoaded = inputState((state) => state.updateAreStatementsLoaded);
-  const updateIsLoadCsvTextButtonGreen = inputState(
-    (state) => state.updateIsLoadCsvTextButtonGreen
+  const updateIsQuinceStatementsXMLButtonGreen = inputState(
+    (state) => state.updateIsQuinceStatementsXMLButtonGreen
   );
+  const isQuinceStatementsXMLButtonGreen = inputState(
+    (state) => state.isQuinceStatementsXMLButtonGreen
+  );
+
   const updateIsInputButtonGreen = appState((state) => state.updateIsInputButtonGreen);
   const updateIsDataButtonGreen = appState((state) => state.updateIsDataButtonGreen);
 
@@ -40,7 +43,7 @@ const LoadQuinceStatements = () => {
       updateNumStatements(statements.length);
       updateStatementsLoaded(true);
       updateAreStatementsLoaded(true);
-      updateIsLoadCsvTextButtonGreen(true);
+      updateIsQuinceStatementsXMLButtonGreen(true);
       setTimeout(() => {
         // read the *current* value, not a stale closure
         const qsortsLoaded = inputState.getState().areQsortsLoaded;
@@ -73,12 +76,19 @@ const LoadQuinceStatements = () => {
     : t('Import statements.xml');
 
   return (
-    <NewLoadButton
+    <button
       onClick={handleClick}
-      className={`${isLoadCsvTextButtonGreen ? 'bg-primary-button' : 'bg-grey-button'}`}
+      className={`text-center font-normal text-[calc(10px+1vw)] font-[Helvetica,sans-serif]
+        rounded mr-[3px] mb-[3px]
+        no-underline text-black
+        transition-[box-shadow] duration-300
+        transform translate-z-0
+        h-[60px] px-[15px] w-[250px]    
+        ${isQuinceStatementsXMLButtonGreen ? 'bg-primary-button' : 'bg-grey-button'}`}
+      id="LoadQuinceStatementsButton"
     >
       <div className="flex flex-row justify-center items-center h-full w-full gap-3">
-        {!areStatementsLoaded ? (
+        {!isQuinceStatementsXMLButtonGreen ? (
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 20 20"
@@ -89,7 +99,7 @@ const LoadQuinceStatements = () => {
         ) : null}
         <div className="font-sans text-sm font-bold">{buttonText}</div>
       </div>
-    </NewLoadButton>
+    </button>
   );
 };
 

@@ -47,6 +47,7 @@
     "ag-grid-react": "^35.0.1",
     "blob-to-buffer": "^1.2.9",
     "buffer": "^6.0.3",
+    "clsx": "^2.1.1",
     "d3": "^7.9.0",
     "d3-svg-to-png": "^0.3.1",
     "docx": "^8.5.0",
@@ -79,6 +80,7 @@
     "rfdc": "^1.3.1",
     "save-svg-as-png": "^1.4.17",
     "semver": "^7.6.0",
+    "tailwind-merge": "^3.7.0",
     "uuid": "^9.0.1",
     "xlsx": "https://cdn.sheetjs.com/xlsx-0.20.2/xlsx-0.20.2.tgz",
     "zustand": "^4.5.2"

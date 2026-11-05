@@ -1,9 +1,6 @@
 import { useEffect } from 'react';
-import NewLoadButton from '../../../Utils/NewLoadButton';
 import { useTranslation } from 'react-i18next';
-import coreState from '../../GlobalState/coreState';
 import inputState from '../../GlobalState/inputState';
-import appState from '../../GlobalState/appState';
 
 const LoadConfigXml = () => {
   const { t } = useTranslation();
@@ -11,13 +8,15 @@ const LoadConfigXml = () => {
   const updateIsLoadConfigXmlButtonGreen = inputState(
     (state) => state.updateIsLoadConfigXmlButtonGreen
   );
-  // const updateNotifyDataUploadSuccess = inputState((state) => state.updateNotifyDataUploadSuccess);
-  // const updateAreStatementsLoaded = inputState((state) => state.updateAreStatementsLoaded);
-  // const updateIsLoadCsvTextButtonGreen = inputState(
-  //   (state) => state.updateIsLoadCsvTextButtonGreen
-  // );
-  // const updateIsInputButtonGreen = appState((state) => state.updateIsInputButtonGreen);
-  // const updateIsDataButtonGreen = appState((state) => state.updateIsDataButtonGreen);
+  const updateQuinceExportConfigXmlData = inputState(
+    (state) => state.updateQuinceExportConfigXmlData
+  );
+  const updateIsImportConfigXmlButtonDisabled = inputState(
+    (state) => state.updateIsImportConfigXmlButtonDisabled
+  );
+  const updateIsImportConfigXmlButtonGreen = inputState(
+    (state) => state.updateIsImportConfigXmlButtonGreen
+  );
 
   // parseSurvey.js
   const unmarkup = (s = '') => s.replace(/\{\{\{(\/?\w+\/?)\}\}\}/g, '<$1>'); // {{{b}}} -> <b>, {{{br/}}} -> <br/>
@@ -56,7 +55,10 @@ const LoadConfigXml = () => {
 
   const processBlob = (data) => {
     const newData = parseSurvey(data);
-    console.log('data', newData);
+    // console.log('data', JSON.stringify(newData, null, 2));
+    updateIsImportConfigXmlButtonDisabled(false);
+    updateIsLoadConfigXmlButtonGreen(true);
+    updateQuinceExportConfigXmlData(newData);
   };
 
   useEffect(() => {
@@ -73,22 +75,34 @@ const LoadConfigXml = () => {
     await window.electronAPI.openXmlFile();
   };
 
+  const buttonText = isLoadConfigXmlButtonGreen ? t('Config.xml Loaded') : t('Load config.xml');
+
   return (
-    <NewLoadButton
+    <button
       onClick={handleClick}
-      className={`${isLoadConfigXmlButtonGreen ? 'bg-primary-button' : 'bg-grey-button'}`}
+      // className={`${isLoadConfigXmlButtonGreen ? 'bg-primary-button' : 'bg-grey-button'}`}
+      className={`text-center font-normal text-[calc(10px+1vw)] font-[Helvetica,sans-serif]
+        rounded mr-[3px] mb-[3px]
+        no-underline text-black
+        transition-[box-shadow] duration-300
+        transform translate-z-0
+        h-[60px] px-[15px] w-[250px]    
+        ${isLoadConfigXmlButtonGreen ? 'bg-primary-button' : 'bg-grey-button'}`}
+      id="LoadConfigXmlButton"
     >
       <div className="flex flex-row justify-center items-center h-full w-full gap-3">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 20 20"
-          className="rotate-180 h-[17px] w-[17px] fill-current"
-        >
-          <path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z" />
-        </svg>
-        <div className="font-sans text-sm font-bold">{t('Import config.xml')}</div>
+        {!isLoadConfigXmlButtonGreen && (
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 20 20"
+            className="h-[17px] w-[17px] fill-current"
+          >
+            <path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z" />
+          </svg>
+        )}
+        <div className="font-sans text-sm font-bold">{buttonText}</div>
       </div>
-    </NewLoadButton>
+    </button>
   );
 };
 
