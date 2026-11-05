@@ -463,8 +463,11 @@ const createQuinceExportExcelFile = async (dataContent) => {
 
   function addSurveySheets({ workbook, data, questions, headerStyle, textObject }) {
     const centered = { horizontal: 'center', vertical: 'middle' };
-    const reportQs = (questions || []).filter((q) => q?.type && q.type !== 'information');
-    if (reportQs.length === 0) return;
+    const reportQsSummary = (questions || []).filter((q) => q?.type && q.type !== 'information');
+    const reportQsSheets = (questions || []).filter(
+      (q) => q?.type && q.type !== 'information' && q.type !== 'textarea' && q.type !== 'text'
+    );
+    if (reportQsSummary.length === 0) return;
 
     const styleHeaderRow = (row) => row.eachCell((cell) => Object.assign(cell, headerStyle));
 
@@ -496,7 +499,7 @@ const createQuinceExportExcelFile = async (dataContent) => {
     const notes = {}; // column number -> header note
     const ratingCols = new Set();
 
-    reportQs.forEach((q) => {
+    reportQsSummary.forEach((q) => {
       if (isRating(q.type)) {
         q.options.forEach((opt, i) => {
           colDefs.push({ header: `${q.key}.${i + 1}`, width: 12 });
@@ -526,7 +529,7 @@ const createQuinceExportExcelFile = async (dataContent) => {
         item?.urlUsercode === undefined || item?.urlUsercode === null
           ? 'no URL Usercode'
           : item.urlUsercode;
-      const answers = reportQs.flatMap((q) => answerCells(q, item?.itemNums?.[itemKey(q)]));
+      const answers = reportQsSummary.flatMap((q) => answerCells(q, item?.itemNums?.[itemKey(q)]));
       const row = respWs.addRow([index + 1, item?.randomId || '', partId, urlUsercode, ...answers]);
       row.eachCell({ includeEmpty: true }, (cell, col) => {
         cell.alignment =
@@ -554,7 +557,7 @@ const createQuinceExportExcelFile = async (dataContent) => {
 
     const bold = (row) => (row.getCell(1).font = { name: 'Arial', bold: true });
 
-    reportQs.forEach((q) => {
+    reportQsSheets.forEach((q) => {
       const baseName = `${q.key} ${cleanLabel(q.label).replace(/^\d+\.\s*/, '')}`;
       const ws = workbook.addWorksheet(uniqueName(baseName));
       const raws = data.map((item) => item?.itemNums?.[itemKey(q)]);
@@ -619,46 +622,46 @@ const createQuinceExportExcelFile = async (dataContent) => {
       }
 
       // ----- text / textarea -----
-      if (q.type === 'text' || q.type === 'textarea') {
-        const freq = new Map();
-        let responded = 0;
-        raws.forEach((raw) => {
-          const s = raw === null || raw === undefined ? '' : String(raw).trim();
-          if (s === '' || /^no response$/i.test(s)) return;
-          responded++;
-          const key = s.toLowerCase();
-          const entry = freq.get(key) || { text: s, count: 0 };
-          entry.count++;
-          freq.set(key, entry);
-        });
+      // if (q.type === 'text' || q.type === 'textarea') {
+      //   const freq = new Map();
+      //   let responded = 0;
+      //   raws.forEach((raw) => {
+      //     const s = raw === null || raw === undefined ? '' : String(raw).trim();
+      //     if (s === '' || /^no response$/i.test(s)) return;
+      //     responded++;
+      //     const key = s.toLowerCase();
+      //     const entry = freq.get(key) || { text: s, count: 0 };
+      //     entry.count++;
+      //     freq.set(key, entry);
+      //   });
 
-        ws.getColumn(1).width = 70;
-        ws.getColumn(2).width = 14;
-        ws.getColumn(3).width = 14;
-        writeTitle(ws, q, 3);
-        styleHeaderRow(ws.addRow(['Response', 'Count', 'Percent']));
+      //   ws.getColumn(1).width = 70;
+      //   ws.getColumn(2).width = 14;
+      //   ws.getColumn(3).width = 14;
+      //   writeTitle(ws, q, 3);
+      //   styleHeaderRow(ws.addRow(['Response', 'Count', 'Percent']));
 
-        [...freq.values()]
-          .sort((a, b) => b.count - a.count)
-          .forEach((e) => {
-            const row = ws.addRow([e.text, e.count, responded ? e.count / responded : 0]);
-            row.getCell(1).alignment = { wrapText: true, vertical: 'top' };
-            row.getCell(2).alignment = centered;
-            row.getCell(3).alignment = centered;
-            row.getCell(3).numFmt = PCT;
-          });
+      //   [...freq.values()]
+      //     .sort((a, b) => b.count - a.count)
+      //     .forEach((e) => {
+      //       const row = ws.addRow([e.text, e.count, responded ? e.count / responded : 0]);
+      //       row.getCell(1).alignment = { wrapText: true, vertical: 'top' };
+      //       row.getCell(2).alignment = centered;
+      //       row.getCell(3).alignment = centered;
+      //       row.getCell(3).numFmt = PCT;
+      //     });
 
-        ws.addRow([]);
-        [
-          ['Responded', responded],
-          ['No response', data.length - responded],
-          ['Total participants', data.length],
-        ].forEach(([label, n]) => {
-          const row = ws.addRow([label, n]);
-          row.getCell(2).alignment = centered;
-        });
-        return;
-      }
+      //   ws.addRow([]);
+      //   [
+      //     ['Responded', responded],
+      //     ['No response', data.length - responded],
+      //     ['Total participants', data.length],
+      //   ].forEach(([label, n]) => {
+      //     const row = ws.addRow([label, n]);
+      //     row.getCell(2).alignment = centered;
+      //   });
+      //   return;
+      // }
 
       // ----- rating2 / rating7 / rating10 ... -----
       if (isRating(q.type)) {
