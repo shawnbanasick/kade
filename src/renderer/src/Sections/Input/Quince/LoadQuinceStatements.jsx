@@ -57,7 +57,7 @@ const LoadQuinceStatements = () => {
   };
 
   useEffect(() => {
-    const unsubscribe = window.bridge.xmlData((content) => {
+    const unsubscribe = window.bridge.xmlDataStatements((content) => {
       processBlob(content);
     });
 
@@ -68,7 +68,7 @@ const LoadQuinceStatements = () => {
 
   const handleClick = async () => {
     // only open the dialog; the listener in useEffect handles the data
-    await window.electronAPI.openXmlFile();
+    await window.electronAPI.openXmlFileStatements();
   };
 
   const buttonText = areStatementsLoaded

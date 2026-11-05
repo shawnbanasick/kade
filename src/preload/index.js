@@ -13,6 +13,8 @@ if (process.contextIsolated) {
       openCsvFile: () => ipcRenderer.send('dialog:openCsvFile'),
       openTxtFile: () => ipcRenderer.send('dialog:openTxtFile'),
       openXmlFile: () => ipcRenderer.send('dialog:openXmlFile'),
+      openXmlFileConfig: () => ipcRenderer.send('dialog:openXmlFileConfig'),
+      openXmlFileStatements: () => ipcRenderer.send('dialog:openXmlFileStatements'),
       openQuinceSortFile: () => ipcRenderer.send('dialog:openQuinceSortFile'),
       saveImgFile: () => ipcRenderer.send('showSaveDialogSync'),
       saveSVG: (imgContent, filePath) => ipcRenderer.invoke('save-svg', imgContent, filePath),
@@ -66,13 +68,21 @@ if (process.contextIsolated) {
         ipcRenderer.on('quinceData', listener);
         return () => ipcRenderer.removeListener('quinceData', listener);
       },
-      xmlData: (callback) => {
+      xmlDataConfig: (callback) => {
         const listener = (_event, content) => {
           if (!content) return;
           callback(content);
         };
-        ipcRenderer.on('xmlData', listener);
-        return () => ipcRenderer.removeListener('xmlData', listener);
+        ipcRenderer.on('xmlDataConfig', listener);
+        return () => ipcRenderer.removeListener('xmlDataConfig', listener);
+      },
+      xmlDataStatements: (callback) => {
+        const listener = (_event, content) => {
+          if (!content) return;
+          callback(content);
+        };
+        ipcRenderer.on('xmlDataStatements', listener);
+        return () => ipcRenderer.removeListener('xmlDataStatements', listener);
       },
 
       openDialog: (method, params) => ipcRenderer.invoke(method, params),

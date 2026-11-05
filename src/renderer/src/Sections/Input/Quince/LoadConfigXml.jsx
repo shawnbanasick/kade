@@ -62,7 +62,7 @@ const LoadConfigXml = () => {
   };
 
   useEffect(() => {
-    const unsubscribe = window.bridge.xmlData((content) => {
+    const unsubscribe = window.bridge.xmlDataConfig((content) => {
       processBlob(content);
     });
 
@@ -72,7 +72,7 @@ const LoadConfigXml = () => {
   }, []);
 
   const handleClick = async () => {
-    await window.electronAPI.openXmlFile();
+    await window.electronAPI.openXmlFileConfig();
   };
 
   const buttonText = isLoadConfigXmlButtonGreen ? t('Config.xml Loaded') : t('Load config.xml');

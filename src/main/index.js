@@ -13,6 +13,8 @@ import openZipFile from './openFileLogic/openZipFile';
 import openCsvFile from './openFileLogic/openCsvFile';
 import openTxtFile from './openFileLogic/openTxtFile';
 import openXmlFile from './openFileLogic/openXmlFile';
+import openXmlFileConfig from './openFileLogic/openXmlFileConfig';
+import openXmlFileStatements from './openFileLogic/openXmlFileStatements';
 import openQuinceSortFile from './openFileLogic/openQuinceSortFile';
 import saveSvgFile from './openFileLogic/saveSvgFile';
 import exportDocx from './docxLogic/exportDocx';
@@ -194,7 +196,7 @@ if (!gotTheLock) {
     });
 
     // IPC test
-    ipcMain.on('ping', () => console.log('pong'));
+    // ipcMain.on('ping', () => console.log('pong'));
 
     // Open Files
     ipcMain.on('dialog:openStaFile', openStaFile);
@@ -203,6 +205,8 @@ if (!gotTheLock) {
     ipcMain.on('dialog:openZipFile', openZipFile);
     ipcMain.on('dialog:openTxtFile', openTxtFile);
     ipcMain.on('dialog:openXmlFile', openXmlFile);
+    ipcMain.on('dialog:openXmlFileConfig', openXmlFileConfig);
+    ipcMain.on('dialog:openXmlFileStatements', openXmlFileStatements);
     ipcMain.on('dialog:openQuinceSortFile', openQuinceSortFile);
     ipcMain.on('dialog:openCsvFile', openCsvFile);
 
