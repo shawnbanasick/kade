@@ -1,6 +1,7 @@
-import GeneralButton from '../../../Utils/GeneralButton';
 import { useTranslation } from 'react-i18next';
+
 import inputState from '../../GlobalState/inputState';
+import GeneralButton from '../../../Utils/GeneralButton';
 
 const ExportQuinceData = () => {
   const { t } = useTranslation();
@@ -9,13 +10,6 @@ const ExportQuinceData = () => {
   const isDisabled = inputState((state) => state.isImportConfigXmlButtonDisabled);
   const quinceRawData = inputState((state) => state.quinceRawData);
   const quinceExportConfigXmlData = inputState((state) => state.quinceExportConfigXmlData);
-
-  // console.log('quinceRawData in ExportQuinceData.jsx:', JSON.stringify(quinceRawData[0].sort));
-  // console.log('quinceRawData columns in ExportQuinceData.jsx:', JSON.stringify(quinceRawData[0].columns));
-  console.log(
-    'quinceRawData presortTrace in ExportQuinceData.jsx:',
-    JSON.stringify(quinceRawData?.[0], null, 2)
-  );
 
   const translatedTextObj = {
     randomId: t('Random ID'),
@@ -71,7 +65,6 @@ const ExportQuinceData = () => {
   const handleOnclick = async () => {
     const dataContent = {
       type: 'QuinceResults',
-      // docOptions,
       translatedTextObj,
       data: quinceRawData,
       surveyQuestions: quinceExportConfigXmlData,
