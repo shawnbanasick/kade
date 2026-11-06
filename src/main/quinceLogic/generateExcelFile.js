@@ -62,11 +62,20 @@ function parseTrace(trace) {
 
 const INITIAL_LABELS = { p: 'Positive', u: 'Uncertain', n: 'Negative' };
 
+/*
+ *****************************
+ * Creates a Quince export Excel file from the provided data.
+ * @param {*} dataContent - The data content to include in the Excel file.
+ *****************************
+ */
+
 const createQuinceExportExcelFile = async (dataContent) => {
   //   console.log('Data received for Quince Excel file:', JSON.stringify(dataContent.data));
 
   const textObject = dataContent?.translatedTextObj || {};
   const data = [...dataContent?.data] || [];
+
+  const numStatements = data[0]?.sort?.length ? data[0].sort.length - 1 : 0; // subtract 1 for the participant ID
 
   var datenum = function (v, date1904) {
     if (date1904) {
@@ -78,16 +87,12 @@ const createQuinceExportExcelFile = async (dataContent) => {
 
   const workbook = new ExcelJS.Workbook();
 
-  // 1. name worksheet
+  // 1. name project
   const projectName2 = data[0]?.projectName || 'Unknown Project';
   const projectName = projectName2
     .replace(/[\\\/\?\*\[\]:]/g, '-') // remove illegal characters
     .trim()
     .slice(0, 31);
-  const mainWorksheet = workbook.addWorksheet(projectName);
-
-  // POST-SORT HEADER ROW PREP
-  //   const rowValues = data[0]?.columns?.
 
   // FORMAT HEADER ROW
   const centered = { horizontal: 'center', vertical: 'middle' };
@@ -107,6 +112,65 @@ const createQuinceExportExcelFile = async (dataContent) => {
     },
     border: thinBorder,
   };
+
+  // PROJECT INFO WORKSHEET
+  const projectInfoWorksheet = workbook.addWorksheet(
+    textObject?.projectInfo || 'Project Information'
+  );
+
+  projectInfoWorksheet.getColumn(1).width = 50;
+
+  const cellA2 = projectInfoWorksheet.getCell('A2');
+  cellA2.value = `${textObject?.projectName}`;
+  cellA2.font = { name: 'Arial', size: 12, bold: true };
+  cellA2.fill = {
+    type: 'pattern',
+    pattern: 'solid',
+    fgColor: { argb: 'd1e5f2' },
+  };
+  cellA2.alignment = centered;
+  cellA2.border = thinBorder;
+
+  const cellA3 = projectInfoWorksheet.getCell('A3');
+  cellA3.value = `${projectName || 'Unknown Project'}`;
+  cellA3.font = { name: 'Arial', size: 12 };
+  cellA3.alignment = centered;
+
+  const cellA6 = projectInfoWorksheet.getCell('A6');
+  cellA6.value = `${textObject?.statements || 'Statements'}`;
+  cellA6.font = { name: 'Arial', size: 12, bold: true };
+  cellA6.fill = {
+    type: 'pattern',
+    pattern: 'solid',
+    fgColor: { argb: 'd1e5f2' },
+  };
+  cellA6.border = thinBorder;
+  cellA6.alignment = centered;
+
+  const cellA7 = projectInfoWorksheet.getCell('A7');
+  cellA7.value = `${numStatements || 0}`;
+  cellA7.font = { name: 'Arial', size: 12 };
+  cellA7.alignment = centered;
+
+  const cellA10 = projectInfoWorksheet.getCell('A10');
+  cellA10.value = `${textObject?.qSorts || 'Q Sorts'}`;
+  cellA10.font = { name: 'Arial', size: 12, bold: true };
+  cellA10.fill = {
+    type: 'pattern',
+    pattern: 'solid',
+    fgColor: { argb: 'd1e5f2' },
+  };
+  cellA10.border = thinBorder;
+  cellA10.alignment = centered;
+
+  const cellA11 = projectInfoWorksheet.getCell('A11');
+  cellA11.value = `${data?.length || 0}`;
+  cellA11.font = { name: 'Arial', size: 12 };
+  cellA11.alignment = centered;
+
+  // MAIN DATA WORKSHEET
+  const mainWorksheet = workbook.addWorksheet(textObject?.mainData || projectName || 'Quince Data');
+
   const fixedColumns = [
     { header: textObject?.randomId || 'Random Id', key: 'pName', width: 20 },
     { header: textObject?.participantId || 'Participant Id', key: 'pId', width: 20 },
@@ -158,7 +222,7 @@ const createQuinceExportExcelFile = async (dataContent) => {
     let cellDesignation2 = `B${index + 2}`;
     const cell2 = mainWorksheet.getCell(cellDesignation2);
     if (item.partId === undefined || item.partId === null) {
-      cell2.value = 'no participant ID';
+      cell2.value = textObject?.noPartId || 'no participant ID';
     } else {
       cell2.value = item.partId || '';
     }
@@ -167,7 +231,7 @@ const createQuinceExportExcelFile = async (dataContent) => {
     let cellDesignation3 = `C${index + 2}`;
     const cell3 = mainWorksheet.getCell(cellDesignation3);
     if (item.urlUsercode === undefined || item.urlUsercode === null) {
-      cell3.value = 'no URL Usercode';
+      cell3.value = textObject?.noUrlUsercode || 'no URL Usercode';
     } else {
       cell3.value = item?.urlUsercode || '';
     }
@@ -187,37 +251,37 @@ const createQuinceExportExcelFile = async (dataContent) => {
     // Welcome page TIME ON PAGE
     let cellDesignation6 = `F${index + 2}`;
     const cell6 = mainWorksheet.getCell(cellDesignation6);
-    cell6.value = item?.timing?.welcome || 'no info';
+    cell6.value = item?.timing?.welcome || textObject?.noInfo || 'no info';
     cell6.alignment = centered;
 
     // Consent page TIME ON PAGE
     let cellDesignation7 = `G${index + 2}`;
     const cell7 = mainWorksheet.getCell(cellDesignation7);
-    cell7.value = item?.timing?.consent || 'no info';
+    cell7.value = item?.timing?.consent || textObject?.noInfo || 'no info';
     cell7.alignment = centered;
 
     // Pre-sort page TIME ON PAGE
     let cellDesignation8 = `H${index + 2}`;
     const cell8 = mainWorksheet.getCell(cellDesignation8);
-    cell8.value = item?.timing?.presort || 'no info';
+    cell8.value = item?.timing?.presort || textObject?.noInfo || 'no info';
     cell8.alignment = centered;
 
     // Refinement page TIME ON PAGE
     let cellDesignation9 = `I${index + 2}`;
     const cell9 = mainWorksheet.getCell(cellDesignation9);
-    cell9.value = item?.timing?.refine || 'no info';
+    cell9.value = item?.timing?.refine || textObject?.noInfo || 'no info';
     cell9.alignment = centered;
 
     // Sort page TIME ON PAGE
     let cellDesignation10 = `J${index + 2}`;
     const cell10 = mainWorksheet.getCell(cellDesignation10);
-    cell10.value = item?.timing?.sort || 'no info';
+    cell10.value = item?.timing?.sort || textObject?.noInfo || 'no info';
     cell10.alignment = centered;
 
     // Post-sort page TIME ON PAGE
     let cellDesignation11 = `K${index + 2}`;
     const cell11 = mainWorksheet.getCell(cellDesignation11);
-    cell11.value = item?.timing?.postsort || 'no info';
+    cell11.value = item?.timing?.postsort || textObject?.noInfo || 'no info';
     cell11.alignment = centered;
 
     // Survey page TIME ON PAGE
@@ -232,7 +296,7 @@ const createQuinceExportExcelFile = async (dataContent) => {
     cell14.value =
       item.items?.neg?.length > 0
         ? `(${item.items?.neg.length}) ${item.items?.neg.join(', ')}`
-        : 'no info';
+        : textObject?.noInfo || 'no info';
 
     // PRE-SORT NEU
     let cellDesignation15 = `O${index + 2}`;
@@ -240,7 +304,7 @@ const createQuinceExportExcelFile = async (dataContent) => {
     cell15.value =
       item.items?.neu?.length > 0
         ? `(${item.items?.neu.length}) ${item.items?.neu.join(', ')}`
-        : 'no info';
+        : textObject?.noInfo || 'no info';
 
     // PRE-SORT POS
     let cellDesignation13 = `M${index + 2}`;
@@ -248,7 +312,7 @@ const createQuinceExportExcelFile = async (dataContent) => {
     cell13.value =
       item.items?.pos?.length > 0
         ? `(${item.items?.pos.length}) ${item.items?.pos.join(', ')}`
-        : 'no info';
+        : textObject?.noInfo || 'no info';
 
     // DYNAMIC COLUMNS (column +4 #1, column -4 #1, ...) appended after the fixed columns
     dynamicDefs.forEach((def, i) => {
@@ -260,7 +324,7 @@ const createQuinceExportExcelFile = async (dataContent) => {
   });
 
   // ===== SORTS WORKSHEET =====
-  const sortsWorksheet = workbook.addWorksheet('sorts');
+  const sortsWorksheet = workbook.addWorksheet(textObject?.qSorts || 'Q Sorts');
 
   // Number of statements = longest sort array minus the participant ID
   const statementCount = data.reduce(
@@ -271,7 +335,7 @@ const createQuinceExportExcelFile = async (dataContent) => {
   const prefixCount = 3; // participant, partId, urlUsercode
 
   sortsWorksheet.columns = [
-    { header: 'participant', key: 'participant', width: 20 },
+    { header: textObject?.participant || 'Participant', key: 'participant', width: 20 },
     { header: textObject?.participantId || 'Participant Id', key: 'partId', width: 20 },
     { header: textObject?.urlUsercode || 'URL Usercode', key: 'urlUsercode', width: 20 },
     ...Array.from({ length: statementCount }, (_, i) => ({
@@ -292,10 +356,10 @@ const createQuinceExportExcelFile = async (dataContent) => {
     const [participant, ...values] = item.sort;
 
     const partId =
-      item?.partId === undefined || item?.partId === null ? 'no participant ID' : item.partId;
+      item?.partId === undefined || item?.partId === null ? textObject.noPartId : item.partId;
     const urlUsercode =
       item?.urlUsercode === undefined || item?.urlUsercode === null
-        ? 'no URL Usercode'
+        ? textObject.noUrlUsercode
         : item.urlUsercode;
 
     const row = sortsWorksheet.addRow([participant, partId, urlUsercode, ...values]);
@@ -308,7 +372,7 @@ const createQuinceExportExcelFile = async (dataContent) => {
   sortsWorksheet.views = [{ state: 'frozen', xSplit: prefixCount, ySplit: 1 }];
 
   // ===== PRESORT-UNUSUAL WORKSHEET =====
-  const unusualWorksheet = workbook.addWorksheet('presort-unusual');
+  const unusualWorksheet = workbook.addWorksheet(textObject?.presortTracing || 'Presort Tracing');
 
   // 1. Work out the final-value scale (min/max) for each project (used internally)
   const scaleByProject = new Map();
@@ -330,14 +394,14 @@ const createQuinceExportExcelFile = async (dataContent) => {
   };
 
   unusualWorksheet.columns = [
-    { header: 'Participant #', key: 'num', width: 14 },
+    { header: textObject?.participantNum || 'Participant #', key: 'num', width: 14 },
     { header: textObject?.randomId || 'Random Id', key: 'randomId', width: 20 },
     { header: textObject?.participantId || 'Participant Id', key: 'partId', width: 20 },
     { header: textObject?.urlUsercode || 'URL Usercode', key: 'urlUsercode', width: 20 },
-    { header: 'Statement', key: 'statement', width: 12 },
-    { header: 'Initial (pre-sort)', key: 'initial', width: 20 },
-    { header: 'Final value', key: 'final', width: 14 },
-    { header: 'Pattern', key: 'pattern', width: 28 },
+    { header: textObject?.statement || 'Statement', key: 'statement', width: 12 },
+    { header: textObject?.presortValues || 'Pre-sort Values', key: 'initial', width: 20 },
+    { header: textObject?.qSortValue || 'Q Sort Value', key: 'final', width: 14 },
+    { header: textObject?.pattern || 'Pattern', key: 'pattern', width: 28 },
   ];
   unusualWorksheet.getRow(1).eachCell((cell) => {
     Object.assign(cell, headerStyle);
@@ -359,10 +423,10 @@ const createQuinceExportExcelFile = async (dataContent) => {
     const participantNum = index + 1;
     const randomId = item?.randomId || '';
     const partId =
-      item?.partId === undefined || item?.partId === null ? 'no participant ID' : item.partId;
+      item?.partId === undefined || item?.partId === null ? textObject.noPartId : item.partId;
     const urlUsercode =
       item?.urlUsercode === undefined || item?.urlUsercode === null
-        ? 'no URL Usercode'
+        ? textObject.noUrlUsercode
         : item.urlUsercode;
 
     const unusual = entries.filter((e) => {
@@ -383,7 +447,7 @@ const createQuinceExportExcelFile = async (dataContent) => {
         randomId,
         partId,
         urlUsercode,
-        pattern: 'no unusual statements',
+        pattern: textObject?.noUnusual || 'No Unusual Statements',
       });
       styleRow(row, false);
       return;
@@ -398,7 +462,10 @@ const createQuinceExportExcelFile = async (dataContent) => {
         statement: e.statement,
         initial: INITIAL_LABELS[e.initial],
         final: e.final,
-        pattern: e.initial === 'p' ? 'Positive → Negative side' : 'Negative → Positive side',
+        pattern:
+          e.initial === 'p'
+            ? textObject?.posToNeg || 'Positive → Negative side'
+            : textObject?.negToPos || 'Negative → Positive side',
       });
       styleRow(row, true);
     });
@@ -489,9 +556,11 @@ const createQuinceExportExcelFile = async (dataContent) => {
     };
 
     // ---------- 1. SURVEY-RESPONSES SHEET ----------
-    const respWs = workbook.addWorksheet(uniqueName('survey-responses'));
+    const respWs = workbook.addWorksheet(
+      uniqueName(textObject?.surveyResponses || 'Survey Responses')
+    );
     const colDefs = [
-      { header: 'Participant #', width: 14 },
+      { header: textObject?.participantNum || 'Participant #', width: 14 },
       { header: textObject?.randomId || 'Random Id', width: 20 },
       { header: textObject?.participantId || 'Participant Id', width: 20 },
       { header: textObject?.urlUsercode || 'URL Usercode', width: 20 },
@@ -524,10 +593,12 @@ const createQuinceExportExcelFile = async (dataContent) => {
 
     data.forEach((item, index) => {
       const partId =
-        item?.partId === undefined || item?.partId === null ? 'no participant ID' : item.partId;
+        item?.partId === undefined || item?.partId === null
+          ? textObject?.noPartId || 'No Participant ID'
+          : item.partId;
       const urlUsercode =
         item?.urlUsercode === undefined || item?.urlUsercode === null
-          ? 'no URL Usercode'
+          ? textObject?.noUrlUsercode || 'No URL Usercode'
           : item.urlUsercode;
       const answers = reportQsSummary.flatMap((q) => answerCells(q, item?.itemNums?.[itemKey(q)]));
       const row = respWs.addRow([index + 1, item?.randomId || '', partId, urlUsercode, ...answers]);
@@ -585,7 +656,13 @@ const createQuinceExportExcelFile = async (dataContent) => {
         ws.getColumn(2).width = 14;
         ws.getColumn(3).width = 14;
         writeTitle(ws, q, 3);
-        styleHeaderRow(ws.addRow(['Option', 'Count', 'Percent']));
+        styleHeaderRow(
+          ws.addRow([
+            textObject?.option || 'Option',
+            textObject?.count || 'Count',
+            textObject?.percent || 'Percent',
+          ])
+        );
 
         q.options.forEach((opt, i) => {
           const row = ws.addRow([
@@ -600,9 +677,9 @@ const createQuinceExportExcelFile = async (dataContent) => {
 
         ws.addRow([]);
         [
-          ['Responded', responded],
-          ['No response', data.length - responded],
-          ['Total participants', data.length],
+          [textObject?.responded || 'Responded', responded],
+          [textObject?.noResponse || 'No response', data.length - responded],
+          [textObject?.totalParticipants || 'Total participants', data.length],
         ].forEach(([label, n]) => {
           const row = ws.addRow([label, n]);
           row.getCell(2).alignment = centered;
@@ -610,8 +687,10 @@ const createQuinceExportExcelFile = async (dataContent) => {
 
         if (others.length > 0) {
           ws.addRow([]);
-          bold(ws.addRow(['Text entered with "Other" options']));
-          styleHeaderRow(ws.addRow(['Text', 'Participant #']));
+          bold(ws.addRow([textObject?.textOther || 'Text entered with "Other" options']));
+          styleHeaderRow(
+            ws.addRow([textObject?.text || 'Text', textObject?.participantNum || 'Participant #'])
+          );
           others.forEach(([text, num]) => {
             const row = ws.addRow([text, num]);
             row.getCell(1).alignment = { wrapText: true, vertical: 'top' };
@@ -620,48 +699,6 @@ const createQuinceExportExcelFile = async (dataContent) => {
         }
         return;
       }
-
-      // ----- text / textarea -----
-      // if (q.type === 'text' || q.type === 'textarea') {
-      //   const freq = new Map();
-      //   let responded = 0;
-      //   raws.forEach((raw) => {
-      //     const s = raw === null || raw === undefined ? '' : String(raw).trim();
-      //     if (s === '' || /^no response$/i.test(s)) return;
-      //     responded++;
-      //     const key = s.toLowerCase();
-      //     const entry = freq.get(key) || { text: s, count: 0 };
-      //     entry.count++;
-      //     freq.set(key, entry);
-      //   });
-
-      //   ws.getColumn(1).width = 70;
-      //   ws.getColumn(2).width = 14;
-      //   ws.getColumn(3).width = 14;
-      //   writeTitle(ws, q, 3);
-      //   styleHeaderRow(ws.addRow(['Response', 'Count', 'Percent']));
-
-      //   [...freq.values()]
-      //     .sort((a, b) => b.count - a.count)
-      //     .forEach((e) => {
-      //       const row = ws.addRow([e.text, e.count, responded ? e.count / responded : 0]);
-      //       row.getCell(1).alignment = { wrapText: true, vertical: 'top' };
-      //       row.getCell(2).alignment = centered;
-      //       row.getCell(3).alignment = centered;
-      //       row.getCell(3).numFmt = PCT;
-      //     });
-
-      //   ws.addRow([]);
-      //   [
-      //     ['Responded', responded],
-      //     ['No response', data.length - responded],
-      //     ['Total participants', data.length],
-      //   ].forEach(([label, n]) => {
-      //     const row = ws.addRow([label, n]);
-      //     row.getCell(2).alignment = centered;
-      //   });
-      //   return;
-      // }
 
       // ----- rating2 / rating7 / rating10 ... -----
       if (isRating(q.type)) {
@@ -688,8 +725,16 @@ const createQuinceExportExcelFile = async (dataContent) => {
         writeTitle(ws, q, span);
 
         // Counts table
-        bold(ws.addRow(['Counts']));
-        styleHeaderRow(ws.addRow(['Statement', 'n', 'Mean', ...scale, 'No response']));
+        bold(ws.addRow([textObject?.counts || 'Counts']));
+        styleHeaderRow(
+          ws.addRow([
+            textObject?.statement || 'Statement',
+            textObject?.n || 'n',
+            textObject?.mean || 'Mean',
+            ...scale,
+            textObject?.noResponse || 'No response',
+          ])
+        );
         q.options.forEach((opt, i) => {
           const s = stats[i];
           const row = ws.addRow([cleanLabel(opt), s.n, s.mean, ...s.counts, s.noResp]);
@@ -700,8 +745,15 @@ const createQuinceExportExcelFile = async (dataContent) => {
 
         // Percent table (of those who answered that statement)
         ws.addRow([]);
-        bold(ws.addRow(['Percent of respondents']));
-        styleHeaderRow(ws.addRow(['Statement', 'n', 'Mean', ...scale]));
+        bold(ws.addRow([textObject?.percentRespondents || 'Percent (of those who answered)']));
+        styleHeaderRow(
+          ws.addRow([
+            textObject?.statement || 'Statement',
+            textObject?.n || 'n',
+            textObject?.mean || 'Mean',
+            ...scale,
+          ])
+        );
         q.options.forEach((opt, i) => {
           const s = stats[i];
           const row = ws.addRow([
@@ -740,9 +792,9 @@ const createQuinceExportExcelFile = async (dataContent) => {
     try {
       await workbook.xlsx.writeFile(filePath);
       dialog.showMessageBoxSync({
-        title: 'Quince Excel File Saved',
+        title: textObject?.quinceFileSaved || 'File Saved',
         type: 'info',
-        message: `File saved to:`,
+        message: textObject?.fileSavedTo || 'File saved to:',
         detail: `${filePath}`,
         buttons: ['OK'],
       });

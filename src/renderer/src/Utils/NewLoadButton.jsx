@@ -7,8 +7,6 @@ const NewLoadButton = ({
   children,
   className = '',
 }) => {
-  console.log(className);
-
   return (
     <button
       type="button"
