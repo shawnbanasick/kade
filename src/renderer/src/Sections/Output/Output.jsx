@@ -1,4 +1,6 @@
 import { ToastContainer, toast, Zoom } from 'react-toastify';
+import { useTranslation } from 'react-i18next';
+
 import FactorsTable from './Factors Table/FactorsTable';
 import FactorVizOptions from './FactorViz/FactorVizOptions';
 import FactorVizDispatch from './FactorVisualizations/FactorVizDispatch';
@@ -8,18 +10,14 @@ import MultipleFactorsFlaggedWarningModal from './MultipleFactorsFlaggedWarningM
 import ShowVizOptionsButton from './DisplayVisualizationsButtons/ShowVizOptionsButton';
 import OutputFactorTablesTransitionContainer from './OutputFactorTablesTransitionContainer';
 import NoLoadingsFlaggedWarningModal from '../Loadings/LoadingsTable/NoLoadingsFlaggedWarningModal';
-import DisplayVisualizationsButtons from './DisplayVisualizationsButtons/DisplayVisualizationsButtons';
 import FactorSelectionForOutputButtons from './FactorSelectionForOutput/FactorSelectionForOutputButtons';
 import DistStateSigLevelDrop1 from './FactorSelectionForOutput/DistStateSigLevelDrop1';
 import DistStateSigLevelDrop2 from './FactorSelectionForOutput/DistStateSigLevelDrop2';
 import DistinguishingStatementsList from './DistinguishingStatementsDisplay/DistingishingStatementsList';
-import { useTranslation } from 'react-i18next';
 import DownloadDocxOptionsBox from './DownloadResultsButtons/DownloadDocxOptionsBox';
 import DocxFormatButtons from './DownloadResultsButtons/DocxFormatButtons';
 import DocxIncludeDataOption from './DownloadResultsButtons/DocxIncludeDataOption';
 import DownloadResultsAsDocx from './DownloadResultsButtons/DownloadResultsAsDocx';
-import outputState from '../GlobalState/outputState';
-import calcState from '../GlobalState/calcState';
 import ConsensusStatementsList from './ConsensusStatementsDisplay/ConsensusStatementsList';
 import ResultsCohenButtons1 from './ResultsCohenButtons1';
 import ResultsCohenButtons2 from './ResultsCohenButtons2';
@@ -27,7 +25,10 @@ import ResultsCalcOutputButton from './ResultsCalcOutputButton';
 import ResultsDistMethodButtons from './ResultsDistMethodButtons';
 import FactorVizOptionsDrawer from './FactorVisualizations/FactorVizOptionsDrawer';
 
-// import DistinguishingTypeButtons from './DistinguishingStatementsDisplay/DistinguishingTypeButtons';
+import outputState from '../GlobalState/outputState';
+import calcState from '../GlobalState/calcState';
+
+// import DisplayVisualizationsButtons from './DisplayVisualizationsButtons/DisplayVisualizationsButtons';
 
 import i18n from 'i18next';
 
@@ -152,7 +153,7 @@ const Output = () => {
     {
       title: t('Results'),
       content: (
-        <div className={window1Class, "mt-5.5"}>
+        <div className={`${window1Class} mt-5.5`}>
           {showTableDataNotSentWarning ? (
             <div className="text-[25px] ml-12.5 mt-12.5">{t('No Data Click')}</div>
           ) : (

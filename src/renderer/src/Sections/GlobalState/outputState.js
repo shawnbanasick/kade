@@ -208,6 +208,10 @@ const outputState = create(
       { show: true, id: 'factor 8', isActive: false, key: 'factor8', label: '8' },
     ],
     highlightedFactors: {},
+    isCalculateResultsButtonOrange: false,
+    isCalculateResultsButtonGreen: false,
+    isCalculateResultsButtonDisabled: false,
+    notifyOutputCaculationSuccess: false,
 
     // for factorSelectionForOutputButtons.jsx
     toggleUserSelectedFactor: (factor) =>
@@ -244,6 +248,16 @@ const outputState = create(
         });
         return { userSelectedFactors: [], highlightedFactors };
       }),
+
+    updateNotifyOutputCalculationSuccess: (inputValue) =>
+      set({ notifyOutputCaculationSuccess: inputValue }),
+    updateIsCalculateResultsButtonDisabled: (inputValue) =>
+      set({ isCalculateResultsButtonDisabled: inputValue }),
+    updateIsCalculateResultsButtonGreen: (inputValue) =>
+      set({ isCalculateResultsButtonGreen: inputValue }),
+    updateIsCalculateResultsButtonOrange: (inputValue) =>
+      set({ isCalculateResultsButtonOrange: inputValue }),
+    updateHighlightedFactors: (inputValue) => set({ highlightedFactors: inputValue }),
     updateButtonFactorLabels: (inputValue) => set({ buttonFactorLabels: [...inputValue] }),
     updateResultsDistIdentType: (inputValue) => set({ resultsDistIdentType: inputValue }),
     updateDisplayOutputTabContent: (inputValue) => set({ displayOutputTabContent: inputValue }),
