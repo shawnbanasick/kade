@@ -24,7 +24,7 @@ const DownloadResultsButtons = () => {
       <div className={`h-[100px] mt-[30px] ${displayOutputTabContent ? 'visible' : 'hidden'}`}>
         <div className="w-fit text-[24px] mr-[5px] mt-0!">{t('Download complete output as')}</div>
         <div className="flex flex-row gap-[47px] items-center py-[10px] w-full h-[60px]">
-          <DownloadResultsAsExcel />
+          {/* <DownloadResultsAsExcel /> */}
           <DownloadResultsAsCsv />
           <DownloadDocxFile />
           <DownloadNewExcel />

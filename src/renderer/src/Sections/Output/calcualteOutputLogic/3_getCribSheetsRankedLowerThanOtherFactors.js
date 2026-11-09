@@ -3,26 +3,25 @@ import cloneDeep from 'lodash/cloneDeep';
 const getCribSheetsRankedLowerThanOtherFactors = (
   j,
   factorInformation,
-  sortValuesTrans,
   statementTrans,
   statementNumTrans
 ) => {
   let transferArray = [];
   // look for higher than other factors relative statements and push to cribArray
   for (let r = 0, rLen = factorInformation.length; r < rLen; r++) {
-    const compositeSortValue = factorInformation[r][sortValuesTrans];
+    const compositeSortValue = factorInformation[r]?.['Sort Values'];
 
     // look for lower than other factors relative statements and push to cribArray
     if (compositeSortValue < 1) {
-      const minRankValue = Math.min(...factorInformation[r].rankArray);
+      const minRankValue = Math.min(...factorInformation[r]?.rankArray);
       if (compositeSortValue === minRankValue) {
-        const otherValuesLower = cloneDeep(factorInformation[r].rankArray);
+        const otherValuesLower = cloneDeep(factorInformation[r]?.rankArray);
         otherValuesLower.splice(j, 1);
-        const stateNum2 = factorInformation[r][statementNumTrans];
+        const stateNum2 = factorInformation[r]?.[statementNumTrans];
         const checkIfDisOrCon2 = checkIfDistinguishingOrConsensus(stateNum2, j);
         const tempArray33 = [
           stateNum2,
-          factorInformation[r][statementTrans],
+          factorInformation[r]?.[statementTrans],
           compositeSortValue,
           checkIfDisOrCon2,
         ];

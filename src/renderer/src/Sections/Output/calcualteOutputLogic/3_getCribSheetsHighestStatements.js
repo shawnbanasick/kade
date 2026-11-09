@@ -7,8 +7,7 @@ const getCribSheetsHighestStatements = (
   minCounts,
   factorInformation,
   statementNumTrans,
-  statementTrans,
-  sortValuesTrans
+  statementTrans
 ) => {
   let array0a;
   let transferArray = [];
@@ -17,11 +16,11 @@ const getCribSheetsHighestStatements = (
     // get highest remaining statement
     let highestRankStatements = factorInformation.shift();
     // get info
-    const stateNum0 = highestRankStatements[statementNumTrans];
-    const statement0 = highestRankStatements[statementTrans];
+    const stateNum0 = highestRankStatements?.[statementNumTrans];
+    const statement0 = highestRankStatements?.[statementTrans];
     const checkIfDisOrCon0 = checkIfDistinguishingOrConsensus(stateNum0, j);
-    const compositeSortValue0 = highestRankStatements[sortValuesTrans];
-    const otherValues = cloneDeep(highestRankStatements.rankArray);
+    const compositeSortValue0 = highestRankStatements?.['Sort Values'];
+    const otherValues = cloneDeep(highestRankStatements?.rankArray);
 
     otherValues.splice(j, 1);
     const array0 = [stateNum0, statement0, compositeSortValue0, checkIfDisOrCon0];

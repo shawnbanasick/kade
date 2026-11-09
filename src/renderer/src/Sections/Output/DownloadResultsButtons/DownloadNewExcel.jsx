@@ -26,12 +26,41 @@ const DownloadResultsAsExcel = () => {
       return;
     }
 
+    const textObject = {
+      projectInformation: t('Project Information'),
+      statements: t('Statements'),
+      qSorts: t('Q Sorts'),
+      correlationMatrix: t('Correlation Matrix'),
+      unrotatedFactorMatrix: t('Unrotated Factor Matrix'),
+      cumulativeCommunalities: t('Cumulative Communalities'),
+      factorMatrix: t('Factor Matrix'),
+      factorLoadingsTable: t('Factor Loadings Table'),
+      freeDistribution: t('Free Distribution'),
+      statementRankings: t('Statement Rankings'),
+      consensusVsDifference: t('Consensus vs. Difference'),
+      factorCharacteristics: t('Factor Characteristics'),
+      standardErrors: t('Standard Errors'),
+      weights: t('Weights'),
+      factorScoreCorrelations: t('Factor Score Correlations'),
+      factorWorksheet: t('Factor Worksheet'),
+      correlations: t('Correlations'),
+      factorName: t('Factor Name'),
+      factorNumber: t('Factor Number'),
+      conDist: t('Consensus-Disagreement'),
+      distinguishing: t('Distinguishing'),
+      consensus: t('Consensus'),
+      relativeRankings: t('Relative Rankings'),
+    };
+
+    console.log('dataXlsx:', dataXlsx);
+
     const dataContent = {
       type: 'ExcelResults',
       data: dataXlsx,
       projectName: projectName,
       userSelectedFactors: userSelectedFactors,
       powerSetDiffsNumber: powerSetDiffsNumber,
+      textObject: textObject,
     };
 
     const newBlob = new Blob([JSON.stringify(dataContent)], { type: 'text/plain' });

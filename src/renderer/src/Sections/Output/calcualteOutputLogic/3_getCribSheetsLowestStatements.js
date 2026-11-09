@@ -6,8 +6,7 @@ const getCribSheetsLowestStatements = (
   maxCounts,
   factorInformation,
   statementNumTrans,
-  statementTrans,
-  sortValuesTrans
+  statementTrans
 ) => {
   let array3a = [];
   let transferArray = [];
@@ -15,11 +14,11 @@ const getCribSheetsLowestStatements = (
   for (let p = 0; p < maxCounts; p++) {
     // tempObj2 = {};
     const lowestRankStatements = factorInformation.pop();
-    const stateNum3 = lowestRankStatements[statementNumTrans];
-    const statement3 = lowestRankStatements[statementTrans];
+    const stateNum3 = lowestRankStatements?.[statementNumTrans];
+    const statement3 = lowestRankStatements?.[statementTrans];
     const checkIfDisOrCon3 = checkIfDistinguishingOrConsensus(stateNum3, j);
-    const compositeSortValue3 = lowestRankStatements[sortValuesTrans];
-    const otherValues3 = cloneDeep(lowestRankStatements.rankArray);
+    const compositeSortValue3 = lowestRankStatements?.['Sort Values'];
+    const otherValues3 = cloneDeep(lowestRankStatements?.rankArray);
     otherValues3.splice(j, 1);
     const array3 = [stateNum3, statement3, compositeSortValue3, checkIfDisOrCon3];
     array3a = array3.concat(otherValues3);

@@ -102,8 +102,8 @@ const pushCribSheetsToOutput = function (outputData, sheetNamesXlsx, colSizes) {
       minCounts,
       factorInformation,
       statementNumTrans,
-      statementTrans,
-      sortValuesTrans
+      statementTrans
+      // sortValuesTrans
     );
 
     cribArray2[0] = [...highestStatements];
@@ -114,8 +114,8 @@ const pushCribSheetsToOutput = function (outputData, sheetNamesXlsx, colSizes) {
       maxCounts,
       factorInformation,
       statementNumTrans,
-      statementTrans,
-      sortValuesTrans
+      statementTrans
+      // sortValuesTrans
     );
 
     cribArray2[3] = [...lowestStatements];
@@ -123,7 +123,7 @@ const pushCribSheetsToOutput = function (outputData, sheetNamesXlsx, colSizes) {
     const higherStatements = getCribSheetsRankedHigherThanOtherFactors(
       j,
       factorInformation,
-      sortValuesTrans,
+      // sortValuesTrans,
       statementTrans,
       statementNumTrans
     );
@@ -133,7 +133,7 @@ const pushCribSheetsToOutput = function (outputData, sheetNamesXlsx, colSizes) {
     const lowerStatements = getCribSheetsRankedLowerThanOtherFactors(
       j,
       factorInformation,
-      sortValuesTrans,
+      // sortValuesTrans,
       statementTrans,
       statementNumTrans
     );

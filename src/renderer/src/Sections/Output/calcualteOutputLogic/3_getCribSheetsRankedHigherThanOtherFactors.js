@@ -4,24 +4,23 @@ import cloneDeep from 'lodash/cloneDeep';
 const getCribSheetsRankedHigherThanOtherFactors = (
   j,
   factorInformation,
-  sortValuesTrans,
   statementTrans,
   statementNumTrans
 ) => {
   let transferArray = [];
   // look for higher than other factors relative statements and push to cribArray
   for (let r = 0, rLen = factorInformation.length; r < rLen; r++) {
-    const compositeSortValue = factorInformation[r][sortValuesTrans];
+    const compositeSortValue = factorInformation[r]?.['Sort Values'];
     if (compositeSortValue > -1) {
-      const maxRankValue = Math.max(...factorInformation[r].rankArray);
+      const maxRankValue = Math.max(...factorInformation[r]?.rankArray);
       if (compositeSortValue === maxRankValue) {
-        const otherValues2 = cloneDeep(factorInformation[r].rankArray);
+        const otherValues2 = cloneDeep(factorInformation[r]?.rankArray);
         otherValues2.splice(j, 1);
-        const stateNum = factorInformation[r][statementNumTrans];
+        const stateNum = factorInformation[r]?.[statementNumTrans];
         const checkIfDisOrCon = checkIfDistinguishingOrConsensus(stateNum, j);
         const tempArray22 = [
           stateNum,
-          factorInformation[r][statementTrans],
+          factorInformation[r]?.[statementTrans],
           compositeSortValue,
           checkIfDisOrCon,
         ];

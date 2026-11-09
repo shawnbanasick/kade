@@ -28,8 +28,10 @@ const createResultsExcelFile = async (dataContent) => {
     const userSelectedFactors = [...dataContent.userSelectedFactors];
     const powerSetDiffsNumber = dataContent.powerSetDiffsNumber;
 
+    const textObject = dataContent.textObject;
+
     // console.log('data in createResultsExcelFile:', dataContent);
-    const overviewText = data?.[0]?.[0]?.[0];
+    const overviewText = textObject.projectInformation;
     const projectNameText = data?.[0]?.[2]?.[0];
     const projectNameValue = data?.[0]?.[2]?.[1];
     const statementsText = data?.[0]?.[4]?.[0];
@@ -49,9 +51,27 @@ const createResultsExcelFile = async (dataContent) => {
     const kadeVersionText = data?.[0]?.[19]?.[0];
     const kadeVersionValue = data?.[0]?.[19]?.[1];
 
-    // 1. OVERVIEW worksheet
+    const blueFill = {
+      type: 'pattern',
+      pattern: 'solid',
+      fgColor: { argb: 'd1e5f2' },
+    };
+
+    const thinBorder = {
+      top: { style: 'thin', color: { argb: '000000' } },
+      left: { style: 'thin', color: { argb: '000000' } },
+      bottom: { style: 'thin', color: { argb: '000000' } },
+      right: { style: 'thin', color: { argb: '000000' } },
+    };
+
+    /**
+     **
+     ** OVERVIEW SHEET
+     **
+     */
+
     const overviewWorksheet = workbook.addWorksheet(overviewText, {
-      properties: { tabColor: { argb: 'FFC0000' } },
+      properties: { tabColor: { argb: 'd1e5f2' } },
     });
     overviewWorksheet.columns = [{ width: 10 }, { width: 80 }, { width: 200 }];
 
@@ -60,6 +80,8 @@ const createResultsExcelFile = async (dataContent) => {
     projectNameCell.value = projectNameText;
     projectNameCell.font = { name: 'Arial', size: 14, bold: true, color: { argb: '0000000' } };
     projectNameCell.alignment = { horizontal: 'left' };
+    projectNameCell.border = thinBorder;
+    projectNameCell.fill = blueFill;
 
     const projectNameCell2 = overviewWorksheet.getCell('C1');
     projectNameCell2.value = projectNameValue;
@@ -78,29 +100,29 @@ const createResultsExcelFile = async (dataContent) => {
     statementsCell2.alignment = { horizontal: 'left' };
 
     // q sort design
-    const qSortDesignCell = overviewWorksheet.getCell('B3');
+    const qSortDesignCell = overviewWorksheet.getCell('B5');
     qSortDesignCell.value = qSortDesignText;
     qSortDesignCell.font = { name: 'Arial', size: 14, bold: true, color: { argb: '0000000' } };
     qSortDesignCell.alignment = { horizontal: 'left' };
 
-    const qSortDesignCell2 = overviewWorksheet.getCell('C3');
+    const qSortDesignCell2 = overviewWorksheet.getCell('C5');
     qSortDesignCell2.value = qSortDesignValue;
     qSortDesignCell2.font = { name: 'Arial', size: 14, bold: false, color: { argb: '000000' } };
     qSortDesignCell2.alignment = { horizontal: 'left' };
 
     // total q sorts
-    const totalQSortsCell = overviewWorksheet.getCell('B5');
+    const totalQSortsCell = overviewWorksheet.getCell('B7');
     totalQSortsCell.value = totalQSortsText;
     totalQSortsCell.font = { name: 'Arial', size: 14, bold: true, color: { argb: '0000000' } };
     totalQSortsCell.alignment = { horizontal: 'left' };
 
-    const totalQSortsCell2 = overviewWorksheet.getCell('C5');
+    const totalQSortsCell2 = overviewWorksheet.getCell('C7');
     totalQSortsCell2.value = totalQSortsValue;
     totalQSortsCell2.font = { name: 'Arial', size: 14, bold: false, color: { argb: '000000' } };
     totalQSortsCell2.alignment = { horizontal: 'left' };
 
     // total distinguishing threshold
-    const totalDistinguishingThresholdCell = overviewWorksheet.getCell('B7');
+    const totalDistinguishingThresholdCell = overviewWorksheet.getCell('B9');
     totalDistinguishingThresholdCell.value = totalDistinguishingThresholdText;
     totalDistinguishingThresholdCell.font = {
       name: 'Arial',
@@ -110,7 +132,7 @@ const createResultsExcelFile = async (dataContent) => {
     };
     totalDistinguishingThresholdCell.alignment = { horizontal: 'left' };
 
-    const totalDistinguishingThresholdCell2 = overviewWorksheet.getCell('C7');
+    const totalDistinguishingThresholdCell2 = overviewWorksheet.getCell('C9');
     totalDistinguishingThresholdCell2.value = totalDistinguishingThresholdValue;
     totalDistinguishingThresholdCell2.font = {
       name: 'Arial',
@@ -121,7 +143,7 @@ const createResultsExcelFile = async (dataContent) => {
     totalDistinguishingThresholdCell2.alignment = { horizontal: 'left' };
 
     // total distinguishing threshold 2
-    const totalDistinguishingThresholdCell3 = overviewWorksheet.getCell('B9');
+    const totalDistinguishingThresholdCell3 = overviewWorksheet.getCell('B11');
     totalDistinguishingThresholdCell3.value = totalDistinguishingThresholdText2;
     totalDistinguishingThresholdCell3.font = {
       name: 'Arial',
@@ -131,7 +153,7 @@ const createResultsExcelFile = async (dataContent) => {
     };
     totalDistinguishingThresholdCell3.alignment = { horizontal: 'left' };
 
-    const totalDistinguishingThresholdCell4 = overviewWorksheet.getCell('C9');
+    const totalDistinguishingThresholdCell4 = overviewWorksheet.getCell('C11');
     totalDistinguishingThresholdCell4.value = totalDistinguishingThresholdValue2;
     totalDistinguishingThresholdCell4.font = {
       name: 'Arial',
@@ -142,12 +164,12 @@ const createResultsExcelFile = async (dataContent) => {
     totalDistinguishingThresholdCell4.alignment = { horizontal: 'left' };
 
     // analysis complete
-    const analysisCompleteCell = overviewWorksheet.getCell('B11');
+    const analysisCompleteCell = overviewWorksheet.getCell('B13');
     analysisCompleteCell.value = analysisCompleteText;
     analysisCompleteCell.font = { name: 'Arial', size: 14, bold: true, color: { argb: '0000000' } };
     analysisCompleteCell.alignment = { horizontal: 'left' };
 
-    const analysisCompleteCell2 = overviewWorksheet.getCell('C11');
+    const analysisCompleteCell2 = overviewWorksheet.getCell('C13');
     analysisCompleteCell2.value = analysisCompleteValue;
     analysisCompleteCell2.font = {
       name: 'Arial',
@@ -158,29 +180,29 @@ const createResultsExcelFile = async (dataContent) => {
     analysisCompleteCell2.alignment = { horizontal: 'left' };
 
     // autoflag
-    const autoflagCell = overviewWorksheet.getCell('B13');
+    const autoflagCell = overviewWorksheet.getCell('B15');
     autoflagCell.value = autoflagText;
     autoflagCell.font = { name: 'Arial', size: 14, bold: true, color: { argb: '0000000' } };
     autoflagCell.alignment = { horizontal: 'left' };
 
-    const autoflagCell2 = overviewWorksheet.getCell('C13');
+    const autoflagCell2 = overviewWorksheet.getCell('C15');
     autoflagCell2.value = autoflagValue;
     autoflagCell2.font = { name: 'Arial', size: 14, bold: false, color: { argb: '000000' } };
     autoflagCell2.alignment = { horizontal: 'left' };
 
     // kade version
-    const kadeVersionCell = overviewWorksheet.getCell('B15');
+    const kadeVersionCell = overviewWorksheet.getCell('B17');
     kadeVersionCell.value = kadeVersionText;
     kadeVersionCell.font = { name: 'Arial', size: 14, bold: true, color: { argb: '0000000' } };
     kadeVersionCell.alignment = { horizontal: 'left' };
 
-    const kadeVersionCell2 = overviewWorksheet.getCell('C15');
+    const kadeVersionCell2 = overviewWorksheet.getCell('C17');
     kadeVersionCell2.value = kadeVersionValue;
     kadeVersionCell2.font = { name: 'Arial', size: 14, bold: false, color: { argb: '000000' } };
     kadeVersionCell2.alignment = { horizontal: 'left' };
 
     // project log history
-    const projectLogHistoryCell = overviewWorksheet.getCell('B17');
+    const projectLogHistoryCell = overviewWorksheet.getCell('B19');
     projectLogHistoryCell.value = data?.[0]?.[21]?.[0];
     projectLogHistoryCell.font = {
       name: 'Arial',
@@ -190,7 +212,7 @@ const createResultsExcelFile = async (dataContent) => {
     };
     projectLogHistoryCell.alignment = { horizontal: 'left' };
 
-    const projectLogHistoryCell2 = overviewWorksheet.getCell('C17');
+    const projectLogHistoryCell2 = overviewWorksheet.getCell('C19');
     projectLogHistoryCell2.value = data?.[0]?.[21]?.[1];
     projectLogHistoryCell2.font = {
       name: 'Arial',
@@ -202,17 +224,30 @@ const createResultsExcelFile = async (dataContent) => {
 
     // rest of the history
     for (let i = 22; i < data.length; i++) {
-      const historyCell = overviewWorksheet.getCell(`C${17 + (i - 21)}`);
+      const historyCell = overviewWorksheet.getCell(`C${19 + (i - 21)}`);
       historyCell.value = data?.[0]?.[i]?.[1];
       historyCell.font = { name: 'Arial', size: 14, bold: false, color: { argb: '000000' } };
       historyCell.alignment = { horizontal: 'left' };
     }
 
+    /**
+     **
+     ** APPEND OTHER SHEETS
+     **
+     */
+
     // add Basic data sheets - statements and sorts,
-    workbook = await createResultsXlsxFile2(workbook, data[1], data[2]);
-    workbook = await createResultsXlsxFile3(workbook, data[3], data[4], data[5], data[6]);
-    workbook = await createResultsXlsxFile4(workbook, data[7], data[8], data[9]);
-    workbook = await createResultsXlsxFile5(workbook, data[10]);
+    workbook = await createResultsXlsxFile2(workbook, data[1], data[2], textObject);
+    workbook = await createResultsXlsxFile3(
+      workbook,
+      data[3],
+      data[4],
+      data[5],
+      data[6],
+      textObject
+    );
+    workbook = await createResultsXlsxFile4(workbook, data[7], data[8], data[9], textObject);
+    workbook = await createResultsXlsxFile5(workbook, data[10], textObject);
     // simple counter to track progress through the data array, starting at 11 because the first 11 elements are used for the overview and basic data sheets
     let dataIndex = 10;
     // add factor contributor weights, factor contributor correlations, and factors
@@ -228,7 +263,12 @@ const createResultsExcelFile = async (dataContent) => {
       dataIndex = dataIndex + 1;
       const factorData3 = data[dataIndex];
       factorData.push([...factorData3]);
-      workbook = await createResultsXlsxFile6(workbook, factorData, userSelectedFactors[i]);
+      workbook = await createResultsXlsxFile6(
+        workbook,
+        factorData,
+        userSelectedFactors[i],
+        textObject
+      );
     }
     // add power set differences sheets
     if (powerSetDiffsNumber > 0) {
@@ -247,7 +287,13 @@ const createResultsExcelFile = async (dataContent) => {
     let factorCharData = data[dataIndex];
     dataIndex = dataIndex + 1;
     let stdErrData = data[dataIndex];
-    workbook = await createResultsXlsxFile8(workbook, conDisData, factorCharData, stdErrData);
+    workbook = await createResultsXlsxFile8(
+      workbook,
+      conDisData,
+      factorCharData,
+      stdErrData,
+      textObject
+    );
 
     // add distinguishing statements by factor sheets
     for (let i = 0; i < userSelectedFactors.length; i++) {
@@ -257,20 +303,28 @@ const createResultsExcelFile = async (dataContent) => {
       workbook = await createResultsXlsxFile9(
         workbook,
         factorDistinguishingData,
-        userSelectedFactors[i]
+        userSelectedFactors[i],
+        textObject
       );
     }
 
     // add consensus statements sheet
     dataIndex = dataIndex + 1;
     const consensusData = data[dataIndex];
-    workbook = await createResultsXlsxFile10(workbook, consensusData);
+    workbook = await createResultsXlsxFile10(workbook, consensusData, textObject);
+
+    console.log('relativeRanksData:', data[dataIndex + 1]);
 
     // add relative ranks sheet
     for (let i = 0; i < userSelectedFactors.length; i++) {
       dataIndex = dataIndex + 1;
       const relativeRanksData = data[dataIndex];
-      workbook = await createResultsXlsxFile11(workbook, relativeRanksData, userSelectedFactors[i]);
+      workbook = await createResultsXlsxFile11(
+        workbook,
+        relativeRanksData,
+        userSelectedFactors[i],
+        textObject
+      );
     }
 
     // File Download
