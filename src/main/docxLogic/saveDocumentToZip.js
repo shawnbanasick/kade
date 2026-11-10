@@ -12,6 +12,7 @@ const saveZipToFile = async (
   statements = [],
   sorts = [],
   multiplierArray = []
+  // downloadAsZip = false
 ) => {
   // setup statements text output file
   let statementsTxt = '';

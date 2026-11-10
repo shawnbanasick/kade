@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next';
 import outputState from '../../GlobalState/outputState';
 import DownloadDocxFile from './DownloadDocxFile';
 import DownloadNewExcel from './DownloadNewExcel';
-import DownloadAllResults from '../downloadDocxLogic/DownloadAllResults';
+import DownloadAllResults from './DownloadAllResults';
 
 const DownloadResultsButtons = () => {
   const { t } = useTranslation();

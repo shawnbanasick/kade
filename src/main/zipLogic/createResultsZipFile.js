@@ -2,6 +2,7 @@ import { dialog } from 'electron';
 import currentDate1 from '../../renderer/src/Utils/currentDate1';
 import currentTime1 from '../../renderer/src/Utils/currentTime1';
 import createResultsXlsxFile from '../excelLogic/createResultsXlsxFile';
+import exportDocx from '../docxLogic/exportDocx';
 import fs from 'fs';
 
 let JSZip = require('jszip');
@@ -13,13 +14,21 @@ const createResultsZipFile = async (dataContent) => {
   const timeStamp = `${currentDate1()}_${currentTime1()}`;
 
   const excelFileBuffer = createResultsXlsxFile(dataContent.excel, true); // Pass true to indicate that we want the buffer for zipping
+  const docBuffer = await exportDocx(dataContent.word, true); // Pass true to indicate that we want the buffer for zipping
 
   // 3. Initialize JSZip and add the Excel buffer
   const zip = new JSZip();
   zip.file(`KADE_Results_${projectName}_${timeStamp}.xlsx`, excelFileBuffer, { binary: true });
+  zip.file(`KADE_Results_${projectName}_${timeStamp}.docx`, docBuffer, { binary: true });
 
   // 4. Generate the zip file (e.g., as a Node.js Buffer or Uint8Array)
-  const zipBuffer = await zip.generateAsync({ type: 'nodebuffer' });
+  let zipContent;
+  if (JSZip.support.uint8array) {
+    zipContent = await zip.generateAsync({ type: 'uint8array' });
+  } else {
+    zipContent = await zip.generateAsync({ type: 'string' });
+  }
+  //   const zipBuffer = await zip.generateAsync({ type: 'nodebuffer' });
 
   // File Download
 
@@ -32,7 +41,7 @@ const createResultsZipFile = async (dataContent) => {
 
     if (!canceled && filePath) {
       //   await workbook.xlsx.writeFile(filePath);
-      await fs.promises.writeFile(filePath, zipBuffer, { encoding: 'binary' });
+      await fs.promises.writeFile(filePath, zipContent, { encoding: 'binary' });
       dialog.showMessageBoxSync({
         title: 'KADE Zip Results Export',
         type: 'info',

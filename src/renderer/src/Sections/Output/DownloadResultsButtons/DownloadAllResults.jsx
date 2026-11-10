@@ -5,6 +5,7 @@ import outputState from '../../GlobalState/outputState';
 import calcState from '../../GlobalState/calcState';
 import cloneDeep from 'lodash/cloneDeep';
 import coreState from '../../GlobalState/coreState';
+import createDocxOptions from '../downloadZipLogic/createDocxOptions';
 
 const DownloadResultsAsExcel = () => {
   const { t } = useTranslation();
@@ -55,16 +56,21 @@ const DownloadResultsAsExcel = () => {
 
     const excelDataContent = {
       type: 'ExcelResults',
-      data: dataXlsx,
+      data: [...dataXlsx],
       projectName: projectName,
       userSelectedFactors: userSelectedFactors,
       powerSetDiffsNumber: powerSetDiffsNumber,
       textObject: textObject,
     };
 
+    const docDataContent = createDocxOptions();
+    // docDataContent.projectName = projectName;
+    docDataContent.data = [...dataXlsx];
+
     const dataContent = {
       type: 'ZipResults',
       excel: excelDataContent,
+      word: docDataContent,
       projectName: projectName,
       userSelectedFactors: userSelectedFactors,
       powerSetDiffsNumber: powerSetDiffsNumber,

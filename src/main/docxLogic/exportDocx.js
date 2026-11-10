@@ -56,7 +56,7 @@ import saveDocumentToZip from './saveDocumentToZip';
 // let filetype = "tableCompat";
 // let filetype = "plainText";
 
-const generateOutputDoc = async (dataContent) => {
+const generateOutputDoc = async (dataContent, downloadAsZip = false) => {
   const data = dataContent.data; // cloneDeep(calcState.getState().outputData);
 
   // let projectName = 'lipset';
@@ -332,6 +332,12 @@ const generateOutputDoc = async (dataContent) => {
       },
     ],
   });
+
+  if (downloadAsZip === true) {
+    const docBufferZip = await Packer.toBuffer(doc);
+    return docBufferZip;
+  }
+
   if (saveAsZip === true) {
     saveDocumentToZip(doc, projectName, statements, sorts, multiplierArray);
   } else {
