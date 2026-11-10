@@ -13,13 +13,19 @@ const createResultsZipFile = async (dataContent) => {
   const projectName = dataContent.projectName || 'myProject';
   const timeStamp = `${currentDate1()}_${currentTime1()}`;
 
-  const excelFileBuffer = createResultsXlsxFile(dataContent.excel, true); // Pass true to indicate that we want the buffer for zipping
-  const docBuffer = await exportDocx(dataContent.word, true); // Pass true to indicate that we want the buffer for zipping
+  const excelFileBuffer = await createResultsXlsxFile(dataContent?.excel, true); // Pass true to indicate that we want the buffer for zipping
+  const docBuffer = await exportDocx(dataContent?.word, true); // Pass true to indicate that we want the buffer for zipping
+
+  const textOutputFiles = dataContent?.text || {};
 
   // 3. Initialize JSZip and add the Excel buffer
   const zip = new JSZip();
   zip.file(`KADE_Results_${projectName}_${timeStamp}.xlsx`, excelFileBuffer, { binary: true });
   zip.file(`KADE_Results_${projectName}_${timeStamp}.docx`, docBuffer, { binary: true });
+  zip.file('name.txt', textOutputFiles.name || 'myProject');
+  zip.file('statements.txt', textOutputFiles.statements || '');
+  zip.file('sorts.txt', textOutputFiles.sorts || '');
+  zip.file('pattern.txt', textOutputFiles.pattern || '');
 
   // 4. Generate the zip file (e.g., as a Node.js Buffer or Uint8Array)
   let zipContent;
@@ -31,7 +37,6 @@ const createResultsZipFile = async (dataContent) => {
   //   const zipBuffer = await zip.generateAsync({ type: 'nodebuffer' });
 
   // File Download
-
   let nameFile = `KADE_Results_${projectName}_${timeStamp}.zip`;
 
   try {

@@ -6,6 +6,7 @@ import calcState from '../../GlobalState/calcState';
 import cloneDeep from 'lodash/cloneDeep';
 import coreState from '../../GlobalState/coreState';
 import createDocxOptions from '../downloadZipLogic/createDocxOptions';
+import createCoreOutputTextFiles from '../downloadZipLogic/createCoreOutputTextFiles';
 
 const DownloadResultsAsExcel = () => {
   const { t } = useTranslation();
@@ -16,8 +17,19 @@ const DownloadResultsAsExcel = () => {
   const userSelectedFactors = outputState((state) => state.userSelectedFactors);
   const dataXlsxPrep = calcState((state) => state.outputData);
   const dataXlsx = cloneDeep(dataXlsxPrep);
-  const projectName = coreState((state) => state.projectName);
   const powerSetDiffsNumber = calcState((state) => state.powerSetDiffsNumber);
+
+  const projectName = coreState((state) => state.projectName);
+  const statements = coreState((state) => state.statements);
+  const mainDataObject = coreState((state) => state.mainDataObject);
+  const multiplierArray = coreState((state) => state.multiplierArray);
+
+  const textOutputFiles = createCoreOutputTextFiles(
+    mainDataObject,
+    statements,
+    projectName,
+    multiplierArray
+  );
 
   const handleClick = async () => {
     // console.log('DownloadResultsAsExcel button clicked');
@@ -71,6 +83,7 @@ const DownloadResultsAsExcel = () => {
       type: 'ZipResults',
       excel: excelDataContent,
       word: docDataContent,
+      text: textOutputFiles,
       projectName: projectName,
       userSelectedFactors: userSelectedFactors,
       powerSetDiffsNumber: powerSetDiffsNumber,
