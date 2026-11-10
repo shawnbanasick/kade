@@ -16,8 +16,6 @@ const thinBorder = {
 const createResultsXlsxFile11 = async (workbook, relativeRanksData, factorName, textObject) => {
   factorName = factorName.replace(/./, (x) => x.toUpperCase());
 
-  console.log('relativeRanksData:', relativeRanksData);
-
   const splitRelativeRanksData = relativeRanksData.reduce(
     (acc, row) => {
       const isEmpty = row.length === 2 && row[0] === '' && row[1] === '';

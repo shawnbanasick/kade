@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import outputState from '../../GlobalState/outputState';
 import DownloadDocxFile from './DownloadDocxFile';
 import DownloadNewExcel from './DownloadNewExcel';
+import DownloadAllResults from '../downloadDocxLogic/DownloadAllResults';
 
 const DownloadResultsButtons = () => {
   const { t } = useTranslation();
@@ -25,9 +26,10 @@ const DownloadResultsButtons = () => {
         <div className="w-fit text-[24px] mr-[5px] mt-0!">{t('Download complete output as')}</div>
         <div className="flex flex-row gap-[47px] items-center py-[10px] w-full h-[60px]">
           {/* <DownloadResultsAsExcel /> */}
-          <DownloadResultsAsCsv />
-          <DownloadDocxFile />
+          <DownloadAllResults />
           <DownloadNewExcel />
+          <DownloadDocxFile />
+          <DownloadResultsAsCsv />
         </div>
       </div>
     </>

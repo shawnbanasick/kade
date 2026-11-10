@@ -13,7 +13,7 @@ import createResultsXlsxFile9 from './createResultsXlsxFile9';
 import createResultsXlsxFile10 from './createResultsXlsxFile10';
 import createResultsXlsxFile11 from './createResultsXlsxFile11';
 
-const createResultsExcelFile = async (dataContent) => {
+const createResultsExcelFile = async (dataContent, downloadAsZip = false) => {
   try {
     var datenum = function (v, date1904) {
       if (date1904) {
@@ -29,8 +29,6 @@ const createResultsExcelFile = async (dataContent) => {
     const powerSetDiffsNumber = dataContent.powerSetDiffsNumber;
 
     const textObject = dataContent.textObject;
-
-    // console.log('data in createResultsExcelFile:', dataContent);
     const overviewText = textObject.projectInformation;
     const projectNameText = data?.[0]?.[2]?.[0];
     const projectNameValue = data?.[0]?.[2]?.[1];
@@ -313,8 +311,6 @@ const createResultsExcelFile = async (dataContent) => {
     const consensusData = data[dataIndex];
     workbook = await createResultsXlsxFile10(workbook, consensusData, textObject);
 
-    console.log('relativeRanksData:', data[dataIndex + 1]);
-
     // add relative ranks sheet
     for (let i = 0; i < userSelectedFactors.length; i++) {
       dataIndex = dataIndex + 1;
@@ -325,6 +321,12 @@ const createResultsExcelFile = async (dataContent) => {
         userSelectedFactors[i],
         textObject
       );
+    }
+
+    if (downloadAsZip) {
+      // Generate the Excel file as a buffer
+      const excelBuffer = await workbook.xlsx.writeBuffer();
+      return excelBuffer; // Return the buffer to be used in the zip file creation
     }
 
     // File Download

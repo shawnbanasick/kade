@@ -28,6 +28,7 @@ import createXlsxFileT1 from './excelLogic/createXlsxFileT1';
 import createXlsxFileT2 from './excelLogic/createXlsxFileT2';
 import createResultsXlsxFile from './excelLogic/createResultsXlsxFile';
 import createQuinceOtherResultsFile from './quinceLogic/createQuinceOtherResultsFile';
+import createResultsZipFile from './zipLogic/createResultsZipFile';
 
 const fs = require('fs');
 
@@ -287,6 +288,9 @@ if (!gotTheLock) {
             break;
           case 'ExcelResults':
             await createResultsXlsxFile(dataContent);
+            break;
+          case 'ZipResults':
+            await createResultsZipFile(dataContent);
             break;
           case 'QuinceResults':
             await createQuinceOtherResultsFile(dataContent);

@@ -1,4 +1,3 @@
-import downloadExcelDispatch from '../downloadExcelLogic/1_downloadExcelDispatch';
 import GeneralButton from '../../../Utils/GeneralButton';
 import { useTranslation } from 'react-i18next';
 import XlsxIcon from '../../images/XLSX_Icon2.svg';
@@ -71,9 +70,8 @@ const DownloadResultsAsExcel = () => {
     } catch (error) {
       console.error('Failed to export Excel Results file:', error);
     }
-    //   updateShowDocxOptions(false);
-    //   updateDownloadDocxButtonActive(false);
-    //   downloadExcelDispatch();
+    updateShowDocxOptions(false);
+    updateDownloadDocxButtonActive(false);
   };
 
   return (
