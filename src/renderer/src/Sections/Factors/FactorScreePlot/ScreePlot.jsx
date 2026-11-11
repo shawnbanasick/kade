@@ -1,5 +1,4 @@
 import * as d3 from 'd3';
-import React from 'react';
 import Line from './DataLine';
 import XYAxis from './XyAxis';
 import DataCircles from './DataCircles';
