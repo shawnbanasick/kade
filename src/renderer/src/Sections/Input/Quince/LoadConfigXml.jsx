@@ -76,7 +76,7 @@ const LoadConfigXml = () => {
     await window.electronAPI.openXmlFileConfig();
   };
 
-  const buttonText = isLoadConfigXmlButtonGreen ? t('Config.xml Loaded') : t('Load config.xml');
+  const buttonText = isLoadConfigXmlButtonGreen ? t('Config.xml Loaded') : t('Import config.xml');
 
   return (
     <NewLoadButton
@@ -90,7 +90,7 @@ const LoadConfigXml = () => {
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 20 20"
-            className="h-[17px] w-[17px] fill-current"
+            className="rotate-180 h-[17px] w-[17px] fill-current"
           >
             <path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z" />
           </svg>

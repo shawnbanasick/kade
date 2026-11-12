@@ -1,6 +1,5 @@
 import GeneralButton from '../../../Utils/GeneralButton';
 import { useTranslation } from 'react-i18next';
-import XlsxIcon from '../../images/XLSX_Icon2.svg';
 import outputState from '../../GlobalState/outputState';
 import calcState from '../../GlobalState/calcState';
 import cloneDeep from 'lodash/cloneDeep';
@@ -23,6 +22,8 @@ const DownloadResultsAsExcel = () => {
   const statements = coreState((state) => state.statements);
   const mainDataObject = coreState((state) => state.mainDataObject);
   const multiplierArray = coreState((state) => state.multiplierArray);
+  const serializedSVGScree1 = outputState((state) => state.serializedSVGScree1);
+  const serializedPNGScree1 = outputState((state) => state.serializedPNGScree1);
 
   const textOutputFiles = createCoreOutputTextFiles(
     mainDataObject,
@@ -84,6 +85,8 @@ const DownloadResultsAsExcel = () => {
       excel: excelDataContent,
       word: docDataContent,
       text: textOutputFiles,
+      screeSvg1: serializedSVGScree1,
+      screePng1: serializedPNGScree1,
       projectName: projectName,
       userSelectedFactors: userSelectedFactors,
       powerSetDiffsNumber: powerSetDiffsNumber,
@@ -110,7 +113,13 @@ const DownloadResultsAsExcel = () => {
     >
       <div className="flex flex-row justify-center items-center text-[22px]  h-full w-full">
         <div className="flex justify-center  items-center mr-2.5">
-          <img src={XlsxIcon} alt="xlsx Icon" className="h-7.5" />
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 20 20"
+            className="h-[17px] w-[17px] fill-current"
+          >
+            <path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z" />
+          </svg>
         </div>
         {t('KADE Zip')}
       </div>

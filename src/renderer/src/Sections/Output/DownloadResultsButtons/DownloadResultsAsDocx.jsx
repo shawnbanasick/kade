@@ -46,7 +46,7 @@ const DownloadResultsAsDocx = () => {
       <GeneralButton
         id="downloadResultsAsDocxButton"
         onClick={handleOpen}
-        className="flex justify-center items-center h-[30px] p-1 ml-5! w-fit min-w-[270px] bg-grey-button mt-[20px]"
+        className="flex justify-center items-center h-[30px] p-1  ml-4! w-fit min-w-[270px] bg-orange-500/80  mt-[40px]"
       >
         <div className="flex flex-row gap-3 justify-center items-center text-[16px]">
           <svg

@@ -1,9 +1,16 @@
+import { useEffect, useRef } from 'react';
+
 import * as d3 from 'd3';
+
+import outputState from '../../GlobalState/outputState';
+
 import Line from './DataLine';
 import XYAxis from './XyAxis';
 import DataCircles from './DataCircles';
 import AxisTextLabels from './AxisTextLabels';
 import ParallelRefLine from './ParallelRefLine';
+import serializeSVG from '../../../Utils/serializeSVG';
+import svgStringToPngBytes from '../../../Utils/svgStringToPngBytes';
 
 const styles = {
   container: {
@@ -55,10 +62,73 @@ const yScale = (props) =>
 
 const ScreePlot = (props) => {
   const { showMeans = false, showP95 = false, means, p95 } = props;
+  const updateSerializedSVGScree1 = outputState((state) => state.updateSerializedSVGScree1);
+  const updateSerializedPNGScree1 = outputState((state) => state.updateSerializedPNGScree1);
 
   const yMax_ = yMax(props.data);
   // Generate an array of every integer from 0 to yMax
   const yTickValues = Array.from({ length: yMax_ + 1 }, (_, i) => i);
+
+  const svgRef = useRef(null);
+
+  useEffect(() => {
+    console.log('1. effect fired', { data: props.data, w: props.width, h: props.height });
+
+    // const svgEl = document.getElementById('screePlot');
+    const svgEl = svgRef.current;
+
+    console.log('2. svgEl:', svgEl);
+    if (!svgEl) {
+      console.warn('svgEl not found, bailing out');
+      return;
+    }
+
+    const run = async () => {
+      try {
+        const { width, height } = svgEl.getBoundingClientRect();
+        console.log('3. size:', width, height);
+
+        const svg = await serializeSVG(svgEl);
+        console.log('4. serialized SVG length:', svg?.length, typeof svg);
+
+        const pngBytes = await svgStringToPngBytes(svg, width, height);
+        console.log('5. png bytes:', pngBytes?.length ?? pngBytes);
+
+        updateSerializedSVGScree1(svg);
+        updateSerializedPNGScree1(pngBytes);
+        console.log('6. outputState updated');
+      } catch (err) {
+        console.error('failed:', err);
+      }
+    };
+    run();
+  }, [props.data, props.width, props.height]);
+
+  // useEffect(() => {
+  //   const svgEl = svgRef.current;
+  //   if (!svgEl) return;
+
+  //   let cancelled = false;
+
+  //   const run = async () => {
+  //     try {
+  //       console.log('Serializing SVG and converting to PNG...');
+  //       const { width, height } = svgEl.getBoundingClientRect();
+  //       const svg = await serializeSVG(svgEl);
+  //       const pngBytes = await svgStringToPngBytes(svg, width, height);
+  //       if (cancelled) return;
+  //       outputState.updateSerializedSVGScree1(svg);
+  //       outputState.updateSerializedPNGScree1(pngBytes);
+  //     } catch (err) {
+  //       console.error('SVG serialization failed:', err);
+  //     }
+  //   };
+
+  //   run();
+  //   return () => {
+  //     cancelled = true;
+  //   };
+  // }, [props.data, props.width, props.height]);
 
   const scales = {
     xScale: xScale(props),
@@ -72,6 +142,7 @@ const ScreePlot = (props) => {
       <svg
         xmlns="http://www.w3.org/2000/svg"
         id="screePlot"
+        ref={svgRef}
         style={styles.svg}
         width={props.width + 20}
         height={props.height}

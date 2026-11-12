@@ -7,7 +7,7 @@ const OptionsBox = () => {
 
   return (
     <>
-      <div className={`w-[500px]   h-[560px] mr-[50px]`}>
+      <div className={`w-[500px] h-[560px] mr-[50px]`}>
         {displayState && <DocxContentSelectionPanel />}
       </div>
       <ToastContainer transition={Zoom} />

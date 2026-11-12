@@ -212,6 +212,8 @@ const outputState = create(
     isCalculateResultsButtonGreen: false,
     isCalculateResultsButtonDisabled: false,
     notifyOutputCaculationSuccess: false,
+    serializedSVGScree1: null,
+    serializedPNGScree1: null,
 
     // for factorSelectionForOutputButtons.jsx
     toggleUserSelectedFactor: (factor) =>
@@ -249,6 +251,8 @@ const outputState = create(
         return { userSelectedFactors: [], highlightedFactors };
       }),
 
+    updateSerializedSVGScree1: (inputValue) => set({ serializedSVGScree1: inputValue }),
+    updateSerializedPNGScree1: (inputValue) => set({ serializedPNGScree1: inputValue }),
     updateNotifyOutputCalculationSuccess: (inputValue) =>
       set({ notifyOutputCaculationSuccess: inputValue }),
     updateIsCalculateResultsButtonDisabled: (inputValue) =>

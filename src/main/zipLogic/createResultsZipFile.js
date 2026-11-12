@@ -8,8 +8,6 @@ import fs from 'fs';
 let JSZip = require('jszip');
 
 const createResultsZipFile = async (dataContent) => {
-  //   const { data, projectName, userSelectedFactors, powerSetDiffsNumber, textObject } = dataContent;
-  //   console.log('createResultsZipFile called with dataContent:', dataContent.type);
   const projectName = dataContent.projectName || 'myProject';
   const timeStamp = `${currentDate1()}_${currentTime1()}`;
 
@@ -26,6 +24,13 @@ const createResultsZipFile = async (dataContent) => {
   zip.file('statements.txt', textOutputFiles.statements || '');
   zip.file('sorts.txt', textOutputFiles.sorts || '');
   zip.file('pattern.txt', textOutputFiles.pattern || '');
+  zip.file(`KADE_Results_${projectName}_${timeStamp}.svg`, dataContent.screeSvg1 || '');
+  if (dataContent.screePng1) {
+    zip.file(`KADE_Results_${projectName}_${timeStamp}.png`, dataContent.screePng1, {
+      base64: true,
+    });
+  }
+  // zip.file(`KADE_Results_${projectName}_${timeStamp}.png`, dataContent.screePng1 || '');
 
   // 4. Generate the zip file (e.g., as a Node.js Buffer or Uint8Array)
   let zipContent;
@@ -45,7 +50,6 @@ const createResultsZipFile = async (dataContent) => {
     });
 
     if (!canceled && filePath) {
-      //   await workbook.xlsx.writeFile(filePath);
       await fs.promises.writeFile(filePath, zipContent, { encoding: 'binary' });
       dialog.showMessageBoxSync({
         title: 'KADE Zip Results Export',

@@ -6,7 +6,7 @@ import outputState from '../../GlobalState/outputState';
 const DistStateListSortByButtons = () => {
   const { t } = useTranslation();
   let tocText = t(
-    '(MS Word Only) Table of Contents and Section Hyperlinks (will request permission to update links on file open)'
+    'Table of Contents and Section Hyperlinks (will request permission to update links on file open - does not work on LibreOffice )'
   );
   let zebraText = t('Zebra Striping');
 

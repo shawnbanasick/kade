@@ -1,3 +1,5 @@
+import { useState, useEffect } from 'react';
+
 import { ToastContainer, toast, Zoom } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
 
@@ -35,6 +37,7 @@ import i18n from 'i18next';
 const Output = () => {
   const { t } = useTranslation();
   let displayState = outputState((state) => state.showDocxOptions);
+  const updateShowDocxOptions = outputState((state) => state.updateShowDocxOptions);
   const updateOutputActiveTabIndex = outputState((state) => state.updateOutputActiveTabIndex);
   const outputActiveTabIndex = outputState((state) => state.outputActiveTabIndex);
   const updateNotifyOutputDistStateError = outputState(
@@ -58,6 +61,25 @@ const Output = () => {
     await updateNotifyOutputDistStateError(false);
   };
 
+  // MODDAL TRANSITION STATE
+  const TRANSITION_MS = 100; // keep in sync with the tailwind CSS transition duration
+  const [mounted, setMounted] = useState(false); // is it in the DOM?
+  const [visible, setVisible] = useState(false); // is it in its "open" style?
+
+  useEffect(() => {
+    if (displayState) {
+      setMounted(true);
+      // Wait one frame so the browser paints the "closed" styles first,
+      // otherwise there's no transition on enter.
+      const id = requestAnimationFrame(() => setVisible(true));
+      return () => cancelAnimationFrame(id);
+    } else {
+      setVisible(false);
+      const id = setTimeout(() => setMounted(false), TRANSITION_MS);
+      return () => clearTimeout(id);
+    }
+  }, [displayState]);
+
   const handleTabClick = (tabId) => {
     updateOutputActiveTabIndex(tabId);
   };
@@ -79,6 +101,10 @@ const Output = () => {
   }
 
   const userSelectedFactors = outputState((state) => state.userSelectedFactors);
+
+  const closeModal = () => {
+    updateShowDocxOptions(false);
+  };
 
   const getArrayValues = (userSelectedFactors) => {
     const headerRow = [i18n.t('Nm'), i18n.t('Statement'), i18n.t('Nm')];
@@ -151,7 +177,7 @@ const Output = () => {
 
   const tabs = [
     {
-      title: t('Results'),
+      title: t('Options'),
       content: (
         <div className={`${window1Class} mt-5.5`}>
           {showTableDataNotSentWarning ? (
@@ -258,17 +284,39 @@ const Output = () => {
       ),
     },
     {
-      title: t('Downloads'),
+      title: t('Save Data'),
       content: (
         <div className={window2Class}>
           <DownloadResultsButtons />
-          {displayState && (
-            <div className="flex flex-row mt-6.25">
-              <DownloadDocxOptionsBox />
-              <div className="flex flex-col h-full">
-                <DocxFormatButtons />
-                <DocxIncludeDataOption />
-                <DownloadResultsAsDocx />
+          {mounted && (
+            <div
+              className={`fixed inset-0 z-50 flex flex-col items-center justify-center bg-black/70 p-4
+      transition-opacity duration-100 ease-out
+      ${visible ? 'opacity-100' : 'opacity-0'}`}
+              onClick={closeModal}
+              role="dialog"
+              aria-modal="true"
+              // aria-label={activeStep.title}
+            >
+              <div className="relative flex max-h-full max-w-[80rem] flex-col  overflow-hidden rounded-lg bg-white shadow-xl">
+                <button
+                  className="flex h-6 w-8 shrink-0 items-center self-end justify-center rounded-md  bg-red-500/60 hover:bg-red-500/80 text-2xl pb-1.5 font-bold text-black"
+                  onClick={closeModal}
+                  aria-label="Close"
+                >
+                  &times;
+                </button>
+                <div
+                  className="flex flex-row bg-white p-6"
+                  onClick={(event) => event.stopPropagation()}
+                >
+                  <DownloadDocxOptionsBox />
+                  <div className="flex flex-col h-full">
+                    <DocxFormatButtons />
+                    <DocxIncludeDataOption />
+                    <DownloadResultsAsDocx />
+                  </div>
+                </div>
               </div>
             </div>
           )}

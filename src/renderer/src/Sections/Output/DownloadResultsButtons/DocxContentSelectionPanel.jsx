@@ -100,7 +100,7 @@ const GeneralOptionsPanel = () => {
   ];
 
   return (
-    <div className="h-[460px]">
+    <div className="h-[460px] ">
       <span className="text-[22px] select-none">{t('Document Content')}</span>
       <hr className="w-full mb-[15px]" />
 

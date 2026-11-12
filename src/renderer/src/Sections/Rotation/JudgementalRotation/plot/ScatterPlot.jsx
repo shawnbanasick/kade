@@ -1,9 +1,10 @@
 import * as d3 from 'd3';
+import { v4 as uuidv4 } from 'uuid';
+
 import XYAxis from './XyAxis';
 import CircleText from './CircleText';
 import DataCircles from './DataCircles';
 import AxisTextLabels from './AxisTextLabels';
-import { v4 as uuidv4 } from 'uuid';
 
 const styles = {
   container: {
