@@ -66,8 +66,8 @@ const factorState = create(
     parallelMeans: [],
     parallel95: [],
     pcaButtonText: 'Principal Components',
-    displayParallelMeans: false,
-    displayParallel95: false,
+    displayParallelMeans: true,
+    displayParallel95: true,
 
     screePlotData: [],
     showCentroidError: false,

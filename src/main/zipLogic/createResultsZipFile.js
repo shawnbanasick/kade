@@ -30,6 +30,13 @@ const createResultsZipFile = async (dataContent) => {
       base64: true,
     });
   }
+  if (dataContent.screeDrawio1) {
+    if (Array.isArray(dataContent.screeDrawio1)) {
+      dataContent.screeDrawio1.forEach((item) => {
+        zip.file(item.name, item.drawio || '');
+      });
+    }
+  }
   // zip.file(`KADE_Results_${projectName}_${timeStamp}.png`, dataContent.screePng1 || '');
 
   // 4. Generate the zip file (e.g., as a Node.js Buffer or Uint8Array)

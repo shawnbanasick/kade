@@ -24,6 +24,7 @@ const DownloadResultsAsExcel = () => {
   const multiplierArray = coreState((state) => state.multiplierArray);
   const serializedSVGScree1 = outputState((state) => state.serializedSVGScree1);
   const serializedPNGScree1 = outputState((state) => state.serializedPNGScree1);
+  const serializedDrawioScree1 = outputState((state) => state.serializedDrawioScree1);
 
   const textOutputFiles = createCoreOutputTextFiles(
     mainDataObject,
@@ -86,6 +87,7 @@ const DownloadResultsAsExcel = () => {
       word: docDataContent,
       text: textOutputFiles,
       screeSvg1: serializedSVGScree1,
+      screeDrawio1: serializedDrawioScree1,
       screePng1: serializedPNGScree1,
       projectName: projectName,
       userSelectedFactors: userSelectedFactors,

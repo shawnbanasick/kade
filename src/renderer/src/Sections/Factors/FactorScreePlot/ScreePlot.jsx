@@ -3,6 +3,7 @@ import { useEffect, useRef } from 'react';
 import * as d3 from 'd3';
 
 import outputState from '../../GlobalState/outputState';
+import coreState from '../../GlobalState/coreState';
 
 import Line from './DataLine';
 import XYAxis from './XyAxis';
@@ -11,6 +12,16 @@ import AxisTextLabels from './AxisTextLabels';
 import ParallelRefLine from './ParallelRefLine';
 import serializeSVG from '../../../Utils/serializeSVG';
 import svgStringToPngBytes from '../../../Utils/svgStringToPngBytes';
+// import buildScreeDrawio from '../../../Utils/buildScreeDrawio';
+import buildScreeDrawio from '../FactorScreePlot/downloadScreeDrawIo';
+import currentDate1 from '../../../Utils/currentDate1';
+import currentTime1 from '../../../Utils/currentTime1';
+
+const dateTime = () => {
+  const date = currentDate1();
+  const time = currentTime1();
+  return `${date}_${time}`;
+};
 
 const styles = {
   container: {
@@ -61,81 +72,93 @@ const yScale = (props) =>
     .range([props.height - props.padding, props.padding]);
 
 const ScreePlot = (props) => {
-  const { showMeans = false, showP95 = false, means, p95 } = props;
-  const updateSerializedSVGScree1 = outputState((state) => state.updateSerializedSVGScree1);
-  const updateSerializedPNGScree1 = outputState((state) => state.updateSerializedPNGScree1);
+  const { showMeans = false, showP95 = false, means, p95, padding } = props;
+  const updateSerializedSVGScree1 = outputState((s) => s.updateSerializedSVGScree1);
+  const updateSerializedPNGScree1 = outputState((s) => s.updateSerializedPNGScree1);
+  const updateSerializedDrawioScree1 = outputState((s) => s.updateSerializedDrawioScree1);
+  const projectName = coreState((state) => state.projectName) ?? 'myProject';
 
   const yMax_ = yMax(props.data);
-  // Generate an array of every integer from 0 to yMax
   const yTickValues = Array.from({ length: yMax_ + 1 }, (_, i) => i);
-
-  const svgRef = useRef(null);
-
-  useEffect(() => {
-    console.log('1. effect fired', { data: props.data, w: props.width, h: props.height });
-
-    // const svgEl = document.getElementById('screePlot');
-    const svgEl = svgRef.current;
-
-    console.log('2. svgEl:', svgEl);
-    if (!svgEl) {
-      console.warn('svgEl not found, bailing out');
-      return;
-    }
-
-    const run = async () => {
-      try {
-        const { width, height } = svgEl.getBoundingClientRect();
-        console.log('3. size:', width, height);
-
-        const svg = await serializeSVG(svgEl);
-        console.log('4. serialized SVG length:', svg?.length, typeof svg);
-
-        const pngBytes = await svgStringToPngBytes(svg, width, height);
-        console.log('5. png bytes:', pngBytes?.length ?? pngBytes);
-
-        updateSerializedSVGScree1(svg);
-        updateSerializedPNGScree1(pngBytes);
-        console.log('6. outputState updated');
-      } catch (err) {
-        console.error('failed:', err);
-      }
-    };
-    run();
-  }, [props.data, props.width, props.height]);
-
-  // useEffect(() => {
-  //   const svgEl = svgRef.current;
-  //   if (!svgEl) return;
-
-  //   let cancelled = false;
-
-  //   const run = async () => {
-  //     try {
-  //       console.log('Serializing SVG and converting to PNG...');
-  //       const { width, height } = svgEl.getBoundingClientRect();
-  //       const svg = await serializeSVG(svgEl);
-  //       const pngBytes = await svgStringToPngBytes(svg, width, height);
-  //       if (cancelled) return;
-  //       outputState.updateSerializedSVGScree1(svg);
-  //       outputState.updateSerializedPNGScree1(pngBytes);
-  //     } catch (err) {
-  //       console.error('SVG serialization failed:', err);
-  //     }
-  //   };
-
-  //   run();
-  //   return () => {
-  //     cancelled = true;
-  //   };
-  // }, [props.data, props.width, props.height]);
 
   const scales = {
     xScale: xScale(props),
     yScale: yScale(props),
   };
 
-  const refLineProps = { ...scales, width: props.width, padding: props.padding };
+  // Integer ticks 0..xMax, matching the visible axis domain
+  const xTicks = Array.from({ length: scales.xScale.domain()[1] + 1 }, (_, i) => i);
+
+  const svgW = props.width + 20; // same as the <svg width>
+  const svgH = props.height;
+
+  const svgRef = useRef(null);
+
+  useEffect(() => {
+    const svgEl = svgRef.current;
+    if (!svgEl) return;
+
+    let cancelled = false;
+
+    const run = async () => {
+      try {
+        const svg = await serializeSVG(svgEl);
+        const png = await svgStringToPngBytes(svg, svgW, svgH); // base64 version if you switched
+        const drawio = await buildScreeDrawio({
+          data: props.data,
+          means: props.means,
+          p95: props.p95,
+          showMeans: true,
+          showP95: true,
+          numFacs: props.numFacs,
+        });
+
+        const drawio2 = await buildScreeDrawio({
+          data: props.data,
+          means: props.means,
+          p95: props.p95,
+          showMeans: false,
+          showP95: false,
+          numFacs: props.numFacs,
+        });
+
+        const screePlotDrawioArray = [
+          {
+            drawio: drawio2,
+            name: `KADE_Results_${projectName}_${dateTime()}_Scree.drawio`,
+          },
+          {
+            drawio: drawio,
+            name: `KADE_Results_${projectName}_${dateTime()}_Scree_with_PA.drawio`,
+          },
+        ];
+
+        if (cancelled) return;
+        updateSerializedSVGScree1(svg);
+        updateSerializedPNGScree1(png);
+        updateSerializedDrawioScree1(screePlotDrawioArray);
+      } catch (err) {
+        console.error('scree export serialization failed:', err);
+      }
+    };
+    run();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [
+    props.data,
+    props.width,
+    props.height,
+    props.numFacs,
+    padding,
+    means,
+    p95,
+    showMeans,
+    showP95,
+  ]);
+
+  const refLineProps = { ...scales, width: props.width, padding };
 
   return (
     <div style={styles.container} className="">
