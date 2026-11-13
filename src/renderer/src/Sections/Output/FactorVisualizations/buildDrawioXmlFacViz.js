@@ -3,9 +3,10 @@ const buildDrawioXmlFacViz = (
   positionData,
   factorVizOptions,
   titleHeight = 0,
-  showSymbols = false
+  showSymbols = false,
+  name = ''
 ) => {
-  console.log(factorVizOptions, 'factorVizOptions in buildDrawioXmlFacViz');
+  console.log(data[0], 'factorVizOptions in buildDrawioXmlFacViz');
 
   const {
     willAdjustCardWidth,
@@ -51,10 +52,24 @@ const buildDrawioXmlFacViz = (
       .replace(/>/g, '&gt;')
       .replace(/"/g, '&quot;');
 
+  const effectiveTitleHeight = name ? Math.max(titleHeight, 50) : titleHeight;
+
+  // ── 0. TITLE ───────────────────────────────────────────────────────────────
+  if (name) {
+    const totalGridWidth = Math.max(uniques.length, 1) * cardWidth;
+    const titleFontSize = 28;
+    const titleBoxHeight = effectiveTitleHeight;
+
+    cells.push(`
+        <mxCell id="${cellId++}" value="${esc(name)}" style="text;html=0;align=center;verticalAlign=middle;whiteSpace=wrap;fontStyle=1;fontSize=${titleFontSize};fontFamily=Arial;fontColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="0" y="0" width="${totalGridWidth}" height="${titleBoxHeight}" as="geometry" />
+        </mxCell>`);
+  }
+
   // ── 1. COLUMN HEADER RECTANGLES + LABELS ──────────────────────────────────
   uniques.forEach((label, index) => {
     const x = index * cardWidth;
-    const y = titleHeight;
+    const y = effectiveTitleHeight;
 
     cells.push(`
         <mxCell id="${cellId++}" value="" style="shape=mxgraph.basic.rect;fillColor=#ffffff;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="1">
@@ -86,7 +101,7 @@ const buildDrawioXmlFacViz = (
     else rawText = entry.sortStatement;
 
     const x = (xPosLoop[index] ?? 0) * cardWidth;
-    const y = (yPosLoop[index] ?? 0) * cardHeight + HEADER_H + titleHeight;
+    const y = (yPosLoop[index] ?? 0) * cardHeight + HEADER_H + effectiveTitleHeight;
 
     const cardStyle = [
       'shape=mxgraph.basic.rect',
@@ -143,7 +158,8 @@ const buildDrawioXmlFacViz = (
 
   // legend Y — mirrors LegendRectangle.yValue() / LegendText.getYValue()
   const maxColumnHeight = Math.max(...yPosLoop, 0) + 1;
-  const legendY = maxColumnHeight * cardHeight + 100;
+  // const legendY = maxColumnHeight * cardHeight + 100;
+  const legendY = maxColumnHeight * cardHeight + 100 + effectiveTitleHeight;
 
   // inner content offset — matches LegendText which uses yLocation = legendY + 5
   const yLoc = legendY + 5;

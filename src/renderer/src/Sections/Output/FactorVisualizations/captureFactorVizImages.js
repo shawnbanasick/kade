@@ -2,7 +2,7 @@
 import serializeSvg from '../../../Utils/serializeSVG';
 import svgStringToPngDataUrl from '../../../Utils/svgStringToPngDataUrl';
 import getSvgSize from '../../../Utils/getSvgSize';
-import buildDrawioXmlFacViz from '../FactorVisualizations/buildDrawioXml';
+import buildDrawioXmlFacViz from './buildDrawioXmlFacViz';
 
 export default async function captureFactorVizImages({ scale = 2 } = {}, dispatchProps = []) {
   const svgEls = Array.from(document.querySelectorAll('svg.vizImage'));
@@ -21,7 +21,10 @@ export default async function captureFactorVizImages({ scale = 2 } = {}, dispatc
         const drawio = buildDrawioXmlFacViz(
           dispatchProps[index].data,
           dispatchProps[index].positionData,
-          dispatchProps[index].factorVizOptions
+          dispatchProps[index].factorVizOptions,
+          30,
+          true,
+          dispatchProps[index].name
         );
         return [el.id, { svg, png, drawio, width, height, updatedAt: Date.now() }];
       })

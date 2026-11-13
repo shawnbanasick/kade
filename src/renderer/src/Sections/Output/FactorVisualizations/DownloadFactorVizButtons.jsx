@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import vizState from '../../GlobalState/vizState';
 import coreState from '../../GlobalState/coreState';
 import d3ToPng from 'd3-svg-to-png';
-import buildDrawioXmlFunction from './buildDrawioXml'; // Import the new helper function
+import buildDrawioXmlFunction from './buildDrawioXmlFacViz'; // Import the new helper function
 
 const DownloadIcon = () => (
   <div className="flex justify-center items-center mr-2.5">
@@ -55,12 +55,20 @@ const getDateTime = () => {
   return `${date}_${time}`;
 };
 
-const DownloadFactorVizButtons = ({ id, data, positionData } = {}) => {
+const DownloadFactorVizButtons = ({ id, data, positionData, name } = {}) => {
   const { t } = useTranslation();
   const factorVizOptions = vizState((state) => state.factorVizOptions) ?? {};
   const projectName = coreState((state) => state.projectName) ?? '';
 
   if (!id) return null;
+  console.log(
+    'DownloadFactorVizButtons rendering with id:',
+    id,
+    'data:',
+    data,
+    'positionData:',
+    positionData
+  );
 
   const downloadSvgImage = async () => {
     const imageName = `#image${id}`;
@@ -82,7 +90,7 @@ const DownloadFactorVizButtons = ({ id, data, positionData } = {}) => {
 
     const filepath = await window.electronAPI?.showSaveSvgDialog(defaultPath);
     if (!filepath) {
-      alert('Save operation was canceled.');
+      alert(t('Save operation was canceled.'));
       return;
     }
 
@@ -133,7 +141,7 @@ const DownloadFactorVizButtons = ({ id, data, positionData } = {}) => {
     const defaultPath = `${nameConfig}.png`;
     const filepath = await window.electronAPI?.showSavePngDialog(defaultPath);
     if (!filepath) {
-      alert('Save operation was canceled.');
+      alert(t('Save operation was canceled.'));
       return;
     }
 
@@ -161,7 +169,9 @@ const DownloadFactorVizButtons = ({ id, data, positionData } = {}) => {
       data, // same `data` array you pass to RectangleText / BaseRectangles
       positionData, // same positionData
       factorVizOptions,
-      titleHeight
+      titleHeight,
+      true, // includeLegend
+      name // pass the name to include in the Drawio XML
     );
 
     const filename = buildFileName(factorVizOptions, projectName, `${id}`, getDateTime());
@@ -172,7 +182,7 @@ const DownloadFactorVizButtons = ({ id, data, positionData } = {}) => {
 
     const filepath = await window.electronAPI?.showSaveDrawioDialog?.(defaultPath);
     if (!filepath) {
-      alert('Save operation was canceled.');
+      alert(t('Save operation was canceled.'));
       return;
     }
 
