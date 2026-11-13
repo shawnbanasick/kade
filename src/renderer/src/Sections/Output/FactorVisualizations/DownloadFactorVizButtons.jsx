@@ -61,14 +61,6 @@ const DownloadFactorVizButtons = ({ id, data, positionData, name } = {}) => {
   const projectName = coreState((state) => state.projectName) ?? '';
 
   if (!id) return null;
-  console.log(
-    'DownloadFactorVizButtons rendering with id:',
-    id,
-    'data:',
-    data,
-    'positionData:',
-    positionData
-  );
 
   const downloadSvgImage = async () => {
     const imageName = `#image${id}`;
@@ -194,7 +186,7 @@ const DownloadFactorVizButtons = ({ id, data, positionData, name } = {}) => {
   };
 
   return (
-    <div className="flex flex-row items-center justify-left pl-48">
+    <div className="flex flex-row pl-15">
       <GeneralButton
         id={`downloadSvgButtonFacViz${id}`}
         onClick={downloadSvgImage}

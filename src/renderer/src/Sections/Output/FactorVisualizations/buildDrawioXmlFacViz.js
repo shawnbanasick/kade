@@ -6,8 +6,6 @@ const buildDrawioXmlFacViz = (
   showSymbols = false,
   name = ''
 ) => {
-  console.log(data[0], 'factorVizOptions in buildDrawioXmlFacViz');
-
   const {
     willAdjustCardWidth,
     willAdjustCardWidthBy,

@@ -17,7 +17,7 @@ const DownloadsPanel = () => {
         <UserSelectionSwitch
           name="willAddCustomNameToDownload"
           value="willAddCustomNameToDownload"
-          toggle={false}
+          toggle
         />
       </div>
       <div>

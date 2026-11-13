@@ -20,11 +20,9 @@ const FactorVizDispatch = (props) => {
   const factorVizOptions = vizState((state) => state.factorVizOptions);
   const factorData = createFactorVizDataObjectForProps(factorVizOptions);
   const updateFactorVizImages = outputState((state) => state.updateFactorVizImages);
-  console.log('FactorVizDispatch props:', factorData);
-
   const hasData = Array.isArray(factorData) && factorData.length > 0;
   const dispatchProps = [...factorData];
-  // Option A: automatic, debounced, re-runs when options change
+
   useEffect(() => {
     if (!hasData) return undefined;
     let cancelled = false;
@@ -39,8 +37,6 @@ const FactorVizDispatch = (props) => {
   }, [factorVizOptions, hasData, updateFactorVizImages]);
 
   if (!hasData) return null;
-
-  console.log('FactorVizDispatch rendering with factorData:', factorData[0]);
 
   return (
     <div>

@@ -37,7 +37,6 @@ const DownloadResultsAsExcel = () => {
   );
 
   const handleClick = async () => {
-    // console.log('DownloadResultsAsExcel button clicked');
     if (userSelectedFactors.length === 0) {
       throw new Error('No factors selected');
       return;
@@ -69,8 +68,6 @@ const DownloadResultsAsExcel = () => {
       relativeRankings: t('Relative Rankings'),
     };
 
-    // console.log('dataXlsx:', dataXlsx);
-
     const excelDataContent = {
       type: 'ExcelResults',
       data: [...dataXlsx],
@@ -81,10 +78,7 @@ const DownloadResultsAsExcel = () => {
     };
 
     const docDataContent = createDocxOptions();
-    // docDataContent.projectName = projectName;
     docDataContent.data = [...dataXlsx];
-
-    console.log(factorVizImages);
 
     const dataContent = {
       type: 'ZipResults',

@@ -12,8 +12,6 @@ const getStyles = (props) => {
   // DYNAMIC height and width from prefs to set CONTAINER size
   // getState
 
-  console.log('getStyles called with props:', props);
-
   const positionData = props.positionData;
   const willAdjustCardWidth = props.factorVizOptions.willAdjustCardWidth;
   const willAdjustCardHeight = props.factorVizOptions.willAdjustCardHeight;
