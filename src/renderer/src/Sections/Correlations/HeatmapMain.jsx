@@ -1,12 +1,17 @@
 import React, { useEffect, useRef } from 'react';
 import * as d3 from 'd3';
-import correlationState from '../GlobalState/correlationState';
-import currentDate from '../../Utils/currentDate1';
-import currentTime from '../../Utils/currentTime1';
-import coreState from '../GlobalState/coreState';
 import { useTranslation } from 'react-i18next';
 import d3ToPng from 'd3-svg-to-png';
+
+import correlationState from '../GlobalState/correlationState';
+import coreState from '../GlobalState/coreState';
+import outputState from '../GlobalState/outputState';
+
+import currentDate from '../../Utils/currentDate1';
+import currentTime from '../../Utils/currentTime1';
 import buildHeatmapDrawio from './buildHeatmapDrawio';
+import serializeSVG from '../../Utils/serializeSVG';
+import svgStringToPngBytes from '../../Utils/svgStringToPngBytes';
 
 const getDateTime = () => {
   const date = currentDate();
@@ -29,6 +34,8 @@ const Heatmap = ({
   // Expects: [{"respondent":"US1","US1":100,"US2":54,...}, {...}, ...]
   const correlationData = correlationState((state) => state.gridRowData);
   const projectName = coreState((state) => state.projectName) ?? '';
+  const updateSerializedSVGHeatmap = outputState((state) => state.updateSerializedSVGHeatmap);
+  const updateSerializedPNGHeatmap = outputState((state) => state.updateSerializedPNGHeatmap);
 
   // Function to download the heatmap as PNG
   const downloadPNG = async () => {
@@ -281,7 +288,7 @@ const Heatmap = ({
       .append('text')
       .attr('x', 0)
       .attr('y', -90)
-      .attr('text-anchor', 'left')
+      .attr('text-anchor', 'start')
       .attr('class', 'text-4xl font-semibold')
       .text(title);
 
@@ -290,10 +297,38 @@ const Heatmap = ({
       .append('text')
       .attr('x', 0)
       .attr('y', -40)
-      .attr('text-anchor', 'left')
+      .attr('text-anchor', 'start')
       .attr('class', 'text-sm text-gray-500')
       .text(subtitle);
   }, [correlationData, width, height, title, subtitle]);
+
+  // OUTPUT IMAGE FOR DOWNLOAD - SERIALIZE SVG AND PNG
+  useEffect(() => {
+    // let cancelled = false;
+
+    const run = async () => {
+      if (!correlationData || correlationData.length === 0 || !svgRef.current) return;
+
+      try {
+        console.log('Serializing heatmap SVG and PNG for download...');
+        // Serialize the SVG for saving
+        const serializedSVG = serializeSVG(svgRef.current, { width, height });
+        console.log('Serialized SVG:', serializedSVG.length, 'characters');
+        const pngBytes = await svgStringToPngBytes(serializedSVG, width, height);
+        console.log('Serialized PNG bytes length:', pngBytes.length);
+
+        // if (cancelled) return;
+        updateSerializedSVGHeatmap(serializedSVG);
+        updateSerializedPNGHeatmap(pngBytes);
+      } catch (err) {
+        console.error('Heatmap export serialization failed:', err);
+      }
+    };
+    run();
+    // return () => {
+    //   // cancelled = true;
+    // };
+  }, [correlationData, width, height, updateSerializedSVGHeatmap, updateSerializedPNGHeatmap]);
 
   return (
     <div className="flex flex-col">

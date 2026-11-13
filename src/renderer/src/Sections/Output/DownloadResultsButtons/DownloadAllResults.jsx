@@ -25,6 +25,8 @@ const DownloadResultsAsExcel = () => {
   const serializedSVGScree1 = outputState((state) => state.serializedSVGScree1);
   const serializedPNGScree1 = outputState((state) => state.serializedPNGScree1);
   const serializedDrawioScree1 = outputState((state) => state.serializedDrawioScree1);
+  const serializedSVGHeatmap = outputState((state) => state.serializedSVGHeatmap);
+  const serializedPNGHeatmap = outputState((state) => state.serializedPNGHeatmap);
 
   const textOutputFiles = createCoreOutputTextFiles(
     mainDataObject,
@@ -89,6 +91,8 @@ const DownloadResultsAsExcel = () => {
       screeSvg1: serializedSVGScree1,
       screeDrawio1: serializedDrawioScree1,
       screePng1: serializedPNGScree1,
+      heatmapSvg: serializedSVGHeatmap,
+      heatmapPng: serializedPNGHeatmap,
       projectName: projectName,
       userSelectedFactors: userSelectedFactors,
       powerSetDiffsNumber: powerSetDiffsNumber,

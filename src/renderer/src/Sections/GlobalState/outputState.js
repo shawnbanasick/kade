@@ -215,6 +215,8 @@ const outputState = create(
     serializedSVGScree1: null,
     serializedPNGScree1: null,
     serializedDrawioScree1: null,
+    serializedSVGHeatmap: null,
+    serializedPNGHeatmap: null,
 
     // for factorSelectionForOutputButtons.jsx
     toggleUserSelectedFactor: (factor) =>
@@ -252,6 +254,8 @@ const outputState = create(
         return { userSelectedFactors: [], highlightedFactors };
       }),
 
+    updateSerializedSVGHeatmap: (inputValue) => set({ serializedSVGHeatmap: inputValue }),
+    updateSerializedPNGHeatmap: (inputValue) => set({ serializedPNGHeatmap: inputValue }),
     updateSerializedSVGScree1: (inputValue) => set({ serializedSVGScree1: inputValue }),
     updateSerializedPNGScree1: (inputValue) => set({ serializedPNGScree1: inputValue }),
     updateSerializedDrawioScree1: (inputValue) => set({ serializedDrawioScree1: inputValue }),

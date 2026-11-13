@@ -24,9 +24,15 @@ const createResultsZipFile = async (dataContent) => {
   zip.file('statements.txt', textOutputFiles.statements || '');
   zip.file('sorts.txt', textOutputFiles.sorts || '');
   zip.file('pattern.txt', textOutputFiles.pattern || '');
-  zip.file(`KADE_Results_${projectName}_${timeStamp}.svg`, dataContent.screeSvg1 || '');
+  zip.file(`KADE_Results_${projectName}_${timeStamp}_scree.svg`, dataContent.screeSvg1 || '');
+  zip.file(`KADE_Results_${projectName}_${timeStamp}_heatmap.svg`, dataContent.heatmapSvg || '');
+  if (dataContent.heatmapPng) {
+    zip.file(`KADE_Results_${projectName}_${timeStamp}_heatmap.png`, dataContent.heatmapPng, {
+      base64: true,
+    });
+  }
   if (dataContent.screePng1) {
-    zip.file(`KADE_Results_${projectName}_${timeStamp}.png`, dataContent.screePng1, {
+    zip.file(`KADE_Results_${projectName}_${timeStamp}_scree.png`, dataContent.screePng1, {
       base64: true,
     });
   }
