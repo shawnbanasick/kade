@@ -1,6 +1,6 @@
 // captureFactorVizImages.js
 import serializeSvg from '../../../Utils/serializeSVG';
-import svgStringToPngDataUrl from '../../../Utils/svgStringToPngBytes';
+import svgStringToPngDataUrl from '../../../Utils/svgStringToPngDataUrl';
 import getSvgSize from '../../../Utils/getSvgSize';
 
 export default async function captureFactorVizImages({ scale = 2 } = {}) {
