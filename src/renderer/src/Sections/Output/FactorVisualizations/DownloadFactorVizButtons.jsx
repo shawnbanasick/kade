@@ -149,6 +149,14 @@ const DownloadFactorVizButtons = ({ id, data, positionData } = {}) => {
   const downloadAsDrawio = async () => {
     const titleHeight = vizState.getState().titleHeight ?? 0;
 
+    console.log('downloadAsDrawio called with:', {
+      id,
+      data,
+      positionData,
+      factorVizOptions,
+      titleHeight,
+    });
+
     const drawioXml = buildDrawioXmlFunction(
       data, // same `data` array you pass to RectangleText / BaseRectangles
       positionData, // same positionData

@@ -1,9 +1,11 @@
 import { useEffect } from 'react';
-import FactorViz from './FactorViz';
-import createFactorVizDataObjectForProps from './createFactorVizDataObjectForProps';
+
 import vizState from '../../GlobalState/vizState';
 import outputState from '../../GlobalState/outputState';
+
+import FactorViz from './FactorViz';
 import captureFactorVizImages from './captureFactorVizImages';
+import createFactorVizDataObjectForProps from './createFactorVizDataObjectForProps';
 
 const styles = {
   width: '100%',
@@ -18,15 +20,16 @@ const FactorVizDispatch = (props) => {
   const factorVizOptions = vizState((state) => state.factorVizOptions);
   const factorData = createFactorVizDataObjectForProps(factorVizOptions);
   const updateFactorVizImages = outputState((state) => state.updateFactorVizImages);
+  console.log('FactorVizDispatch props:', factorData);
 
   const hasData = Array.isArray(factorData) && factorData.length > 0;
-
+  const dispatchProps = [...factorData];
   // Option A: automatic, debounced, re-runs when options change
   useEffect(() => {
     if (!hasData) return undefined;
     let cancelled = false;
     const t = setTimeout(async () => {
-      const images = await captureFactorVizImages({ scale: 2 });
+      const images = await captureFactorVizImages({ scale: 2 }, dispatchProps);
       if (!cancelled) updateFactorVizImages(images);
     }, 500); // let the SVGs finish rendering
     return () => {
@@ -36,6 +39,8 @@ const FactorVizDispatch = (props) => {
   }, [factorVizOptions, hasData, updateFactorVizImages]);
 
   if (!hasData) return null;
+
+  console.log('FactorVizDispatch rendering with factorData:', factorData[0]);
 
   return (
     <div>

@@ -1,10 +1,12 @@
-const buildDrawioXml = (
+const buildDrawioXmlFacViz = (
   data,
   positionData,
   factorVizOptions,
   titleHeight = 0,
   showSymbols = false
 ) => {
+  console.log(factorVizOptions, 'factorVizOptions in buildDrawioXmlFacViz');
+
   const {
     willAdjustCardWidth,
     willAdjustCardWidthBy,
@@ -282,4 +284,4 @@ const buildDrawioXml = (
 </mxfile>`;
 };
 
-export default buildDrawioXml;
+export default buildDrawioXmlFacViz;

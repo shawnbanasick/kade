@@ -56,6 +56,9 @@ const createResultsZipFile = async (dataContent) => {
           base64: true,
         });
       }
+      if (entry.drawio) {
+        zip.file(`factorViz_${id}.drawio`, entry.drawio);
+      }
     });
   }
   // zip.file(`KADE_Results_${projectName}_${timeStamp}.png`, dataContent.screePng1 || '');
