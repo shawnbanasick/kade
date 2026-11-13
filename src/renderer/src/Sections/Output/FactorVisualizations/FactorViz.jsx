@@ -51,6 +51,7 @@ const getStyles = (props) => {
   return container;
 };
 
+// ** Main Factors Component **
 const FactorViz = (props) => {
   const willIndicateDistinguishing = props.factorVizOptions.willIndicateDistinguishing;
   const showDistinguishingAs = props.factorVizOptions.showDistinguishingAs;
@@ -63,6 +64,7 @@ const FactorViz = (props) => {
   let shouldDisplayLegend = props.factorVizOptions.willIncludeLegend;
 
   const margin = { top: 10, left: 10, bottom: 10, right: 10 };
+
   return (
     <div className="flex flex-col" style={getStyles(props)}>
       <svg

@@ -310,13 +310,9 @@ const Heatmap = ({
       if (!correlationData || correlationData.length === 0 || !svgRef.current) return;
 
       try {
-        console.log('Serializing heatmap SVG and PNG for download...');
         // Serialize the SVG for saving
         const serializedSVG = serializeSVG(svgRef.current, { width, height });
-        console.log('Serialized SVG:', serializedSVG.length, 'characters');
         const pngBytes = await svgStringToPngBytes(serializedSVG, width, height);
-        console.log('Serialized PNG bytes length:', pngBytes.length);
-
         // if (cancelled) return;
         updateSerializedSVGHeatmap(serializedSVG);
         updateSerializedPNGHeatmap(pngBytes);

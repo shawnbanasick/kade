@@ -217,7 +217,10 @@ const outputState = create(
     serializedDrawioScree1: null,
     serializedSVGHeatmap: null,
     serializedPNGHeatmap: null,
+    factorVizImages: {},
 
+    updateFactorVizImages: (images) => set({ factorVizImages: images }),
+    clearFactorVizImages: () => set({ factorVizImages: {} }),
     // for factorSelectionForOutputButtons.jsx
     toggleUserSelectedFactor: (factor) =>
       set((state) => {

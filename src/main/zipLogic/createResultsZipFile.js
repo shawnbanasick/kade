@@ -43,6 +43,21 @@ const createResultsZipFile = async (dataContent) => {
       });
     }
   }
+  if (dataContent.factorVizImages) {
+    const imageData = dataContent.factorVizImages;
+
+    Object.entries(imageData).forEach(([id, entry]) => {
+      if (entry.svg) {
+        zip.file(`factorViz_${id}.svg`, entry.svg);
+      }
+      if (entry.png) {
+        // PNG is stored as a data URL, so strip the prefix and write as base64
+        zip.file(`factorViz_${id}.png`, entry.png.replace(/^data:image\/png;base64,/, ''), {
+          base64: true,
+        });
+      }
+    });
+  }
   // zip.file(`KADE_Results_${projectName}_${timeStamp}.png`, dataContent.screePng1 || '');
 
   // 4. Generate the zip file (e.g., as a Node.js Buffer or Uint8Array)

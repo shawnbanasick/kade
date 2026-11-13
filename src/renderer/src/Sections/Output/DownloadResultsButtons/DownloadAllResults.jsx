@@ -27,6 +27,7 @@ const DownloadResultsAsExcel = () => {
   const serializedDrawioScree1 = outputState((state) => state.serializedDrawioScree1);
   const serializedSVGHeatmap = outputState((state) => state.serializedSVGHeatmap);
   const serializedPNGHeatmap = outputState((state) => state.serializedPNGHeatmap);
+  const factorVizImages = outputState((state) => state.factorVizImages);
 
   const textOutputFiles = createCoreOutputTextFiles(
     mainDataObject,
@@ -83,6 +84,8 @@ const DownloadResultsAsExcel = () => {
     // docDataContent.projectName = projectName;
     docDataContent.data = [...dataXlsx];
 
+    console.log(factorVizImages);
+
     const dataContent = {
       type: 'ZipResults',
       excel: excelDataContent,
@@ -96,6 +99,7 @@ const DownloadResultsAsExcel = () => {
       projectName: projectName,
       userSelectedFactors: userSelectedFactors,
       powerSetDiffsNumber: powerSetDiffsNumber,
+      factorVizImages: factorVizImages,
       textObject: textObject,
     };
 
