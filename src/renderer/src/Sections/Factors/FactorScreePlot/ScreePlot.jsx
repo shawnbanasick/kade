@@ -125,11 +125,11 @@ const ScreePlot = (props) => {
         const screePlotDrawioArray = [
           {
             drawio: drawio2,
-            name: `KADE_Results_${projectName}_${dateTime()}_Scree.drawio`,
+            name: `images/scree/KADE_${projectName}_${dateTime()}_scree_DRAWIO.drawio`,
           },
           {
             drawio: drawio,
-            name: `KADE_Results_${projectName}_${dateTime()}_Scree_with_PA.drawio`,
+            name: `images/scree/KADE_${projectName}_${dateTime()}_scree_with_PA_DRAWIO.drawio`,
           },
         ];
 

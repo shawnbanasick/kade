@@ -139,7 +139,6 @@ const DownloadFactorVizButtons = ({ id, data, positionData, name } = {}) => {
 
     try {
       const result = await window.electronAPI.savePNG(buffer, filepath);
-      console.log(result);
     } catch (error) {
       console.error('Failed to save PNG file:', error);
     }
@@ -148,14 +147,6 @@ const DownloadFactorVizButtons = ({ id, data, positionData, name } = {}) => {
   // ─── NEW HANDLER ────────────────────────────────────────────────────────────
   const downloadAsDrawio = async () => {
     const titleHeight = vizState.getState().titleHeight ?? 0;
-
-    console.log('downloadAsDrawio called with:', {
-      id,
-      data,
-      positionData,
-      factorVizOptions,
-      titleHeight,
-    });
 
     const drawioXml = buildDrawioXmlFunction(
       data, // same `data` array you pass to RectangleText / BaseRectangles

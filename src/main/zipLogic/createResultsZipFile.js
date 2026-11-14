@@ -18,21 +18,31 @@ const createResultsZipFile = async (dataContent) => {
 
   // 3. Initialize JSZip and add the Excel buffer
   const zip = new JSZip();
-  zip.file(`KADE_Results_${projectName}_${timeStamp}.xlsx`, excelFileBuffer, { binary: true });
-  zip.file(`KADE_Results_${projectName}_${timeStamp}.docx`, docBuffer, { binary: true });
+  zip.file(`KADE_${projectName}_${timeStamp}_Excel.xlsx`, excelFileBuffer, { binary: true });
+  zip.file(`KADE_${projectName}_${timeStamp}_Word.docx`, docBuffer, { binary: true });
   zip.file('name.txt', textOutputFiles.name || 'myProject');
   zip.file('statements.txt', textOutputFiles.statements || '');
   zip.file('sorts.txt', textOutputFiles.sorts || '');
   zip.file('pattern.txt', textOutputFiles.pattern || '');
-  zip.file(`KADE_Results_${projectName}_${timeStamp}_scree.svg`, dataContent.screeSvg1 || '');
-  zip.file(`KADE_Results_${projectName}_${timeStamp}_heatmap.svg`, dataContent.heatmapSvg || '');
+  zip.file(
+    `images/scree/KADE_${projectName}_${timeStamp}_scree_SVG.svg`,
+    dataContent.screeSvg1 || ''
+  );
+  zip.file(
+    `images/heatmap/KADE_${projectName}_${timeStamp}_heatmap_SVG.svg`,
+    dataContent.heatmapSvg || ''
+  );
   if (dataContent.heatmapPng) {
-    zip.file(`KADE_Results_${projectName}_${timeStamp}_heatmap.png`, dataContent.heatmapPng, {
-      base64: true,
-    });
+    zip.file(
+      `images/heatmap/KADE_${projectName}_${timeStamp}_heatmap_PNG.png`,
+      dataContent.heatmapPng,
+      {
+        base64: true,
+      }
+    );
   }
   if (dataContent.screePng1) {
-    zip.file(`KADE_Results_${projectName}_${timeStamp}_scree.png`, dataContent.screePng1, {
+    zip.file(`images/scree/KADE_${projectName}_${timeStamp}_scree_PNG.png`, dataContent.screePng1, {
       base64: true,
     });
   }
@@ -47,17 +57,25 @@ const createResultsZipFile = async (dataContent) => {
     const imageData = dataContent.factorVizImages;
 
     Object.entries(imageData).forEach(([id, entry]) => {
+      const newId = id.replace('image', ''); // Replace non-alphanumeric characters with underscores
       if (entry.svg) {
-        zip.file(`factorViz_${id}.svg`, entry.svg);
+        zip.file(`images/factors/KADE_${projectName}_${timeStamp}_${newId}_SVG.svg`, entry.svg);
       }
       if (entry.png) {
         // PNG is stored as a data URL, so strip the prefix and write as base64
-        zip.file(`factorViz_${id}.png`, entry.png.replace(/^data:image\/png;base64,/, ''), {
-          base64: true,
-        });
+        zip.file(
+          `images/factors/KADE_${projectName}_${timeStamp}_${newId}_PNG.png`,
+          entry.png.replace(/^data:image\/png;base64,/, ''),
+          {
+            base64: true,
+          }
+        );
       }
       if (entry.drawio) {
-        zip.file(`factorViz_${id}.drawio`, entry.drawio);
+        zip.file(
+          `images/factors/KADE_${projectName}_${timeStamp}_${newId}_DRAWIO.drawio`,
+          entry.drawio
+        );
       }
     });
   }

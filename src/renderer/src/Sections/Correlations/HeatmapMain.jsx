@@ -1,7 +1,7 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import * as d3 from 'd3';
 import { useTranslation } from 'react-i18next';
-import d3ToPng from 'd3-svg-to-png';
+// import d3ToPng from 'd3-svg-to-png';
 
 import correlationState from '../GlobalState/correlationState';
 import coreState from '../GlobalState/coreState';
@@ -11,7 +11,7 @@ import currentDate from '../../Utils/currentDate1';
 import currentTime from '../../Utils/currentTime1';
 import buildHeatmapDrawio from './buildHeatmapDrawio';
 import serializeSVG from '../../Utils/serializeSVG';
-import svgStringToPngBytes from '../../Utils/svgStringToPngBytes';
+import svgStringToPngBase64 from '../../Utils/svgStringToPngBytes';
 
 const getDateTime = () => {
   const date = currentDate();
@@ -30,53 +30,47 @@ const Heatmap = ({
   const tooltipRef = useRef(null);
   const { t } = useTranslation();
 
-  // Get data from Zustand store
-  // Expects: [{"respondent":"US1","US1":100,"US2":54,...}, {...}, ...]
+  // Each range is [low/negative, midpoint (0), high/positive]
+  const COLOR_SCHEMES = {
+    blueRed: { label: `${t('Blue')} – ${t('Red')}`, range: ['#2563eb', '#f3f4f6', '#dc2626'] },
+    redGreen: { label: `${t('Red')} – ${t('Green')}`, range: ['#dc2626', '#f3f4f6', '#16a34a'] },
+    greenRed: { label: `${t('Green')} – ${t('Red')}`, range: ['#16a34a', '#f3f4f6', '#dc2626'] },
+    purpleGreen: {
+      label: `${t('Purple')} – ${t('Green')}`,
+      range: ['#7c3aed', '#f3f4f6', '#16a34a'],
+    },
+    orangeBlue: {
+      label: `${t('Orange')} – ${t('Blue')}`,
+      range: ['#ea580c', '#f3f4f6', '#2563eb'],
+    },
+    brownTeal: { label: `${t('Brown')} – ${t('Teal')}`, range: ['#92400e', '#f5f5f4', '#0f766e'] },
+    grayscale: { label: `${t('Grayscale')}`, range: ['#dbdbdb', '#9ca3af', '#111827'] },
+  };
+
   const correlationData = correlationState((state) => state.gridRowData);
   const projectName = coreState((state) => state.projectName) ?? '';
   const updateSerializedSVGHeatmap = outputState((state) => state.updateSerializedSVGHeatmap);
   const updateSerializedPNGHeatmap = outputState((state) => state.updateSerializedPNGHeatmap);
+  const serializedPNG = outputState((state) => state.serializedPNGHeatmap);
+
+  const [colorScheme, setColorScheme] = useState('blueRed');
 
   // Function to download the heatmap as PNG
   const downloadPNG = async () => {
-    const imageEl = document.getElementById(`heatmapImage`);
-
-    if (!imageEl) {
-      console.error(`Image element not found: heatmapImage`);
-      return;
-    }
-
     const filename = `KADE_${projectName}_${t('heatmap')}_${getDateTime()}`;
-    let fileData;
+
+    const filepath = await window.electronAPI?.showSavePngDialog(`${filename}.png`);
+    if (!filepath) return;
+
+    // await nextPaint();
     try {
-      fileData = await d3ToPng(imageEl, filename, {
-        backgroundColor: 'white',
-        scale: 3,
-        format: 'png',
-        download: false,
-        quality: 1,
-      });
-    } catch (error) {
-      console.error('Failed to convert to PNG:', error);
-      return;
-    }
-
-    const buffer = fileData?.split(',')?.[1];
-    if (!buffer) {
-      console.error('PNG conversion returned no data.');
-      return;
-    }
-
-    const defaultPath = `${filename}.png`;
-    const filepath = await window.electronAPI?.showSavePngDialog(defaultPath);
-    if (!filepath) {
-      alert('Save operation was canceled.');
-      return;
-    }
-
-    try {
-      const result = await window.electronAPI.savePNG(buffer, filepath);
-      console.log(result);
+      let b64 = serializedPNG; // from outputState
+      if (!b64) {
+        // Fallback: render now
+        const svg = serializeSVG(svgRef.current, { width, height });
+        b64 = await svgStringToPngBase64(svg, width, height);
+      }
+      await window.electronAPI.savePNG(b64, filepath);
     } catch (error) {
       console.error('Failed to save PNG file:', error);
     }
@@ -89,6 +83,7 @@ const Heatmap = ({
       subtitle,
       width,
       height,
+      colorRange: COLOR_SCHEMES[colorScheme].range,
     });
 
     if (!drawioXml) return;
@@ -220,10 +215,11 @@ const Heatmap = ({
 
     // Use a diverging color scale for correlation data
     // Negative correlations = blue, Positive correlations = red
+
     const myColor = d3
       .scaleLinear()
       .domain([minValue, 0, maxValue])
-      .range(['#2563eb', '#f3f4f6', '#dc2626']);
+      .range(COLOR_SCHEMES[colorScheme].range);
 
     // Tooltip functions
     const tooltip = d3.select(tooltipRef.current);
@@ -276,11 +272,12 @@ const Heatmap = ({
       .attr('text-anchor', 'middle')
       .attr('dominant-baseline', 'middle')
       .attr('class', 'text-xs font-medium pointer-events-none')
-      .style('fill', (d) => {
-        // Use white text for dark cells, dark text for light cells
-        const absValue = Math.abs(d.value);
-        return absValue > 50 ? '#ffffff' : '#1f2937';
-      })
+      // .style('fill', (d) => {
+      //   // Use white text for dark cells, dark text for light cells
+      //   const absValue = Math.abs(d.value);
+      //   return absValue > 50 ? '#ffffff' : '#1f2937';
+      // })
+      .style('fill', (d) => (d3.lab(myColor(d.value)).l < 55 ? '#ffffff' : '#1f2937'))
       .text((d) => d.value);
 
     // Add title
@@ -300,7 +297,7 @@ const Heatmap = ({
       .attr('text-anchor', 'start')
       .attr('class', 'text-sm text-gray-500')
       .text(subtitle);
-  }, [correlationData, width, height, title, subtitle]);
+  }, [correlationData, width, height, title, subtitle, colorScheme]);
 
   // OUTPUT IMAGE FOR DOWNLOAD - SERIALIZE SVG AND PNG
   useEffect(() => {
@@ -312,7 +309,15 @@ const Heatmap = ({
       try {
         // Serialize the SVG for saving
         const serializedSVG = serializeSVG(svgRef.current, { width, height });
-        const pngBytes = await svgStringToPngBytes(serializedSVG, width, height);
+        const pngBytes = await svgStringToPngBase64(serializedSVG, width, height);
+        const drawioXml = buildHeatmapDrawio({
+          correlationData,
+          title,
+          subtitle,
+          width,
+          height,
+          colorRange: COLOR_SCHEMES[colorScheme].range,
+        });
         // if (cancelled) return;
         updateSerializedSVGHeatmap(serializedSVG);
         updateSerializedPNGHeatmap(pngBytes);
@@ -324,61 +329,88 @@ const Heatmap = ({
     // return () => {
     //   // cancelled = true;
     // };
-  }, [correlationData, width, height, updateSerializedSVGHeatmap, updateSerializedPNGHeatmap]);
+  }, [
+    correlationData,
+    width,
+    height,
+    colorScheme,
+    updateSerializedSVGHeatmap,
+    updateSerializedPNGHeatmap,
+  ]);
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col mt-10">
       <div className="relative">
+        {/** Color scheme selector */}
+        <div className="flex flex-row items-center gap-2 mb-4">
+          <div className="flex items-center gap-2 mb-2 ml-18">
+            <label htmlFor="heatmapColorScheme" className="text-sm font-medium">
+              {t('Color scheme')}
+            </label>
+            <select
+              id="heatmapColorScheme"
+              value={colorScheme}
+              onChange={(e) => setColorScheme(e.target.value)}
+              className="border border-gray-300 rounded-md px-2 py-1 text-sm bg-white"
+            >
+              {Object.entries(COLOR_SCHEMES).map(([key, { label }]) => (
+                <option key={key} value={key}>
+                  {label}
+                </option>
+              ))}
+            </select>
+          </div>
+          {/** Download buttons */}
+          <div className="flex flex-row gap-4 ml-18 mt-4">
+            <button
+              onClick={downloadPNG}
+              className="mt-4 mb-12.5! px-4 py-2 cursor-pointer bg-grey-button text-black rounded-md hover:bg-grey-button-hover transition-colors flex items-center gap-2"
+            >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
+                />
+              </svg>
+              Download PNG
+            </button>
+            <button
+              onClick={downloadSVG}
+              className="mt-4  mb-12.5! px-4 py-2 cursor-pointer bg-grey-button text-black rounded-md hover:bg-grey-button-hover transition-colors flex items-center gap-2"
+            >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
+                />
+              </svg>
+              Download SVG
+            </button>
+            <button
+              onClick={downloadDrawio}
+              className="mt-4 mb-12.5! px-4 py-2 cursor-pointer bg-grey-button text-black rounded-md hover:bg-grey-button-hover transition-colors flex items-center gap-2"
+            >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
+                />
+              </svg>
+              Download Draw.io
+            </button>
+          </div>
+        </div>
         <svg id="heatmapImage" ref={svgRef}></svg>
         <div
           ref={tooltipRef}
           className="absolute opacity-0 bg-white border-2 border-solid border-gray-800 rounded-md p-2 pointer-events-none shadow-lg"
         />
-      </div>
-
-      <div className="flex flex-row gap-4 ml-18 mt-4">
-        <button
-          onClick={downloadPNG}
-          className="mt-4 mb-12.5! px-4 py-2 cursor-pointer bg-grey-button text-black rounded-md hover:bg-grey-button-hover transition-colors flex items-center gap-2"
-        >
-          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
-            />
-          </svg>
-          Download PNG
-        </button>
-        <button
-          onClick={downloadSVG}
-          className="mt-4  mb-12.5! px-4 py-2 cursor-pointer bg-grey-button text-black rounded-md hover:bg-grey-button-hover transition-colors flex items-center gap-2"
-        >
-          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
-            />
-          </svg>
-          Download SVG
-        </button>
-        <button
-          onClick={downloadDrawio}
-          className="mt-4 mb-12.5! px-4 py-2 cursor-pointer bg-grey-button text-black rounded-md hover:bg-grey-button-hover transition-colors flex items-center gap-2"
-        >
-          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
-            />
-          </svg>
-          Download Draw.io
-        </button>
       </div>
     </div>
   );

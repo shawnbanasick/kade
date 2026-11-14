@@ -1,5 +1,3 @@
-// buildHeatmapDrawio.js
-
 const escXml = (str) =>
   String(str ?? '')
     .replace(/&/g, '&amp;')
@@ -23,6 +21,7 @@ const buildHeatmapDrawio = ({
   subtitle = '',
   width = 600,
   height = 600,
+  colorRange = ['#2563eb', '#f3f4f6', '#dc2626'],
 }) => {
   if (!correlationData.length) return null;
 
@@ -85,18 +84,24 @@ const buildHeatmapDrawio = ({
     b: lerp(c1.b, c2.b, t),
   });
 
-  const blue = hexToRgb('#2563eb');
-  const light = hexToRgb('#f3f4f6');
-  const red = hexToRgb('#dc2626');
+  // const blue = hexToRgb('#2563eb');
+  // const light = hexToRgb('#f3f4f6');
+  // const red = hexToRgb('#dc2626');
+  const low = hexToRgb(colorRange[0]);
+  const mid = hexToRgb(colorRange[1]);
+  const high = hexToRgb(colorRange[2]);
+  const isDark = (hex) => {
+    const { r, g, b } = hexToRgb(hex);
+    return 0.299 * r + 0.587 * g + 0.114 * b < 140;
+  };
 
   const colorScale = (value) => {
     if (value <= 0) {
-      const t = minValue === 0 ? 0 : value / minValue; // 0→light, minValue→blue
-      return rgbToHex(lerpColor(light, blue, t));
-    } else {
-      const t = maxValue === 0 ? 0 : value / maxValue; // 0→light, maxValue→red
-      return rgbToHex(lerpColor(light, red, t));
+      const t = minValue === 0 ? 0 : value / minValue;
+      return rgbToHex(lerpColor(mid, low, t));
     }
+    const t = maxValue === 0 ? 0 : value / maxValue;
+    return rgbToHex(lerpColor(mid, high, t));
   };
 
   // Text color mirrors Heatmap.jsx: white if absValue > 50, dark otherwise
@@ -146,7 +151,8 @@ const buildHeatmapDrawio = ({
     const x = xBand(col);
     const y = yBand(row);
     const bg = colorScale(value);
-    const fg = textColor(value);
+    // const fg = textColor(value);
+    const fg = isDark(bg) ? '#ffffff' : '#1f2937';
 
     // Colored rectangle (rx/ry=4 → rounded=4 in draw.io)
     cells.push(`
