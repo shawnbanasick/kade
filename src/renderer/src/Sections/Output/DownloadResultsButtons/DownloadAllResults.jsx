@@ -28,6 +28,7 @@ const DownloadResultsAsExcel = () => {
   const serializedSVGHeatmap = outputState((state) => state.serializedSVGHeatmap);
   const serializedPNGHeatmap = outputState((state) => state.serializedPNGHeatmap);
   const factorVizImages = outputState((state) => state.factorVizImages);
+  const heatmapSavedImages = outputState((state) => state.heatmapSavedImages);
 
   const textOutputFiles = createCoreOutputTextFiles(
     mainDataObject,
@@ -90,6 +91,7 @@ const DownloadResultsAsExcel = () => {
       screePng1: serializedPNGScree1,
       heatmapSvg: serializedSVGHeatmap,
       heatmapPng: serializedPNGHeatmap,
+      savedHeatmapImages: heatmapSavedImages,
       projectName: projectName,
       userSelectedFactors: userSelectedFactors,
       powerSetDiffsNumber: powerSetDiffsNumber,

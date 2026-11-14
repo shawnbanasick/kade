@@ -18,29 +18,58 @@ const createResultsZipFile = async (dataContent) => {
 
   // 3. Initialize JSZip and add the Excel buffer
   const zip = new JSZip();
+
+  // ** OUTPUT FILES ** //
   zip.file(`KADE_${projectName}_${timeStamp}_Excel.xlsx`, excelFileBuffer, { binary: true });
   zip.file(`KADE_${projectName}_${timeStamp}_Word.docx`, docBuffer, { binary: true });
+
+  // ** BASE DATA ** //
   zip.file('name.txt', textOutputFiles.name || 'myProject');
   zip.file('statements.txt', textOutputFiles.statements || '');
   zip.file('sorts.txt', textOutputFiles.sorts || '');
   zip.file('pattern.txt', textOutputFiles.pattern || '');
-  zip.file(
-    `images/scree/KADE_${projectName}_${timeStamp}_scree_SVG.svg`,
-    dataContent.screeSvg1 || ''
-  );
+
+  // ** HEATMAP IMAGES ** //
   zip.file(
     `images/heatmap/KADE_${projectName}_${timeStamp}_heatmap_SVG.svg`,
     dataContent.heatmapSvg || ''
   );
-  if (dataContent.heatmapPng) {
-    zip.file(
-      `images/heatmap/KADE_${projectName}_${timeStamp}_heatmap_PNG.png`,
-      dataContent.heatmapPng,
-      {
+  zip.file(
+    `images/heatmap/KADE_${projectName}_${timeStamp}_heatmap_PNG.png`,
+    dataContent.heatmapPng,
+    {
+      base64: true,
+    }
+  );
+  zip.file(
+    `images/heatmap/KADE_${projectName}_${timeStamp}_heatmap_DRAWIO.drawio`,
+    dataContent.heatmapDrawio || ''
+  );
+
+  const savedHeatmapImages = dataContent.savedHeatmapImages || [];
+  savedHeatmapImages.forEach((image, index) => {
+    const imageId = `heatmap_${index + 1}`;
+    if (image.svg) {
+      zip.file(`images/heatmap/KADE_${projectName}_${timeStamp}_${imageId}_SVG.svg`, image.svg);
+    }
+    if (image.png) {
+      zip.file(`images/heatmap/KADE_${projectName}_${timeStamp}_${imageId}_PNG.png`, image.png, {
         base64: true,
-      }
-    );
-  }
+      });
+    }
+    if (image.drawio) {
+      zip.file(
+        `images/heatmap/KADE_${projectName}_${timeStamp}_${imageId}_DRAWIO.drawio`,
+        image.drawio
+      );
+    }
+  });
+
+  // ** SCREE PLOT IMAGES ** //
+  zip.file(
+    `images/scree/KADE_${projectName}_${timeStamp}_scree_SVG.svg`,
+    dataContent.screeSvg1 || ''
+  );
   if (dataContent.screePng1) {
     zip.file(`images/scree/KADE_${projectName}_${timeStamp}_scree_PNG.png`, dataContent.screePng1, {
       base64: true,
@@ -53,6 +82,8 @@ const createResultsZipFile = async (dataContent) => {
       });
     }
   }
+
+  // ** FACTOR VISUALIZATION IMAGES ** //
   if (dataContent.factorVizImages) {
     const imageData = dataContent.factorVizImages;
 

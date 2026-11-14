@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { ToastContainer, toast, Zoom } from 'react-toastify';
 import * as d3 from 'd3';
 import { useTranslation } from 'react-i18next';
 // import d3ToPng from 'd3-svg-to-png';
@@ -28,7 +29,26 @@ const Heatmap = ({
 }) => {
   const svgRef = useRef(null);
   const tooltipRef = useRef(null);
+  const initialSavedRef = useRef(false); // guards the one-time "save on load"
   const { t } = useTranslation();
+
+  const notify = async () => {
+    await new Promise((resolve) => setTimeout(resolve, 50));
+    await toast.success(<div>{t('Image added to KADE Zip')}</div>, {
+      autoClose: true,
+      position: 'bottom-right',
+      closeOnClick: true,
+      draggable: true,
+      theme: 'light',
+      style: {
+        background: '#fff',
+        color: 'dark-gray',
+        outline: '1px solid #ccc',
+        boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
+      },
+    });
+    // await updateNotifyDataUploadSuccess(false);
+  };
 
   // Each range is [low/negative, midpoint (0), high/positive]
   const COLOR_SCHEMES = {
@@ -51,9 +71,31 @@ const Heatmap = ({
   const projectName = coreState((state) => state.projectName) ?? '';
   const updateSerializedSVGHeatmap = outputState((state) => state.updateSerializedSVGHeatmap);
   const updateSerializedPNGHeatmap = outputState((state) => state.updateSerializedPNGHeatmap);
+  const updateDrawioHeatmapXml = outputState((state) => state.updateDrawioHeatmapXml);
   const serializedPNG = outputState((state) => state.serializedPNGHeatmap);
+  // Append-only action; the store reads the latest array itself, so no stale closures.
+  const addHeatmapSavedImage = outputState((state) => state.addHeatmapSavedImage);
 
   const [colorScheme, setColorScheme] = useState('blueRed');
+
+  // Build one snapshot (svg + png + drawio) of the current heatmap
+  const buildSnapshot = async () => {
+    if (!svgRef.current) return null;
+
+    const svg = serializeSVG(svgRef.current, { width, height });
+    const png = await svgStringToPngBase64(svg, width, height);
+    const drawio = buildHeatmapDrawio({
+      correlationData,
+      title,
+      subtitle,
+      width,
+      height,
+      colorRange: COLOR_SCHEMES[colorScheme].range,
+    });
+
+    if (!svg || !png || !drawio) return null;
+    return { time: getDateTime(), svg, png, drawio };
+  };
 
   // Function to download the heatmap as PNG
   const downloadPNG = async () => {
@@ -62,7 +104,6 @@ const Heatmap = ({
     const filepath = await window.electronAPI?.showSavePngDialog(`${filename}.png`);
     if (!filepath) return;
 
-    // await nextPaint();
     try {
       let b64 = serializedPNG; // from outputState
       if (!b64) {
@@ -135,8 +176,19 @@ const Heatmap = ({
     }
   };
 
+  // Button handler: append a new snapshot to the saved images
   const saveToKADEZip = async () => {
-    console.log('saveToKADEZip called');
+    try {
+      const snapshot = await buildSnapshot();
+      if (!snapshot) {
+        console.error('Failed to generate heatmap files for KADE Zip.');
+        return;
+      }
+      addHeatmapSavedImage(snapshot);
+      notify();
+    } catch (err) {
+      console.error('Failed to save heatmap snapshot:', err);
+    }
   };
 
   // Expose download function to parent component via callback
@@ -146,6 +198,7 @@ const Heatmap = ({
     }
   }, [onDownload]);
 
+  // DRAW THE HEATMAP
   useEffect(() => {
     if (!correlationData || correlationData.length === 0 || !svgRef.current) return;
 
@@ -218,8 +271,6 @@ const Heatmap = ({
     const maxValue = Math.max(...allValues);
 
     // Use a diverging color scale for correlation data
-    // Negative correlations = blue, Positive correlations = red
-
     const myColor = d3
       .scaleLinear()
       .domain([minValue, 0, maxValue])
@@ -298,10 +349,38 @@ const Heatmap = ({
       .text(subtitle);
   }, [correlationData, width, height, title, subtitle, colorScheme]);
 
+  // SAVE THE INITIAL IMAGE ONCE.
+  // Must stay AFTER the drawing effect so the SVG already exists when this runs.
+  useEffect(() => {
+    if (initialSavedRef.current) return;
+    if (!correlationData || correlationData.length === 0 || !svgRef.current) return;
+
+    // If the store already has images (e.g. component remounted), don't add another "initial" one.
+    const existing = outputState.getState().heatmapSavedImages;
+    if (existing && existing.length > 0) {
+      initialSavedRef.current = true;
+      return;
+    }
+
+    initialSavedRef.current = true; // set BEFORE the await to block StrictMode double-runs
+    (async () => {
+      try {
+        const snapshot = await buildSnapshot();
+        if (snapshot) {
+          addHeatmapSavedImage(snapshot);
+        } else {
+          initialSavedRef.current = false; // allow a retry if it failed
+        }
+      } catch (err) {
+        console.error('Failed to save initial heatmap snapshot:', err);
+        initialSavedRef.current = false;
+      }
+    })();
+    // Intentionally only depends on correlationData: this is a one-time save on load.
+  }, [correlationData]);
+
   // OUTPUT IMAGE FOR DOWNLOAD - SERIALIZE SVG AND PNG
   useEffect(() => {
-    // let cancelled = false;
-
     const run = async () => {
       if (!correlationData || correlationData.length === 0 || !svgRef.current) return;
 
@@ -317,28 +396,29 @@ const Heatmap = ({
           height,
           colorRange: COLOR_SCHEMES[colorScheme].range,
         });
-        // if (cancelled) return;
         updateSerializedSVGHeatmap(serializedSVG);
         updateSerializedPNGHeatmap(pngBytes);
+        updateDrawioHeatmapXml(drawioXml);
       } catch (err) {
         console.error('Heatmap export serialization failed:', err);
       }
     };
     run();
-    // return () => {
-    //   // cancelled = true;
-    // };
   }, [
     correlationData,
     width,
     height,
+    title,
+    subtitle,
     colorScheme,
     updateSerializedSVGHeatmap,
     updateSerializedPNGHeatmap,
+    updateDrawioHeatmapXml,
   ]);
 
   return (
     <div className="flex flex-col mt-10">
+      <ToastContainer transition={Zoom} />
       <div className="relative">
         {/** Color scheme selector */}
         <div className="flex flex-row items-center gap-2 mb-4">
@@ -408,15 +488,15 @@ const Heatmap = ({
               className="mt-4 mb-12.5! px-4 py-2 cursor-pointer bg-grey-button text-black rounded-md hover:bg-grey-button-hover transition-colors flex items-center gap-2"
             >
               <svg
-                xmlns="http://w3.org"
+                xmlns="http://www.w3.org/2000/svg"
                 width="24"
                 height="24"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
               >
                 <path d="M11 20H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h10l4 4v3" />
                 <path d="M7 3v4h7V3" />

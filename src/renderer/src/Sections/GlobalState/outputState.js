@@ -217,9 +217,16 @@ const outputState = create(
     serializedDrawioScree1: null,
     serializedSVGHeatmap: null,
     serializedPNGHeatmap: null,
+    drawioHeatmapXml: null,
     factorVizImages: {},
     heatmapSavedImages: [],
 
+    addHeatmapSavedImage: (img) =>
+      set((state) => ({
+        heatmapSavedImages: [...(state.heatmapSavedImages ?? []), img],
+      })),
+
+    updateDrawioHeatmapXml: (inputValue) => set({ drawioHeatmapXml: inputValue }),
     updateHeatmapSavedImages: (images) => set({ heatmapSavedImages: images }),
     updateFactorVizImages: (images) => set({ factorVizImages: images }),
     clearFactorVizImages: () => set({ factorVizImages: {} }),
