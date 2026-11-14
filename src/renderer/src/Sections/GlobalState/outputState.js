@@ -218,7 +218,9 @@ const outputState = create(
     serializedSVGHeatmap: null,
     serializedPNGHeatmap: null,
     factorVizImages: {},
+    heatmapSavedImages: [],
 
+    updateHeatmapSavedImages: (images) => set({ heatmapSavedImages: images }),
     updateFactorVizImages: (images) => set({ factorVizImages: images }),
     clearFactorVizImages: () => set({ factorVizImages: {} }),
     // for factorSelectionForOutputButtons.jsx

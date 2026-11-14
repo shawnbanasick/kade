@@ -135,6 +135,10 @@ const Heatmap = ({
     }
   };
 
+  const saveToKADEZip = async () => {
+    console.log('saveToKADEZip called');
+  };
+
   // Expose download function to parent component via callback
   useEffect(() => {
     if (onDownload) {
@@ -272,11 +276,6 @@ const Heatmap = ({
       .attr('text-anchor', 'middle')
       .attr('dominant-baseline', 'middle')
       .attr('class', 'text-xs font-medium pointer-events-none')
-      // .style('fill', (d) => {
-      //   // Use white text for dark cells, dark text for light cells
-      //   const absValue = Math.abs(d.value);
-      //   return absValue > 50 ? '#ffffff' : '#1f2937';
-      // })
       .style('fill', (d) => (d3.lab(myColor(d.value)).l < 55 ? '#ffffff' : '#1f2937'))
       .text((d) => d.value);
 
@@ -403,6 +402,29 @@ const Heatmap = ({
                 />
               </svg>
               Download Draw.io
+            </button>
+            <button
+              onClick={saveToKADEZip}
+              className="mt-4 mb-12.5! px-4 py-2 cursor-pointer bg-grey-button text-black rounded-md hover:bg-grey-button-hover transition-colors flex items-center gap-2"
+            >
+              <svg
+                xmlns="http://w3.org"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M11 20H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h10l4 4v3" />
+                <path d="M7 3v4h7V3" />
+                <path d="M7 20v-6h4" />
+                <path d="M18 14v7" />
+                <path d="M14.5 17.5h7" />
+              </svg>
+              {t('Save to KADE Zip')}
             </button>
           </div>
         </div>
