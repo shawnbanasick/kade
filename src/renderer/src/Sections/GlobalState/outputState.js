@@ -220,7 +220,12 @@ const outputState = create(
     drawioHeatmapXml: null,
     factorVizImages: {},
     heatmapSavedImages: [],
+    correlationGraphSavedImages: [],
 
+    addCorrelationGraphSavedImage: (img) =>
+      set((state) => ({
+        correlationGraphSavedImages: [...(state.correlationGraphSavedImages ?? []), img],
+      })),
     addHeatmapSavedImage: (img) =>
       set((state) => ({
         heatmapSavedImages: [...(state.heatmapSavedImages ?? []), img],

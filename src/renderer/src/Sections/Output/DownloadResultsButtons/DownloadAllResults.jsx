@@ -29,6 +29,12 @@ const DownloadResultsAsExcel = () => {
   const serializedPNGHeatmap = outputState((state) => state.serializedPNGHeatmap);
   const factorVizImages = outputState((state) => state.factorVizImages);
   const heatmapSavedImages = outputState((state) => state.heatmapSavedImages);
+  const correlationGraphSavedImages = outputState((state) => state.correlationGraphSavedImages);
+
+  console.log(
+    correlationGraphSavedImages.length,
+    'correlationGraphSavedImages in DownloadResultsAsExcel.jsx'
+  );
 
   const textOutputFiles = createCoreOutputTextFiles(
     mainDataObject,
@@ -92,6 +98,7 @@ const DownloadResultsAsExcel = () => {
       heatmapSvg: serializedSVGHeatmap,
       heatmapPng: serializedPNGHeatmap,
       savedHeatmapImages: heatmapSavedImages,
+      savedCorrelationImages: correlationGraphSavedImages,
       projectName: projectName,
       userSelectedFactors: userSelectedFactors,
       powerSetDiffsNumber: powerSetDiffsNumber,

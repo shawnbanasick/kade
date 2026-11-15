@@ -46,6 +46,7 @@ const createResultsZipFile = async (dataContent) => {
     dataContent.heatmapDrawio || ''
   );
 
+  // ** SAVED HEATMAP IMAGES ** //
   const savedHeatmapImages = dataContent.savedHeatmapImages || [];
   savedHeatmapImages.forEach((image, index) => {
     const imageId = `heatmap_${index + 1}`;
@@ -60,6 +61,33 @@ const createResultsZipFile = async (dataContent) => {
     if (image.drawio) {
       zip.file(
         `images/heatmap/KADE_${projectName}_${timeStamp}_${imageId}_DRAWIO.drawio`,
+        image.drawio
+      );
+    }
+  });
+
+  // ** SAVED CORRELATION IMAGES ** //
+  const savedCorrelationImages = dataContent.savedCorrelationImages || [];
+  savedCorrelationImages.forEach((image, index) => {
+    const imageId = `correlation_${index + 1}`;
+    if (image.svg) {
+      zip.file(
+        `images/correlationGraph/KADE_${projectName}_${timeStamp}_${imageId}_SVG.svg`,
+        image.svg
+      );
+    }
+    if (image.png) {
+      zip.file(
+        `images/correlationGraph/KADE_${projectName}_${timeStamp}_${imageId}_PNG.png`,
+        image.png,
+        {
+          base64: true,
+        }
+      );
+    }
+    if (image.drawio) {
+      zip.file(
+        `images/correlationGraph/KADE_${projectName}_${timeStamp}_${imageId}_DRAWIO.drawio`,
         image.drawio
       );
     }

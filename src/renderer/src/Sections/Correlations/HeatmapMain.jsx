@@ -34,7 +34,7 @@ const Heatmap = ({
 
   const notify = async () => {
     await new Promise((resolve) => setTimeout(resolve, 50));
-    await toast.success(<div>{t('Image added to KADE Zip')}</div>, {
+    await toast.success(<div>{t('Current image added to KADE Zip')}</div>, {
       autoClose: true,
       position: 'bottom-right',
       closeOnClick: true,
@@ -47,7 +47,6 @@ const Heatmap = ({
         boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
       },
     });
-    // await updateNotifyDataUploadSuccess(false);
   };
 
   // Each range is [low/negative, midpoint (0), high/positive]

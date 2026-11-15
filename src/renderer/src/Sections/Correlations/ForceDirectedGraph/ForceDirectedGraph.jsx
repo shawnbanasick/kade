@@ -1,15 +1,18 @@
-import React, { useEffect, useRef, memo, useState } from 'react';
+import { useEffect, useRef, memo, useState } from 'react';
 import * as d3 from 'd3';
+import d3ToPng from 'd3-svg-to-png';
 import { useTranslation } from 'react-i18next';
+import { ToastContainer, toast, Zoom } from 'react-toastify';
+
+import coreState from '../../GlobalState/coreState';
+import structureState from '../../GlobalState/structureState';
+import outputState from '../../GlobalState/outputState';
+
 import PcaScenarios from './PcaScenarios';
 import ForceGraphDataSelectRadio from './ForceGraphDataSelectRadio';
 import DebouncedNumberInput from './ForceGraphCorrLimitInput';
-import structureState from '../../GlobalState/structureState';
-import { update } from 'lodash';
 import currentDate from '../../../Utils/currentDate1';
 import currentTime from '../../../Utils/currentTime1';
-import coreState from '../../GlobalState/coreState';
-import d3ToPng from 'd3-svg-to-png';
 
 const getDateTime = () => {
   const date = currentDate();
@@ -34,6 +37,8 @@ const ForceGraph = ({
   const [forceStrength, setForceStrength] = useState(-5);
   const showAutoFlags = structureState((state) => state.showAutoFlags);
   const updateShowAutoFlags = structureState((state) => state.updateShowAutoFlags);
+  const addCorrelationGraphSavedImage = outputState((state) => state.addCorrelationGraphSavedImage);
+
   const projectName = coreState.getState().projectName;
   const date = currentDate();
   const time = currentTime();
@@ -41,6 +46,23 @@ const ForceGraph = ({
   const completeFileName = `${projectName}-correlation_network_${getDateTime()}`;
 
   const minCorrelation = correlationThreshold * 100;
+
+  const notify = async () => {
+    await new Promise((resolve) => setTimeout(resolve, 50));
+    await toast.success(<div>{t('Current image added to KADE Zip')}</div>, {
+      autoClose: true,
+      position: 'bottom-right',
+      closeOnClick: true,
+      draggable: true,
+      theme: 'light',
+      style: {
+        background: '#fff',
+        color: 'dark-gray',
+        outline: '1px solid #ccc',
+        boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
+      },
+    });
+  };
 
   // set display NODE size
   const NODE_RADIUS = 16;
@@ -119,15 +141,26 @@ const ForceGraph = ({
   };
 
   // Color scale values (matching D3 colorScale domain 1-8)
+  // const factorColors = [
+  //   '#b4dffe',
+  //   '#fdba74',
+  //   '#86efac',
+  //   '#ffe4b2',
+  //   '#fca5a5',
+  //   '#67e8f9',
+  //   '#f9a8d4',
+  //   '#d8b4fe',
+  // ];
+
   const factorColors = [
-    '#d1d5db',
-    '#7dd3fc',
-    '#fdba74',
-    '#86efac',
-    '#fca5a5',
-    '#67e8f9',
-    '#f9a8d4',
-    '#d8b4fe',
+    '#7cc0f0', // 1 - sky blue
+    '#f5a742', // 2 - orange
+    '#4cc9a0', // 4 - teal green
+    '#e88fc0', // 5 - pink
+    '#b39ddb', // 6 - lavender purple
+    '#f07c5a', // 7 - coral
+    '#f2e04a', // 3 - yellow
+    '#b0b0b0', // 8 - neutral gray
   ];
 
   const [windowSize, setWindowSize] = useState({
@@ -146,9 +179,13 @@ const ForceGraph = ({
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  const downloadSVG = async () => {
+  /**
+   ** Download the current graph state as an SVG file.
+   ** Reads node positions directly from the live D3 simulation data bound to SVG elements.
+   */
+  const downloadSVG = async (saveToKade = false) => {
     if (!svgRef.current) return;
-    const svgEl = document.querySelector('#forceGraph');
+    const svgEl = svgRef.current;
     svgEl.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
     const svgData = svgEl.outerHTML;
     const preface = '<?xml version="1.0" standalone="no"?>\r\n';
@@ -156,8 +193,14 @@ const ForceGraph = ({
       type: 'image/svg+xml;charset=utf-8',
     });
 
+    const svgString = preface + svgData;
+    if (saveToKade === true) {
+      return svgString;
+    }
+
     // to buffer
     const arrayBuffer = await new Response(svgContent).arrayBuffer();
+
     const defaultPath = `${completeFileName}.svg`;
 
     const filepath = await window.electronAPI.showSaveSvgDialog(defaultPath);
@@ -174,7 +217,10 @@ const ForceGraph = ({
     }
   };
 
-  const downloadPngImage = async () => {
+  /**
+   ** Download the current graph state as a PNG image.
+   */
+  const downloadPngImage = async (saveToKade = false) => {
     if (!svgRef.current) return;
     const svgEl = document.querySelector('#forceGraph');
     const dateTime = `${currentDate()}__${currentTime()}`;
@@ -204,6 +250,11 @@ const ForceGraph = ({
     }
 
     const defaultPath = `${completeFileName}.png`;
+
+    if (saveToKade === true) {
+      return buffer;
+    }
+
     const filepath = await window.electronAPI?.showSavePngDialog(defaultPath);
     if (!filepath) {
       alert('Save operation was canceled.');
@@ -219,10 +270,10 @@ const ForceGraph = ({
   };
 
   /**
-   * Download the current graph state as a draw.io (.drawio) XML file.
-   * Reads node positions directly from the live D3 simulation data bound to SVG elements.
+   ** Download the current graph state as a draw.io (.drawio) XML file.
+   ** Reads node positions directly from the live D3 simulation data bound to SVG elements.
    */
-  const downloadDrawio = async () => {
+  const downloadDrawio = async (saveToKade = false) => {
     if (!svgRef.current || !correlationData || correlationData.length === 0) return;
 
     // ── 1. Collect live node positions from rendered SVG ──────────────────────
@@ -498,8 +549,13 @@ const ForceGraph = ({
     const filename = `KADE_${projectName}_${t('Correlation Network')}_${getDateTime()}`;
     const defaultPath = `${filename}.drawio`;
 
+    if (saveToKade === true) {
+      return drawioXml;
+    }
+
     const encoder = new TextEncoder();
-    const arrayBuffer = encoder.encode(drawioXml).buffer;
+    const bytes = encoder.encode(drawioXml);
+    const arrayBuffer = bytes.buffer.slice(bytes.byteOffset, bytes.byteOffset + bytes.byteLength);
 
     const filepath = await window.electronAPI?.showSaveDrawioDialog?.(defaultPath);
     if (!filepath) {
@@ -512,6 +568,35 @@ const ForceGraph = ({
     } catch (error) {
       console.error('Failed to save .drawio file:', error);
     }
+  };
+
+  // ** SAVE TO KADE ZIP **
+  const saveToKadeZip = async () => {
+    if (!svgRef.current) return;
+
+    const [pngBuffer, drawioBuffer, svgBuffer] = await Promise.all([
+      downloadPngImage(true),
+      downloadDrawio(true),
+      downloadSVG(true),
+    ]);
+
+    if (!pngBuffer || !drawioBuffer || !svgBuffer) {
+      console.error('Failed to generate one or more buffers', {
+        png: !!pngBuffer,
+        drawio: !!drawioBuffer,
+        svg: !!svgBuffer,
+      });
+      return;
+    }
+
+    addCorrelationGraphSavedImage({
+      name: completeFileName,
+      png: pngBuffer,
+      drawio: drawioBuffer,
+      svg: svgBuffer,
+      time: `${currentDate()}__${currentTime()}`,
+    });
+    notify();
   };
 
   /** Escape characters that are special in XML attribute values */
@@ -576,7 +661,7 @@ const ForceGraph = ({
 
       legendItem
         .append('text')
-        .attr('x', isGrayscale && factorNum === 6 ? 18 : 16)
+        .attr('x', isGrayscale ? 22 : 16)
         .attr('y', 0)
         .attr('dy', '0.35em')
         .attr('class', 'text-xs')
@@ -585,6 +670,7 @@ const ForceGraph = ({
     });
   };
 
+  // ** Main D3 rendering effect **
   useEffect(() => {
     if (!correlationData || correlationData.length === 0 || !svgRef.current) return;
 
@@ -967,8 +1053,8 @@ const ForceGraph = ({
 
   return (
     <>
+      <ToastContainer transition={Zoom} />
       <div className="text-4xl mb-2 mt-3">{t('Correlation Network Graph')}</div>
-
       <div className="h-[93%]">
         {/* Controls and legend */}
         <div className="flex w-full text-basis h-auto min-h-20 items-center flex-wrap">
@@ -990,7 +1076,7 @@ const ForceGraph = ({
                   className={`w-6 h-0.5 shrink-0 ${isGrayscale ? 'bg-gray-800' : 'bg-[#78bc21]'}`}
                   style={{ height: '4px' }}
                 ></div>
-                <span>Positive Correlation</span>
+                <span>{t('Positive Correlation')}</span>
               </div>
               <div className="flex items-center gap-2">
                 <div
@@ -1005,14 +1091,14 @@ const ForceGraph = ({
                       : { backgroundColor: '#dc2626', height: '4px' }
                   }
                 ></div>
-                <span>Negative Correlation</span>
+                <span>{t('Negative Correlation')}</span>
               </div>
             </div>
             <PcaScenarios onSelectionChange={handleSelectionChange} isGrayscale={isGrayscale} />
             <div className="flex flex-col items-left">
               {/* Autoflag toggle */}
               <div className="flex flex-col items-center">
-                <label className="text-sm font-medium mr-3">Attraction Strength</label>
+                <label className="text-sm font-medium mr-3">{t('Attraction Strength')}</label>
                 <div className="flex flex-row items-center gap-3">
                   <input
                     type="range"
@@ -1027,32 +1113,14 @@ const ForceGraph = ({
                   <span className="text-sm w-6 mb-2">{100 + forceStrength}</span>
                 </div>
               </div>
-              <button
-                onClick={downloadPngImage}
-                className="px-4 py-2 h-8 mb-2 bg-grey-button text-black rounded-md hover:shadow-[inset_0_0_0_4px_#666,0_0_1px_transparent] transition-colors flex items-center gap-2"
-              >
-                <svg
-                  className="w-5 h-5 shrink-0"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
-                  />
-                </svg>
-                Download PNG
-              </button>
             </div>
             {/* end autoflag toggle and strength slider */}
             {/* reset and grayscale buttons div */}
             <div className="flex flex-col gap-2 items-left">
+              {/* AUTO-FLAG TOGGLE */}
               <button
                 onClick={() => updateShowAutoFlags(!showAutoFlags)}
-                className={`px-4 py-2 h-8 w-45 rounded-md transition-colors flex items-center justify-center gap-2  ${
+                className={`px-4 pr-7 py-2 h-8 w-47 rounded-md transition-colors flex items-center justify-center gap-4  ${
                   showAutoFlags
                     ? 'bg-primary-button text-black hover:shadow-[inset_0_0_0_4px_#666,0_0_1px_transparent]'
                     : 'bg-grey-button text-black hover:shadow-[inset_0_0_0_4px_#666,0_0_1px_transparent]'
@@ -1066,30 +1134,9 @@ const ForceGraph = ({
                     d="M3 21v-4m0 0V5a2 2 0 012-2h6.5l1 1H21l-3 6 3 6h-8.5l-1-1H5a2 2 0 00-2 2zm9-13.5V9"
                   />
                 </svg>
-                Auto-Flag {showAutoFlags ? 'ON' : 'OFF'}
+                {t('Auto-Flag')} {showAutoFlags ? t('ON') : t('OFF')}
               </button>
-              <button
-                onClick={downloadSVG}
-                className="px-4 py-2 h-8 bg-grey-button text-black rounded-md hover:shadow-[inset_0_0_0_4px_#666,0_0_1px_transparent] transition-colors flex items-center gap-2"
-              >
-                <svg
-                  className="w-5 h-5 shrink-0"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
-                  />
-                </svg>
-                Download SVG
-              </button>
-            </div>
-            {/* download buttons div */}
-            <div className="flex flex-col gap-2 items-left gap-2">
+              {/* GRAYSCALE MODE */}
               <button
                 onClick={toggleGrayscale}
                 className="px-4 py-2 h-8 w-47 rounded-md transition-colors flex items-center gap-2 bg-grey-button text-black hover:shadow-[inset_0_0_0_4px_#666,0_0_1px_transparent]"
@@ -1107,10 +1154,35 @@ const ForceGraph = ({
                     d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zm0 0h12a2 2 0 002-2v-4a2 2 0 00-2-2h-2.343M11 7.343l1.657-1.657a2 2 0 012.828 0l2.829 2.829a2 2 0 010 2.828l-8.486 8.485M7 17h.01"
                   />
                 </svg>
-                {isGrayscale ? 'Color Mode' : 'Grayscale Mode'}
+                {isGrayscale ? t('Color Mode') : t('Grayscale Mode')}
               </button>
+            </div>
+            {/* download buttons div */}
+            <div className="flex flex-col gap-2 items-left">
+              {/* DOWNLOAD PNG */}
               <button
-                onClick={downloadDrawio}
+                onClick={() => downloadPngImage(false)}
+                className="px-4 py-2 h-8 bg-grey-button text-black rounded-md hover:shadow-[inset_0_0_0_4px_#666,0_0_1px_transparent] transition-colors flex items-center gap-2"
+              >
+                <svg
+                  className="w-5 h-5 shrink-0"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
+                  />
+                </svg>
+                {t('Download PNG')}
+              </button>
+
+              {/* DOWNLOAD DRAWIO */}
+              <button
+                onClick={() => downloadDrawio(false)}
                 className="px-4 py-2 h-8 bg-grey-button text-black rounded-md hover:shadow-[inset_0_0_0_4px_#666,0_0_1px_transparent] transition-colors flex items-center gap-2"
                 title="Export the current graph layout as a draw.io diagram (.drawio)"
               >
@@ -1127,7 +1199,55 @@ const ForceGraph = ({
                     d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
                   />
                 </svg>
-                Download draw.io
+                {t('Download draw.io')}
+              </button>
+            </div>
+            <div className="flex flex-col gap-2 items-left">
+              {/* DOWNLOAD SVG */}
+              <button
+                onClick={() => downloadSVG(false)}
+                className="px-4 py-2 h-8 bg-grey-button text-black rounded-md hover:shadow-[inset_0_0_0_4px_#666,0_0_1px_transparent] transition-colors flex items-center gap-2"
+              >
+                <svg
+                  className="w-5 h-5 shrink-0"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
+                  />
+                </svg>
+                {t('Download SVG')}
+              </button>
+
+              {/* DOWNLOAD SAVE TO KADE ZIP */}
+              <button
+                onClick={saveToKadeZip}
+                className="px-4 py-2 h-8 bg-grey-button text-black rounded-md hover:shadow-[inset_0_0_0_4px_#666,0_0_1px_transparent] transition-colors flex items-center gap-2"
+                title="Export the current graph layout as a draw.io diagram (.drawio)"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <path d="M11 20H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h10l4 4v3" />
+                  <path d="M7 3v4h7V3" />
+                  <path d="M7 20v-6h4" />
+                  <path d="M18 14v7" />
+                  <path d="M14.5 17.5h7" />
+                </svg>
+                {t('Save to KADE Zip')}
               </button>
             </div>
           </div>
