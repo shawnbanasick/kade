@@ -30,6 +30,7 @@ const DownloadResultsAsExcel = () => {
   const factorVizImages = outputState((state) => state.factorVizImages);
   const heatmapSavedImages = outputState((state) => state.heatmapSavedImages);
   const correlationGraphSavedImages = outputState((state) => state.correlationGraphSavedImages);
+  const hierarchySavedImages = outputState((state) => state.hierarchySavedImages);
 
   console.log(
     correlationGraphSavedImages.length,
@@ -99,6 +100,7 @@ const DownloadResultsAsExcel = () => {
       heatmapPng: serializedPNGHeatmap,
       savedHeatmapImages: heatmapSavedImages,
       savedCorrelationImages: correlationGraphSavedImages,
+      savedHierarchyImages: hierarchySavedImages,
       projectName: projectName,
       userSelectedFactors: userSelectedFactors,
       powerSetDiffsNumber: powerSetDiffsNumber,

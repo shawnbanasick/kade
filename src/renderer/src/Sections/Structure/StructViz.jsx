@@ -1,4 +1,8 @@
 import { useCallback, useMemo, useRef, useState } from 'react';
+import { ToastContainer, toast, Zoom } from 'react-toastify';
+import * as htmlToImage from 'html-to-image';
+import { useTranslation } from 'react-i18next';
+import './reactFlow.css';
 import ReactFlow, {
   Controls,
   Background,
@@ -7,17 +11,17 @@ import ReactFlow, {
   Panel,
   useReactFlow,
 } from 'reactflow';
-import * as htmlToImage from 'html-to-image';
+import 'reactflow/dist/style.css';
+
+import structureState from '../GlobalState/structureState';
+import coreState from '../GlobalState/coreState';
+import outputState from '../GlobalState/outputState';
+
 import StraightEdgeWithLabel from './StraightEdgeWithLabel';
 import EdgeLegend from './EdgeLegend';
-import { useTranslation } from 'react-i18next';
 import currentDate from '../../Utils/currentDate1';
 import currentTime from '../../Utils/currentTime1';
-import coreState from '../GlobalState/coreState';
-import 'reactflow/dist/style.css';
 import getNodes from './getNodes';
-import './reactFlow.css';
-import structureState from '../GlobalState/structureState';
 import UserNumberInput from './UserNumberInput';
 import refreshViz from './refreshViz';
 import exportToDrawio from './exportToDrawio';
@@ -28,6 +32,73 @@ const getDateTime = () => {
   const date = currentDate();
   const time = currentTime();
   return `${date}_${time}`;
+};
+
+const EXPORT_PADDING = 40; // px of white space on every side
+const EXPORT_PADDING_TOP = 130; // px of white space on top (for title)
+
+// Bounding box (in container-relative px) of everything visible in the export:
+// nodes, edges, edge labels, and the legend panel.
+const getContentBounds = (container) => {
+  const c = container.getBoundingClientRect();
+  const selectors = [
+    '.react-flow__node',
+    '.react-flow__edge',
+    '.react-flow__edgelabel-renderer > *',
+    '.react-flow__panel.top', // EdgeLegend (the button panel is bottom-left, so it's excluded)
+  ];
+
+  let minX = Infinity;
+  let minY = Infinity;
+  let maxX = -Infinity;
+  let maxY = -Infinity;
+
+  container.querySelectorAll(selectors.join(',')).forEach((el) => {
+    const r = el.getBoundingClientRect();
+    if (r.width === 0 && r.height === 0) return;
+    minX = Math.min(minX, r.left - c.left);
+    minY = Math.min(minY, r.top - c.top);
+    maxX = Math.max(maxX, r.right - c.left);
+    maxY = Math.max(maxY, r.bottom - c.top);
+  });
+
+  // Nothing found: fall back to the full container
+  if (!Number.isFinite(minX)) {
+    return { minX: 0, minY: 0, maxX: c.width, maxY: c.height };
+  }
+
+  // Never go outside the container (anything out there is clipped anyway)
+  return { minX, minY, maxX, maxY };
+};
+
+const exportFilter = (node) => {
+  if (
+    node?.classList?.contains('react-flow__minimap') ||
+    node?.classList?.contains('react-flow__controls') ||
+    node?.classList?.contains('react-flow__background') ||
+    node?.classList?.contains('react-flow__panel-top')
+  ) {
+    return false;
+  }
+  let currentNode = node;
+  while (currentNode) {
+    if (currentNode?.tagName === 'BUTTON') return false;
+    if (
+      currentNode?.classList?.contains('react-flow__panel') &&
+      currentNode?.style?.position === 'absolute' &&
+      currentNode?.querySelector('button')
+    ) {
+      return false;
+    }
+    currentNode = currentNode.parentElement;
+  }
+  if (node?.tagName === 'LINK' && node?.rel === 'stylesheet') return false;
+  return true;
+};
+
+const toArrayBuffer = (str) => {
+  const bytes = new TextEncoder().encode(str);
+  return bytes.buffer.slice(bytes.byteOffset, bytes.byteOffset + bytes.byteLength);
 };
 
 // adjust text padding in nodes
@@ -123,6 +194,28 @@ function FlowInner() {
   const explainedVarianceArrays = structureState((state) => state.explainedVarianceArrays);
   const projectName = coreState.getState().projectName;
 
+  const addHierarchySavedImage = outputState((state) => state.addHierarchySavedImage);
+
+  const getImageOptions = () => {
+    const container = flowRef.current;
+    const { minX, minY, maxX, maxY } = getContentBounds(container);
+
+    return {
+      skipFonts: true,
+      skipAutoScale: true,
+      backgroundColor: 'white',
+      filter: exportFilter,
+      width: Math.ceil(maxX - minX + EXPORT_PADDING * 2),
+      height: Math.ceil(maxY - minY + EXPORT_PADDING_TOP + EXPORT_PADDING),
+      style: {
+        transform: `translate(${EXPORT_PADDING - minX}px, ${EXPORT_PADDING_TOP - minY}px)`,
+        transformOrigin: 'top left',
+        boxShadow: `0 0 0 ${EXPORT_PADDING_TOP}px #ffffff`,
+      },
+    };
+  };
+  const getBaseName = () => `KADE_${projectName}_${t('Hierarchical_Factor_Graph')}`;
+
   const onInit = useCallback((instance) => {
     instance.fitView({ padding: 0.2 });
     // Shift the fitted view to the right by a fixed pixel amount
@@ -133,6 +226,23 @@ function FlowInner() {
       instance.setViewport({ ...viewport, x: viewport.x + shiftAmount, zoom: 0.8 });
     });
   }, []);
+
+  const notify = async () => {
+    await new Promise((resolve) => setTimeout(resolve, 50));
+    await toast.success(<div>{t('Current graph added to KADE Zip')}</div>, {
+      autoClose: true,
+      position: 'bottom-right',
+      closeOnClick: true,
+      draggable: true,
+      theme: 'light',
+      style: {
+        background: '#fff',
+        color: 'dark-gray',
+        outline: '1px solid #ccc',
+        boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
+      },
+    });
+  };
 
   // Compute width object based on mode
   const widthObj = useMemo(() => {
@@ -179,139 +289,117 @@ function FlowInner() {
   }, []);
 
   const handleDownloadPng = async () => {
-    const container = flowRef.current;
-    if (!container) return;
+    const base64 = await generatePngBase64();
+    if (!base64) return;
 
-    const dataUrl = await htmlToImage.toPng(container, {
-      skipFonts: true,
-      skipAutoScale: true,
-      backgroundColor: 'white',
-      filter: (node) => {
-        if (
-          node?.classList?.contains('react-flow__minimap') ||
-          node?.classList?.contains('react-flow__controls') ||
-          node?.classList?.contains('react-flow__background') ||
-          node?.classList?.contains('react-flow__panel-top')
-        ) {
-          return false;
-        }
-        // Exclude button panel - check parent chain for button elements
-        let currentNode = node;
-        while (currentNode) {
-          if (currentNode?.tagName === 'BUTTON') {
-            return false;
-          }
-          if (
-            currentNode?.classList?.contains('react-flow__panel') &&
-            currentNode?.style?.position === 'absolute' &&
-            currentNode?.querySelector('button')
-          ) {
-            return false;
-          }
-          currentNode = currentNode.parentElement;
-        }
-        if (node?.tagName === 'LINK' && node?.rel === 'stylesheet') {
-          return false;
-        }
-        return true;
-      },
-    });
-
-    const filename = `KADE_${projectName}_${t('Hierarchical_Factor_Graph')}_${getDateTime()}`;
-    const defaultPath = `${filename}.png`;
-    const filepath = await window.electronAPI?.showSavePngDialog?.(defaultPath);
+    const filepath = await window.electronAPI?.showSavePngDialog?.(
+      `${getBaseName()}_${getDateTime()}_(${structureCorrelationThreshold}_${nodeSizeMode}).png`
+    );
     if (!filepath) {
       alert('Save operation was canceled.');
       return;
     }
-
     try {
-      const result = await window.electronAPI.savePNG(dataUrl?.split(',')?.[1], filepath);
-      console.log(result);
+      console.log(await window.electronAPI.savePNG(base64, filepath));
     } catch (error) {
       console.error('Failed to save PNG file:', error);
     }
   };
 
-  const handleDownloadSvg = useCallback(async () => {
-    const filename = `KADE_${projectName}_${t('Hierarchical_Factor_Graph')}_${getDateTime()}`;
-    const container = flowRef.current;
-    if (!container) return;
+  const handleDownloadSvg = async () => {
+    try {
+      const svgString = await generateSvgString();
+      if (!svgString) return;
 
-    htmlToImage
-      .toSvg(container, {
-        skipFonts: true,
-        skipAutoScale: true,
-        backgroundColor: 'white',
-        filter: (node) => {
-          if (
-            node?.classList?.contains('react-flow__minimap') ||
-            node?.classList?.contains('react-flow__controls') ||
-            node?.classList?.contains('react-flow__background') ||
-            node?.classList?.contains('react-flow__panel-top')
-          ) {
-            return false;
-          }
-          // Exclude button panel - check parent chain for button elements
-          let currentNode = node;
-          while (currentNode) {
-            if (currentNode?.tagName === 'BUTTON') {
-              return false;
-            }
-            if (
-              currentNode?.classList?.contains('react-flow__panel') &&
-              currentNode?.style?.position === 'absolute' &&
-              currentNode?.querySelector('button')
-            ) {
-              return false;
-            }
-            currentNode = currentNode.parentElement;
-          }
-          if (node?.tagName === 'LINK' && node?.rel === 'stylesheet') {
-            return false;
-          }
-          return true;
-        },
-      })
-      .then(async (dataUrl) => {
-        const defaultPath = `${filename}.svg`;
-        const filepath = await window.electronAPI?.showSaveSvgDialog(defaultPath);
-        if (!filepath) {
-          alert('Save operation was canceled.');
-          return;
-        }
-        try {
-          const result = await window.electronAPI.saveSVG(arrayBuffer, filepath);
-          console.log(result);
-        } catch (error) {
-          console.error('Failed to save SVG file:', error);
-        }
-      })
-      .catch((err) => {
-        console.error('SVG export failed:', err);
-      });
-  }, []);
+      const filepath = await window.electronAPI?.showSaveSvgDialog?.(
+        `${getBaseName()}_${getDateTime()}_(${structureCorrelationThreshold}_${nodeSizeMode}).svg`
+      );
+      if (!filepath) {
+        alert('Save operation was canceled.');
+        return;
+      }
+      console.log(await window.electronAPI.saveSVG(toArrayBuffer(svgString), filepath));
+    } catch (error) {
+      console.error('Failed to save SVG file:', error);
+    }
+  };
 
   const handleDownloadDrawio = async () => {
-    const filename = `KADE_${projectName}_${t('Hierarchical_Factor_Graph')}_${getDateTime()}`;
-    const defaultPath = `${filename}.drawio`;
-    const drawioXml = exportToDrawio(nodes, edges, { includeLegend: true });
-    const encoder = new TextEncoder();
-    const arrayBuffer = encoder.encode(drawioXml).buffer;
-    const filepath = await window.electronAPI?.showSaveDrawioDialog?.(defaultPath);
+    const drawioXml = generateDrawioString();
+    const filepath = await window.electronAPI?.showSaveDrawioDialog?.(
+      `${getBaseName()}_${getDateTime()}_(${structureCorrelationThreshold}_${nodeSizeMode}).drawio`
+    );
     if (!filepath) {
       alert('Save operation was canceled.');
       return;
     }
     try {
-      await window.electronAPI.saveSVG(arrayBuffer, filepath);
+      await window.electronAPI.saveSVG(toArrayBuffer(drawioXml), filepath);
     } catch (error) {
       console.error('Failed to save .drawio file:', error);
     }
   };
 
+  // base64 PNG (no data-URL prefix)
+  const generatePngBase64 = async () => {
+    const container = flowRef.current;
+    if (!container) return null;
+    const imageOptions = getImageOptions();
+    const dataUrl = await htmlToImage.toPng(container, imageOptions);
+    return dataUrl?.split(',')?.[1] ?? null;
+  };
+
+  // raw SVG markup
+  const generateSvgString = async () => {
+    const container = flowRef.current;
+    if (!container) return null;
+    const imageOptions = getImageOptions();
+    const dataUrl = await htmlToImage.toSvg(container, imageOptions);
+    if (!dataUrl) return null;
+
+    // html-to-image returns: data:image/svg+xml;charset=utf-8,<encoded svg>
+    const commaIdx = dataUrl.indexOf(',');
+    const header = dataUrl.slice(0, commaIdx);
+    const payload = dataUrl.slice(commaIdx + 1);
+    const svg = header.includes(';base64') ? atob(payload) : decodeURIComponent(payload);
+
+    return `<?xml version="1.0" standalone="no"?>\r\n${svg}`;
+  };
+
+  const generateDrawioString = () => exportToDrawio(nodes, edges, { includeLegend: true });
+
+  const handleSaveToKadeZip = async () => {
+    try {
+      const [png, svg] = await Promise.all([generatePngBase64(), generateSvgString()]);
+      const drawio = generateDrawioString();
+
+      if (!png || !svg || !drawio) {
+        console.error('Failed to generate hierarchy images', {
+          png: !!png,
+          svg: !!svg,
+          drawio: !!drawio,
+        });
+        return;
+      }
+
+      const dateTime = getDateTime();
+      addHierarchySavedImage({
+        name: `${getBaseName()}_${dateTime}`,
+        png, // base64 string
+        svg, // string
+        drawio, // string
+        time: dateTime,
+        context: `(${structureCorrelationThreshold}_${nodeSizeMode})`,
+      });
+      notify();
+    } catch (error) {
+      console.error('Failed to save hierarchy graph to KADE zip:', error);
+    }
+  };
+
   return (
     <>
+      <ToastContainer transition={Zoom} />
       <div className="text-4xl mb-3 mt-3">{t('Hierarchical Factor Graph')}</div>
       <div ref={flowRef} className="relative w-[95%] h-[82%] bg-white">
         <div className="flex flex-row gap-15 items-end react-flow__panel-top mb-5">
@@ -441,6 +529,29 @@ function FlowInner() {
                   />
                 </svg>
                 Download draw.io
+              </button>
+              <button
+                onClick={handleSaveToKadeZip}
+                className="px-4 py-2 bg-grey-button text-black rounded-md hover:shadow-[inset_0_0_0_4px_#666,0_0_1px_transparent] transition-colors flex items-center gap-2"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <path d="M11 20H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h10l4 4v3" />
+                  <path d="M7 3v4h7V3" />
+                  <path d="M7 20v-6h4" />
+                  <path d="M18 14v7" />
+                  <path d="M14.5 17.5h7" />
+                </svg>
+                {t('Save to KADE Zip')}
               </button>
             </div>
           </Panel>

@@ -43,7 +43,7 @@ const ForceGraph = ({
   const date = currentDate();
   const time = currentTime();
   const dateTime = `${date}_${time}`;
-  const completeFileName = `${projectName}-correlation_network_${getDateTime()}`;
+  const completeFileName = `${projectName}-correlation_network_${getDateTime()}_(${correlationThreshold})`;
 
   const minCorrelation = correlationThreshold * 100;
 
@@ -224,7 +224,7 @@ const ForceGraph = ({
     if (!svgRef.current) return;
     const svgEl = document.querySelector('#forceGraph');
     const dateTime = `${currentDate()}__${currentTime()}`;
-    const cleanFactorName = `correlation_network__`;
+    const cleanFactorName = `correlation_network_(${correlationThreshold})`;
 
     const pngOptions = {
       customDownloadFileNames: [cleanFactorName],
@@ -546,7 +546,7 @@ const ForceGraph = ({
       `  </diagram>\n` +
       `</mxfile>`;
 
-    const filename = `KADE_${projectName}_${t('Correlation Network')}_${getDateTime()}`;
+    const filename = `KADE_${projectName}_${t('Correlation Network')}_${getDateTime()}_(${correlationThreshold})`;
     const defaultPath = `${filename}.drawio`;
 
     if (saveToKade === true) {
@@ -593,6 +593,7 @@ const ForceGraph = ({
       name: completeFileName,
       png: pngBuffer,
       drawio: drawioBuffer,
+      context: `(${correlationThreshold})`,
       svg: svgBuffer,
       time: `${currentDate()}__${currentTime()}`,
     });

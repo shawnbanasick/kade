@@ -46,7 +46,7 @@ const buildLegendCells = (legendX, legendY, startCellId) => {
 
   // Title
   const titleId = id++;
-  cells.push(`<mxCell id="${titleId}" value="Correlation Links" style="text;html=1;align=left;verticalAlign=middle;fontSize=11;fontStyle=1;fontColor=#333333;" vertex="1" parent="1">
+  cells.push(`<mxCell id="${titleId}" value="Correlation Links" style="text;html=1;align=left;verticalAlign=middle;fontSize=11;fontStyle=1;fontColor=#333333;fontFamily=Arial;" vertex="1" parent="1">
           <mxGeometry x="${legendX + paddingX}" y="${legendY + paddingY}" width="${width - paddingX * 2}" height="16" as="geometry"/>
         </mxCell>`);
 
@@ -67,7 +67,7 @@ const buildLegendCells = (legendX, legendY, startCellId) => {
         </mxCell>`);
 
     const labelId = id++;
-    cells.push(`<mxCell id="${labelId}" value="${escapeXml(item.label)}" style="text;html=1;align=left;verticalAlign=middle;fontSize=10;fontColor=#333333;" vertex="1" parent="1">
+    cells.push(`<mxCell id="${labelId}" value="${escapeXml(item.label)}" style="text;html=1;align=left;verticalAlign=middle;fontSize=10;fontColor=#333333;fontFamily=Arial;" vertex="1" parent="1">
           <mxGeometry x="${legendX + paddingX + textOffset}" y="${rowY - 8}" width="120" height="16" as="geometry"/>
         </mxCell>`);
   });
@@ -93,7 +93,7 @@ const exportToDrawio = (nodes, edges, options = {}) => {
     const width = node.style?.width || 100;
     const height = node.style?.height || 40;
 
-    return `<mxCell id="${id}" value="${escapeXml(node.data.label)}" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+    return `<mxCell id="${id}" value="${escapeXml(node.data.label)}" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Arial;" vertex="1" parent="1">
           <mxGeometry x="${x}" y="${y}" width="${width}" height="${height}" as="geometry"/>
         </mxCell>`;
   });
@@ -120,7 +120,7 @@ const exportToDrawio = (nodes, edges, options = {}) => {
       dashed = 1;
     }
 
-    const style = `rounded=0;html=1;strokeWidth=${strokeWidth};dashed=${dashed};endArrow=classic;`;
+    const style = `rounded=0;html=1;strokeWidth=${strokeWidth};dashed=${dashed};endArrow=classic;fontFamily=Arial;`;
 
     return `<mxCell id="${id}" value="${escapeXml(edge.label || '')}" style="${style}" edge="1" parent="1" source="${sourceId}" target="${targetId}">
           <mxGeometry relative="1" as="geometry"/>

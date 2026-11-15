@@ -93,6 +93,33 @@ const createResultsZipFile = async (dataContent) => {
     }
   });
 
+  // ** SAVED HIERARCHY IMAGES ** //
+  const savedHierarchyImages = dataContent.savedHierarchyImages || [];
+  savedHierarchyImages.forEach((image, index) => {
+    const imageId = `hierarchy_${index + 1}`;
+    if (image.svg) {
+      zip.file(
+        `images/hierarchy/KADE_${projectName}_${timeStamp}_${imageId}_SVG_${image.context}.svg`,
+        image.svg
+      );
+    }
+    if (image.png) {
+      zip.file(
+        `images/hierarchy/KADE_${projectName}_${timeStamp}_${imageId}_PNG_${image.context}.png`,
+        image.png,
+        {
+          base64: true,
+        }
+      );
+    }
+    if (image.drawio) {
+      zip.file(
+        `images/hierarchy/KADE_${projectName}_${timeStamp}_${imageId}_DRAWIO_${image.context}.drawio`,
+        image.drawio
+      );
+    }
+  });
+
   // ** SCREE PLOT IMAGES ** //
   zip.file(
     `images/scree/KADE_${projectName}_${timeStamp}_scree_SVG.svg`,

@@ -221,7 +221,12 @@ const outputState = create(
     factorVizImages: {},
     heatmapSavedImages: [],
     correlationGraphSavedImages: [],
+    hierarchySavedImages: [],
 
+    addHierarchySavedImage: (img) =>
+      set((state) => ({
+        hierarchySavedImages: [...(state.hierarchySavedImages ?? []), img],
+      })),
     addCorrelationGraphSavedImage: (img) =>
       set((state) => ({
         correlationGraphSavedImages: [...(state.correlationGraphSavedImages ?? []), img],
