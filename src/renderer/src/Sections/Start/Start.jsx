@@ -10,25 +10,25 @@ const linkDivClasses =
 const Start = () => {
   const { t } = useTranslation();
   // const update
-    // draw eigenvalues sub table
-    const eigenValuesTrans = t('Actual Eigenvalues');
-    const explainedVarianceTrans = t('Explained Variance');
-    const cumuExplainedVarianceTrans = t('Cumulative Explained Variance');
-    const factorTrans2 = t('Factor');
-    const parallelMeansTrans = t('Parallel Analysis Means (1,000 iterations)');
-    const parallel95Trans = t('Parallel Analysis 95th Percentile');
-    const updateEigensTranslations = factorState((state) => state.updateEigensTranslations);
-  
-    const eigensTranslations = {
-      eigenValuesTrans,
-      explainedVarianceTrans,
-      cumuExplainedVarianceTrans,
-      factorTrans2,
-      parallelMeansTrans,
-      parallel95Trans,
-    };
+  // draw eigenvalues sub table
+  const eigenValuesTrans = t('Actual Eigenvalues');
+  const explainedVarianceTrans = t('Explained Variance');
+  const cumuExplainedVarianceTrans = t('Cumulative Explained Variance');
+  const factorTrans2 = t('Factor');
+  const parallelMeansTrans = t('Parallel Analysis Means (5,000 iterations)');
+  const parallel95Trans = t('Parallel Analysis 95th Percentile');
+  const updateEigensTranslations = factorState((state) => state.updateEigensTranslations);
 
-    updateEigensTranslations(eigensTranslations);
+  const eigensTranslations = {
+    eigenValuesTrans,
+    explainedVarianceTrans,
+    cumuExplainedVarianceTrans,
+    factorTrans2,
+    parallelMeansTrans,
+    parallel95Trans,
+  };
+
+  updateEigensTranslations(eigensTranslations);
 
   return (
     <div className="box-border grid grid-cols-4  text-black border-5 border-t-18 border-grey-button  [grid-template-rows:430px_10px_10px_100px_40px_20px_150px_1fr_1fr] [grid-template-areas:'row1_row1_row1_row1''weblinkRow_weblinkRow_weblinkRow_weblinkRow''rule_rule_rule_rule''linkboxRow1_linkboxRow1_linkboxRow2_linkboxRow2''linkboxRow3_linkboxRow3_linkboxRow4_linkboxRow4''rule2_rule2_rule2_rule2''translation_translation_translation_translation'] justify-items-center items-center bg-white font-[Helvetica,sans-serif] text-[18px] w-[calc(100vw-135px)] max-h-full h-[calc(100vh)] overflow-auto select-none animate-fadeIn">
@@ -37,10 +37,6 @@ const Start = () => {
         <img src={heroImage} alt="Kade image" className="w-[600px]" />
       </div>
 
-      {/* Website Links heading 
-      <div className="[grid-area:weblinkRow] w-[80%] flex items-end">
-        <div className="text-black w-[150px]">{`${t('Website Links')}:`}</div>
-        </div>*/}
       <hr className="[grid-area:rule] w-[80%] ml-4" />
 
       {/* Link Box 1 */}

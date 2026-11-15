@@ -1,10 +1,11 @@
 import * as d3 from 'd3';
-import { v4 as uuidv4 } from 'uuid';
 
 import XYAxis from './XyAxis';
 import CircleText from './CircleText';
 import DataCircles from './DataCircles';
 import AxisTextLabels from './AxisTextLabels';
+
+export const LEFT_EXTRA = 30; // extra px on the left for the y axis title; raise if still clipped
 
 const styles = {
   container: {
@@ -44,12 +45,20 @@ const ScatterPlot = (props) => {
 
   return (
     <div style={styles.container}>
-      <svg id="screePlot" style={styles.svg} width={props.width - 5} height={props.height + 20}>
-        <XYAxis {...props} {...scales} {...styles.XYAxis} />
-        <AxisTextLabels {...props} />
-        <g>
-          <DataCircles key={uuidv4()} {...props} {...scales} />
-          <CircleText key={uuidv4()} {...props} {...scales} />
+      <svg
+        id="rotationScatterPlot"
+        ref={props.svgRef}
+        style={styles.svg}
+        width={props.width - 5 + LEFT_EXTRA}
+        height={props.height + 20}
+      >
+        <g transform={`translate(${LEFT_EXTRA}, 0)`}>
+          <XYAxis {...props} {...scales} {...styles.XYAxis} />
+          <AxisTextLabels {...props} />
+          <g>
+            <DataCircles {...props} {...scales} />
+            <CircleText {...props} {...scales} />
+          </g>
         </g>
       </svg>
     </div>

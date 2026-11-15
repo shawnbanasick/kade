@@ -222,7 +222,10 @@ const outputState = create(
     heatmapSavedImages: [],
     correlationGraphSavedImages: [],
     hierarchySavedImages: [],
+    rotationScatterSavedImages: [],
 
+    addRotationScatterSavedImage: (img) =>
+      set((s) => ({ rotationScatterSavedImages: [...s.rotationScatterSavedImages, img] })),
     addHierarchySavedImage: (img) =>
       set((state) => ({
         hierarchySavedImages: [...(state.hierarchySavedImages ?? []), img],

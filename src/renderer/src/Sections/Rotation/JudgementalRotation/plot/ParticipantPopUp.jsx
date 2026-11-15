@@ -18,14 +18,14 @@ const ParticipantPopUp = () => {
   return (
     <div className="mt-2">
       {participantDataObject ? (
-        <div className="flex flex-row justify-around w-max min-w-[250px] text-white bg-gray-800 rounded-md p-2">
+        <div className="flex flex-row items-center h-8 justify-around w-max min-w-[190px] text-white bg-gray-800 rounded-md p-2">
           <div>{respondent}</div>
           <div>{factor1Value},</div>
           <div>{factor2Value}</div>
         </div>
       ) : (
-        <div className="flex flex-row justify-around w-max min-w-[290px] text-black bg-gray-300 rounded-md p-2">
-          {t('Hover over circle to view participant data')}
+        <div className="flex flex-row h-8 items-center justify-around w-max min-w-[190px] text-black bg-gray-300 rounded-md p-2">
+          {t('Participant data')}
         </div>
       )}
     </div>

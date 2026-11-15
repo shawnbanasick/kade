@@ -123,7 +123,7 @@ const pcaDispatch = () => {
   const explainedVarianceTrans = i18n.t('Explained Variance');
   const cumuExplainedVarianceTrans = i18n.t('Cumulative Explained Variance');
   const factorTrans2 = i18n.t('Factor');
-  const parallelMeansTrans = i18n.t('Parallel Analysis Means (1,000 iterations)');
+  const parallelMeansTrans = i18n.t('Parallel Analysis Means (5,000 iterations)');
   const parallel95Trans = i18n.t('Parallel Analysis 95th Percentile');
   const eigensTranslations = {
     eigenValuesTrans,
