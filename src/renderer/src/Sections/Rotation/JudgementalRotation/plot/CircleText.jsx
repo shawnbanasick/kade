@@ -1,37 +1,32 @@
 import rotationState from '../../../GlobalState/rotationState';
-
-const styles = {
-  stroke: 'black',
-  strokeWidth: 0.5,
-  fontSize: 10,
-  cursor: 'default',
-};
+import { getPlotScale } from './plotSizing';
 
 const showPopUp = (info) => rotationState.setState({ participantDataObject: info });
 const closePopUp = () => rotationState.setState({ participantDataObject: false });
 
-const renderCircleText = (props) => (coords, index) => {
-  const circleProps = {
-    x: props.xScale(props.data[index].factor2),
-    y: props.yScale(props.data[index].factor1 - 0.01),
-    // key removed from here
-    text: props.data[index].num,
-    textAnchor: 'middle',
-  };
+const CircleText = (props) => {
+  const { fontSize, labelDy } = getPlotScale(props);
 
   return (
-    <text
-      key={props.data[index].num} // key passed directly, not via spread
-      onMouseOver={() => showPopUp(props.data[index])}
-      onMouseOut={() => closePopUp()}
-      {...styles}
-      {...circleProps}
-    >
-      {circleProps.text}
-    </text>
+    <g>
+      {props.data.map((d) => (
+        <text
+          key={d.num}
+          x={props.xScale(d.factor2)}
+          y={props.yScale(d.factor1)}
+          dy={labelDy}
+          textAnchor="middle"
+          fontSize={fontSize}
+          fontFamily="Arial, sans-serif"
+          cursor="default"
+          onMouseOver={() => showPopUp(d)}
+          onMouseOut={closePopUp}
+        >
+          {d.num}
+        </text>
+      ))}
+    </g>
   );
 };
 
-const CircleTextJudge = (props) => <g>{props.data.map(renderCircleText(props))}</g>;
-
-export default CircleTextJudge;
+export default CircleText;

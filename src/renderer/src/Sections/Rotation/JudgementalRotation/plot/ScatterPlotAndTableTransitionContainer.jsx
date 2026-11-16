@@ -11,23 +11,13 @@ import RotationTable from '../rotationTable/RotationTable';
 import RotationButtons from '../FactorSelect/RotationButtons';
 import SaveRotationButton from '../FactorSelect/SaveRotationButton';
 
-function getWidthHeight() {
-  let windowWidth = window.innerWidth - 603;
-  const windowHeight = window.innerHeight - 345;
-
-  if (windowWidth > windowHeight) {
-    return windowHeight;
-  }
-  if (windowWidth > 1100) {
-    windowWidth = 1100;
-  }
-  return windowWidth;
-}
-
 const scatterPlotStyles = {
   padding: 30,
   marginBottom: 10,
 };
+
+const MIN_SIZE = 180;
+const MAX_SIZE = 1100;
 
 const ScatterPlotAndTableTransitionContainer = (props) => {
   const { t } = useTranslation();
@@ -38,10 +28,11 @@ const ScatterPlotAndTableTransitionContainer = (props) => {
   const rotationDegrees = rotationState((state) => state.rotationDegrees);
 
   const svgRef = useRef(null);
+  const plotColRef = useRef(null);
 
   const [localStore, setLocalStore] = useState({
-    width: getWidthHeight(),
-    height: getWidthHeight(),
+    width: 600,
+    height: 600,
   });
 
   const { downloadSvg, downloadPng, downloadDrawio, saveToKade } = useScatterPlotExport(svgRef, {
@@ -51,22 +42,28 @@ const ScatterPlotAndTableTransitionContainer = (props) => {
   });
 
   useEffect(() => {
-    const size = getWidthHeight();
-    setLocalStore({ width: size, height: size });
+    const el = plotColRef.current;
+    if (!el) return;
 
-    const handleResize = () => {
-      const size = getWidthHeight();
-      setLocalStore({ width: size, height: size });
+    const update = () => {
+      const availableW = el.clientWidth - LEFT_EXTRA;
+      const availableH = window.innerHeight - 345;
+      const size = Math.round(Math.max(MIN_SIZE, Math.min(availableW, availableH, MAX_SIZE)));
+      setLocalStore((prev) => (prev.width === size ? prev : { width: size, height: size }));
     };
 
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
+    update();
+    const observer = new ResizeObserver(update);
+    observer.observe(el);
+    window.addEventListener('resize', update); // height changes don't resize the column
+    return () => {
+      observer.disconnect();
+      window.removeEventListener('resize', update);
+    };
+  }, [showScatterPlotTableDiv]);
 
   const degreesText = `${rotationDegrees}\u00B0`;
-  const leftContWidth = getWidthHeight();
-  const maxTableHeight = window.innerHeight - 374;
-  // const maxTableHeight = window.innerHeight / 2 - 120;
+  const maxTableHeight = window.innerHeight - 340;
 
   if (showScatterPlotTableDiv) {
     return (
@@ -75,7 +72,6 @@ const ScatterPlotAndTableTransitionContainer = (props) => {
           className="flex flex-wrap items-end w-full h-10 flex-row mb-3"
           id="RotPlotFactorsSelectDiv"
         >
-          {/* <div className="flex h-[30px] w-[85px] text-[clamp(0.80rem,1.2cqw,2rem)] justify-baseline items-center"> */}
           <div className="flex h-7 w-21.25 text-[22px] justify-baseline items-center">
             {t('Rotate')}:
           </div>
@@ -86,9 +82,13 @@ const ScatterPlotAndTableTransitionContainer = (props) => {
           </div>
           <SaveRotationButton />
         </div>
-        <div id="scatterPlotDiv" className="flex flex-row w-full h-[80%] gap-8 flex-wrap mt-1.25">
-          <div style={{ width: leftContWidth + LEFT_EXTRA }} className="flex flex-col h-[75%]">
-            <div className="flex flex-row flex-wrap gap-2 ml-auto mr-4 items-end">
+        <div id="scatterPlotDiv" className="flex flex-row w-full h-[80%] gap-2 mt-1.25">
+          <div
+            ref={plotColRef}
+            className="flex flex-col flex-1 max-w-[48%] h-[75%]"
+            style={{ minWidth: MIN_SIZE + LEFT_EXTRA }}
+          >
+            <div className="flex flex-row flex-wrap gap-2 ml-2 mt-2 mr-4 items-end ">
               <ParticipantPopUp />
               <button
                 onClick={downloadPng}
@@ -164,16 +164,19 @@ const ScatterPlotAndTableTransitionContainer = (props) => {
                 </div>
               </button>
             </div>
-            <ScatterPlot
-              data={data}
-              svgRef={svgRef}
-              width={localStore.width}
-              height={localStore.height}
-              {...props}
-              {...scatterPlotStyles}
-            />
+            <div>
+              <ScatterPlot
+                data={data}
+                svgRef={svgRef}
+                width={localStore.width}
+                height={localStore.height}
+                {...props}
+                {...scatterPlotStyles}
+              />
+            </div>
           </div>
-          <div className="flex flex-col h-[75%] mb-12">
+
+          <div className="flex flex-col mb-12 mt-4 shrink-0">
             <div id="rotFactorsTableDiv">
               <RotationTable colDefs={colDefs} maxHeight={maxTableHeight} rowData={rowData} />
             </div>

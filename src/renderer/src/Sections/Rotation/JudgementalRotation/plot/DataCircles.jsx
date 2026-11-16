@@ -1,9 +1,5 @@
 import rotationState from '../../../GlobalState/rotationState';
-
-const styles = {
-  stroke: 'black',
-  strokeWidth: 0.5,
-};
+import { getPlotScale } from './plotSizing';
 
 const getFillColor = (data) => {
   if (data.factor1Sig === true) return '#b4dffe';
@@ -14,27 +10,26 @@ const getFillColor = (data) => {
 const showPopUp = (info) => rotationState.setState({ participantDataObject: info });
 const closePopUp = () => rotationState.setState({ participantDataObject: false });
 
-const renderCircles = (props) => (coords, index) => {
-  const circleProps = {
-    cx: props.xScale(props.data[index].factor2),
-    cy: props.yScale(props.data[index].factor1),
-    r: 9,
-    fill: getFillColor(props.data[index]),
-    text: props.data[index].num,
-    // key removed from here
-  };
+const DataCircles = (props) => {
+  const { radius, strokeWidth } = getPlotScale(props);
 
   return (
-    <circle
-      key={props.data[index].num} // key passed directly, not via spread
-      onMouseOver={() => showPopUp(props.data[index])}
-      onMouseOut={() => closePopUp()}
-      {...styles}
-      {...circleProps}
-    />
+    <g>
+      {props.data.map((d) => (
+        <circle
+          key={d.num}
+          cx={props.xScale(d.factor2)}
+          cy={props.yScale(d.factor1)}
+          r={radius}
+          fill={getFillColor(d)}
+          stroke="black"
+          strokeWidth={strokeWidth}
+          onMouseOver={() => showPopUp(d)}
+          onMouseOut={closePopUp}
+        />
+      ))}
+    </g>
   );
 };
 
-const dataCirclesJudge = (props) => <g>{props.data.map(renderCircles(props))}</g>;
-
-export default dataCirclesJudge;
+export default DataCircles;
