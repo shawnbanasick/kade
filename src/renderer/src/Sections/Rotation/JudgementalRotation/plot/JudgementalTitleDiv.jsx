@@ -15,7 +15,19 @@ const JudgementalTitleDiv = () => {
 
   const notify = async () => {
     await updateNotifyForSavedRotation(false);
-    await toast.success(t('Rotation Data Saved to Loadings Table'), { autoClose: 5000 });
+    await toast.success(t('Rotation Data Saved to Loadings Table'), {
+      autoClose: 5000,
+      position: 'bottom-right',
+      closeOnClick: true,
+      draggable: true,
+      theme: 'light',
+      style: {
+        background: '#fff',
+        color: 'dark-gray',
+        outline: '1px solid #ccc',
+        boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
+      },
+    });
   };
 
   const baselineData = transposeMatrix(factorMatrix);

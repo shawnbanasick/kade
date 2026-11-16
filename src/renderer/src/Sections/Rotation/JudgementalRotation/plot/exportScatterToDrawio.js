@@ -1,6 +1,17 @@
 const FONT = 'fontFamily=Arial;';
 const PAD = 40; // margin around the plot in the .drawio canvas
 
+// Unrotated size, rotation and screen rect of an SVG text element
+const getTextGeometry = (el, origin) => {
+  const rect = rectIn(el, origin);
+  const m = el.getScreenCTM(); // includes the element's own and all ancestor transforms
+  const scale = m ? Math.hypot(m.a, m.b) : 1;
+  const angle = m ? (Math.atan2(m.b, m.a) * 180) / Math.PI : 0;
+  const rotation = ((Math.round(angle) % 360) + 360) % 360; // draw.io: clockwise degrees
+  const bb = el.getBBox(); // local, unrotated box
+  return { rect, rotation, w: bb.width * scale, h: bb.height * scale };
+};
+
 const escapeXml = (str) =>
   String(str ?? '')
     .replace(/&/g, '&amp;')
@@ -36,7 +47,7 @@ const rectIn = (el, origin) => {
  * options: { width, height, padding } - the same props given to <ScatterPlot>
  *          (the plot area is the box inset by `padding`, domain -1..1)
  */
-const exportScatterToDrawio = (svgEl, { width, height, padding = 30 } = {}) => {
+const exportScatterToDrawio = (svgEl, { width, height, padding = 30, leftOffset = 0 } = {}) => {
   const origin = svgEl.getBoundingClientRect();
   let id = 2;
   const cells = [];
@@ -60,8 +71,8 @@ const exportScatterToDrawio = (svgEl, { width, height, padding = 30 } = {}) => {
     );
 
   // ── Plot frame and origin axes (domain is -1..1, so the origin is the centre) ──
-  const left = padding;
-  const right = width - padding;
+  const left = padding + leftOffset;
+  const right = width - padding + leftOffset;
   const top = padding;
   const bottom = height - padding;
   vertex(
@@ -104,7 +115,17 @@ const exportScatterToDrawio = (svgEl, { width, height, padding = 30 } = {}) => {
     if (owner) {
       owner.label = { content, fontSize };
     } else {
-      standalone.push({ content, rect, fontSize, color: toHex(cs.fill) });
+      const g = getTextGeometry(el, origin);
+      standalone.push({
+        content,
+        rect,
+        fontSize,
+        color: toHex(cs.fill),
+        anchor: cs.textAnchor, // 'start' | 'middle' | 'end'
+        rotation: g.rotation,
+        w: g.w,
+        h: g.h,
+      });
     }
   });
 
@@ -118,13 +139,31 @@ const exportScatterToDrawio = (svgEl, { width, height, padding = 30 } = {}) => {
   });
 
   standalone.forEach((t) => {
-    const w = t.rect.w + 8;
-    const h = t.rect.h + 4;
+    const w = t.w + 8;
+    const h = t.h + 4;
     const fontColor = t.color === 'none' ? '#000000' : t.color;
+    const rotated = t.rotation !== 0;
+
+    let align = 'center';
+    let x = t.rect.cx - w / 2;
+    if (!rotated && t.anchor === 'start') {
+      align = 'left';
+      x = t.rect.x;
+    } else if (!rotated && t.anchor === 'end') {
+      align = 'right';
+      x = t.rect.x + t.rect.w - w;
+    }
+    // For rotated text, the cell is the unrotated box around the same centre;
+    // draw.io rotates it about that centre.
+    const y = t.rect.cy - h / 2;
+
     const style =
-      `text;html=0;align=center;verticalAlign=middle;strokeColor=none;fillColor=none;${FONT}` +
-      `fontSize=${t.fontSize};fontColor=${fontColor};`;
-    vertex(t.content, style, t.rect.cx - w / 2, t.rect.cy - h / 2, w, h);
+      `text;html=0;align=${align};verticalAlign=middle;strokeColor=none;fillColor=none;` +
+      `spacing=0;spacingLeft=0;spacingRight=0;spacingTop=0;spacingBottom=0;` +
+      `${FONT}fontSize=${t.fontSize};fontColor=${fontColor};` +
+      (rotated ? `rotation=${t.rotation};` : '');
+
+    vertex(t.content, style, x, y, w, h);
   });
 
   return (

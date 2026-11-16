@@ -13,11 +13,11 @@ const toArrayBuffer = (str) => {
   return bytes.buffer.slice(bytes.byteOffset, bytes.byteOffset + bytes.byteLength);
 };
 
-const useScatterPlotExport = (svgRef, plotOptions) => {
+const useScatterPlotExport = (svgRef, plotOptions, notify, rotationDegrees) => {
   const addSavedImage = outputState((s) => s.addRotationScatterSavedImage); // new action, see below
 
   const getBaseName = () =>
-    `${coreState.getState().projectName}-rotation_scatter_plot_${getDateTime()}`;
+    `${coreState.getState().projectName}-rotation_scatter_plot_${getDateTime()}_(${rotationDegrees})`;
 
   const getSvgString = () => {
     const el = svgRef.current;
@@ -96,7 +96,15 @@ const useScatterPlotExport = (svgRef, plotOptions) => {
       });
       return false;
     }
-    addSavedImage({ name: getBaseName(), png, svg, drawio, time: getDateTime() });
+    addSavedImage({
+      name: getBaseName(),
+      context: rotationDegrees,
+      png,
+      svg,
+      drawio,
+      time: getDateTime(),
+    });
+    notify?.();
     return true;
   };
 

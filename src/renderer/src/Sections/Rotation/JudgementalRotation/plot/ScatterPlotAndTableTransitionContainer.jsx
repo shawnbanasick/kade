@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
+import { ToastContainer, toast, Zoom } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
 
 import rotationState from '../../../GlobalState/rotationState';
@@ -35,11 +36,41 @@ const ScatterPlotAndTableTransitionContainer = (props) => {
     height: 600,
   });
 
-  const { downloadSvg, downloadPng, downloadDrawio, saveToKade } = useScatterPlotExport(svgRef, {
-    width: localStore.width,
-    height: localStore.height,
-    padding: scatterPlotStyles.padding,
-  });
+  const notify = async () => {
+    await new Promise((resolve) => setTimeout(resolve, 50));
+    await toast.success(
+      <div>
+        {/* {t('Data Loaded Successfully!')}
+        <br /> */}
+        {t('Current image saved to KADE zip')}
+      </div>,
+      {
+        autoClose: true,
+        position: 'bottom-right',
+        closeOnClick: true,
+        draggable: true,
+        theme: 'light',
+        style: {
+          background: '#fff',
+          color: 'dark-gray',
+          outline: '1px solid #ccc',
+          boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
+        },
+      }
+    );
+  };
+
+  const { downloadSvg, downloadPng, downloadDrawio, saveToKade } = useScatterPlotExport(
+    svgRef,
+    {
+      width: localStore.width,
+      height: localStore.height,
+      padding: scatterPlotStyles.padding,
+      leftOffset: LEFT_EXTRA,
+    },
+    notify,
+    rotationDegrees
+  );
 
   useEffect(() => {
     const el = plotColRef.current;
@@ -68,6 +99,7 @@ const ScatterPlotAndTableTransitionContainer = (props) => {
   if (showScatterPlotTableDiv) {
     return (
       <React.Fragment>
+        <ToastContainer transition={Zoom} />
         <div
           className="flex flex-wrap items-end w-full h-10 flex-row mb-3"
           id="RotPlotFactorsSelectDiv"

@@ -31,11 +31,7 @@ const DownloadResultsAsExcel = () => {
   const heatmapSavedImages = outputState((state) => state.heatmapSavedImages);
   const correlationGraphSavedImages = outputState((state) => state.correlationGraphSavedImages);
   const hierarchySavedImages = outputState((state) => state.hierarchySavedImages);
-
-  console.log(
-    correlationGraphSavedImages.length,
-    'correlationGraphSavedImages in DownloadResultsAsExcel.jsx'
-  );
+  const rotationSavedImages = outputState((state) => state.rotationScatterSavedImages);
 
   const textOutputFiles = createCoreOutputTextFiles(
     mainDataObject,
@@ -101,6 +97,7 @@ const DownloadResultsAsExcel = () => {
       savedHeatmapImages: heatmapSavedImages,
       savedCorrelationImages: correlationGraphSavedImages,
       savedHierarchyImages: hierarchySavedImages,
+      savedRotationImages: rotationSavedImages,
       projectName: projectName,
       userSelectedFactors: userSelectedFactors,
       powerSetDiffsNumber: powerSetDiffsNumber,

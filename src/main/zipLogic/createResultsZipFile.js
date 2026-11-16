@@ -7,6 +7,15 @@ import fs from 'fs';
 
 let JSZip = require('jszip');
 
+const toBuf = (v) => {
+  if (v == null) throw new Error('Missing data');
+  if (typeof v === 'string') return Buffer.from(v, 'base64'); // only for PNG base64
+  if (v instanceof ArrayBuffer) return Buffer.from(v);
+  if (ArrayBuffer.isView(v)) return Buffer.from(v.buffer, v.byteOffset, v.byteLength);
+  if (v.type === 'Buffer' && Array.isArray(v.data)) return Buffer.from(v.data);
+  throw new Error(`Unsupported data type: ${Object.prototype.toString.call(v)}`);
+};
+
 const createResultsZipFile = async (dataContent) => {
   const projectName = dataContent.projectName || 'myProject';
   const timeStamp = `${currentDate1()}_${currentTime1()}`;
@@ -115,6 +124,33 @@ const createResultsZipFile = async (dataContent) => {
     if (image.drawio) {
       zip.file(
         `images/hierarchy/KADE_${projectName}_${timeStamp}_${imageId}_DRAWIO_${image.context}.drawio`,
+        image.drawio
+      );
+    }
+  });
+
+  // ** SAVED ROTATION IMAGES ** //
+  const savedRotationImages = dataContent.savedRotationImages || [];
+  savedRotationImages.forEach((image, index) => {
+    const imageId = `rotation_${index + 1}`;
+    if (image.svg) {
+      zip.file(
+        `images/rotation/KADE_${projectName}_${timeStamp}_${imageId}_SVG_(${image.context}).svg`,
+        image.svg
+      );
+    }
+    if (image.png) {
+      zip.file(
+        `images/rotation/KADE_${projectName}_${timeStamp}_${imageId}_PNG_(${image.context}).png`,
+        image.png,
+        {
+          base64: true,
+        }
+      );
+    }
+    if (image.drawio) {
+      zip.file(
+        `images/rotation/KADE_${projectName}_${timeStamp}_${imageId}_DRAWIO_(${image.context}).drawio`,
         image.drawio
       );
     }
