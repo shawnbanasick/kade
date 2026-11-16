@@ -201,6 +201,41 @@ const createResultsZipFile = async (dataContent) => {
       }
     });
   }
+
+  // ** SAVEDFACTOR VISUALIZATION IMAGES ** //
+  if (dataContent.savedFactorsImages) {
+    const imageDataArray = dataContent.savedFactorsImages;
+
+    imageDataArray.forEach((imageData, index) => {
+      const imageId = `set_${index + 1}`;
+      Object.entries(imageData).forEach(([id, entry]) => {
+        const newId = id.replace('image', ''); // Replace non-alphanumeric characters with underscores
+        if (entry.svg) {
+          zip.file(
+            `images/factors/KADE_${projectName}_${timeStamp}_${newId}_${imageId}_SVG.svg`,
+            entry.svg
+          );
+        }
+        if (entry.png) {
+          // PNG is stored as a data URL, so strip the prefix and write as base64
+          zip.file(
+            `images/factors/KADE_${projectName}_${timeStamp}_${newId}_${imageId}_PNG.png`,
+            entry.png.replace(/^data:image\/png;base64,/, ''),
+            {
+              base64: true,
+            }
+          );
+        }
+        if (entry.drawio) {
+          zip.file(
+            `images/factors/KADE_${projectName}_${timeStamp}_${newId}_${imageId}_DRAWIO.drawio`,
+            entry.drawio
+          );
+        }
+      });
+    });
+  }
+
   // zip.file(`KADE_Results_${projectName}_${timeStamp}.png`, dataContent.screePng1 || '');
 
   // 4. Generate the zip file (e.g., as a Node.js Buffer or Uint8Array)

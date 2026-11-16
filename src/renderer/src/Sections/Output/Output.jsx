@@ -256,7 +256,7 @@ const Output = () => {
         <>
           {displayOutputTabContent ? (
             <div className="flex flex-row justify-left w-[80%] gap-8 items-center mb-6">
-              <div className="text-4xl  ">{t('Factor Visualizations')}</div>
+              <div className="text-4xl min-w-100">{t('Factor Visualizations')}</div>
               {/* <DisplayVisualizationsButtons /> */}
               <ShowVizOptionsButton />
             </div>

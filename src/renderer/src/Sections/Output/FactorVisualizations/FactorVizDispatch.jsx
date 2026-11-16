@@ -19,10 +19,11 @@ const FactorVizDispatch = (props) => {
   // getState
   const factorVizOptions = vizState((state) => state.factorVizOptions);
   const factorData = createFactorVizDataObjectForProps(factorVizOptions);
+  const dispatchProps = [...factorData];
   const updateFactorVizImages = outputState((state) => state.updateFactorVizImages);
   const hasData = Array.isArray(factorData) && factorData.length > 0;
-  const dispatchProps = [...factorData];
 
+  //* useEffect to capture factor visualization images ONCE only (keep array empty) */
   useEffect(() => {
     if (!hasData) return undefined;
     let cancelled = false;
@@ -34,7 +35,7 @@ const FactorVizDispatch = (props) => {
       cancelled = true;
       clearTimeout(t);
     };
-  }, [factorVizOptions, hasData, updateFactorVizImages]);
+  }, []);
 
   if (!hasData) return null;
 

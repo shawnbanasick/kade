@@ -52,7 +52,7 @@ const UnforcedSortsDisplayButton = (props) => {
         className={
           areQsortsVerified
             ? 'bg-primary-button h-[30px] w-[270px] text-[clamp(1.3rem,1.5vw,1.8rem)]'
-            : 'bg-[orange] h-[30px] w-[270px] text-[clamp(1.3rem,1.5vw,1.8rem)]'
+            : 'bg-[orange] h-[30px] w-[270px] text-[clamp(1.3rem,1.5vw,1.8rem)] !pt-1.5 flex items-center'
         }
       >
         <div className="text-[clamp(0.5rem,1.5vw,1rem)] text-center leading-tight">{`${areQsortsVerified ? t('Sorts Verified') : t('Click after Verifying Q Sorts')}`}</div>

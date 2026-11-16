@@ -32,6 +32,7 @@ const DownloadResultsAsExcel = () => {
   const correlationGraphSavedImages = outputState((state) => state.correlationGraphSavedImages);
   const hierarchySavedImages = outputState((state) => state.hierarchySavedImages);
   const rotationSavedImages = outputState((state) => state.rotationScatterSavedImages);
+  const factorsSavedImages = outputState((state) => state.factorsSavedImages);
 
   const textOutputFiles = createCoreOutputTextFiles(
     mainDataObject,
@@ -84,6 +85,8 @@ const DownloadResultsAsExcel = () => {
     const docDataContent = createDocxOptions();
     docDataContent.data = [...dataXlsx];
 
+    console.log('factorVizImages', factorsSavedImages.length);
+
     const dataContent = {
       type: 'ZipResults',
       excel: excelDataContent,
@@ -98,6 +101,7 @@ const DownloadResultsAsExcel = () => {
       savedCorrelationImages: correlationGraphSavedImages,
       savedHierarchyImages: hierarchySavedImages,
       savedRotationImages: rotationSavedImages,
+      savedFactorsImages: factorsSavedImages,
       projectName: projectName,
       userSelectedFactors: userSelectedFactors,
       powerSetDiffsNumber: powerSetDiffsNumber,

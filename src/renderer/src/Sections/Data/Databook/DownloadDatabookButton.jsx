@@ -19,8 +19,8 @@ import {
 } from 'docx';
 import GeneralButton from './../../../Utils/GeneralButton';
 import { useTranslation } from 'react-i18next';
-import DocxIcon from '../../images/DOCX_Icon2.svg';
 import coreState from '../../GlobalState/coreState';
+import inputState from '../../GlobalState/inputState';
 
 const DownloadDatabookButton = () => {
   const { t } = useTranslation();
@@ -51,6 +51,7 @@ const DownloadDatabookButton = () => {
   const multiplierArray = coreState((state) => state.multiplierArray);
   const statements = coreState((state) => state.statements);
   const projectName = coreState((state) => state.projectName);
+  const showExportButtons = inputState((state) => state.showExportButtons);
 
   const handleClick = () => {
     const statementNumArray = statements.map((item, index) => {
@@ -265,18 +266,27 @@ const DownloadDatabookButton = () => {
   };
 
   return (
-    <GeneralButton
-      className="h-[50px] w-[320px] bg-grey-button"
-      id="DatabookButton"
-      onClick={handleClick}
-    >
-      <div className="flex flex-row  items-center gap-4">
-        <div className="flex justify-end items-center">
-          <img src={DocxIcon} className="h-[40px]" alt="CSV Icon" />
+    <div className="flex flex-row items-center justify-center gap-4 mt-1">
+      <div className="text-2xl font-medium">{t('Export Project Databook:')}</div>
+      <GeneralButton
+        className="h-[50px] w-[180px] bg-grey-button"
+        id="DatabookButton"
+        onClick={handleClick}
+        disabled={!showExportButtons}
+      >
+        <div className="flex flex-row  items-center gap-4">
+          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
+            />
+          </svg>
+          {t('DOCX File')}
         </div>
-        {t('Download Project Data Book')}
-      </div>
-    </GeneralButton>
+      </GeneralButton>
+    </div>
   );
 };
 

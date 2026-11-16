@@ -28,6 +28,9 @@ const InfoPanel = () => {
   const projectName = coreState((state) => state.projectName);
   const numQsorts = coreState((state) => state.numQsorts);
   const numStatements = coreState((state) => state.numStatements);
+  const multiplierArray = coreState((state) => state.multiplierArray);
+  const texts = useMemo(() => calcPatternArray([...multiplierArray]), [multiplierArray]);
+  const showExportButtons = inputState((state) => state.showExportButtons);
 
   return (
     <div className="flex flex-col mt-9">
@@ -42,6 +45,22 @@ const InfoPanel = () => {
         <h2 className="text-2xl font-semibold">
           {t('Number of Statements')}: <span className="font-normal">{numStatements}</span>
         </h2>
+        <div className="flex flex-col mt-2">
+          <div className="text-2xl mb-2">{t('Q Sort Grid Pattern:')}</div>
+          <section className="mb-8 space-y-2 pl-6">
+            <QsortsPatternList texts={texts} />
+          </section>
+        </div>
+        <div className="flex flex-row flex-wrap w-4/5 items-center justify-between gap-4">
+          <DownloadDatabookButton />
+        </div>
+        {showExportButtons ? null : (
+          <div className="flex flex-row flex-wrap items-center text-center gap-4">
+            <div className="ml-60! text-[clamp(1.3rem,1.1vw,1.8rem)] font-bold self-center">
+              {t('Please verify Q Sorts first')}
+            </div>
+          </div>
+        )}
       </section>
     </div>
   );
@@ -103,7 +122,7 @@ const SortsPanel = () => {
         <div className="text-4xl mt-8 mb-8 ml-1">{t('Participant Q Sorts')}</div>
         <div className="flex flex-row gap-4 max-w-[60vw]">
           <div className="flex flex-row items-center gap-4">
-            <div className="text-[clamp(1.5rem,1.5vw,1.8rem)]">{t('Display sorts as')}</div>
+            <div className="text-[clamp(1.5rem,1.5vw,1.8rem)]">{t('Display Q sorts as')}</div>
             <DisplayDataQsortsButton />
             <DisplayDataSortsGridButton />
           </div>
@@ -134,12 +153,11 @@ const DownloadsPanel = () => {
     <section className="py-3 mb-12">
       {showExportButtons ? (
         <>
-          <div className="text-4xl mb-8 ml-1">{t('Downloads')}</div>
+          <div className="text-4xl mb-8 ml-1">{t('Data Exports')}</div>
           <div className="flex flex-row flex-wrap w-4/5 items-center justify-between gap-4">
-            <DownloadDatabookButton />
             <div className="flex flex-row gap-4 mt-1">
               <div className="text-[clamp(1.3rem,1.5vw,1.8rem)] font-bold self-center">
-                {t('Export PQMethod')}
+                {t('PQMethod Data Files:')}
               </div>
               <div className="flex flex-row gap-4 mt-1">
                 <StaFileButton />
@@ -182,10 +200,10 @@ const Data = () => {
 
   const tabs = [
     { id: 'tab1', title: t('Info'), Panel: InfoPanel },
-    { id: 'tab2', title: t('Pattern'), Panel: PatternPanel },
-    { id: 'tab3', title: t('Statements'), Panel: StatementsPanel },
-    { id: 'tab4', title: t('Q Sorts'), Panel: SortsPanel, needsVerification: true },
-    { id: 'tab5', title: t('Downloads'), Panel: DownloadsPanel },
+    // { id: 'tab2', title: t('Pattern'), Panel: PatternPanel },
+    { id: 'tab2', title: t('Statements'), Panel: StatementsPanel },
+    { id: 'tab3', title: t('Q Sorts'), Panel: SortsPanel, needsVerification: true },
+    { id: 'tab4', title: t('Data Export'), Panel: DownloadsPanel },
   ];
 
   const tabColor = ({ id, needsVerification }) => {

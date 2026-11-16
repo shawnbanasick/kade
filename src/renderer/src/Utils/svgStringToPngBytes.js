@@ -1,4 +1,4 @@
-export default function svgStringToPngBase64(svgString, width, height, scale = 2) {
+export default function svgStringToPngBase64(svgString, width, height, scale = 1) {
   return new Promise((resolve, reject) => {
     const img = new Image();
     const url = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svgString);

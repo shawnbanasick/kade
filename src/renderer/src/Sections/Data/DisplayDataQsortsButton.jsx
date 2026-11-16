@@ -26,11 +26,31 @@ const DisplayDataQSortsButton = () => {
   return (
     <div>
       <GeneralButton
-        className={`h-[30px] w-[120px] ${isActive ? 'bg-primary-button' : 'bg-grey-button'}`}
+        className={`h-[30px] w-[130px] ${isActive ? 'bg-primary-button' : 'bg-grey-button'}`}
         id="qSortsButton"
         onClick={handleClick}
       >
-        {t('Q sorts')}
+        <div className="flex justify-center gap-2 items-center mr-2.5">
+          <svg
+            xmlns="http://w3.org"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            className="pb-0.5"
+          >
+            <rect x="3" y="4" width="2.5" height="5" rx="0.5" />
+            <rect x="7.2" y="4" width="2.5" height="10" rx="0.5" />
+            <rect x="11.4" y="4" width="2.5" height="15" rx="0.5" />
+            <rect x="15.6" y="4" width="2.5" height="10" rx="0.5" />
+            <rect x="19.8" y="4" width="2.5" height="5" rx="0.5" />
+          </svg>
+          {t('Q sorts')}
+        </div>
       </GeneralButton>
     </div>
   );

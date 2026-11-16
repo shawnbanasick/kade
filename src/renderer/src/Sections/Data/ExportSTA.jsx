@@ -29,10 +29,15 @@ const ExportStaButton = () => {
       onClick={handleOnClick}
     >
       <div className="flex flex-row justify-center items-center h-full w-full gap-4 ">
-        <div className="flex justify-center items-center mr-2.5 ml-0">
-          <img src={StaIcon} className="h-[40px]" alt="CSV Icon" />
-        </div>
-        <p>{t('Statements')}</p>
+        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
+          />
+        </svg>
+        <div className="text-xl font-medium">{t('Statements')}</div>
       </div>
     </GeneralButton>
   );

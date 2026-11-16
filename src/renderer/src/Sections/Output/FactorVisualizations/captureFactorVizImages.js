@@ -19,12 +19,12 @@ export default async function captureFactorVizImages({ scale = 2 } = {}, dispatc
         const svg = serializeSvg(el, { width, height });
         const png = await svgStringToPngDataUrl(svg, { width, height, scale });
         const drawio = buildDrawioXmlFacViz(
-          dispatchProps[index].data,
-          dispatchProps[index].positionData,
-          dispatchProps[index].factorVizOptions,
+          dispatchProps[index]?.data,
+          dispatchProps[index]?.positionData,
+          dispatchProps[index]?.factorVizOptions,
           30,
           true,
-          dispatchProps[index].name
+          dispatchProps[index]?.name
         );
         return [el.id, { svg, png, drawio, width, height, updatedAt: Date.now() }];
       })

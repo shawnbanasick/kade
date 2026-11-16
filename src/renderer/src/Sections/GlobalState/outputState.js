@@ -223,6 +223,7 @@ const outputState = create(
     correlationGraphSavedImages: [],
     hierarchySavedImages: [],
     rotationScatterSavedImages: [],
+    factorsSavedImages: [],
 
     addRotationScatterSavedImage: (img) =>
       set((s) => ({ rotationScatterSavedImages: [...s.rotationScatterSavedImages, img] })),
@@ -237,6 +238,10 @@ const outputState = create(
     addHeatmapSavedImage: (img) =>
       set((state) => ({
         heatmapSavedImages: [...(state.heatmapSavedImages ?? []), img],
+      })),
+    addFactorsSavedImage: (img) =>
+      set((state) => ({
+        factorsSavedImages: [...(state.factorsSavedImages ?? []), img],
       })),
 
     updateDrawioHeatmapXml: (inputValue) => set({ drawioHeatmapXml: inputValue }),
