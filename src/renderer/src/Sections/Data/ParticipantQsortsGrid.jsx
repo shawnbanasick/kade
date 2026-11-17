@@ -2,8 +2,8 @@ import { useEffect, useRef } from 'react';
 import { AgGridReact } from 'ag-grid-react';
 // import 'ag-grid-community/styles/ag-grid.css';
 // import 'ag-grid-community/styles/ag-theme-quartz.css';
+// import { themeBalham } from 'ag-grid-community';
 import '../../Utils/ag-theme-fresh.css';
-import { themeBalham } from 'ag-grid-community';
 import coreState from '../GlobalState/coreState';
 
 // HELPER FUNCTION

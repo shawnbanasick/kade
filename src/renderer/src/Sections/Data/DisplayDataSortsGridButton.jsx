@@ -15,12 +15,19 @@ const DisplayDataSortsGridButton = () => {
   const updateIsShowQsortsButtonGreen = dataDisplayState(
     (state) => state.updateIsShowQsortsButtonGreen
   );
+  const updateShowQsortsList = dataDisplayState((state) => state.updateShowQsortsList);
+  const updateIsShowQsortsListButtonGreen = dataDisplayState(
+    (state) => state.updateIsShowQsortsListButtonGreen
+  );
 
   const handleClick = () => {
     updateShowQsortsSpreadsheet(true);
     updateShowQsorts(false);
+    updateShowQsortsList(false);
+
     updateIsShowQsortsSpreadsheetButtonGreen(true);
     updateIsShowQsortsButtonGreen(false);
+    updateIsShowQsortsListButtonGreen(false);
   };
 
   const isActive = dataDisplayState((state) => state.isShowQsortsSpreadsheetButtonGreen);

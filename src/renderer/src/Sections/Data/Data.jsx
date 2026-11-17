@@ -8,6 +8,7 @@ import calcPatternArray from './calcPatternArray';
 import DownloadDatabookButton from './Databook/DownloadDatabookButton';
 import DisplayDataSortsGridButton from './DisplayDataSortsGridButton';
 import DisplayDataQsortsButton from './DisplayDataQsortsButton';
+import DisplayDataListButton from './DisplayDataListButton';
 import generateDisplaySortMaps from './Databook/generateDisplaySortMaps';
 import SortsDisplayList from './SortsDisplayList';
 import DatFileButton from './ExportDAT';
@@ -15,6 +16,7 @@ import StaFileButton from './ExportSTA';
 import coreState from '../GlobalState/coreState';
 import inputState from '../GlobalState/inputState';
 import dataDisplayState from '../GlobalState/dataDisplayState';
+import QsortsListView from './QsortsListView';
 
 /* -------------------------------------------------------------------------- */
 /*  Panels                                                                    */
@@ -104,6 +106,7 @@ const SortsPanel = () => {
   const multiplierArray = coreState((state) => state.multiplierArray);
   const showQsortsSpreadsheet = dataDisplayState((state) => state.showQsortsSpreadsheet);
   const showQsorts = dataDisplayState((state) => state.showQsorts);
+  const showQsortsList = dataDisplayState((state) => state.showQsortsList);
 
   // Expensive: only recompute when the underlying data changes.
   const [sortsDisplayText, respondentNames, numUnforcedParts] = useMemo(() => {
@@ -116,18 +119,24 @@ const SortsPanel = () => {
     );
   }, [qSortPattern, mainDataObject, statements, multiplierArray]);
 
+  console.log(JSON.stringify(mainDataObject), 'mainDataObject in SortsPanel');
+  console.log(JSON.stringify(statements), 'statements in SortsPanel');
+  console.log(JSON.stringify(qSortPattern), 'qSortPattern in SortsPanel');
+  console.log(JSON.stringify(multiplierArray), 'multiplierArray in SortsPanel');
+
   return (
     <div className="flex flex-col h-full min-h-0 pr-0 pt-0">
-      <div className="flex flex-row gap-2 max-w-[85vw] justify-between mb-6 items-center flex-wrap shrink-0">
-        <div className="text-4xl mt-8 mb-8 ml-1">{t('Participant Q Sorts')}</div>
-        <div className="flex flex-row gap-4 max-w-[60vw]">
+      <div className="flex flex-col gap-2 max-w-[85vw] justify-between mb-1 items-center flex-wrap shrink-0">
+        <div className="text-4xl mt-8 mb-2 ml-1 w-full">{t('Participant Q Sorts')}</div>
+        <div className="flex flex-row justify-start items-center gap-18 w-full">
           <div className="flex flex-row items-center gap-4">
             <div className="text-[clamp(1.5rem,1.5vw,1.8rem)]">{t('Display Q sorts as')}</div>
             <DisplayDataQsortsButton />
             <DisplayDataSortsGridButton />
+            <DisplayDataListButton />
           </div>
+          <UnforcedSortsDisplay number={numUnforcedParts} display={numUnforcedParts === 0} />
         </div>
-        <UnforcedSortsDisplay number={numUnforcedParts} display={numUnforcedParts === 0} />
       </div>
 
       <div className="flex-1 min-h-0 overflow-y-auto">
@@ -137,6 +146,13 @@ const SortsPanel = () => {
             <SortsDisplayList
               sortsDisplayText={sortsDisplayText}
               respondentNames={respondentNames}
+            />
+          )}
+          {showQsortsList && (
+            <QsortsListView
+              mainDataObject={mainDataObject}
+              statements={statements}
+              multiplierArray={multiplierArray}
             />
           )}
         </section>
@@ -199,7 +215,7 @@ const Data = () => {
   const updateDataActiveTab = dataDisplayState((state) => state.updateDataActiveTab);
 
   const tabs = [
-    { id: 'tab1', title: t('Info'), Panel: InfoPanel },
+    { id: 'tab1', title: t('Information'), Panel: InfoPanel },
     // { id: 'tab2', title: t('Pattern'), Panel: PatternPanel },
     { id: 'tab2', title: t('Statements'), Panel: StatementsPanel },
     { id: 'tab3', title: t('Q Sorts'), Panel: SortsPanel, needsVerification: true },

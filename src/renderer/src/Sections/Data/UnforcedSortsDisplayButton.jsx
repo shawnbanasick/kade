@@ -51,11 +51,11 @@ const UnforcedSortsDisplayButton = (props) => {
         onClick={handleOnClick}
         className={
           areQsortsVerified
-            ? 'bg-primary-button h-[30px] w-[270px] text-[clamp(1.3rem,1.5vw,1.8rem)]'
-            : 'bg-[orange] h-[30px] w-[270px] text-[clamp(1.3rem,1.5vw,1.8rem)] !pt-1.5 flex items-center'
+            ? 'bg-primary-button h-[30px] w-[270px] text-[clamp(1.3rem,1.3vw,1.8rem)] flex items-center'
+            : 'bg-[orange] h-[30px] w-[270px] text-[clamp(1.3rem,1.3vw,1.8rem)]  flex items-center'
         }
       >
-        <div className="text-[clamp(0.5rem,1.5vw,1rem)] text-center leading-tight">{`${areQsortsVerified ? t('Sorts Verified') : t('Click after Verifying Q Sorts')}`}</div>
+        <div className="text-[clamp(0.5rem,1.2vw,1rem)] text-center leading-tight">{`${areQsortsVerified ? t('Sorts Verified') : t('Click after Verifying Q Sorts')}`}</div>
       </GeneralButton>
     );
   } else {
@@ -65,15 +65,15 @@ const UnforcedSortsDisplayButton = (props) => {
           onClick={handleOnClick2}
           className={
             areQsortsVerified
-              ? 'bg-primary-button h-[35px] w-[270px] text-[1.2rem] mt-4 '
-              : 'bg-[orange] h-[35px] w-[270px] text-[1.2rem] mt-4'
+              ? 'bg-primary-button h-[30px] w-[270px] text-[1.2rem] flex items-center'
+              : 'bg-[orange] h-[30px] w-[270px] text-[1.2rem] flex items-center'
           }
         >
-          <div>
+          <div className="text-[clamp(0.5rem,1.4vw,1rem)] pt-0.5 font-bold text-center leading-tight">
             {`${areQsortsVerified ? t('Sorts Verified') : t('Click after Verifying Q Sorts')}`}
           </div>
         </GeneralButton>
-        <div className="flex flex-row items-center ml-8 mt-4 text-2xl">
+        <div className="flex flex-row items-center ml-2 text-xl bg-amber-100 text-amber-900 dark:bg-amber-900/50 dark:text-amber-200 px-2 rounded-md">
           {t('Unforced Q sorts')}:{` ${props.number}`}
         </div>
       </div>

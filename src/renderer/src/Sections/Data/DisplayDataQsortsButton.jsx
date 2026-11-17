@@ -15,11 +15,18 @@ const DisplayDataQSortsButton = () => {
   const updateIsShowQsortsButtonGreen = dataDisplayState(
     (state) => state.updateIsShowQsortsButtonGreen
   );
+  const updateShowQsortsList = dataDisplayState((state) => state.updateShowQsortsList);
+  const updateIsShowQsortsListButtonGreen = dataDisplayState(
+    (state) => state.updateIsShowQsortsListButtonGreen
+  );
 
   const handleClick = () => {
     updateShowQsortsSpreadsheet(false);
     updateShowQsorts(true);
+    updateShowQsortsList(false);
+
     updateIsShowQsortsSpreadsheetButtonGreen(false);
+    updateIsShowQsortsListButtonGreen(false);
     updateIsShowQsortsButtonGreen(true);
   };
 
@@ -49,7 +56,7 @@ const DisplayDataQSortsButton = () => {
             <rect x="15.6" y="4" width="2.5" height="10" rx="0.5" />
             <rect x="19.8" y="4" width="2.5" height="5" rx="0.5" />
           </svg>
-          {t('Q sorts')}
+          {t('Grid')}
         </div>
       </GeneralButton>
     </div>
