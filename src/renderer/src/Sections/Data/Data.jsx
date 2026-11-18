@@ -68,21 +68,6 @@ const InfoPanel = () => {
   );
 };
 
-// const PatternPanel = () => {
-//   const { t } = useTranslation();
-//   const multiplierArray = coreState((state) => state.multiplierArray);
-//   const texts = useMemo(() => calcPatternArray([...multiplierArray]), [multiplierArray]);
-
-//   return (
-//     <div className="flex flex-col mt-9">
-//       <div className="text-4xl mb-10">{t('Q Sort Grid Pattern')}</div>
-//       <section className="mb-8 space-y-2 pl-6">
-//         <QsortsPatternList texts={texts} />
-//       </section>
-//     </div>
-//   );
-// };
-
 // min-h-0 lets the flex child shrink below its content height so overflow-y-auto can engage.
 const StatementsPanel = () => {
   const { t } = useTranslation();
@@ -90,7 +75,9 @@ const StatementsPanel = () => {
 
   return (
     <div className="flex flex-col h-full min-h-0 p-4 pr-0 pt-0">
-      <div className="text-4xl mt-4  ml-1 shrink-0">{t('Statements')}</div>
+      <div className="text-4xl mt-4  ml-1 shrink-0 pb-5 border-b-2 border-gray-200">
+        {t('Statements')}
+      </div>
       <div className="flex-1 min-h-0 overflow-y-auto py-4">
         <StatementsList statements={statements} />
       </div>

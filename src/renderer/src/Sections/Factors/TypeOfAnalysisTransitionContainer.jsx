@@ -10,7 +10,7 @@ const TypeOfAnalysisTransitionContainer = () => {
         <PcaButton />
         <ResetAnalysisButton />
       </div>
-      <div className="border-b-2 border-grey-button w-full h-px" />
+      <div className="border-b-2 border-gray-200 w-full h-px" />
     </div>
   );
 };
