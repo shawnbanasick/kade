@@ -43,7 +43,7 @@ const ResultsCalcOutputButton = () => {
   const showNotification = outputState((state) => state.notifyOutputCaculationSuccess);
 
   // const resultsCohenButtons2Value = outputState((state) => state.resultsCohenButtons2Value);
-  const notify = async () => {
+  const notifySuccess = async () => {
     await new Promise((resolve) => setTimeout(resolve, 50));
     await toast.success(
       <div>
@@ -52,7 +52,7 @@ const ResultsCalcOutputButton = () => {
         {t('Results are ready for download.')}
       </div>,
       {
-        autoClose: false,
+        autoClose: true,
         position: 'bottom-right',
         closeOnClick: true,
         draggable: true,
@@ -69,7 +69,7 @@ const ResultsCalcOutputButton = () => {
   };
 
   if (showNotification) {
-    notify();
+    notifySuccess();
   }
 
   const handleSubmit = () => {
@@ -81,6 +81,7 @@ const ResultsCalcOutputButton = () => {
 
     if (userSelectedFactors.length !== 0) {
       outputDispatch();
+      // notify();
       updateShowDownloadOutputButtons(true);
       updateIsOutputButtonGreen(true);
       updateOutputFactorSelectButtonsDisabled(true);
@@ -94,7 +95,13 @@ const ResultsCalcOutputButton = () => {
 
   return (
     <>
-      <ToastContainer transition={Zoom} />
+      <ToastContainer
+        style={{ zIndex: 99999 }}
+        containerId="output-success-toast"
+        pauseOnHover={false}
+        pauseOnFocusLoss={false}
+        transition={Zoom}
+      />
       <div className="flex flex-row mt-4 items-baseline text-2xl gap-2 w-full">
         <span className="">3. {t('Generate Results')}:</span>
         <div className="h-2" />

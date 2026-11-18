@@ -52,7 +52,7 @@ const Output = () => {
   );
   const displayOutputTabContent = outputState((state) => state.displayOutputTabContent);
 
-  const notify = async () => {
+  const notifyError = async () => {
     await toast.error('Error >>> Reset threshold levels', {
       className: 'outputToast',
       progressClassName: 'outputToastProgress',
@@ -91,13 +91,13 @@ const Output = () => {
 
   // Shared content window classes
   const window1Class =
-    'bg-white flex flex-col select-none min-w-[calc(100vw-166px)] h-[calc(100vh-80px)] overflow-auto box-border';
+    'bg-white flex flex-col select-none min-w-[calc(100vw-166px)] h-[calc(100vh-180px)] overflow-auto box-border';
 
   const window2Class =
     'bg-white select-none h-[calc(100vh-80px)] min-w-[calc(100vw-186px)] overflow-auto box-border';
 
   if (showNotification) {
-    notify();
+    notifyError();
   }
 
   const userSelectedFactors = outputState((state) => state.userSelectedFactors);
@@ -255,7 +255,7 @@ const Output = () => {
       content: (
         <>
           {displayOutputTabContent ? (
-            <div className="flex flex-row justify-left w-[80%] gap-8 items-center mb-6">
+            <div className="flex flex-row justify-left w-full gap-8 items-center mb-2 border-b-2 border-gray-100 pb-5">
               <div className="text-4xl min-w-100">{t('Factor Visualizations')}</div>
               {/* <DisplayVisualizationsButtons /> */}
               <ShowVizOptionsButton />
@@ -266,7 +266,7 @@ const Output = () => {
             </h2>
           )}
 
-          <div className="bg-white select-none h-[calc(100vh-80px)] min-w-[calc(100vw-186px)] overflow-auto box-border">
+          <div className="bg-white select-none h-[calc(100vh-160px)] min-w-[calc(100vw-186px)] overflow-auto box-border">
             <FactorVizOptionsDrawer
               isOpen={shouldDisplayFactorVizOptions}
               onClose={() => updateShouldDisplayFactorVizOptions(false)}
@@ -351,7 +351,7 @@ const Output = () => {
             aria-label={tabs[0].title}
             onClick={() => handleTabClick('tab1')}
           />
-          <div className="tab-content bg-base-100 border-base-300 p-6 pt-1">{tabs[0].content}</div>
+          <div className="tab-content bg-base-100 border-base-300 pl-6 pt-6">{tabs[0].content}</div>
 
           <input
             type="radio"
@@ -360,7 +360,7 @@ const Output = () => {
             aria-label={tabs[1].title}
             onClick={() => handleTabClick('tab2')}
           />
-          <div className="tab-content bg-base-100 border-base-300 p-6">{tabs[1].content}</div>
+          <div className="tab-content bg-base-100 border-base-300 pl-6 pt-6">{tabs[1].content}</div>
 
           <input
             type="radio"
@@ -369,7 +369,7 @@ const Output = () => {
             aria-label={tabs[2].title}
             onClick={() => handleTabClick('tab3')}
           />
-          <div className="tab-content bg-base-100 border-base-300 p-6">{tabs[2].content}</div>
+          <div className="tab-content bg-base-100 border-base-300 pl-6 pt-6">{tabs[2].content}</div>
 
           <input
             type="radio"
@@ -378,7 +378,7 @@ const Output = () => {
             aria-label={tabs[3].title}
             onClick={() => handleTabClick('tab4')}
           />
-          <div className="tab-content bg-base-100 border-base-300 p-6">{tabs[3].content}</div>
+          <div className="tab-content bg-base-100 border-base-300 pl-6 pt-6">{tabs[3].content}</div>
 
           <input
             type="radio"
@@ -387,7 +387,7 @@ const Output = () => {
             aria-label={tabs[4].title}
             onClick={() => handleTabClick('tab5')}
           />
-          <div className="tab-content bg-base-100 border-base-300 p-6">{tabs[4].content}</div>
+          <div className="tab-content bg-base-100 border-base-300 pl-6 pt-6">{tabs[4].content}</div>
           <input
             type="radio"
             name="my_tabs_6"
@@ -395,7 +395,7 @@ const Output = () => {
             aria-label={tabs[5].title}
             onClick={() => handleTabClick('tab6')}
           />
-          <div className="tab-content bg-base-100 border-base-300 p-6">{tabs[5].content}</div>
+          <div className="tab-content bg-base-100 border-base-300 pl-6 pt-6">{tabs[5].content}</div>
           <input
             type="radio"
             name="my_tabs_6"
@@ -403,7 +403,7 @@ const Output = () => {
             aria-label={tabs[6].title}
             onClick={() => handleTabClick('tab7')}
           />
-          <div className="tab-content bg-base-100 border-base-300 p-6">{tabs[6].content}</div>
+          <div className="tab-content bg-base-100 border-base-300 pl-6 pt-6">{tabs[6].content}</div>
         </div>
       </div>
     </div>

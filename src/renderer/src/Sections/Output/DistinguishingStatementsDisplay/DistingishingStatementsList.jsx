@@ -128,93 +128,103 @@ const DistinguishingStatementsList = () => {
   if (displayOutputTabContent) {
     if (distIdentType === 'stephensonMethod') {
       return (
-        <div className="mb-37.5 pr-5">
-          <div className="mb-5 text-4xl">{t('Distinguishing Statements')}</div>
-          <DistinguishingTypeButtons
-            textSize="xl"
-            className="mb-5"
-            origin={'distinguishing'}
-            cohenData={cohenExcelExport}
-            stephenExportData={stephenExportData}
-          />
-          {/* <DistStateListSortByButtons /> */}
-          <DistStateListButtons label={thresholdLabel} />
+        <div className="flex h-full flex-col">
+          <div id="distinguishing-controls" className="shrink-0 bg-white pb-2 mb-3">
+            <div className="mb-5 text-4xl">{t('Distinguishing Statements')}</div>
+            <DistinguishingTypeButtons
+              textSize="xl"
+              className="mb-5"
+              origin={'distinguishing'}
+              cohenData={cohenExcelExport}
+              stephenExportData={stephenExportData}
+            />
+            {/* <DistStateListSortByButtons /> */}
+            <DistStateListButtons label={thresholdLabel} />
+          </div>
 
-          {displayData.map((factorItem, index1) => (
-            <React.Fragment key={`key${index1.toString()}`}>
-              <div className="text-2xl font-bold mt-6">{`${t('Factor')} ${factorItem.userSelectedFactor.slice(7)}`}</div>
-              <table className="border-collapse border border-black">
-                <thead>
-                  <tr>
-                    {[
-                      { label: t('Threshold'), key: 'sigLevelText' },
-                      { label: t('Z score'), key: 'zScore' },
-                      { label: t('Q Sort Value'), key: 'sortValue' },
-                      { label: t('Number'), key: 'statement' },
-                      { label: t('Statement'), key: 'sortStatement' },
-                    ].map(({ label, key }) => (
-                      <th
-                        key={key}
-                        className="border border-black p-1.25"
-                        onClick={() => handleSort(index1, key)}
-                        style={{ cursor: 'pointer', userSelect: 'none', whiteSpace: 'nowrap' }}
-                      >
-                        {label}
-                        <SortIcon factorIndex={index1} colKey={key} />
-                      </th>
-                    ))}
-                  </tr>
-                </thead>
-                <tbody>
-                  {getSortedRows(displayData[index1].distStates, index1).map((item, index) => (
-                    <tr
-                      key={`key${index.toString()}`}
-                      className={`hover:bg-[rgba(131,202,254,0.6)] ${index % 2 === 0 ? '' : 'bg-[#eee]'}`}
-                    >
-                      <td className="border border-black p-1.25 min-w-25 text-center">
-                        {item.sigLevelText}
-                      </td>
-                      <td className="border border-black p-1.25 min-w-20 text-center">
-                        {item.zScore}
-                      </td>
-                      <td className="border border-black p-1.25 text-center min-w-36">
-                        {item.sortValue}
-                      </td>
-                      <td className="border border-black p-1.25 text-center min-w-25">
-                        {item.statement}
-                      </td>
-                      <td className="border border-black p-1.25 w-full">{item.sortStatement}</td>
+          <div id="distinguishing-data" className="minh-0 flex-1 overflow-y-auto pb-37.5">
+            {displayData.map((factorItem, index1) => (
+              <React.Fragment key={`key${index1.toString()}`}>
+                <div className="text-2xl font-bold mt-6">{`${t('Factor')} ${factorItem.userSelectedFactor.slice(7)}`}</div>
+                <table className="border-collapse border border-black">
+                  <thead>
+                    <tr>
+                      {[
+                        { label: t('Threshold'), key: 'sigLevelText' },
+                        { label: t('Z score'), key: 'zScore' },
+                        { label: t('Q Sort Value'), key: 'sortValue' },
+                        { label: t('Number'), key: 'statement' },
+                        { label: t('Statement'), key: 'sortStatement' },
+                      ].map(({ label, key }) => (
+                        <th
+                          key={key}
+                          className="border border-black p-1.25"
+                          onClick={() => handleSort(index1, key)}
+                          style={{ cursor: 'pointer', userSelect: 'none', whiteSpace: 'nowrap' }}
+                        >
+                          {label}
+                          <SortIcon factorIndex={index1} colKey={key} />
+                        </th>
+                      ))}
                     </tr>
-                  ))}
-                </tbody>
-              </table>
-            </React.Fragment>
-          ))}
+                  </thead>
+                  <tbody>
+                    {getSortedRows(displayData[index1].distStates, index1).map((item, index) => (
+                      <tr
+                        key={`key${index.toString()}`}
+                        className={`hover:bg-[rgba(131,202,254,0.6)] ${index % 2 === 0 ? '' : 'bg-[#eee]'}`}
+                      >
+                        <td className="border border-black p-1.25 min-w-25 text-center">
+                          {item.sigLevelText}
+                        </td>
+                        <td className="border border-black p-1.25 min-w-20 text-center">
+                          {item.zScore}
+                        </td>
+                        <td className="border border-black p-1.25 text-center min-w-36">
+                          {item.sortValue}
+                        </td>
+                        <td className="border border-black p-1.25 text-center min-w-25">
+                          {item.statement}
+                        </td>
+                        <td className="border border-black p-1.25 w-full">{item.sortStatement}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </React.Fragment>
+            ))}
+          </div>
         </div>
       );
     } else if (distIdentType === 'cohenMethod') {
       return (
-        <div className="pb-37.5 pr-5">
+        <div className="flex h-full flex-col">
           <div className="mb-5 text-4xl">{t('Distinguishing Statements')}</div>
-          <DistinguishingTypeButtons
-            textSize="xl"
-            className="mb-6"
-            origin={'distinguishing'}
-            cohenData={cohenExcelExport}
-            stephenExportData={stephenExportData}
-          />
-          {/* <DistStateListCohenSortByButtons /> */}
-          <DistStateListCohensButton />
-          {displayCohenData.map((factorItem, index) => (
-            <React.Fragment key={`key${index.toString()}`}>
-              <div className="text-2xl font-bold mt-4">{`${t('Factor')} ${factorItem.factor}`}</div>
-              <CohensDynamicTable
-                factor={factorItem.factorNumber}
-                factors={userSelectedFactors}
-                data={factorItem.distStates}
-              />
-            </React.Fragment>
-          ))}
+
+          <div id="distinguishing-controls-cohens" className="shrink-0 bg-white mb-3 pb-2">
+            <DistinguishingTypeButtons
+              textSize="xl"
+              className="mb-6"
+              origin={'distinguishing'}
+              cohenData={cohenExcelExport}
+              stephenExportData={stephenExportData}
+            />
+            {/* <DistStateListCohenSortByButtons /> */}
+            <DistStateListCohensButton />
+          </div>
+
+          <div id="distinguishing-data-cohens" className="minh-0 flex-1 overflow-y-auto pb-37.5">
+            {displayCohenData.map((factorItem, index) => (
+              <React.Fragment key={`key${index.toString()}`}>
+                <div className="text-2xl font-bold mt-4">{`${t('Factor')} ${factorItem.factor}`}</div>
+                <CohensDynamicTable
+                  factor={factorItem.factorNumber}
+                  factors={userSelectedFactors}
+                  data={factorItem.distStates}
+                />
+              </React.Fragment>
+            ))}
+          </div>
         </div>
       );
     }

@@ -66,11 +66,11 @@ const DisplayVisualizationsButtons = () => {
     return (
       <>
         <ToastContainer transition={Zoom} />
-        <div className="flex flew-row pl-33.5 justify-left items-center gap-15 w-full h-7.5">
+        <div className="flex flew-row pl-33.5 justify-left items-center gap-5 w-full h-7.5">
           <GeneralButton
             id="viewVisualizationsDisplayOptions"
             onClick={handleOpenVizOptions}
-            className="flex justify-center items-center  h-7.5 w-fit min-w-50 bg-grey-button"
+            className="flex justify-center items-center  h-7.5 w-fit min-w-65 bg-grey-button"
           >
             <div className="flex flex-row justify-center items-center gap-2">
               <svg
@@ -99,7 +99,7 @@ const DisplayVisualizationsButtons = () => {
           <GeneralButton
             id="viewVisualizationsDisplayOptions"
             onClick={handleSaveToZip}
-            className="flex justify-center items-center  h-7.5 w-fit min-w-50 bg-grey-button"
+            className="flex justify-center items-center  h-7.5 w-fit min-w-65 bg-grey-button"
           >
             <div className="flex flex-row justify-center items-center gap-2">
               <svg

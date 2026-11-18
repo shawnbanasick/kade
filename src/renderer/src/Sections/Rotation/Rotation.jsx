@@ -29,9 +29,9 @@ const Rotation = () => {
     {
       title: optionsTrans,
       content: (
-        <div>
+        <div className="bg-white overflow-auto p-1.25 box-border h-[calc(100vh-140px)] select-none">
           <div className="text-4xl mb-6">{t('Rotation Options')}</div>
-          <div className="grid bg-white max-w-299.25 select-none grid-rows-[50px_120px_150px_1fr] h-[calc(100vh-75px)]">
+          <div className="grid bg-white max-w-299.25 select-none grid-rows-[50px_120px_150px_1fr] ">
             {showKeepFacForRotButton ? (
               <div className="mr-5 mt-2.5 text-[22px]">{numberFactorsKeepTrans}:</div>
             ) : (
@@ -50,7 +50,7 @@ const Rotation = () => {
       title: varimaxTrans,
       content: (
         <div>
-          <div className="bg-white overflow-auto p-1.25 box-border h-[calc(100vh-120px)] select-none">
+          <div className="bg-white overflow-auto p-1.25 box-border h-[calc(100vh-140px)] select-none">
             <FireVarimaxButton />
             <VarimaxHeywoodWarning />
           </div>
