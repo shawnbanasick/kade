@@ -203,7 +203,6 @@ const Data = () => {
 
   const tabs = [
     { id: 'tab1', title: t('Information'), Panel: InfoPanel },
-    // { id: 'tab2', title: t('Pattern'), Panel: PatternPanel },
     { id: 'tab2', title: t('Statements'), Panel: StatementsPanel },
     { id: 'tab3', title: t('Q Sorts'), Panel: SortsPanel, needsVerification: true },
     { id: 'tab4', title: t('Data Export'), Panel: DownloadsPanel },

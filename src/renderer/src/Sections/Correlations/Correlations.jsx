@@ -43,8 +43,8 @@ const Correlations = () => {
       >
         <div className="justify-self-start" style={{ gridArea: 'header' }}>
           {hasDataBeenConfirmed ? null : (
-            <div className="mt-12.5 ml-5 text-[22px] pt-15">
-              {t("Verify Q sorts in section '2. Data'")}
+            <div className="flex items-center justify-center m-3 p-2 bg-white rounded-lg shadow-lg border border-gray-200">
+              <div className="text-[22px]">{t("Verify Q sorts in section '2. Data'")}</div>
             </div>
           )}
         </div>
@@ -52,7 +52,9 @@ const Correlations = () => {
           {showCorrelationMatrix ? (
             <CorrelationTable />
           ) : (
-            <div className="mt-12.5 ml-5 text-[22px] pt-15">{t('No correlations calculated')}</div>
+            <div className="flex items-center justify-center m-3 p-2 bg-white rounded-lg shadow-lg border border-gray-200">
+              <div className="p-2 text-[22px]">{t('No correlations calculated')}</div>
+            </div>
           )}
         </div>
         <ErrorNotification />
@@ -73,13 +75,19 @@ const Correlations = () => {
       title: t('Heatmap'),
       content: (
         <div>
-          <div className="text-4xl mt-4">{t('Correlation Heatmap')}</div>
-
-          {/* <div className="flex w-[500px] ml-[150px] text-4xl">{`${t('Correlation Heatmap')}`}</div> */}
-          <HeatmapMain
-            width={numQsorts < 20 ? numQsorts * 60 : numQsorts * 40}
-            height={numQsorts < 20 ? numQsorts * 60 : numQsorts * 40}
-          />
+          {showCorrelationMatrix ? (
+            <>
+              <div className="text-4xl mt-4">{t('Correlation Heatmap')}</div>
+              <HeatmapMain
+                width={numQsorts < 20 ? numQsorts * 60 : numQsorts * 40}
+                height={numQsorts < 20 ? numQsorts * 60 : numQsorts * 40}
+              />
+            </>
+          ) : (
+            <div className="flex items-center w-[400px] justify-center m-3 p-2 bg-white rounded-lg shadow-lg border border-gray-200">
+              <div className="p-2 text-[22px]">{t('No correlations calculated')}</div>
+            </div>
+          )}
         </div>
       ),
     },
