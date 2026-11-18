@@ -230,18 +230,21 @@ const ConsensusStatementsList = () => {
 
   if (distIdentType === 'stephensonMethod') {
     return (
-      <div className="flex flex-col">
-        <div className="mb-5 text-4xl">{t('Consensus Statements')}</div>
-        <DistinguishingTypeButtons
-          textSize="xl"
-          className=""
-          origin={'consensus'}
-          exportData={excelExportData}
-          cohenData={excelExportCohenData}
-          cohensThreshold={cohensThreshold}
-        />
-        <DistStateListButtons label={thresholdLabel} />
-        <>
+      <div className="flex h-full flex-col">
+        <div id="consensus-controls" className="shrink-0 bg-white pb-5 border-b-2 border-gray-200">
+          <div className="mb-5 text-4xl">{t('Consensus Statements')}</div>
+          <DistinguishingTypeButtons
+            textSize="xl"
+            className=""
+            origin={'consensus'}
+            exportData={excelExportData}
+            cohenData={excelExportCohenData}
+            cohensThreshold={cohensThreshold}
+          />
+          <DistStateListButtons label={thresholdLabel} />
+        </div>
+
+        <div id="consensus-data" className="minh-0 flex-1 overflow-y-auto pb-37.5">
           <table className="border-collapse border border-black mb-10 mr-5 mt-4">
             <thead>
               <tr>
@@ -276,53 +279,64 @@ const ConsensusStatementsList = () => {
               ))}
             </tbody>
           </table>
-        </>
+        </div>
       </div>
     );
   } else {
     return (
-      <div className="flex flex-col">
-        <div className="mb-5 text-4xl">{t('Consensus Statements')}</div>
+      <div className="flex h-full flex-col">
+        <div
+          id="consensus-controls-cohens"
+          className="shrink-0 bg-white pb-5 border-b-2 border-gray-200"
+        >
+          <div className="mb-5 text-4xl">{t('Consensus Statements')}</div>
+          <DistinguishingTypeButtons
+            textSize="xl"
+            className=""
+            origin={'consensus'}
+            exportData={excelExportData}
+            cohenData={excelExportCohenData}
+            cohensThreshold={cohensThreshold}
+          />
+          <DistStateListCohensButton />
+        </div>
 
-        <DistinguishingTypeButtons
-          textSize="xl"
-          className=""
-          origin={'consensus'}
-          exportData={excelExportData}
-          cohenData={excelExportCohenData}
-          cohensThreshold={cohensThreshold}
-        />
-        <DistStateListCohensButton />
-        <table className="border-collapse border border-black mt-4">
-          <thead>
-            <tr>
-              {cohensHeaders.map(({ label, key }) => (
-                <th
-                  key={key}
-                  className="border border-black p-1.25"
-                  onClick={() => handleSort(key)}
-                  style={thStyle}
-                >
-                  {label}
-                  <SortIcon colKey={key} />
-                </th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {sortedCohenConsensusStatements.map((statement, index) => (
-              <tr
-                key={`key${index}`}
-                className={`hover:bg-[rgba(131,202,254,0.6)] ${index % 2 === 0 ? '' : 'bg-[#eee]'}`}
-              >
-                <td className="border border-black p-1.25 text-center">{statement.cutoffLevel}</td>
-                <td className="border border-black p-1.25 text-center">{statement.qValues}</td>
-                <td className="border border-black p-1.25 text-center">{statement.statement}</td>
-                <td className="border border-black p-1.25 min-w-150">{statement.sortStatement}</td>
+        <div id="consensus-data-cohens" className="minh-0 flex-1 overflow-y-auto pb-37.5">
+          <table className="border-collapse border border-black mt-4">
+            <thead>
+              <tr>
+                {cohensHeaders.map(({ label, key }) => (
+                  <th
+                    key={key}
+                    className="border border-black p-1.25"
+                    onClick={() => handleSort(key)}
+                    style={thStyle}
+                  >
+                    {label}
+                    <SortIcon colKey={key} />
+                  </th>
+                ))}
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {sortedCohenConsensusStatements.map((statement, index) => (
+                <tr
+                  key={`key${index}`}
+                  className={`hover:bg-[rgba(131,202,254,0.6)] ${index % 2 === 0 ? '' : 'bg-[#eee]'}`}
+                >
+                  <td className="border border-black p-1.25 text-center">
+                    {statement.cutoffLevel}
+                  </td>
+                  <td className="border border-black p-1.25 text-center">{statement.qValues}</td>
+                  <td className="border border-black p-1.25 text-center">{statement.statement}</td>
+                  <td className="border border-black p-1.25 min-w-150">
+                    {statement.sortStatement}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     );
   }

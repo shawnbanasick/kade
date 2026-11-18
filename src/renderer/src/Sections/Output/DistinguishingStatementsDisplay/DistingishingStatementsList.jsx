@@ -129,7 +129,10 @@ const DistinguishingStatementsList = () => {
     if (distIdentType === 'stephensonMethod') {
       return (
         <div className="flex h-full flex-col">
-          <div id="distinguishing-controls" className="shrink-0 bg-white pb-2 mb-3">
+          <div
+            id="distinguishing-controls"
+            className="shrink-0 bg-white pb-5 border-b-2 border-gray-200"
+          >
             <div className="mb-5 text-4xl">{t('Distinguishing Statements')}</div>
             <DistinguishingTypeButtons
               textSize="xl"
@@ -201,7 +204,10 @@ const DistinguishingStatementsList = () => {
         <div className="flex h-full flex-col">
           <div className="mb-5 text-4xl">{t('Distinguishing Statements')}</div>
 
-          <div id="distinguishing-controls-cohens" className="shrink-0 bg-white mb-3 pb-2">
+          <div
+            id="distinguishing-controls-cohens"
+            className="shrink-0 bg-white pb-5 border-b-2 border-gray-200"
+          >
             <DistinguishingTypeButtons
               textSize="xl"
               className="mb-6"
