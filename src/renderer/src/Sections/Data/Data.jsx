@@ -131,9 +131,9 @@ const SortsPanel = () => {
         <div className="flex flex-row justify-start items-center gap-18 w-full">
           <div className="flex flex-row items-center gap-4">
             <div className="text-[clamp(1.5rem,1.5vw,1.8rem)]">{t('Display Q sorts as')}</div>
+            <DisplayDataListButton />
             <DisplayDataQsortsButton />
             <DisplayDataSortsGridButton />
-            <DisplayDataListButton />
           </div>
           <UnforcedSortsDisplay number={numUnforcedParts} display={numUnforcedParts === 0} />
         </div>

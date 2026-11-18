@@ -4,14 +4,14 @@ import { immer } from 'zustand/middleware/immer';
 const dataDisplayState = create(
   immer((set, get) => ({
     showQsortsSpreadsheet: false,
-    showQsorts: true,
-    showQsortsList: false,
+    showQsorts: false,
+    showQsortsList: true,
 
     dataActiveTab: 'tab1',
 
     isShowQsortsSpreadsheetButtonGreen: false,
-    isShowQsortsButtonGreen: true,
-    isShowQsortsListButtonGreen: false,
+    isShowQsortsButtonGreen: false,
+    isShowQsortsListButtonGreen: true,
 
     updateDataActiveTab: (inputValue) => set({ dataActiveTab: inputValue }),
     updateShowQsortsSpreadsheet: (inputValue) => set({ showQsortsSpreadsheet: inputValue }),
