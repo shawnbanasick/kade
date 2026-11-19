@@ -35,7 +35,7 @@ function zeros(i) {
 
     */
 
-const svd = A => {
+const svd = (A) => {
   let temp;
   // Compute the thin SVD from G. H. Golub and C. Reinsch, Numer. Math. 14, 403-420 (1970)
   let prec = 2 ** -52; // assumes double prec
@@ -47,7 +47,7 @@ const svd = A => {
   let k = 0;
   let l = 0;
 
-  const u = A.map(row => row.slice(0));
+  const u = A.map((row) => row.slice(0));
   const m = u.length;
   const n = u[0].length;
 
@@ -244,7 +244,7 @@ const svd = A => {
         break; // break out of iteration loop and move on to next k value
       }
 
-      console.assert(iteration < itmax - 1, "Error: no convergence.");
+      console.assert(iteration < itmax - 1, 'Error: no convergence.');
 
       // shift from bottom 2x2 minor
       x = q[l];

@@ -1,7 +1,7 @@
-import vizState from "./vizState";
-const clone = require("rfdc")();
+import vizState from './vizState';
+const clone = require('rfdc')();
 
-const getVizState = key => {
+const getVizState = (key) => {
   try {
     const stateValue = vizState[key];
 
@@ -13,10 +13,10 @@ const getVizState = key => {
 
     return returnValue;
   } catch (error) {
-    const spacing = "5px";
+    const spacing = '5px';
     const styles = `padding: ${spacing}; background-color: darkblue; color: white; font-style: 
      italic; border: ${spacing} solid crimson; font-size: 2em;`;
-    console.error("%cError", styles, error.message);
+    console.error('%cError', styles, error.message);
   }
 };
 

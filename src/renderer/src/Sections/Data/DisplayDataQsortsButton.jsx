@@ -45,9 +45,9 @@ const DisplayDataQSortsButton = () => {
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
             className="pb-0.5"
           >
             <rect x="3" y="4" width="2.5" height="5" rx="0.5" />

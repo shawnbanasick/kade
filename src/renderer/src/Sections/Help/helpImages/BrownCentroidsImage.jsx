@@ -1,9 +1,9 @@
-import React from "react";
+import React from 'react';
 
 const FactorImage = () => {
   return (
     <img
-      style={{ width: "900px", height: "500px" }}
+      style={{ width: '900px', height: '500px' }}
       alt="Factors card"
       src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABXAAAANACAYAAACCJUU5AAAKpGlDQ1
       BJQ0MgUHJvZmlsZQAASImVlgk4lPsex//vO/tmG4QsY98iu0GWsY89O6mMGcxYpmkYW7scnXBSkk

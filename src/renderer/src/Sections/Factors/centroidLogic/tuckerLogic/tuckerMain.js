@@ -1,17 +1,17 @@
-import getColumnSumsFromMatrix from "./getColumnSumsFromMatrix";
-import calculateDR from "./calculateDR";
-import checkForNegativeColSums from "./checkForNegativeColSums";
-import calculateQPrimeArray from "./calculateQPrimeArray";
-import calculateCoeffPValue from "./calculateCoeffPValue";
-import calcFactorArray from "./calcFactorArray";
-import calcCoeffLValue from "./calcCoeffLValue";
-import calcResidualMatrix from "./calcResidualMatrix";
-import convertMatrixDiags from "./convertMatrixDiags";
-import reflectMatrix from "./reflectMatrix";
-import calcEigenValues from "./calcEigenValues";
-import evenRound from "../../../../Utils/evenRound";
+import getColumnSumsFromMatrix from './getColumnSumsFromMatrix';
+import calculateDR from './calculateDR';
+import checkForNegativeColSums from './checkForNegativeColSums';
+import calculateQPrimeArray from './calculateQPrimeArray';
+import calculateCoeffPValue from './calculateCoeffPValue';
+import calcFactorArray from './calcFactorArray';
+import calcCoeffLValue from './calcCoeffLValue';
+import calcResidualMatrix from './calcResidualMatrix';
+import convertMatrixDiags from './convertMatrixDiags';
+import reflectMatrix from './reflectMatrix';
+import calcEigenValues from './calcEigenValues';
+import evenRound from '../../../../Utils/evenRound';
 
-const clone = require("rfdc")();
+const clone = require('rfdc')();
 
 const tuckerMain = (NFAX, HOLDR, numQsorts) => {
   // todo - set to user input

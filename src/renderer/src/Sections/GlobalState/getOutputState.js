@@ -1,7 +1,7 @@
-import outputState from "./outputState";
-const clone = require("rfdc")();
+import outputState from './outputState';
+const clone = require('rfdc')();
 
-const getOutputState = key => {
+const getOutputState = (key) => {
   try {
     const stateValue = outputState[key];
 
@@ -13,10 +13,10 @@ const getOutputState = key => {
 
     return returnValue;
   } catch (error) {
-    const spacing = "5px";
+    const spacing = '5px';
     const styles = `padding: ${spacing}; background-color: darkblue; color: white; font-style: 
      italic; border: ${spacing} solid crimson; font-size: 2em;`;
-    console.error("%cError", styles, error.message);
+    console.error('%cError', styles, error.message);
   }
 };
 

@@ -1,4 +1,4 @@
-import inputState from "../../GlobalState/inputState";
+import inputState from '../../GlobalState/inputState';
 
 const setDuplicatedNamesErrorContent = () => {
   inputState.showErrorMessageBar = true;

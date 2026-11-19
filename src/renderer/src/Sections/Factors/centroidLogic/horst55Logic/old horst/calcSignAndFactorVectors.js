@@ -1,7 +1,7 @@
 const calcSignAndFactorVectors = (rMatrix, K, D, fMatrix) => {
   const W = [];
   const V = [];
-  const rMatrixClone = rMatrix.map(arr => arr.slice());
+  const rMatrixClone = rMatrix.map((arr) => arr.slice());
 
   // ** create W array of accumulated row values
   // ** create V array of 1s

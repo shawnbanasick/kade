@@ -1,4 +1,4 @@
-const convertMatrixDiags = HOLDR => {
+const convertMatrixDiags = (HOLDR) => {
   const newMatrix = HOLDR.map((row, indexI) => {
     return row.map((item, indexJ) => {
       if (indexI === indexJ) {

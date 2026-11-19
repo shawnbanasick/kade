@@ -1,7 +1,7 @@
-import shiftRawSortsPositive from "../logic/shiftRawSortsPositive";
+import shiftRawSortsPositive from '../logic/shiftRawSortsPositive';
 
 const addPosShiftSorts = (mainDataObject, minValue) => {
-  mainDataObject.forEach(item => {
+  mainDataObject.forEach((item) => {
     let tempArray = [...item.rawSort];
     let shiftedArray = shiftRawSortsPositive(tempArray, minValue);
     item.posShiftSort = [...shiftedArray];

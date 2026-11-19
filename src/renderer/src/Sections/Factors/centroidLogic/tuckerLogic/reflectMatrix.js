@@ -1,7 +1,6 @@
 import evenRound from '../../../../Utils/evenRound';
 
 const reflectMatrix = (negativereflectionArray, matrix, columnSums, DR) => {
-
   let reflectionArray = [];
   for (let j = 0; j < columnSums.length; j += 1) {
     const tempObject = {};
@@ -12,7 +11,6 @@ const reflectMatrix = (negativereflectionArray, matrix, columnSums, DR) => {
     tempObject.reflectionTarget = false;
     reflectionArray.push(tempObject);
   }
-
 
   let count = 0;
   let breakLoop = false;
@@ -57,10 +55,7 @@ const reflectMatrix = (negativereflectionArray, matrix, columnSums, DR) => {
       const tempFactorArray = [];
 
       for (let m = 0; m < reflectionArray.length; m += 1) {
-        let tempValue = evenRound(
-          reflectionArray[m].value + DR[m] * reflectionArray[m].weight,
-          3
-        );
+        let tempValue = evenRound(reflectionArray[m].value + DR[m] * reflectionArray[m].weight, 3);
         tempFactorArray.push(tempValue);
       }
       return tempFactorArray;

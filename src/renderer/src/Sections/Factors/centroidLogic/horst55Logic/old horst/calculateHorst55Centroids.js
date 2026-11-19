@@ -1,6 +1,6 @@
-import testSignificanceOfResidual from "./testSignificanceOfResidual";
-import calcSignAndFactorVectors from "./calcSignAndFactorVectors";
-import getDiagonalsAndNewDiagonals from "./getDiagonalsAndNewDiagonals";
+import testSignificanceOfResidual from './testSignificanceOfResidual';
+import calcSignAndFactorVectors from './calcSignAndFactorVectors';
+import getDiagonalsAndNewDiagonals from './getDiagonalsAndNewDiagonals';
 
 // ** HOLDR is correlation matrix
 const HOLDR = [
@@ -12,7 +12,7 @@ const HOLDR = [
   [0.108, 0.125, 0.238, 0.626, 0.709, 1.0, 0.19, 0.103, 0.291],
   [0.298, 0.323, 0.296, 0.249, 0.138, 0.19, 1.0, 0.654, 0.527],
   [0.309, 0.347, 0.271, 0.183, 0.091, 0.103, 0.654, 1.0, 0.541],
-  [0.351, 0.369, 0.385, 0.369, 0.254, 0.291, 0.527, 0.541, 1.0]
+  [0.351, 0.369, 0.385, 0.369, 0.254, 0.291, 0.527, 0.541, 1.0],
 ];
 
 const STPCRT = false;
@@ -30,7 +30,7 @@ const calculateHorst55Centroids = (numFactors, STPCRT, HOLDR) => {
   // loop iterations
   let L = 0;
   // copy the correl matrix to HOLDR
-  let rMatrix = HOLDR.map(arr => arr.slice());
+  let rMatrix = HOLDR.map((arr) => arr.slice());
   // other variables from Horst
   const P = 0.001;
   // size of the matrix
@@ -80,17 +80,7 @@ const calculateHorst55Centroids = (numFactors, STPCRT, HOLDR) => {
 
     // * if we are still calculating facs, then goto line 54 first and calc diagonals, new diagonals
     // * returns [D, U, K, rMatrix, L, breakLoop]
-    const diagonals = getDiagonalsAndNewDiagonals(
-      D,
-      U,
-      L,
-      NL,
-      rMatrix,
-      HOLDR,
-      P,
-      breakLoop,
-      K
-    );
+    const diagonals = getDiagonalsAndNewDiagonals(D, U, L, NL, rMatrix, HOLDR, P, breakLoop, K);
     // * unpack
     D = diagonals[0];
     U = diagonals[1];

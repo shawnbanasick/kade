@@ -1,4 +1,4 @@
-import average from "../../../Utils/average";
+import average from '../../../Utils/average';
 
 const x = [2, 2, 6, 6];
 const y = [5, 5];
@@ -9,7 +9,7 @@ const testValue2 = 5;
 const average1 = average(x);
 const average2 = average(y);
 
-test("average", () => {
+test('average', () => {
   expect(average1).toEqual(testValue1);
   expect(average2).toEqual(testValue2);
 });

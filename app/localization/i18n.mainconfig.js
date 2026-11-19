@@ -13,7 +13,7 @@ const prependPath = isMac && !isDev ? path.join(process.resourcesPath, '..') : '
 i18n.use(backend).init({
   backend: {
     loadPath: prependPath + '/app/localization/locales/{{lng}}/{{ns}}.json',
-    addPath: prependPath + '/app/localization/locales/{{lng}}/{{ns}}.missing.json'
+    addPath: prependPath + '/app/localization/locales/{{lng}}/{{ns}}.missing.json',
   },
   debug: false,
   namespace: 'translation',
@@ -21,7 +21,7 @@ i18n.use(backend).init({
   saveMissingTo: 'current',
   lng: 'en',
   fallbackLng: false, // set to false when generating translation files locally
-  supportedLngs: whitelist.langs
+  supportedLngs: whitelist.langs,
 });
 
 export default i18n;

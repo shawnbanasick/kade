@@ -1,4 +1,4 @@
-import calculateColumnSums from "../../../Factors/centroidLogic/calculateColumnSums";
+import calculateColumnSums from '../../../Factors/centroidLogic/calculateColumnSums';
 
 const parameter1 = [
   [1, 0.5375, 0.20625, 0.225, 0.1, -0.225, -0.31875, 0.2375, 0.05],
@@ -9,22 +9,12 @@ const parameter1 = [
   [-0.225, -0.025, 0.0875, 0.275, -0.0625, 1, 0.61875, -0.36875, -0.2125],
   [-0.31875, -0.1625, 0.05, 0.16875, -0.13125, 0.61875, 1, -0.2875, -0.03125],
   [0.2375, 0.38125, -0.09375, 0.05625, 0.01875, -0.36875, -0.2875, 1, -0.2125],
-  [0.05, 0.06875, 0.1125, 0.025, -0.03125, -0.2125, -0.03125, -0.2125, 1]
+  [0.05, 0.06875, 0.1125, 0.025, -0.03125, -0.2125, -0.03125, -0.2125, 1],
 ];
 
-const testValue1 = [
-  0.8125,
-  0.9875,
-  0.14375,
-  0.675,
-  -1.0375,
-  0.0875,
-  -0.09375,
-  -0.26875,
-  -0.23125
-];
+const testValue1 = [0.8125, 0.9875, 0.14375, 0.675, -1.0375, 0.0875, -0.09375, -0.26875, -0.23125];
 
-test("calculate column sums", () => {
+test('calculate column sums', () => {
   const value1 = calculateColumnSums(parameter1);
   expect(value1).toEqual(testValue1);
 });

@@ -18,7 +18,7 @@ i18n
     backend: {
       loadPath: prependPath + '/app/localization/locales/{{lng}}/{{ns}}.json',
       addPath: prependPath + '/app/localization/locales/{{lng}}/{{ns}}.missing.json',
-      contextBridgeApiKey: 'api' // needs to match first parameter of contextBridge.exposeInMainWorld in preload file; defaults to "api"
+      contextBridgeApiKey: 'api', // needs to match first parameter of contextBridge.exposeInMainWorld in preload file; defaults to "api"
     },
     debug: false,
     namespace: 'translation',
@@ -26,7 +26,7 @@ i18n
     saveMissingTo: 'current',
     lng: 'en',
     fallbackLng: false, // set to false when generating translation files locally
-    supportedLngs: whitelist.langs
+    supportedLngs: whitelist.langs,
   });
 
 window.api.i18nextElectronBackend.onLanguageChange((args) => {

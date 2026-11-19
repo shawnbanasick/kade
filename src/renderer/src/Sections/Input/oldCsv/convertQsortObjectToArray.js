@@ -1,4 +1,4 @@
-const convertQsortObjectToArray = data => {
+const convertQsortObjectToArray = (data) => {
   const objectKeys = Object.keys(data);
   const resultsArray = [];
   for (let i = 0; i < objectKeys.length; i += 1) {

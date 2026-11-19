@@ -16,12 +16,12 @@ export default function getExcelT1SortText(inputData1, numStatements) {
       value = inputData1[k][j];
 
       // catch the respondent names first
-      if (k === 28 && value !== "") {
+      if (k === 28 && value !== '') {
         tempObj1 = {};
         tempObj1.sortValue = key;
         tempObj1.statementNum = value;
         tempArray1.push(tempObj1);
-      } else if (value !== "") {
+      } else if (value !== '') {
         tempObj1 = {};
         tempObj1.sortValue = +key;
         tempObj1.statementNum = +value;

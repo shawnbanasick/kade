@@ -84,8 +84,9 @@
     "zustand": "^4.5.2"
   },
   "devDependencies": {
-    "@electron-toolkit/eslint-config": "^1.0.2",
-    "@electron-toolkit/eslint-config-prettier": "^2.0.0",
+    "@electron-toolkit/eslint-config": "^3.0.0",
+    "@electron-toolkit/eslint-config-prettier": "^3.0.1",
+    "@eslint/js": "^9.39.5",
     "@tailwindcss/vite": "^4.1.18",
     "@types/node": "^26.6.6",
     "@vitejs/plugin-react": "^6.3.0",
@@ -96,7 +97,7 @@
     "electron-builder": "^26.7.0",
     "electron-devtools-installer": "^3.2.0",
     "electron-vite": "^6.0.0",
-    "eslint": "^10.15.0",
+    "eslint": "^9.39.5",
     "eslint-plugin-react": "^7.33.2",
     "knip": "^6.46.1",
     "postcss": "^8.5.6",

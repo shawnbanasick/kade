@@ -1,5 +1,5 @@
 import evenRound from '../../../../Utils/evenRound';
-import sumArrayValues from "./sumArrayValues";
+import sumArrayValues from './sumArrayValues';
 
 const calcCoeffLValue = (coeffPValue, DR, matrixSum) => {
   const DRSum = sumArrayValues(DR);

@@ -1,4 +1,4 @@
-const convertArrayToABS = array => {
+const convertArrayToABS = (array) => {
   const absArray = array.map((item, index) => {
     return Math.abs(item);
   });

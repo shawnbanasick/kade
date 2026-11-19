@@ -1,4 +1,4 @@
-import counterClockwiseRotation from "../../../Rotation/JudgementalRotation/rotationLogic/counterClockwiseRotation";
+import counterClockwiseRotation from '../../../Rotation/JudgementalRotation/rotationLogic/counterClockwiseRotation';
 
 const parameter1 = [
   [-0.2913921, 0.54946489],
@@ -9,7 +9,7 @@ const parameter1 = [
   [0.47844413, -0.25841561],
   [0.58270093, -0.27694738],
   [-0.5156279, 0.2516003],
-  [0.00535119, 0.10235977]
+  [0.00535119, 0.10235977],
 ];
 const parameter2 = 10;
 const parameter3 = 0;
@@ -23,10 +23,10 @@ const testValue1 = [
   [0.51605, -0.17141],
   [0.62194, -0.17155],
   [-0.55148, 0.15824],
-  [-0.0125, 0.10173]
+  [-0.0125, 0.10173],
 ];
 
-test("counter clockwise rotation", () => {
+test('counter clockwise rotation', () => {
   const value1 = counterClockwiseRotation(parameter1, parameter2, parameter3);
   expect(value1).toEqual(testValue1);
   // expect(value1[1]).toEqual(testValue2);
