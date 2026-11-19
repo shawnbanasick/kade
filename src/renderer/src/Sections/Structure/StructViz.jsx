@@ -16,6 +16,7 @@ import 'reactflow/dist/style.css';
 import structureState from '../GlobalState/structureState';
 import coreState from '../GlobalState/coreState';
 import outputState from '../GlobalState/outputState';
+import correlationState from '../GlobalState/correlationState';
 
 import StraightEdgeWithLabel from './StraightEdgeWithLabel';
 import EdgeLegend from './EdgeLegend';
@@ -193,6 +194,7 @@ function FlowInner() {
   const horizontalSpacing = structureState((state) => state.horizontalSpacing);
   const explainedVarianceArrays = structureState((state) => state.explainedVarianceArrays);
   const projectName = coreState.getState().projectName;
+  const showCorrelationMatrix = correlationState((state) => state.showCorrelationMatrix);
 
   const addHierarchySavedImage = outputState((state) => state.addHierarchySavedImage);
 
@@ -396,6 +398,15 @@ function FlowInner() {
       console.error('Failed to save hierarchy graph to KADE zip:', error);
     }
   };
+
+  if (!showCorrelationMatrix) {
+    return (
+      <div className="flex flex-col w-150 bg-white rounded-lg shadow-lg p-6 items-center justify-center gap-2">
+        <div className="text-lg font-semibold">{t('No hierarchy data available')}</div>
+        <div className="text-sm text-gray-500">{t('Please check your data or settings.')}</div>
+      </div>
+    );
+  }
 
   return (
     <>

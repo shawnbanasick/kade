@@ -1,10 +1,12 @@
 import { useEffect } from 'react';
-import CorrelationTable from './CorrelationTable/CorrelationTable';
-import ErrorNotification from '../Input/ErrorChecking/ErrorNotification';
 import { useTranslation } from 'react-i18next';
-import correlationState from '../GlobalState/correlationState';
+
 import appState from '../GlobalState/appState';
 import coreState from '../GlobalState/coreState';
+import correlationState from '../GlobalState/correlationState';
+
+import CorrelationTable from './CorrelationTable/CorrelationTable';
+import ErrorNotification from '../Input/ErrorChecking/ErrorNotification';
 import HeatmapMain from './HeatmapMain';
 
 const Correlations = () => {

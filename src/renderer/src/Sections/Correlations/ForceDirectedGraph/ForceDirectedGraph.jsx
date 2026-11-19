@@ -7,6 +7,7 @@ import { ToastContainer, toast, Zoom } from 'react-toastify';
 import coreState from '../../GlobalState/coreState';
 import structureState from '../../GlobalState/structureState';
 import outputState from '../../GlobalState/outputState';
+import correlationState from '../../GlobalState/correlationState';
 
 import PcaScenarios from './PcaScenarios';
 import ForceGraphDataSelectRadio from './ForceGraphDataSelectRadio';
@@ -38,6 +39,7 @@ const ForceGraph = ({
   const showAutoFlags = structureState((state) => state.showAutoFlags);
   const updateShowAutoFlags = structureState((state) => state.updateShowAutoFlags);
   const addCorrelationGraphSavedImage = outputState((state) => state.addCorrelationGraphSavedImage);
+  // const showCorrelationMatrix = correlationState((state) => state.showCorrelationMatrix);
 
   const projectName = coreState.getState().projectName;
   const date = currentDate();
@@ -1051,6 +1053,15 @@ const ForceGraph = ({
         });
     }
   };
+
+  if (!correlationData || correlationData.length === 0) {
+    return (
+      <div className="flex flex-col w-150 bg-white rounded-lg shadow-lg p-6 items-center justify-center gap-2">
+        <div className="text-lg font-semibold">{t('No correlation data available')}</div>
+        <div className="text-sm text-gray-500">{t('Please check your data or settings.')}</div>
+      </div>
+    );
+  }
 
   return (
     <>
