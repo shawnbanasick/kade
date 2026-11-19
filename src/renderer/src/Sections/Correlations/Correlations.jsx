@@ -45,19 +45,16 @@ const Correlations = () => {
       >
         <div className="justify-self-start" style={{ gridArea: 'header' }}>
           {hasDataBeenConfirmed ? null : (
-            <div className="flex items-center justify-center m-3 p-2 bg-white rounded-lg shadow-lg border border-gray-200">
-              <div className="text-[22px]">{t("Verify Q sorts in section '2. Data'")}</div>
+            <div className="flex flex-col gap-4 items-center justify-center p-2 bg-white rounded-lg shadow-lg border border-gray-200">
+              <div className="text-[20px] font-bold">
+                {t("Verify Q sorts in section '2. Data'")}
+              </div>
+              <div className="text-[16px]">{t('No correlations calculated')}</div>
             </div>
           )}
         </div>
         <div className="justify-self-start" style={{ gridArea: 'main' }}>
-          {showCorrelationMatrix ? (
-            <CorrelationTable />
-          ) : (
-            <div className="flex items-center justify-center m-3 p-2 bg-white rounded-lg shadow-lg border border-gray-200">
-              <div className="p-2 text-[22px]">{t('No correlations calculated')}</div>
-            </div>
-          )}
+          {showCorrelationMatrix ? <CorrelationTable /> : null}
         </div>
         <ErrorNotification />
       </div>
@@ -69,7 +66,7 @@ const Correlations = () => {
       title: t('Matrix'),
       content: (
         <div>
-          <MainContent />,
+          <MainContent />
         </div>
       ),
     },

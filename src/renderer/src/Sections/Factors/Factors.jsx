@@ -15,10 +15,20 @@ const Factors = () => {
   const { t } = useTranslation();
 
   const showCentroidError = factorState((state) => state.showCentroidError);
+  const showCorrelationMatrix = correlationState((state) => state.showCorrelationMatrix);
+
+  if (!showCorrelationMatrix) {
+    return (
+      <div className="flex flex-col w-150 m-5 bg-white border-2 border-gray-100 rounded-lg shadow-lg p-6 items-center justify-center gap-2">
+        <div className="text-lg text-gray-800 font-semibold">{t('No factor data available')}</div>
+        <div className="text-sm text-gray-800">{t('Please check your data or settings.')}</div>
+      </div>
+    );
+  }
 
   return (
     <div className="flex flex-col  border-5 border-t-18 border-grey-button w-full h-full text-black  p-1 pt-3.75 px-1.75 pr-0 font-[Helvetica,sans-serif] text-[18px] bg-white box-border select-none animate-fadeIn">
-      <div className="text-4xl mb-6">{t('Factor Extractions')}</div>
+      <div className="text-4xl mb-6">{t('Factor Extraction Header')}</div>
       <TypeOfAnalysisTransitionContainer />
       <div className="flex flex-col overflow-auto">
         <CentroidSelection />

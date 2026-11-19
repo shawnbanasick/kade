@@ -401,7 +401,7 @@ function FlowInner() {
 
   if (!showCorrelationMatrix) {
     return (
-      <div className="flex flex-col w-150 bg-white rounded-lg shadow-lg p-6 items-center justify-center gap-2">
+      <div className="flex flex-col w-110 border-2 border-gray-100 bg-white rounded-lg shadow-lg p-6 items-center justify-center gap-2">
         <div className="text-lg font-semibold">{t('No hierarchy data available')}</div>
         <div className="text-sm text-gray-500">{t('Please check your data or settings.')}</div>
       </div>

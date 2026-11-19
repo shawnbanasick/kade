@@ -96,13 +96,12 @@ const ExcelPanel = () => {
               <p className="text-sm leading-relaxed text-gray-600">{step.text}</p>
               {index === 0 && (
                 <div className="flex flex-col gap-4 mt-2">
-                  <DownloadExampleT1 />
                   <LoadExcelT1 />
+                  <DownloadExampleT1 />
                 </div>
               )}
               {index === 1 && (
                 <div className="flex flex-col gap-4 mt-2">
-                  <DownloadExampleT2 />
                   <NewLoadButton
                     className={`${isLoadExcelT2ButtonGreen ? 'bg-primary-button' : 'bg-grey-button'} `}
                     onClick={handleClick}
@@ -125,6 +124,7 @@ const ExcelPanel = () => {
                       </div>
                     </div>
                   </NewLoadButton>
+                  <DownloadExampleT2 />
                 </div>
               )}
             </div>

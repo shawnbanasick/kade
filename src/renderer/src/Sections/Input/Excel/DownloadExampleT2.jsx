@@ -40,13 +40,13 @@ const DownloadExampleT2 = () => {
         id="ExcelT2LineContainer"
         className="flex flex-row justify-center items-center h-full w-full gap-3"
       >
-        <svg
-          id="ExcelT2SvgContainer"
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 20 20"
-          className="h-4.25 w-4.25 fill-current"
-        >
-          <path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z" />
+        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
+          />
         </svg>
         <div className="font-sans text-sm font-bold">{t('Download Type 2 Template')}</div>
       </div>

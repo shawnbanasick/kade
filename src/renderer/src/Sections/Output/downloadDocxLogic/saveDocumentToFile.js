@@ -1,15 +1,13 @@
-import { Packer } from 'docx';
+// import { Packer } from 'docx';
 // import { saveAs } from "file-saver";
 import currentDate1 from '../../../Utils/currentDate1';
 import currentTime1 from '../../../Utils/currentTime1';
 import coreState from '../../GlobalState/coreState';
 import calcState from '../../GlobalState/calcState';
 // import FileReader from 'filereader';
-import cloneDeep from 'lodash/cloneDeep';
-import { Buffer } from 'buffer';
-import { toBuffer } from 'blob-to-buffer';
+// import cloneDeep from 'lodash/cloneDeep';
 import docxTestFile from '../docxTestFile';
-import { json } from 'd3';
+// import { json } from 'd3';
 
 // const { remote } = require('electron');
 // const mainWindow = remote.getCurrentWindow();

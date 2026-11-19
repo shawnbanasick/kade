@@ -216,13 +216,13 @@ const Data = () => {
   // todo - also require "areStatementsLoaded" so Data is inaccessible until all three are loaded
   if (!(areQsortsLoaded && isQsortPatternLoaded)) {
     return (
-      <div className="m-12 p-8 bg-white rounded-lg shadow-md">
+      <div className="flex flex-col items-center justify-center gap-2 w-150  text-balance m-12 p-2 bg-white rounded-lg shadow-md border-2 border-gray-200 ">
         <h2 className="text-3xl font-bold mb-4 text-gray-800">{t('No data loaded')}</h2>
-        <p className="text-lg text-gray-600 leading-relaxed">
+        <div className="flex text-center text-lg text-gray-600">
           {t(
             'Confirm that the statements, Q sorts, and the Q sort pattern have all been entered correctly'
           )}
-        </p>
+        </div>
       </div>
     );
   }

@@ -28,7 +28,7 @@ const ForceGraph = ({
   height = window.innerHeight - 220,
   data = [],
   correlationThreshold = 0.5,
-  factorIndices = [],
+  // factorIndices = [],
 }) => {
   const svgRef = useRef(null);
   const tooltipRef = useRef(null);
@@ -44,7 +44,7 @@ const ForceGraph = ({
   const projectName = coreState.getState().projectName;
   const date = currentDate();
   const time = currentTime();
-  const dateTime = `${date}_${time}`;
+  // const dateTime = `${date}_${time}`;
   const completeFileName = `${projectName}-correlation_network_${getDateTime()}_(${correlationThreshold})`;
 
   const minCorrelation = correlationThreshold * 100;
@@ -1056,7 +1056,7 @@ const ForceGraph = ({
 
   if (!correlationData || correlationData.length === 0) {
     return (
-      <div className="flex flex-col w-150 bg-white rounded-lg shadow-lg p-6 items-center justify-center gap-2">
+      <div className="flex flex-col w-110 bg-white border-2 border-gray-100 rounded-lg shadow-lg p-6 items-center justify-center gap-2">
         <div className="text-lg font-semibold">{t('No correlation data available')}</div>
         <div className="text-sm text-gray-500">{t('Please check your data or settings.')}</div>
       </div>
