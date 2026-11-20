@@ -227,28 +227,16 @@ const Output = () => {
     },
     {
       title: t('Characteristics'),
-      content: (
-        <div className={window2Class}>
-          <OutputFactorTablesTransitionContainer />
-        </div>
-      ),
+      content: <div className={window2Class}>{<OutputFactorTablesTransitionContainer />}</div>,
     },
 
     {
       title: t('Distinguishing'),
-      content: (
-        <div className={window2Class}>
-          <DistinguishingStatementsList />
-        </div>
-      ),
+      content: <div className={window2Class}>{<DistinguishingStatementsList />}</div>,
     },
     {
       title: t('Consensus'),
-      content: (
-        <div className={window2Class}>
-          <ConsensusStatementsList />
-        </div>
-      ),
+      content: <div className={window2Class}>{<ConsensusStatementsList />}</div>,
     },
     {
       title: t('Visualizations'),

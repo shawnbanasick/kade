@@ -12,6 +12,12 @@ import ConStateListSortByButtons from './ConStateListSortByButtons';
 import outputState from '../../GlobalState/outputState';
 import calcState from '../../GlobalState/calcState';
 import { useTranslation } from 'react-i18next';
+import { useShallow } from 'zustand/react/shallow';
+
+const SortIcon = ({ colKey }, sortConfig) => {
+  if (sortConfig.key !== colKey) return <span style={{ opacity: 0.3, marginLeft: 4 }}>⇅</span>;
+  return <span style={{ marginLeft: 4 }}>{sortConfig.direction === 'asc' ? '↑' : '↓'}</span>;
+};
 
 const ConsensusStatementsList = () => {
   const { t } = useTranslation();
@@ -46,11 +52,6 @@ const ConsensusStatementsList = () => {
     }));
   };
 
-  const SortIcon = ({ colKey }) => {
-    if (sortConfig.key !== colKey) return <span style={{ opacity: 0.3, marginLeft: 4 }}>⇅</span>;
-    return <span style={{ marginLeft: 4 }}>{sortConfig.direction === 'asc' ? '↑' : '↓'}</span>;
-  };
-
   const thStyle = { cursor: 'pointer', userSelect: 'none', whiteSpace: 'nowrap' };
 
   const {
@@ -64,18 +65,20 @@ const ConsensusStatementsList = () => {
     cohens80,
     cohens90,
     cohens100,
-  } = outputState((state) => ({
-    cohens10: state.cohens10,
-    cohens20: state.cohens20,
-    cohens30: state.cohens30,
-    cohens40: state.cohens40,
-    cohens50: state.cohens50,
-    cohens60: state.cohens60,
-    cohens70: state.cohens70,
-    cohens80: state.cohens80,
-    cohens90: state.cohens90,
-    cohens100: state.cohens100,
-  }));
+  } = outputState(
+    useShallow((state) => ({
+      cohens10: state.cohens10,
+      cohens20: state.cohens20,
+      cohens30: state.cohens30,
+      cohens40: state.cohens40,
+      cohens50: state.cohens50,
+      cohens60: state.cohens60,
+      cohens70: state.cohens70,
+      cohens80: state.cohens80,
+      cohens90: state.cohens90,
+      cohens100: state.cohens100,
+    }))
+  );
 
   const {
     stephConsensus0001,
@@ -87,17 +90,19 @@ const ConsensusStatementsList = () => {
     stephConsensus1,
     stephConsensus15,
     stephConsensus2,
-  } = calcState((state) => ({
-    stephConsensus0001: state.stephConsensus0001,
-    stephConsensus0005: state.stephConsensus0005,
-    stephConsensus001: state.stephConsensus001,
-    stephConsensus005: state.stephConsensus005,
-    stephConsensus01: state.stephConsensus01,
-    stephConsensus05: state.stephConsensus05,
-    stephConsensus1: state.stephConsensus1,
-    stephConsensus15: state.stephConsensus15,
-    stephConsensus2: state.stephConsensus2,
-  }));
+  } = calcState(
+    useShallow((state) => ({
+      stephConsensus0001: state.stephConsensus0001,
+      stephConsensus0005: state.stephConsensus0005,
+      stephConsensus001: state.stephConsensus001,
+      stephConsensus005: state.stephConsensus005,
+      stephConsensus01: state.stephConsensus01,
+      stephConsensus05: state.stephConsensus05,
+      stephConsensus1: state.stephConsensus1,
+      stephConsensus15: state.stephConsensus15,
+      stephConsensus2: state.stephConsensus2,
+    }))
+  );
 
   const stephConsensusData = useMemo(
     () =>
@@ -313,7 +318,7 @@ const ConsensusStatementsList = () => {
                     style={thStyle}
                   >
                     {label}
-                    <SortIcon colKey={key} />
+                    <SortIcon colKey={key} sortConfig={sortConfig} />
                   </th>
                 ))}
               </tr>

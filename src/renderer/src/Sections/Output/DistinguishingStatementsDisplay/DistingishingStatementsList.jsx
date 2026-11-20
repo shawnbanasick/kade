@@ -9,6 +9,13 @@ import filterDistStateCohenListData from './filterDistStateCohenListData';
 import CohensDynamicTable from './CohensDynamicTable';
 import outputState from '../../GlobalState/outputState';
 import calcState from '../../GlobalState/calcState';
+import { useShallow } from 'zustand/react/shallow';
+
+const SortIcon = ({ factorIndex, colKey, sortConfigs }) => {
+  const config = sortConfigs[factorIndex];
+  if (config?.key !== colKey) return <span style={{ opacity: 0.3, marginLeft: 4 }}>⇅</span>;
+  return <span style={{ marginLeft: 4 }}>{config.direction === 'asc' ? '↑' : '↓'}</span>;
+};
 
 const DistinguishingStatementsList = () => {
   const { t } = useTranslation();
@@ -17,6 +24,7 @@ const DistinguishingStatementsList = () => {
   const threshold = outputState((state) => state.threshold);
   const sortCohensBy = outputState((state) => state.sortCohensBy);
   const distIdentType = outputState((state) => state.distIdentType);
+
   const {
     cohens10,
     cohens20,
@@ -28,18 +36,21 @@ const DistinguishingStatementsList = () => {
     cohens80,
     cohens90,
     cohens100,
-  } = outputState((state) => ({
-    cohens10: state.cohens10,
-    cohens20: state.cohens20,
-    cohens30: state.cohens30,
-    cohens40: state.cohens40,
-    cohens50: state.cohens50,
-    cohens60: state.cohens60,
-    cohens70: state.cohens70,
-    cohens80: state.cohens80,
-    cohens90: state.cohens90,
-    cohens100: state.cohens100,
-  }));
+  } = outputState(
+    useShallow((state) => ({
+      cohens10: state.cohens10,
+      cohens20: state.cohens20,
+      cohens30: state.cohens30,
+      cohens40: state.cohens40,
+      cohens50: state.cohens50,
+      cohens60: state.cohens60,
+      cohens70: state.cohens70,
+      cohens80: state.cohens80,
+      cohens90: state.cohens90,
+      cohens100: state.cohens100,
+    }))
+  );
+
   const consensusDisagreeArray = outputState((state) => state.consensusDisagreeArray);
   const userSelectedFactors = outputState((state) => state.userSelectedFactors);
   const cohensThreshold = outputState((state) => state.cohensThreshold);
@@ -111,12 +122,6 @@ const DistinguishingStatementsList = () => {
     });
   };
 
-  const SortIcon = ({ factorIndex, colKey }) => {
-    const config = sortConfigs[factorIndex];
-    if (config?.key !== colKey) return <span style={{ opacity: 0.3, marginLeft: 4 }}>⇅</span>;
-    return <span style={{ marginLeft: 4 }}>{config.direction === 'asc' ? '↑' : '↓'}</span>;
-  };
-
   if (userSelectedFactors.length === 0) {
     return (
       <h2 className="mt-12.5 text-2xl ml-12.5">
@@ -166,7 +171,7 @@ const DistinguishingStatementsList = () => {
                           style={{ cursor: 'pointer', userSelect: 'none', whiteSpace: 'nowrap' }}
                         >
                           {label}
-                          <SortIcon factorIndex={index1} colKey={key} />
+                          <SortIcon factorIndex={index1} colKey={key} sortConfigs={sortConfigs} />
                         </th>
                       ))}
                     </tr>
