@@ -271,9 +271,6 @@ if (!gotTheLock) {
           case 'csv':
             await createCsvFile(dataContent);
             break;
-          case 'json':
-            await createJsonFile(dataContent);
-            break;
           case 'ConExcel':
             await createConExcelFile(dataContent);
             break;
@@ -375,16 +372,16 @@ app.on('window-all-closed', () => {
   }
 });
 
-app.on('web-contents-created', (event, contents) => {
-  // enable i18next translations in popup window
-  contents.on('did-create-window', (window) => {
-    // i18nextBackend.mainBindings(ipcMain, window, fs);
-  });
-  // destroy bindings on popup window closed
-  contents.on('destroyed', () => {
-    // i18nextBackend.clearMainBindings(ipcMain);
-  });
-});
+// app.on('web-contents-created', (event, contents) => {
+//   // enable i18next translations in popup window
+//   contents.on('did-create-window', (window) => {
+//     i18nextBackend.mainBindings(ipcMain, window, fs);
+//   });
+//   // destroy bindings on popup window closed
+//   contents.on('destroyed', () => {
+//     i18nextBackend.clearMainBindings(ipcMain);
+//   });
+// });
 
 // In this file you can include the rest of your app"s specific main process
 // code. You can also put them in separate files and require them here.

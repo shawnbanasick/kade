@@ -9,7 +9,7 @@ async function openExcelFile() {
     filters: [
       {
         name: 'Excel',
-        extensions: ['xls', 'XLS', 'xlsx', 'XLSX'],
+        extensions: ['xlsx', 'XLSX'],
       },
     ],
   };
