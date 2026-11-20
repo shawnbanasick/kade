@@ -9,7 +9,7 @@ import sortsDisplayText from '../logic/sortsDisplayText';
 import filterLines from '../CSV/filterLines';
 import createMainDataObjectArray from '../CSV/createMainDataObjectArray';
 import calcMultiplierArray from '../CSV/calcMultiplierArray';
-// import revertLoadButtonsColors from '../DemoData/revertLoadButtonsColors';
+import revertLoadButtonsColors from '../DemoData/revertLoadButtonsColors';
 
 const processCsvQsorts = (data) => {
   const hasInputError = false;

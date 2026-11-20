@@ -4,7 +4,7 @@ import inputState from '../../GlobalState/inputState';
 import projectHistoryState from '../../GlobalState/projectHistoryState';
 // import getInputState from '../../GlobalState/getInputState';
 import sortsDisplayText from '../logic/sortsDisplayText';
-// import revertLoadButtonsColors from '../DemoData/revertLoadButtonsColors';
+import revertLoadButtonsColors from '../DemoData/revertLoadButtonsColors';
 import filterLines from './filterLines';
 import createMainDataObjectArray from './createMainDataObjectArray';
 import calcMultiplierArray from './calcMultiplierArray';

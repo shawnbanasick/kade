@@ -8,7 +8,7 @@ if (process.contextIsolated) {
     contextBridge.exposeInMainWorld('electronAPI', {
       openStaFile: () => ipcRenderer.send('dialog:openStaFile'),
       openDatFile: () => ipcRenderer.send('dialog:openDatFile'),
-      openExcelFile: () => ipcRenderer.send('dialog:openExcelFile'),
+      openExcelFile: () => ipcRenderer.invoke('dialog:openExcelFile'),
       openZipFile: () => ipcRenderer.send('dialog:openZipFile'),
       openCsvFile: () => ipcRenderer.send('dialog:openCsvFile'),
       openTxtFile: () => ipcRenderer.send('dialog:openTxtFile'),

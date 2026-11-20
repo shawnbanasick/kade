@@ -1,4 +1,3 @@
-import XLSX from 'xlsx';
 import throwNoSortsInputErrorModal from '../ErrorChecking/throwNoSortsInputError';
 import numStatementsMatchErrorModal from '../ErrorChecking/numStatementsMatchErrorModal';
 import throwNoSortsTabInputErrorModal from '../ErrorChecking/throwNoSortsTabInputErrorModal';
@@ -14,6 +13,7 @@ import formatExcelType1Ver2ForDisplay from './excelLogic/formatExcelType1Ver2For
 import i18n from 'i18next';
 import inputState from '../../GlobalState/inputState';
 import appState from '../../GlobalState/appState';
+import { sheetToCsv, sheetToJson } from './sheetHelpers';
 
 function parseExcelType1(workbook) {
   // const workbook = XLSX.readFile(excelFile, {
@@ -36,12 +36,12 @@ function parseExcelType1(workbook) {
   let hasPatternTab = false;
 
   // iterate through every sheet and pull values
-  const sheetNameList = workbook.SheetNames;
+  const sheetNameList = workbook.sheetNames;
 
   try {
     sheetNameList.forEach((y) => {
       const y2 = y.toLowerCase();
-      worksheet = workbook.Sheets[y];
+      worksheet = workbook.sheets[y];
       /* iterate through sheets */
       if (y2 === 'guide') {
         console.log('found guide page');
@@ -49,7 +49,7 @@ function parseExcelType1(workbook) {
 
       if (y2 === 'name' || y2 === 'names') {
         console.log('3. Name worksheet found');
-        let tempVar = XLSX.utils.sheet_to_csv(worksheet);
+        let tempVar = sheetToCsv(worksheet);
         let tempVar2 = tempVar.split(/\n/);
         let tempVar3 = tempVar2.filter(Boolean);
         let tempVar4 = tempVar3[1].toString();
@@ -61,7 +61,7 @@ function parseExcelType1(workbook) {
         console.log('4. Pattern worksheet found');
 
         newTypeWorksheetsCheck.push('pattern');
-        let tempVar = XLSX.utils.sheet_to_csv(worksheet);
+        let tempVar = sheetToCsv(worksheet);
         let tempVar2 = tempVar.split(/\n/);
         let tempVar3 = tempVar2.filter(Boolean);
         dataObject.multiplierArray = tempVar3[1];
@@ -70,7 +70,7 @@ function parseExcelType1(workbook) {
 
       if (y2 === 'type') {
         console.log('4b. Type worksheet found');
-        let tempVar = XLSX.utils.sheet_to_csv(worksheet);
+        let tempVar = sheetToCsv(worksheet);
         let tempVar2 = tempVar.split(/\n/);
         let tempVar3 = tempVar2.filter(Boolean);
         let tempVar4 = tempVar3[1].toString();
@@ -92,7 +92,7 @@ function parseExcelType1(workbook) {
       if (y2 === 'version') {
         console.log('5. Version worksheet found');
         newTypeWorksheetsCheck.push('version');
-        let tempVar = XLSX.utils.sheet_to_csv(worksheet);
+        let tempVar = sheetToCsv(worksheet);
         let tempVar2 = tempVar.split(/\n/);
         let tempVar3 = tempVar2.filter(Boolean);
         dataObject.version = tempVar3[1];
@@ -101,7 +101,7 @@ function parseExcelType1(workbook) {
       if (y2 === 'sorts' || y2 === 'qsorts' || y2 === 'q-sorts') {
         console.log(`1. Q sorts worksheet found`);
         hasSortsWorksheet = true;
-        tester = XLSX.utils.sheet_to_csv(worksheet);
+        tester = sheetToCsv(worksheet);
         tester2 = tester.split(/\n/);
         let firstRow = tester2[0].split(',');
         // max statement number 500 artificial limit
@@ -122,7 +122,7 @@ function parseExcelType1(workbook) {
       if (y2 === 'statements' || y2 === 'statement') {
         console.log(`2. Statements worksheet found`);
         hasStatementsWorksheet = true;
-        tester4 = XLSX.utils.sheet_to_json(worksheet);
+        tester4 = sheetToJson(worksheet);
         const testValue = Object.prototype.hasOwnProperty.call(tester4[0], 'Statements');
         if (!testValue) {
           throwNoStatementsInputErrorModal();

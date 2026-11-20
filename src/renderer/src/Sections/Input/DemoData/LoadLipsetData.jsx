@@ -4,7 +4,7 @@ import inputState from '../../GlobalState/inputState';
 import appState from '../../GlobalState/appState';
 import { useTranslation } from 'react-i18next';
 import i18n from 'i18next';
-// import revertLoadButtonsColors from './revertLoadButtonsColors';
+import revertLoadButtonsColors from './revertLoadButtonsColors';
 
 const LoadLipsetData = () => {
   const { t } = useTranslation();

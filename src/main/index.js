@@ -202,7 +202,6 @@ if (!gotTheLock) {
     // Open Files
     ipcMain.on('dialog:openStaFile', openStaFile);
     ipcMain.on('dialog:openDatFile', openDatFile);
-    ipcMain.on('dialog:openExcelFile', openExcelFile);
     ipcMain.on('dialog:openZipFile', openZipFile);
     ipcMain.on('dialog:openTxtFile', openTxtFile);
     ipcMain.on('dialog:openXmlFile', openXmlFile);
@@ -210,6 +209,8 @@ if (!gotTheLock) {
     ipcMain.on('dialog:openXmlFileStatements', openXmlFileStatements);
     ipcMain.on('dialog:openQuinceSortFile', openQuinceSortFile);
     ipcMain.on('dialog:openCsvFile', openCsvFile);
+
+    ipcMain.handle('dialog:openExcelFile', () => openExcelFile());
 
     // Path
     ipcMain.handle('getPath', () => {

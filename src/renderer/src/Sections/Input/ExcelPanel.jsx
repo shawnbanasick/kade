@@ -1,6 +1,4 @@
 import { useState } from 'react';
-import ExcelT1Card from './Excel/ExcelT1Card';
-import ExcelT2Card from './Excel/ExcelT2Card';
 import { useTranslation } from 'react-i18next';
 import DownloadExampleT1 from './Excel/DownloadExampleT1';
 import DownloadExampleT2 from './Excel/DownloadExampleT2';
@@ -10,6 +8,7 @@ import LoadExcelT1 from './Excel/LoadExcelT1';
 import parseExcelType2 from './Excel/parseExcelType2';
 import NewLoadButton from '../../Utils/NewLoadButton';
 import inputState from '../GlobalState/inputState';
+import revertLoadButtonsColors from './DemoData/revertLoadButtonsColors';
 
 const ExcelPanel = () => {
   const [t] = useTranslation();
@@ -32,18 +31,19 @@ const ExcelPanel = () => {
   const [isLoadExcelT2ButtonGreen, setIsLoadExcelT2ButtonGreen] = useState(false);
 
   const handleClick = async () => {
+    console.log('LoadExcelT2 button clicked');
     const isDataAlreadyLoaded = inputState.getState().isDataAlreadyLoaded;
     if (isDataAlreadyLoaded) {
       throwDataAlreadyLoadedInputErrorModal();
     } else {
       try {
-        await window.electronAPI.openExcelFile();
-        window.bridge.excelData((event, excelData) => {
-          parseExcelType2(excelData);
-          revertLoadButtonsColors('excelT2');
-        });
+        const excelData = await window.electronAPI.openExcelFile();
+        if (!excelData) return; // user cancelled the dialog
+        parseExcelType2(excelData);
+        revertLoadButtonsColors('excelT2');
       } catch (error) {
         // catch unknown input error
+        console.log('Error in ExcelPanel handleClick:', error);
         inputState.errorMessage = t('There was an unexpected XSLX data input error');
         inputState.extendedErrorMessage = t('Check the format of the file and try again');
         inputState.errorStackTrace = t('no stack trace available');
