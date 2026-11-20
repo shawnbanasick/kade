@@ -22,10 +22,8 @@ const LoadExcelT1 = () => {
       try {
         const excelData = await window.electronAPI.openExcelFile();
         if (!excelData) return; // user cancelled the dialog
-        console.log('Excel data received in ExcelPanel:', excelData);
         parseExcelType1(excelData);
         revertLoadButtonsColors('excelT1');
-        // await window.electronAPI.openExcelFile();
       } catch (error) {
         // catch unknown input error
         updateErrorMessage(t('There was an unexpected XLSX data input error'));

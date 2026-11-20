@@ -1,6 +1,6 @@
-import * as XLSX from 'xlsx';
 import formatExcelType3ForDisplay from '../KandedLogic/formatExcelType3ForDisplay';
 import inputState from '../../../GlobalState/inputState';
+import { sheetToCsv } from '../../Excel/sheetHelpers';
 
 function parseExcelType3(workbook) {
   const allWorksheets = [];
@@ -25,7 +25,7 @@ function parseExcelType3(workbook) {
         // turn off error report
         hasAnalysisOverviewWorksheet = true;
 
-        const tester6 = XLSX.utils.sheet_to_csv(worksheet);
+        const tester6 = sheetToCsv(worksheet);
         const temp99 = tester6.split('\n');
         const temp99Array = [];
         for (const frag of temp99) {
@@ -42,7 +42,7 @@ function parseExcelType3(workbook) {
         // turn off error report
         hasSortsWorksheetFromKenQ = true;
 
-        const tester = XLSX.utils.sheet_to_csv(worksheet);
+        const tester = sheetToCsv(worksheet);
         const tester2 = tester.split(/\n/);
         const tempArray3 = [];
         tester2.forEach((entry) => {
@@ -55,7 +55,7 @@ function parseExcelType3(workbook) {
       } else if (y === 'statements') {
         // turn off error report
         hasStatementsWorksheet = true;
-        const tester4 = XLSX.utils.sheet_to_csv(worksheet);
+        const tester4 = sheetToCsv(worksheet);
         const statementString = tester4.split('\n');
 
         allWorksheets.push(statementString);

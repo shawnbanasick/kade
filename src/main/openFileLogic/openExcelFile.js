@@ -45,14 +45,6 @@ async function openExcelFile() {
       sheets[ws.name] = rows;
     });
 
-    console.log('Excel file opened successfully:', sheetNames);
-
-    try {
-      structuredClone({ sheetNames, sheets });
-    } catch (e) {
-      console.error('clone failed', e);
-    }
-
     return { sheetNames, sheets };
   } catch (err) {
     console.error('Error opening file:', err);
