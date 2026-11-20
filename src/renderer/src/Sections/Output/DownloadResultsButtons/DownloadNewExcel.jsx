@@ -1,6 +1,5 @@
 import GeneralButton from '../../../Utils/GeneralButton';
 import { useTranslation } from 'react-i18next';
-import XlsxIcon from '../../images/XLSX_Icon2.svg';
 import outputState from '../../GlobalState/outputState';
 import calcState from '../../GlobalState/calcState';
 import cloneDeep from 'lodash/cloneDeep';
