@@ -16,10 +16,6 @@ import appState from '../../GlobalState/appState';
 import { sheetToCsv, sheetToJson } from './sheetHelpers';
 
 function parseExcelType1(workbook) {
-  // const workbook = XLSX.readFile(excelFile, {
-  //   type: 'binary',
-  // });
-
   let tester;
   let tester2;
   let tester3;

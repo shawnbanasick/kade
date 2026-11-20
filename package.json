@@ -80,7 +80,6 @@
     "semver": "^7.8.6",
     "tailwind-merge": "^3.7.0",
     "uuid": "^14.0.3",
-    "xlsx": "https://cdn.sheetjs.com/xlsx-0.20.2/xlsx-0.20.2.tgz",
     "zustand": "^5.1.0"
   },
   "devDependencies": {
@@ -112,6 +111,7 @@
     "electron-winstaller@5.4.0": true,
     "esbuild@0.25.12": true,
     "esbuild@0.27.2": true,
-    "electron@45.4.1": true
+    "electron@45.4.1": true,
+    "node-pty@1.1.0": true
   }
 }
