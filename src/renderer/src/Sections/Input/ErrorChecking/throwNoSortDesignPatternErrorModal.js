@@ -18,6 +18,7 @@ export default function throwNoSortDesignErrorModal(message) {
   inputState.setState({ errorStackTrace: i18n.t('no stack trace available') });
   inputState.setState({ notifyDataUploadSuccess: false });
   appState.setState({ isDataButtonGreen: false });
+  inputState.setState({ sortsLoaded: false });
 
   return null;
 }

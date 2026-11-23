@@ -35,6 +35,22 @@ export default function formatExcelType1ForDisplay(rawStatementsData, rawSortsDa
       noSortPatternError = true;
     }
 
+    console.log(`multiplierArray: ${multiplierArray}`);
+
+    if (multiplierArray.length !== 20) {
+      console.log('The Q sort pattern input is incorrect - formateExcelType1ForDisplay');
+      inputState.setState({ showWarningMessageBar: false });
+      inputState.setState({ showErrorMessageBar: true });
+      inputState.setState({ errorMessage: i18n.t('The Q sort pattern input is incorrect') });
+      inputState.setState({ errorStackTrace: i18n.t('no stack trace available') });
+      inputState.setState({ extendedErrorMessage: i18n.t('Check the Q sort pattern data') });
+      inputState.setState({ isLoadZipButtonGreen: false });
+      inputState.setState({ isCsvDataErrorCheckButtonGreen: false });
+      inputState.setState({ sortsLoaded: false });
+      inputState.setState({ showDataImportSuccessMessage: false });
+      throw new Error('Check the Q sort pattern data');
+    }
+
     const sortTriangleShape = createMultiplierAndQShapeData[1];
 
     // QAV #3
@@ -111,7 +127,7 @@ export default function formatExcelType1ForDisplay(rawStatementsData, rawSortsDa
     inputState.setState({ excelErrorMessage1: error.message });
     inputState.setState({ showExcelErrorModal: true });
   }
-  return [
+  return {
     outOfRangeError,
     noSortsError,
     noSortPatternError,
@@ -119,5 +135,5 @@ export default function formatExcelType1ForDisplay(rawStatementsData, rawSortsDa
     noHeaderMatchError,
     numStatementsMatchError,
     missingStatementNumberError,
-  ];
+  };
 }

@@ -57,6 +57,7 @@ const formatExcelType2Ver2ForDisplay = (dataObject) => {
       inputState.setState({ extendedErrorMessage: i18n.t('Check the Q sort pattern data') });
       inputState.setState({ isLoadZipButtonGreen: false });
       inputState.setState({ isCsvDataErrorCheckButtonGreen: false });
+      inputState.setState({ sortsLoaded: false });
       inputState.setState({ showDataImportSuccessMessage: false });
       throw new Error('Check the Q sort pattern data');
     }

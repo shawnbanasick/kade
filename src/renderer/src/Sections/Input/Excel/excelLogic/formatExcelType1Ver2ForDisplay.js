@@ -43,6 +43,8 @@ const formatExcelType1Ver2ForDisplay = (dataObject) => {
       inputState.setState({ isLoadZipButtonGreen: false });
       inputState.setState({ isCsvDataErrorCheckButtonGreen: false });
       inputState.setState({ showDataImportSuccessMessage: false });
+      inputState.setState({ sortsLoaded: false });
+      noSortPatternError = true;
       throw new Error('Check the Q sort pattern data');
     }
 
@@ -156,7 +158,7 @@ const formatExcelType1Ver2ForDisplay = (dataObject) => {
     inputState.setState({ showExcelErrorModal: true });
   }
 
-  return [
+  return {
     outOfRangeError,
     noSortsError,
     noSortPatternError,
@@ -164,7 +166,7 @@ const formatExcelType1Ver2ForDisplay = (dataObject) => {
     noHeaderMatchError,
     numStatementsMatchError,
     missingStatementNumberError,
-  ];
+  };
 };
 
 export default formatExcelType1Ver2ForDisplay;

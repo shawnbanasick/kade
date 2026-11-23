@@ -190,43 +190,43 @@ function parseExcelType1(workbook) {
     // **
 
     // out of range values
-    if (finalErrorCheck[0]) {
+    if (finalErrorCheck.outOfRangeError) {
       throwExcelT1RangeErrorModal();
       isNoError = false;
     }
 
     // no sorts
-    if (finalErrorCheck[1]) {
+    if (finalErrorCheck.noSortsError) {
       throwNoSortsInputErrorModal();
       isNoError = false;
     }
 
     // no sort design pattern
-    if (finalErrorCheck[2]) {
+    if (finalErrorCheck.noSortPatternError) {
       throwNoSortDesignPatternErrorModal();
       isNoError = false;
     }
 
     // duplicate statement numbers
-    if (finalErrorCheck[3]) {
+    if (finalErrorCheck.hasDuplicateStatementNumbers) {
       hasDuplicateStatementNumbersErrorModal();
       isNoError = false;
     }
 
     // no header match error
-    if (finalErrorCheck[4]) {
+    if (finalErrorCheck.noHeaderMatchError) {
       headersDontMatchSortsErrorModal();
       isNoError = false;
     }
 
     // num statements doesnt match number sort values in Q sort pattern
-    if (finalErrorCheck[5]) {
+    if (finalErrorCheck.numStatementsMatchError) {
       numStatementsMatchErrorModal();
       isNoError = false;
     }
 
     // missing statement number(s)
-    if (finalErrorCheck[6]) {
+    if (finalErrorCheck.missingStatementNumberError) {
       throwExcelT1MissingStatementNumberError();
       isNoError = false;
     }
@@ -241,6 +241,7 @@ function parseExcelType1(workbook) {
       appState.setState({ isInputButtonGreen: true });
       appState.setState({ isDataButtonGreen: true });
       inputState.setState({ isDataAlreadyLoaded: true });
+      inputState.setState({ sortsLoaded: true });
       // button won't go green without timeout
 
       setTimeout(() => {
