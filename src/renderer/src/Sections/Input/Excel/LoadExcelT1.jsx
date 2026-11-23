@@ -13,6 +13,7 @@ const LoadExcelT1 = () => {
   const updateExtendedErrorMessage = inputState((state) => state.updateExtendedErrorMessage);
   const updateErrorStackTrace = inputState((state) => state.updateErrorStackTrace);
   const updateShowErrorMessageBar = inputState((state) => state.updateShowErrorMessageBar);
+  const sortsLoaded = inputState((state) => state.sortsLoaded);
 
   const handleClick = async () => {
     // check to see if data loaded and correlations started - true ==> throw error
@@ -36,7 +37,7 @@ const LoadExcelT1 = () => {
 
   return (
     <NewLoadButton
-      className={`${isLoadExcelT1ButtonGreen ? 'bg-primary-button' : 'bg-grey-button'}`}
+      className={`${isLoadExcelT1ButtonGreen && sortsLoaded ? 'bg-primary-button' : 'bg-grey-button'}`}
       onClick={handleClick}
     >
       <div

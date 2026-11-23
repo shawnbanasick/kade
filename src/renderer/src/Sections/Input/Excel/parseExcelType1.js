@@ -116,6 +116,22 @@ function parseExcelType1(workbook) {
         }
         let temp2 = [...rawSortsData];
         temp2.unshift(firstRow);
+        const filtered = temp2.filter((row) => row[0] !== '');
+        console.log(`filtered.length:`, JSON.stringify(filtered));
+        if (filtered[1].length < 2) {
+          console.log('Wrong spreadsheet type - must be Type 1');
+          inputState.setState({ showWarningMessageBar: false });
+          inputState.setState({ showErrorMessageBar: true });
+          inputState.setState({
+            errorMessage: i18n.t('Input Error - No sorts found in spreadsheet'),
+          });
+          inputState.setState({ errorStackTrace: i18n.t('no stack trace available') });
+          inputState.setState({ extendedErrorMessage: i18n.t('Check sorts input tab') });
+          inputState.setState({ isLoadZipButtonGreen: false });
+          inputState.setState({ isCsvDataErrorCheckButtonGreen: false });
+          inputState.setState({ showDataImportSuccessMessage: false });
+          throw new Error('Wrong spreadsheet type!');
+        }
         dataObject.sortsArray = temp2;
       }
 
@@ -214,6 +230,9 @@ function parseExcelType1(workbook) {
       throwExcelT1MissingStatementNumberError();
       isNoError = false;
     }
+
+    console.log(`isNoError: ${isNoError}`);
+    console.log(`finalErrorCheck: ${finalErrorCheck}`);
 
     if (isNoError && finalErrorCheck !== true) {
       inputState.setState({ dataOrigin: 'excel' });

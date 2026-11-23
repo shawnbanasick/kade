@@ -1,4 +1,15 @@
 import { useEffect, useState } from 'react';
+import i18next from 'i18next';
+import { useTranslation } from 'react-i18next';
+import { AllCommunityModule, ModuleRegistry } from 'ag-grid-community';
+import './Utils/ag-theme-fresh.css';
+import './Utils/loadingsTable.css';
+import './Utils/ag-grid.css';
+import './App.css';
+
+import appState from './Sections/GlobalState/appState';
+import inputState from './Sections/GlobalState/inputState';
+
 import Start from './Sections/Start/Start';
 import Input from './Sections/Input/Input';
 import Data from './Sections/Data/Data';
@@ -14,16 +25,8 @@ import License from './Sections/License/License';
 import ClearProject from './Sections//ClearProject/ClearProject';
 import UpdateModal from './Sections/Start/UpdateModal';
 import ErrorBoundary from './Utils/ErrorBoundary';
-import appState from './Sections/GlobalState/appState';
 import indicateDataButtonColor from './Sections/Start/indicateDataButtonColor';
-import './Utils/ag-grid.css';
-import './Utils/ag-theme-fresh.css';
-import './Utils/loadingsTable.css';
-import { useTranslation } from 'react-i18next';
-import i18next from 'i18next';
 import FileButton from './FileButton';
-import './App.css';
-import { AllCommunityModule, ModuleRegistry } from 'ag-grid-community';
 
 // Register all Community features
 ModuleRegistry.registerModules([AllCommunityModule]);
@@ -93,6 +96,7 @@ const App = () => {
   const isLoadingsButtonGreen = appState((state) => state.isLoadingsButtonGreen);
   const isOutputButtonGreen = appState((state) => state.isOutputButtonGreen);
   const isStructureButtonGreen = appState((state) => state.isStructureButtonGreen);
+  const sortsLoaded = inputState((state) => state.sortsLoaded);
 
   const updateViewAttribution = appState((state) => state.updateViewAttribution);
   const updateViewData = appState((state) => state.updateViewData);
@@ -126,7 +130,8 @@ const App = () => {
 
   const isDataButtonGreenCombined = indicateDataButtonColor(
     isDataButtonGreen,
-    hasDataBeenConfirmed
+    hasDataBeenConfirmed,
+    sortsLoaded
   );
 
   const handleClick = (target) => {

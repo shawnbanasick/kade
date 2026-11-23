@@ -288,7 +288,7 @@ const Output = () => {
             >
               <div className="relative flex max-h-full max-w-[80rem] flex-col  overflow-hidden rounded-lg bg-white shadow-xl">
                 <button
-                  className="flex h-6 w-8 shrink-0 items-center self-end justify-center rounded-md  bg-red-500/60 hover:bg-red-500/80 text-2xl pb-1.5 font-bold text-black"
+                  className="flex h-6 w-8 shrink-0 items-center self-end justify-center rounded-tr-lgmd  bg-red-500/60 hover:bg-red-500/80 text-2xl pb-1.5 font-bold text-black"
                   onClick={closeModal}
                   aria-label="Close"
                 >

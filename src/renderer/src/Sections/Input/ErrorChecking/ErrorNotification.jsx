@@ -72,16 +72,14 @@ const ErrorNotification = () => {
             onClick={(event) => event.stopPropagation()}
           >
             <button
-              type="button"
+              className="flex h-6 w-8 shrink-0 items-center self-end justify-center rounded-tr-md  bg-red-500/60 hover:bg-red-500/80 text-2xl pb-1.5 font-bold text-black"
               onClick={closeModal}
-              aria-label={t('Close')}
-              className="absolute right-3 top-3 flex h-7 w-7.5 pb-1 pl-0.5 items-center justify-center rounded-full bg-black/60 text-lg leading-none text-white hover:bg-black/80 focus:outline-none focus-visible:ring-2 focus-visible:ring-white"
-              autoFocus
+              aria-label="Close"
             >
               &times;
             </button>
 
-            <div className="min-h-50 items-center overflow-auto bg-gray-50 p-4 rounded-lg">
+            <div className="min-h-50 items-center overflow-auto bg-gray-50 p-4 rounded-lg mx-5">
               <div className="flex flex-col items-left justify-center gap-4">
                 {/* HEADER TEXT */}
                 <h3 className="text-3xl font-semibold text-gray-900">{errorMessage}</h3>

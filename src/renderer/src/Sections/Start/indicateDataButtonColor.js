@@ -1,4 +1,8 @@
-const indicateDataButtonColor = (isDataButtonGreen, hasDataBeenConfirmed) => {
+const indicateDataButtonColor = (isDataButtonGreen, hasDataBeenConfirmed, sortsLoaded) => {
+  if (!sortsLoaded) {
+    // if there is an error message
+    return 'bg-grey-button';
+  }
   if (isDataButtonGreen && hasDataBeenConfirmed) {
     // if unforced and data loaded and confirmed
     return 'bg-primary-button';

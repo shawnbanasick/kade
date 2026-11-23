@@ -1,4 +1,5 @@
 import inputState from '../../GlobalState/inputState';
+import appState from '../../GlobalState/appState';
 import i18n from 'i18next';
 
 const checkForOutOfRangeValues2 = (testSortArray, min, max, respondentNames) => {
@@ -25,8 +26,11 @@ const checkForOutOfRangeValues2 = (testSortArray, min, max, respondentNames) => 
       )} ${errorNameArray.join(',')}. \n\n  ${i18n.t('Check the Q sorts file and Q sort pattern')}`,
     });
     inputState.setState({ isLoadZipButtonGreen: false });
+    inputState.setState({ isLoadExcelT1ButtonGreen: false });
+    inputState.setState({ isCsvDataErrorCheckButtonGreen: false });
     inputState.setState({ isCsvDataErrorCheckButtonGreen: false });
     inputState.setState({ showDataImportSuccessMessage: false });
+    appState.setState({ isDataButtonGreen: false });
   }
   return passesTest;
 };
