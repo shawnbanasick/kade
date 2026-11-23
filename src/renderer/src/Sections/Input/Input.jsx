@@ -8,6 +8,8 @@ import DemoDataPanel from './DemoDataPanel';
 import CsvPanel from './CsvPanel';
 import { useTranslation } from 'react-i18next';
 import QuincePanel from './QuincePanel';
+import WarningNotification from './ErrorChecking/WarningNotification';
+import ErrorNotification from './ErrorChecking/ErrorNotification';
 
 function Input() {
   const showNotification = inputState((state) => state.notifyDataUploadSuccess);
@@ -85,6 +87,8 @@ function Input() {
 
   return (
     <>
+      <ErrorNotification />
+      <WarningNotification />
       <ToastContainer transition={Zoom} />
       <div
         className={`

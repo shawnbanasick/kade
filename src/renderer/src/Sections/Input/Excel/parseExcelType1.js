@@ -72,10 +72,14 @@ function parseExcelType1(workbook) {
         let tempVar4 = tempVar3[1].toString();
         tempVar4 = tempVar4.replace(/,/g, '');
         let tempVar5 = tempVar4.toLowerCase().trim();
+        console.log(`tempVar5: ${tempVar5}`);
         if (tempVar5 !== '1') {
+          console.log('Wrong spreadsheet type - must be Type 1');
           inputState.setState({ showWarningMessageBar: false });
           inputState.setState({ showErrorMessageBar: true });
-          inputState.setState({ errorMessage: i18n.t('Wrong spreadsheet type - must be Type 1') });
+          inputState.setState({
+            errorMessage: i18n.t('Input Error - Wrong spreadsheet type - must be Type 1'),
+          });
           inputState.setState({ errorStackTrace: i18n.t('no stack trace available') });
           inputState.setState({ extendedErrorMessage: i18n.t('Check the spreadsheet type') });
           inputState.setState({ isLoadZipButtonGreen: false });
@@ -106,7 +110,7 @@ function parseExcelType1(workbook) {
           rawSortsData.push(tester3);
 
           // emergency break
-          if (i > 300) {
+          if (i > 500) {
             break;
           }
         }

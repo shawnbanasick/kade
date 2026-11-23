@@ -67,7 +67,6 @@ export default function formatExcelType1ForDisplay(rawStatementsData, rawSortsDa
       numStatements
     );
     const respondentSorts = respondentDataSortsPrep[0];
-    // const statementNumArray = respondentDataSortsPrep[1];
     outOfRangeError = respondentDataSortsPrep[2];
     hasDuplicateStatementNumbers = respondentDataSortsPrep[3];
     missingStatementNumberError = respondentDataSortsPrep[4];

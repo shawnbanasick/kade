@@ -1,3 +1,5 @@
+import { useEffect, useState } from 'react';
+
 import ExtendedErrorModal from './ExtendedErrorModal';
 import inputState from '../../GlobalState/inputState';
 import { useTranslation } from 'react-i18next';
@@ -17,35 +19,82 @@ const ErrorNotification = () => {
   const showErrorMessageBar = inputState((state) => state.showErrorMessageBar);
   const errorMessage = inputState((state) => state.errorMessage);
   const errorMessageString = `${t('Error')}:  ${errorMessage}`;
+  const errorMessageString1 = inputState((state) => state.extendedErrorMessage) || '';
+  const errorMessageString2 = inputState((state) => state.errorMessage) || '';
+  const extendedErrorMessage = inputState((state) => state.extendedErrorMessage);
 
-  const handleOnClick = () => {
+  const [showErrorModal, setShowErrorModal] = useState(false);
+
+  const closeModal = () => {
+    setShowErrorModal(false);
     updateShowErrorMessageBar(false);
     updateErrorStackTrace(t('no stack trace available'));
-    updateIsCsvDataErrorCheckButtonGreen(false);
+    // updateIsCsvDataErrorCheckButtonGreen(false);
     updateShowDataImportSuccessMessage(false);
   };
 
+  useEffect(() => {
+    if (!showErrorMessageBar) return undefined;
+
+    const handleKeyDown = (event) => {
+      if (event.key === 'Escape') setShowErrorModal(false);
+    };
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    document.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [showErrorMessageBar]);
+
+  // const handleOnClick = () => {
+  //   updateShowErrorMessageBar(false);
+  //   updateErrorStackTrace(t('no stack trace available'));
+  //   updateIsCsvDataErrorCheckButtonGreen(false);
+  //   updateShowDataImportSuccessMessage(false);
+  // };
+
   if (showErrorMessageBar) {
     return (
-      <div
-        className="
-          absolute flex items-center justify-between
-          left-[155px] bottom-0 mb-[5px] z-[9999]
-          w-[calc(100vw-188px)] h-[50px]
-          bg-[rgba(255,102,102,0.8)]
-          px-[10px]
-          font-sans text-xl
-          rounded
-        "
-      >
-        <div>{errorMessageString}</div>
-        <ExtendedErrorModal />
-        <div>
-          <GeneralButton className="wrapper1" onClick={handleOnClick}>
-            {t('Close')}
-          </GeneralButton>
+      <>
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4"
+          onClick={closeModal}
+          role="dialog"
+          aria-modal="true"
+          aria-label={t('Error')}
+        >
+          <div
+            className="relative flex max-h-full max-w-[80rem] flex-col overflow-hidden rounded-lg bg-white shadow-xl"
+            onClick={(event) => event.stopPropagation()}
+          >
+            <button
+              type="button"
+              onClick={closeModal}
+              aria-label={t('Close')}
+              className="absolute right-3 top-3 flex h-7 w-7.5 pb-1 pl-0.5 items-center justify-center rounded-full bg-black/60 text-lg leading-none text-white hover:bg-black/80 focus:outline-none focus-visible:ring-2 focus-visible:ring-white"
+              autoFocus
+            >
+              &times;
+            </button>
+
+            <div className="min-h-50 items-center overflow-auto bg-gray-50 p-4 rounded-lg">
+              <div className="flex flex-col items-left justify-center gap-4">
+                {/* HEADER TEXT */}
+                <h3 className="text-3xl font-semibold text-gray-900">{errorMessage}</h3>
+                <hr />
+                {/* ERROR STACK TRACE */}
+                <div className="mt-1 text-xl leading-relaxed text-gray-800">
+                  {extendedErrorMessage}
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-      </div>
+      </>
     );
   }
   return null;
