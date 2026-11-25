@@ -3,12 +3,14 @@ import ExcelJS from 'exceljs';
 
 const cellToValue = (value) => {
   if (value === null || value === undefined) return null;
+
   if (typeof value === 'object' && !(value instanceof Date)) {
     if ('result' in value) return cellToValue(value.result);
     if ('richText' in value) return value.richText.map((r) => r.text).join('');
     if ('text' in value) return value.text;
     if ('error' in value) return value.error;
   }
+
   return value;
 };
 
@@ -22,37 +24,32 @@ async function openExcelFile() {
   const window = BrowserWindow.getFocusedWindow();
 
   try {
-    const result = await dialog.showOpenDialog(window, options);
+    const result = window
+      ? await dialog.showOpenDialog(window, options)
+      : await dialog.showOpenDialog(options);
+
     if (result.canceled || !result.filePaths?.length) return null;
 
-    const reader = new ExcelJS.stream.xlsx.WorkbookReader(result.filePaths[0], {
-      worksheets: 'emit',
-      sharedStrings: 'cache', // needed so string cells resolve to text
-      hyperlinks: 'ignore',
-      styles: 'ignore',
-      entries: 'emit',
-    });
+    const workbook = new ExcelJS.Workbook();
+
+    await workbook.xlsx.readFile(result.filePaths[0]);
 
     const sheetNames = [];
     const sheets = {};
 
-    for await (const ws of reader) {
+    for (const ws of workbook.worksheets) {
       const rows = [];
-      let maxCols = 0;
+      const maxCols = ws.columnCount;
 
-      for await (const row of ws) {
-        // row.values is 1-indexed (index 0 is empty), so slice(1)
-        const values = row.values.slice(1).map(cellToValue);
-        if (values.length > maxCols) maxCols = values.length;
+      for (let i = 1; i <= ws.rowCount; i++) {
+        const row = ws.getRow(i);
+        const values = [];
 
-        // Streaming skips empty rows, so pad to preserve row positions
-        while (rows.length < row.number - 1) rows.push([]);
+        for (let j = 1; j <= maxCols; j++) {
+          values.push(cellToValue(row.getCell(j).value));
+        }
+
         rows.push(values);
-      }
-
-      // Pad every row to the same width
-      for (const r of rows) {
-        while (r.length < maxCols) r.push(null);
       }
 
       sheetNames.push(ws.name);

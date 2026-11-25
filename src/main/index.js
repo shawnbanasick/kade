@@ -210,7 +210,11 @@ if (!gotTheLock) {
     ipcMain.on('dialog:openQuinceSortFile', openQuinceSortFile);
     ipcMain.on('dialog:openCsvFile', openCsvFile);
 
-    ipcMain.handle('dialog:openExcelFile', () => openExcelFile());
+    // Open Excel Files
+    ipcMain.handle('dialog:openExcelFile', async () => {
+      const result = await openExcelFile();
+      return result;
+    });
 
     // Path
     ipcMain.handle('getPath', () => {

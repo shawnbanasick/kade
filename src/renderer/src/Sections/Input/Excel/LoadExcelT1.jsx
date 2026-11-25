@@ -27,6 +27,7 @@ const LoadExcelT1 = () => {
         revertLoadButtonsColors('excelT1');
       } catch (error) {
         // catch unknown input error
+        console.error('Error loading Excel Type 1 file:', error);
         updateErrorMessage(t('There was an unexpected XLSX data input error'));
         updateExtendedErrorMessage(t('Check the format of the file and try again'));
         updateErrorStackTrace(t('no stack trace available'));

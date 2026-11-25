@@ -1,14 +1,16 @@
-import throwNoSortsInputErrorModal from '../ErrorChecking/throwNoSortsInputError';
 import numStatementsMatchErrorModal from '../ErrorChecking/numStatementsMatchErrorModal';
-import throwNoSortsTabInputErrorModal from '../ErrorChecking/throwNoSortsTabInputErrorModal';
 import formatExcelType1ForDisplay from './excelLogic/formatExcelType1ForDisplay';
 import headersDontMatchSortsErrorModal from '../ErrorChecking/headersDontMatchSortsErrorModal';
+
+import throwNoSortsInputErrorModal from '../ErrorChecking/throwNoSortsInputError';
+import throwNoSortsTabInputErrorModal from '../ErrorChecking/throwNoSortsTabInputErrorModal';
 import throwNoStatementsInputErrorModal from '../ErrorChecking/throwNoStatementsInputErrorModal';
 import throwExcelT1RangeErrorModal from './excelLogic/throwExcelT1RangeErrorModal';
 import throwNoSortDesignPatternErrorModal from '../ErrorChecking/throwNoSortDesignPatternErrorModal';
 import throwNoStatementsTabInputErrorModal from '../ErrorChecking/throwNoStatementsTabInputErrorModal';
-import hasDuplicateStatementNumbersErrorModal from '../ErrorChecking/hasDuplicateStatementNumbersErrorModal';
 import throwExcelT1MissingStatementNumberError from '../ErrorChecking/throwExcelT1MissingStatementNumberError';
+
+import hasDuplicateStatementNumbersErrorModal from '../ErrorChecking/hasDuplicateStatementNumbersErrorModal';
 import formatExcelType1Ver2ForDisplay from './excelLogic/formatExcelType1Ver2ForDisplay';
 import i18n from 'i18next';
 import inputState from '../../GlobalState/inputState';
@@ -23,13 +25,15 @@ function parseExcelType1(workbook) {
   const rawSortsData = [];
   const rawStatementsData = [];
   let worksheet;
+
   let hasSortsWorksheet = false;
   let hasStatementsWorksheet = false;
+  let hasPatternWorksheet = false;
+
   let isNoError = true;
   let dataObject = {};
   dataObject.version = 'old';
   let newTypeWorksheetsCheck = [];
-  let hasPatternTab = false;
 
   // iterate through every sheet and pull values
   const sheetNameList = workbook.sheetNames;
@@ -61,7 +65,7 @@ function parseExcelType1(workbook) {
         let tempVar2 = tempVar.split(/\n/);
         let tempVar3 = tempVar2.filter(Boolean);
         dataObject.multiplierArray = tempVar3[1];
-        hasPatternTab = true;
+        hasPatternWorksheet = true;
       }
 
       if (y2 === 'type') {
@@ -117,7 +121,6 @@ function parseExcelType1(workbook) {
         let temp2 = [...rawSortsData];
         temp2.unshift(firstRow);
         const filtered = temp2.filter((row) => row[0] !== '');
-        console.log(`filtered.length:`, JSON.stringify(filtered));
         if (filtered[1].length < 2) {
           console.log('Wrong spreadsheet type - must be Type 1');
           inputState.setState({ showWarningMessageBar: false });
@@ -157,8 +160,12 @@ function parseExcelType1(workbook) {
       throwNoStatementsTabInputErrorModal();
       isNoError = false;
     }
+    if (hasPatternWorksheet === false) {
+      throwNoSortDesignPatternErrorModal();
+      isNoError = false;
+    }
 
-    if (hasPatternTab === true && dataObject.version === 'old') {
+    if (hasPatternWorksheet === true && dataObject.version === 'old') {
       inputState.setState({ showWarningMessageBar: false });
       inputState.setState({ showErrorMessageBar: true });
       inputState.setState({
