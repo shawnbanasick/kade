@@ -1,23 +1,23 @@
-import transposeMatrix from '../../../../Utils/transposeMatrix';
 import uniq from 'lodash/uniq';
 import i18n from 'i18next';
-import inputState from '../../../GlobalState/inputState';
 
-const transformExcelType1Ver2Sorts = (sortData, numStatements, participantNames) => {
+import transposeMatrix from '../../../../Utils/transposeMatrix';
+
+const transformExcelType1Ver2Sorts = (sortData, numStatements, participantNames, errorObject) => {
   function removeEmptyStrings(array) {
-    return array.map((subArray) => subArray.filter((str) => str !== ''));
+    return array?.map((subArray) => subArray?.filter((str) => str !== ''));
   }
 
   function removeEmptyArrays(array) {
-    return array.filter((subArray) => subArray.length > 0);
+    return array?.filter((subArray) => subArray?.length > 0);
   }
 
   // Format data
   const sortData2 = removeEmptyStrings(sortData);
   const sortData3 = removeEmptyArrays(sortData2);
-  sortData3.shift();
+  sortData3?.shift();
   const sortData4 = transposeMatrix(sortData3);
-  const sortPattern = sortData4.shift();
+  const sortPattern = sortData4?.shift();
 
   let overRangeSorts = [];
   let underRangeSorts = [];
@@ -27,26 +27,22 @@ const transformExcelType1Ver2Sorts = (sortData, numStatements, participantNames)
   let newDataArray = [];
   let statementNum;
   let sortValue;
-  sortData4.forEach((item, i) => {
+  sortData4?.forEach((item, i) => {
     let tempArray = [];
     let length = item.length;
 
     if (length !== +numStatements) {
-      inputState.setState({ showWarningMessageBar: false });
-      inputState.setState({ showErrorMessageBar: true });
-      inputState.setState({
-        errorMessage: i18n.t(
-          'One or more participants have a different number of Q sorts values than the project design'
-        ),
-      });
-      inputState.setState({ errorStackTrace: i18n.t('no stack trace available') });
-      inputState.setState({ extendedErrorMessage: i18n.t('Check the Q sort data') });
-      inputState.setState({ isLoadZipButtonGreen: false });
-      inputState.setState({ isCsvDataErrorCheckButtonGreen: false });
-      inputState.setState({ showDataImportSuccessMessage: false });
-      throw new Error('Check the Q sort data');
+      errorObject.hasError = true;
+      errorObject.sortLengthMismatchError = true;
+      errorObject.errorMessage = i18n.t(
+        'One or more participants have a different number of Q sorts values than the project design'
+      );
+      errorObject.extendedErrorMessage = i18n.t('Check the Q sort data');
+      errorObject.errorStackTrace = i18n.t('no stack trace available');
+      return { errorObject };
     }
-    item.forEach((item2, index) => {
+
+    item?.forEach((item2, index) => {
       let tempObject = {};
       sortValue = parseInt(sortPattern[index], 10);
       if (isNaN(parseInt(sortPattern[index], 10)) || sortPattern[index] === null) {
@@ -88,6 +84,6 @@ const transformExcelType1Ver2Sorts = (sortData, numStatements, participantNames)
   underRangeSorts = uniq(underRangeSorts);
   nonNumericSorts = uniq(nonNumericSorts);
 
-  return { participantSorts, overRangeSorts, underRangeSorts, nonNumericSorts };
+  return { participantSorts, overRangeSorts, underRangeSorts, nonNumericSorts, errorObject };
 };
 export default transformExcelType1Ver2Sorts;

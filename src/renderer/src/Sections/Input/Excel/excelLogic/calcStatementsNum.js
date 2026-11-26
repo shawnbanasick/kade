@@ -1,6 +1,6 @@
 const calcStatementsNum = (multiplierArray) => {
   const initialValue = 0;
-  const numStatements = multiplierArray.reduce(
+  const numStatements = multiplierArray?.reduce(
     (accumulator, currentValue) => accumulator + currentValue,
     initialValue
   );
