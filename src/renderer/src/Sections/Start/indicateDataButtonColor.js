@@ -1,5 +1,5 @@
 const indicateDataButtonColor = (isDataButtonGreen, hasDataBeenConfirmed, sortsLoaded) => {
-  if (!sortsLoaded) {
+  if (sortsLoaded === false) {
     // if there is an error message
     return 'bg-grey-button';
   }

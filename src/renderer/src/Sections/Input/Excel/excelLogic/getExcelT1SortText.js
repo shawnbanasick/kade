@@ -3,10 +3,10 @@ export default function getExcelT1SortText(inputData1, numStatements) {
 
   const sortData = [];
   const sortLength = 29 + numStatements;
-  const counter = inputData1[28].length - 1;
+  const counter = inputData1[28]?.length - 1;
 
   for (let k = 28; k < sortLength; k += 1) {
-    const key = inputData1[k][0];
+    const key = inputData1[k]?.[0];
     let value;
     const tempArray1 = [];
     let j = 1;

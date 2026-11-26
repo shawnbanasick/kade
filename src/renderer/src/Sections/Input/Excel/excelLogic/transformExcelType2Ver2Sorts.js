@@ -1,6 +1,9 @@
-import checkUniqueParticipantName from '../../logic/checkUniqueParticipantNames';
-import inputState from '../../../GlobalState/inputState';
 import i18n from 'i18next';
+
+import inputState from '../../../GlobalState/inputState';
+// import appState from '../../../GlobalState/appState';
+
+import checkUniqueParticipantName from '../../logic/checkUniqueParticipantNames';
 
 const transformExcelType2Ver2Sorts = (sortData, qSortPatternArray) => {
   let maxValue = Math.max(...qSortPatternArray);
@@ -60,19 +63,7 @@ const transformExcelType2Ver2Sorts = (sortData, qSortPatternArray) => {
     inputState.setState({ showDataImportSuccessMessage: false });
     throw new Error('Q sort values outside allowed range');
   }
-  if (nonNumericArray.length > 0) {
-    inputState.setState({ showWarningMessageBar: false });
-    inputState.setState({ showErrorMessageBar: true });
-    inputState.setState({ errorMessage: `${i18n.t('The Q sorts contain a non-numeric value')}` });
-    inputState.setState({ errorStackTrace: i18n.t('no stack trace available') });
-    inputState.setState({
-      extendedErrorMessage: `${i18n.t('Check the Q sort data for non-numeric values')}: ${nonNumericArray.join(', ')}.`,
-    });
-    inputState.setState({ isLoadZipButtonGreen: false });
-    inputState.setState({ isCsvDataErrorCheckButtonGreen: false });
-    inputState.setState({ showDataImportSuccessMessage: false });
-    throw new Error('Q sort values non-numeric');
-  }
+
   namesArray = checkUniqueParticipantName(namesArray);
   return { sortsArray, namesArray };
 };

@@ -3,7 +3,6 @@ import calcStatementsNum from './calcStatementsNum';
 import cleanMultiplierArray from './cleanMultiplierArray';
 import transformExcelType2Ver2Statements from './transformExcelType2Ver2Statements';
 import calcQsortPatternArray from './calcQsortPatternArray';
-// import createExcelType1NonsymmetricalArrayText from "./createExcelType1NonsymmetricalArray";
 import createSortsDisplayText from './createSortsDisplayText';
 import createMainDataObject from './createMainDataObject';
 import transformExcelType2Ver2Sorts from './transformExcelType2Ver2Sorts';
@@ -73,6 +72,31 @@ const formatExcelType2Ver2ForDisplay = (dataObject) => {
     let sortData = cloneDeep(dataObject.sortsArray);
     const participantSorts2 = transformExcelType2Ver2Sorts(sortData, qSortPatternArray);
     const participantSorts = participantSorts2.sortsArray;
+
+    console.log('participantSorts2', participantSorts2);
+
+    if (participantSorts.nonNumericArray.length > 0) {
+      inputState.setState({ showWarningMessageBar: false });
+      inputState.setState({ showErrorMessageBar: true });
+      inputState.setState({
+        errorMessage: `${i18n.t('The Q sorts contain a non-numeric value')}`,
+      });
+      inputState.setState({ errorStackTrace: i18n.t('no stack trace available') });
+      inputState.setState({
+        extendedErrorMessage: `${i18n.t('Check the Q sort data for non-numeric values')}: ${participantSorts.nonNumericArray.join(', ')}.`,
+      });
+      inputState.setState({ isLoadZipButtonGreen: false });
+      inputState.setState({ isCsvDataErrorCheckButtonGreen: false });
+      inputState.setState({ showDataImportSuccessMessage: false });
+      inputState.setState({ isLoadExcelT1ButtonGreen: false });
+      inputState.setState({ showDataImportSuccessMessage: false });
+      // appState.setState({ isDataButtonGreen: false });
+      inputState.setState({ notifyDataUploadSuccess: false });
+
+      inputState.setState({ sortsLoaded: false });
+      throw new Error('Q sort values non-numeric');
+    }
+
     if (participantSorts.length === 0) {
       inputState.setState({ showWarningMessageBar: false });
       inputState.setState({ showErrorMessageBar: true });

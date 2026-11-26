@@ -6,6 +6,7 @@ const extremeValueErrorCheck = (participantSorts) => {
   let overRangeSorts = participantSorts.overRangeSorts;
   let underRangeSorts = participantSorts.underRangeSorts;
   let nonNumericSorts = participantSorts.nonNumericSorts;
+  let sortsError = false;
 
   if (overRangeSorts.length > 0 || underRangeSorts.length > 0) {
     inputState.setState({ showWarningMessageBar: false });
@@ -38,10 +39,15 @@ const extremeValueErrorCheck = (participantSorts) => {
     inputState.setState({ isLoadZipButtonGreen: false });
     inputState.setState({ isCsvDataErrorCheckButtonGreen: false });
     inputState.setState({ showDataImportSuccessMessage: false });
+    inputState.setState({ isLoadExcelT1ButtonGreen: false });
+    inputState.setState({ showDataImportSuccessMessage: false });
+    inputState.setState({ notifyDataUploadSuccess: false });
+    inputState.setState({ sortsLoaded: false });
     throw new Error(
       `There are problems with Q sort values in the participant sorts! [ ${nonNumericSorts.join()} ] Check your Excel file, reload the webpage, and try again.`
     );
   }
+  return sortsError;
 };
 
 export default extremeValueErrorCheck;

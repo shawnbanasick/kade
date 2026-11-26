@@ -1,3 +1,6 @@
+import i18n from 'i18next';
+import cloneDeep from 'lodash/cloneDeep';
+
 import getExcelT1SortText from './getExcelT1SortText';
 import getStatementsExcelT1 from './getStatementsExcelT1';
 import getRespondentNamesExcelT1 from './getRespondentNamesExcelT1';
@@ -5,20 +8,15 @@ import getRespondentSortsExcelT1 from './getRespondentSortsExcelT1';
 import createMainDataObject from './createMainDataObject';
 import checkUniqueParticipantNames from '../../logic/checkUniqueParticipantNames';
 import createMultiplierArrayAndTriangleShape from './createMultiplierArrayAndTriangleShape';
-import projectHistoryState from '../../../GlobalState/projectHistoryState';
-import i18n from 'i18next';
-import coreState from '../../../GlobalState/coreState';
-import inputState from '../../../GlobalState/inputState';
-import cloneDeep from 'lodash/cloneDeep';
 
-export default function formatExcelType1ForDisplay(rawStatementsData, rawSortsData) {
-  let outOfRangeError = false;
-  let noSortsError = false;
-  let noSortPatternError = false;
-  let hasDuplicateStatementNumbers = false;
-  let noHeaderMatchError = false;
-  let numStatementsMatchError = false;
-  let missingStatementNumberError = false;
+export default function formatExcelType1ForDisplay(rawStatementsData, rawSortsData, errorObject) {
+  // let outOfRangeError = false;
+  // let noSortsError = false;
+  // let noSortPatternError = false;
+  // let hasDuplicateStatementNumbers = false;
+  // let noHeaderMatchError = false;
+  // let numStatementsMatchError = false;
+  // let missingStatementNumberError = false;
 
   try {
     console.log(`3. formatExcelType1ForDisplay called`);
@@ -28,78 +26,119 @@ export default function formatExcelType1ForDisplay(rawStatementsData, rawSortsDa
 
     // QAV #2  -  todo - fix loop function
     const inputData1 = cloneDeep(rawSortsData);
-    const createMultiplierAndQShapeData = createMultiplierArrayAndTriangleShape(inputData1);
-    const multiplierArray = createMultiplierAndQShapeData[0];
+
+    const { multiplierArray, sortTriangleShape } =
+      createMultiplierArrayAndTriangleShape(inputData1);
+
+    const checkSum = multiplierArray.reduce((acc, val) => acc + val, 0);
+    if (checkSum !== sortTriangleShape?.length) {
+      errorObject.hasError = true;
+      errorObject.noSortPatternError = true;
+      errorObject.errorMessage = i18n.t('The Q sort pattern input is incorrect');
+      errorObject.extendedErrorMessage = i18n.t('Check the Q sort pattern data');
+      errorObject.errorStackTrace = i18n.t('no stack trace available');
+      return { errorObject };
+    }
+
     // check for sort pattern error
     if (Math.min(...multiplierArray) === 0 && Math.max(...multiplierArray) === 0) {
-      noSortPatternError = true;
+      errorObject.hasError = true;
+      errorObject.noSortPatternError = true;
+      errorObject.errorMessage = i18n.t('The Q sort pattern input is incorrect');
+      errorObject.extendedErrorMessage = i18n.t('Check the Q sort pattern data');
+      errorObject.errorStackTrace = i18n.t('no stack trace available');
+      return { errorObject };
     }
 
-    console.log(`multiplierArray: ${multiplierArray}`);
-
-    if (multiplierArray.length !== 20) {
-      console.log('The Q sort pattern input is incorrect - formateExcelType1ForDisplay');
-      inputState.setState({ showWarningMessageBar: false });
-      inputState.setState({ showErrorMessageBar: true });
-      inputState.setState({ errorMessage: i18n.t('The Q sort pattern input is incorrect') });
-      inputState.setState({ errorStackTrace: i18n.t('no stack trace available') });
-      inputState.setState({ extendedErrorMessage: i18n.t('Check the Q sort pattern data') });
-      inputState.setState({ isLoadZipButtonGreen: false });
-      inputState.setState({ isCsvDataErrorCheckButtonGreen: false });
-      inputState.setState({ sortsLoaded: false });
-      inputState.setState({ showDataImportSuccessMessage: false });
-      throw new Error('Check the Q sort pattern data');
+    if (multiplierArray?.length !== 20) {
+      errorObject.hasError = true;
+      errorObject.noSortPatternError = true;
+      errorObject.errorMessage = i18n.t('The Q sort pattern input is incorrect');
+      errorObject.extendedErrorMessage = i18n.t('Check the Q sort pattern data');
+      errorObject.errorStackTrace = i18n.t('no stack trace available');
+      return { errorObject };
     }
-
-    const sortTriangleShape = createMultiplierAndQShapeData[1];
 
     // QAV #3
-    const numStatements = sortTriangleShape.length; // number of statements
+    const numStatements = sortTriangleShape?.length; // number of statements
 
     // creates array of objects with sort value and statement number
     const inputData2 = cloneDeep(rawSortsData);
     const sortData = getExcelT1SortText(inputData2, numStatements);
 
-    if (sortData[1].length === 0 && sortData[2].length === 0) {
-      noSortsError = true;
+    if (sortData?.[1]?.length !== checkSum) {
+      errorObject.hasError = true;
+      errorObject.noSortPatternError = true;
+      errorObject.errorMessage = i18n.t('The Q sort pattern input is incorrect');
+      errorObject.extendedErrorMessage = i18n.t('Check the Q sort pattern data');
+      errorObject.errorStackTrace = i18n.t('no stack trace available');
+      return { errorObject };
+    }
+
+    if (sortData?.[1]?.length === 0 && sortData?.[2]?.length === 0) {
+      errorObject.hasError = true;
+      errorObject.noSortsError = true;
+      errorObject.errorMessage = i18n.t('No Q sorts found');
+      errorObject.extendedErrorMessage = i18n.t('Check the Q sort data');
+      errorObject.errorStackTrace = i18n.t('no stack trace available');
+      return { errorObject };
     }
 
     // QAV #4
-    const namesData = sortData.shift();
+    const namesData = sortData?.shift();
     const respondentNames = getRespondentNamesExcelT1(namesData);
 
     // test for too many headers
-    if (sortData[0].length !== respondentNames.length) {
-      noHeaderMatchError = true;
+    if (sortData[0]?.length !== respondentNames?.length) {
+      errorObject.hasError = true;
+      errorObject.noHeaderMatchError = true;
+      errorObject.errorMessage = i18n.t('The Q sort data input is incorrect');
+      errorObject.extendedErrorMessage = i18n.t('Check the Q sort data');
+      errorObject.errorStackTrace = i18n.t('no stack trace available');
+      return { errorObject };
     }
 
+    console.log('respondentNames', respondentNames);
+    console.log('sortData', namesData);
+
     // QAV #5
-    const numQsorts = respondentNames.length;
+    const numQsorts = respondentNames?.length;
 
     // QAV #6   respondent sorts
-    const respondentDataSortsPrep = getRespondentSortsExcelT1(
+    const getRespondentSorts = getRespondentSortsExcelT1(
       sortData,
       respondentNames,
-      numStatements
+      numStatements,
+      errorObject
     );
-    const respondentSorts = respondentDataSortsPrep[0];
-    outOfRangeError = respondentDataSortsPrep[2];
-    hasDuplicateStatementNumbers = respondentDataSortsPrep[3];
-    missingStatementNumberError = respondentDataSortsPrep[4];
+    console.log('respondentSorts', getRespondentSorts);
+
+    const respondentSorts = getRespondentSorts?.respondentSorts;
+
+    if (getRespondentSorts?.errorObject?.hasError) {
+      errorObject.hasError = true;
+      errorObject.errorMessage = getRespondentSorts?.errorObject?.errorMessage;
+      errorObject.extendedErrorMessage = getRespondentSorts?.errorObject?.extendedErrorMessage;
+      errorObject.errorStackTrace = getRespondentSorts?.errorObject?.errorStackTrace;
+      return { errorObject };
+    }
 
     // QAV #7   project statements
     const statementData1 = rawStatementsData;
     const statements = getStatementsExcelT1(statementData1);
 
-    // catch too many / too few statements
-    if (statements.length !== numStatements) {
-      numStatementsMatchError = true;
-    } else {
-      inputState.setState({ statementsLoaded: true });
+    //** TOO MANY / TOO FEW STATEMENTS **//
+    if (statements?.length !== numStatements) {
+      errorObject.hasError = true;
+      errorObject.errorMessage = i18n.t(
+        'The number of statements does not match the expected number'
+      );
+      errorObject.extendedErrorMessage = i18n.t('Check the statements input');
+      errorObject.errorStackTrace = i18n.t('no stack trace available');
+      return { errorObject };
     }
 
-    const sortsDisplayText = respondentNames.map((item, i) => `${item} : ${respondentSorts[i]}`);
-
+    const sortsDisplayText = respondentNames?.map((item, i) => `${item} : ${respondentSorts[i]}`);
     const mainDataObject = createMainDataObject(respondentNames, respondentSorts);
     const participantNames = checkUniqueParticipantNames(respondentNames);
 
@@ -108,32 +147,21 @@ export default function formatExcelType1ForDisplay(rawStatementsData, rawSortsDa
       logType: 'excelInput',
     };
 
-    projectHistoryState.projectHistoryArray = [logMessageObj1];
-
-    coreState.setState({ statements: statements });
-    coreState.setState({ sortsDisplayText: sortsDisplayText });
-    coreState.setState({ projectName: projectName });
-    coreState.setState({ numQsorts: numQsorts });
-    coreState.setState({ numStatements: numStatements });
-    coreState.setState({ qSortPattern: sortTriangleShape });
-    coreState.setState({ mainDataObject: mainDataObject });
-    coreState.setState({ multiplierArray: multiplierArray });
-    coreState.setState({ respondentNames: participantNames });
-    inputState.setState({ areQsortsLoaded: true });
-    inputState.setState({ isQsortPatternLoaded: true });
+    return {
+      projectHistoryArray: [logMessageObj1],
+      statements,
+      sortsDisplayText,
+      projectName,
+      numQsorts,
+      numStatements,
+      qSortPattern: sortTriangleShape,
+      mainDataObject,
+      multiplierArray,
+      participantNames,
+      errorObject,
+    };
   } catch (error) {
     console.log(error.message);
     console.log(error.stack);
-    inputState.setState({ excelErrorMessage1: error.message });
-    inputState.setState({ showExcelErrorModal: true });
   }
-  return {
-    outOfRangeError,
-    noSortsError,
-    noSortPatternError,
-    hasDuplicateStatementNumbers,
-    noHeaderMatchError,
-    numStatementsMatchError,
-    missingStatementNumberError,
-  };
 }
