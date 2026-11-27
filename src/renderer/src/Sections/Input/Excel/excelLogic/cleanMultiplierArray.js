@@ -1,10 +1,7 @@
 const cleanMultiplierArray = (multiplierArray) => {
-  let multiplierArray2 = multiplierArray?.split(',')?.filter((item) => item);
-  let newMultiplierArray = multiplierArray2?.map((item) => {
-    return parseInt(item, 10);
-  });
+  if (!multiplierArray) return [];
 
-  return newMultiplierArray;
+  return (multiplierArray.match(/-?\d+/g) || []).map(Number);
 };
 
 export default cleanMultiplierArray;

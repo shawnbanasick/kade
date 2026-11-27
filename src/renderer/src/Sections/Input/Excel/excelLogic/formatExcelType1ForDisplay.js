@@ -10,14 +10,6 @@ import checkUniqueParticipantNames from '../../logic/checkUniqueParticipantNames
 import createMultiplierArrayAndTriangleShape from './createMultiplierArrayAndTriangleShape';
 
 export default function formatExcelType1ForDisplay(rawStatementsData, rawSortsData, errorObject) {
-  // let outOfRangeError = false;
-  // let noSortsError = false;
-  // let noSortPatternError = false;
-  // let hasDuplicateStatementNumbers = false;
-  // let noHeaderMatchError = false;
-  // let numStatementsMatchError = false;
-  // let missingStatementNumberError = false;
-
   try {
     console.log(`3. formatExcelType1ForDisplay called`);
 
@@ -98,9 +90,6 @@ export default function formatExcelType1ForDisplay(rawStatementsData, rawSortsDa
       return { errorObject };
     }
 
-    console.log('respondentNames', respondentNames);
-    console.log('sortData', namesData);
-
     // QAV #5
     const numQsorts = respondentNames?.length;
 
@@ -111,7 +100,6 @@ export default function formatExcelType1ForDisplay(rawStatementsData, rawSortsDa
       numStatements,
       errorObject
     );
-    console.log('respondentSorts', getRespondentSorts);
 
     const respondentSorts = getRespondentSorts?.respondentSorts;
 

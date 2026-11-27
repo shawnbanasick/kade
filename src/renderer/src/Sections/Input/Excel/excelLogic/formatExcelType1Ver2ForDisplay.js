@@ -14,15 +14,6 @@ import sortErrorCheckT2 from './sortErrorCheckT2';
 import createSortsDisplayText from './createSortsDisplayText';
 
 const formatExcelType1Ver2ForDisplay = (dataObject, errorObject) => {
-  // let outOfRangeError = false;
-  // let noSortsError = false;
-  // let noSortPatternError = false;
-  // let hasDuplicateStatementNumbers = false;
-  // let noHeaderMatchError = false;
-  // let numStatementsMatchError = false;
-  // let missingStatementNumberError = false;
-  // let sortsError = false;
-
   // TODO - Add more error handling
 
   try {
@@ -58,9 +49,7 @@ const formatExcelType1Ver2ForDisplay = (dataObject, errorObject) => {
     }
 
     const participantNames3a = [...headerRow].slice(1);
-    console.log('headerRow', participantNames3a);
     const participantNames3 = participantNames3a.filter((item) => item);
-    console.log('participantNames3', participantNames3);
 
     let participantNames = checkUniqueParticipantNames(participantNames3);
 
@@ -69,6 +58,7 @@ const formatExcelType1Ver2ForDisplay = (dataObject, errorObject) => {
 
     // QAV#6  Participant Sorts
     let sortData = cloneDeep(dataObject?.sortsArray);
+
     const participantSorts2 = transformExcelType1Ver2Sorts(
       sortData,
       numStatements,
@@ -82,10 +72,7 @@ const formatExcelType1Ver2ForDisplay = (dataObject, errorObject) => {
 
     let participantSorts = cloneDeep(participantSorts2.participantSorts);
 
-    console.log('participantSorts', participantSorts);
-    console.log('participantNames', numberOfParticipants, participantNames);
-
-    if (participantSorts.length !== numberOfParticipants) {
+    if (participantSorts.length !== numberOfParticipants || participantSorts.length === 0) {
       errorObject.hasError = true;
       errorObject.noSortsError = true;
       errorObject.errorMessage = i18n.t('Participant data and Q sort data do not match');
@@ -149,19 +136,6 @@ const formatExcelType1Ver2ForDisplay = (dataObject, errorObject) => {
       logMessage: `${projectName} ${i18n.t('data loaded from XLSX Type 1 file')}`,
       logType: 'excelInput',
     };
-
-    console.log('logMessageObj1', logMessageObj1);
-    console.log('statements', projectStatements);
-    console.log('sortsDisplayText', sortsDisplayText);
-    console.log('projectName', projectName);
-    console.log('numQsorts', numberOfParticipants);
-    console.log('numStatements', numStatements);
-    console.log('qSortPattern', qSortPatternArray);
-    console.log('mainDataObject', mainDataObject);
-    console.log('multiplierArray', multiplierArray);
-    console.log('statementNumArray', statementNumArray);
-    console.log('respondentNames', participantNames);
-    console.log('errorObject', errorObject);
 
     return {
       projectHistoryArray: [logMessageObj1],

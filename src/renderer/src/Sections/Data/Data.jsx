@@ -106,11 +106,6 @@ const SortsPanel = () => {
     );
   }, [qSortPattern, mainDataObject, statements, multiplierArray]);
 
-  console.log(JSON.stringify(mainDataObject), 'mainDataObject in SortsPanel');
-  console.log(JSON.stringify(statements), 'statements in SortsPanel');
-  console.log(JSON.stringify(qSortPattern), 'qSortPattern in SortsPanel');
-  console.log(JSON.stringify(multiplierArray), 'multiplierArray in SortsPanel');
-
   return (
     <div className="flex flex-col h-full min-h-0 pr-0 pt-0">
       <div className="flex flex-col gap-2 max-w-[85vw] justify-between mb-1 items-center flex-wrap shrink-0">
