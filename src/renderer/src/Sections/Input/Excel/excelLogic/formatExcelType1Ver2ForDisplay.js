@@ -153,12 +153,13 @@ const formatExcelType1Ver2ForDisplay = (dataObject, errorObject) => {
     };
   } catch (error) {
     console.error(error);
+    console.log(error.message);
+    console.log(error.stack);
 
     errorObject.hasError = true;
     errorObject.errorMessage = i18n.t('An error occurred while processing the Excel file');
     errorObject.extendedErrorMessage = error?.message ?? String(error);
     errorObject.errorStackTrace = error?.stack ?? i18n.t('no stack trace available');
-
     return { errorObject };
   }
 };

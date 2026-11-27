@@ -149,7 +149,13 @@ export default function formatExcelType1ForDisplay(rawStatementsData, rawSortsDa
       errorObject,
     };
   } catch (error) {
+    console.error(error);
     console.log(error.message);
     console.log(error.stack);
+    errorObject.hasError = true;
+    errorObject.errorMessage = i18n.t('There was an unexpected XSLX data input error');
+    errorObject.errorStackTrace = i18n.t('no stack trace available');
+    errorObject.extendedErrorMessage = i18n.t('Check the format of the file and try again');
+    return { errorObject };
   }
 }

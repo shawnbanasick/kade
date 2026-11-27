@@ -196,25 +196,12 @@ function parseExcelType1(workbook) {
     if (dataObject.version === 'old') {
       //** OLD VERSION PROCESSING **//
       finalProcessing = formatExcelType1ForDisplay(rawStatementsData, rawSortsData, errorObject);
-      if (finalProcessing.errorObject.hasError) {
-        inputState.setState({
-          showWarningMessageBar: false,
-          showErrorMessageBar: true,
-          errorMessage: finalProcessing.errorObject.errorMessage,
-          errorStackTrace: finalProcessing.errorObject.errorStackTrace,
-          extendedErrorMessage: finalProcessing.errorObject.extendedErrorMessage,
-          isLoadZipButtonGreen: false,
-          isCsvDataErrorCheckButtonGreen: false,
-          showDataImportSuccessMessage: false,
-        });
-        throw new Error(finalProcessing.errorObject.errorMessage);
-      }
     } else {
       //** NEW VERSION PROCESSING **//
       finalProcessing = formatExcelType1Ver2ForDisplay(dataObject, errorObject);
     }
 
-    //** THROW FINAL PROCESSING ERROR **//
+    //** THROW FINAL PROCESSING ERROR? **//
     if (finalProcessing.errorObject.hasError) {
       inputState.setState({
         showWarningMessageBar: false,
@@ -229,21 +216,21 @@ function parseExcelType1(workbook) {
       throw new Error(errorObject.errorMessage);
     }
 
-    /*
-     * SUCCESSFUL LOAD
-     */
+    //**
+    //** SUCCESSFUL LOAD
+    //**
 
     if (isNoError && finalProcessing.errorObject.hasError === false) {
       let statementNumArray = createStatementNumArray(finalProcessing.statements.length);
 
       appState.setState({ isDataButtonGreen: true, isInputButtonGreen: true });
 
-      projectHistoryState.projectHistoryArray = finalProcessing.projectHistoryArray;
+      projectHistoryState.setState({ projectHistoryArray: finalProcessing.projectHistoryArray });
 
       coreState.setState({
+        projectName: finalProcessing.projectName,
         statements: finalProcessing.statements,
         sortsDisplayText: finalProcessing.sortsDisplayText,
-        projectName: finalProcessing.projectName,
         numQsorts: finalProcessing.numQsorts,
         numStatements: finalProcessing.numStatements,
         qSortPattern: finalProcessing.qSortPattern,
@@ -254,12 +241,12 @@ function parseExcelType1(workbook) {
       });
 
       inputState.setState({
+        dataOrigin: 'excel',
         statementsLoaded: true,
         areQsortsLoaded: true,
         isQsortPatternLoaded: true,
         isDataAlreadyLoaded: true,
         sortsLoaded: true,
-        dataOrigin: 'excel',
         notifyDataUploadSuccess: true,
       });
 

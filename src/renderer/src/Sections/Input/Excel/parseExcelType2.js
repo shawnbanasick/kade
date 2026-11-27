@@ -1,3 +1,10 @@
+import i18n from 'i18next';
+
+import inputState from '../../GlobalState/inputState';
+import appState from '../../GlobalState/appState';
+import coreState from '../../GlobalState/coreState';
+import projectHistoryState from '../../GlobalState/projectHistoryState';
+
 import throwNoSortsInputErrorModal from '../ErrorChecking/throwNoSortsInputError';
 import numStatementsMatchErrorModal from '../ErrorChecking/numStatementsMatchErrorModal';
 import throwNoSortsTabInputErrorModal from '../ErrorChecking/throwNoSortsTabInputErrorModal';
@@ -6,9 +13,6 @@ import throwNoStatementsInputErrorModal from '../ErrorChecking/throwNoStatements
 import throwNoStatementsTabInputErrorModal from '../ErrorChecking/throwNoStatementsTabInputErrorModal';
 import throwNoSortDesignPatternErrorModal from '../ErrorChecking/throwNoSortDesignPatternErrorModal';
 import formatExcelType2Ver2ForDisplay from './excelLogic/formatExcelType2Ver2ForDisplay';
-import inputState from '../../GlobalState/inputState';
-import appState from '../../GlobalState/appState';
-import i18n from 'i18next';
 import { sheetToCsv, sheetToJson } from './sheetHelpers';
 
 function parseExcelType2(workbook) {
@@ -18,7 +22,6 @@ function parseExcelType2(workbook) {
   let tester4;
   const rawSortsData = [];
   const rawStatementsData = [];
-  // let tempArray = [];
   let worksheet;
   let hasSortsWorksheet = false;
   let hasStatementsWorksheet = false;
@@ -27,6 +30,13 @@ function parseExcelType2(workbook) {
   let dataObject = {};
   dataObject.version = 'old';
   let hasPatternTab = false;
+
+  let errorObject = {
+    hasError: false,
+    errorMessage: '',
+    errorStackTrace: '',
+    extendedErrorMessage: '',
+  };
 
   // workbook shape is now { sheetNames, sheets }
   const sheetNameList = workbook.sheetNames;
@@ -83,15 +93,19 @@ function parseExcelType2(workbook) {
         hasPatternTab = true;
         dataObject.multiplierArray = tempVar3[1];
         if (tempVar2[1] === undefined) {
-          inputState.setState({ showWarningMessageBar: false });
-          inputState.setState({ showErrorMessageBar: true });
-          inputState.setState({ errorMessage: i18n.t('Cant find the Q sort pattern') });
-          inputState.setState({ errorStackTrace: i18n.t('no stack trace available') });
-          inputState.setState({ extendedErrorMessage: i18n.t('Check the Q sort pattern data') });
-          inputState.setState({ isLoadZipButtonGreen: false });
-          inputState.setState({ isCsvDataErrorCheckButtonGreen: false });
-          inputState.setState({ showDataImportSuccessMessage: false });
-          throw new Error("Can't find the Q sort pattern!");
+          errorObject.hasError = true;
+          errorObject.errorMessage = i18n.t('Cant find the Q sort pattern');
+          errorObject.errorStackTrace = i18n.t('no stack trace available');
+          errorObject.extendedErrorMessage = i18n.t('Check the Q sort pattern data');
+          // inputState.setState({ showWarningMessageBar: false });
+          // inputState.setState({ showErrorMessageBar: true });
+          // inputState.setState({ errorMessage: i18n.t('Cant find the Q sort pattern') });
+          // inputState.setState({ errorStackTrace: i18n.t('no stack trace available') });
+          // inputState.setState({ extendedErrorMessage: i18n.t('Check the Q sort pattern data') });
+          // inputState.setState({ isLoadZipButtonGreen: false });
+          // inputState.setState({ isCsvDataErrorCheckButtonGreen: false });
+          // inputState.setState({ showDataImportSuccessMessage: false });
+          // throw new Error("Can't find the Q sort pattern!");
         }
       }
 
@@ -137,17 +151,27 @@ function parseExcelType2(workbook) {
     }); // end iteration of for each
 
     if (hasPatternTab === true && dataObject.version === 'old') {
-      inputState.setState({ showWarningMessageBar: false });
-      inputState.setState({ showErrorMessageBar: true });
+      errorObject.hasError = true;
+      errorObject.errorMessage = i18n.t('The "version" tab is missing from the spreadsheet');
+      errorObject.errorStackTrace = i18n.t('no stack trace available');
+      errorObject.extendedErrorMessage = i18n.t('Check the spreadsheet type');
+    }
+    // **
+    // ** INITIALLY ERROR CATCHING
+    // **
+
+    if (errorObject.hasError) {
       inputState.setState({
-        errorMessage: i18n.t("The 'version' tab is missing from the spreadsheet"),
+        showWarningMessageBar: false,
+        showErrorMessageBar: true,
+        errorMessage: errorObject.errorMessage,
+        errorStackTrace: errorObject.errorStackTrace,
+        extendedErrorMessage: errorObject.extendedErrorMessage,
+        isLoadZipButtonGreen: false,
+        isCsvDataErrorCheckButtonGreen: false,
+        showDataImportSuccessMessage: false,
       });
-      inputState.setState({ errorStackTrace: i18n.t('no stack trace available') });
-      inputState.setState({ extendedErrorMessage: i18n.t('Check the spreadsheet type') });
-      inputState.setState({ isLoadZipButtonGreen: false });
-      inputState.setState({ isCsvDataErrorCheckButtonGreen: false });
-      inputState.setState({ showDataImportSuccessMessage: false });
-      throw new Error('Missing version tab!');
+      throw new Error(errorObject.errorMessage);
     }
 
     // **
@@ -155,9 +179,23 @@ function parseExcelType2(workbook) {
     // **
     let finalErrorCheck;
     if (dataObject.version === 'old') {
-      finalErrorCheck = formatExcelType2ForDisplay(rawStatementsData, rawSortsData);
+      finalErrorCheck = formatExcelType2ForDisplay(rawStatementsData, rawSortsData, errorObject);
     } else {
-      finalErrorCheck = formatExcelType2Ver2ForDisplay(dataObject);
+      finalErrorCheck = formatExcelType2Ver2ForDisplay(dataObject, errorObject);
+    }
+
+    if (finalErrorCheck.errorObject.hasError) {
+      inputState.setState({
+        showWarningMessageBar: false,
+        showErrorMessageBar: true,
+        errorMessage: finalErrorCheck.errorObject.errorMessage,
+        errorStackTrace: finalErrorCheck.errorObject.errorStackTrace,
+        extendedErrorMessage: finalErrorCheck.errorObject.extendedErrorMessage,
+        isLoadZipButtonGreen: false,
+        isCsvDataErrorCheckButtonGreen: false,
+        showDataImportSuccessMessage: false,
+      });
+      throw new Error(errorObject.errorMessage);
     }
 
     // **
@@ -184,15 +222,33 @@ function parseExcelType2(workbook) {
       throwNoStatementsTabInputErrorModal();
       isNoError = false;
     }
-    // no errors ==> state updates
+
     if (isNoError) {
-      inputState.setState({ dataOrigin: 'excel' });
-      inputState.setState({ notifyDataUploadSuccess: true });
-      inputState.setState({ areQsortsLoaded: true });
-      appState.setState({ isInputButtonGreen: true });
-      appState.setState({ isDataButtonGreen: true });
-      inputState.setState({ isDataAlreadyLoaded: true });
-      // button won't green without timeout
+      inputState.setState({
+        dataOrigin: 'excel',
+        statementsLoaded: true,
+        areQsortsLoaded: true,
+        isQsortPatternLoaded: true,
+        isDataAlreadyLoaded: true,
+        sortsLoaded: true,
+        notifyDataUploadSuccess: true,
+      });
+      appState.setState({ isInputButtonGreen: true, isDataButtonGreen: true });
+
+      coreState.setState({
+        projectName: finalErrorCheck.projectName,
+        statements: finalErrorCheck.statements,
+        sortsDisplayText: finalErrorCheck.sortsDisplayText,
+        numQsorts: finalErrorCheck.numQsorts,
+        numStatements: finalErrorCheck.numStatements,
+        qSortPattern: finalErrorCheck.qSortPattern,
+        mainDataObject: finalErrorCheck.mainDataObject,
+        multiplierArray: finalErrorCheck.multiplierArray,
+        respondentNames: finalErrorCheck.respondentNames,
+        statementNumArray: finalErrorCheck.statementNumArray,
+      });
+      projectHistoryState.setState({ projectHistoryArray: finalErrorCheck.projectHistoryArray });
+
       setTimeout(() => {
         inputState.setState({ isLoadExcelT2ButtonGreen: true });
       }, 10);

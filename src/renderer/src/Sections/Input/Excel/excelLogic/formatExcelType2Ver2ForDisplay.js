@@ -1,4 +1,6 @@
 import cloneDeep from 'lodash/cloneDeep';
+import i18n from 'i18next';
+
 import calcStatementsNum from './calcStatementsNum';
 import cleanMultiplierArray from './cleanMultiplierArray';
 import transformExcelType2Ver2Statements from './transformExcelType2Ver2Statements';
@@ -7,17 +9,9 @@ import createSortsDisplayText from './createSortsDisplayText';
 import createMainDataObject from './createMainDataObject';
 import transformExcelType2Ver2Sorts from './transformExcelType2Ver2Sorts';
 import checkUniqueParticipantNames from '../../logic/checkUniqueParticipantNames';
-import projectHistoryState from '../../../GlobalState/projectHistoryState';
-import coreState from '../../../GlobalState/coreState';
-import inputState from '../../../GlobalState/inputState';
-import i18n from 'i18next';
-
 import createStatementNumArray from './createStatementNumArray';
 
-const formatExcelType2Ver2ForDisplay = (dataObject) => {
-  let returnObject = {};
-
-  // TODO - Add more error handling
+const formatExcelType2Ver2ForDisplay = (dataObject, errorObject) => {
   try {
     // QAV#1  Project Name
     let projectName = dataObject.projectName;
@@ -34,31 +28,22 @@ const formatExcelType2Ver2ForDisplay = (dataObject) => {
     let multiplierArray3 = cloneDeep(dataObject.multiplierArray);
 
     if (multiplierArray3 === undefined) {
-      inputState.setState({ showWarningMessageBar: false });
-      inputState.setState({ showErrorMessageBar: true });
-      inputState.setState({ errorMessage: i18n.t('Cant find the Q sort pattern worksheet') });
-      inputState.setState({ errorStackTrace: i18n.t('no stack trace available') });
-      inputState.setState({
-        extendedErrorMessage: i18n.t('Check the statements input and the Q sort pattern data'),
-      });
-      inputState.setState({ isLoadZipButtonGreen: false });
-      inputState.setState({ isCsvDataErrorCheckButtonGreen: false });
-      inputState.setState({ showDataImportSuccessMessage: false });
-      throw new Error("Can't find the Q sort pattern worksheet!");
+      errorObject.hasError = true;
+      errorObject.errorMessage = i18n.t('Cant find the Q sort pattern worksheet');
+      errorObject.errorStackTrace = i18n.t('no stack trace available');
+      errorObject.extendedErrorMessage = i18n.t(
+        'Check the statements input and the Q sort pattern data'
+      );
+      return { errorObject };
     }
     let multiplierArray = cleanMultiplierArray(multiplierArray3);
 
-    if (multiplierArray.length !== 20) {
-      inputState.setState({ showWarningMessageBar: false });
-      inputState.setState({ showErrorMessageBar: true });
-      inputState.setState({ errorMessage: i18n.t('The Q sort pattern input is incorrect') });
-      inputState.setState({ errorStackTrace: i18n.t('no stack trace available') });
-      inputState.setState({ extendedErrorMessage: i18n.t('Check the Q sort pattern data') });
-      inputState.setState({ isLoadZipButtonGreen: false });
-      inputState.setState({ isCsvDataErrorCheckButtonGreen: false });
-      inputState.setState({ sortsLoaded: false });
-      inputState.setState({ showDataImportSuccessMessage: false });
-      throw new Error('Check the Q sort pattern data');
+    if (multiplierArray?.length !== 20) {
+      errorObject.hasError = true;
+      errorObject.errorMessage = i18n.t('The Q sort pattern input is incorrect');
+      errorObject.errorStackTrace = i18n.t('no stack trace available');
+      errorObject.extendedErrorMessage = i18n.t('Check the Q sort pattern data');
+      return { errorObject };
     }
 
     // QAV#8  Create Q sort Pattern Array
@@ -75,38 +60,20 @@ const formatExcelType2Ver2ForDisplay = (dataObject) => {
 
     console.log('participantSorts2', participantSorts2);
 
-    if (participantSorts.nonNumericArray.length > 0) {
-      inputState.setState({ showWarningMessageBar: false });
-      inputState.setState({ showErrorMessageBar: true });
-      inputState.setState({
-        errorMessage: `${i18n.t('The Q sorts contain a non-numeric value')}`,
-      });
-      inputState.setState({ errorStackTrace: i18n.t('no stack trace available') });
-      inputState.setState({
-        extendedErrorMessage: `${i18n.t('Check the Q sort data for non-numeric values')}: ${participantSorts.nonNumericArray.join(', ')}.`,
-      });
-      inputState.setState({ isLoadZipButtonGreen: false });
-      inputState.setState({ isCsvDataErrorCheckButtonGreen: false });
-      inputState.setState({ showDataImportSuccessMessage: false });
-      inputState.setState({ isLoadExcelT1ButtonGreen: false });
-      inputState.setState({ showDataImportSuccessMessage: false });
-      // appState.setState({ isDataButtonGreen: false });
-      inputState.setState({ notifyDataUploadSuccess: false });
-
-      inputState.setState({ sortsLoaded: false });
-      throw new Error('Q sort values non-numeric');
+    if (participantSorts.nonNumericArray?.length > 0) {
+      errorObject.hasError = true;
+      errorObject.errorMessage = i18n.t('The Q sorts contain a non-numeric value');
+      errorObject.errorStackTrace = i18n.t('no stack trace available');
+      errorObject.extendedErrorMessage = i18n.t('Check the Q sort data for non-numeric values');
+      return { errorObject };
     }
 
-    if (participantSorts.length === 0) {
-      inputState.setState({ showWarningMessageBar: false });
-      inputState.setState({ showErrorMessageBar: true });
-      inputState.setState({ errorMessage: i18n.t('No Q sorts found') });
-      inputState.setState({ errorStackTrace: i18n.t('no stack trace available') });
-      inputState.setState({ extendedErrorMessage: i18n.t('Check the Q sort data') });
-      inputState.setState({ isLoadZipButtonGreen: false });
-      inputState.setState({ isCsvDataErrorCheckButtonGreen: false });
-      inputState.setState({ showDataImportSuccessMessage: false });
-      throw new Error("Can't find the Q sort worksheet!");
+    if (participantSorts?.length === 0) {
+      errorObject.hasError = true;
+      errorObject.errorMessage = i18n.t('No Q sorts found');
+      errorObject.errorStackTrace = i18n.t('no stack trace available');
+      errorObject.extendedErrorMessage = i18n.t('Check the Q sort data');
+      return { errorObject };
     }
 
     // QAV#4  Participant Names
@@ -114,7 +81,7 @@ const formatExcelType2Ver2ForDisplay = (dataObject) => {
     const participantNames = checkUniqueParticipantNames(respondentNames);
 
     // QAV#5  Number of Participants
-    let numberOfParticipants = participantNames.length;
+    let numberOfParticipants = participantNames?.length;
 
     // QAV#7  Project Statements
     let projectStatements2 = cloneDeep(dataObject.statementsArray);
@@ -123,41 +90,48 @@ const formatExcelType2Ver2ForDisplay = (dataObject) => {
     // Create Statement Num Array
     let statementNumArray = createStatementNumArray(numStatements);
 
-    // Create Excel Type 1 Nonsymmetric Array Text
-    /*
-    let excelType1NonsymmetricArrayText = createExcelType1NonsymmetricalArrayText(
-      participantNames
-    );
-    */
-
     // Create Sorts Display Text
     let sortsDisplayText = createSortsDisplayText(participantNames, participantSorts);
 
     // Create Main Data Object
     let mainDataObject = createMainDataObject(participantNames, participantSorts);
 
-    // Create Return Object
-    projectHistoryState.setState({ projectHistoryArray: projectHistoryArray });
-    coreState.setState({ projectName: projectName });
-    coreState.setState({ multiplierArray: multiplierArray });
-    coreState.setState({ statements: projectStatements });
-    coreState.setState({ numQsorts: numberOfParticipants });
-    coreState.setState({ qSortPattern: qSortPatternArray });
-    coreState.setState({ numStatements: projectStatements.length });
-    coreState.setState({ mainDataObject: mainDataObject });
-    coreState.setState({ statementNumArray: statementNumArray });
-    coreState.setState({ sortsDisplayText: sortsDisplayText });
-    coreState.setState({ respondentNames: participantNames });
-    inputState.setState({ areQsortsLoaded: true });
-    inputState.setState({ isQsortPatternLoaded: true });
-    inputState.setState({ statementsLoaded: true });
+    console.log('projectName', projectName);
+    console.log('projectHistoryArray', projectHistoryArray);
+    console.log('projectStatements', projectStatements);
+    console.log('numberOfParticipants', numberOfParticipants);
+    console.log('qSortPatternArray', qSortPatternArray);
+    console.log('numStatements', numStatements);
+    console.log('statementNumArray', statementNumArray);
+    console.log('multiplierArray', multiplierArray);
+    console.log('mainDataObject', mainDataObject);
+    console.log('sortsDisplayText', sortsDisplayText);
+    console.log('respondentNames', respondentNames);
+
+    return {
+      projectHistoryArray: projectHistoryArray,
+      projectName: projectName,
+      multiplierArray: multiplierArray,
+      statements: projectStatements,
+      numQsorts: numberOfParticipants,
+      qSortPattern: qSortPatternArray,
+      numStatements: projectStatements?.length,
+      mainDataObject: mainDataObject,
+      statementNumArray: statementNumArray,
+      sortsDisplayText: sortsDisplayText,
+      respondentNames: participantNames,
+      errorObject: errorObject,
+    };
   } catch (error) {
     console.log(error);
     console.log(error.message);
     console.log(error.stack);
+    errorObject.hasError = true;
+    errorObject.errorMessage = i18n.t('There was an unexpected XSLX data input error');
+    errorObject.errorStackTrace = i18n.t('no stack trace available');
+    errorObject.extendedErrorMessage = i18n.t('Check the format of the file and try again');
+    return { errorObject };
   }
-
-  return returnObject;
 };
 
 export default formatExcelType2Ver2ForDisplay;
