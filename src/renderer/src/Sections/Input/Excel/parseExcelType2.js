@@ -5,13 +5,7 @@ import appState from '../../GlobalState/appState';
 import coreState from '../../GlobalState/coreState';
 import projectHistoryState from '../../GlobalState/projectHistoryState';
 
-import throwNoSortsInputErrorModal from '../ErrorChecking/throwNoSortsInputError';
-import numStatementsMatchErrorModal from '../ErrorChecking/numStatementsMatchErrorModal';
-import throwNoSortsTabInputErrorModal from '../ErrorChecking/throwNoSortsTabInputErrorModal';
 import formatExcelType2ForDisplay from './excelLogic/formatExcelType2ForDisplay';
-import throwNoStatementsInputErrorModal from '../ErrorChecking/throwNoStatementsInputErrorModal';
-import throwNoStatementsTabInputErrorModal from '../ErrorChecking/throwNoStatementsTabInputErrorModal';
-import throwNoSortDesignPatternErrorModal from '../ErrorChecking/throwNoSortDesignPatternErrorModal';
 import formatExcelType2Ver2ForDisplay from './excelLogic/formatExcelType2Ver2ForDisplay';
 import { sheetToCsv, sheetToJson } from './sheetHelpers';
 
@@ -23,13 +17,13 @@ function parseExcelType2(workbook) {
   const rawSortsData = [];
   const rawStatementsData = [];
   let worksheet;
-  let hasSortsWorksheet = false;
-  let hasStatementsWorksheet = false;
   let isNoError = true;
   let newTypeWorksheetsCheck = [];
   let dataObject = {};
   dataObject.version = 'old';
   let hasPatternTab = false;
+  let hasSortsWorksheet = false;
+  let hasStatementsWorksheet = false;
 
   let errorObject = {
     hasError: false,
@@ -69,6 +63,7 @@ function parseExcelType2(workbook) {
       }
 
       if (y2 === 'version') {
+        console.log('5. Version worksheet found');
         newTypeWorksheetsCheck.push('version');
         let tempVar = sheetToCsv(worksheet);
         let tempVar2 = tempVar.split(/\n/);
@@ -86,6 +81,7 @@ function parseExcelType2(workbook) {
       }
 
       if (y2 === 'pattern' || y2 === 'patterns') {
+        console.log('4. Q sort pattern worksheet found');
         newTypeWorksheetsCheck.push('pattern');
         let tempVar = sheetToCsv(worksheet);
         let tempVar2 = tempVar.split(/\n/);
@@ -97,26 +93,15 @@ function parseExcelType2(workbook) {
           errorObject.errorMessage = i18n.t('Cant find the Q sort pattern');
           errorObject.errorStackTrace = i18n.t('no stack trace available');
           errorObject.extendedErrorMessage = i18n.t('Check the Q sort pattern data');
-          // inputState.setState({ showWarningMessageBar: false });
-          // inputState.setState({ showErrorMessageBar: true });
-          // inputState.setState({ errorMessage: i18n.t('Cant find the Q sort pattern') });
-          // inputState.setState({ errorStackTrace: i18n.t('no stack trace available') });
-          // inputState.setState({ extendedErrorMessage: i18n.t('Check the Q sort pattern data') });
-          // inputState.setState({ isLoadZipButtonGreen: false });
-          // inputState.setState({ isCsvDataErrorCheckButtonGreen: false });
-          // inputState.setState({ showDataImportSuccessMessage: false });
-          // throw new Error("Can't find the Q sort pattern!");
         }
       }
 
       // ** SORTS **
       if (y2 === 'sorts' || y2 === 'qsorts' || y2 === 'q-sorts') {
-        console.log('1. Q sorts worksheet found');
-
         hasSortsWorksheet = true;
+        console.log('1. Q sorts worksheet found');
         tester = sheetToCsv(worksheet);
         tester2 = tester.split(/\n/);
-
         // filter unneeded values
         tester3 = tester2.filter(Boolean);
         // convert to array
@@ -128,8 +113,10 @@ function parseExcelType2(workbook) {
         // sum array, if empty (no sort), will sum to zero
         const checkValuesArrayTotal = checkValuesArray.reduce(add);
         if (checkValuesArrayTotal === 0) {
-          throwNoSortsInputErrorModal();
-          isNoError = false;
+          errorObject.hasError = true;
+          errorObject.errorMessage = i18n.t('The Q sorts contain no data');
+          errorObject.errorStackTrace = i18n.t('no stack trace available');
+          errorObject.extendedErrorMessage = i18n.t('Check the Q sorts data');
         }
         rawSortsData.push(tester3);
         dataObject.sortsArray = rawSortsData;
@@ -137,13 +124,15 @@ function parseExcelType2(workbook) {
 
       // ** STATEMENTS **
       if (y2 === 'statements' || y2 === 'statement') {
-        console.log('2. Statements worksheet found');
         hasStatementsWorksheet = true;
+        console.log('2. Statements worksheet found');
         tester4 = sheetToJson(worksheet);
         const testValue = Object.prototype.hasOwnProperty.call(tester4[0], 'Statements');
         if (!testValue) {
-          throwNoStatementsInputErrorModal();
-          isNoError = false;
+          errorObject.hasError = true;
+          errorObject.errorMessage = i18n.t('No statements found in the input data');
+          errorObject.errorStackTrace = i18n.t('no stack trace available');
+          errorObject.extendedErrorMessage = i18n.t('Check the statements input data');
         }
         rawStatementsData.push(tester4);
         dataObject.statementsArray = [...rawStatementsData];
@@ -160,6 +149,22 @@ function parseExcelType2(workbook) {
     // ** INITIALLY ERROR CATCHING
     // **
 
+    if (hasSortsWorksheet === false) {
+      errorObject.hasError = true;
+      errorObject.errorMessage = `${i18n.t('Input Error - No sorts tab found in spreadsheet')}`;
+      errorObject.errorStackTrace = `${i18n.t('no stack trace available')}`;
+      errorObject.extendedErrorMessage = `${i18n.t('Check sorts input tab')}`;
+      isNoError = false;
+    }
+
+    if (hasStatementsWorksheet === false) {
+      errorObject.hasError = true;
+      errorObject.errorMessage = `${i18n.t('Cant find the statements tab in the Excel File')}`;
+      errorObject.errorStackTrace = `${i18n.t('no stack trace available')}`;
+      errorObject.extendedErrorMessage = `${i18n.t('Check the format of the Excel file and try again')}`;
+      isNoError = false;
+    }
+
     if (errorObject.hasError) {
       inputState.setState({
         showWarningMessageBar: false,
@@ -175,7 +180,7 @@ function parseExcelType2(workbook) {
     }
 
     // **
-    // ** Do Processing
+    // ** NO INTIAL ERROR ==> FORMAT DATA FOR DISPLAY
     // **
     let finalErrorCheck;
     if (dataObject.version === 'old') {
@@ -199,30 +204,8 @@ function parseExcelType2(workbook) {
     }
 
     // **
-    // ** Error Handling
+    // ** IF NO FINAL ERROR ==> SET STATE
     // **
-    // no sort design
-    if (finalErrorCheck[0]) {
-      throwNoSortDesignPatternErrorModal();
-      isNoError = false;
-    }
-
-    // statement number doesnt match
-    if (finalErrorCheck[1]) {
-      numStatementsMatchErrorModal();
-      isNoError = false;
-    }
-
-    if (hasSortsWorksheet === false) {
-      throwNoSortsTabInputErrorModal();
-      isNoError = false;
-    }
-
-    if (hasStatementsWorksheet === false) {
-      throwNoStatementsTabInputErrorModal();
-      isNoError = false;
-    }
-
     if (isNoError) {
       inputState.setState({
         dataOrigin: 'excel',
@@ -254,7 +237,6 @@ function parseExcelType2(workbook) {
       }, 10);
     }
   } catch (error) {
-    // set unexpected error message and show modal
     inputState.setState({ excelErrorMessage1: error.message });
     inputState.setState({ showExcelErrorModal: true });
   }

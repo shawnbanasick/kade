@@ -49,16 +49,19 @@ const formatExcelType2Ver2ForDisplay = (dataObject, errorObject) => {
     // QAV#8  Create Q sort Pattern Array
     let qSortPatternArray = calcQsortPatternArray(multiplierArray);
 
-    // QAV#3  Number of Statements
-    let numberOfStatements2 = [...multiplierArray];
-    const numStatements = calcStatementsNum(numberOfStatements2);
-
     // QAV#6  Participant Sorts
     let sortData = cloneDeep(dataObject.sortsArray);
-    const participantSorts2 = transformExcelType2Ver2Sorts(sortData, qSortPatternArray);
-    const participantSorts = participantSorts2.sortsArray;
+    const participantSorts2 = transformExcelType2Ver2Sorts(
+      sortData,
+      qSortPatternArray,
+      errorObject
+    );
 
-    console.log('participantSorts2', participantSorts2);
+    if (participantSorts2.errorObject?.hasError) {
+      return { errorObject: participantSorts2.errorObject };
+    }
+
+    const participantSorts = participantSorts2.sortsArray;
 
     if (participantSorts.nonNumericArray?.length > 0) {
       errorObject.hasError = true;
@@ -87,6 +90,21 @@ const formatExcelType2Ver2ForDisplay = (dataObject, errorObject) => {
     let projectStatements2 = cloneDeep(dataObject.statementsArray);
     let projectStatements = transformExcelType2Ver2Statements(projectStatements2);
 
+    // QAV#3  Number of Statements
+    const numStatements = projectStatements?.length;
+
+    if (qSortPatternArray?.length !== projectStatements?.length) {
+      errorObject.hasError = true;
+      errorObject.errorMessage = i18n.t(
+        'The number of statements does not match the Q sort pattern'
+      );
+      errorObject.errorStackTrace = i18n.t('no stack trace available');
+      errorObject.extendedErrorMessage = i18n.t(
+        'Check the statements input and the Q sort pattern data'
+      );
+      return { errorObject };
+    }
+
     // Create Statement Num Array
     let statementNumArray = createStatementNumArray(numStatements);
 
@@ -95,18 +113,6 @@ const formatExcelType2Ver2ForDisplay = (dataObject, errorObject) => {
 
     // Create Main Data Object
     let mainDataObject = createMainDataObject(participantNames, participantSorts);
-
-    console.log('projectName', projectName);
-    console.log('projectHistoryArray', projectHistoryArray);
-    console.log('projectStatements', projectStatements);
-    console.log('numberOfParticipants', numberOfParticipants);
-    console.log('qSortPatternArray', qSortPatternArray);
-    console.log('numStatements', numStatements);
-    console.log('statementNumArray', statementNumArray);
-    console.log('multiplierArray', multiplierArray);
-    console.log('mainDataObject', mainDataObject);
-    console.log('sortsDisplayText', sortsDisplayText);
-    console.log('respondentNames', respondentNames);
 
     return {
       projectHistoryArray: projectHistoryArray,

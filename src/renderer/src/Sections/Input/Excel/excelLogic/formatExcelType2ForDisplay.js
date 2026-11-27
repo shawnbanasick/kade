@@ -78,18 +78,6 @@ export default function formatExcelType2ForDisplay(rawStatementsData, rawSortsDa
 
     const participantNames = checkUniqueParticipantNames(respondentNames);
 
-    console.log('projectName', projectName);
-    console.log('projectHistoryArray', projectHistoryArray);
-    console.log('currentStatements', currentStatements);
-    console.log('totalNumberSorts', totalNumberSorts);
-    console.log('sortTriangleShape', sortTriangleShape);
-    console.log('originalSortSize', originalSortSize);
-    console.log('statementNumArray', statementNumArray);
-    console.log('multiplierArray', multiplierArray);
-    console.log('mainDataObject', mainDataObject);
-    console.log('sortsDisplayText', sortsDisplayText);
-    console.log('respondentNames', respondentNames);
-
     return {
       projectHistoryArray: projectHistoryArray,
       projectName: projectName,

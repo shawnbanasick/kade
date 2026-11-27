@@ -1,11 +1,7 @@
 import i18n from 'i18next';
-
-import inputState from '../../../GlobalState/inputState';
-// import appState from '../../../GlobalState/appState';
-
 import checkUniqueParticipantName from '../../logic/checkUniqueParticipantNames';
 
-const transformExcelType2Ver2Sorts = (sortData, qSortPatternArray) => {
+const transformExcelType2Ver2Sorts = (sortData, qSortPatternArray, errorObject) => {
   let maxValue = Math.max(...qSortPatternArray);
   let minValue = Math.min(...qSortPatternArray);
   let matchValue = qSortPatternArray.length;
@@ -15,10 +11,16 @@ const transformExcelType2Ver2Sorts = (sortData, qSortPatternArray) => {
   let nonNumericArray = [];
   let sortsArray = [];
   let namesArray = [];
+  let missingNamesArray = [];
 
-  sortData[0].forEach((row) => {
+  sortData[0].forEach((row, index) => {
     let tempArray = [];
     row = row.split(',');
+    // check for missing participant names
+    if (row[0] === '' && row[1] !== '') {
+      missingNamesArray.push(index + 1);
+    }
+    // process each row of sort data, skipping the first column (participant name)
     if (row[0] !== '') {
       row.forEach((item, index) => {
         if (item !== '') {
@@ -47,25 +49,47 @@ const transformExcelType2Ver2Sorts = (sortData, qSortPatternArray) => {
   });
 
   if (maxValueArray.length > 0 || minValueArray.length > 0) {
-    inputState.setState({ showWarningMessageBar: false });
-    inputState.setState({ showErrorMessageBar: true });
-    inputState.setState({
-      errorMessage: `${i18n.t('There is a Q sort with values beyond the range of the Q sort design')}`,
-    });
-    inputState.setState({ errorStackTrace: i18n.t('no stack trace available') });
-    inputState.setState({
-      extendedErrorMessage: `${i18n.t(
-        'Participants with a value beyond the range of the Q sort design'
-      )}: ${maxValueArray.join(', ')} ${minValueArray.join(', ')}.`,
-    });
-    inputState.setState({ isLoadZipButtonGreen: false });
-    inputState.setState({ isCsvDataErrorCheckButtonGreen: false });
-    inputState.setState({ showDataImportSuccessMessage: false });
-    throw new Error('Q sort values outside allowed range');
+    errorObject.hasError = true;
+    errorObject.errorMessage = i18n.t(
+      'There is a Q sort with values beyond the range of the Q sort design'
+    );
+    errorObject.errorStackTrace = i18n.t('no stack trace available');
+    errorObject.extendedErrorMessage = `${i18n.t(
+      'Participants with a value beyond the range of the Q sort design'
+    )} ${maxValueArray.join(', ')}, ${minValueArray.join(', ')}.`;
+    return { errorObject };
+  }
+
+  if (nonNumericArray.length > 0) {
+    errorObject.hasError = true;
+    errorObject.errorMessage = i18n.t('There is a Q sort with a non-numeric value');
+    errorObject.errorStackTrace = i18n.t('no stack trace available');
+    errorObject.extendedErrorMessage = `${i18n.t(
+      'Participants with a non-numeric value in their Q sort'
+    )}: ${nonNumericArray.join(', ')}.`;
+    return { errorObject };
+  }
+
+  if (matchArray.length > 0) {
+    errorObject.hasError = true;
+    errorObject.errorMessage = i18n.t(
+      'There is a Q sort with a number of values that does not match the Q sort design'
+    );
+    errorObject.errorStackTrace = i18n.t('no stack trace available');
+    errorObject.extendedErrorMessage = `${i18n.t('Participants with a number of values that does not match the Q sort design')}: ${matchArray.join(', ')}.`;
+    return { errorObject };
+  }
+
+  if (missingNamesArray.length > 0) {
+    errorObject.hasError = true;
+    errorObject.errorMessage = i18n.t('There is a Q sort with a missing participant name');
+    errorObject.errorStackTrace = i18n.t('no stack trace available');
+    errorObject.extendedErrorMessage = `${i18n.t('Data with a missing participant name - row(s)')}: ${missingNamesArray.join(', ')}.`;
+    return { errorObject };
   }
 
   namesArray = checkUniqueParticipantName(namesArray);
-  return { sortsArray, namesArray };
+  return { sortsArray, namesArray, errorObject };
 };
 
 export default transformExcelType2Ver2Sorts;
