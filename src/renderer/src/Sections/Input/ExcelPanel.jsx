@@ -41,6 +41,7 @@ const ExcelPanel = () => {
         if (!excelData) return; // user cancelled the dialog
         parseExcelType2(excelData);
         revertLoadButtonsColors('excelT2');
+        setIsLoadExcelT2ButtonGreen(true);
       } catch (error) {
         // catch unknown input error
         console.log('Error in ExcelPanel handleClick:', error);
@@ -102,6 +103,7 @@ const ExcelPanel = () => {
               )}
               {index === 1 && (
                 <div className="flex flex-col gap-4 mt-2">
+                  {/* Load Type 2 XLSX File Button */}
                   <NewLoadButton
                     className={`${isLoadExcelT2ButtonGreen ? 'bg-primary-button' : 'bg-grey-button'} `}
                     onClick={handleClick}

@@ -1,6 +1,5 @@
-import ZipDataCard from './Zip/ZipDataCard';
+// import ZipDataCard from './Zip/ZipDataCard';
 import { useTranslation } from 'react-i18next';
-import excel3Image from '../images/kadeZip.png';
 // import kadeZip from '../../images/kadeZip.png';
 import LoadKadeZip from './Zip/LoadKadeZip';
 
@@ -27,7 +26,7 @@ const KadeZipPanel = () => {
             <img
               className="h-[205px] w-[250px] outline outline-1 outline-gray-300"
               // alt={step.alt}
-              src={excel3Image}
+              // src={excel3Image}
             />
           </button>
         </div>

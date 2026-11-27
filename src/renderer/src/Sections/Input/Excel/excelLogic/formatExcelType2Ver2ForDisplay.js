@@ -1,7 +1,6 @@
 import cloneDeep from 'lodash/cloneDeep';
 import i18n from 'i18next';
 
-import calcStatementsNum from './calcStatementsNum';
 import cleanMultiplierArray from './cleanMultiplierArray';
 import transformExcelType2Ver2Statements from './transformExcelType2Ver2Statements';
 import calcQsortPatternArray from './calcQsortPatternArray';

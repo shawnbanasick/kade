@@ -23,12 +23,17 @@ export default function formatExcelType1ForDisplay(rawStatementsData, rawSortsDa
       createMultiplierArrayAndTriangleShape(inputData1);
 
     const checkSum = multiplierArray.reduce((acc, val) => acc + val, 0);
+
+    console.log(`4. multiplierArray: ${multiplierArray}`);
+    console.log(`5. sortTriangleShape: ${sortTriangleShape}`);
+    console.log(`6. checkSum: ${checkSum}`);
+
     if (checkSum !== sortTriangleShape?.length) {
       errorObject.hasError = true;
       errorObject.noSortPatternError = true;
       errorObject.errorMessage = i18n.t('The Q sort pattern input is incorrect');
       errorObject.extendedErrorMessage = i18n.t('Check the Q sort pattern data');
-      errorObject.errorStackTrace = i18n.t('no stack trace available');
+      errorObject.errorStackTrace = `${i18n.t('no stack trace available')} (error fet1fd-36)`;
       return { errorObject };
     }
 
@@ -38,7 +43,7 @@ export default function formatExcelType1ForDisplay(rawStatementsData, rawSortsDa
       errorObject.noSortPatternError = true;
       errorObject.errorMessage = i18n.t('The Q sort pattern input is incorrect');
       errorObject.extendedErrorMessage = i18n.t('Check the Q sort pattern data');
-      errorObject.errorStackTrace = i18n.t('no stack trace available');
+      errorObject.errorStackTrace = `${i18n.t('no stack trace available')} (error fet1fd-46)`;
       return { errorObject };
     }
 
@@ -47,7 +52,7 @@ export default function formatExcelType1ForDisplay(rawStatementsData, rawSortsDa
       errorObject.noSortPatternError = true;
       errorObject.errorMessage = i18n.t('The Q sort pattern input is incorrect');
       errorObject.extendedErrorMessage = i18n.t('Check the Q sort pattern data');
-      errorObject.errorStackTrace = i18n.t('no stack trace available');
+      errorObject.errorStackTrace = `${i18n.t('no stack trace available')} (error fet1fd-56)`;
       return { errorObject };
     }
 
@@ -58,21 +63,14 @@ export default function formatExcelType1ForDisplay(rawStatementsData, rawSortsDa
     const inputData2 = cloneDeep(rawSortsData);
     const sortData = getExcelT1SortText(inputData2, numStatements);
 
-    if (sortData?.[1]?.length !== checkSum) {
-      errorObject.hasError = true;
-      errorObject.noSortPatternError = true;
-      errorObject.errorMessage = i18n.t('The Q sort pattern input is incorrect');
-      errorObject.extendedErrorMessage = i18n.t('Check the Q sort pattern data');
-      errorObject.errorStackTrace = i18n.t('no stack trace available');
-      return { errorObject };
-    }
+    console.log(`7. sortData: ${JSON.stringify(sortData[1])}`);
 
     if (sortData?.[1]?.length === 0 && sortData?.[2]?.length === 0) {
       errorObject.hasError = true;
       errorObject.noSortsError = true;
       errorObject.errorMessage = i18n.t('No Q sorts found');
       errorObject.extendedErrorMessage = i18n.t('Check the Q sort data');
-      errorObject.errorStackTrace = i18n.t('no stack trace available');
+      errorObject.errorStackTrace = `${i18n.t('no stack trace available')} (error fet1fd-80)`;
       return { errorObject };
     }
 
@@ -86,7 +84,7 @@ export default function formatExcelType1ForDisplay(rawStatementsData, rawSortsDa
       errorObject.noHeaderMatchError = true;
       errorObject.errorMessage = i18n.t('The Q sort data input is incorrect');
       errorObject.extendedErrorMessage = i18n.t('Check the Q sort data');
-      errorObject.errorStackTrace = i18n.t('no stack trace available');
+      errorObject.errorStackTrace = `${i18n.t('no stack trace available')} (error fet1fd-94)`;
       return { errorObject };
     }
 
@@ -102,6 +100,15 @@ export default function formatExcelType1ForDisplay(rawStatementsData, rawSortsDa
     );
 
     const respondentSorts = getRespondentSorts?.respondentSorts;
+
+    if (respondentSorts?.[1]?.length !== checkSum) {
+      errorObject.hasError = true;
+      errorObject.noSortPatternError = true;
+      errorObject.errorMessage = i18n.t('The Q sort pattern input is incorrect');
+      errorObject.extendedErrorMessage = i18n.t('Check the Q sort pattern data');
+      errorObject.errorStackTrace = `${i18n.t('no stack trace available')} (error fet1fd-71)`;
+      return { errorObject };
+    }
 
     if (getRespondentSorts?.errorObject?.hasError) {
       errorObject.hasError = true;

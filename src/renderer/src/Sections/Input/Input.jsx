@@ -3,8 +3,8 @@ import inputState from '../GlobalState/inputState';
 import ExcelPanel from './ExcelPanel';
 import Excel3Panel from './KandedPanel';
 import PQMethodPanel from './PQMethodPanel';
-import KadeZipPanel from './KadeZipPanel';
 import DemoDataPanel from './DemoDataPanel';
+import ManualPanel from './ManualPanel';
 import CsvPanel from './CsvPanel';
 import { useTranslation } from 'react-i18next';
 import QuincePanel from './QuincePanel';
@@ -56,12 +56,8 @@ function Input() {
       content: <ExcelPanel />,
     },
     {
-      title: 'KADE XLSX',
+      title: 'KADE File',
       content: <Excel3Panel />,
-    },
-    {
-      title: 'KADE Zip',
-      content: <KadeZipPanel />,
     },
     {
       title: 'CSV',
@@ -74,6 +70,10 @@ function Input() {
     {
       title: t('PQMethod'),
       content: <PQMethodPanel />,
+    },
+    {
+      title: 'Manual',
+      content: <ManualPanel />,
     },
     {
       title: t('Demo Data'),

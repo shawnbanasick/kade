@@ -32,9 +32,8 @@ const formatExcelType1Ver2ForDisplay = (dataObject, errorObject) => {
       errorObject.hasError = true;
       errorObject.noSortPatternError = true;
       errorObject.errorMessage = i18n.t('The Q sort pattern input is incorrect');
-      errorObject.extendedErrorMessage = i18n.t('Check the Q sort pattern data');
+      errorObject.extendedErrorMessage = `${i18n.t('Check the Q sort pattern data')} (error fet1v2fd-35)`;
       errorObject.errorStackTrace = i18n.t('no stack trace available');
-
       return { errorObject };
     }
     // QAV#3  Number of Statements

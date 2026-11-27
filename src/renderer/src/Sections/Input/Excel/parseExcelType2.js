@@ -215,6 +215,7 @@ function parseExcelType2(workbook) {
         isDataAlreadyLoaded: true,
         sortsLoaded: true,
         notifyDataUploadSuccess: true,
+        isLoadExcelT2ButtonGreen: true,
       });
       appState.setState({ isInputButtonGreen: true, isDataButtonGreen: true });
 

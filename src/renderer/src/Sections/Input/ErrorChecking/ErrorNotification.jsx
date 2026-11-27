@@ -1,17 +1,16 @@
 import { useEffect, useState } from 'react';
 
-import ExtendedErrorModal from './ExtendedErrorModal';
+// import ExtendedErrorModal from './ExtendedErrorModal';
 import inputState from '../../GlobalState/inputState';
 import { useTranslation } from 'react-i18next';
-import GeneralButton from '../../../Utils/GeneralButton';
 
 const ErrorNotification = () => {
   const { t } = useTranslation();
   const updateShowErrorMessageBar = inputState((state) => state.updateShowErrorMessageBar);
   const updateErrorStackTrace = inputState((state) => state.updateErrorStackTrace);
-  const updateIsCsvDataErrorCheckButtonGreen = inputState(
-    (state) => state.updateIsCsvDataErrorCheckButtonGreen
-  );
+  // const updateIsCsvDataErrorCheckButtonGreen = inputState(
+  //   (state) => state.updateIsCsvDataErrorCheckButtonGreen
+  // );
   const updateShowDataImportSuccessMessage = inputState(
     (state) => state.updateShowDataImportSuccessMessage
   );
@@ -19,7 +18,7 @@ const ErrorNotification = () => {
   const showErrorMessageBar = inputState((state) => state.showErrorMessageBar);
   const errorMessage = inputState((state) => state.errorMessage);
   const errorMessageString = `${t('Error')}:  ${errorMessage}`;
-  const errorMessageString1 = inputState((state) => state.extendedErrorMessage) || '';
+  const errorStackTrace = inputState((state) => state.errorStackTrace) || '';
   const errorMessageString2 = inputState((state) => state.errorMessage) || '';
   const extendedErrorMessage = inputState((state) => state.extendedErrorMessage);
 
@@ -29,7 +28,6 @@ const ErrorNotification = () => {
     setShowErrorModal(false);
     updateShowErrorMessageBar(false);
     updateErrorStackTrace(t('no stack trace available'));
-    // updateIsCsvDataErrorCheckButtonGreen(false);
     updateShowDataImportSuccessMessage(false);
   };
 
@@ -49,13 +47,6 @@ const ErrorNotification = () => {
       document.removeEventListener('keydown', handleKeyDown);
     };
   }, [showErrorMessageBar]);
-
-  // const handleOnClick = () => {
-  //   updateShowErrorMessageBar(false);
-  //   updateErrorStackTrace(t('no stack trace available'));
-  //   updateIsCsvDataErrorCheckButtonGreen(false);
-  //   updateShowDataImportSuccessMessage(false);
-  // };
 
   if (showErrorMessageBar) {
     return (
@@ -87,6 +78,9 @@ const ErrorNotification = () => {
                 {/* ERROR STACK TRACE */}
                 <div className="mt-1 text-xl leading-relaxed text-gray-800">
                   {extendedErrorMessage}
+                </div>
+                <div className="mt-2 text-xl leading-relaxed text-gray-800">
+                  {errorStackTrace ? <div>{errorStackTrace}</div> : null}
                 </div>
               </div>
             </div>

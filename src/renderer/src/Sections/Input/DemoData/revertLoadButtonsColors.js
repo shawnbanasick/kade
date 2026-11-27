@@ -6,18 +6,19 @@ const revertLoadButtonsColors = (type) => {
       isLoadCsvTextButtonGreen: false,
       isLoadCsvQsortsButtonGreen: false,
     }),
-    ...(type !== 'json' && {
-      isLoadJsonTextButtonGreen: false,
-      isLoadJsonQsortsButtonGreen: false,
-      isLoadSheetsCsvButtonGreen: false,
-    }),
     ...(type !== 'pqmethod' && {
       isLoadPqmethodTextButtonButtonGreen: false,
       isLoadPqmethodQsortsButtonGreen: false,
     }),
-    isLoadExcelT3ButtonGreen: false,
-    isLoadExcelT2ButtonGreen: false,
-    isLoadExcelT1ButtonGreen: false,
+    ...(type !== 'excelT1' && {
+      isLoadExcelT1ButtonGreen: false,
+    }),
+    ...(type !== 'excelT2' && {
+      isLoadExcelT2ButtonGreen: false,
+    }),
+    ...(type !== 'excelT3' && {
+      isLoadExcelT3ButtonGreen: false,
+    }),
     isLoadLipsetButtonGreen: false,
     isLoadBuzzwordsButtonGreen: false,
     isLoadMotivationalButtonGreen: false,

@@ -22,7 +22,7 @@ const checkForIncorrectLengths = (testSortArray, numStatements, qSortPattern, re
     inputState.setState({ errorMessage: i18n.t('The Q sort pattern input is incorrect') });
     inputState.setState({ errorStackTrace: i18n.t("Error in 'standardErrorChecks' function") });
     inputState.setState({
-      extendedErrorMessage: i18n.t('Check the Q sorts and Q sort pattern data'),
+      extendedErrorMessage: `${i18n.t('Check the Q sorts and Q sort pattern data')} (error cfil-25)`,
     });
     inputState.setState({ isLoadZipButtonGreen: false });
     inputState.setState({ isCsvDataErrorCheckButtonGreen: false });

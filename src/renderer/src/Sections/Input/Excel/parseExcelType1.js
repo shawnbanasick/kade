@@ -248,6 +248,7 @@ function parseExcelType1(workbook) {
         isDataAlreadyLoaded: true,
         sortsLoaded: true,
         notifyDataUploadSuccess: true,
+        isLoadExcelT1ButtonGreen: true,
       });
 
       setTimeout(() => {
