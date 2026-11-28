@@ -41,6 +41,29 @@ const projectN = (p) => {
   return Math.max(designSum, p.freeTotal || 0, p.statements?.length || 0, seen);
 };
 
+// Full JSON export: the stored project plus convenient array views of the data
+const buildExport = (p) => {
+  const n = projectN(p);
+  const design = p.design || {};
+  const columnCounts = COLUMNS.map((c) => design[c] || 0); // [0] = -6 column ... [19] = +13 column
+  const patternColumnValues = COLUMNS.flatMap((c) => Array(design[c] || 0).fill(c)); // e.g. [-4,-4,-3,-3,-3,...]
+  const participantNames = p.participants.map((x) => x.name);
+  const sortValues = p.participants.map((part) => {
+    const row = new Array(n).fill(null); // row[i] = column value of statement i+1 (null if not placed)
+    for (const [col, stmts] of Object.entries(part.sorts))
+      for (const st of stmts) row[st - 1] = Number(col);
+    return row;
+  });
+  return {
+    ...p,
+    columnHeaders: COLUMNS,
+    participantNames,
+    sortValues,
+    columnCounts,
+    patternColumnValues,
+  };
+};
+
 export default function QSortDataEntry() {
   const projectList = useLiveQuery(() => db.projects.toArray(), []);
   const loading = projectList === undefined;
@@ -57,7 +80,8 @@ export default function QSortDataEntry() {
   const [draftType, setDraftType] = useState('forced'); // "forced" | "free"
   const [draftDesign, setDraftDesign] = useState(emptyDesign);
   const [draftFreeCols, setDraftFreeCols] = useState([]);
-  const [draftFreeTotal, setDraftFreeTotal] = useState(0);
+  const [showDelete, setShowDelete] = useState(false);
+  const [deleteText, setDeleteText] = useState('');
   const [draftStmtText, setDraftStmtText] = useState('');
 
   // Statement text for the active (saved) project
@@ -108,9 +132,16 @@ export default function QSortDataEntry() {
   const name = active ? active.name : draftName;
   const type = active ? active.type || 'forced' : draftType;
   const isFree = type === 'free';
-  const design = active ? active.design : draftDesign;
   const freeCols = active ? active.freeColumns || [] : draftFreeCols;
-  const freeTotalInput = active ? active.freeTotal || 0 : draftFreeTotal;
+  const freeTotalInput = active ? active.freeTotal || 0 : 0; // only used by projects saved by an older version
+  // In a draft free design, only counts in selected columns belong to the idealized pattern
+  const design = useMemo(() => {
+    if (active) return active.design;
+    if (!isFree) return draftDesign;
+    return Object.fromEntries(
+      COLUMNS.map((c) => [c, draftFreeCols.includes(c) ? draftDesign[c] || 0 : 0])
+    );
+  }, [active, isFree, draftDesign, draftFreeCols]);
   const complete = !!active?.complete;
   const designLocked = !!active;
 
@@ -125,10 +156,10 @@ export default function QSortDataEntry() {
   const designSum = useMemo(() => COLUMNS.reduce((s, c) => s + (design[c] || 0), 0), [design]);
 
   // How many statements every participant must place (0 = unknown, free design only)
-  const expectedTotal = isFree ? statements.length || freeTotalInput : designSum;
+  const expectedTotal = designSum || (isFree ? statements.length || freeTotalInput : 0);
   const maxStmt = isFree ? (expectedTotal > 0 ? expectedTotal : Infinity) : designSum;
   const statementMismatch =
-    !isFree && statements.length > 0 && designSum > 0 && statements.length !== designSum;
+    statements.length > 0 && designSum > 0 && statements.length !== designSum;
 
   // Forced: fixed slots per column. Free: filled slots plus one empty trailing slot.
   const slotCount = (c) => (isFree ? lastFilled(sorts[c]) + 2 : design[c] || 0);
@@ -138,6 +169,8 @@ export default function QSortDataEntry() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [activeCols, sorts, isFree, design]
   );
+
+  const placedIn = (c) => (sorts[c] || []).slice(0, slotCount(c)).filter(Boolean).length;
 
   const getCell = (c, i) => sorts[c]?.[i] ?? '';
 
@@ -235,8 +268,12 @@ export default function QSortDataEntry() {
       );
     if (isFree && activeCols.length === 0)
       return setError('Select at least one column for the free distribution.');
-    if (!isFree && designSum === 0)
-      return setError('Enter the Q sort design (number of statements per column) first.');
+    if (designSum === 0 && !(active && isFree))
+      return setError(
+        isFree
+          ? 'Enter the idealized sort pattern (number of statements per selected column) first.'
+          : 'Enter the Q sort design (number of statements per column) first.'
+      );
     if (!pName) return setError('Enter the participant’s name.');
     if (
       active?.participants.some(
@@ -275,6 +312,20 @@ export default function QSortDataEntry() {
         );
     }
 
+    // Free design: compare against the idealized pattern (warn, but allow an override)
+    if (isFree && designSum > 0) {
+      const diffs = activeCols
+        .filter((c) => placedIn(c) !== (design[c] || 0))
+        .map((c) => `${fmtCol(c)} (placed ${placedIn(c)}, expected ${design[c] || 0})`);
+      if (
+        diffs.length > 0 &&
+        !window.confirm(
+          `This sort differs from the idealized pattern in: ${diffs.join(', ')}.\n\nSave anyway?`
+        )
+      )
+        return;
+    }
+
     const cleanSorts = {};
     for (const c of activeCols) {
       const vals = [];
@@ -292,9 +343,9 @@ export default function QSortDataEntry() {
           await db.projects.put({
             name: projectName,
             type,
-            design: isFree ? {} : { ...design },
+            design: { ...design },
             freeColumns: isFree ? [...activeCols] : [],
-            freeTotal: isFree ? freeTotalInput : 0,
+            freeTotal: 0,
             statements: parseStatements(draftStmtText),
             participants: [{ name: pName, sorts: cleanSorts, addedAt: Date.now() }],
             complete: false,
@@ -351,14 +402,17 @@ export default function QSortDataEntry() {
     setNotice(value ? 'Project data input marked complete.' : 'Project reopened for data entry.');
   };
 
+  const openDelete = () => {
+    setDeleteText('');
+    setShowDelete(true);
+  };
+
   const deleteProject = async () => {
-    if (
-      !active ||
-      !window.confirm(`Delete “${active.name}” and all its data? This cannot be undone.`)
-    )
-      return;
+    if (!active || deleteText !== active.name) return;
     clearTimeout(stmtTimer.current);
     await db.projects.delete(active.name);
+    setShowDelete(false);
+    setDeleteText('');
     setSelectedName('');
     setStmtText('');
     setMode('new');
@@ -429,7 +483,11 @@ export default function QSortDataEntry() {
 
   const exportJson = () => {
     if (!active) return;
-    download(`${active.name}.json`, JSON.stringify(active, null, 2), 'application/json');
+    download(
+      `${active.name}.json`,
+      JSON.stringify(buildExport(active), null, 2),
+      'application/json'
+    );
   };
 
   const inputBase =
@@ -583,75 +641,108 @@ export default function QSortDataEntry() {
             </div>
           </div>
         ) : (
-          <div className="space-y-3">
-            <p className="text-sm text-slate-600">
-              Select the columns participants may use. Each participant can place any number of
-              statements in each selected column.
-            </p>
-            <div className="flex flex-wrap gap-1.5">
-              {COLUMNS.map((c) => {
-                const on = freeCols.includes(c);
-                return (
-                  <button
-                    key={c}
-                    type="button"
-                    aria-pressed={on}
-                    disabled={designLocked}
-                    onClick={() => toggleFreeCol(c)}
-                    className={`w-12 rounded-md border py-1.5 text-sm font-semibold disabled:cursor-not-allowed ${
-                      on
-                        ? 'border-indigo-600 bg-indigo-600 text-white'
-                        : 'border-slate-300 bg-white text-slate-700 hover:bg-slate-50'
-                    } ${designLocked && !on ? 'opacity-40' : ''}`}
-                  >
-                    {fmtCol(c)}
-                  </button>
-                );
-              })}
-            </div>
-            {!designLocked && (
-              <div className="flex flex-wrap gap-2 text-sm">
-                <button
-                  type="button"
-                  className="rounded border border-slate-300 px-2 py-1 hover:bg-slate-50"
-                  onClick={() => {
-                    setDraftFreeCols(COLUMNS.filter((c) => c >= -6 && c <= 6));
-                    setSorts({});
-                  }}
-                >
-                  −6 to +6
-                </button>
-                <button
-                  type="button"
-                  className="rounded border border-slate-300 px-2 py-1 hover:bg-slate-50"
-                  onClick={() => {
-                    setDraftFreeCols([]);
-                    setSorts({});
-                  }}
-                >
-                  Clear
-                </button>
-              </div>
-            )}
-            <div>
-              <label className="mb-1 block text-sm font-medium" htmlFor="free-total">
-                Total number of statements
-              </label>
-              <input
-                id="free-total"
-                type="number"
-                min="0"
-                className={`${inputBase} w-32`}
-                value={statements.length > 0 ? statements.length : freeTotalInput || ''}
-                placeholder="optional"
-                disabled={designLocked || statements.length > 0}
-                onChange={(e) => setDraftFreeTotal(Math.max(0, parseInt(e.target.value, 10) || 0))}
-              />
-              <p className="mt-1 text-xs text-slate-500">
-                {statements.length > 0
-                  ? 'Taken from the statement list below.'
-                  : 'If given (or if statements are pasted below), every participant must place exactly this many statements.'}
+          <div className="space-y-5">
+            <div className="space-y-2">
+              <p className="text-sm text-slate-600">
+                <span className="font-medium text-slate-800">Step 1.</span> Select the columns
+                participants may use.
               </p>
+              <div className="flex flex-wrap gap-1.5">
+                {COLUMNS.map((c) => {
+                  const on = freeCols.includes(c);
+                  return (
+                    <button
+                      key={c}
+                      type="button"
+                      aria-pressed={on}
+                      disabled={designLocked}
+                      onClick={() => toggleFreeCol(c)}
+                      className={`w-12 rounded-md border py-1.5 text-sm font-semibold disabled:cursor-not-allowed ${
+                        on
+                          ? 'border-indigo-600 bg-indigo-600 text-white'
+                          : 'border-slate-300 bg-white text-slate-700 hover:bg-slate-50'
+                      } ${designLocked && !on ? 'opacity-40' : ''}`}
+                    >
+                      {fmtCol(c)}
+                    </button>
+                  );
+                })}
+              </div>
+              {!designLocked && (
+                <div className="flex flex-wrap gap-2 text-sm">
+                  <button
+                    type="button"
+                    className="rounded border border-slate-300 px-2 py-1 hover:bg-slate-50"
+                    onClick={() => {
+                      setDraftFreeCols(COLUMNS.filter((c) => c >= -6 && c <= 6));
+                      setSorts({});
+                    }}
+                  >
+                    −6 to +6
+                  </button>
+                  <button
+                    type="button"
+                    className="rounded border border-slate-300 px-2 py-1 hover:bg-slate-50"
+                    onClick={() => {
+                      setDraftFreeCols([]);
+                      setDraftDesign(emptyDesign());
+                      setSorts({});
+                    }}
+                  >
+                    Clear
+                  </button>
+                </div>
+              )}
+            </div>
+
+            <div className="space-y-2">
+              <p className="text-sm text-slate-600">
+                <span className="font-medium text-slate-800">Step 2.</span> Enter the idealized sort
+                pattern: the number of statements you expect in each selected column. Its total sets
+                the number of statements, and every participant’s sort is checked against it (a sort
+                that deviates from the pattern is allowed only after you confirm).
+              </p>
+              {designLocked && designSum === 0 && (
+                <p className="text-sm text-slate-500">
+                  This project was saved before idealized patterns were supported, so it has none.
+                </p>
+              )}
+              {activeCols.length === 0 ? (
+                <p className="rounded-md border border-dashed border-slate-300 p-3 text-sm text-slate-500">
+                  Select columns above and a count box for each will appear here.
+                </p>
+              ) : (
+                <div className="overflow-x-auto pb-2">
+                  <div className="flex min-w-max gap-1">
+                    {activeCols.map((c) => (
+                      <label key={c} className="flex w-14 flex-col items-center gap-1">
+                        <span
+                          className={`text-sm font-semibold ${
+                            c < 0
+                              ? 'text-rose-700'
+                              : c === 0
+                                ? 'text-slate-600'
+                                : 'text-emerald-700'
+                          }`}
+                        >
+                          {fmtCol(c)}
+                        </span>
+                        <input
+                          type="number"
+                          min="0"
+                          max="99"
+                          aria-label={`Idealized number of statements in column ${fmtCol(c)}`}
+                          className={`${inputBase} w-full px-1 py-2 text-center`}
+                          value={design[c] || ''}
+                          placeholder="0"
+                          disabled={designLocked}
+                          onChange={(e) => handleDesignChange(c, e.target.value)}
+                        />
+                      </label>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         )}
@@ -744,6 +835,18 @@ export default function QSortDataEntry() {
                       <span className={`rounded px-2 py-0.5 text-sm font-semibold ${colBadge(c)}`}>
                         {fmtCol(c)}
                       </span>
+                      {isFree && designSum > 0 && (
+                        <span
+                          title="statements placed / idealized pattern"
+                          className={`text-xs ${
+                            placedIn(c) !== (design[c] || 0)
+                              ? 'font-semibold text-amber-700'
+                              : 'text-slate-500'
+                          }`}
+                        >
+                          {placedIn(c)}/{design[c] || 0}
+                        </span>
+                      )}
                       {Array.from({ length: slotCount(c) }, (_, i) => {
                         const key = `${c}:${i}`;
                         const v = getCell(c, i);
@@ -877,7 +980,7 @@ export default function QSortDataEntry() {
               </button>
             )}
             <button
-              onClick={deleteProject}
+              onClick={openDelete}
               className="rounded-md border border-rose-300 px-4 py-2.5 text-rose-700 hover:bg-rose-50"
             >
               Delete project
@@ -920,6 +1023,61 @@ export default function QSortDataEntry() {
           </p>
         )}
       </section>
+
+      {/* Delete-project confirmation: the project name must be typed to enable the button */}
+      {showDelete && active && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/50 p-4"
+          onMouseDown={(e) => e.target === e.currentTarget && setShowDelete(false)}
+          onKeyDown={(e) => e.key === 'Escape' && setShowDelete(false)}
+        >
+          <div
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="delete-title"
+            className="w-full max-w-md rounded-lg bg-white p-6 shadow-xl"
+          >
+            <h3 id="delete-title" className="text-lg font-semibold text-slate-900">
+              Delete this project?
+            </h3>
+            <p className="mt-2 text-sm text-slate-600">
+              This permanently deletes <span className="font-semibold">{active.name}</span>,
+              including its {active.participants.length} participant
+              {active.participants.length === 1 ? '' : 's'}, design and statements. This cannot be
+              undone.
+            </p>
+            <label htmlFor="delete-confirm" className="mt-4 block text-sm text-slate-700">
+              Please type <span className="font-mono font-semibold">{active.name}</span> to confirm.
+            </label>
+            <input
+              id="delete-confirm"
+              autoFocus
+              autoComplete="off"
+              value={deleteText}
+              onChange={(e) => setDeleteText(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' && deleteText === active.name) deleteProject();
+              }}
+              className={`${inputBase} mt-1 w-full`}
+            />
+            <div className="mt-5 flex justify-end gap-2">
+              <button
+                onClick={() => setShowDelete(false)}
+                className="rounded-md border border-slate-300 bg-white px-4 py-2 hover:bg-slate-50"
+              >
+                Cancel
+              </button>
+              <button
+                disabled={deleteText !== active.name}
+                onClick={deleteProject}
+                className="rounded-md bg-rose-600 px-4 py-2 font-medium text-white hover:bg-rose-700 disabled:cursor-not-allowed disabled:opacity-40"
+              >
+                Delete this project
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
