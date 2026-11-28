@@ -41,6 +41,64 @@ const projectN = (p) => {
   return Math.max(designSum, p.freeTotal || 0, p.statements?.length || 0, seen);
 };
 
+// ---------- Import helpers ----------
+const isInt = Number.isInteger;
+
+// Turns an imported object into a clean project record, or throws an Error with a readable message.
+// Extra arrays added by the JSON export (participantNames, sortValues, ...) are dropped.
+const normalizeProject = (raw, label) => {
+  if (!raw || typeof raw !== 'object') throw new Error(`${label}: not a project object.`);
+  const name = typeof raw.name === 'string' ? raw.name.trim() : '';
+  if (!name) throw new Error(`${label}: missing project name.`);
+  if (!raw.design || typeof raw.design !== 'object') throw new Error(`“${name}”: missing design.`);
+  if (!Array.isArray(raw.participants)) throw new Error(`“${name}”: missing participants list.`);
+
+  const design = {};
+  for (const [k, v] of Object.entries(raw.design)) {
+    if (!isInt(Number(k)) || !isInt(v) || v < 0)
+      throw new Error(`“${name}”: invalid design entry for column ${k}.`);
+    design[k] = v;
+  }
+
+  const seen = new Set();
+  const participants = raw.participants.map((p, i) => {
+    const pName = typeof p?.name === 'string' ? p.name.trim() : '';
+    if (!pName) throw new Error(`“${name}”: participant ${i + 1} has no name.`);
+    if (seen.has(pName.toLowerCase()))
+      throw new Error(`“${name}”: participant “${pName}” appears twice.`);
+    seen.add(pName.toLowerCase());
+    if (!p.sorts || typeof p.sorts !== 'object')
+      throw new Error(`“${name}”: participant “${pName}” has no sort data.`);
+    const sorts = {};
+    for (const [col, stmts] of Object.entries(p.sorts)) {
+      if (!isInt(Number(col)) || !Array.isArray(stmts) || !stmts.every((x) => isInt(x) && x >= 1))
+        throw new Error(`“${name}”: invalid sort data for “${pName}” in column ${col}.`);
+      sorts[col] = stmts;
+    }
+    return { ...p, name: pName, sorts };
+  });
+
+  return {
+    name,
+    type: raw.type === 'free' ? 'free' : 'forced',
+    design,
+    freeColumns: Array.isArray(raw.freeColumns) ? raw.freeColumns.filter(isInt) : [],
+    freeTotal: isInt(raw.freeTotal) ? raw.freeTotal : 0,
+    statements: Array.isArray(raw.statements) ? raw.statements.map(String) : [],
+    participants,
+    complete: !!raw.complete,
+    createdAt: raw.createdAt || Date.now(),
+  };
+};
+
+// Accepts a backup file ({projects: [...]}), an array of projects, or one project's JSON export
+const extractProjects = (parsed) => {
+  if (Array.isArray(parsed)) return parsed;
+  if (parsed && Array.isArray(parsed.projects)) return parsed.projects;
+  if (parsed && typeof parsed === 'object' && parsed.name) return [parsed];
+  throw new Error('This file doesn’t look like a Q sort project or backup.');
+};
+
 // Full JSON export: the stored project plus convenient array views of the data
 const buildExport = (p) => {
   const n = projectN(p);
@@ -82,6 +140,7 @@ export default function QSortDataEntry() {
   const [draftFreeCols, setDraftFreeCols] = useState([]);
   const [showDelete, setShowDelete] = useState(false);
   const [deleteText, setDeleteText] = useState('');
+  const [ioMessage, setIoMessage] = useState(null); // { kind: "ok" | "error", text }
   const [draftStmtText, setDraftStmtText] = useState('');
 
   // Statement text for the active (saved) project
@@ -99,6 +158,7 @@ export default function QSortDataEntry() {
   const participantRef = useRef(null);
   const addBtnRef = useRef(null);
   const cellRefs = useRef({});
+  const importInputRef = useRef(null);
 
   // One-time import of data saved by the old localStorage version
   useEffect(() => {
@@ -456,7 +516,7 @@ export default function QSortDataEntry() {
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = filename;
+    a.download = filename.replace(/[\\/:*?"<>|]+/g, '_');
     a.click();
     URL.revokeObjectURL(url);
   };
@@ -488,6 +548,92 @@ export default function QSortDataEntry() {
       JSON.stringify(buildExport(active), null, 2),
       'application/json'
     );
+  };
+
+  // One statement per line, the same format the statements textarea accepts
+  const exportStatements = () => {
+    if (!active) return;
+    download(`${active.name}-statements.txt`, statements.join('\n') + '\n', 'text/plain');
+  };
+
+  // Backup of every project in one file
+  const exportAll = () => {
+    const stamp = new Date().toISOString();
+    download(
+      `qsort-backup-${stamp.slice(0, 10)}.json`,
+      JSON.stringify(
+        { format: 'qsort-backup', version: 1, exportedAt: stamp, projects: projectList },
+        null,
+        2
+      ),
+      'application/json'
+    );
+    setIoMessage({
+      kind: 'ok',
+      text: `Exported ${projectList.length} project${projectList.length === 1 ? '' : 's'}.`,
+    });
+  };
+
+  const handleImportFile = async (e) => {
+    const file = e.target.files?.[0];
+    e.target.value = ''; // allow picking the same file again later
+    if (!file) return;
+    try {
+      const parsed = JSON.parse(await file.text());
+      const incoming = extractProjects(parsed).map((raw, i) =>
+        normalizeProject(raw, `Project ${i + 1}`)
+      );
+      if (incoming.length === 0) throw new Error('The file contains no projects.');
+      const names = incoming.map((p) => p.name);
+      if (new Set(names).size !== names.length)
+        throw new Error('The file contains two projects with the same name.');
+
+      let toWrite = incoming;
+      const conflicts = incoming.filter((p) => projects[p.name]);
+      if (conflicts.length) {
+        const replace = window.confirm(
+          `These projects already exist: ${conflicts.map((p) => `“${p.name}”`).join(', ')}.\n\n` +
+            'OK = replace them with the imported versions\nCancel = skip them and keep what you have now'
+        );
+        if (!replace) toWrite = incoming.filter((p) => !projects[p.name]);
+      }
+      if (toWrite.length === 0) {
+        setIoMessage({
+          kind: 'ok',
+          text: 'Nothing imported: all projects in the file already exist and were kept.',
+        });
+        return;
+      }
+
+      await db.projects.bulkPut(toWrite);
+
+      // Keep the screen in sync if the open project was just replaced
+      const replacedActive = active && toWrite.find((p) => p.name === active.name);
+      if (replacedActive) {
+        clearTimeout(stmtTimer.current);
+        resetEntry();
+        setStmtText(replacedActive.statements.join('\n'));
+        setStmtStatus('');
+      }
+      if (toWrite.length === 1) {
+        if (!replacedActive) resetEntry();
+        setMode('continue');
+        setSelectedName(toWrite[0].name);
+      }
+      const skipped = incoming.length - toWrite.length;
+      setIoMessage({
+        kind: 'ok',
+        text: `Imported ${toWrite.length} project${toWrite.length === 1 ? '' : 's'}${skipped ? ` (skipped ${skipped})` : ''}.`,
+      });
+    } catch (err) {
+      setIoMessage({
+        kind: 'error',
+        text:
+          err instanceof SyntaxError
+            ? 'That file isn’t valid JSON.'
+            : `Import failed: ${err.message}`,
+      });
+    }
   };
 
   const inputBase =
@@ -557,6 +703,50 @@ export default function QSortDataEntry() {
                 </option>
               ))}
             </select>
+          )}
+        </div>
+
+        {/* Backup / restore */}
+        <div className="space-y-2">
+          <div className="flex flex-wrap items-center gap-2 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-sm">
+            <span className="font-medium text-slate-700">Backup</span>
+            <button
+              type="button"
+              onClick={exportAll}
+              disabled={projectNames.length === 0}
+              className="rounded-md border border-slate-300 bg-white px-3 py-1.5 hover:bg-slate-100 disabled:cursor-not-allowed disabled:opacity-40"
+            >
+              Export all projects
+            </button>
+            <button
+              type="button"
+              onClick={() => importInputRef.current?.click()}
+              className="rounded-md border border-slate-300 bg-white px-3 py-1.5 hover:bg-slate-100"
+            >
+              Import from JSON file…
+            </button>
+            <input
+              ref={importInputRef}
+              type="file"
+              accept=".json,application/json"
+              className="hidden"
+              onChange={handleImportFile}
+            />
+            <span className="text-xs text-slate-500">
+              Import accepts a backup of all projects or a single project’s JSON download.
+            </span>
+          </div>
+          {ioMessage && (
+            <p
+              role={ioMessage.kind === 'error' ? 'alert' : 'status'}
+              className={`rounded-md border px-3 py-2 text-sm ${
+                ioMessage.kind === 'error'
+                  ? 'border-rose-200 bg-rose-50 text-rose-800'
+                  : 'border-emerald-200 bg-emerald-50 text-emerald-800'
+              }`}
+            >
+              {ioMessage.text}
+            </p>
           )}
         </div>
 
@@ -758,7 +948,19 @@ export default function QSortDataEntry() {
               className="rounded-md bg-emerald-700 px-4 py-2 text-white hover:bg-emerald-800"
               onClick={exportCsv}
             >
-              Download CSV
+              Download sorts (CSV)
+            </button>
+            <button
+              className="rounded-md bg-emerald-700 px-4 py-2 text-white hover:bg-emerald-800 disabled:cursor-not-allowed disabled:opacity-40"
+              onClick={exportStatements}
+              disabled={statements.length === 0}
+              title={
+                statements.length === 0
+                  ? 'No statements have been entered for this project'
+                  : undefined
+              }
+            >
+              Download statements (TXT)
             </button>
             <button
               className="rounded-md bg-emerald-700 px-4 py-2 text-white hover:bg-emerald-800"
