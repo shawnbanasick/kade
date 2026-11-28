@@ -29,6 +29,7 @@ import createXlsxFileT2 from './excelLogic/createXlsxFileT2';
 import createResultsXlsxFile from './excelLogic/createResultsXlsxFile';
 import createQuinceOtherResultsFile from './quinceLogic/createQuinceOtherResultsFile';
 import createResultsZipFile from './zipLogic/createResultsZipFile';
+import createKadeZipManualFile from './zipLogic/createKadeZipManualFile';
 
 const fs = require('fs');
 
@@ -296,6 +297,9 @@ if (!gotTheLock) {
             break;
           case 'QuinceResults':
             await createQuinceOtherResultsFile(dataContent);
+            break;
+          case 'kade-zip-manual':
+            await createKadeZipManualFile(dataContent);
             break;
           default:
             console.warn('Unknown large-data type:', dataContent.type);

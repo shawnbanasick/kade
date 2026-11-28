@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import Dexie from 'dexie';
 import { useLiveQuery } from 'dexie-react-hooks';
+import { useTranslation } from 'react-i18next';
 
 // ---------- Database ----------
 const db = new Dexie('QSortDB');
@@ -123,6 +124,7 @@ const buildExport = (p) => {
 };
 
 export default function QSortDataEntry() {
+  const { t } = useTranslation();
   const projectList = useLiveQuery(() => db.projects.toArray(), []);
   const loading = projectList === undefined;
   const projects = useMemo(
@@ -141,7 +143,12 @@ export default function QSortDataEntry() {
   const [showDelete, setShowDelete] = useState(false);
   const [deleteText, setDeleteText] = useState('');
   const [ioMessage, setIoMessage] = useState(null); // { kind: "ok" | "error", text }
+  const [analysisNote, setAnalysisNote] = useState(false);
   const [draftStmtText, setDraftStmtText] = useState('');
+
+  // Button color state for download buttons (to show that the download has been triggered)
+  const [downloadZipBtnColor, setDownloadZipBtnColor] = useState('bg-grey-button');
+  const [downloadJsonBtnColor, setDownloadJsonBtnColor] = useState('bg-grey-button');
 
   // Statement text for the active (saved) project
   const [stmtText, setStmtText] = useState('');
@@ -360,15 +367,16 @@ export default function QSortDataEntry() {
           return setError(
             `Statement numbers must be between 1 and ${maxStmt} (column ${fmtCol(c)}).`
           );
-        if (valueCounts[v] > 1) return setError(`Statement ${v} is used more than once.`);
+        if (valueCounts[v] > 1)
+          return setError(`${t('Statement is used more than once')}:  ${v} (column ${fmtCol(c)}).`);
       }
     }
     // Free design: all statements must be placed
     if (isFree) {
-      if (filledCount === 0) return setError('Enter at least one statement number.');
+      if (filledCount === 0) return setError(t('Enter at least one statement number.'));
       if (expectedTotal > 0 && filledCount !== expectedTotal)
         return setError(
-          `${filledCount} of ${expectedTotal} statements placed. Every statement must be placed exactly once.`
+          `${t('Statements placed')} ${filledCount} / ${expectedTotal} . ${t('Every statement must be placed exactly once.')}`
         );
     }
 
@@ -376,11 +384,13 @@ export default function QSortDataEntry() {
     if (isFree && designSum > 0) {
       const diffs = activeCols
         .filter((c) => placedIn(c) !== (design[c] || 0))
-        .map((c) => `${fmtCol(c)} (placed ${placedIn(c)}, expected ${design[c] || 0})`);
+        .map(
+          (c) => `${fmtCol(c)} (${t('placed')} ${placedIn(c)}, ${t('expected')} ${design[c] || 0})`
+        );
       if (
         diffs.length > 0 &&
         !window.confirm(
-          `This sort differs from the idealized pattern in: ${diffs.join(', ')}.\n\nSave anyway?`
+          `This sort differs from the idealized pattern in: ${diffs.join(', ')}.${t('Do you want to save anyway?')}`
         )
       )
         return;
@@ -437,17 +447,17 @@ export default function QSortDataEntry() {
     if (!active) {
       setStmtText(draftStmtText);
       setDraftStmtText('');
-      setMode('continue');
+      setMode(t('continue'));
       setSelectedName(projectName);
     }
     const wasEditing = !!editingName;
     resetEntry();
-    setNotice(wasEditing ? `Updated ${pName}.` : `Saved ${pName}.`);
+    setNotice(wasEditing ? `${t('Updated')} ${pName}.` : `${t('Saved')} ${pName}.`);
     setTimeout(() => participantRef.current?.focus(), 0);
   };
 
   const deleteParticipant = async (pName) => {
-    if (!active || !window.confirm(`Remove ${pName} from ${active.name}?`)) return;
+    if (!active || !window.confirm(`${t('Remove')} ${pName} ${t('from')} ${active.name}?`)) return;
     await updateProject(active.name, (p) => ({
       ...p,
       participants: p.participants.filter((x) => x.name !== pName),
@@ -459,7 +469,11 @@ export default function QSortDataEntry() {
     if (!active) return;
     resetEntry();
     await updateProject(active.name, (p) => ({ ...p, complete: value }));
-    setNotice(value ? 'Project data input marked complete.' : 'Project reopened for data entry.');
+    setNotice(
+      value
+        ? `${t('Project data input marked complete.')}`
+        : `${t('Project reopened for data entry.')}`
+    );
   };
 
   const openDelete = () => {
@@ -481,12 +495,12 @@ export default function QSortDataEntry() {
 
   // ----- Statements textarea (auto-saves to the project) -----
   const saveStatements = async (projectName, text) => {
-    setStmtStatus('Saving…');
+    setStmtStatus(t('Saving…'));
     try {
       await updateProject(projectName, (p) => ({ ...p, statements: parseStatements(text) }));
-      setStmtStatus('Saved');
+      setStmtStatus(t('Saved'));
     } catch {
-      setStmtStatus('Save failed');
+      setStmtStatus(t('Save failed'));
     }
   };
 
@@ -497,14 +511,14 @@ export default function QSortDataEntry() {
       return;
     }
     setStmtText(v);
-    setStmtStatus('Unsaved changes…');
+    setStmtStatus(t('Unsaved changes…'));
     clearTimeout(stmtTimer.current);
     const projectName = active.name;
     stmtTimer.current = setTimeout(() => saveStatements(projectName, v), 600);
   };
 
   const handleStmtBlur = () => {
-    if (active && stmtStatus === 'Unsaved changes…') {
+    if (active && stmtStatus === t('Unsaved changes…')) {
       clearTimeout(stmtTimer.current);
       saveStatements(active.name, stmtText);
     }
@@ -521,25 +535,55 @@ export default function QSortDataEntry() {
     URL.revokeObjectURL(url);
   };
 
-  // CSV: one row per participant, one column per statement, value = column score
-  const exportCsv = () => {
+  // KADE Zip: a zip file containing the project data in a format suitable for analysis
+  const exportKadeZip = async () => {
+    // TODO: Implement the KADE Zip export functionality
+
     if (!active) return;
-    const n = projectN(active);
-    const header = ['participant', ...Array.from({ length: n }, (_, i) => `S${i + 1}`)];
-    const rows = active.participants.map((p) => {
-      const scores = new Array(n).fill('');
-      for (const [col, stmts] of Object.entries(p.sorts)) {
-        stmts.forEach((s) => (scores[s - 1] = col));
-      }
-      return [p.name, ...scores];
-    });
-    const esc = (v) => `"${String(v).replace(/"/g, '""')}"`;
-    download(
-      `${active.name}.csv`,
-      [header, ...rows].map((r) => r.map(esc).join(',')).join('\n'),
-      'text/csv'
-    );
+    const data = buildExport(active);
+    const zipDataContent = {
+      type: 'kade-zip-manual',
+      data: structuredClone(data),
+    };
+
+    const newBlob = new Blob([JSON.stringify(zipDataContent)], { type: 'text/plain' });
+    const arrayBuffer = await new Response(newBlob).arrayBuffer();
+
+    try {
+      await window.bridge.sendLargeData('large-data', arrayBuffer, 'path');
+
+      // console.log('Exporting Zip Results file:', status);
+
+      // if (status === 'success') {
+      //   setDownloadZipBtnColor('bg-[#a5d6a7]');
+      // } else if (status === 'cancelled') {
+      //   setDownloadZipBtnColor('bg-grey-button'); // Reset to default color on cancel
+      // }
+    } catch (error) {
+      console.error('Failed to export Zip Results file:', error);
+      setDownloadZipBtnColor('bg-[#ef9a9a]'); // Set to red on error
+    }
   };
+
+  // CSV: one row per participant, one column per statement, value = column score
+  // const exportCsv = () => {
+  //   if (!active) return;
+  //   const n = projectN(active);
+  //   const header = [t('participant'), ...Array.from({ length: n }, (_, i) => `S${i + 1}`)];
+  //   const rows = active.participants.map((p) => {
+  //     const scores = new Array(n).fill('');
+  //     for (const [col, stmts] of Object.entries(p.sorts)) {
+  //       stmts.forEach((s) => (scores[s - 1] = col));
+  //     }
+  //     return [p.name, ...scores];
+  //   });
+  //   const esc = (v) => `"${String(v).replace(/"/g, '""')}"`;
+  //   download(
+  //     `${active.name}.csv`,
+  //     [header, ...rows].map((r) => r.map(esc).join(',')).join('\n'),
+  //     'text/csv'
+  //   );
+  // };
 
   const exportJson = () => {
     if (!active) return;
@@ -548,6 +592,17 @@ export default function QSortDataEntry() {
       JSON.stringify(buildExport(active), null, 2),
       'application/json'
     );
+    setDownloadJsonBtnColor('bg-[#a5d6a7]');
+  };
+
+  // Hands the project to the analysis side. Same object as the JSON download.
+  const loadForAnalysis = () => {
+    if (!active) return;
+    const data = buildExport(active);
+    // TODO: replace with the Zustand store action, e.g. useStore.getState().setAnalysisData(data)
+    console.log('Project data for analysis:', data);
+    setAnalysisNote(true);
+    setTimeout(() => setAnalysisNote(false), 3000);
   };
 
   // One statement per line, the same format the statements textarea accepts
@@ -560,7 +615,7 @@ export default function QSortDataEntry() {
   const exportAll = () => {
     const stamp = new Date().toISOString();
     download(
-      `qsort-backup-${stamp.slice(0, 10)}.json`,
+      `KADE-qsort-backup-${stamp.slice(0, 10)}.json`,
       JSON.stringify(
         { format: 'qsort-backup', version: 1, exportedAt: stamp, projects: projectList },
         null,
@@ -570,7 +625,7 @@ export default function QSortDataEntry() {
     );
     setIoMessage({
       kind: 'ok',
-      text: `Exported ${projectList.length} project${projectList.length === 1 ? '' : 's'}.`,
+      text: `${t('Exported')} ${projectList.length} ${t('project')}${projectList.length === 1 ? '' : 's'}.`,
     });
   };
 
@@ -592,15 +647,15 @@ export default function QSortDataEntry() {
       const conflicts = incoming.filter((p) => projects[p.name]);
       if (conflicts.length) {
         const replace = window.confirm(
-          `These projects already exist: ${conflicts.map((p) => `“${p.name}”`).join(', ')}.\n\n` +
-            'OK = replace them with the imported versions\nCancel = skip them and keep what you have now'
+          `${t('These projects already exist:')} ${conflicts.map((p) => `“${p.name}”`).join(', ')}.\n\n` +
+            `${t('OK = replace them with the imported versions')}\n${t('Cancel = skip them and keep what you have now')}`
         );
         if (!replace) toWrite = incoming.filter((p) => !projects[p.name]);
       }
       if (toWrite.length === 0) {
         setIoMessage({
           kind: 'ok',
-          text: 'Nothing imported: all projects in the file already exist and were kept.',
+          text: `${t('Nothing imported: all projects in the file already exist and were kept.')}`,
         });
         return;
       }
@@ -630,656 +685,700 @@ export default function QSortDataEntry() {
         kind: 'error',
         text:
           err instanceof SyntaxError
-            ? 'That file isn’t valid JSON.'
-            : `Import failed: ${err.message}`,
+            ? `${t('That file isn’t valid JSON.')}`
+            : `${t('Import failed:')} ${err.message}`,
       });
     }
   };
 
   const inputBase =
-    'rounded-md border border-slate-300 bg-white px-3 py-2 text-slate-900 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-200 disabled:bg-slate-100 disabled:text-slate-500';
+    'rounded-md border border-slate-300 bg-white px-3 py-2 text-slate-900 shadow-sm focus:border-[#1E88E5] focus:outline-none focus:ring-2 focus:ring-[#1E88E5]/30 disabled:bg-[#d6dbe0] disabled:text-slate-500 disabled:cursor-not-allowed';
 
   if (loading) {
-    return <div className="mx-auto max-w-5xl p-6 text-slate-500">Loading projects…</div>;
+    return <div className="mx-auto max-w-[1324px] p-6 text-slate-500">Loading projects…</div>;
   }
 
   const colBadge = (c) =>
     c < 0
       ? 'bg-rose-100 text-rose-800'
       : c === 0
-        ? 'bg-slate-200 text-slate-700'
-        : 'bg-emerald-100 text-emerald-800';
+        ? 'bg-[#d6dbe0] text-slate-700'
+        : 'bg-[#a5d6a7] text-slate-900';
 
   return (
-    <div className="mx-auto max-w-5xl space-y-8 p-6 text-slate-800">
-      <header>
-        <h1 className="text-2xl font-semibold tracking-tight">Q sort data entry</h1>
-        <p className="mt-1 text-sm text-slate-600">
-          Enter each participant’s sorted statements by column. Data is stored in this browser’s
-          IndexedDB.
-        </p>
-      </header>
-
-      {/* 1. New vs continue */}
-      <section className="space-y-3">
-        <h2 className="text-lg font-medium">Project</h2>
-        <div className="flex flex-wrap items-center gap-4">
-          <label className="flex items-center gap-2">
-            <input
-              type="radio"
-              name="mode"
-              checked={mode === 'new'}
-              onChange={() => handleModeChange('new')}
-            />
-            Start a new project
-          </label>
-          <label className="flex items-center gap-2">
-            <input
-              type="radio"
-              name="mode"
-              checked={mode === 'continue'}
-              disabled={projectNames.length === 0}
-              onChange={() => handleModeChange('continue')}
-            />
-            Continue a project
-            {projectNames.length === 0 && (
-              <span className="text-xs text-slate-500">(none saved yet)</span>
-            )}
-          </label>
-          {mode === 'continue' && (
-            <select
-              className={inputBase}
-              value={selectedName}
-              onChange={(e) => {
-                setSelectedName(e.target.value);
-                resetEntry();
-                setNotice('');
-              }}
-            >
-              {projectNames.map((n) => (
-                <option key={n} value={n}>
-                  {n} ({projects[n].participants.length} participants
-                  {projects[n].complete ? ', complete' : ''})
-                </option>
-              ))}
-            </select>
-          )}
-        </div>
-
-        {/* Backup / restore */}
-        <div className="space-y-2">
-          <div className="flex flex-wrap items-center gap-2 rounded-md border border-slate-200 bg-slate-50 px-3 py-2 text-sm">
-            <span className="font-medium text-slate-700">Backup</span>
-            <button
-              type="button"
-              onClick={exportAll}
-              disabled={projectNames.length === 0}
-              className="rounded-md border border-slate-300 bg-white px-3 py-1.5 hover:bg-slate-100 disabled:cursor-not-allowed disabled:opacity-40"
-            >
-              Export all projects
-            </button>
-            <button
-              type="button"
-              onClick={() => importInputRef.current?.click()}
-              className="rounded-md border border-slate-300 bg-white px-3 py-1.5 hover:bg-slate-100"
-            >
-              Import from JSON file…
-            </button>
-            <input
-              ref={importInputRef}
-              type="file"
-              accept=".json,application/json"
-              className="hidden"
-              onChange={handleImportFile}
-            />
-            <span className="text-xs text-slate-500">
-              Import accepts a backup of all projects or a single project’s JSON download.
-            </span>
-          </div>
-          {ioMessage && (
-            <p
-              role={ioMessage.kind === 'error' ? 'alert' : 'status'}
-              className={`rounded-md border px-3 py-2 text-sm ${
-                ioMessage.kind === 'error'
-                  ? 'border-rose-200 bg-rose-50 text-rose-800'
-                  : 'border-emerald-200 bg-emerald-50 text-emerald-800'
-              }`}
-            >
-              {ioMessage.text}
-            </p>
-          )}
-        </div>
-
-        {/* 2. Project name */}
-        <div>
-          <label className="mb-1 block text-sm font-medium" htmlFor="project-name">
-            Project name
-          </label>
-          <input
-            id="project-name"
-            className={`${inputBase} w-full max-w-md`}
-            value={name}
-            readOnly={designLocked}
-            disabled={designLocked}
-            placeholder="e.g. Teacher attitudes study"
-            onChange={(e) => setDraftName(e.target.value)}
-          />
-        </div>
-      </section>
-
-      {/* 3. Design */}
-      <section className="space-y-3">
-        <div className="flex flex-wrap items-baseline justify-between gap-2">
-          <h2 className="text-lg font-medium">Q sort design</h2>
-          <p className="text-sm text-slate-600">
-            Statements in total:{' '}
-            <span className="font-semibold text-slate-900">{expectedTotal || '—'}</span>
-            {designLocked && (
-              <span className="ml-2 text-slate-500">(design locked once the project is saved)</span>
-            )}
+    <div id="manualPanel" className="overflow-y-auto h-full mb-10 pb-8">
+      <div className="mx-auto max-w-[1324px] space-y-8 p-6 text-slate-800">
+        <header>
+          <h1 className="text-4xl font-semibold tracking-tight text-slate-900">
+            Q Sort Data Entry
+          </h1>
+          <p className="mt-1 text-sm w-180 text-slate-600">
+            Accepts both forced placement and free placement Q sorts. Project data is automatically
+            stored locally on your device. If you want to use the project data on another computer,
+            export it to a JSON backup file and import it on the new computer. You can also export
+            the individual project data in KADE Zip format.
           </p>
-        </div>
+        </header>
 
-        <div className="flex flex-wrap gap-x-6 gap-y-2">
-          <label className="flex items-center gap-2">
-            <input
-              type="radio"
-              name="design-type"
-              disabled={designLocked}
-              checked={!isFree}
-              onChange={() => handleTypeChange('forced')}
-            />
-            Forced distribution (fixed pattern)
-          </label>
-          <label className="flex items-center gap-2">
-            <input
-              type="radio"
-              name="design-type"
-              disabled={designLocked}
-              checked={isFree}
-              onChange={() => handleTypeChange('free')}
-            />
-            Free distribution (choose columns)
-          </label>
-        </div>
-
-        {!isFree ? (
-          <div className="overflow-x-auto pb-2">
-            <div className="flex min-w-max gap-1">
-              {COLUMNS.map((c) => (
-                <label key={c} className="flex w-14 flex-col items-center gap-1">
-                  <span
-                    className={`text-sm font-semibold ${
-                      c < 0 ? 'text-rose-700' : c === 0 ? 'text-slate-600' : 'text-emerald-700'
-                    }`}
-                  >
-                    {fmtCol(c)}
-                  </span>
-                  <input
-                    type="number"
-                    min="0"
-                    max="99"
-                    aria-label={`Number of statements in column ${fmtCol(c)}`}
-                    className={`${inputBase} w-full px-1 py-2 text-center`}
-                    value={design[c] || ''}
-                    placeholder="0"
-                    disabled={designLocked}
-                    onChange={(e) => handleDesignChange(c, e.target.value)}
-                  />
-                </label>
-              ))}
-            </div>
+        {/* 1. New vs continue */}
+        <section className="space-y-3">
+          <h2 className="text-3xl font-medium">Project</h2>
+          <div className="flex flex-wrap items-center gap-4">
+            <label className="flex items-center gap-2">
+              <input
+                type="radio"
+                className="accent-[#1E88E5]"
+                name="mode"
+                checked={mode === 'new'}
+                onChange={() => handleModeChange('new')}
+              />
+              Start a new project
+            </label>
+            <label className="flex items-center gap-2">
+              <input
+                type="radio"
+                className="accent-[#1E88E5]"
+                name="mode"
+                checked={mode === 'continue'}
+                disabled={projectNames.length === 0}
+                onChange={() => handleModeChange('continue')}
+              />
+              Continue a project
+              {projectNames.length === 0 && (
+                <span className="text-xs text-slate-500">(none saved yet)</span>
+              )}
+            </label>
+            {mode === 'continue' && (
+              <select
+                className={inputBase}
+                value={selectedName}
+                onChange={(e) => {
+                  setSelectedName(e.target.value);
+                  resetEntry();
+                  setNotice('');
+                }}
+              >
+                {projectNames.map((n) => (
+                  <option key={n} value={n}>
+                    {t('Name')}: {n} ({projects[n].participants.length} {t('participants')}
+                    {projects[n].complete ? ', complete' : ''})
+                  </option>
+                ))}
+              </select>
+            )}
           </div>
-        ) : (
-          <div className="space-y-5">
-            <div className="space-y-2">
-              <p className="text-sm text-slate-600">
-                <span className="font-medium text-slate-800">Step 1.</span> Select the columns
-                participants may use.
+
+          {/* Backup / restore */}
+          <div className="space-y-2">
+            <div className="flex flex-wrap items-center gap-2 rounded-md border border-[#d6dbe0] bg-[#d6dbe0]/30 px-3 py-2 text-sm">
+              <span className="font-medium text-slate-700">Backup</span>
+              <button
+                type="button"
+                onClick={exportAll}
+                disabled={projectNames.length === 0}
+                className="rounded-md border border-[#1E88E5] bg-white px-3 py-1.5 text-[#1E88E5] hover:bg-[#1E88E5]/10 disabled:cursor-not-allowed disabled:border-[#d6dbe0] disabled:bg-[#d6dbe0] disabled:text-slate-500"
+              >
+                {t('Export all projects')}
+              </button>
+              <button
+                type="button"
+                onClick={() => importInputRef.current?.click()}
+                className="rounded-md border border-[#1E88E5] bg-white px-3 py-1.5 text-[#1E88E5] hover:bg-[#1E88E5]/10 disabled:cursor-not-allowed disabled:border-[#d6dbe0] disabled:bg-[#d6dbe0] disabled:text-slate-500"
+              >
+                {t('Import from JSON file…')}
+              </button>
+              <input
+                ref={importInputRef}
+                type="file"
+                accept=".json,application/json"
+                className="hidden"
+                onChange={handleImportFile}
+              />
+              <span className="text-xs text-slate-500">
+                {t('Import accepts a backup of all projects or a single project’s JSON download.')}
+              </span>
+            </div>
+            {ioMessage && (
+              <p
+                role={ioMessage.kind === 'error' ? 'alert' : 'status'}
+                className={`rounded-md border px-3 py-2 text-sm ${
+                  ioMessage.kind === 'error'
+                    ? 'border-rose-200 bg-rose-50 text-rose-800'
+                    : 'border-[#a5d6a7] bg-[#a5d6a7]/30 text-slate-800'
+                }`}
+              >
+                {ioMessage.text}
               </p>
-              <div className="flex flex-wrap gap-1.5">
-                {COLUMNS.map((c) => {
-                  const on = freeCols.includes(c);
-                  return (
-                    <button
-                      key={c}
-                      type="button"
-                      aria-pressed={on}
-                      disabled={designLocked}
-                      onClick={() => toggleFreeCol(c)}
-                      className={`w-12 rounded-md border py-1.5 text-sm font-semibold disabled:cursor-not-allowed ${
-                        on
-                          ? 'border-indigo-600 bg-indigo-600 text-white'
-                          : 'border-slate-300 bg-white text-slate-700 hover:bg-slate-50'
-                      } ${designLocked && !on ? 'opacity-40' : ''}`}
+            )}
+          </div>
+
+          {/* 2. Project name */}
+          <div>
+            <label className="mb-1 block text-sm font-medium" htmlFor="project-name">
+              {t('Project name')}
+            </label>
+            <input
+              id="project-name"
+              className={`${inputBase} w-full max-w-md`}
+              value={name}
+              readOnly={designLocked}
+              disabled={designLocked}
+              placeholder={t('e.g. Teacher attitudes study')}
+              onChange={(e) => setDraftName(e.target.value)}
+            />
+          </div>
+        </section>
+
+        {/* 3. Design */}
+        <section className="space-y-3">
+          <div className="flex flex-wrap items-baseline justify-between gap-2">
+            <h2 className="text-3xl font-medium mt-5 ">Q sort design</h2>
+            <p className="text-sm text-slate-600">
+              Statements in total:{' '}
+              <span className="font-semibold text-slate-900">{expectedTotal || '—'}</span>
+              {designLocked && (
+                <span className="ml-2 text-slate-500">
+                  ({t('design locked once the project is saved')})
+                </span>
+              )}
+            </p>
+          </div>
+
+          <div className="flex flex-wrap gap-x-6 gap-y-2">
+            <label className="flex items-center gap-2">
+              <input
+                type="radio"
+                className="accent-[#1E88E5]"
+                name="design-type"
+                disabled={designLocked}
+                checked={!isFree}
+                onChange={() => handleTypeChange('forced')}
+              />
+              {t('Forced distribution (fixed pattern)')}
+            </label>
+            <label className="flex items-center gap-2">
+              <input
+                type="radio"
+                className="accent-[#1E88E5]"
+                name="design-type"
+                disabled={designLocked}
+                checked={isFree}
+                onChange={() => handleTypeChange('free')}
+              />
+              {t('Free distribution (choose columns)')}
+            </label>
+          </div>
+
+          {!isFree ? (
+            <div className="overflow-x-auto pb-2">
+              <div className="flex min-w-max gap-1">
+                {COLUMNS.map((c) => (
+                  <label key={c} className="flex w-14 flex-col items-center gap-1">
+                    <span
+                      className={`text-sm font-semibold ${
+                        c < 0 ? 'text-rose-700' : c === 0 ? 'text-slate-600' : 'text-emerald-700'
+                      }`}
                     >
                       {fmtCol(c)}
-                    </button>
-                  );
-                })}
+                    </span>
+                    <input
+                      type="number"
+                      min="0"
+                      max="99"
+                      aria-label={`${t('Number of statements in column')} ${fmtCol(c)}`}
+                      className={`${inputBase} w-full px-1 py-2 text-center`}
+                      value={design[c] || ''}
+                      placeholder="0"
+                      disabled={designLocked}
+                      onChange={(e) => handleDesignChange(c, e.target.value)}
+                    />
+                  </label>
+                ))}
               </div>
-              {!designLocked && (
-                <div className="flex flex-wrap gap-2 text-sm">
-                  <button
-                    type="button"
-                    className="rounded border border-slate-300 px-2 py-1 hover:bg-slate-50"
-                    onClick={() => {
-                      setDraftFreeCols(COLUMNS.filter((c) => c >= -6 && c <= 6));
-                      setSorts({});
-                    }}
-                  >
-                    −6 to +6
-                  </button>
-                  <button
-                    type="button"
-                    className="rounded border border-slate-300 px-2 py-1 hover:bg-slate-50"
-                    onClick={() => {
-                      setDraftFreeCols([]);
-                      setDraftDesign(emptyDesign());
-                      setSorts({});
-                    }}
-                  >
-                    Clear
-                  </button>
+            </div>
+          ) : (
+            <div className="space-y-5">
+              <div className="space-y-2">
+                <p className="text-sm text-slate-600">
+                  <span className="font-medium text-slate-800">Step 1.</span> Select the columns
+                  participants may use.
+                </p>
+                <div className="flex flex-wrap gap-1.5">
+                  {COLUMNS.map((c) => {
+                    const on = freeCols.includes(c);
+                    return (
+                      <button
+                        key={c}
+                        type="button"
+                        aria-pressed={on}
+                        disabled={designLocked}
+                        onClick={() => toggleFreeCol(c)}
+                        className={`w-12 rounded-md border py-1.5 text-sm font-semibold disabled:cursor-not-allowed ${
+                          on
+                            ? 'border-[#1E88E5] bg-[#1E88E5] text-white'
+                            : 'border-[#d6dbe0] bg-[#d6dbe0] text-slate-700 hover:brightness-95'
+                        } ${designLocked && !on ? 'opacity-40' : ''}`}
+                      >
+                        {fmtCol(c)}
+                      </button>
+                    );
+                  })}
                 </div>
+                {!designLocked && (
+                  <div className="flex flex-wrap gap-2 text-sm">
+                    <button
+                      type="button"
+                      className="rounded bg-[#d6dbe0] px-2 py-1 hover:brightness-95"
+                      onClick={() => {
+                        setDraftFreeCols(COLUMNS.filter((c) => c >= -6 && c <= 6));
+                        setSorts({});
+                      }}
+                    >
+                      −6 to +6
+                    </button>
+                    <button
+                      type="button"
+                      className="rounded bg-[#d6dbe0] px-2 py-1 hover:brightness-95"
+                      onClick={() => {
+                        setDraftFreeCols([]);
+                        setDraftDesign(emptyDesign());
+                        setSorts({});
+                      }}
+                    >
+                      {t('Clear')}
+                    </button>
+                  </div>
+                )}
+              </div>
+
+              <div className="space-y-2">
+                <p className="text-sm text-slate-600">
+                  <span className="font-medium text-slate-800">{t('Step 2.')}</span>
+                  {t(
+                    'Enter the idealized sort pattern: the number of statements you expect in each selected column. Its total sets the number of statements, and every participant’s sort is checked against it (a sort that deviates from the pattern is allowed only after you confirm)).'
+                  )}
+                </p>
+                {designLocked && designSum === 0 && (
+                  <p className="text-sm text-slate-500">
+                    {t(
+                      'This project was saved before idealized patterns were supported, so it has none.'
+                    )}
+                  </p>
+                )}
+                {activeCols.length === 0 ? (
+                  <p className="rounded-md border border-dashed border-slate-300 p-3 text-sm text-slate-500">
+                    {t('Select columns above and a count box for each will appear here.')}
+                  </p>
+                ) : (
+                  <div className="overflow-x-auto pb-2">
+                    <div className="flex min-w-max gap-1">
+                      {activeCols.map((c) => (
+                        <label key={c} className="flex w-14 flex-col items-center gap-1">
+                          <span
+                            className={`text-sm font-semibold ${
+                              c < 0
+                                ? 'text-rose-700'
+                                : c === 0
+                                  ? 'text-slate-600'
+                                  : 'text-emerald-700'
+                            }`}
+                          >
+                            {fmtCol(c)}
+                          </span>
+                          <input
+                            type="number"
+                            min="0"
+                            max="99"
+                            aria-label={t(`Idealized number of statements in column ${fmtCol(c)}`)}
+                            className={`${inputBase} w-full px-1 py-2 text-center`}
+                            value={design[c] || ''}
+                            placeholder="0"
+                            disabled={designLocked}
+                            onChange={(e) => handleDesignChange(c, e.target.value)}
+                          />
+                        </label>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
+        </section>
+
+        {complete ? (
+          <section className="rounded-lg border border-[#a5d6a7] bg-[#a5d6a7]/25 p-4">
+            <p className="font-medium text-slate-900">
+              {`${t('Data input is complete')}: "${active.name}" -  ${t('Participants')}: ${active.participants.length}.`}
+            </p>
+
+            {/* <p className="font-medium text-slate-900">
+              {`${t('Data input is complete')}: ${active.name} ${active.participants.length} ${t('participants')}.`,
+                {
+                  active: {
+                    name: active.name,
+                    participants: active.participants,
+                  },
+                }
+              )}
+            </p> */}
+            <div className="mt-3 flex flex-wrap gap-2">
+              <button
+                className="rounded-md bg-orange-button px-4 py-2 font-medium text-gray-800 hover:brightness-90"
+                onClick={loadForAnalysis}
+              >
+                {t('Load data for analysis')}
+              </button>
+
+              <button
+                className={`rounded-md ${downloadZipBtnColor} px-4 py-2 font-medium text-slate-900 hover:brightness-95`}
+                onClick={exportKadeZip}
+              >
+                {t('Export project data (KADE Zip)')}
+              </button>
+              {/* <button
+                className="rounded-md bg-[#a5d6a7] px-4 py-2 font-medium text-slate-900 hover:brightness-95 disabled:cursor-not-allowed disabled:bg-[#d6dbe0] disabled:text-slate-500"
+                onClick={exportStatements}
+                disabled={statements.length === 0}
+                title={
+                  statements.length === 0
+                    ? 'No statements have been entered for this project'
+                    : undefined
+                }
+              >
+                Download statements (TXT)
+              </button> */}
+              <button
+                className={`rounded-md ${downloadJsonBtnColor} px-4 py-2 font-medium text-slate-900 hover:brightness-95`}
+                onClick={exportJson}
+              >
+                {t('Backup project data (JSON)')}
+              </button>
+
+              <button
+                className="rounded-md bg-[#d6dbe0] px-4 py-2 text-slate-800 hover:brightness-95"
+                onClick={() => setComplete(false)}
+              >
+                {t('Reopen project for data entry')}
+              </button>
+
+              {analysisNote && (
+                <span role="status" className="self-center text-sm text-slate-700">
+                  ✓ {t('Project data saved')}
+                </span>
               )}
             </div>
-
-            <div className="space-y-2">
-              <p className="text-sm text-slate-600">
-                <span className="font-medium text-slate-800">Step 2.</span> Enter the idealized sort
-                pattern: the number of statements you expect in each selected column. Its total sets
-                the number of statements, and every participant’s sort is checked against it (a sort
-                that deviates from the pattern is allowed only after you confirm).
-              </p>
-              {designLocked && designSum === 0 && (
-                <p className="text-sm text-slate-500">
-                  This project was saved before idealized patterns were supported, so it has none.
+          </section>
+        ) : (
+          <>
+            {/* 4. Participant name */}
+            <section className="space-y-2">
+              <h2 className="text-3xl font-medium">{t('Participant Q sort data')}</h2>
+              {editingName && (
+                <p className="rounded-md border border-amber-200 bg-amber-50 px-3 py-2 text-sm text-amber-900">
+                  {t('Editing')} <span className="font-semibold">{editingName}</span>.{' '}
+                  {t('Saving replaces their stored data.')}
                 </p>
               )}
+              <label className="mb-1 block text-sm font-medium" htmlFor="participant-name">
+                {t('Participant name')}
+              </label>
+              <input
+                id="participant-name"
+                ref={participantRef}
+                className={`${inputBase} w-full max-w-md`}
+                value={participant}
+                placeholder="Name or ID"
+                onChange={(e) => {
+                  setParticipant(e.target.value);
+                  setError('');
+                }}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' && cellKeys.length) {
+                    e.preventDefault();
+                    cellRefs.current[cellKeys[0]]?.focus();
+                  }
+                }}
+              />
+            </section>
+
+            {/* 5. Dynamic column inputs */}
+            <section className="space-y-3">
+              <div className="flex flex-wrap items-baseline justify-between gap-2">
+                <h2 className="text-lg font-medium">{t('Statement numbers by column')}</h2>
+                {activeCols.length > 0 && (
+                  <p className="text-sm text-slate-600">
+                    {filledCount} of {expectedTotal || '?'} entered ·{' '}
+                    {isFree
+                      ? `${t('new slots appear as you type; Enter on an empty slot moves to the next column')}`
+                      : `${t('Enter moves to the next slot')}`}
+                  </p>
+                )}
+              </div>
+
               {activeCols.length === 0 ? (
-                <p className="rounded-md border border-dashed border-slate-300 p-3 text-sm text-slate-500">
-                  Select columns above and a count box for each will appear here.
+                <p className="rounded-md border border-dashed border-slate-300 p-4 text-sm text-slate-500">
+                  {isFree
+                    ? `${t('Select the columns in the design above and their input slots will appear here.')}`
+                    : `${t('Set at least one column count in the design above and its input slots will appear here.')}`}
                 </p>
               ) : (
                 <div className="overflow-x-auto pb-2">
-                  <div className="flex min-w-max gap-1">
+                  <div className="flex min-w-max items-start gap-3">
                     {activeCols.map((c) => (
-                      <label key={c} className="flex w-14 flex-col items-center gap-1">
+                      <div key={c} className="flex w-16 flex-col items-center gap-1.5">
                         <span
-                          className={`text-sm font-semibold ${
-                            c < 0
-                              ? 'text-rose-700'
-                              : c === 0
-                                ? 'text-slate-600'
-                                : 'text-emerald-700'
-                          }`}
+                          className={`rounded px-2 py-0.5 text-sm font-semibold ${colBadge(c)}`}
                         >
                           {fmtCol(c)}
                         </span>
-                        <input
-                          type="number"
-                          min="0"
-                          max="99"
-                          aria-label={`Idealized number of statements in column ${fmtCol(c)}`}
-                          className={`${inputBase} w-full px-1 py-2 text-center`}
-                          value={design[c] || ''}
-                          placeholder="0"
-                          disabled={designLocked}
-                          onChange={(e) => handleDesignChange(c, e.target.value)}
-                        />
-                      </label>
+                        {isFree && designSum > 0 && (
+                          <span
+                            title="statements placed / idealized pattern"
+                            className={`text-xs ${
+                              placedIn(c) !== (design[c] || 0)
+                                ? 'font-semibold text-amber-700'
+                                : 'text-slate-500'
+                            }`}
+                          >
+                            {placedIn(c)}/{design[c] || 0}
+                          </span>
+                        )}
+                        {Array.from({ length: slotCount(c) }, (_, i) => {
+                          const key = `${c}:${i}`;
+                          const v = getCell(c, i);
+                          return (
+                            <input
+                              key={key}
+                              ref={(el) => (cellRefs.current[key] = el)}
+                              inputMode="numeric"
+                              aria-label={`Column ${fmtCol(c)}, slot ${i + 1}`}
+                              title={v ? statements[Number(v) - 1] : undefined}
+                              className={`${inputBase} w-full px-1 text-center ${
+                                cellProblem(v)
+                                  ? 'border-rose-500 bg-rose-50 focus:border-rose-500 focus:ring-rose-200'
+                                  : ''
+                              }`}
+                              value={v}
+                              onChange={(e) => setCell(c, i, e.target.value)}
+                              onKeyDown={(e) => {
+                                if (e.key === 'Enter') {
+                                  e.preventDefault();
+                                  focusNext(key);
+                                }
+                              }}
+                            />
+                          );
+                        })}
+                      </div>
                     ))}
                   </div>
                 </div>
               )}
-            </div>
-          </div>
+            </section>
+
+            {/* 6. Add / update button */}
+            <section className="space-y-3">
+              {error && (
+                <p
+                  role="alert"
+                  className="rounded-md border border-rose-200 bg-rose-50 px-3 py-2 text-sm text-rose-800"
+                >
+                  {error}
+                </p>
+              )}
+              {notice && !error && (
+                <p
+                  role="status"
+                  className="rounded-md border border-[#a5d6a7] bg-[#a5d6a7]/30 px-3 py-2 text-sm text-slate-800"
+                >
+                  {notice}
+                </p>
+              )}
+              <div className="flex flex-wrap gap-2">
+                <button
+                  ref={addBtnRef}
+                  onClick={addParticipant}
+                  className="rounded-md bg-[#1E88E5] px-5 py-2.5 font-medium text-white shadow-sm hover:brightness-90 focus:outline-none focus:ring-2 focus:ring-[#1E88E5]/40"
+                >
+                  {editingName ? 'Update participant’s data' : 'Add participant’s data'}
+                </button>
+                {editingName && (
+                  <button
+                    onClick={() => {
+                      resetEntry();
+                      setTimeout(() => participantRef.current?.focus(), 0);
+                    }}
+                    className="rounded-md bg-[#d6dbe0] px-4 py-2.5 text-slate-800 hover:brightness-95"
+                  >
+                    {t('Cancel edit')}
+                  </button>
+                )}
+              </div>
+            </section>
+          </>
         )}
-      </section>
 
-      {complete ? (
-        <section className="rounded-lg border border-emerald-200 bg-emerald-50 p-4">
-          <p className="font-medium text-emerald-900">
-            Data input for “{active.name}” is complete ({active.participants.length} participants).
-          </p>
-          <div className="mt-3 flex flex-wrap gap-2">
-            <button
-              className="rounded-md bg-emerald-700 px-4 py-2 text-white hover:bg-emerald-800"
-              onClick={exportCsv}
-            >
-              Download sorts (CSV)
-            </button>
-            <button
-              className="rounded-md bg-emerald-700 px-4 py-2 text-white hover:bg-emerald-800 disabled:cursor-not-allowed disabled:opacity-40"
-              onClick={exportStatements}
-              disabled={statements.length === 0}
-              title={
-                statements.length === 0
-                  ? 'No statements have been entered for this project'
-                  : undefined
-              }
-            >
-              Download statements (TXT)
-            </button>
-            <button
-              className="rounded-md bg-emerald-700 px-4 py-2 text-white hover:bg-emerald-800"
-              onClick={exportJson}
-            >
-              Download JSON
-            </button>
-            <button
-              className="rounded-md border border-slate-300 bg-white px-4 py-2 hover:bg-slate-50"
-              onClick={() => setComplete(false)}
-            >
-              Reopen for data entry
-            </button>
-          </div>
-        </section>
-      ) : (
-        <>
-          {/* 4. Participant name */}
-          <section className="space-y-2">
-            <h2 className="text-lg font-medium">Participant</h2>
-            {editingName && (
-              <p className="rounded-md border border-amber-200 bg-amber-50 px-3 py-2 text-sm text-amber-900">
-                Editing <span className="font-semibold">{editingName}</span>. Saving replaces their
-                stored data.
-              </p>
-            )}
-            <label className="mb-1 block text-sm font-medium" htmlFor="participant-name">
-              Participant name
-            </label>
-            <input
-              id="participant-name"
-              ref={participantRef}
-              className={`${inputBase} w-full max-w-md`}
-              value={participant}
-              placeholder="Name or ID"
-              onChange={(e) => {
-                setParticipant(e.target.value);
-                setError('');
-              }}
-              onKeyDown={(e) => {
-                if (e.key === 'Enter' && cellKeys.length) {
-                  e.preventDefault();
-                  cellRefs.current[cellKeys[0]]?.focus();
-                }
-              }}
-            />
-          </section>
-
-          {/* 5. Dynamic column inputs */}
-          <section className="space-y-3">
+        {/* Saved participants + completion */}
+        {active && (
+          <section className="space-y-3 border-t border-[#d6dbe0] pt-6">
             <div className="flex flex-wrap items-baseline justify-between gap-2">
-              <h2 className="text-lg font-medium">Statement numbers by column</h2>
-              {activeCols.length > 0 && (
-                <p className="text-sm text-slate-600">
-                  {filledCount} of {expectedTotal || '?'} entered ·{' '}
-                  {isFree
-                    ? 'new slots appear as you type; Enter on an empty slot moves to the next column'
-                    : 'Enter moves to the next slot'}
+              <h2 className="text-lg font-medium">
+                Participants in “{active.name}” ({active.participants.length})
+              </h2>
+              {!complete && active.participants.length > 0 && (
+                <p className="text-sm text-slate-500">
+                  {t('Click a participant to load their data for editing.')}
                 </p>
               )}
             </div>
-
-            {activeCols.length === 0 ? (
-              <p className="rounded-md border border-dashed border-slate-300 p-4 text-sm text-slate-500">
-                {isFree
-                  ? 'Select the columns in the design above and their input slots will appear here.'
-                  : 'Set at least one column count in the design above and its input slots will appear here.'}
-              </p>
+            {active.participants.length === 0 ? (
+              <p className="text-sm text-slate-500">No participants yet.</p>
             ) : (
-              <div className="overflow-x-auto pb-2">
-                <div className="flex min-w-max items-start gap-3">
-                  {activeCols.map((c) => (
-                    <div key={c} className="flex w-16 flex-col items-center gap-1.5">
-                      <span className={`rounded px-2 py-0.5 text-sm font-semibold ${colBadge(c)}`}>
-                        {fmtCol(c)}
-                      </span>
-                      {isFree && designSum > 0 && (
-                        <span
-                          title="statements placed / idealized pattern"
-                          className={`text-xs ${
-                            placedIn(c) !== (design[c] || 0)
-                              ? 'font-semibold text-amber-700'
-                              : 'text-slate-500'
-                          }`}
-                        >
-                          {placedIn(c)}/{design[c] || 0}
-                        </span>
+              <ul className="divide-y divide-[#d6dbe0] rounded-md border border-[#d6dbe0]">
+                {active.participants.map((p) => (
+                  <li
+                    key={p.name}
+                    className={`flex items-center justify-between text-sm ${
+                      editingName === p.name ? 'bg-amber-50' : ''
+                    }`}
+                  >
+                    <button
+                      disabled={complete}
+                      onClick={() => startEdit(p)}
+                      className="flex-1 px-3 py-2 text-left hover:bg-[#d6dbe0]/40 disabled:cursor-default disabled:hover:bg-transparent"
+                    >
+                      {p.name}
+                      {editingName === p.name && (
+                        <span className="ml-2 text-xs text-amber-800">(editing)</span>
                       )}
-                      {Array.from({ length: slotCount(c) }, (_, i) => {
-                        const key = `${c}:${i}`;
-                        const v = getCell(c, i);
-                        return (
-                          <input
-                            key={key}
-                            ref={(el) => (cellRefs.current[key] = el)}
-                            inputMode="numeric"
-                            aria-label={`Column ${fmtCol(c)}, slot ${i + 1}`}
-                            title={v ? statements[Number(v) - 1] : undefined}
-                            className={`${inputBase} w-full px-1 text-center ${
-                              cellProblem(v)
-                                ? 'border-rose-500 bg-rose-50 focus:border-rose-500 focus:ring-rose-200'
-                                : ''
-                            }`}
-                            value={v}
-                            onChange={(e) => setCell(c, i, e.target.value)}
-                            onKeyDown={(e) => {
-                              if (e.key === 'Enter') {
-                                e.preventDefault();
-                                focusNext(key);
-                              }
-                            }}
-                          />
-                        );
-                      })}
-                    </div>
-                  ))}
-                </div>
-              </div>
+                    </button>
+                    {!complete && (
+                      <button
+                        className="px-3 py-2 text-rose-700 hover:underline"
+                        onClick={() => deleteParticipant(p.name)}
+                      >
+                        {t('Remove')}
+                      </button>
+                    )}
+                  </li>
+                ))}
+              </ul>
             )}
-          </section>
 
-          {/* 6. Add / update button */}
-          <section className="space-y-3">
-            {error && (
-              <p
-                role="alert"
-                className="rounded-md border border-rose-200 bg-rose-50 px-3 py-2 text-sm text-rose-800"
-              >
-                {error}
-              </p>
-            )}
-            {notice && !error && (
-              <p
-                role="status"
-                className="rounded-md border border-emerald-200 bg-emerald-50 px-3 py-2 text-sm text-emerald-800"
-              >
-                {notice}
-              </p>
-            )}
-            <div className="flex flex-wrap gap-2">
-              <button
-                ref={addBtnRef}
-                onClick={addParticipant}
-                className="rounded-md bg-indigo-600 px-5 py-2.5 font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-300"
-              >
-                {editingName ? 'Update participant’s data' : 'Add participant’s data'}
-              </button>
-              {editingName && (
+            <div className="flex flex-wrap gap-2 pt-2">
+              {!complete && (
                 <button
-                  onClick={() => {
-                    resetEntry();
-                    setTimeout(() => participantRef.current?.focus(), 0);
-                  }}
-                  className="rounded-md border border-slate-300 bg-white px-4 py-2.5 hover:bg-slate-50"
+                  disabled={active.participants.length === 0}
+                  onClick={() => setComplete(true)}
+                  className="rounded-md bg-[#a5d6a7] px-5 py-2.5 font-medium text-slate-900 hover:brightness-95 disabled:cursor-not-allowed disabled:bg-[#d6dbe0] disabled:text-slate-500"
                 >
-                  Cancel edit
+                  {t('Project data input complete')}
                 </button>
               )}
+              <button
+                onClick={openDelete}
+                className="rounded-md border border-rose-300 px-4 py-2.5 text-rose-700 hover:bg-rose-50"
+              >
+                {t('Delete project')}
+              </button>
             </div>
           </section>
-        </>
-      )}
-
-      {/* Saved participants + completion */}
-      {active && (
-        <section className="space-y-3 border-t border-slate-200 pt-6">
-          <div className="flex flex-wrap items-baseline justify-between gap-2">
-            <h2 className="text-lg font-medium">
-              Participants in “{active.name}” ({active.participants.length})
-            </h2>
-            {!complete && active.participants.length > 0 && (
-              <p className="text-sm text-slate-500">
-                Click a participant to load their data for editing.
-              </p>
-            )}
-          </div>
-          {active.participants.length === 0 ? (
-            <p className="text-sm text-slate-500">No participants yet.</p>
-          ) : (
-            <ul className="divide-y divide-slate-200 rounded-md border border-slate-200">
-              {active.participants.map((p) => (
-                <li
-                  key={p.name}
-                  className={`flex items-center justify-between text-sm ${
-                    editingName === p.name ? 'bg-amber-50' : ''
-                  }`}
-                >
-                  <button
-                    disabled={complete}
-                    onClick={() => startEdit(p)}
-                    className="flex-1 px-3 py-2 text-left hover:bg-slate-50 disabled:cursor-default disabled:hover:bg-transparent"
-                  >
-                    {p.name}
-                    {editingName === p.name && (
-                      <span className="ml-2 text-xs text-amber-800">(editing)</span>
-                    )}
-                  </button>
-                  {!complete && (
-                    <button
-                      className="px-3 py-2 text-rose-700 hover:underline"
-                      onClick={() => deleteParticipant(p.name)}
-                    >
-                      Remove
-                    </button>
-                  )}
-                </li>
-              ))}
-            </ul>
-          )}
-
-          <div className="flex flex-wrap gap-2 pt-2">
-            {!complete && (
-              <button
-                disabled={active.participants.length === 0}
-                onClick={() => setComplete(true)}
-                className="rounded-md bg-slate-900 px-5 py-2.5 font-medium text-white hover:bg-slate-700 disabled:cursor-not-allowed disabled:opacity-40"
-              >
-                Project data input complete
-              </button>
-            )}
-            <button
-              onClick={openDelete}
-              className="rounded-md border border-rose-300 px-4 py-2.5 text-rose-700 hover:bg-rose-50"
-            >
-              Delete project
-            </button>
-          </div>
-        </section>
-      )}
-
-      {/* Statements */}
-      <section className="space-y-2 border-t border-slate-200 pt-6">
-        <div className="flex flex-wrap items-baseline justify-between gap-2">
-          <h2 className="text-lg font-medium">Project statements</h2>
-          <p className="text-sm text-slate-600">
-            {statements.length} statement{statements.length === 1 ? '' : 's'}
-            {active && stmtStatus && <span className="ml-2 text-slate-500">· {stmtStatus}</span>}
-          </p>
-        </div>
-        <p className="text-sm text-slate-600">
-          Paste one statement per line (line 1 is statement 1, line 2 is statement 2, and so on).{' '}
-          {active
-            ? 'Changes are saved to the project automatically.'
-            : 'They will be saved with the project when you add its first participant.'}{' '}
-          Hover a filled slot above to see its statement.
-        </p>
-        <textarea
-          value={stmtValue}
-          onChange={handleStmtChange}
-          onBlur={handleStmtBlur}
-          rows={16}
-          spellCheck={false}
-          placeholder={
-            'People should take more responsibility for their own learning\nTeachers need more time for planning\n…'
-          }
-          className={`${inputBase} min-h-[24rem] w-full resize-y font-mono text-sm leading-relaxed`}
-        />
-        {statementMismatch && (
-          <p className="rounded-md border border-amber-200 bg-amber-50 px-3 py-2 text-sm text-amber-900">
-            The statement list has {statements.length} statements, but the Q sort design totals{' '}
-            {designSum}.
-          </p>
         )}
-      </section>
 
-      {/* Delete-project confirmation: the project name must be typed to enable the button */}
-      {showDelete && active && (
-        <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/50 p-4"
-          onMouseDown={(e) => e.target === e.currentTarget && setShowDelete(false)}
-          onKeyDown={(e) => e.key === 'Escape' && setShowDelete(false)}
-        >
-          <div
-            role="dialog"
-            aria-modal="true"
-            aria-labelledby="delete-title"
-            className="w-full max-w-md rounded-lg bg-white p-6 shadow-xl"
-          >
-            <h3 id="delete-title" className="text-lg font-semibold text-slate-900">
-              Delete this project?
-            </h3>
-            <p className="mt-2 text-sm text-slate-600">
-              This permanently deletes <span className="font-semibold">{active.name}</span>,
-              including its {active.participants.length} participant
-              {active.participants.length === 1 ? '' : 's'}, design and statements. This cannot be
-              undone.
+        {/* Statements */}
+        <section className="space-y-2 border-t border-[#d6dbe0] pt-6">
+          <div className="flex flex-wrap items-baseline justify-between gap-2">
+            <h2 className="text-3xl mt-5 font-medium">Project statements</h2>
+            <p className="text-sm text-slate-600">
+              {statements.length} statement{statements.length === 1 ? '' : 's'}
+              {active && stmtStatus && <span className="ml-2 text-slate-500">· {stmtStatus}</span>}
             </p>
-            <label htmlFor="delete-confirm" className="mt-4 block text-sm text-slate-700">
-              Please type <span className="font-mono font-semibold">{active.name}</span> to confirm.
-            </label>
-            <input
-              id="delete-confirm"
-              autoFocus
-              autoComplete="off"
-              value={deleteText}
-              onChange={(e) => setDeleteText(e.target.value)}
-              onKeyDown={(e) => {
-                if (e.key === 'Enter' && deleteText === active.name) deleteProject();
-              }}
-              className={`${inputBase} mt-1 w-full`}
-            />
-            <div className="mt-5 flex justify-end gap-2">
-              <button
-                onClick={() => setShowDelete(false)}
-                className="rounded-md border border-slate-300 bg-white px-4 py-2 hover:bg-slate-50"
-              >
-                Cancel
-              </button>
-              <button
-                disabled={deleteText !== active.name}
-                onClick={deleteProject}
-                className="rounded-md bg-rose-600 px-4 py-2 font-medium text-white hover:bg-rose-700 disabled:cursor-not-allowed disabled:opacity-40"
-              >
-                Delete this project
-              </button>
+          </div>
+          <p className="text-sm text-slate-600">
+            {t(
+              'Paste one statement per line (line 1 is statement 1, line 2 is statement 2, and so on).'
+            )}{' '}
+            {active
+              ? `${t('Changes are saved to the project automatically.')}`
+              : `${t('They will be saved with the project when you add its first participant.')}`}{' '}
+            {t('Hover a filled slot above to see its statement.')}
+          </p>
+          <textarea
+            value={stmtValue}
+            onChange={handleStmtChange}
+            onBlur={handleStmtBlur}
+            rows={16}
+            spellCheck={false}
+            placeholder={
+              'People should take more responsibility for their own learning\nTeachers need more time for planning\n…'
+            }
+            className={`${inputBase} min-h-[24rem] w-full resize-y font-mono text-sm leading-relaxed`}
+          />
+          {statementMismatch && (
+            <p className="rounded-md border border-amber-200 bg-amber-50 px-3 py-2 text-sm text-amber-900">
+              The statement list has {statements.length} statements, but the Q sort design totals{' '}
+              {designSum}.
+            </p>
+          )}
+        </section>
+
+        {/* Delete-project confirmation: the project name must be typed to enable the button */}
+        {showDelete && active && (
+          <div
+            className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/50 p-4"
+            onMouseDown={(e) => e.target === e.currentTarget && setShowDelete(false)}
+            onKeyDown={(e) => e.key === 'Escape' && setShowDelete(false)}
+          >
+            <div
+              role="dialog"
+              aria-modal="true"
+              aria-labelledby="delete-title"
+              className="w-full max-w-md rounded-lg bg-white p-6 shadow-xl"
+            >
+              <h3 id="delete-title" className="text-lg font-semibold text-slate-900">
+                {t('Delete this project?')}
+              </h3>
+              <p className="mt-2 text-sm text-slate-600">
+                {t(
+                  'This permanently deletes the project and all its data, including participants’ data, design, and statements.'
+                )}{' '}
+                {t(' This action cannot be undone.')}
+              </p>
+              <label htmlFor="delete-confirm" className="mt-4 block text-sm text-slate-700">
+                {t('Please type the project name to confirm:')}{' '}
+                <span className="font-mono font-bold">{active.name}</span>
+              </label>
+              <input
+                id="delete-confirm"
+                autoFocus
+                autoComplete="off"
+                value={deleteText}
+                onChange={(e) => setDeleteText(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' && deleteText === active.name) deleteProject();
+                }}
+                className={`${inputBase} mt-1 w-full`}
+              />
+              <div className="mt-5 flex justify-end gap-2">
+                <button
+                  onClick={() => setShowDelete(false)}
+                  className="rounded-md bg-[#d6dbe0] px-4 py-2 text-slate-800 hover:brightness-95"
+                >
+                  Cancel
+                </button>
+                <button
+                  disabled={deleteText !== active.name}
+                  onClick={deleteProject}
+                  className="rounded-md bg-rose-600 px-4 py-2 font-medium text-white hover:bg-rose-700 disabled:cursor-not-allowed disabled:bg-[#d6dbe0] disabled:text-slate-500"
+                >
+                  {t('Delete this project')}
+                </button>
+              </div>
             </div>
           </div>
-        </div>
-      )}
+        )}
+      </div>
     </div>
   );
 }

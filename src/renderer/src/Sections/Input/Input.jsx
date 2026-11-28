@@ -165,7 +165,7 @@ function Input() {
             onClick={() => handleTabClick('tab6')}
           />
 
-          <div className="tab-content bg-base-100 border-base-300 pt-6 pl-6">{tabs[5].content}</div>
+          <div className="tab-content bg-base-100 border-base-300 pt-2 pl-6">{tabs[5].content}</div>
 
           <input
             type="radio"

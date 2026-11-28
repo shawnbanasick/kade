@@ -7,7 +7,7 @@ import coreState from '../../GlobalState/coreState';
 import createDocxOptions from '../downloadZipLogic/createDocxOptions';
 import createCoreOutputTextFiles from '../downloadZipLogic/createCoreOutputTextFiles';
 
-const DownloadResultsAsExcel = () => {
+const DownloadResultsAsZip = () => {
   const { t } = useTranslation();
   const updateShowDocxOptions = outputState((state) => state.updateShowDocxOptions);
   const updateDownloadDocxButtonActive = outputState(
@@ -143,4 +143,4 @@ const DownloadResultsAsExcel = () => {
   );
 };
 
-export default DownloadResultsAsExcel;
+export default DownloadResultsAsZip;
