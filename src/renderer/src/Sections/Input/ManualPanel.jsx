@@ -5,7 +5,7 @@ import { useLiveQuery } from 'dexie-react-hooks';
 // ---------- Database ----------
 const db = new Dexie('QSortDB');
 db.version(1).stores({
-  projects: 'name', // whole project (design + participants) stored under its name
+  projects: 'name', // whole project (design, statements, participants) stored under its name
 });
 
 const LEGACY_LS_KEY = 'qsort_projects_v1'; // from the earlier localStorage version
@@ -15,6 +15,15 @@ const MAX_COL = 13;
 const COLUMNS = Array.from({ length: MAX_COL - MIN_COL + 1 }, (_, i) => MIN_COL + i);
 const fmtCol = (c) => (c > 0 ? `+${c}` : `${c}`);
 const emptyDesign = () => Object.fromEntries(COLUMNS.map((c) => [c, 0]));
+const parseStatements = (text) =>
+  text
+    .split(/\r?\n/)
+    .map((s) => s.trim())
+    .filter(Boolean);
+const lastFilled = (arr = []) => {
+  for (let i = arr.length - 1; i >= 0; i--) if (arr[i]) return i;
+  return -1;
+};
 
 // Read-modify-write one project atomically
 const updateProject = (name, fn) =>
@@ -22,6 +31,15 @@ const updateProject = (name, fn) =>
     const p = await db.projects.get(name);
     if (p) await db.projects.put(fn(p));
   });
+
+// Highest statement number the project could contain (used for CSV width)
+const projectN = (p) => {
+  const designSum = Object.values(p.design || {}).reduce((s, v) => s + v, 0);
+  let seen = 0;
+  for (const part of p.participants)
+    for (const stmts of Object.values(part.sorts)) for (const s of stmts) seen = Math.max(seen, s);
+  return Math.max(designSum, p.freeTotal || 0, p.statements?.length || 0, seen);
+};
 
 export default function QSortDataEntry() {
   const projectList = useLiveQuery(() => db.projects.toArray(), []);
@@ -36,12 +54,21 @@ export default function QSortDataEntry() {
 
   // Draft state for a project that has not been saved yet
   const [draftName, setDraftName] = useState('');
+  const [draftType, setDraftType] = useState('forced'); // "forced" | "free"
   const [draftDesign, setDraftDesign] = useState(emptyDesign);
+  const [draftFreeCols, setDraftFreeCols] = useState([]);
+  const [draftFreeTotal, setDraftFreeTotal] = useState(0);
+  const [draftStmtText, setDraftStmtText] = useState('');
+
+  // Statement text for the active (saved) project
+  const [stmtText, setStmtText] = useState('');
+  const [stmtStatus, setStmtStatus] = useState('');
+  const stmtTimer = useRef(null);
 
   // Participant entry state
   const [participant, setParticipant] = useState('');
   const [sorts, setSorts] = useState({}); // { [col]: string[] }
-  const [editingName, setEditingName] = useState(null); // name of saved participant being edited
+  const [editingName, setEditingName] = useState(null);
   const [error, setError] = useState('');
   const [notice, setNotice] = useState('');
 
@@ -69,21 +96,47 @@ export default function QSortDataEntry() {
   const projectNames = Object.keys(projects).sort((a, b) => a.localeCompare(b));
   const active = mode === 'continue' ? projects[selectedName] : null;
 
+  // Load a saved project's statements into the textarea when the project changes
+  useEffect(() => {
+    if (active) {
+      setStmtText((active.statements || []).join('\n'));
+      setStmtStatus('');
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [active?.name]);
+
   const name = active ? active.name : draftName;
+  const type = active ? active.type || 'forced' : draftType;
+  const isFree = type === 'free';
   const design = active ? active.design : draftDesign;
+  const freeCols = active ? active.freeColumns || [] : draftFreeCols;
+  const freeTotalInput = active ? active.freeTotal || 0 : draftFreeTotal;
   const complete = !!active?.complete;
   const designLocked = !!active;
 
-  const activeCols = useMemo(() => COLUMNS.filter((c) => (design[c] || 0) > 0), [design]);
-  const totalStatements = useMemo(
-    () => activeCols.reduce((s, c) => s + design[c], 0),
-    [activeCols, design]
-  );
+  const stmtValue = active ? stmtText : draftStmtText;
+  const statements = useMemo(() => parseStatements(stmtValue), [stmtValue]);
 
-  // Ordered cell keys for Enter-to-advance
+  const activeCols = useMemo(
+    () =>
+      isFree ? [...freeCols].sort((a, b) => a - b) : COLUMNS.filter((c) => (design[c] || 0) > 0),
+    [isFree, freeCols, design]
+  );
+  const designSum = useMemo(() => COLUMNS.reduce((s, c) => s + (design[c] || 0), 0), [design]);
+
+  // How many statements every participant must place (0 = unknown, free design only)
+  const expectedTotal = isFree ? statements.length || freeTotalInput : designSum;
+  const maxStmt = isFree ? (expectedTotal > 0 ? expectedTotal : Infinity) : designSum;
+  const statementMismatch =
+    !isFree && statements.length > 0 && designSum > 0 && statements.length !== designSum;
+
+  // Forced: fixed slots per column. Free: filled slots plus one empty trailing slot.
+  const slotCount = (c) => (isFree ? lastFilled(sorts[c]) + 2 : design[c] || 0);
+
   const cellKeys = useMemo(
-    () => activeCols.flatMap((c) => Array.from({ length: design[c] }, (_, i) => `${c}:${i}`)),
-    [activeCols, design]
+    () => activeCols.flatMap((c) => Array.from({ length: slotCount(c) }, (_, i) => `${c}:${i}`)),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [activeCols, sorts, isFree, design]
   );
 
   const getCell = (c, i) => sorts[c]?.[i] ?? '';
@@ -97,24 +150,24 @@ export default function QSortDataEntry() {
     });
   };
 
-  // Count occurrences of each statement number to flag duplicates
   const valueCounts = useMemo(() => {
     const m = {};
     for (const c of activeCols) {
-      for (let i = 0; i < design[c]; i++) {
+      const n = isFree ? lastFilled(sorts[c]) + 2 : design[c] || 0;
+      for (let i = 0; i < n; i++) {
         const v = sorts[c]?.[i];
         if (v) m[v] = (m[v] || 0) + 1;
       }
     }
     return m;
-  }, [sorts, activeCols, design]);
+  }, [sorts, activeCols, design, isFree]);
 
   const filledCount = Object.values(valueCounts).reduce((s, n) => s + n, 0);
 
   const cellProblem = (v) => {
     if (!v) return false;
     const n = Number(v);
-    return valueCounts[v] > 1 || n < 1 || n > totalStatements;
+    return valueCounts[v] > 1 || n < 1 || n > maxStmt;
   };
 
   const resetEntry = () => {
@@ -133,9 +186,20 @@ export default function QSortDataEntry() {
     }
   };
 
+  const handleTypeChange = (t) => {
+    setDraftType(t);
+    setSorts({});
+    setError('');
+  };
+
   const handleDesignChange = (c, value) => {
     const n = Math.max(0, Math.min(99, parseInt(value, 10) || 0));
     setDraftDesign((d) => ({ ...d, [c]: n }));
+    setSorts({});
+  };
+
+  const toggleFreeCol = (c) => {
+    setDraftFreeCols((prev) => (prev.includes(c) ? prev.filter((x) => x !== c) : [...prev, c]));
     setSorts({});
   };
 
@@ -169,7 +233,9 @@ export default function QSortDataEntry() {
       return setError(
         `A project named “${projectName}” already exists. Pick it under “Continue a project”.`
       );
-    if (totalStatements === 0)
+    if (isFree && activeCols.length === 0)
+      return setError('Select at least one column for the free distribution.');
+    if (!isFree && designSum === 0)
       return setError('Enter the Q sort design (number of statements per column) first.');
     if (!pName) return setError('Enter the participant’s name.');
     if (
@@ -179,25 +245,45 @@ export default function QSortDataEntry() {
     )
       return setError(`“${pName}” is already in this project.`);
 
-    for (const c of activeCols) {
-      for (let i = 0; i < design[c]; i++) {
-        if (!sorts[c]?.[i]) return setError(`Column ${fmtCol(c)} still has empty slots.`);
+    // Forced design: every slot must be filled
+    if (!isFree) {
+      for (const c of activeCols) {
+        for (let i = 0; i < design[c]; i++) {
+          if (!sorts[c]?.[i]) return setError(`Column ${fmtCol(c)} still has empty slots.`);
+        }
       }
     }
+    // Range and duplicates
     for (const c of activeCols) {
-      for (let i = 0; i < design[c]; i++) {
-        const v = sorts[c][i];
+      for (let i = 0; i < slotCount(c); i++) {
+        const v = sorts[c]?.[i];
+        if (!v) continue;
         const n = Number(v);
-        if (n < 1 || n > totalStatements)
+        if (n < 1 || n > maxStmt)
           return setError(
-            `Statement numbers must be between 1 and ${totalStatements} (column ${fmtCol(c)}).`
+            `Statement numbers must be between 1 and ${maxStmt} (column ${fmtCol(c)}).`
           );
         if (valueCounts[v] > 1) return setError(`Statement ${v} is used more than once.`);
       }
     }
+    // Free design: all statements must be placed
+    if (isFree) {
+      if (filledCount === 0) return setError('Enter at least one statement number.');
+      if (expectedTotal > 0 && filledCount !== expectedTotal)
+        return setError(
+          `${filledCount} of ${expectedTotal} statements placed. Every statement must be placed exactly once.`
+        );
+    }
 
     const cleanSorts = {};
-    for (const c of activeCols) cleanSorts[c] = sorts[c].slice(0, design[c]).map(Number);
+    for (const c of activeCols) {
+      const vals = [];
+      for (let i = 0; i < slotCount(c); i++) {
+        const v = sorts[c]?.[i];
+        if (v) vals.push(Number(v));
+      }
+      if (vals.length) cleanSorts[c] = vals;
+    }
 
     try {
       await db.transaction('rw', db.projects, async () => {
@@ -205,7 +291,11 @@ export default function QSortDataEntry() {
         if (!existing) {
           await db.projects.put({
             name: projectName,
-            design: { ...design },
+            type,
+            design: isFree ? {} : { ...design },
+            freeColumns: isFree ? [...activeCols] : [],
+            freeTotal: isFree ? freeTotalInput : 0,
+            statements: parseStatements(draftStmtText),
             participants: [{ name: pName, sorts: cleanSorts, addedAt: Date.now() }],
             complete: false,
             createdAt: Date.now(),
@@ -234,6 +324,8 @@ export default function QSortDataEntry() {
     }
 
     if (!active) {
+      setStmtText(draftStmtText);
+      setDraftStmtText('');
       setMode('continue');
       setSelectedName(projectName);
     }
@@ -265,14 +357,48 @@ export default function QSortDataEntry() {
       !window.confirm(`Delete “${active.name}” and all its data? This cannot be undone.`)
     )
       return;
+    clearTimeout(stmtTimer.current);
     await db.projects.delete(active.name);
     setSelectedName('');
+    setStmtText('');
     setMode('new');
     resetEntry();
   };
 
-  const download = (filename, text, type) => {
-    const blob = new Blob([text], { type });
+  // ----- Statements textarea (auto-saves to the project) -----
+  const saveStatements = async (projectName, text) => {
+    setStmtStatus('Saving…');
+    try {
+      await updateProject(projectName, (p) => ({ ...p, statements: parseStatements(text) }));
+      setStmtStatus('Saved');
+    } catch {
+      setStmtStatus('Save failed');
+    }
+  };
+
+  const handleStmtChange = (e) => {
+    const v = e.target.value;
+    if (!active) {
+      setDraftStmtText(v);
+      return;
+    }
+    setStmtText(v);
+    setStmtStatus('Unsaved changes…');
+    clearTimeout(stmtTimer.current);
+    const projectName = active.name;
+    stmtTimer.current = setTimeout(() => saveStatements(projectName, v), 600);
+  };
+
+  const handleStmtBlur = () => {
+    if (active && stmtStatus === 'Unsaved changes…') {
+      clearTimeout(stmtTimer.current);
+      saveStatements(active.name, stmtText);
+    }
+  };
+
+  // ----- Export -----
+  const download = (filename, text, mime) => {
+    const blob = new Blob([text], { type: mime });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
@@ -284,7 +410,7 @@ export default function QSortDataEntry() {
   // CSV: one row per participant, one column per statement, value = column score
   const exportCsv = () => {
     if (!active) return;
-    const n = Object.values(active.design).reduce((s, v) => s + v, 0);
+    const n = projectN(active);
     const header = ['participant', ...Array.from({ length: n }, (_, i) => `S${i + 1}`)];
     const rows = active.participants.map((p) => {
       const scores = new Array(n).fill('');
@@ -312,6 +438,13 @@ export default function QSortDataEntry() {
   if (loading) {
     return <div className="mx-auto max-w-5xl p-6 text-slate-500">Loading projects…</div>;
   }
+
+  const colBadge = (c) =>
+    c < 0
+      ? 'bg-rose-100 text-rose-800'
+      : c === 0
+        ? 'bg-slate-200 text-slate-700'
+        : 'bg-emerald-100 text-emerald-800';
 
   return (
     <div className="mx-auto max-w-5xl space-y-8 p-6 text-slate-800">
@@ -392,38 +525,136 @@ export default function QSortDataEntry() {
           <h2 className="text-lg font-medium">Q sort design</h2>
           <p className="text-sm text-slate-600">
             Statements in total:{' '}
-            <span className="font-semibold text-slate-900">{totalStatements}</span>
+            <span className="font-semibold text-slate-900">{expectedTotal || '—'}</span>
             {designLocked && (
-              <span className="ml-2 text-slate-500">(locked once the project is saved)</span>
+              <span className="ml-2 text-slate-500">(design locked once the project is saved)</span>
             )}
           </p>
         </div>
-        <div className="overflow-x-auto pb-2">
-          <div className="flex min-w-max gap-1">
-            {COLUMNS.map((c) => (
-              <label key={c} className="flex w-14 flex-col items-center gap-1">
-                <span
-                  className={`text-sm font-semibold ${
-                    c < 0 ? 'text-rose-700' : c === 0 ? 'text-slate-600' : 'text-emerald-700'
-                  }`}
-                >
-                  {fmtCol(c)}
-                </span>
-                <input
-                  type="number"
-                  min="0"
-                  max="99"
-                  aria-label={`Number of statements in column ${fmtCol(c)}`}
-                  className={`${inputBase} w-full px-1 py-2 text-center`}
-                  value={design[c] || ''}
-                  placeholder="0"
-                  disabled={designLocked}
-                  onChange={(e) => handleDesignChange(c, e.target.value)}
-                />
-              </label>
-            ))}
-          </div>
+
+        <div className="flex flex-wrap gap-x-6 gap-y-2">
+          <label className="flex items-center gap-2">
+            <input
+              type="radio"
+              name="design-type"
+              disabled={designLocked}
+              checked={!isFree}
+              onChange={() => handleTypeChange('forced')}
+            />
+            Forced distribution (fixed pattern)
+          </label>
+          <label className="flex items-center gap-2">
+            <input
+              type="radio"
+              name="design-type"
+              disabled={designLocked}
+              checked={isFree}
+              onChange={() => handleTypeChange('free')}
+            />
+            Free distribution (choose columns)
+          </label>
         </div>
+
+        {!isFree ? (
+          <div className="overflow-x-auto pb-2">
+            <div className="flex min-w-max gap-1">
+              {COLUMNS.map((c) => (
+                <label key={c} className="flex w-14 flex-col items-center gap-1">
+                  <span
+                    className={`text-sm font-semibold ${
+                      c < 0 ? 'text-rose-700' : c === 0 ? 'text-slate-600' : 'text-emerald-700'
+                    }`}
+                  >
+                    {fmtCol(c)}
+                  </span>
+                  <input
+                    type="number"
+                    min="0"
+                    max="99"
+                    aria-label={`Number of statements in column ${fmtCol(c)}`}
+                    className={`${inputBase} w-full px-1 py-2 text-center`}
+                    value={design[c] || ''}
+                    placeholder="0"
+                    disabled={designLocked}
+                    onChange={(e) => handleDesignChange(c, e.target.value)}
+                  />
+                </label>
+              ))}
+            </div>
+          </div>
+        ) : (
+          <div className="space-y-3">
+            <p className="text-sm text-slate-600">
+              Select the columns participants may use. Each participant can place any number of
+              statements in each selected column.
+            </p>
+            <div className="flex flex-wrap gap-1.5">
+              {COLUMNS.map((c) => {
+                const on = freeCols.includes(c);
+                return (
+                  <button
+                    key={c}
+                    type="button"
+                    aria-pressed={on}
+                    disabled={designLocked}
+                    onClick={() => toggleFreeCol(c)}
+                    className={`w-12 rounded-md border py-1.5 text-sm font-semibold disabled:cursor-not-allowed ${
+                      on
+                        ? 'border-indigo-600 bg-indigo-600 text-white'
+                        : 'border-slate-300 bg-white text-slate-700 hover:bg-slate-50'
+                    } ${designLocked && !on ? 'opacity-40' : ''}`}
+                  >
+                    {fmtCol(c)}
+                  </button>
+                );
+              })}
+            </div>
+            {!designLocked && (
+              <div className="flex flex-wrap gap-2 text-sm">
+                <button
+                  type="button"
+                  className="rounded border border-slate-300 px-2 py-1 hover:bg-slate-50"
+                  onClick={() => {
+                    setDraftFreeCols(COLUMNS.filter((c) => c >= -6 && c <= 6));
+                    setSorts({});
+                  }}
+                >
+                  −6 to +6
+                </button>
+                <button
+                  type="button"
+                  className="rounded border border-slate-300 px-2 py-1 hover:bg-slate-50"
+                  onClick={() => {
+                    setDraftFreeCols([]);
+                    setSorts({});
+                  }}
+                >
+                  Clear
+                </button>
+              </div>
+            )}
+            <div>
+              <label className="mb-1 block text-sm font-medium" htmlFor="free-total">
+                Total number of statements
+              </label>
+              <input
+                id="free-total"
+                type="number"
+                min="0"
+                className={`${inputBase} w-32`}
+                value={statements.length > 0 ? statements.length : freeTotalInput || ''}
+                placeholder="optional"
+                disabled={designLocked || statements.length > 0}
+                onChange={(e) => setDraftFreeTotal(Math.max(0, parseInt(e.target.value, 10) || 0))}
+              />
+              <p className="mt-1 text-xs text-slate-500">
+                {statements.length > 0
+                  ? 'Taken from the statement list below.'
+                  : 'If given (or if statements are pasted below), every participant must place exactly this many statements.'}
+              </p>
+            </div>
+          </div>
+        )}
       </section>
 
       {complete ? (
@@ -489,35 +720,31 @@ export default function QSortDataEntry() {
           <section className="space-y-3">
             <div className="flex flex-wrap items-baseline justify-between gap-2">
               <h2 className="text-lg font-medium">Statement numbers by column</h2>
-              {totalStatements > 0 && (
+              {activeCols.length > 0 && (
                 <p className="text-sm text-slate-600">
-                  {filledCount} of {totalStatements} entered · Enter moves to the next slot
+                  {filledCount} of {expectedTotal || '?'} entered ·{' '}
+                  {isFree
+                    ? 'new slots appear as you type; Enter on an empty slot moves to the next column'
+                    : 'Enter moves to the next slot'}
                 </p>
               )}
             </div>
 
             {activeCols.length === 0 ? (
               <p className="rounded-md border border-dashed border-slate-300 p-4 text-sm text-slate-500">
-                Set at least one column count in the design above and its input slots will appear
-                here.
+                {isFree
+                  ? 'Select the columns in the design above and their input slots will appear here.'
+                  : 'Set at least one column count in the design above and its input slots will appear here.'}
               </p>
             ) : (
               <div className="overflow-x-auto pb-2">
                 <div className="flex min-w-max items-start gap-3">
                   {activeCols.map((c) => (
                     <div key={c} className="flex w-16 flex-col items-center gap-1.5">
-                      <span
-                        className={`rounded px-2 py-0.5 text-sm font-semibold ${
-                          c < 0
-                            ? 'bg-rose-100 text-rose-800'
-                            : c === 0
-                              ? 'bg-slate-200 text-slate-700'
-                              : 'bg-emerald-100 text-emerald-800'
-                        }`}
-                      >
+                      <span className={`rounded px-2 py-0.5 text-sm font-semibold ${colBadge(c)}`}>
                         {fmtCol(c)}
                       </span>
-                      {Array.from({ length: design[c] }, (_, i) => {
+                      {Array.from({ length: slotCount(c) }, (_, i) => {
                         const key = `${c}:${i}`;
                         const v = getCell(c, i);
                         return (
@@ -526,6 +753,7 @@ export default function QSortDataEntry() {
                             ref={(el) => (cellRefs.current[key] = el)}
                             inputMode="numeric"
                             aria-label={`Column ${fmtCol(c)}, slot ${i + 1}`}
+                            title={v ? statements[Number(v) - 1] : undefined}
                             className={`${inputBase} w-full px-1 text-center ${
                               cellProblem(v)
                                 ? 'border-rose-500 bg-rose-50 focus:border-rose-500 focus:ring-rose-200'
@@ -657,6 +885,41 @@ export default function QSortDataEntry() {
           </div>
         </section>
       )}
+
+      {/* Statements */}
+      <section className="space-y-2 border-t border-slate-200 pt-6">
+        <div className="flex flex-wrap items-baseline justify-between gap-2">
+          <h2 className="text-lg font-medium">Project statements</h2>
+          <p className="text-sm text-slate-600">
+            {statements.length} statement{statements.length === 1 ? '' : 's'}
+            {active && stmtStatus && <span className="ml-2 text-slate-500">· {stmtStatus}</span>}
+          </p>
+        </div>
+        <p className="text-sm text-slate-600">
+          Paste one statement per line (line 1 is statement 1, line 2 is statement 2, and so on).{' '}
+          {active
+            ? 'Changes are saved to the project automatically.'
+            : 'They will be saved with the project when you add its first participant.'}{' '}
+          Hover a filled slot above to see its statement.
+        </p>
+        <textarea
+          value={stmtValue}
+          onChange={handleStmtChange}
+          onBlur={handleStmtBlur}
+          rows={16}
+          spellCheck={false}
+          placeholder={
+            'People should take more responsibility for their own learning\nTeachers need more time for planning\n…'
+          }
+          className={`${inputBase} min-h-[24rem] w-full resize-y font-mono text-sm leading-relaxed`}
+        />
+        {statementMismatch && (
+          <p className="rounded-md border border-amber-200 bg-amber-50 px-3 py-2 text-sm text-amber-900">
+            The statement list has {statements.length} statements, but the Q sort design totals{' '}
+            {designSum}.
+          </p>
+        )}
+      </section>
     </div>
   );
 }
